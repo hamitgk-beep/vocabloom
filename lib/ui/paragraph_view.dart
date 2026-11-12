@@ -103,7 +103,9 @@ class _ParagraphViewState extends State<ParagraphView> {
       var st = app.statusOf(t);
       if (st == WordStatus.none) st = phraseStatus[i];
       final cat = catOf[i];
-      final cc = cat == null ? null : categoryById[cat]!.color;
+      final dark = theme.brightness == Brightness.dark;
+      final cc0 = cat == null ? null : categoryById[cat]!.color;
+      final cc = cc0 == null || !dark ? cc0 : Color.lerp(cc0, Colors.white, 0.35);
       spans.add(TextSpan(
         text: t.text,
         style: TextStyle(

@@ -6,12 +6,17 @@ import 'package:archive/archive.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as html;
 import 'package:path/path.dart' as p;
-import 'package:pdfrx/pdfrx.dart';
 import 'package:xml/xml.dart';
 
 import '../data/user_db.dart';
+import 'ocr.dart';
+import 'pdf_import.dart';
 
-const supportedExtensions = ['epub', 'pdf', 'txt', 'md', 'markdown', 'html', 'htm', 'xhtml', 'docx', 'odt', 'fb2', 'rtf'];
+const supportedExtensions = [
+  'epub', 'pdf', 'txt', 'md', 'markdown', 'html', 'htm', 'xhtml', 'docx', 'odt', 'fb2', 'rtf', 'jpg', 'jpeg', 'png'
+];
+
+typedef ImportProgress = void Function(String message);
 
 class ImportException implements Exception {
   final String message;
@@ -21,10 +26,13 @@ class ImportException implements Exception {
 }
 
 /// Converts a book file into the app's own chapter/paragraph format.
-Future<ImportedBook> importFile(String path) async {
+Future<ImportedBook> importFile(String path, {OcrEngine? ocr, ImportProgress? onProgress, bool Function(String word)? isWord}) async {
   final ext = p.extension(path).toLowerCase().replaceFirst('.', '');
   final base = p.basenameWithoutExtension(path);
-  if (ext == 'pdf') return _importPdf(path, base);
+  if (ext == 'pdf') return importPdf(path, base, ocr: ocr, onProgress: onProgress, isWord: isWord);
+  if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
+    return importImage(path, base, ocr: ocr, onProgress: onProgress, isWord: isWord);
+  }
   final bytes = await File(path).readAsBytes();
   return Isolate.run(() => importBytes(bytes, ext, base));
 }
@@ -329,87 +337,3 @@ String _rtfToText(String rtf) {
   return s;
 }
 
-// ---------------------------------------------------------------- PDF
-Future<ImportedBook> _importPdf(String path, String fallbackTitle) async {
-  await pdfrxFlutterInitialize();
-  final doc = await PdfDocument.openFile(path);
-  try {
-    final pageLines = <List<String>>[];
-    var chars = 0;
-    for (final page in doc.pages) {
-      final t = await page.loadText();
-      final text = t?.fullText ?? '';
-      chars += text.trim().length;
-      pageLines.add(text.replaceAll('\r', '\n').split('\n').map((l) => l.trimRight()).toList());
-    }
-    if (chars < 40 * doc.pages.length.clamp(1, 1 << 30) && chars < 2000) {
-      throw ImportException(
-          'Bu PDF taranmış (resim) bir belge gibi görünüyor; içinde seçilebilir metin yok. '
-          'Resimden metne (OCR) desteği sonraki sürümde gelecek.');
-    }
-    // Lines that repeat on many pages are headers/footers.
-    final freq = <String, int>{};
-    for (final lines in pageLines) {
-      for (final l in lines.toSet()) {
-        final k = l.trim().replaceAll(RegExp(r'\d+'), '#');
-        if (k.isNotEmpty) freq[k] = (freq[k] ?? 0) + 1;
-      }
-    }
-    final repeated = pageLines.length >= 6
-        ? freq.entries.where((e) => e.value > pageLines.length * 0.4).map((e) => e.key).toSet()
-        : <String>{};
-    final chapters = <ImportedChapter>[];
-    const perChapter = 10;
-    String carry = '';
-    for (var start = 0; start < pageLines.length; start += perChapter) {
-      final end = (start + perChapter).clamp(0, pageLines.length);
-      final paras = <(String, String)>[];
-      for (var pg = start; pg < end; pg++) {
-        final lines = pageLines[pg]
-            .where((l) => l.trim().isNotEmpty)
-            .where((l) => !RegExp(r'^\s*\d{1,4}\s*$').hasMatch(l))
-            .where((l) => !repeated.contains(l.trim().replaceAll(RegExp(r'\d+'), '#')))
-            .toList();
-        if (lines.isEmpty) continue;
-        final lens = lines.map((l) => l.trim().length).toList()..sort();
-        final typical = lens[(lens.length * 0.8).floor().clamp(0, lens.length - 1)];
-        var buf = carry;
-        carry = '';
-        for (var i = 0; i < lines.length; i++) {
-          final l = lines[i].trim();
-          if (buf.endsWith('-') && RegExp(r'^[a-z]').hasMatch(l)) {
-            buf = buf.substring(0, buf.length - 1) + l;
-          } else {
-            buf = buf.isEmpty ? l : '$buf $l';
-          }
-          final endsSentence = RegExp(r'[.!?:"”’)]$').hasMatch(l);
-          final short = l.length < typical * 0.75;
-          if ((endsSentence && short) || (short && l.length < 60 && !endsSentence && i + 1 < lines.length && RegExp(r'^[A-Z0-9]').hasMatch(lines[i + 1].trim()) && l == l.toUpperCase())) {
-            paras.add((l == l.toUpperCase() && l.length < 60 && !endsSentence ? 'h' : 'p', _clean(buf)));
-            buf = '';
-          }
-        }
-        if (buf.isNotEmpty) {
-          if (RegExp(r'[.!?"”]$').hasMatch(buf)) {
-            paras.add(('p', _clean(buf)));
-          } else if (pg == end - 1) {
-            carry = buf; // continues on the next chapter's first page
-          } else {
-            carry = buf;
-          }
-        }
-        if (carry.isNotEmpty && pg < end - 1) {
-          // keep carrying inside the chapter
-        }
-      }
-      if (carry.isNotEmpty && end == pageLines.length) {
-        paras.add(('p', _clean(carry)));
-        carry = '';
-      }
-      chapters.add(ImportedChapter('Sayfa ${start + 1}–$end', paras));
-    }
-    return ImportedBook(fallbackTitle, null, 'pdf', chapters.where((c) => c.paragraphs.isNotEmpty).toList());
-  } finally {
-    await doc.dispose();
-  }
-}

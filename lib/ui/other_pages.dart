@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
-import '../online/claude_service.dart';
+import '../online/ai_service.dart';
 import 'word_sheet.dart';
 
 // ------------------------------------------------------------------ words
@@ -228,63 +228,169 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  late final key = TextEditingController(text: widget.app.user.getSetting('api_key') ?? '');
+  late String providerId = AiSettings.activeId(widget.app.user) ?? 'anthropic';
+  final key = TextEditingController();
+  final model = TextEditingController();
+  final url = TextEditingController();
   bool obscure = true;
+  String? testResult;
+  bool testing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFields();
+  }
+
+  void _loadFields() {
+    final u = widget.app.user;
+    final p = providerById[providerId]!;
+    key.text = u.getSetting('ai_key_$providerId') ?? (providerId == 'anthropic' ? u.getSetting('api_key') ?? '' : '');
+    model.text = u.getSetting('ai_model_$providerId') ?? p.defaultModel;
+    url.text = u.getSetting('ai_url_$providerId') ?? p.baseUrl;
+    testResult = null;
+  }
+
+  void _save() {
+    final u = widget.app.user;
+    u.setSetting('ai_provider', providerId);
+    u.setSetting('ai_key_$providerId', key.text.trim().isEmpty ? null : key.text.trim());
+    u.setSetting('ai_model_$providerId', model.text.trim().isEmpty ? null : model.text.trim());
+    u.setSetting('ai_url_$providerId', url.text.trim().isEmpty ? null : url.text.trim());
+  }
+
+  Future<void> _test() async {
+    _save();
+    final svc = AiService.fromSettings(widget.app.user);
+    if (svc == null) {
+      setState(() => testResult = 'Eksik bilgi var (anahtar, model veya adres).');
+      return;
+    }
+    setState(() {
+      testing = true;
+      testResult = null;
+    });
+    try {
+      final r = await svc.translateChunk(['The weather is lovely today.']);
+      setState(() => testResult = 'Çalışıyor ✓  "${r.translations.firstOrNull ?? ''}"');
+      widget.app.analyzer.tick();
+    } catch (e) {
+      setState(() => testResult = 'Hata: $e');
+    } finally {
+      if (mounted) setState(() => testing = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final u = widget.app.user;
+    final app = widget.app;
+    final u = app.user;
     final theme = Theme.of(context);
-    final model = u.getSetting('api_model') ?? ClaudeService.defaultModel;
+    final p = providerById[providerId]!;
+    final showUrl = p.kind == ApiKind.azure || p.id == 'custom' || p.id == 'ollama' || p.id == 'openrouter';
     return Scaffold(
       appBar: AppBar(title: const Text('Ayarlar')),
       body: ListView(padding: const EdgeInsets.all(16), children: [
         Text('Görünüm', style: theme.textTheme.titleMedium),
+        const SizedBox(height: 8),
+        SegmentedButton<ThemeMode>(
+          segments: const [
+            ButtonSegment(value: ThemeMode.light, icon: Icon(Icons.light_mode), label: Text('Gündüz')),
+            ButtonSegment(value: ThemeMode.dark, icon: Icon(Icons.dark_mode), label: Text('Gece')),
+            ButtonSegment(value: ThemeMode.system, icon: Icon(Icons.brightness_auto), label: Text('Sistem')),
+          ],
+          selected: {app.themeMode},
+          onSelectionChanged: (s) => app.setTheme(s.first),
+        ),
         ListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('Anlam dili'),
           subtitle: const Text('Kelime panelinde Türkçe, İngilizce veya ikisi birden.'),
-          trailing: LangToggles(app: widget.app, onChanged: () => setState(() {})),
+          trailing: LangToggles(app: app, onChanged: () => setState(() {})),
         ),
         const Divider(height: 32),
-        Text('Çevrimiçi analiz (isteğe bağlı)', style: theme.textTheme.titleMedium),
+        Text('Yapay zekâ (isteğe bağlı, internet gerekir)', style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
         const Text(
-          'İnternet varken kitap Claude yapay zekâsıyla taranır: her cümlenin Türkçe çevirisi ve her bölümün özeti çıkarılıp '
-          'cihazına kaydedilir. Sonra internetsiz de görünür. Bunun için kendi Anthropic API anahtarın gerekir '
-          '(console.anthropic.com); kullanım ücreti anahtarın hesabından düşer. Bir roman için yaklaşık maliyet: '
-          'Opus 5.5 ile birkaç dolar, Haiku 5.5 ile birkaç sent.',
+          'Bağladığın servis, internet olduğu her an henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve '
+          'bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Yarıda kalırsa kaldığı yerden devam eder. '
+          'Taranmış (resim) PDF\'lerde cihazda OCR yoksa sayfaları da okuyabilir. Kullanım ücreti kendi hesabından düşer.',
         ),
         const SizedBox(height: 12),
+        DropdownButtonFormField<String>(
+          initialValue: providerId,
+          isExpanded: true,
+          decoration: const InputDecoration(labelText: 'Servis', border: OutlineInputBorder()),
+          items: [for (final x in providers) DropdownMenuItem(value: x.id, child: Text(x.name))],
+          onChanged: (v) => setState(() {
+            _save();
+            providerId = v!;
+            _loadFields();
+            u.setSetting('ai_provider', providerId);
+          }),
+        ),
+        if (p.keyHelp.isNotEmpty)
+          Padding(padding: const EdgeInsets.only(top: 6), child: Text(p.keyHelp, style: theme.textTheme.bodySmall)),
+        const SizedBox(height: 12),
+        if (showUrl) ...[
+          TextField(
+            controller: url,
+            decoration: InputDecoration(
+              labelText: p.kind == ApiKind.azure ? 'Uç nokta (https://<kaynak>.openai.azure.com)' : 'Adres (base URL)',
+              border: const OutlineInputBorder(),
+            ),
+            onChanged: (_) => _save(),
+          ),
+          const SizedBox(height: 12),
+        ],
         TextField(
           controller: key,
           obscureText: obscure,
           decoration: InputDecoration(
-            labelText: 'Anthropic API anahtarı',
+            labelText: p.needsKey ? 'API anahtarı' : 'API anahtarı (gerekmiyorsa boş bırak)',
             border: const OutlineInputBorder(),
             suffixIcon: IconButton(icon: Icon(obscure ? Icons.visibility : Icons.visibility_off), onPressed: () => setState(() => obscure = !obscure)),
           ),
-          onChanged: (v) => u.setSetting('api_key', v.trim().isEmpty ? null : v.trim()),
+          onChanged: (_) => _save(),
         ),
         const SizedBox(height: 12),
-        DropdownButtonFormField<String>(
-          initialValue: model,
-          decoration: const InputDecoration(labelText: 'Model', border: OutlineInputBorder()),
-          items: [for (final e in ClaudeService.models.entries) DropdownMenuItem(value: e.key, child: Text(e.value))],
-          onChanged: (v) => setState(() => u.setSetting('api_model', v)),
+        TextField(
+          controller: model,
+          decoration: InputDecoration(
+            labelText: p.kind == ApiKind.azure ? 'Dağıtım (deployment) adı' : 'Model adı',
+            helperText: 'Servisin model listesinden istediğini yazabilirsin. Varsayılan: ${p.defaultModel}',
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (_) => _save(),
         ),
+        const SizedBox(height: 8),
+        Row(children: [
+          FilledButton.tonalIcon(
+            onPressed: testing ? null : _test,
+            icon: testing ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.wifi_tethering),
+            label: const Text('Bağlantıyı dene'),
+          ),
+        ]),
+        if (testResult != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(testResult!)),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Kitap eklerken otomatik analiz et'),
-          subtitle: const Text('İnternet yoksa atlanır; kitap menüsünden sonra da başlatabilirsin.'),
-          value: u.getSetting('auto_analyze') == '1',
-          onChanged: (v) => setState(() => u.setSetting('auto_analyze', v ? '1' : null)),
+          title: const Text('İnternet olunca kitapları otomatik tara'),
+          subtitle: const Text('Kapalıysa kitap menüsünden elle başlatabilirsin.'),
+          value: u.getSetting('auto_analyze') != '0',
+          onChanged: (v) => setState(() {
+            u.setSetting('auto_analyze', v ? null : '0');
+            if (v) app.analyzer.tick();
+          }),
         ),
+        if (!p.vision)
+          Text('Not: ${p.name} resimdeki yazıyı okuyamaz; taranmış PDF için cihazın kendi OCR\'ı kullanılır.',
+              style: theme.textTheme.bodySmall),
         const Divider(height: 32),
         Text('Veriler ve lisanslar', style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
         const Text(
-          'Tüm kitapların, kelime listen ve ayarların yalnızca bu cihazda saklanır.\n\n'
+          'Tüm kitapların, kelime listen ve ayarların yalnızca bu cihazda saklanır. API anahtarları da yalnızca cihazda '
+          'tutulur ve sadece seçtiğin servise gönderilir.\n\n'
           'Sözlük kaynakları:\n'
           '• FreeDict English–Turkish (GPL-2.0+)\n'
           '• Princeton WordNet 3.0 (WordNet lisansı)\n'

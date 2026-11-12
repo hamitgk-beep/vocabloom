@@ -35,7 +35,9 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
   Future<void> _init() async {
     try {
       final override = Platform.environment['KELIME_OKUR_DATA'];
-      final dir = override != null ? Directory(override) : await getApplicationSupportDirectory();
+      final dir = override != null
+          ? Directory(override)
+          : await getApplicationSupportDirectory();
       await dir.create(recursive: true);
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
@@ -44,6 +46,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       for (final f in widget.args.where((a) => File(a).existsSync())) {
         await importForTest(a, f);
       }
+      a.analyzer.start();
       setState(() => app = a);
     } catch (e, st) {
       debugPrint('$e\n$st');
@@ -53,25 +56,59 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
 
   @override
   Widget build(BuildContext context) {
-    final seed = const Color(0xFF3F51B5);
-    return MaterialApp(
-      title: 'Kelime Okur',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorSchemeSeed: seed, useMaterial3: true),
-      darkTheme: ThemeData(colorSchemeSeed: seed, brightness: Brightness.dark, useMaterial3: true),
-      home: app != null
-          ? HomePage(app: app!)
-          : Scaffold(
-              body: Center(
-                child: error != null
-                    ? Padding(padding: const EdgeInsets.all(24), child: Text('Başlatılamadı: $error'))
-                    : const Column(mainAxisSize: MainAxisSize.min, children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 16),
-                        Text('Sözlük hazırlanıyor…'),
-                      ]),
+    const seed = Color(0xFF3F51B5);
+    final light = ColorScheme.fromSeed(seedColor: seed).copyWith(
+      surface: Colors.white,
+      surfaceContainerLowest: Colors.white,
+      surfaceContainerLow: const Color(0xFFF7F7F9),
+      surfaceContainer: const Color(0xFFF3F3F6),
+    );
+    // Night mode: dark grey (not pure black) with soft off-white text.
+    final dark =
+        ColorScheme.fromSeed(
+          seedColor: seed,
+          brightness: Brightness.dark,
+        ).copyWith(
+          surface: const Color(0xFF16171B),
+          onSurface: const Color(0xFFD9D6CF),
+        );
+    final a = app;
+    return ListenableBuilder(
+      listenable: a ?? ValueNotifier(0),
+      builder: (context, _) => MaterialApp(
+        title: 'Kelime Okur',
+        debugShowCheckedModeBanner: false,
+        themeMode: a?.themeMode ?? ThemeMode.light,
+        theme: ThemeData(
+          colorScheme: light,
+          scaffoldBackgroundColor: Colors.white,
+          useMaterial3: true,
+        ),
+        darkTheme: ThemeData(
+          colorScheme: dark,
+          scaffoldBackgroundColor: const Color(0xFF16171B),
+          useMaterial3: true,
+        ),
+        home: app != null
+            ? HomePage(app: app!)
+            : Scaffold(
+                body: Center(
+                  child: error != null
+                      ? Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Text('Başlatılamadı: $error'),
+                        )
+                      : const Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 16),
+                            Text('Sözlük hazırlanıyor…'),
+                          ],
+                        ),
+                ),
               ),
-            ),
+      ),
     );
   }
 }
@@ -105,16 +142,25 @@ class _HomePageState extends State<HomePage> {
     final body = IndexedStack(index: tab, children: pages);
     if (wide) {
       return Scaffold(
-        body: Row(children: [
-          NavigationRail(
-            selectedIndex: tab,
-            labelType: NavigationRailLabelType.all,
-            onDestinationSelected: (i) => setState(() => tab = i),
-            destinations: [for (final d in dests) NavigationRailDestination(icon: Icon(d.$1), selectedIcon: Icon(d.$2), label: Text(d.$3))],
-          ),
-          const VerticalDivider(width: 1),
-          Expanded(child: body),
-        ]),
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: tab,
+              labelType: NavigationRailLabelType.all,
+              onDestinationSelected: (i) => setState(() => tab = i),
+              destinations: [
+                for (final d in dests)
+                  NavigationRailDestination(
+                    icon: Icon(d.$1),
+                    selectedIcon: Icon(d.$2),
+                    label: Text(d.$3),
+                  ),
+              ],
+            ),
+            const VerticalDivider(width: 1),
+            Expanded(child: body),
+          ],
+        ),
       );
     }
     return Scaffold(
@@ -122,7 +168,14 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,
         onDestinationSelected: (i) => setState(() => tab = i),
-        destinations: [for (final d in dests) NavigationDestination(icon: Icon(d.$1), selectedIcon: Icon(d.$2), label: d.$3)],
+        destinations: [
+          for (final d in dests)
+            NavigationDestination(
+              icon: Icon(d.$1),
+              selectedIcon: Icon(d.$2),
+              label: d.$3,
+            ),
+        ],
       ),
     );
   }

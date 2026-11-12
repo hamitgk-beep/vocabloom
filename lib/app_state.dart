@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
 import 'nlp/grammar.dart';
+import 'online/auto_analyzer.dart';
 import 'nlp/text.dart';
 
 class CategoryInfo {
@@ -43,7 +44,9 @@ class AppState extends ChangeNotifier {
   bool showTr = true;
   bool showEn = true;
   double fontSize = 19;
+  ThemeMode themeMode = ThemeMode.light;
   int _wordsVersion = 0;
+  late final AutoAnalyzer analyzer = AutoAnalyzer(user);
 
   AppState(this.dict, this.user) {
     final past = <String>{}, pp = <String>{};
@@ -67,11 +70,18 @@ class AppState extends ChangeNotifier {
     showTr = s['tr'] as bool? ?? true;
     showEn = s['en'] as bool? ?? true;
     fontSize = (s['font'] as num?)?.toDouble() ?? 19;
+    themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
+  }
+
+  void setTheme(ThemeMode m) {
+    themeMode = m;
+    _save();
+    notifyListeners();
   }
 
   int get wordsVersion => _wordsVersion;
 
-  void _save() => user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize});
+  void _save() => user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);
@@ -118,6 +128,12 @@ class AppState extends ChangeNotifier {
   }
 
   String primaryLemma(String lower) => dict.lemmatizer.lemmas(lower).first;
+
+  /// Whether [w] is an English word the dictionary knows (used to clean OCR).
+  bool isWord(String w) {
+    final l = w.toLowerCase().replaceAll('’', "'");
+    return dict.lemmatizer.lemmas(l).any(dict.lemmatizer.known.contains);
+  }
 
   /// Short Turkish meaning used in lists.
   String? shortMeaning(String lemma) {

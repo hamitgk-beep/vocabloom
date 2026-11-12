@@ -129,6 +129,11 @@ class _ReaderPageState extends State<ReaderPage> {
             ),
           ),
           IconButton(
+            tooltip: theme.brightness == Brightness.dark ? 'Gündüz modu' : 'Gece modu',
+            icon: Icon(theme.brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
+            onPressed: () => app.setTheme(theme.brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark),
+          ),
+          IconButton(
             tooltip: 'Bölümler',
             icon: const Icon(Icons.list),
             onPressed: () => _scaffold.currentState!.openDrawer(),
@@ -243,7 +248,7 @@ class FilterPanel extends StatelessWidget {
             value: app.enabledCats.contains(c.id),
             onChanged: (_) => app.toggleCat(c.id),
             secondary: Container(width: 14, height: 14, decoration: BoxDecoration(color: c.color, shape: BoxShape.circle)),
-            title: Text(c.name, style: TextStyle(color: c.color, fontWeight: FontWeight.w600)),
+            title: Text(c.name, style: TextStyle(color: theme.brightness == Brightness.dark ? Color.lerp(c.color, Colors.white, 0.35) : c.color, fontWeight: FontWeight.w600)),
             subtitle: Text(c.tr),
           ),
         const Divider(),

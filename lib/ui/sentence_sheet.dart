@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
-import '../online/claude_service.dart';
+import '../online/ai_service.dart';
 import 'paragraph_view.dart';
 import 'word_sheet.dart';
 
@@ -47,9 +47,9 @@ class _SentencePanelState extends State<SentencePanel> {
   String? error;
 
   Future<void> _explain() async {
-    final svc = ClaudeService.fromSettings(widget.app.user);
+    final svc = AiService.fromSettings(widget.app.user);
     if (svc == null) {
-      setState(() => error = 'Çevrimiçi analiz için Ayarlar > Çevrimiçi analiz bölümüne API anahtarı girin.');
+      setState(() => error = 'Çevrimiçi açıklama için Ayarlar > Yapay zekâ bölümünden bir servis bağlayın.');
       return;
     }
     setState(() {

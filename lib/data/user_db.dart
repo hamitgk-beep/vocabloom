@@ -80,6 +80,8 @@ class UserDb {
         meaning TEXT, added INTEGER);
       CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
     ''');
+    final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
+    if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
     for (final r in u.db.select('SELECT lemma, status FROM words')) {
       u.statuses[r['lemma'] as String] = WordStatus.values[r['status'] as int];
     }
