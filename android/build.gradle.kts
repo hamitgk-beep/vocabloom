@@ -18,6 +18,10 @@ subprojects {
 subprojects {
     project.evaluationDependsOn(":app")
 }
+// Release-time lint ("lintVital") crashes inside some plugins (lint bug); it is not needed to build.
+subprojects {
+    tasks.matching { it.name.startsWith("lintVital") }.configureEach { enabled = false }
+}
 
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
