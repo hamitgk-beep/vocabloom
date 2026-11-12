@@ -84,7 +84,7 @@ class _LibraryPageState extends State<LibraryPage> {
     final books = widget.app.user.books();
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Kitaplığım')),
+      appBar: AppBar(title: const Text('VocaBloom · Kitaplığım')),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: importing ? null : _import,
         icon: importing

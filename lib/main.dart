@@ -76,7 +76,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
     return ListenableBuilder(
       listenable: a ?? ValueNotifier(0),
       builder: (context, _) => MaterialApp(
-        title: 'Kelime Okur',
+        title: 'VocaBloom',
         debugShowCheckedModeBanner: false,
         themeMode: a?.themeMode ?? ThemeMode.light,
         theme: ThemeData(

@@ -24,7 +24,7 @@ jobs:
       - run: flutter build windows --release
       - uses: actions/upload-artifact@v4
         with:
-          name: KelimeOkur-Windows
+          name: VocaBloom-Windows
           path: build/windows/x64/runner/Release
 
   android:
@@ -39,7 +39,7 @@ jobs:
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: KelimeOkur-Android
+          name: VocaBloom-Android
           path: build/app/outputs/flutter-apk/app-release.apk
 
   ios:
@@ -61,11 +61,11 @@ jobs:
         run: |
           mkdir -p Payload
           cp -R build/ios/iphoneos/Runner.app Payload/
-          zip -qr KelimeOkur-unsigned.ipa Payload
+          zip -qr VocaBloom-unsigned.ipa Payload
       - uses: actions/upload-artifact@v4
         with:
-          name: KelimeOkur-iOS
-          path: KelimeOkur-unsigned.ipa
+          name: VocaBloom-iOS
+          path: VocaBloom-unsigned.ipa
 
   macos:
     needs: test
@@ -77,5 +77,5 @@ jobs:
       - run: flutter build macos --release
       - uses: actions/upload-artifact@v4
         with:
-          name: KelimeOkur-macOS
-          path: build/macos/Build/Products/Release
+          name: VocaBloom-macOS
+          path: build/macos/Build/Products/Release/VocaBloom.app
