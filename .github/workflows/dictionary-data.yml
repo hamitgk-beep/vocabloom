@@ -84,7 +84,7 @@ jobs:
             --target "$GITHUB_SHA" --title "Built-in Turkish library (build input)" \
             --notes "Senses, Turkish explanations and translated examples of every expression, and word families. Made once with AI at build time; used by tools/build_dict.py." || true
           mkdir -p prev
-          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' -p 'syn*' || true
+          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*' || true
           ls -la prev
       - name: Translate
         if: inputs.provider == '' || inputs.provider == 'all' || inputs.provider == matrix.service
@@ -103,8 +103,9 @@ jobs:
           cp prev/exd-$S.jsonl.gz . 2>/dev/null || true
           cp prev/wfd-$S.jsonl.gz . 2>/dev/null || true
           cp prev/syn-$S.jsonl.gz . 2>/dev/null || true
+          cp prev/wd-$S.jsonl.gz . 2>/dev/null || true
           python3 tools/pretranslate.py assets/dict.db exd-$S.jsonl.gz --provider $S --model "$MODEL" \
-            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --senses syn-$S.jsonl.gz --shard ${{ matrix.shard }} \
+            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --words wd-$S.jsonl.gz --senses syn-$S.jsonl.gz --shard ${{ matrix.shard }} \
             --done prev/*.jsonl.gz
       - name: Save results
         if: always()
@@ -113,9 +114,85 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           S=${{ matrix.service }}
-          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz syn-$S.jsonl.gz; do
+          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz wd-$S.jsonl.gz syn-$S.jsonl.gz; do
             if [ -f $f ]; then
               gh release upload data-exd $f --clobber
               python3 -c "import gzip,sys;print(sys.argv[1], sum(1 for _ in gzip.open(sys.argv[1],'rt')))" $f
             fi
           done
+
+  # After the translations: rebuild the app dictionary with everything finished
+  # so far and, when there is something new, commit it and start an app build,
+  # so users get an update with the new entries every day.
+  publish:
+    needs: translate
+    if: always() && (github.event_name == 'schedule' || inputs.job == 'translate')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - name: Get sources and all results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -e
+          mkdir -p raw && cd raw
+          curl -sSfLO https://raw.githubusercontent.com/freedict/fd-dictionaries/master/eng-tur/eng-tur.tei
+          curl -sSfLO https://raw.githubusercontent.com/StarlangSoftware/TurkishWordNet/master/kenet.xml
+          curl -sSfLO https://raw.githubusercontent.com/globalwordnet/cili/master/ili-map-pwn30.tab
+          curl -sSfL -o wn30.zip https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/wordnet.zip
+          unzip -q wn30.zip
+          gh release download data-tatoeba -p 'tatoeba_en_tr.tsv.gz'
+          gh release download data-wiktionary -p 'wiktionary_phrases.json.gz'
+          gh release download data-exd -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*'
+          ls -la
+      - name: Rebuild the dictionary
+        run: |
+          cp assets/dict.db old.db
+          python3 tools/build_dict.py raw assets/dict.db
+      - name: Publish when there are new entries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY' > stats.txt
+          import sqlite3
+          def stats(path):
+              db = sqlite3.connect(path)
+              out = {}
+              for name, q in [('expressions', 'SELECT count(*) FROM exd'), ('words', 'SELECT count(*) FROM wd'),
+                              ('families', 'SELECT count(*) FROM wfd'),
+                              ('senses', "SELECT count(*) FROM syn WHERE tr IS NOT NULL AND tr != '[]'")]:
+                  try:
+                      out[name] = db.execute(q).fetchone()[0]
+                  except sqlite3.OperationalError:
+                      out[name] = 0
+              return out
+          old, new = stats('old.db'), stats('assets/dict.db')
+          grew = {k: new[k] - old[k] for k in new if new[k] > old[k]}
+          print('NEW=' + ('1' if grew else '0'))
+          print('MSG=' + ', '.join(f'{v} new {k}' for k, v in grew.items()))
+          print('TOTAL=' + ', '.join(f'{k} {v}' for k, v in new.items()))
+          PY
+          cat stats.txt
+          NEW=$(sed -n 's/^NEW=//p' stats.txt); MSG=$(sed -n 's/^MSG=//p' stats.txt); TOTAL=$(sed -n 's/^TOTAL=//p' stats.txt)
+          if [ "$NEW" != "1" ]; then echo "nothing new"; exit 0; fi
+          # devices copy the bundled dictionary again when this number changes
+          python3 - <<'PY'
+          import re
+          p = 'lib/data/dict_db.dart'
+          s = open(p).read()
+          s = re.sub(r"_version = '(\d+)'", lambda m: f"_version = '{int(m.group(1)) + 1}'", s, count=1)
+          open(p, 'w').write(s)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/dict.db lib/data/dict_db.dart
+          git commit -m "Dictionary: $MSG" -m "Built-in library now: $TOTAL"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          # a push made with the workflow token does not start other workflows, so start the app build
+          gh workflow run build.yml --ref main

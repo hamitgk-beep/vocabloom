@@ -465,9 +465,11 @@ class AiService {
 /// One sense of an expression, from [AiService.exprDetail].
 class ExprSense {
   final String titleEn, titleTr, explainEn, explainTr;
+  /// Part of speech in English ("verb", "noun"...), for word explanations.
+  final String? pos;
   final bool inSentence;
   final List<(String, String)> examples;
-  ExprSense(this.titleEn, this.titleTr, this.explainEn, this.explainTr, this.inSentence, this.examples);
+  ExprSense(this.titleEn, this.titleTr, this.explainEn, this.explainTr, this.inSentence, this.examples, {this.pos});
 
   factory ExprSense.fromJson(Map<String, dynamic> j) => ExprSense(
         '${j['title_en'] ?? ''}',
@@ -476,6 +478,7 @@ class ExprSense {
         '${j['explain_tr'] ?? ''}',
         j['in_sentence'] == true,
         [for (final e in (j['examples'] as List? ?? const [])) ('${(e as Map)['en'] ?? ''}', '${e['tr'] ?? ''}')],
+        pos: j['pos'] as String?,
       );
 
   Map<String, dynamic> toJson() => {

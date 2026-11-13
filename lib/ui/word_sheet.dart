@@ -10,6 +10,7 @@ import '../nlp/word_family.dart';
 import '../online/ai_service.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
+import 'sense_cards.dart';
 import '../l10n.dart';
 import 'paragraph_view.dart';
 
@@ -214,6 +215,22 @@ class _WordPanelState extends State<WordPanel> {
       ]));
     }
 
+    // ---------------- teacher-style explanation (built-in library)
+    final wd = app.dict.wordDetail(lemma);
+    List<ExprSense>? wdSenses;
+    if (wd != null) {
+      try {
+        wdSenses = [for (final x in jsonDecode(wd.$2) as List) ExprSense.fromJson((x as Map).cast<String, dynamic>())];
+      } catch (_) {}
+    }
+    if (wdSenses != null && wdSenses.isNotEmpty) {
+      const posEn = {'v': 'verb', 'n': 'noun', 'a': 'adjective', 's': 'adjective', 'r': 'adverb'};
+      children.add(_Section(L('Anlamları ve kullanımı', 'Meanings and usage'), [
+        SenseCards(senses: wdSenses, en: en, tr: tr, color: theme.colorScheme.primary, highlightPos: ctx == null ? null : posEn[best?.pos]),
+        Text(L('Kaynak: dahili sözlük', 'Source: built-in dictionary'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+      ]));
+    }
+
     // ---------------- Turkish meanings
     if (tr && info.trFreeDict.isNotEmpty) {
       children.add(_Section(L('Türkçe karşılıklar', 'Turkish equivalents'), [
@@ -228,7 +245,8 @@ class _WordPanelState extends State<WordPanel> {
     }
 
     // ---------------- senses
-    if (info.senses.isNotEmpty) {
+    // With the built-in explanation above, the WordNet list is extra detail for English readers.
+    if (info.senses.isNotEmpty && (wdSenses == null || wdSenses.isEmpty || en)) {
       final byPos = <String, List<Sense>>{};
       for (final s in info.senses) {
         byPos.putIfAbsent(s.pos, () => []).add(s);

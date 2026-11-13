@@ -34,7 +34,7 @@ Map<String, String> get posNames => uiEnglish
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {
-  static const _version = '7';
+  static const _version = '8';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -141,6 +141,16 @@ class DictDb {
       for (final r in db.select('SELECT en, tr FROM exs WHERE key=? LIMIT ?', [key, limit]))
         (r.columnAt(0) as String, r.columnAt(1) as String)
     ];
+  }
+
+  late final bool _hasWd =
+      db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='wd'").isNotEmpty;
+
+  /// Built-in teacher-style explanation of [lemma]: (main Turkish, senses JSON), or null.
+  (String, String)? wordDetail(String lemma) {
+    if (!_hasWd) return null;
+    final r = db.select('SELECT tr, json FROM wd WHERE word=?', [lemma]);
+    return r.isEmpty ? null : (r.first.columnAt(0) as String, r.first.columnAt(1) as String);
   }
 
   late final bool _hasWfd =

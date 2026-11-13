@@ -438,6 +438,25 @@ def load_tatoeba(db, exprs):
     print('tatoeba pairs', len(pairs), 'expression examples', n_expr, 'word examples', len(rows) - n_expr)
 
 
+def load_wd(db):
+    """Teacher-style explanations of words (tools/pretranslate.py, kind "word")."""
+    paths = result_files('wd-')
+    if not paths:
+        print('wd: not found, skipped')
+        return
+    db.execute('CREATE TABLE wd(word TEXT PRIMARY KEY, tr TEXT, json TEXT)')
+    n = 0
+    for line in result_lines(paths):
+        try:
+            j = json.loads(line)
+        except ValueError:
+            continue
+        if j.get('w') and j.get('s'):
+            n += db.execute('INSERT OR IGNORE INTO wd VALUES (?,?,?)',
+                            (j['w'], j.get('tr') or '', json.dumps(j['s'], ensure_ascii=False))).rowcount
+    print('built-in word explanations', n)
+
+
 def load_syn(db):
     """Turkish for WordNet senses and their examples (tools/pretranslate.py, kind "syn").
     Synset ids follow the WordNet files, so they stay the same from build to build.
@@ -573,6 +592,7 @@ def main():
         print('built-in word families', n)
     print('word families', len(gid_of), 'words', len(fam_rows))
     load_syn(db)
+    load_wd(db)
 
     db.executescript('''
       CREATE INDEX sense_lemma ON sense(lemma);

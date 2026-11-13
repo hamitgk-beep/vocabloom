@@ -40,9 +40,11 @@ Skip obsolete, archaic and vulgar senses.
 For every sense give:
 - "title_en": a short English heading
 - "title_tr": a short natural Turkish heading (e.g. "Uzman veya yardım çağırmak")
-- "explain_en": one English sentence on when it is used
-- "explain_tr": the same sentence in natural Turkish
-- "examples": 2 objects {"en": a natural English example sentence, "tr": its natural Turkish translation}
+- "explain_en": 1 to 3 English sentences, the way a good teacher explains it to a learner: what it means,
+  when and how it is used (formal or informal, spoken or written), the usual pattern
+  (e.g. "look forward to + -ing", "put something off"), and how it differs from a similar expression when that helps
+- "explain_tr": the same explanation in natural, clear Turkish (not a word-by-word translation)
+- "examples": 2 objects {"en": a natural everyday English example sentence, "tr": its natural Turkish translation}
 
 Also give "tr": the expression's main Turkish meaning in 1 to 4 words.
 
@@ -145,6 +147,82 @@ FAM_SCHEMA = {
     'required': ['items'],
     'additionalProperties': False,
 }
+
+
+WORD_PROMPT = '''You are a friendly English teacher writing a learner's dictionary for Turkish speakers.
+For each English word below, explain it the way you would if a learner asked you
+"explain this word in English and Turkish with all the details so I can learn it".
+
+List its common senses (1 to 6), across parts of speech, the most common first. Skip obsolete, archaic,
+very technical and vulgar senses. For every sense give:
+- "pos": verb, noun, adjective, adverb, preposition, conjunction, pronoun, determiner or interjection
+- "title_en": a short English heading
+- "title_tr": the Turkish equivalents for this sense, 1 to 4, most common first (e.g. "yine de, gene de")
+- "explain_en": 1 to 3 sentences: what it means, when and how it is used (formal or informal), the usual
+  patterns and collocations ("depend on something", "make a decision"), and a common mistake or a
+  difference from a similar word when that helps a Turkish learner
+- "explain_tr": the same explanation in natural, clear Turkish (not a word-by-word translation)
+- "examples": 2 objects {"en": a natural everyday English sentence using this sense, "tr": its natural Turkish translation}
+
+Also give "tr": the word's main Turkish meanings in 1 to 5 words.
+
+Answer with JSON only: {"items": [{"w": "<word exactly as given>", "tr": "...", "senses": [...]}]}
+
+Words:
+'''
+
+_WSENSE = json.loads(json.dumps(SCHEMA['properties']['items']['items']['properties']['senses']['items']))
+_WSENSE['properties']['pos'] = {'type': 'string'}
+_WSENSE['required'] = ['pos'] + _WSENSE['required']
+WORD_SCHEMA = {
+    'type': 'object',
+    'properties': {'items': {'type': 'array', 'items': {
+        'type': 'object',
+        'properties': {'w': {'type': 'string'}, 'tr': {'type': 'string'},
+                       'senses': {'type': 'array', 'items': _WSENSE}},
+        'required': ['w', 'tr', 'senses'],
+        'additionalProperties': False,
+    }}},
+    'required': ['items'],
+    'additionalProperties': False,
+}
+
+
+def describe_word(r):
+    return f'- {r[0]}'  # WordNet's parts of speech miss prepositions and pronouns, so none are given
+
+
+def load_word_todo(dict_path, done, min_freq=5):
+    """Dictionary words, the ones people meet most often (Tatoeba frequency) first."""
+    db = sqlite3.connect(dict_path)
+    try:
+        freq = dict(db.execute('SELECT word, n FROM wfreq'))
+    except sqlite3.OperationalError:
+        freq = {}
+    forms = {f for f, l in db.execute('SELECT form, lemma FROM exc') if f != l}  # "are" is a form of "be"
+    poss = {}
+    for lemma, pos in db.execute('SELECT DISTINCT lemma, pos FROM sense'):
+        if lemma in forms or '_' in lemma or ' ' in lemma or lemma in _SKIP or lemma in done or freq.get(lemma, 0) < min_freq:
+            continue
+        poss.setdefault(lemma, set()).add('a' if pos == 's' else pos)
+    db.close()
+    return [(w, sorted(p)) for w, p in sorted(poss.items(), key=lambda x: -freq.get(x[0], 0))]
+
+
+def save_word(out, chunk, items):
+    by_w = {it['w'].strip().lower(): it for it in items or [] if isinstance(it, dict) and it.get('w')}
+    n = 0
+    with gzip.open(out, 'at', encoding='utf-8') as f:
+        for w, _ in chunk:
+            it = by_w.get(w.lower())
+            if not it:
+                continue
+            senses = clean_item(it, limit=6)
+            if not senses:
+                continue
+            f.write(json.dumps({'w': w, 'tr': (it.get('tr') or '').strip(), 's': senses}, ensure_ascii=False) + '\n')
+            n += 1
+    return n
 
 
 SYN_PROMPT = '''You are writing a learner's dictionary for Turkish speakers.
@@ -281,12 +359,13 @@ def load_todo(dict_path, done):
     return [r for r in rows if f'{r[0]}|{r[1]}' not in done]
 
 
-def clean_item(it):
+def clean_item(it, limit=4):
     senses = []
     for s in it.get('senses') or []:
         if not s.get('title_tr') or not s.get('explain_tr'):
             continue
         senses.append({
+            **({'pos': s['pos'].strip()} if s.get('pos') else {}),
             'title_en': s.get('title_en', '').strip(),
             'title_tr': s['title_tr'].strip(),
             'explain_en': s.get('explain_en', '').strip(),
@@ -294,7 +373,7 @@ def clean_item(it):
             'examples': [{'en': x['en'].strip(), 'tr': x['tr'].strip()}
                          for x in (s.get('examples') or []) if x.get('en') and x.get('tr')][:3],
         })
-    return senses[:4]
+    return senses[:limit]
 
 
 # ---------------------------------------------------------------- free services
@@ -586,6 +665,7 @@ def save(out, chunk, items):
 KINDS.update({
     'expr': (PROMPT, SCHEMA, describe, save, CHUNK),
     'fam': (FAM_PROMPT, FAM_SCHEMA, describe_root, save_fam, 4),
+    'word': (WORD_PROMPT, WORD_SCHEMA, describe_word, save_word, 5),
     'syn': (SYN_PROMPT, SYN_SCHEMA, describe_syn, save_syn, 10),
 })
 
@@ -599,6 +679,7 @@ def main():
     ap.add_argument('--minutes', type=float, default=300)
     ap.add_argument('--limit', type=int, default=10 ** 9)
     ap.add_argument('--families', default='', help='word-family results of this service; done after the expressions')
+    ap.add_argument('--words', default='', help='word explanations of this service (wd-<service>.jsonl.gz)')
     ap.add_argument('--senses', default='', help='WordNet-sense results of this service (syn-<service>.jsonl.gz)')
     ap.add_argument('--shard', default='0/1', help='k/n: this service takes every n-th item first')
     ap.add_argument('--done', nargs='*', default=[], help='results of other services, to skip')
@@ -622,15 +703,23 @@ def main():
     # senses each get a slice of the time, and time a kind does not use goes on
     # to the next one. A used-up quota stops them all.
     start, total = time.time(), deadline - time.time()
-    n = run(svc, todo, a.out, min(deadline, start + total * 0.4), a.limit, 'expr')
+    n = run(svc, todo, a.out, min(deadline, start + total * 0.35), a.limit, 'expr')
     print(f'added {n}; remaining {len(todo) - n}')
+
+    if a.words and svc.models and time.time() < deadline:
+        wd_files = [a.words] + [f for f in a.done if os.path.basename(f).startswith('wd-')]
+        wdone = read_done(wd_files, lambda j: j['w'])
+        wtodo = shard_order(load_word_todo(a.dict_db, wdone), lambda r: r[0], shard, shards)
+        print(f'words: {len(wdone)} done, {len(wtodo)} to go')
+        m = run(svc, wtodo, a.words, min(deadline, start + total * 0.7), a.limit, 'word')
+        print(f'words added {m}; remaining {len(wtodo) - m}')
 
     if a.families and svc.models and time.time() < deadline:
         wfd_files = [a.families] + [f for f in a.done if os.path.basename(f).startswith('wfd')]
         fdone = read_done(wfd_files, lambda j: j['root'])
         ftodo = shard_order(load_fam_todo(a.dict_db, fdone), lambda r: r[0], shard, shards)
         print(f'word families: {len(fdone)} done, {len(ftodo)} to go')
-        m = run(svc, ftodo, a.families, min(deadline, start + total * 0.7), a.limit, 'fam')
+        m = run(svc, ftodo, a.families, min(deadline, start + total * 0.85), a.limit, 'fam')
         print(f'word families added {m}; remaining {len(ftodo) - m}')
 
     if a.senses and svc.models and time.time() < deadline:
