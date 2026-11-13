@@ -1,0 +1,27 @@
+name: wiktionary-data
+on:
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Wiktextract English dump and extract expressions
+        run: |
+          set -o pipefail
+          curl -sSfL https://kaikki.org/dictionary/English/kaikki.org-dictionary-English.jsonl \
+            | python3 tools/wiktionary_extract.py wiktionary_phrases.json.gz
+          ls -la wiktionary_phrases.json.gz
+      - name: Publish as release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release delete data-wiktionary --yes --cleanup-tag || true
+          gh release create data-wiktionary --prerelease --target "$GITHUB_SHA" \
+            --title "Wiktionary data (build input)" \
+            --notes "English expressions extracted from Wiktionary via kaikki.org (CC BY-SA 4.0). Used by tools/build_dict.py." \
+            wiktionary_phrases.json.gz
