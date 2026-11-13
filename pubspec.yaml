@@ -67,6 +67,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/dict.db
+    - assets/brand/logo.png
 
   fonts:
     - family: Inter
@@ -130,7 +131,7 @@ flutter:
 flutter_launcher_icons:
   image_path: assets/brand/icon.png
   android: true
-  adaptive_icon_background: "#5B3FD9"
+  adaptive_icon_background: assets/brand/icon-adaptive-bg.png
   adaptive_icon_foreground: assets/brand/icon-adaptive-fg.png
   ios: true
   remove_alpha_ios: true
@@ -151,6 +152,6 @@ flutter_native_splash:
     color: "#F5F4F9"
     color_dark: "#111117"
     image: assets/brand/icon-adaptive-fg.png
-    icon_background_color: "#5B3FD9"
-    icon_background_color_dark: "#5B3FD9"
+    icon_background_color: "#22185C"
+    icon_background_color_dark: "#22185C"
   web: false

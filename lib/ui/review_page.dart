@@ -192,12 +192,7 @@ class _ReviewPageState extends State<ReviewPage> {
     return Padding(
       padding: const EdgeInsets.all(28),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
-          width: 96,
-          height: 96,
-          decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: BorderRadius.circular(32)),
-          child: const Icon(Icons.local_florist_rounded, color: Colors.white, size: 52),
-        ),
+        const BrandMark(size: 96),
         const SizedBox(height: 24),
         Text(L('Harika iş!', 'Great job!'), style: theme.textTheme.headlineMedium),
         const SizedBox(height: 8),

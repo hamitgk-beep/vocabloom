@@ -550,12 +550,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SectionLabel(L('Hakkında', 'About')),
         Panel(children: [
           Row(children: [
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: BorderRadius.circular(13)),
-              child: const Icon(Icons.local_florist_rounded, color: Colors.white, size: 26),
-            ),
+            const BrandMark(size: 44),
             const SizedBox(width: 14),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
