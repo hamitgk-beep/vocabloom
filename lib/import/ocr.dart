@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -115,7 +116,7 @@ foreach ($line in $result.Lines) {
     await script.writeAsString(_script);
     try {
       final r = await Process.run('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', script.path, f.path],
-          stdoutEncoding: const SystemEncoding(), runInShell: false);
+          stdoutEncoding: utf8, stderrEncoding: utf8, runInShell: false);
       if (r.exitCode != 0) {
         final err = '${r.stderr}';
         if (err.contains('NO_OCR_LANGUAGE')) {

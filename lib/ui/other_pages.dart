@@ -396,7 +396,7 @@ class _SettingsPageState extends State<SettingsPage> {
         const Divider(height: 32),
         Text('Hakkında', style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
-        const Text('VocaBloom, Hamit tarafından geliştirildi.'),
+        const Text('VocaBloom, Hamit Gök tarafından geliştirildi.'),
         Text(appBuild == 0 ? 'Sürüm: geliştirme derlemesi' : 'Sürüm: 1.0 (derleme $appBuild)', style: theme.textTheme.bodySmall),
         const Divider(height: 32),
         Text('Veriler ve lisanslar', style: theme.textTheme.titleMedium),

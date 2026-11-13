@@ -3,7 +3,7 @@
 İngilizce kitapları okurken bilmediğin kelimeleri öğrenmen için çevrimdışı çalışan okuyucu.
 Windows, macOS, Linux, Android ve iOS için tek kod tabanı (Flutter).
 
-Geliştiren: Hamit
+Geliştiren: Hamit Gök
 
 ## Neler yapar
 

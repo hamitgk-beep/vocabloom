@@ -107,9 +107,23 @@ class DictDb {
   }
 
   /// Lesk-style choice of the sense that best fits the sentence.
+  final Map<String, Set<String>> _posCache = {};
+
+  /// Parts of speech WordNet knows for [word] (any inflected form).
+  Set<String> posOf(String word) => _posCache.putIfAbsent(word, () {
+        final out = <String>{};
+        for (final l in lemmatizer.lemmas(word)) {
+          for (final r in db.select('SELECT DISTINCT pos FROM sense WHERE lemma=?', [l])) {
+            final p = r.columnAt(0) as String;
+            out.add(p == 's' ? 'a' : p);
+          }
+        }
+        return out;
+      });
+
   Sense? bestSense(WordInfo info, List<Token> sentence, int tokenIndex) {
     if (info.senses.isEmpty) return null;
-    final pos = guessPos(sentence, tokenIndex, info.senses.map((s) => s.pos).toSet());
+    final pos = guessPos(sentence, tokenIndex, info.senses.map((s) => s.pos == 's' ? 'a' : s.pos).toSet(), posOf: posOf);
     final ctx = <String>{};
     for (var i = 0; i < sentence.length; i++) {
       if (i == tokenIndex) continue;
@@ -125,7 +139,7 @@ class DictDb {
           .expand((t) => lemmatizer.lemmas(t.lower))
           .toSet();
       var score = bag.intersection(ctx).length * 2.0;
-      if (pos != null && s.pos == pos) score += 3;
+      if (pos != null && (s.pos == pos || (pos == 'a' && s.pos == 's'))) score += 6;
       score -= k * 0.15; // WordNet order roughly follows frequency
       if (s.tr.isNotEmpty) score += 0.3;
       if (score > bestScore) {

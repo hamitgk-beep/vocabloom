@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -97,9 +98,21 @@ bool _noise(String l) {
 /// Turns page texts into chapters/paragraphs. Pages starting with \u0001
 /// come from OCR, where blank lines separate paragraphs.
 /// Typical OCR slips: a vertical bar read instead of the capital I.
-String fixOcr(String s) => s
+String fixOcr(String s) => fixMojibake(s)
     .replaceAllMapped(RegExp(r'''(^|[\s“"(‘'])\|(?=['’]|\s|$)''', multiLine: true), (m) => '${m.group(1)}I')
     .replaceAll(RegExp(r'[ \t]+'), ' ');
+
+/// Repairs UTF-8 text that was decoded as Windows-1252/Latin-1 ("GÃ¶ttingen" -> "Göttingen").
+String fixMojibake(String s) {
+  if (!s.contains(RegExp('[ÃÂÅÄ][\u0080-\u00BF]'))) return s;
+  return s.replaceAllMapped(RegExp('[\u00C2-\u00F4][\u0080-\u00BF]+'), (m) {
+    try {
+      return utf8.decode(latin1.encode(m.group(0)!));
+    } catch (_) {
+      return m.group(0)!;
+    }
+  });
+}
 
 ImportedBook buildBookFromPages(List<String> pages, String title, String format, {bool Function(String word)? isWord}) {
   // Lines repeated on many pages are running headers/footers.

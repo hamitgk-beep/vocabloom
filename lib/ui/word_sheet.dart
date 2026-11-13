@@ -6,6 +6,8 @@ import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../nlp/word_family.dart';
 import '../online/ai_service.dart';
+import 'expr_sheet.dart';
+import 'panel.dart';
 import 'paragraph_view.dart';
 
 /// Context in which a word was tapped (null when opened from a list).
@@ -38,19 +40,7 @@ WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? 
 }
 
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    showDragHandle: true,
-    constraints: const BoxConstraints(maxWidth: 760),
-    builder: (_) => DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.62,
-      minChildSize: 0.3,
-      maxChildSize: 0.95,
-      builder: (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc),
-    ),
-  );
+  return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
 }
 
 class WordPanel extends StatefulWidget {
@@ -107,11 +97,24 @@ class _WordPanelState extends State<WordPanel> {
     }
   }
 
-  String? get _meaning {
+  /// Main Turkish meaning: the sense used in this sentence, otherwise the
+  /// dictionary's first meaning ("unfortunate" -> "talihsiz, bahtsız").
+  String? get _trMain {
     if (best != null && best!.tr.isNotEmpty) return best!.tr.take(3).join(', ');
-    if (info.trFreeDict.isNotEmpty) return info.trFreeDict.first;
-    return best?.gloss;
+    final bestPos = best?.pos;
+    if (info.trFreeDict.isNotEmpty) {
+      // FreeDict lists the most common meaning first; skip "... kimse" style
+      // noun readings when the sentence uses the word as an adjective.
+      final list = info.trFreeDict;
+      final pick = bestPos == 'a' || bestPos == 's'
+          ? list.firstWhere((t) => !t.contains('kimse') && !t.contains('kişi'), orElse: () => list.first)
+          : list.first;
+      return pick.split(RegExp(r'[,;]')).map((x) => x.trim()).where((x) => x.isNotEmpty).take(3).join(', ');
+    }
+    return null;
   }
+
+  String? get _meaning => _trMain ?? best?.gloss;
 
   void _set(String key, WordStatus st) {
     widget.app.setWord(key, st,
@@ -141,6 +144,12 @@ class _WordPanelState extends State<WordPanel> {
             child: Text(posNames[best!.pos] ?? '', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           ),
       ]),
+      if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: Text(best!.gloss, style: theme.textTheme.titleMedium)),
+      if (tr && _trMain != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Text(_trMain!, style: theme.textTheme.titleLarge?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600)),
+        ),
       const SizedBox(height: 10),
       Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
         StatusButtons(status: st, onChanged: (s) => _set(lemma, s)),
@@ -166,23 +175,22 @@ class _WordPanelState extends State<WordPanel> {
     // ---------------- in this sentence
     if (ctx != null) {
       children.add(_Section('Bu cümlede', [
-        _SentenceText(ctx.sentence, widget.surface),
+        SentenceText(ctx.sentence, widget.surface),
         if (ctx.sentenceTr != null && tr) ...[
           const SizedBox(height: 6),
           Text(ctx.sentenceTr!.first, style: TextStyle(fontStyle: FontStyle.italic, color: theme.colorScheme.secondary)),
         ],
-        for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, onChanged: () => setState(() {})),
+        for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
         if (best != null) ...[
           const SizedBox(height: 8),
-          Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? 'Kelimenin tek başına anlamı:' : 'Büyük olasılıkla bu anlamda:',
+          Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? 'Kelimenin tek başına anlamı:' : 'Bu cümledeki anlamı:',
               style: theme.textTheme.labelLarge),
           const SizedBox(height: 4),
-          if (tr && best!.tr.isNotEmpty) Text(best!.tr.join(', '), style: theme.textTheme.titleMedium),
-          if (tr && best!.tr.isEmpty && info.trFreeDict.isNotEmpty)
-            Text(info.trFreeDict.first, style: theme.textTheme.titleMedium),
           if (en) Text(best!.gloss, style: theme.textTheme.bodyLarge),
-          for (final e in best!.examples.take(2))
-            Padding(padding: const EdgeInsets.only(top: 4), child: Text('• $e', style: const TextStyle(fontStyle: FontStyle.italic))),
+          if (tr && _trMain != null) Text(_trMain!, style: theme.textTheme.titleMedium),
+          if (en)
+            for (final e in best!.examples.take(2))
+              Padding(padding: const EdgeInsets.only(top: 4), child: Text('• $e', style: const TextStyle(fontStyle: FontStyle.italic))),
         ],
       ]));
     }
@@ -222,11 +230,11 @@ class _WordPanelState extends State<WordPanel> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              if (en) Text(s.gloss, style: TextStyle(fontWeight: tr && s.tr.isNotEmpty ? null : FontWeight.w600)),
               if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: const TextStyle(fontWeight: FontWeight.w600)),
-              if (en) Text(s.gloss),
               if (en && s.synonyms.isNotEmpty)
                 Text('eş anlamlı: ${s.synonyms.take(5).join(', ')}', style: TextStyle(color: theme.hintColor, fontSize: 13)),
-              for (final ex in s.examples.take(2)) Text('“$ex”', style: const TextStyle(fontStyle: FontStyle.italic)),
+              if (en) for (final ex in s.examples.take(2)) Text('“$ex”', style: const TextStyle(fontStyle: FontStyle.italic)),
             ]),
           ));
         }
@@ -237,7 +245,7 @@ class _WordPanelState extends State<WordPanel> {
     if (bookExamples.isNotEmpty) {
       children.add(_Section('Kitaptan başka örnekler', [
         for (final s in bookExamples)
-          Padding(padding: const EdgeInsets.only(bottom: 6), child: _SentenceText(s, null, highlight: {lemma, widget.surface.toLowerCase()})),
+          Padding(padding: const EdgeInsets.only(bottom: 6), child: SentenceText(s, null, highlight: {lemma, widget.surface.toLowerCase()})),
       ]));
     }
     if (info.isEmpty && (ctx?.matches.isEmpty ?? true)) {
@@ -455,7 +463,8 @@ class ExprCard extends StatefulWidget {
   final AppState app;
   final Expr expr;
   final VoidCallback onChanged;
-  const ExprCard({super.key, required this.app, required this.expr, required this.onChanged});
+  final WordContext? ctx;
+  const ExprCard({super.key, required this.app, required this.expr, required this.onChanged, this.ctx});
 
   @override
   State<ExprCard> createState() => _ExprCardState();
@@ -510,6 +519,7 @@ class _ExprCardState extends State<ExprCard> {
           Expanded(child: Text(expr.phrase, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
           Text(app.showEn && !app.showTr ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
+        if (showEn && expr.en != null) Text(expr.en!, style: TextStyle(color: app.showTr && tr != null ? theme.hintColor : null)),
         if (app.showTr && tr != null) Text(tr, style: const TextStyle(fontWeight: FontWeight.w600)),
         if (app.showTr && expr.aiExp != null) Text(expr.aiExp!),
         if (translating)
@@ -521,20 +531,27 @@ class _ExprCardState extends State<ExprCard> {
               Text('Türkçeye çevriliyor…', style: theme.textTheme.bodySmall),
             ]),
           ),
-        if (showEn && expr.en != null) Text(expr.en!, style: TextStyle(color: theme.hintColor)),
         if (expr.ex != null)
           Padding(
             padding: const EdgeInsets.only(top: 4),
             child: Text('“${expr.ex}”', style: const TextStyle(fontStyle: FontStyle.italic)),
           ),
         const SizedBox(height: 6),
-        StatusButtons(
-          status: st,
-          onChanged: (s) {
-            app.setWord(expr.phrase, s, meaning: expr.trShown ?? expr.en);
-            widget.onChanged();
-          },
-        ),
+        Wrap(spacing: 8, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
+          StatusButtons(
+            status: st,
+            onChanged: (s) {
+              app.setWord(expr.phrase, s, meaning: expr.trShown ?? expr.en);
+              widget.onChanged();
+            },
+          ),
+          if (widget.ctx != null && expr.pattern.length > 1)
+            TextButton.icon(
+              onPressed: () => showExprSheet(context, app, expr, widget.ctx!, expr.phrase.split(' ')),
+              icon: const Icon(Icons.menu_book_outlined, size: 18),
+              label: const Text('Anlamlar ve örnekler'),
+            ),
+        ]),
       ]),
     );
   }
@@ -559,11 +576,11 @@ class _Section extends StatelessWidget {
   }
 }
 
-class _SentenceText extends StatelessWidget {
+class SentenceText extends StatelessWidget {
   final String sentence;
   final String? word;
   final Set<String>? highlight;
-  const _SentenceText(this.sentence, this.word, {this.highlight});
+  const SentenceText(this.sentence, this.word, {this.highlight});
 
   @override
   Widget build(BuildContext context) {

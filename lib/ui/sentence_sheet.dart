@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../online/ai_service.dart';
+import 'panel.dart';
 import 'paragraph_view.dart';
 import 'word_sheet.dart';
 
@@ -14,18 +17,7 @@ Future<void> showSentenceSheet(BuildContext context, AppState app, Para para, Pa
   final first = ctx.sentenceTokens.isEmpty ? 0 : a.tokens.indexWhere((t) => t.start == ctx.sentenceTokens.first.start);
   final last = first + ctx.sentenceTokens.length - 1;
   final matches = a.matches.where((m) => m.tokens.every((t) => t >= first && t <= last)).toList();
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    showDragHandle: true,
-    constraints: const BoxConstraints(maxWidth: 760),
-    builder: (_) => DraggableScrollableSheet(
-      expand: false,
-      initialChildSize: 0.7,
-      maxChildSize: 0.95,
-      builder: (c, sc) => SentencePanel(app: app, ctx: ctx, para: para, matches: matches, scroll: sc),
-    ),
-  );
+  return showPanel(context, (c, sc) => SentencePanel(app: app, ctx: ctx, para: para, matches: matches, scroll: sc));
 }
 
 class SentencePanel extends StatefulWidget {
@@ -43,8 +35,24 @@ class SentencePanel extends StatefulWidget {
 class _SentencePanelState extends State<SentencePanel> {
   String? onlineTr;
   String? onlineExplain;
+  String? onlineExplainEn;
   bool loading = false;
   String? error;
+
+  @override
+  void initState() {
+    super.initState();
+    // Saved earlier, or translated now when an AI service is connected.
+    final saved = widget.app.user.sentenceAi(widget.ctx.sentence);
+    if (saved != null) {
+      onlineTr = saved.$1;
+      final exp = saved.$2 == null ? null : jsonDecode(saved.$2!) as Map;
+      onlineExplain = exp?['tr'] as String?;
+      onlineExplainEn = exp?['en'] as String?;
+    } else if (AiService.fromSettings(widget.app.user) != null) {
+      _explain();
+    }
+  }
 
   Future<void> _explain() async {
     final svc = AiService.fromSettings(widget.app.user);
@@ -58,12 +66,15 @@ class _SentencePanelState extends State<SentencePanel> {
     });
     try {
       final r = await svc.explainSentence(widget.ctx.sentence, widget.para.text);
+      widget.app.user.setSentenceAi(widget.ctx.sentence, r.translation, jsonEncode({'tr': r.explanation, 'en': r.explanationEn}));
+      if (!mounted) return;
       setState(() {
         onlineTr = r.translation;
         onlineExplain = r.explanation;
+        onlineExplainEn = r.explanationEn.isEmpty ? null : r.explanationEn;
       });
     } catch (e) {
-      setState(() => error = 'Bağlantı kurulamadı: $e');
+      if (mounted) setState(() => error = 'Bağlantı kurulamadı: $e');
     } finally {
       if (mounted) setState(() => loading = false);
     }
@@ -76,6 +87,7 @@ class _SentencePanelState extends State<SentencePanel> {
     final ctx = widget.ctx;
     final tenses = app.tenses.detect(ctx.sentenceTokens);
     final tr = ctx.sentenceTr?.first ?? onlineTr;
+    final showTr = app.showTr, showEn = app.showEn;
 
     Widget section(String t) => Padding(
           padding: const EdgeInsets.only(top: 18, bottom: 6),
@@ -100,51 +112,74 @@ class _SentencePanelState extends State<SentencePanel> {
       Text('Cümle analizi', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
       const SizedBox(height: 10),
       SelectableText(ctx.sentence, style: const TextStyle(fontSize: 18, height: 1.5, fontFamily: 'serif')),
-      const SizedBox(height: 8),
-      LangToggles(app: app, onChanged: () => setState(() {})),
-      section('Çeviri'),
-      if (tr != null && app.showTr) SelectableText(tr, style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: theme.colorScheme.secondary)),
-      if (onlineExplain != null) Padding(padding: const EdgeInsets.only(top: 8), child: SelectableText(onlineExplain!)),
-      if (tr == null || onlineExplain == null)
+      // Full Turkish translation right under the English sentence.
+      if (tr != null && showTr)
         Padding(
           padding: const EdgeInsets.only(top: 6),
+          child: SelectableText(tr, style: TextStyle(fontSize: 17, height: 1.45, color: theme.colorScheme.secondary)),
+        ),
+      if (tr == null && loading)
+        const Padding(
+          padding: EdgeInsets.only(top: 8),
           child: Row(children: [
-            FilledButton.tonalIcon(
-              onPressed: loading ? null : _explain,
-              icon: loading
-                  ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.auto_awesome),
-              label: Text(tr == null ? 'Çevrimiçi çevir ve açıkla' : 'Çevrimiçi ayrıntılı açıkla'),
-            ),
+            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+            SizedBox(width: 10),
+            Text('Cümle çevriliyor…'),
           ]),
         ),
-      if (tr == null && onlineTr == null)
+      const SizedBox(height: 10),
+      LangToggles(app: app, onChanged: () => setState(() {})),
+      if (tr == null && !loading && AiService.fromSettings(app.user) == null)
         Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Text('Çevrimdışıyken tam cümle çevirisi yok; aşağıdaki parça parça analiz çevrimdışı çalışır.',
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+              'Tam cümle çevirisi için Ayarlar\'dan bir yapay zekâ servisi bağla. Aşağıdaki parça parça analiz internetsiz çalışır.',
               style: TextStyle(color: theme.hintColor, fontSize: 13)),
         ),
-      if (error != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(error!, style: TextStyle(color: theme.colorScheme.error))),
+      if (error != null) ...[
+        Padding(padding: const EdgeInsets.only(top: 6), child: Text(error!, style: TextStyle(color: theme.colorScheme.error))),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(onPressed: loading ? null : _explain, icon: const Icon(Icons.refresh), label: const Text('Tekrar dene')),
+        ),
+      ],
+      if ((showEn && onlineExplainEn != null) || (showTr && onlineExplain != null)) ...[
+        section('Açıklama'),
+        if (showEn && onlineExplainEn != null) SelectableText(onlineExplainEn!),
+        if (showEn && onlineExplainEn != null && showTr && onlineExplain != null) const SizedBox(height: 8),
+        if (showTr && onlineExplain != null) SelectableText(onlineExplain!),
+      ],
+      if (tr != null && onlineExplain == null && !loading && AiService.fromSettings(app.user) != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FilledButton.tonalIcon(onPressed: _explain, icon: const Icon(Icons.auto_awesome), label: const Text('Ayrıntılı açıkla')),
+          ),
+        ),
       section('Zaman ve yapı'),
       if (tenses.isEmpty) Text('Belirgin bir fiil yapısı bulunamadı.', style: TextStyle(color: theme.hintColor)),
       for (final h in tenses)
         Card(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
-            title: Text('${h.en} · ${h.tr}', style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: Text('"${h.words}"  ${h.explain}'),
+            title: Text(showTr ? (showEn ? '${h.en} · ${h.tr}' : '${h.tr} (${h.en})') : h.en,
+                style: const TextStyle(fontWeight: FontWeight.w600)),
+            subtitle: Text(showTr ? '"${h.words}"  ${h.explain}' : '"${h.words}"'),
           ),
         ),
       section('Kalıplar ve kategoriler'),
       if (byCat.isEmpty) Text('Bu cümlede listelerimizdeki bir kalıp bulunamadı.', style: TextStyle(color: theme.hintColor)),
       for (final e in byCat.entries) ...[
-        for (final m in e.value) ExprCard(app: app, expr: m.expr, onChanged: () => setState(() {})),
+        for (final m in e.value) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
       ],
       section('Kelimeler'),
       for (final t in contentWords)
         Builder(builder: (context) {
           final lemma = app.primaryLemma(t.lower);
-          final m = app.shortMeaning(lemma);
+          final trM = showTr ? app.shortMeaning(lemma) : null;
+          final enM = showEn ? app.dict.lookup(lemma).senses.firstOrNull?.gloss : null;
+          final m = [?enM, if (trM != enM) ?trM].join('\n');
           final st = app.statusOf(t);
           return ListTile(
             dense: true,
@@ -158,7 +193,7 @@ class _SentencePanelState extends State<SentencePanel> {
               },
             ),
             title: Text(lemma == t.lower ? t.text : '${t.text}  →  $lemma', style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: m == null ? null : Text(m, maxLines: 2, overflow: TextOverflow.ellipsis),
+            subtitle: m.isEmpty ? null : Text(m, maxLines: 3, overflow: TextOverflow.ellipsis),
             onTap: () async {
               final i = ctx.sentenceTokens.indexOf(t);
               await showWordSheet(context, app, t.text,

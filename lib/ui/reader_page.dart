@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../data/user_db.dart';
+import 'expr_sheet.dart';
 import 'paragraph_view.dart';
 import 'sentence_sheet.dart';
 import 'word_sheet.dart';
@@ -75,6 +76,15 @@ class _ReaderPageState extends State<ReaderPage> {
 
   void _onWord(Para p, ParaAnalysis a, int i) async {
     final ctx = buildContext(app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
+    // A tap anywhere on an underlined multi-word expression opens the whole expression.
+    final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()
+      ..sort((x, y) => y.tokens.length.compareTo(x.tokens.length));
+    if (shown.isNotEmpty) {
+      final m = shown.first;
+      await showExprSheet(context, app, m.expr, ctx, [for (final t in m.tokens) a.tokens[t].text]);
+      if (mounted) setState(() {});
+      return;
+    }
     await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
     if (mounted) setState(() {});
   }

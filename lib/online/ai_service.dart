@@ -315,6 +315,52 @@ class AiService {
     ];
   }
 
+  /// Detailed meanings of an expression (phrasal verb, idiom ...) for a learner:
+  /// each sense in English and Turkish with example sentences and translations.
+  Future<List<ExprSense>> exprDetail(String phrase, String category, {String? sentence}) async {
+    final r = await _json(
+      'Explain the English ${category.replaceAll('_', ' ')} "$phrase" for a Turkish learner of English. '
+      '${sentence == null ? '' : 'It appears in this sentence: "$sentence". Put the sense used there first. '}'
+      'Return JSON {"senses": [...]} with its common senses (at most 4). For each sense: "title_en" (short English '
+      'heading), "title_tr" (Turkish heading, e.g. "Uzman veya yardım çağırmak"), "explain_en" (one English sentence '
+      'on when it is used), "explain_tr" (the same in Turkish), "examples": 2 objects {"en": natural English example '
+      'sentence, "tr": its Turkish translation}. "in_sentence": true only for the sense used in the given sentence.',
+      {
+        'type': 'object',
+        'properties': {
+          'senses': {
+            'type': 'array',
+            'items': {
+              'type': 'object',
+              'properties': {
+                'title_en': {'type': 'string'},
+                'title_tr': {'type': 'string'},
+                'explain_en': {'type': 'string'},
+                'explain_tr': {'type': 'string'},
+                'in_sentence': {'type': 'boolean'},
+                'examples': {
+                  'type': 'array',
+                  'items': {
+                    'type': 'object',
+                    'properties': {'en': {'type': 'string'}, 'tr': {'type': 'string'}},
+                    'required': ['en', 'tr'],
+                    'additionalProperties': false,
+                  },
+                },
+              },
+              'required': ['title_en', 'title_tr', 'explain_en', 'explain_tr', 'in_sentence', 'examples'],
+              'additionalProperties': false,
+            },
+          },
+        },
+        'required': ['senses'],
+        'additionalProperties': false,
+      },
+      maxTokens: 4000,
+    );
+    return [for (final s in (r['senses'] as List? ?? const [])) ExprSense.fromJson((s as Map).cast<String, dynamic>())];
+  }
+
   /// Word family (root, verb/noun/adjective/adverb forms, negatives) with
   /// Turkish meanings and what each affix does.
   Future<WordFamily> wordFamily(String word) async {
@@ -364,24 +410,30 @@ class AiService {
   }
 
   /// Translation plus a Turkish breakdown of one sentence (used on demand).
-  Future<({String translation, String explanation})> explainSentence(String sentence, String context) async {
+  Future<({String translation, String explanation, String explanationEn})> explainSentence(String sentence, String context) async {
     final r = await _json(
       'Context paragraph:\n$context\n\nSentence:\n$sentence\n\n'
-      'Return JSON {"translation": "...", "explanation": "..."}: "translation" is a natural Turkish translation of the '
-      'sentence; "explanation" is, in Turkish, a short breakdown for a learner: the tense(s) used, conjunctions, phrasal '
-      'verbs, idioms and other notable patterns, and what any hard words mean here.',
+      'Return JSON {"translation": "...", "explanation": "...", "explanation_en": "..."}: "translation" is a natural '
+      'Turkish translation of the sentence; "explanation" is, in Turkish, a short breakdown for a learner: the tense(s) '
+      'used, conjunctions, phrasal verbs, idioms and other notable patterns, and what any hard words mean here; '
+      '"explanation_en" is the same breakdown in simple English.',
       {
         'type': 'object',
         'properties': {
           'translation': {'type': 'string'},
           'explanation': {'type': 'string'},
+          'explanation_en': {'type': 'string'},
         },
-        'required': ['translation', 'explanation'],
+        'required': ['translation', 'explanation', 'explanation_en'],
         'additionalProperties': false,
       },
       maxTokens: 4000,
     );
-    return (translation: '${r['translation']}', explanation: '${r['explanation']}');
+    return (
+      translation: '${r['translation']}',
+      explanation: '${r['explanation']}',
+      explanationEn: '${r['explanation_en'] ?? ''}',
+    );
   }
 
   /// Reads the text of a scanned page image (online OCR).
@@ -402,6 +454,32 @@ class AiService {
     );
     return '${r['text'] ?? ''}';
   }
+}
+
+/// One sense of an expression, from [AiService.exprDetail].
+class ExprSense {
+  final String titleEn, titleTr, explainEn, explainTr;
+  final bool inSentence;
+  final List<(String, String)> examples;
+  ExprSense(this.titleEn, this.titleTr, this.explainEn, this.explainTr, this.inSentence, this.examples);
+
+  factory ExprSense.fromJson(Map<String, dynamic> j) => ExprSense(
+        '${j['title_en'] ?? ''}',
+        '${j['title_tr'] ?? ''}',
+        '${j['explain_en'] ?? ''}',
+        '${j['explain_tr'] ?? ''}',
+        j['in_sentence'] == true,
+        [for (final e in (j['examples'] as List? ?? const [])) ('${(e as Map)['en'] ?? ''}', '${e['tr'] ?? ''}')],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'title_en': titleEn,
+        'title_tr': titleTr,
+        'explain_en': explainEn,
+        'explain_tr': explainTr,
+        'in_sentence': inSentence,
+        'examples': [for (final e in examples) {'en': e.$1, 'tr': e.$2}],
+      };
 }
 
 /// Runs the online analysis for a whole book and saves the results. Already

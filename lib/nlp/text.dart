@@ -221,11 +221,20 @@ class PhraseMatcher {
 List<String> patternOf(String phrase) => tokenize(phrase).map((t) => t.lower).toList();
 
 /// Very small part-of-speech guesser used to pick the right dictionary sense.
-String? guessPos(List<Token> toks, int i, Set<String> availablePos) {
+String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String> Function(String word)? posOf}) {
   final w = toks[i].lower;
   final prev = i > 0 ? toks[i - 1].lower : '';
+  final next = i + 1 < toks.length ? toks[i + 1].lower : '';
+  // "unfortunate circumstances", "heavy rain": a word that can be an
+  // adjective, followed by a noun, is an adjective.
+  if (availablePos.contains('a') && next.isNotEmpty && !stopWords.contains(next) && posOf != null) {
+    final np = posOf(next);
+    // "the light shines" is ambiguous (noun + verb), so only when that reading is impossible.
+    final nounThenVerb = _det.contains(prev) && availablePos.contains('n') && np.contains('v');
+    if (np.contains('n') && !nounThenVerb) return 'a';
+  }
   const modals = {
-    'to', 'will', 'would', 'can', 'could', 'should', 'must', 'may', 'might', 'shall',
+    'will', 'would', 'can', 'could', 'should', 'must', 'may', 'might', 'shall',
     "don't", "doesn't", "didn't", "won't", "can't", "couldn't", "wouldn't", 'not', 'never',
     'i', 'you', 'we', 'they', 'he', 'she', 'it', 'please', "let's"
   };
@@ -246,6 +255,7 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos) {
     return pick(['a', 'n', 'v']);
   }
   if (modals.contains(prev)) return pick(['v', 'n', 'a']);
+  if (prev == 'to' && availablePos.contains('v')) return 'v';
   if (w.endsWith('ing') || w.endsWith('ed')) return pick(['v', 'a', 'n']);
   if (prev == 'of' || prev == 'in' || prev == 'on' || prev == 'at' || prev == 'with' || prev == 'for') {
     return pick(['n', 'a', 'v']);

@@ -114,4 +114,14 @@ void main() {
     final w = offlineFamily(d, 'worker')!;
     for (final e in w.entries) print('${e.pos} ${e.word} | ${e.tr} | ${e.affixNote}');
   });
+
+  test('sense in context: adjective before a noun', () {
+    final toks = tokenize('But we were both unemployed due to unfortunate circumstances.');
+    final i = toks.indexWhere((t) => t.lower == 'unfortunate');
+    final s = d.bestSense(d.lookup('unfortunate'), toks, i)!;
+    expect(s.pos == 'a' || s.pos == 's', isTrue);
+    final t2 = tokenize('The poor unfortunate was left alone.');
+    final s2 = d.bestSense(d.lookup('unfortunate'), t2, t2.indexWhere((t) => t.lower == 'unfortunate'))!;
+    expect(s2.pos, 'n');
+  });
 }

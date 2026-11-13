@@ -79,6 +79,8 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS words(lemma TEXT PRIMARY KEY, status INTEGER, context TEXT, book TEXT,
         meaning TEXT, added INTEGER);
       CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
+      CREATE TABLE IF NOT EXISTS expr_detail(key TEXT PRIMARY KEY, json TEXT);
+      CREATE TABLE IF NOT EXISTS sentence_ai(sentence TEXT PRIMARY KEY, tr TEXT, exp TEXT);
       CREATE TABLE IF NOT EXISTS wfam_ai(word TEXT PRIMARY KEY, json TEXT);
       CREATE TABLE IF NOT EXISTS expr_ai(phrase TEXT, cat TEXT, tr TEXT, exp TEXT, PRIMARY KEY(phrase, cat));
     ''');
@@ -98,6 +100,23 @@ class UserDb {
 
   void setExprAi(String phrase, String cat, String tr, String? exp) =>
       db.execute('INSERT OR REPLACE INTO expr_ai(phrase, cat, tr, exp) VALUES (?,?,?,?)', [phrase, cat, tr, exp]);
+
+  // ---- AI expression details and sentence explanations
+  String? exprDetail(String key) {
+    final r = db.select('SELECT json FROM expr_detail WHERE key=?', [key]);
+    return r.isEmpty ? null : r.first['json'] as String;
+  }
+
+  void setExprDetail(String key, String json) =>
+      db.execute('INSERT OR REPLACE INTO expr_detail(key, json) VALUES (?,?)', [key, json]);
+
+  (String, String?)? sentenceAi(String sentence) {
+    final r = db.select('SELECT tr, exp FROM sentence_ai WHERE sentence=?', [sentence]);
+    return r.isEmpty ? null : (r.first['tr'] as String, r.first['exp'] as String?);
+  }
+
+  void setSentenceAi(String sentence, String tr, String? exp) =>
+      db.execute('INSERT OR REPLACE INTO sentence_ai(sentence, tr, exp) VALUES (?,?,?)', [sentence, tr, exp]);
 
   // ---- AI word families
   String? familyAi(String word) {

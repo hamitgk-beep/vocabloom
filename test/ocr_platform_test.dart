@@ -18,5 +18,6 @@ void main() {
     print('${ocr.name}: $text');
     expect(text, contains('quick brown fox'));
     expect(text, contains('lazy dog'));
+    expect(text, isNot(contains('Ã')), reason: 'OCR output must be decoded as UTF-8');
   }, timeout: const Timeout(Duration(minutes: 2)));
 }
