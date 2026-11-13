@@ -256,9 +256,25 @@ def describe_word(r):
     return f'- {r[0]}'  # WordNet's parts of speech miss prepositions and pronouns, so none are given
 
 
-def load_word_todo(dict_path, done, min_freq=5):
-    """Dictionary words, the ones people meet most often (Tatoeba frequency) first."""
+def _inflected_of(w, known):
+    for suf, rep in (('ies', 'y'), ('es', ''), ('s', ''), ('ied', 'y'), ('ed', ''), ('ed', 'e'), ('d', ''),
+                     ('ing', ''), ('ing', 'e'), ('er', ''), ('est', ''), ('ier', 'y'), ('iest', 'y')):
+        if w.endswith(suf) and len(w) > len(suf) + 2:
+            b = w[:-len(suf)] + rep
+            if b in known or (len(b) > 2 and b[-1] == b[-2] and b[:-1] in known):
+                return True
+    return False
+
+
+def load_word_todo(dict_path, done, min_freq=5, only_missing=False):
+    """Dictionary words, the ones people meet most often (Tatoeba frequency) first.
+    only_missing: just the words with no Turkish at all yet ("usually", "each")."""
     db = sqlite3.connect(dict_path)
+    has_tr = set()
+    if only_missing:
+        has_tr = {w for (w,) in db.execute('SELECT word FROM ft')}
+        has_tr |= {l for (l,) in db.execute("SELECT DISTINCT x.lemma FROM sense x JOIN syn s ON s.id = x.syn_id "
+                                            "WHERE s.tr IS NOT NULL AND s.tr != '[]'")}
     try:
         freq = dict(db.execute('SELECT word, n FROM wfreq'))
     except sqlite3.OperationalError:
@@ -266,9 +282,17 @@ def load_word_todo(dict_path, done, min_freq=5):
     forms = {f for f, l in db.execute('SELECT form, lemma FROM exc') if f != l}  # "are" is a form of "be"
     poss = {}
     for lemma, pos in db.execute('SELECT DISTINCT lemma, pos FROM sense'):
-        if lemma in forms or '_' in lemma or ' ' in lemma or lemma in _SKIP or lemma in done or freq.get(lemma, 0) < min_freq:
+        if only_missing and _inflected_of(lemma, has_tr):
+            continue  # "needed", "days": the app shows the base word's Turkish
+        if lemma in has_tr or lemma in forms or '_' in lemma or ' ' in lemma or lemma in _SKIP or lemma in done or freq.get(lemma, 0) < min_freq:
             continue
         poss.setdefault(lemma, set()).add('a' if pos == 's' else pos)
+    if only_missing:  # names ("jackson", "york"): WordNet lists them capitalized
+        for w in list(poss):
+            words = [json.loads(r[0]) for r in db.execute(
+                'SELECT s.words FROM sense x JOIN syn s ON s.id = x.syn_id WHERE x.lemma = ?', (w,))]
+            if words and all(w not in ws and any(x.lower() == w for x in ws) for ws in words):
+                del poss[w]
     db.close()
     return [(w, sorted(p)) for w, p in sorted(poss.items(), key=lambda x: -freq.get(x[0], 0))]
 
@@ -788,7 +812,16 @@ def main():
         print(f'short meanings added {m}; remaining {len(gtodo) - m}')
     if not svc.models:
         return
-    n = run(svc, todo, a.out, min(deadline, start + total * 0.35), a.limit, 'expr')
+    # Frequent words with no Turkish at all ("usually", "each"): a few hundred, before the long queues.
+    if a.words and svc.models and time.time() < deadline:
+        wd_files = [a.words] + [f for f in a.done if os.path.basename(f).startswith('wd-')]
+        wdone = read_done(wd_files, lambda j: j['w'])
+        mtodo = shard_order(load_word_todo(a.dict_db, wdone, only_missing=True), lambda r: r[0], shard, shards)
+        print(f'words without Turkish: {len(mtodo)} to go')
+        m = run(svc, mtodo, a.words, min(deadline, start + total * 0.3), a.limit, 'word')
+        print(f'words without Turkish added {m}')
+
+    n = run(svc, todo, a.out, min(deadline, start + total * 0.4), a.limit, 'expr')
     print(f'added {n}; remaining {len(todo) - n}')
 
     if a.words and svc.models and time.time() < deadline:
