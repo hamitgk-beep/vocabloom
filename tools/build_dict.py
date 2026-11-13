@@ -238,6 +238,8 @@ def main():
       CREATE TABLE syn(id INTEGER PRIMARY KEY, pos TEXT, gloss TEXT, examples TEXT, words TEXT, tr TEXT);
       CREATE TABLE sense(lemma TEXT, pos TEXT, rank INTEGER, syn_id INTEGER);
       CREATE TABLE exc(form TEXT, lemma TEXT, pos TEXT);
+      CREATE TABLE famg(id INTEGER PRIMARY KEY, root TEXT, members TEXT, negs TEXT);
+      CREATE TABLE fam(word TEXT PRIMARY KEY, gid INTEGER);
       CREATE TABLE expr(id INTEGER PRIMARY KEY, phrase TEXT, cat TEXT, tr TEXT, en TEXT, forms TEXT, ex TEXT);
     ''')
     ft = load_freedict(db)
@@ -299,6 +301,19 @@ def main():
         rows.append((p, cat, tr, en, json.dumps(forms) if forms else None, examples.get((p, cat))))
     db.executemany('INSERT INTO expr(phrase, cat, tr, en, forms, ex) VALUES (?,?,?,?,?,?)', rows)
     print('expressions total', len(rows))
+
+    from word_family import build_families
+    fams = build_families(os.path.join(RAW, 'wordnet'))
+    gid_of = {}
+    fam_rows = []
+    for w, g in fams.items():
+        key = id(g)
+        if key not in gid_of:
+            gid_of[key] = len(gid_of) + 1
+            db.execute('INSERT INTO famg VALUES (?,?,?,?)', (gid_of[key], g[0], json.dumps(g[1]), json.dumps(g[2])))
+        fam_rows.append((w, gid_of[key]))
+    db.executemany('INSERT INTO fam VALUES (?,?)', fam_rows)
+    print('word families', len(gid_of), 'words', len(fam_rows))
 
     db.executescript('''
       CREATE INDEX sense_lemma ON sense(lemma);

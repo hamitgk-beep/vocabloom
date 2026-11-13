@@ -7,7 +7,10 @@ import 'app_state.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
 import 'ui/library_page.dart';
+import 'online/update_check.dart';
 import 'ui/other_pages.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -123,6 +126,41 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int tab = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 4), _checkUpdate);
+  }
+
+  Future<void> _checkUpdate() async {
+    final u = await checkForUpdate();
+    if (u == null || !mounted) return;
+    final m = ScaffoldMessenger.of(context);
+    m.showMaterialBanner(
+      MaterialBanner(
+        leading: const Icon(Icons.system_update),
+        content: Text(
+          Platform.isAndroid
+              ? 'VocaBloom\'un yeni sürümü var. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.'
+              : 'VocaBloom\'un yeni sürümü var.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: m.hideCurrentMaterialBanner,
+            child: const Text('Sonra'),
+          ),
+          FilledButton(
+            onPressed: () {
+              m.hideCurrentMaterialBanner();
+              launchUrl(Uri.parse(u.url), mode: LaunchMode.externalApplication);
+            },
+            child: const Text('İndir'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

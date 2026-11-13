@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../online/ai_service.dart';
+import '../online/update_check.dart';
 import 'word_sheet.dart';
 
 // ------------------------------------------------------------------ words
@@ -396,6 +397,7 @@ class _SettingsPageState extends State<SettingsPage> {
         Text('Hakkında', style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
         const Text('VocaBloom, Hamit tarafından geliştirildi.'),
+        Text(appBuild == 0 ? 'Sürüm: geliştirme derlemesi' : 'Sürüm: 1.0 (derleme $appBuild)', style: theme.textTheme.bodySmall),
         const Divider(height: 32),
         Text('Veriler ve lisanslar', style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),

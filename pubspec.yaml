@@ -45,6 +45,7 @@ dependencies:
   http: ^1.6.0
   xml: ^7.1.0
   google_mlkit_text_recognition: ^1.0.2
+  url_launcher: ^6.3.3
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import '../nlp/word_family.dart';
 import '../online/ai_service.dart';
 import 'paragraph_view.dart';
 
@@ -70,6 +71,7 @@ class _WordPanelState extends State<WordPanel> {
   WordInfo? surfaceInfo;
   Sense? best;
   List<String> bookExamples = [];
+  int tab = 0; // 0 = meaning, 1 = word family
 
   @override
   void initState() {
@@ -145,7 +147,21 @@ class _WordPanelState extends State<WordPanel> {
         const SizedBox(width: 8),
         LangToggles(app: app, onChanged: () => setState(() {})),
       ]),
+      const SizedBox(height: 12),
+      SegmentedButton<int>(
+        segments: const [
+          ButtonSegment(value: 0, label: Text('Anlam'), icon: Icon(Icons.translate)),
+          ButtonSegment(value: 1, label: Text('Word Family'), icon: Icon(Icons.account_tree_outlined)),
+        ],
+        selected: {tab},
+        showSelectedIcon: false,
+        onSelectionChanged: (s) => setState(() => tab = s.first),
+      ),
     ];
+    if (tab == 1) {
+      children.add(WordFamilyView(app: app, lemma: lemma, key: ValueKey(lemma)));
+      return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
+    }
 
     // ---------------- in this sentence
     if (ctx != null) {
@@ -229,6 +245,156 @@ class _WordPanelState extends State<WordPanel> {
     }
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
+  }
+}
+
+/// "Word Family" tab: root, verb / noun / adjective / adverb forms, negative
+/// forms, Turkish meanings and what each affix does. Comes from the bundled
+/// dictionary; with an AI service it can be completed online (saved on device).
+class WordFamilyView extends StatefulWidget {
+  final AppState app;
+  final String lemma;
+  const WordFamilyView({super.key, required this.app, required this.lemma});
+
+  @override
+  State<WordFamilyView> createState() => _WordFamilyViewState();
+}
+
+class _WordFamilyViewState extends State<WordFamilyView> {
+  WordFamily? offline;
+  WordFamily? ai;
+  bool loading = false;
+  String? error;
+
+  @override
+  void initState() {
+    super.initState();
+    offline = offlineFamily(widget.app.dict, widget.lemma);
+    final cached = widget.app.user.familyAi(widget.lemma);
+    if (cached != null) {
+      ai = WordFamily.fromJsonString(cached, fromAi: true);
+    } else if (offline == null && AiService.fromSettings(widget.app.user) != null) {
+      _askAi();
+    }
+  }
+
+  Future<void> _askAi() async {
+    final svc = AiService.fromSettings(widget.app.user);
+    if (svc == null) return;
+    setState(() {
+      loading = true;
+      error = null;
+    });
+    try {
+      final f = await svc.wordFamily(widget.lemma);
+      widget.app.user.setFamilyAi(widget.lemma, f.toJsonString());
+      if (mounted) setState(() => ai = f);
+    } catch (e) {
+      if (mounted) setState(() => error = 'Yapay zekâya ulaşılamadı: $e');
+    } finally {
+      if (mounted) setState(() => loading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final f = ai ?? offline;
+    final hasAi = AiService.fromSettings(widget.app.user) != null;
+    final out = <Widget>[];
+    if (f == null) {
+      out.add(Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: Text(loading
+            ? 'Kelime ailesi hazırlanıyor…'
+            : hasAi
+                ? 'Sözlükte bu kelimenin ailesi yok.'
+                : 'Sözlükte bu kelimenin ailesi yok. Ayarlar\'dan bir yapay zekâ servisi bağlarsan oluşturabilirim.'),
+      ));
+    } else {
+      out.add(Container(
+        margin: const EdgeInsets.only(top: 14),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.primaryContainer.withValues(alpha: 0.45),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(children: [
+          Text('Kök', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+          const SizedBox(width: 12),
+          Text(f.root, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+          if (f.rootTr != null && f.rootTr!.isNotEmpty) ...[
+            const SizedBox(width: 8),
+            Flexible(child: Text('(${f.rootTr})', style: theme.textTheme.titleMedium)),
+          ],
+        ]),
+      ));
+      const groups = [('v', 'Fiil (Verb)'), ('n', 'İsim (Noun)'), ('a', 'Sıfat (Adjective)'), ('r', 'Zarf (Adverb)')];
+      for (final (pos, title) in groups) {
+        final items = f.byPos(pos);
+        if (items.isEmpty) continue;
+        out.add(_familyGroup(theme, title, items));
+      }
+      if (f.negatives.isNotEmpty) out.add(_familyGroup(theme, 'Olumsuz / zıt halleri', f.negatives, negative: true));
+    }
+    if (loading && f != null) {
+      out.add(const Padding(padding: EdgeInsets.only(top: 12), child: LinearProgressIndicator()));
+    }
+    if (error != null) out.add(Padding(padding: const EdgeInsets.only(top: 8), child: Text(error!, style: TextStyle(color: theme.colorScheme.error))));
+    if (hasAi && ai == null && !loading && offline != null) {
+      out.add(Padding(
+        padding: const EdgeInsets.only(top: 14),
+        child: OutlinedButton.icon(
+          onPressed: _askAi,
+          icon: const Icon(Icons.auto_awesome),
+          label: const Text('Yapay zekâ ile ayrıntılı göster'),
+        ),
+      ));
+    }
+    if (f != null) {
+      out.add(Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Text(f.fromAi ? 'Kaynak: yapay zekâ (cihaza kaydedildi)' : 'Kaynak: WordNet türetme bağlantıları',
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+      ));
+    }
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: out);
+  }
+
+  Widget _familyGroup(ThemeData theme, String title, List<FamilyEntry> items, {bool negative = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(title, style: theme.textTheme.labelLarge?.copyWith(color: negative ? theme.colorScheme.error : theme.colorScheme.primary)),
+        const SizedBox(height: 4),
+        for (final e in items)
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              border: Border(left: BorderSide(color: negative ? theme.colorScheme.error : theme.colorScheme.primary, width: 3)),
+              color: theme.colorScheme.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text.rich(TextSpan(children: [
+                TextSpan(
+                  text: e.word,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    decoration: e.word == widget.lemma ? TextDecoration.underline : null,
+                  ),
+                ),
+                if (e.tr != null && e.tr!.isNotEmpty) TextSpan(text: '  ${e.tr}'),
+              ])),
+              if (e.affixNote != null)
+                Text(e.affixNote!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+            ]),
+          ),
+      ]),
+    );
   }
 }
 

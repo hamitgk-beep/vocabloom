@@ -79,6 +79,7 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS words(lemma TEXT PRIMARY KEY, status INTEGER, context TEXT, book TEXT,
         meaning TEXT, added INTEGER);
       CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
+      CREATE TABLE IF NOT EXISTS wfam_ai(word TEXT PRIMARY KEY, json TEXT);
       CREATE TABLE IF NOT EXISTS expr_ai(phrase TEXT, cat TEXT, tr TEXT, exp TEXT, PRIMARY KEY(phrase, cat));
     ''');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
@@ -97,6 +98,15 @@ class UserDb {
 
   void setExprAi(String phrase, String cat, String tr, String? exp) =>
       db.execute('INSERT OR REPLACE INTO expr_ai(phrase, cat, tr, exp) VALUES (?,?,?,?)', [phrase, cat, tr, exp]);
+
+  // ---- AI word families
+  String? familyAi(String word) {
+    final r = db.select('SELECT json FROM wfam_ai WHERE word=?', [word]);
+    return r.isEmpty ? null : r.first['json'] as String;
+  }
+
+  void setFamilyAi(String word, String json) =>
+      db.execute('INSERT OR REPLACE INTO wfam_ai(word, json) VALUES (?,?)', [word, json]);
 
   // ---- settings
   String? getSetting(String key) {

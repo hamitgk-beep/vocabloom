@@ -29,11 +29,22 @@ android {
         versionName = flutter.versionName
     }
 
+    // A fixed release key (from CI secrets) lets new versions install over old
+    // ones and keep the user's books. Without it, debug keys are used.
+    val ksFile = System.getenv("VOCABLOOM_KEYSTORE")?.let { file(it) }
+    val ksPass = System.getenv("VOCABLOOM_KEY_PASSWORD")
+    if (ksFile != null && ksFile.exists() && ksPass != null) {
+        signingConfigs.create("release") {
+            storeFile = ksFile
+            storePassword = ksPass
+            keyAlias = "vocabloom"
+            keyPassword = ksPass
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
             // R8 shrinking strips classes ML Kit loads by reflection (crashes OCR at runtime).
             isMinifyEnabled = false
             isShrinkResources = false

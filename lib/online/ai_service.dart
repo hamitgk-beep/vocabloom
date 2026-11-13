@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 import '../data/user_db.dart';
+import '../nlp/word_family.dart';
 import '../nlp/text.dart';
 
 /// The kinds of HTTP API the providers speak.
@@ -298,6 +299,54 @@ class AiService {
       for (final x in (r['items'] as List? ?? const []))
         (tr: '${(x as Map)['tr'] ?? ''}'.trim(), exp: '${x['exp'] ?? ''}'.trim())
     ];
+  }
+
+  /// Word family (root, verb/noun/adjective/adverb forms, negatives) with
+  /// Turkish meanings and what each affix does.
+  Future<WordFamily> wordFamily(String word) async {
+    final r = await _json(
+      'For Turkish learners of English, give the word family of "$word". Return JSON with: "root" (the base word), '
+      '"root_tr" (its Turkish meaning), and "entries": the common English words built from the same root, including '
+      'the root itself, grouped by part of speech. For each entry: "word"; "pos" (verb, noun, adjective or adverb); '
+      '"tr" (short Turkish meaning); "affix" (the prefix or suffix added, like "-tion" or "un-", or "" for the root); '
+      '"note" (in Turkish, one short sentence on how the affix changes the meaning, e.g. "-er eki işi yapan kişiyi '
+      'gösterir"); "negative" (true for negative/opposite forms like unhappy, disagree). Only include real, '
+      'reasonably common words; at most 14 entries.',
+      {
+        'type': 'object',
+        'properties': {
+          'root': {'type': 'string'},
+          'root_tr': {'type': 'string'},
+          'entries': {
+            'type': 'array',
+            'items': {
+              'type': 'object',
+              'properties': {
+                'word': {'type': 'string'},
+                'pos': {'type': 'string', 'enum': ['verb', 'noun', 'adjective', 'adverb']},
+                'tr': {'type': 'string'},
+                'affix': {'type': 'string'},
+                'note': {'type': 'string'},
+                'negative': {'type': 'boolean'},
+              },
+              'required': ['word', 'pos', 'tr', 'affix', 'note', 'negative'],
+              'additionalProperties': false,
+            },
+          },
+        },
+        'required': ['root', 'root_tr', 'entries'],
+        'additionalProperties': false,
+      },
+      maxTokens: 4000,
+    );
+    const posMap = {'verb': 'v', 'noun': 'n', 'adjective': 'a', 'adverb': 'r'};
+    return WordFamily('${r['root']}', '${r['root_tr'] ?? ''}', [
+      for (final e in (r['entries'] as List? ?? const []))
+        FamilyEntry('${(e as Map)['word']}', posMap['${e['pos']}'] ?? 'n',
+            tr: '${e['tr'] ?? ''}',
+            affixNote: '${e['affix'] ?? ''}'.isEmpty ? null : '${e['affix']}: ${e['note'] ?? ''}',
+            negative: e['negative'] == true),
+    ], fromAi: true);
   }
 
   /// Translation plus a Turkish breakdown of one sentence (used on demand).

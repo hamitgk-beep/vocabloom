@@ -6,6 +6,7 @@ import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/nlp/grammar.dart';
 import 'package:kelime_okur/nlp/text.dart';
+import 'package:kelime_okur/nlp/word_family.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 DictDb openDict() {
@@ -95,5 +96,22 @@ void main() {
     expect(saved?.$2, 'açıklama');
     u.db.dispose();
     dir.deleteSync(recursive: true);
+  });
+
+  test('word family', () {
+    final f = offlineFamily(d, 'create')!;
+    // ignore: avoid_print
+    for (final e in f.entries) print('${e.pos} ${e.word} | ${e.tr} | ${e.affixNote}${e.negative ? ' (neg)' : ''}');
+    expect(f.root, 'create');
+    expect(f.byPos('n').map((e) => e.word), containsAll(['creation', 'creator', 'creativity']));
+    expect(f.byPos('a').map((e) => e.word), contains('creative'));
+    expect(f.byPos('r').map((e) => e.word), contains('creatively'));
+    expect(f.negatives.map((e) => e.word), contains('uncreative'));
+    final h = offlineFamily(d, 'happily')!;
+    expect(h.root, 'happy');
+    expect(h.negatives.map((e) => e.word), contains('unhappy'));
+    for (final e in h.entries) print('${e.pos} ${e.word} | ${e.tr} | ${e.affixNote}');
+    final w = offlineFamily(d, 'worker')!;
+    for (final e in w.entries) print('${e.pos} ${e.word} | ${e.tr} | ${e.affixNote}');
   });
 }
