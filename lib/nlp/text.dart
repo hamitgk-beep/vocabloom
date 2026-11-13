@@ -225,6 +225,12 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
   final w = toks[i].lower;
   final prev = i > 0 ? toks[i - 1].lower : '';
   final next = i + 1 < toks.length ? toks[i + 1].lower : '';
+  // Forms of be / have / do are verbs ("had been" is not the metal beryllium).
+  const aux = {
+    'be', 'am', 'is', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having',
+    'do', 'does', 'did', 'done', 'doing',
+  };
+  if (aux.contains(w) && availablePos.contains('v')) return 'v';
   // "unfortunate circumstances", "heavy rain": a word that can be an
   // adjective, followed by a noun, is an adjective.
   if (availablePos.contains('a') && next.isNotEmpty && !stopWords.contains(next) && posOf != null) {

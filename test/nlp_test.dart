@@ -124,4 +124,10 @@ void main() {
     final s2 = d.bestSense(d.lookup('unfortunate'), t2, t2.indexWhere((t) => t.lower == 'unfortunate'))!;
     expect(s2.pos, 'n');
   });
+
+  test('sense in context: forms of be are verbs', () {
+    final toks = tokenize('After the ceremony, there had been a big party.');
+    final i = toks.indexWhere((t) => t.lower == 'been');
+    expect(d.bestSense(d.lookup('be'), toks, i)!.pos, 'v');
+  });
 }
