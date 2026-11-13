@@ -330,7 +330,8 @@ def gemini_call(model, key, prompt, schema):
 
 
 def openai_call(base, model, key, prompt, schema):
-    body = {'model': model, 'temperature': 0.3, 'max_tokens': 16000,
+    # GitHub Models' free tier allows at most 4,000 output tokens per request.
+    body = {'model': model, 'temperature': 0.3, 'max_tokens': 4000 if 'models.github.ai' in base else 16000,
             'response_format': {'type': 'json_object'},
             'messages': [{'role': 'user', 'content': prompt}]}
     req = urllib.request.Request(
@@ -339,8 +340,12 @@ def openai_call(base, model, key, prompt, schema):
                  # Cloudflare in front of some services refuses Python's default agent (403, code 1010).
                  'User-Agent': 'vocabloom-dictionary-builder/1.0', 'Accept': 'application/json'})
     with urllib.request.urlopen(req, timeout=240) as r:
-        data = json.load(r)
-    return _parse(data['choices'][0]['message']['content'])
+        raw = r.read().decode(errors='replace')
+    try:
+        data = json.loads(raw)
+    except ValueError:
+        raise ValueError(f'not JSON from {base}: {raw[:200]!r}')
+    return _parse(data['choices'][0]['message']['content'] or '')
 
 
 class Service:
