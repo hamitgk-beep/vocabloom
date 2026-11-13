@@ -149,6 +149,63 @@ FAM_SCHEMA = {
 }
 
 
+GLOSS_PROMPT = '''You are translating a learner's dictionary of English expressions for Turkish speakers.
+For each expression below (with its category and English definition), give:
+- "tr": its natural Turkish meaning in 1 to 5 words, the way a Turkish dictionary would put it
+  (an idiom gets its real meaning, not a word-by-word translation: "above board" -> "dürüst, açık, hilesiz")
+- "def_tr": the English definition translated into natural, clear Turkish; keep the "; " between senses
+
+Answer with JSON only: {"items": [{"p": "<expression exactly as given>", "tr": "...", "def_tr": "..."}]}
+
+Expressions:
+'''
+
+GLOSS_SCHEMA = {
+    'type': 'object',
+    'properties': {'items': {'type': 'array', 'items': {
+        'type': 'object',
+        'properties': {'p': {'type': 'string'}, 'tr': {'type': 'string'}, 'def_tr': {'type': 'string'}},
+        'required': ['p', 'tr', 'def_tr'],
+        'additionalProperties': False,
+    }}},
+    'required': ['items'],
+    'additionalProperties': False,
+}
+
+
+def describe_gloss(r):
+    p, cat, en = r
+    return f'- "{p}" ({cat.replace("_", " ")}): {(en or "")[:400]}'
+
+
+def load_gloss_todo(dict_path, done):
+    """Expressions with no Turkish at all, the most common first."""
+    db = sqlite3.connect(dict_path)
+    try:
+        freq = {(p, c): n for p, c, n in db.execute('SELECT phrase, cat, n FROM exfreq')}
+    except sqlite3.OperationalError:
+        freq = {}
+    rows = [r for r in db.execute("SELECT phrase, cat, en FROM expr WHERE (tr IS NULL OR tr = '') AND en IS NOT NULL")
+            if f'{r[0]}|{r[1]}' not in done]
+    db.close()
+    rows.sort(key=lambda r: -freq.get((r[0], r[1]), 0))
+    return rows
+
+
+def save_gloss(out, chunk, items):
+    by_p = {it['p'].strip().lower(): it for it in items or [] if isinstance(it, dict) and it.get('p')}
+    n = 0
+    with gzip.open(out, 'at', encoding='utf-8') as f:
+        for p, cat, _ in chunk:
+            it = by_p.get(p.lower())
+            if not it or not (it.get('tr') or '').strip():
+                continue
+            f.write(json.dumps({'p': p, 'c': cat, 'tr': it['tr'].strip(), 'd': (it.get('def_tr') or '').strip()},
+                               ensure_ascii=False) + '\n')
+            n += 1
+    return n
+
+
 WORD_PROMPT = '''You are a friendly English teacher writing a learner's dictionary for Turkish speakers.
 For each English word below, explain it the way you would if a learner asked you
 "explain this word in English and Turkish with all the details so I can learn it".
@@ -347,6 +404,7 @@ def describe(e):
 def load_todo(dict_path, done):
     db = sqlite3.connect(dict_path)
     rows = db.execute('SELECT phrase, cat, en, ex FROM expr').fetchall()
+    has_tr = {(p, c) for p, c in db.execute("SELECT phrase, cat FROM expr WHERE tr IS NOT NULL AND tr != ''")}
     try:
         freq = {(p, c): n for p, c, n in db.execute('SELECT phrase, cat, n FROM exfreq')}
     except sqlite3.OperationalError:
@@ -354,7 +412,8 @@ def load_todo(dict_path, done):
     db.close()
     order = {c: i for i, c in enumerate(CAT_ORDER)}
     # Expressions people actually use (frequent in Tatoeba sentences) first, then by category.
-    rows.sort(key=lambda r: (-min(freq.get((r[0], r[1]), 0), 50), order.get(r[1], 99), r[2] is None,
+    # Among equally common ones, entries with no Turkish at all come first.
+    rows.sort(key=lambda r: (-min(freq.get((r[0], r[1]), 0), 50), (r[0], r[1]) in has_tr, order.get(r[1], 99), r[2] is None,
                              len(r[0].split()), r[0]))
     return [r for r in rows if f'{r[0]}|{r[1]}' not in done]
 
@@ -665,6 +724,7 @@ def save(out, chunk, items):
 KINDS.update({
     'expr': (PROMPT, SCHEMA, describe, save, CHUNK),
     'fam': (FAM_PROMPT, FAM_SCHEMA, describe_root, save_fam, 4),
+    'gloss': (GLOSS_PROMPT, GLOSS_SCHEMA, describe_gloss, save_gloss, 30),
     'word': (WORD_PROMPT, WORD_SCHEMA, describe_word, save_word, 5),
     'syn': (SYN_PROMPT, SYN_SCHEMA, describe_syn, save_syn, 10),
 })
@@ -679,6 +739,7 @@ def main():
     ap.add_argument('--minutes', type=float, default=300)
     ap.add_argument('--limit', type=int, default=10 ** 9)
     ap.add_argument('--families', default='', help='word-family results of this service; done after the expressions')
+    ap.add_argument('--gloss', default='', help='short Turkish meanings of this service (gl-<service>.jsonl.gz)')
     ap.add_argument('--words', default='', help='word explanations of this service (wd-<service>.jsonl.gz)')
     ap.add_argument('--senses', default='', help='WordNet-sense results of this service (syn-<service>.jsonl.gz)')
     ap.add_argument('--shard', default='0/1', help='k/n: this service takes every n-th item first')
@@ -703,6 +764,16 @@ def main():
     # senses each get a slice of the time, and time a kind does not use goes on
     # to the next one. A used-up quota stops them all.
     start, total = time.time(), deadline - time.time()
+    # First a short Turkish meaning for every expression that has none: 30 per request, so it is quick.
+    if a.gloss:
+        gl_files = [a.gloss] + [f for f in a.done if os.path.basename(f).startswith('gl-')]
+        gdone = read_done(gl_files, lambda j: f"{j['p']}|{j['c']}")
+        gtodo = shard_order(load_gloss_todo(a.dict_db, gdone | done), lambda r: f'{r[0]}|{r[1]}', shard, shards)
+        print(f'short meanings: {len(gdone)} done, {len(gtodo)} to go')
+        m = run(svc, gtodo, a.gloss, min(deadline, start + total * 0.15), a.limit, 'gloss')
+        print(f'short meanings added {m}; remaining {len(gtodo) - m}')
+    if not svc.models:
+        return
     n = run(svc, todo, a.out, min(deadline, start + total * 0.35), a.limit, 'expr')
     print(f'added {n}; remaining {len(todo) - n}')
 

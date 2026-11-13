@@ -216,6 +216,31 @@ String? trFor(DictDb dict, String lemma, String pos) {
   return null;
 }
 
+const _glossSkip = {'a', 'an', 'the', 'to', 'of', 'and', 'or', 'one', "one's", 'someone', 'something', 'somebody', 'be', 'is'};
+
+/// Word-by-word Turkish of an expression the library has no Turkish for yet:
+/// "above board" -> "above: yukarıda · board: tahta". Null when no word is known.
+String? wordGloss(DictDb dict, String phrase) {
+  final parts = <String>[];
+  var known = 0;
+  for (final w in phrase.toLowerCase().split(RegExp(r'\s+'))) {
+    if (w.isEmpty || _glossSkip.contains(w)) continue;
+    String? t;
+    for (final l in {w, ...dict.lemmatizer.lemmas(w)}) {
+      final info = dict.lookup(l);
+      final s = info.senses.where((s) => s.tr.isNotEmpty).firstOrNull;
+      t = info.trFreeDict.isNotEmpty ? info.trFreeDict.first : s?.tr.first;
+      if (t != null) break;
+    }
+    if (t != null) {
+      t = t.replaceAll(RegExp(r'\([^)]*\)'), '').split(RegExp(r'[,;]')).first.trim();
+      known++;
+    }
+    parts.add(t == null || t.isEmpty ? w : '$w: $t');
+  }
+  return known == 0 ? null : parts.join(' · ');
+}
+
 /// Turkish for a negative form the dictionary lacks, built from its base:
 /// nonworker -> "işçi olmayan", disagree -> "tersi: katılmak".
 String? negativeTr(DictDb dict, String base, String pos) {

@@ -565,6 +565,8 @@ class _ExprCardState extends State<ExprCard> {
   AppState get app => widget.app;
   Expr get expr => widget.expr;
 
+  late final String? _gloss = expr.trShown == null ? wordGloss(app.dict, expr.phrase) : null;
+
   /// An example with its Turkish when one is known: the built-in sense
   /// examples first, then a translated Tatoeba sentence, then the list's own
   /// English example.
@@ -626,6 +628,9 @@ class _ExprCardState extends State<ExprCard> {
         ]),
         if (showEn && expr.en != null) Text(expr.en!, style: enStyle(theme)),
         if (app.showTr && tr != null) Text(tr, style: trStyle(theme)),
+        // No Turkish yet: at least the words one by one, never English alone.
+        if (app.showTr && tr == null && _gloss != null)
+          Text(L('Kelime kelime: $_gloss', 'Word by word: $_gloss'), style: trStyle(theme, null, false)),
         if (app.showTr && expr.aiExp != null) Text(expr.aiExp!, style: trStyle(theme, null, false)),
         if (translating)
           Padding(

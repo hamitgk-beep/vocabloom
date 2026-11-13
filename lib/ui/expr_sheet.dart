@@ -200,11 +200,30 @@ class _ExprPanelState extends State<ExprPanel> {
       if (tr && expr.trShown != null) {
         children.add(Text(expr.trShown!, style: trStyle(theme, const TextStyle(fontSize: 16))));
       }
+      // No Turkish yet for the expression: its words one by one, so nothing is English only.
+      if (tr && expr.trShown == null && head == null) {
+        final g = wordGloss(app.dict, expr.phrase);
+        if (g != null) children.add(Text(L('Kelime kelime: $g', 'Word by word: $g'), style: trStyle(theme)));
+      }
       if (tr && expr.aiExp != null) children.add(Text(expr.aiExp!, style: trStyle(theme, null, false)));
-      if (en || expr.trShown == null) {
-        for (var i = 0; i < defs.length; i++) {
-          children.add(Padding(padding: const EdgeInsets.only(top: 2), child: Text('${i + 1}. ${defs[i]}', style: enStyle(theme))));
-        }
+      final defsTr = (expr.enTr ?? '').split('; ').where((d) => d.trim().isNotEmpty).toList();
+      for (var i = 0; i < defs.length; i++) {
+        final t = i < defsTr.length && defsTr.length == defs.length ? defsTr[i] : null;
+        if (!en && tr && t == null && defsTr.isNotEmpty) continue;
+        if (en || t == null) children.add(Padding(padding: const EdgeInsets.only(top: 2), child: Text('${i + 1}. ${defs[i]}', style: enStyle(theme))));
+        if (tr && t != null) children.add(Padding(padding: EdgeInsets.only(top: en ? 0 : 2, left: en ? 14 : 0), child: Text(en ? t : '${i + 1}. $t', style: trStyle(theme))));
+      }
+      // Turkish definitions in one piece when their number does not match the English ones.
+      if (tr && defsTr.isNotEmpty && defsTr.length != defs.length) {
+        children.add(Padding(padding: const EdgeInsets.only(top: 2), child: Text(defsTr.join('; '), style: trStyle(theme))));
+      }
+      if (tr && expr.trShown == null && defsTr.isEmpty && defs.isNotEmpty) {
+        children.add(Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(L('Bu kalıbın Türkçe açıklaması henüz hazır değil; günlük sözlük güncellemeleriyle gelecek.',
+                  'The Turkish explanation of this expression is not ready yet; it will come with a daily dictionary update.'),
+              style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor, fontStyle: FontStyle.italic)),
+        ));
       }
       if (expr.ex != null) {
         children.add(Padding(

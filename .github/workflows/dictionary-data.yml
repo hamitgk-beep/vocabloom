@@ -84,7 +84,7 @@ jobs:
             --target "$GITHUB_SHA" --title "Built-in Turkish library (build input)" \
             --notes "Senses, Turkish explanations and translated examples of every expression, and word families. Made once with AI at build time; used by tools/build_dict.py." || true
           mkdir -p prev
-          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*' || true
+          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*' -p 'gl-*' || true
           ls -la prev
       - name: Translate
         if: inputs.provider == '' || inputs.provider == 'all' || inputs.provider == matrix.service
@@ -104,8 +104,9 @@ jobs:
           cp prev/wfd-$S.jsonl.gz . 2>/dev/null || true
           cp prev/syn-$S.jsonl.gz . 2>/dev/null || true
           cp prev/wd-$S.jsonl.gz . 2>/dev/null || true
+          cp prev/gl-$S.jsonl.gz . 2>/dev/null || true
           python3 tools/pretranslate.py assets/dict.db exd-$S.jsonl.gz --provider $S --model "$MODEL" \
-            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --words wd-$S.jsonl.gz --senses syn-$S.jsonl.gz --shard ${{ matrix.shard }} \
+            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --gloss gl-$S.jsonl.gz --words wd-$S.jsonl.gz --senses syn-$S.jsonl.gz --shard ${{ matrix.shard }} \
             --done prev/*.jsonl.gz
       - name: Save results
         if: always()
@@ -114,7 +115,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           S=${{ matrix.service }}
-          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz wd-$S.jsonl.gz syn-$S.jsonl.gz; do
+          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz wd-$S.jsonl.gz syn-$S.jsonl.gz gl-$S.jsonl.gz; do
             if [ -f $f ]; then
               gh release upload data-exd $f --clobber
               python3 -c "import gzip,sys;print(sys.argv[1], sum(1 for _ in gzip.open(sys.argv[1],'rt')))" $f
@@ -148,7 +149,7 @@ jobs:
           unzip -q wn30.zip
           gh release download data-tatoeba -p 'tatoeba_en_tr.tsv.gz'
           gh release download data-wiktionary -p 'wiktionary_phrases.json.gz'
-          gh release download data-exd -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*'
+          gh release download data-exd -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*' -p 'gl-*'
           ls -la
       - name: Rebuild the dictionary
         run: |
@@ -165,6 +166,7 @@ jobs:
               out = {}
               for name, q in [('expressions', 'SELECT count(*) FROM exd'), ('words', 'SELECT count(*) FROM wd'),
                               ('families', 'SELECT count(*) FROM wfd'),
+                              ('Turkish meanings', "SELECT count(*) FROM expr WHERE tr IS NOT NULL AND tr != ''"),
                               ('senses', "SELECT count(*) FROM syn WHERE tr IS NOT NULL AND tr != '[]'")]:
                   try:
                       out[name] = db.execute(q).fetchone()[0]

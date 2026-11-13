@@ -105,10 +105,13 @@ class Expr {
   /// Example sentence from the dictionary (Wiktionary), if any.
   String? ex;
 
+  /// Turkish translation of [en] (built-in library), senses separated by "; ".
+  String? enTr;
+
   /// Turkish meaning / explanation made by the user's AI service (saved on device).
   String? aiTr;
   String? aiExp;
-  Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern, {this.ex});
+  Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern, {this.ex, this.enTr});
 
   /// Turkish meaning: from the dictionary, otherwise from the AI translation.
   String? get trShown => tr ?? aiTr;

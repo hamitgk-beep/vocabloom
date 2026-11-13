@@ -261,8 +261,12 @@ def load_wiktionary(exprs):
             if cat == 'phrasal_verbs' and (len(toks) != 2 or toks[1] not in WIKT_PV_PARTICLES
                                            or toks[0] in ('be', 'have', 'do')):
                 continue
-        en = '; '.join(it['en'][:3]) or None
+        # "Used other than figuratively or idiomatically: see above, grass." teaches nothing
+        defs = [d for d in it['en'] if not re.match(r'(often )?used other than (figuratively|as an idiom)', d, re.I)]
+        en = '; '.join(defs[:3]) or None
         tr = ', '.join(it['tr'][:4]) or None
+        if not en and not tr and (p, cat) not in exprs:
+            continue
         if (p, cat) in exprs:
             e = exprs[(p, cat)]
             if e[0] is None and tr:
@@ -438,6 +442,30 @@ def load_tatoeba(db, exprs):
     print('tatoeba pairs', len(pairs), 'expression examples', n_expr, 'word examples', len(rows) - n_expr)
 
 
+def load_gloss(db):
+    """Short Turkish meanings and Turkish definitions (tools/pretranslate.py, kind "gloss")
+    for expressions no other source translates."""
+    db.execute('ALTER TABLE expr ADD COLUMN entr TEXT')
+    paths = result_files('gl-')
+    if not paths:
+        print('gloss: not found, skipped')
+        return
+    seen = set()
+    filled = 0
+    for line in result_lines(paths):
+        try:
+            j = json.loads(line)
+            key = (j['p'], j['c'])
+        except (ValueError, KeyError):
+            continue
+        if key in seen:
+            continue
+        seen.add(key)
+        db.execute("UPDATE expr SET tr=? WHERE phrase=? AND cat=? AND (tr IS NULL OR tr='')", (j.get('tr') or None, *key))
+        filled += db.execute('UPDATE expr SET entr=? WHERE phrase=? AND cat=?', (j.get('d') or None, *key)).rowcount
+    print('short Turkish meanings', filled)
+
+
 def load_wd(db):
     """Teacher-style explanations of words (tools/pretranslate.py, kind "word")."""
     paths = result_files('wd-')
@@ -560,6 +588,7 @@ def main():
         rows.append((p, cat, tr, en, json.dumps(forms) if forms else None, examples.get((p, cat))))
     db.executemany('INSERT INTO expr(phrase, cat, tr, en, forms, ex) VALUES (?,?,?,?,?,?)', rows)
     print('expressions total', len(rows))
+    load_gloss(db)
 
     load_tatoeba(db, exprs)
 
