@@ -36,6 +36,56 @@ def clean_tr(s):
     return s
 
 
+# FreeDict's short labels, written out so learners can read them.
+ABBR = {
+    'çoğ.': 'çoğul', 'den.': 'denizcilik', 'den': 'denizcilik', 'bot.': 'botanik', 'zool.': 'zooloji',
+    'tıb.': 'tıp', 'kıs.': 'kısaltma', 'k. dili': 'konuşma dili', 'k.dili.': 'konuşma dili',
+    'k.dili': 'konuşma dili', 'bak.': 'bakınız', 'A.B.D.': 'Amerikan İngilizcesi', 'A.B.D': 'Amerikan İngilizcesi',
+    'ABD': 'Amerikan İngilizcesi', 'huk.': 'hukuk', 'müz.': 'müzik', 'anat.': 'anatomi', 'İng.': 'İngiliz İngilizcesi',
+    'biyol.': 'biyoloji', 'ask.': 'askerlik', 'kim.': 'kimya', 'mat.': 'matematik', 'mak.': 'makine',
+    'Lat.': 'Latince', 'mim.': 'mimarlık', 'Fr.': 'Fransızca', 'fiz.': 'fizik', 'tic.': 'ticaret',
+    'gen.': 'genellikle', 'astr.': 'astronomi', 'jeol.': 'jeoloji', 'argo.': 'argo', 'matb.': 'matbaacılık',
+    'gram.': 'dilbilgisi', 'gram': 'dilbilgisi', 'dilb.': 'dilbilgisi', 'geom.': 'geometri', 'elek.': 'elektrik',
+    'fels.': 'felsefe', 'psik.': 'psikoloji', 'mit.': 'mitoloji', 'leh.': 'lehçe', 'hav.': 'havacılık',
+    'foto.': 'fotoğrafçılık', 'eski.': 'eski', 'oto.': 'otomotiv', 'min.': 'mineraloji', 'mad.': 'madencilik',
+    'sonek': 'son ek', 'önek': 'ön ek', 'slang': 'argo', 'ing': 'İngiliz İngilizcesi', 'sig.': 'sigortacılık',
+    'man.': 'mantık', 'zam.': 'zamir',
+}
+_RARE = re.compile(r'^\((son ek|ön ek|kısaltma|bakınız|eski|argo|Latince|Fransızca)\)')
+
+
+def clean_freedict(word, senses):
+    """Expands labels, removes English sub-entries ("work force ...") and puts common meanings first."""
+    out = []
+    head = re.compile(r"(?<![\w'])" + re.escape(word) + r"(?![\w])", re.I)
+    for s in senses:
+        s = re.sub(r'^ba[çg]la[çc]\s+', '(bağlaç) ', s)  # "baçlaç gerçi, ..." in FreeDict
+        segs = re.split(r'(?<=[.;])\s+', s)
+        keep = []
+        for i, seg in enumerate(segs):
+            if head.search(seg) or re.search(r"[A-Za-z]+'[a-z]", seg):
+                if i == 0:
+                    keep = []
+                break  # from here on FreeDict lists English phrases with their meanings
+            keep.append(seg)
+        t = ' '.join(keep).strip().rstrip('.').strip()
+        t = re.sub(r'\(\s*([^()]{1,14}?)\s*\)', lambda m: '(' + ABBR.get(m.group(1), m.group(1)) + ')', t)
+        t = re.sub(r'^\(çoğul\),\s*', '(çoğul) ', t)
+        if len(t) < 2 or t in out:
+            continue
+        out.append(t)
+
+    def rank(t):
+        if t.startswith(('...', '-', '(son ek)', '(ön ek)')) or '...' in t:
+            return 3
+        if _RARE.match(t):
+            return 2
+        if t.startswith('('):
+            return 1
+        return 0
+    return sorted(out, key=rank)
+
+
 def load_freedict(db):
     path = os.path.join(RAW, 'eng-tur.tei')
     data = {}
@@ -57,6 +107,7 @@ def load_freedict(db):
             senses.sort(key=lambda x: x.startswith('(kıs.)'))
             data.setdefault(word, []).extend(senses)
         el.clear()
+    data = {w: c for w, c in ((w, clean_freedict(w, s)) for w, s in data.items()) if c}
     db.executemany('INSERT INTO ft(word, tr) VALUES (?, ?)',
                    [(w, json.dumps(s, ensure_ascii=False)) for w, s in data.items()])
     print('freedict', len(data))
@@ -332,7 +383,16 @@ def load_tatoeba(db, exprs):
     for (p, cat) in exprs:
         words = p.replace("one's", '').replace('someone', '').replace('something', '').split()
         words = [w for w in words if w]
-        if len(words) < 2:
+        if not words:
+            continue
+        if len(words) == 1:  # single-word expressions ("though", "however")
+            hits = index.get(words[0], ())
+            if cat == 'conjunctions':  # "Though it is risky, ..." not "It's expensive, though."
+                hits = sorted(hits, key=lambda i: (toks[i][:1] != [words[0]], toks[i][-1:] == [words[0]]))
+            for i in hits[:4]:
+                rows.append((f'{p}|{cat}', pairs[i][0], pairs[i][1]))
+            if hits:
+                freq.append((p, cat, len(hits)))
             continue
         cand = None
         for w in words:
@@ -374,6 +434,35 @@ def load_tatoeba(db, exprs):
     db.execute('CREATE TABLE exfreq(phrase TEXT, cat TEXT, n INTEGER)')
     db.executemany('INSERT INTO exfreq VALUES (?,?,?)', freq)
     print('tatoeba pairs', len(pairs), 'expression examples', n_expr, 'word examples', len(rows) - n_expr)
+
+
+def load_syn(db):
+    """Turkish for WordNet senses and their examples (tools/pretranslate.py, kind "syn").
+    Synset ids follow the WordNet files, so they stay the same from build to build.
+    A Turkish meaning from KeNet is kept; the AI one fills the senses KeNet lacks."""
+    paths = result_files('syn')
+    db.execute('ALTER TABLE syn ADD COLUMN extr TEXT')
+    if not paths:
+        print('syn: not found, skipped')
+        return
+    seen = set()
+    filled = ex = 0
+    for line in result_lines(paths):
+        try:
+            j = json.loads(line)
+            sid = int(j['id'])
+        except (ValueError, KeyError, TypeError):
+            continue
+        if sid in seen:
+            continue
+        seen.add(sid)
+        tr = [t for t in j.get('tr') or [] if t][:4]
+        if tr:
+            filled += db.execute("UPDATE syn SET tr=? WHERE id=? AND (tr IS NULL OR tr='[]')",
+                                 (json.dumps(tr, ensure_ascii=False), sid)).rowcount
+        if j.get('ex'):
+            ex += db.execute('UPDATE syn SET extr=? WHERE id=?', (json.dumps(j['ex'], ensure_ascii=False), sid)).rowcount
+    print('built-in sense Turkish', filled, 'translated sense examples', ex)
 
 
 def main():
@@ -481,6 +570,7 @@ def main():
                 n += 1
         print('built-in word families', n)
     print('word families', len(gid_of), 'words', len(fam_rows))
+    load_syn(db)
 
     db.executescript('''
       CREATE INDEX sense_lemma ON sense(lemma);

@@ -141,6 +141,111 @@ FAM_SCHEMA = {
 }
 
 
+SYN_PROMPT = '''You are writing a learner's dictionary for Turkish speakers.
+Each item below is one meaning (WordNet sense) of an English word: its id, the word and its synonyms,
+the part of speech, the English definition and maybe example sentences.
+
+For each item return:
+- "id": the same id
+- "tr": 1 to 4 short natural Turkish equivalents of the word in exactly this meaning, most common first
+  (e.g. for "though" as an adverb meaning "however": ["yine de", "gene de", "bununla birlikte"])
+- "examples_tr": natural Turkish translations of the given example sentences, same order ([] if none)
+
+Answer with JSON only: {"items": [{"id": ..., "tr": [...], "examples_tr": [...]}]}
+
+Meanings:
+'''
+
+SYN_SCHEMA = {
+    'type': 'object',
+    'properties': {'items': {'type': 'array', 'items': {
+        'type': 'object',
+        'properties': {
+            'id': {'type': 'integer'},
+            'tr': {'type': 'array', 'items': {'type': 'string'}},
+            'examples_tr': {'type': 'array', 'items': {'type': 'string'}},
+        },
+        'required': ['id', 'tr', 'examples_tr'],
+        'additionalProperties': False,
+    }}},
+    'required': ['items'],
+    'additionalProperties': False,
+}
+
+POS_NAME = {'n': 'noun', 'v': 'verb', 'a': 'adjective', 's': 'adjective', 'r': 'adverb'}
+
+
+def describe_syn(r):
+    sid, pos, word, words, gloss, examples = r
+    s = f'- id {sid}: "{word}" ({POS_NAME.get(pos, pos)})'
+    others = [w for w in words if w != word][:4]
+    if others:
+        s += f', synonyms: {", ".join(others)}'
+    s += f'; definition: {gloss[:300]}'
+    if examples:
+        s += '; examples: ' + ' | '.join(e[:160] for e in examples[:2])
+    return s
+
+
+_SKIP = {'i', 'a', 'an', 'the', 'tom', 'mary', 'john', 'us', 'it', 'he', 'she', 'we', 'me', 'my', 'no', 'not', 'one'}
+
+
+def load_syn_todo(dict_path, done, min_freq=3, max_rank=8):
+    """WordNet senses of words people meet (Tatoeba frequency), most common words and senses first."""
+    db = sqlite3.connect(dict_path)
+    try:
+        freq = dict(db.execute('SELECT word, n FROM wfreq'))
+    except sqlite3.OperationalError:
+        freq = {}
+    best = {}
+    for lemma, rank, sid in db.execute('SELECT lemma, rank, syn_id FROM sense'):
+        n = freq.get(lemma, 0)
+        if n < min_freq or rank > max_rank or sid in done or '_' in lemma:
+            continue
+        score = n / (1 + rank) ** 2  # first senses of frequent words first
+        if sid not in best or score > best[sid][0]:
+            best[sid] = (score, lemma)
+    rows = []
+    for sid, pos, gloss, examples, words, tr in db.execute('SELECT id, pos, gloss, examples, words, tr FROM syn'):
+        if sid not in best:
+            continue
+        lemma, words = best[sid][1], json.loads(words)
+        # "Tom", "I" (iodine), "A" (angstrom): names and symbols, not the everyday word
+        if lemma in _SKIP or any(w != lemma and w.lower() == lemma for w in words):
+            continue
+        if tr and tr != '[]' and examples == '[]':
+            continue  # already has Turkish and nothing to translate
+        rows.append((best[sid][0], (sid, pos, lemma, words, gloss, json.loads(examples))))
+    db.close()
+    rows.sort(key=lambda r: -r[0])
+    return [r[1] for r in rows]
+
+
+def save_syn(out, chunk, items):
+    by_id = {}
+    for it in items or []:
+        try:
+            by_id[int(it['id'])] = it
+        except (KeyError, TypeError, ValueError):
+            pass
+    n = 0
+    with gzip.open(out, 'at', encoding='utf-8') as f:
+        for sid, _, _, _, _, examples in chunk:
+            it = by_id.get(sid)
+            if not it:
+                continue
+            tr = [t.strip() for t in it.get('tr') or [] if isinstance(t, str) and t.strip()][:4]
+            if not tr:
+                continue
+            ex = [t.strip() for t in it.get('examples_tr') or [] if isinstance(t, str)][:len(examples)]
+            f.write(json.dumps({'id': sid, 'tr': tr, 'ex': ex}, ensure_ascii=False) + '\n')
+            n += 1
+    return n
+
+
+KINDS = {}  # filled below: kind -> (prompt, schema, describe, saver, chunk size)
+
+
 class QuotaExhausted(Exception):
     pass
 
@@ -224,7 +329,9 @@ def openai_call(base, model, key, prompt, schema):
             'messages': [{'role': 'user', 'content': prompt}]}
     req = urllib.request.Request(
         f'{base}/chat/completions', data=json.dumps(body).encode(),
-        headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}'})
+        headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}',
+                 # Cloudflare in front of some services refuses Python's default agent (403, code 1010).
+                 'User-Agent': 'vocabloom-dictionary-builder/1.0', 'Accept': 'application/json'})
     with urllib.request.urlopen(req, timeout=240) as r:
         data = json.load(r)
     return _parse(data['choices'][0]['message']['content'])
@@ -245,7 +352,7 @@ class Service:
         self.misses = 0
 
     def call(self, chunk, kind):
-        prompt, schema, desc = (PROMPT, SCHEMA, describe) if kind == 'expr' else (FAM_PROMPT, FAM_SCHEMA, describe_root)
+        prompt, schema, desc, _, _ = KINDS[kind]
         text = prompt + '\n'.join(desc(e) for e in chunk)
         for attempt in range(4):
             if not self.models:
@@ -291,8 +398,7 @@ class Service:
 
 
 def run(svc, todo, out, deadline, limit, kind):
-    saver = save if kind == 'expr' else save_fam
-    size = CHUNK if kind == 'expr' else 4
+    _, _, _, saver, size = KINDS[kind]
     done = i = 0
     try:
         while i < len(todo) and time.time() < deadline and done < limit:
@@ -464,6 +570,13 @@ def save(out, chunk, items):
     return n
 
 
+KINDS.update({
+    'expr': (PROMPT, SCHEMA, describe, save, CHUNK),
+    'fam': (FAM_PROMPT, FAM_SCHEMA, describe_root, save_fam, 4),
+    'syn': (SYN_PROMPT, SYN_SCHEMA, describe_syn, save_syn, 10),
+})
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('dict_db')
@@ -473,6 +586,7 @@ def main():
     ap.add_argument('--minutes', type=float, default=300)
     ap.add_argument('--limit', type=int, default=10 ** 9)
     ap.add_argument('--families', default='', help='word-family results of this service; done after the expressions')
+    ap.add_argument('--senses', default='', help='WordNet-sense results of this service (syn-<service>.jsonl.gz)')
     ap.add_argument('--shard', default='0/1', help='k/n: this service takes every n-th item first')
     ap.add_argument('--done', nargs='*', default=[], help='results of other services, to skip')
     a = ap.parse_args()
@@ -491,17 +605,28 @@ def main():
     if not svc.key:
         print(f'{a.provider}: no API key, nothing to do')
         return
-    n = run(svc, todo, a.out, deadline, a.limit, 'expr')
+    # The three kinds share the run: expressions, word families and WordNet
+    # senses each get a slice of the time, and time a kind does not use goes on
+    # to the next one. A used-up quota stops them all.
+    start, total = time.time(), deadline - time.time()
+    n = run(svc, todo, a.out, min(deadline, start + total * 0.4), a.limit, 'expr')
     print(f'added {n}; remaining {len(todo) - n}')
 
-    # Word families, once the expressions are done (same free quota).
-    if a.families and n >= len(todo) and svc.models and time.time() < deadline:
+    if a.families and svc.models and time.time() < deadline:
         wfd_files = [a.families] + [f for f in a.done if os.path.basename(f).startswith('wfd')]
         fdone = read_done(wfd_files, lambda j: j['root'])
         ftodo = shard_order(load_fam_todo(a.dict_db, fdone), lambda r: r[0], shard, shards)
         print(f'word families: {len(fdone)} done, {len(ftodo)} to go')
-        m = run(svc, ftodo, a.families, deadline, a.limit, 'fam')
+        m = run(svc, ftodo, a.families, min(deadline, start + total * 0.7), a.limit, 'fam')
         print(f'word families added {m}; remaining {len(ftodo) - m}')
+
+    if a.senses and svc.models and time.time() < deadline:
+        syn_files = [a.senses] + [f for f in a.done if os.path.basename(f).startswith('syn')]
+        sdone = read_done(syn_files, lambda j: int(j['id']))
+        stodo = shard_order(load_syn_todo(a.dict_db, sdone), lambda r: str(r[0]), shard, shards)
+        print(f'word senses: {len(sdone)} done, {len(stodo)} to go')
+        m = run(svc, stodo, a.senses, deadline, a.limit, 'syn')
+        print(f'word senses added {m}; remaining {len(stodo) - m}')
 
 
 if __name__ == '__main__':

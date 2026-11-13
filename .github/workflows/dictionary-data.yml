@@ -84,7 +84,7 @@ jobs:
             --target "$GITHUB_SHA" --title "Built-in Turkish library (build input)" \
             --notes "Senses, Turkish explanations and translated examples of every expression, and word families. Made once with AI at build time; used by tools/build_dict.py." || true
           mkdir -p prev
-          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' || true
+          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' -p 'syn*' || true
           ls -la prev
       - name: Translate
         if: inputs.provider == '' || inputs.provider == 'all' || inputs.provider == matrix.service
@@ -102,8 +102,9 @@ jobs:
           S=${{ matrix.service }}
           cp prev/exd-$S.jsonl.gz . 2>/dev/null || true
           cp prev/wfd-$S.jsonl.gz . 2>/dev/null || true
+          cp prev/syn-$S.jsonl.gz . 2>/dev/null || true
           python3 tools/pretranslate.py assets/dict.db exd-$S.jsonl.gz --provider $S --model "$MODEL" \
-            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --shard ${{ matrix.shard }} \
+            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --senses syn-$S.jsonl.gz --shard ${{ matrix.shard }} \
             --done prev/*.jsonl.gz
       - name: Save results
         if: always()
@@ -112,7 +113,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           S=${{ matrix.service }}
-          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz; do
+          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz syn-$S.jsonl.gz; do
             if [ -f $f ]; then
               gh release upload data-exd $f --clobber
               python3 -c "import gzip,sys;print(sys.argv[1], sum(1 for _ in gzip.open(sys.argv[1],'rt')))" $f

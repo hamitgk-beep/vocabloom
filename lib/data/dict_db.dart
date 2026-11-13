@@ -15,7 +15,9 @@ class Sense {
   final List<String> examples;
   final List<String> synonyms;
   final List<String> tr;
-  Sense(this.synId, this.pos, this.gloss, this.examples, this.synonyms, this.tr);
+  /// Turkish of [examples], same order; may be shorter or empty.
+  final List<String> examplesTr;
+  Sense(this.synId, this.pos, this.gloss, this.examples, this.synonyms, this.tr, [this.examplesTr = const []]);
 }
 
 class WordInfo {
@@ -32,7 +34,7 @@ Map<String, String> get posNames => uiEnglish
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {
-  static const _version = '4';
+  static const _version = '5';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -89,12 +91,14 @@ class DictDb {
     matcher = PhraseMatcher(lemmatizer, exprs, forms);
   }
 
+  late final bool _hasExTr = db.select('PRAGMA table_info(syn)').any((r) => r['name'] == 'extr');
+
   WordInfo lookup(String lemma) {
     final ft = db.select('SELECT tr FROM ft WHERE word = ?', [lemma]);
     final tr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
     final senses = <Sense>[];
     for (final r in db.select(
-        'SELECT s.id, s.pos, s.gloss, s.examples, s.words, s.tr FROM sense x JOIN syn s ON s.id = x.syn_id '
+        'SELECT s.id, s.pos, s.gloss, s.examples, s.words, s.tr${_hasExTr ? ', s.extr' : ''} FROM sense x JOIN syn s ON s.id = x.syn_id '
         'WHERE x.lemma = ? ORDER BY x.rank, s.pos',
         [lemma])) {
       senses.add(Sense(
@@ -104,6 +108,7 @@ class DictDb {
         (jsonDecode(r['examples'] as String) as List).cast<String>(),
         (jsonDecode(r['words'] as String) as List).cast<String>().where((w) => w != lemma).toList(),
         r['tr'] == null ? const [] : (jsonDecode(r['tr'] as String) as List).cast<String>(),
+        !_hasExTr || r['extr'] == null ? const [] : (jsonDecode(r['extr'] as String) as List).cast<String>(),
       ));
     }
     return WordInfo(lemma, tr, senses);

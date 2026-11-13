@@ -142,6 +142,16 @@ String? trFor(DictDb dict, String lemma, String pos) {
   return null;
 }
 
+/// Turkish for a negative form the dictionary lacks, built from its base:
+/// nonworker -> "işçi olmayan", disagree -> "tersi: katılmak".
+String? negativeTr(DictDb dict, String base, String pos) {
+  final t = trFor(dict, base, pos) ?? trFor(dict, base, 'n') ?? trFor(dict, base, 'a') ?? trFor(dict, base, 'v');
+  if (t == null) return null;
+  final first = t.split(RegExp(r'[,;]')).first.replaceAll(RegExp(r'\([^)]*\)'), '').trim();
+  if (first.isEmpty) return null;
+  return pos == 'v' ? 'tersi: $first' : '$first olmayan';
+}
+
 /// Family from the bundled dictionary (WordNet derivations), or null.
 WordFamily? offlineFamily(DictDb dict, String lemma) {
   final List<Map<String, Object?>> r;
@@ -159,7 +169,16 @@ WordFamily? offlineFamily(DictDb dict, String lemma) {
     // Explain against the closest shorter member (creatively <- creative).
     final cands = members.map((m) => m[0] as String).where((b) => b != w && w.startsWith(b.substring(0, (b.length - 2).clamp(3, b.length)))).toList()
       ..sort((a, b) => b.length.compareTo(a.length));
-    for (final b in cands.where((b) => b.length < w.length)) {
+    // Only a real base: workable comes from work, not from worker.
+    bool builtOn(String b) {
+      var l = 0;
+      while (l < b.length && b[l] == w[l]) {
+        l++;
+      }
+      return l >= b.length - 1; // happy -> happiness, creative -> creativity
+    }
+
+    for (final b in cands.where((b) => b.length < w.length && builtOn(b))) {
       final n = explainSuffix(b, w, p);
       if (n != null) return b == root ? n : '$b + $n';
     }
@@ -172,7 +191,7 @@ WordFamily? offlineFamily(DictDb dict, String lemma) {
           tr: trFor(dict, m[0] as String, m[1] as String), affixNote: baseNote(m[0] as String, m[1] as String)),
     for (final n in negs)
       FamilyEntry(n[0] as String, n[1] as String,
-          tr: trFor(dict, n[0] as String, n[1] as String),
+          tr: trFor(dict, n[0] as String, n[1] as String) ?? negativeTr(dict, n[2] as String, n[1] as String),
           affixNote: explainPrefix(n[2] as String, n[0] as String) ?? L('zıt anlam: ${n[2]}', 'opposite of: ${n[2]}'),
           negative: true),
   ]);

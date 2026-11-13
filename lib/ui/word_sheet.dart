@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
@@ -112,6 +114,15 @@ class _WordPanelState extends State<WordPanel> {
           : list.first;
       return pick.split(RegExp(r'[,;]')).map((x) => x.trim()).where((x) => x.isNotEmpty).take(3).join(', ');
     }
+    return _selfExprTr;
+  }
+
+  /// Turkish of a matched single-word expression that is this word itself
+  /// (conjunctions like "though", discourse markers like "however").
+  String? get _selfExprTr {
+    for (final m in widget.ctx?.matches ?? const []) {
+      if (m.expr.phrase == lemma && m.expr.trShown != null) return m.expr.trShown;
+    }
     return null;
   }
 
@@ -182,16 +193,23 @@ class _WordPanelState extends State<WordPanel> {
           Text(ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
         ],
         for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
-        if (best != null) ...[
+        if (best != null && (en || (tr && _trMain != null && _trMain != _selfExprTr))) ...[
           const SizedBox(height: 8),
           Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? L('Kelimenin tek başına anlamı:', 'Meaning of the word on its own:') : L('Bu cümledeki anlamı:', 'Meaning in this sentence:'),
               style: theme.textTheme.labelLarge),
           const SizedBox(height: 4),
           if (en) Text(best!.gloss, style: enStyle(theme, theme.textTheme.bodyLarge)),
           if (tr && _trMain != null) Text(_trMain!, style: trStyle(theme, theme.textTheme.titleMedium)),
-          if (en)
-            for (final e in best!.examples.take(2))
-              Padding(padding: const EdgeInsets.only(top: 4), child: Text('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false))),
+          for (var k = 0; k < best!.examples.length && k < 2; k++)
+            if (en || (tr && k < best!.examplesTr.length))
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text('• ${best!.examples[k]}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+                  if (tr && k < best!.examplesTr.length)
+                    Padding(padding: const EdgeInsets.only(left: 12), child: Text(best!.examplesTr[k], style: trStyle(theme, null, false))),
+                ]),
+              ),
         ],
       ]));
     }
@@ -217,12 +235,13 @@ class _WordPanelState extends State<WordPanel> {
       }
       final items = <Widget>[];
       for (final e in byPos.entries) {
+        final visible = [for (final s in e.value.take(8)) if (en || (tr && s.tr.isNotEmpty)) s];
+        if (visible.isEmpty) continue;
         items.add(Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 2),
           child: Text(posNames[e.key] ?? e.key, style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
         ));
-        for (final s in e.value.take(8)) {
-          if (!en && s.tr.isEmpty) continue;
+        for (final s in visible) {
           items.add(Container(
             margin: const EdgeInsets.only(bottom: 6),
             padding: const EdgeInsets.all(8),
@@ -235,12 +254,17 @@ class _WordPanelState extends State<WordPanel> {
               if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: trStyle(theme)),
               if (en && s.synonyms.isNotEmpty)
                 Text(L('eş anlamlı: ${s.synonyms.take(5).join(', ')}', 'synonyms: ${s.synonyms.take(5).join(', ')}'), style: TextStyle(color: theme.hintColor, fontSize: 13)),
-              if (en) for (final ex in s.examples.take(2)) Text('“$ex”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              for (var k = 0; k < s.examples.length && k < 2; k++)
+                if (en || (tr && k < s.examplesTr.length)) ...[
+                  Text('“${s.examples[k]}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+                  if (tr && k < s.examplesTr.length)
+                    Padding(padding: const EdgeInsets.only(left: 12), child: Text(s.examplesTr[k], style: trStyle(theme, null, false))),
+                ],
             ]),
           ));
         }
       }
-      children.add(_Section(en ? L('Anlamlar (WordNet)', 'Meanings (WordNet)') : L('Anlamlar', 'Meanings'), items));
+      if (items.isNotEmpty) children.add(_Section(en ? L('Anlamlar (WordNet)', 'Meanings (WordNet)') : L('Anlamlar', 'Meanings'), items));
     }
 
     final exs = app.dict.examples('w:$lemma', limit: 3);
@@ -505,6 +529,27 @@ class _ExprCardState extends State<ExprCard> {
   AppState get app => widget.app;
   Expr get expr => widget.expr;
 
+  /// An example with its Turkish when one is known: the built-in sense
+  /// examples first, then a translated Tatoeba sentence, then the list's own
+  /// English example.
+  late final (String, String?)? _example = () {
+    final key = '${expr.phrase}|${expr.cat}';
+    final cached = app.user.exprDetail(key) ?? app.dict.exprDetail(expr.phrase, expr.cat);
+    if (cached != null) {
+      try {
+        for (final s in jsonDecode(cached) as List) {
+          for (final e in ((s as Map)['examples'] as List? ?? const [])) {
+            final en = '${(e as Map)['en'] ?? ''}', tr = '${e['tr'] ?? ''}';
+            if (en.isNotEmpty && tr.isNotEmpty) return (en, tr);
+          }
+        }
+      } catch (_) {}
+    }
+    final t = app.dict.examples(key, limit: 1);
+    if (t.isNotEmpty) return (t.first.$1, t.first.$2);
+    return expr.ex == null ? null : (expr.ex!, null);
+  }();
+
   /// Entries with only an English definition can be translated on request when
   /// an AI service is connected; the result is saved on the device. Nothing is
   /// fetched automatically, so the panel never waits for the internet.
@@ -555,10 +600,14 @@ class _ExprCardState extends State<ExprCard> {
               Text(L('Türkçeye çevriliyor…', 'Translating into Turkish…'), style: theme.textTheme.bodySmall),
             ]),
           ),
-        if (expr.ex != null)
+        if (_example case final ex?)
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Text('“${expr.ex}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('“${ex.$1}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              if (app.showTr && ex.$2 != null)
+                Padding(padding: const EdgeInsets.only(left: 12), child: Text(ex.$2!, style: trStyle(theme, null, false))),
+            ]),
           ),
         const SizedBox(height: 6),
         Wrap(spacing: 8, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
