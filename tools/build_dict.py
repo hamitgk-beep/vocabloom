@@ -58,6 +58,27 @@ _NOT_TR = {'him', 'his', 'her', 'hers', 'their', 'theirs', 'them', 'they', 'thos
 _EN_FUNC = {'he', 'she', 'the', 'and', 'of', 'for', 'will', 'would', 'have', 'has', 'had', 'been', 'who', 'whom',
             'whose', 'you', 'there', 'from', 'should', 'do', 'than', 'is', 'are', 'was', 'were', 'it', 'to', 'we',
             'they', 'his', 'her', 'my', 'your', 'a', 'an', 'on', 'with', 'by', 'at', 'get', 'can', 'be', 'that', 'this'}
+_TR_SHORT = {'o', 'bu', 've', 'de', 'da', 'ki', 'ne', 'en', 'ya', 'mi', 'su', 'el', 'at', 'ad', 'af', 'ay', 'az',
+             'ok', 'ip', 'is', 'ev', 'et', 'ot', 'ön', 'iç', 'üç', 'iş', 'şu', 'ilk', 'pek', 'çok', 'ile', 'ama'}
+_EN_SUFFIXES = ('s', 'es', 'ed', 'd', 'ing', 'ance', 'ation', 'er', 'ers', 'to', 'ly', 'ment')
+
+
+def _english_sub_entry(item, word):
+    """An English phrase inside a Turkish line: a form of the headword ("make both ends meet",
+    "all things considered") or a fragment left where FreeDict dropped it ("n off", "ht")."""
+    for tok in re.findall(r"[\w']+", item):  # whole words, Turkish letters included ("iş" is not "i")
+        t = tok.lower()
+        if not t.isascii() or t.isdigit():
+            continue
+        if t != word and t.startswith(word) and t[len(word):] in _EN_SUFFIXES:
+            return True
+        if word.endswith('e') and t.startswith(word[:-1]) and t[len(word) - 1:] in ('ing', 'ation'):
+            return True
+        if len(t) <= 2 and t not in _TR_SHORT and t.isascii():
+            return True
+    return False
+
+
 _RARE = re.compile(r'^\((son ek|ön ek|kısaltma|bakınız|eski|argo|Latince|Fransızca)\)')
 
 
@@ -97,8 +118,10 @@ def clean_freedict(word, senses):
         t = t.replace('(', '').replace(')', '')
         # English forms and grammar words FreeDict lists inside the Turkish ("nesne, him, o")
         items = [x.strip() for x in re.split(r'[,;]|\.\s+', t)]
+        items = [re.sub(r'^-[a-z]+\s*', '', x).strip() for x in items]  # "-our şeref" (honour)
         items = [x for x in items if x and x.lower() not in _NOT_TR
-                 and (x.startswith('bakınız:') or not (set(re.findall(r"[a-z']+", x.lower())) & _EN_FUNC))]
+                 and (x.startswith('bakınız:') or not (set(re.findall(r"[a-z']+", x.lower())) & _EN_FUNC))
+                 and not _english_sub_entry(x, word)]
         t = ', '.join(items)
         return re.sub(r'\s+', ' ', t).strip(' ,;.:')
 
