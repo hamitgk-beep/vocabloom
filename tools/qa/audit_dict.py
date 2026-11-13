@@ -339,7 +339,9 @@ class Audit:
                     self.hit('word_ft_tag_first', w, t)
                 if GLUED_TAG.search(t):
                     self.hit('word_ft_corrupt', w, f'{i + 1}. {t}')
-                bad = english_words(t, extra={w} if len(w) > 3 else ())
+                # "bakınız: have" pointers and quoted particles ("over" ile) are meant to be English.
+                t2 = re.sub(r'bakınız:\s*[\w\']+|"[^"]*"', ' ', t)
+                bad = english_words(t2, extra={w} if len(w) > 3 else ())
                 if bad:
                     self.hit('word_ft_has_english', w, f'{i + 1}. {t}  ← {", ".join(sorted(set(bad)))}')
 
