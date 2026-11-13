@@ -1,0 +1,80 @@
+name: quality
+# Release quality check. Runs after every app build (each "latest" release),
+# on pull requests that touch the app or the dictionary, and on demand.
+#  1. tools/qa/audit_dict.py scans assets/dict.db for missing Turkish, missing
+#     examples, English mixed into Turkish lines and broken entries. It fails
+#     when a "bug" count is higher than in tools/qa/baseline.json.
+#  2. qa_test/ opens the word, expression, Word Family and sentence panels and
+#     the main pages on phone and desktop sizes, light and dark, and fails on
+#     overflowing layouts, panels that do not fit and empty headings. English
+#     lines without Turkish are listed in the report.
+# The report (with screenshots) is uploaded as the "quality-report" artifact
+# and summarised on the run page.
+on:
+  workflow_run:
+    workflows: [build]
+    types: [completed]
+  pull_request:
+    paths: ['lib/**', 'assets/dict.db', 'qa_test/**', 'tools/qa/**', 'pubspec.*']
+  workflow_dispatch:
+    inputs:
+      words:
+        description: "frequent words to open"
+        default: "1000"
+      exprs:
+        description: "expressions to open per category"
+        default: "60"
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Dictionary audit
+        id: audit
+        run: |
+          set +e
+          python3 -I tools/qa/audit_dict.py assets/dict.db --baseline tools/qa/baseline.json --out qa-report
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter pub get
+      - name: Open every panel
+        id: ui
+        env:
+          QA_OUT: qa-report
+          QA_WORDS: ${{ inputs.words || '300' }}
+          QA_EXPRS: ${{ inputs.exprs || '20' }}
+        run: |
+          set +e
+          flutter test qa_test --reporter expanded 2>&1 | tee qa-report/ui-test.log | grep -E '^[0-9]+:[0-9]+ ' | tail -20
+          echo "status=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Summary
+        if: always()
+        run: |
+          {
+            cat qa-report/report.md
+            echo
+            echo "## Panel taraması"
+            echo
+            echo '| Bulgu | Sayı |'
+            echo '|---|---:|'
+            sed 's/\t/ | /; s/^/| /; s/$/ |/' qa-report/ui-summary.txt || true
+            echo
+            echo "Ayrıntılar ve ekran görüntüleri: quality-report dosyası (bu çalıştırmanın Artifacts bölümü)."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-report
+          path: qa-report
+      - name: Result
+        run: |
+          [ "${{ steps.audit.outputs.status }}" = 0 ] || { echo "::error::Dictionary audit: a bug count went up (see summary)"; exit 1; }
+          [ "${{ steps.ui.outputs.status }}" = 0 ] || { echo "::error::Panel check failed: layout problem or empty heading (see qa-report/ui-test.log)"; exit 1; }
