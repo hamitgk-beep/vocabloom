@@ -7,6 +7,7 @@ import '../online/ai_service.dart';
 import '../online/update_check.dart';
 import '../l10n.dart';
 import 'expr_sheet.dart';
+import 'key_guide.dart';
 import 'panel.dart';
 import 'review_page.dart';
 import 'theme.dart';
@@ -458,6 +459,11 @@ class _SettingsPageState extends State<SettingsPage> {
           L('Bağladığın servis, internet olduğu her an henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Yarıda kalırsa kaldığı yerden devam eder. Taranmış (resim) PDF\'lerde cihazda OCR yoksa sayfaları da okuyabilir. Kullanım ücreti kendi hesabından düşer.', 'Whenever there is an internet connection, the service you connect scans books that have not been scanned yet: a Turkish translation of every sentence and chapter summaries are saved on your device and never scanned again. If it stops halfway, it continues where it left off. For scanned (image) PDFs it can also read the pages when the device has no OCR. Usage is billed to your own account.'),
           style: theme.textTheme.bodySmall?.copyWith(height: 1.45),
         ),
+        const SizedBox(height: 8),
+        Text(
+          L('Ücretsiz başlamak için Google Gemini ya da Groq\'u seç. Servisi seçince anahtarı nereden ve nasıl alacağın aşağıda adım adım yazar.', 'To start for free, pick Google Gemini or Groq. When you pick a service, the steps to get its key appear below.'),
+          style: theme.textTheme.bodySmall?.copyWith(height: 1.45, fontWeight: FontWeight.w600),
+        ),
         const SizedBox(height: 12),
         DropdownButtonFormField<String>(
           initialValue: providerId,
@@ -471,7 +477,9 @@ class _SettingsPageState extends State<SettingsPage> {
             u.setSetting('ai_provider', providerId);
           }),
         ),
-        if (p.keyHelp.isNotEmpty)
+        if (keyGuides.containsKey(p.id))
+          KeyGuideCard(providerId: p.id)
+        else if (p.keyHelp.isNotEmpty)
           Padding(padding: const EdgeInsets.only(top: 6), child: Text(p.keyHelp, style: theme.textTheme.bodySmall)),
         const SizedBox(height: 12),
         if (showUrl) ...[
