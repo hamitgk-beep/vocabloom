@@ -33,9 +33,11 @@ CAT_ORDER = ['phrasal_verbs', 'conjunctions', 'discourse_markers', 'chunks', 'co
 
 PROMPT = '''You are writing a learner's dictionary of English expressions for Turkish speakers.
 For each expression below, list its common senses (1 to 4), the most common meaning first.
-Include the everyday literal meaning when the expression is often used that way, even if the given
-definition only lists a special sense (for example "disagree with" also means "not have the same opinion as").
-Skip obsolete, archaic and vulgar senses.
+The first sense must be the one people use most in everyday English. The given definition often lists only a
+special or rare sense: do not follow it blindly. When the words are often used in their plain meaning, that
+plain meaning is a sense and usually the first one (for example "walk down" first means walking along or down
+a street or stairs, "yürüyerek inmek, boyunca yürümek", and only later the boxing sense; "disagree with" also
+means "not have the same opinion as"). Never leave out a common sense. Skip obsolete, archaic and vulgar senses.
 
 For every sense give:
 - "title_en": a short English heading
@@ -759,11 +761,156 @@ def save(out, chunk, items):
     return n
 
 
+# ---------------------------------------------------------------- second-model review
+
+REVIEW_PROMPT = '''You are a strict second reviewer of an English learner's dictionary for Turkish speakers.
+Another AI wrote each entry below. Reference data from open dictionaries (WordNet, Wiktionary, FreeDict,
+Tatoeba sentences) is given with each entry; use it to check that no common sense is missing.
+
+Check every entry:
+1. The senses: the most common everyday meaning comes first; no common meaning is missing (including the plain,
+   literal meaning when the words are often used that way, e.g. "walk down the street"); no rare, wrong or
+   invented sense comes before common ones.
+2. The Turkish is correct, natural and matches the English (headings, explanations, meanings).
+3. Every example uses exactly that sense, is natural English, and its Turkish translation is correct.
+
+If the entry is fully right: "ok": true, "problems": "", "fixed": "".
+Otherwise: "ok": false, "problems": a short note in English, and "fixed": the whole corrected entry as a JSON
+string in exactly the same format as the given entry (same keys), with all problems fixed.
+
+Answer with JSON only: {"items": [{"key": "<key exactly as given>", "ok": true|false, "problems": "...", "fixed": "..."}]}
+
+Entries:
+'''
+
+REVIEW_SCHEMA = {
+    'type': 'object',
+    'properties': {'items': {'type': 'array', 'items': {
+        'type': 'object',
+        'properties': {'key': {'type': 'string'}, 'ok': {'type': 'boolean'},
+                       'problems': {'type': 'string'}, 'fixed': {'type': 'string'}},
+        'required': ['key', 'ok', 'problems', 'fixed'],
+        'additionalProperties': False,
+    }}},
+    'required': ['items'],
+    'additionalProperties': False,
+}
+
+
+def service_of(path):
+    """exd-groq.jsonl.gz -> groq; the first combined file exd.jsonl.gz was made with Gemini."""
+    name = os.path.basename(path).split('.')[0]
+    return name.split('-', 1)[1] if '-' in name else 'gemini'
+
+
+def entry_key(kind, j):
+    return f"{kind}:{j['w']}" if kind == 'wd' else f"{kind}:{j['p']}|{j['c']}"
+
+
+def references(db, kind, j):
+    """What the open dictionaries say, so the reviewer can spot a missing common sense."""
+    out = []
+    if kind == 'wd':
+        word = j['w']
+        senses = db.execute('SELECT s.pos, s.gloss FROM sense x JOIN syn s ON s.id = x.syn_id WHERE x.lemma = ? '
+                            'ORDER BY x.rank LIMIT 6', (word,)).fetchall()
+        if senses:
+            out.append('WordNet: ' + ' | '.join(f'({p}) {g[:120]}' for p, g in senses))
+        key = f'w:{word}'
+    else:
+        p, c = j['p'], j['c']
+        r = db.execute('SELECT en, tr FROM expr WHERE phrase = ? AND cat = ?', (p, c)).fetchone()
+        if r and r[0]:
+            out.append('Wiktionary/WordNet definition: ' + r[0][:400])
+        if r and r[1]:
+            out.append('Curated Turkish: ' + r[1][:120])
+        word = p.split()[0]
+        key = f'{p}|{c}'
+    ft = db.execute('SELECT tr FROM ft WHERE word = ?', (word,)).fetchone()
+    if ft:
+        out.append(f'FreeDict "{word}": ' + '; '.join(json.loads(ft[0])[:5])[:300])
+    ex = db.execute('SELECT en FROM exs WHERE key = ? LIMIT 3', (key,)).fetchall()
+    if ex:
+        out.append('Real usage (Tatoeba): ' + ' | '.join(e[0] for e in ex))
+    return out
+
+
+def describe_review(r):
+    kind, key, _, entry, refs = r
+    s = f'- key "{key}" ({ {"exd": "expression", "wd": "word", "gl": "short meaning"}[kind] }): ' \
+        + json.dumps(entry, ensure_ascii=False)
+    for ref in refs:
+        s += f'\n    reference: {ref}'
+    return s
+
+
+def load_review_todo(dict_path, files, reviewed, me):
+    """Generated entries not reviewed yet: other services' work first (a different model checks it),
+    then this service's own. Entries already in the app come first."""
+    db = sqlite3.connect(dict_path)
+    other, own = [], []
+    for path in files:
+        base = os.path.basename(path)
+        kind = 'exd' if base.startswith('exd') else 'wd' if base.startswith('wd-') else 'gl' if base.startswith('gl-') else None
+        if kind is None or not os.path.exists(path):
+            continue
+        gen = service_of(path)
+        with gzip.open(path, 'rt', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    j = json.loads(line)
+                    key = entry_key(kind, j)
+                except (ValueError, KeyError):
+                    continue
+                if key in reviewed:
+                    continue
+                reviewed.add(key)  # one review per key even when two services made it
+                entry = {k: v for k, v in j.items() if k not in ('c',)}
+                row = (kind, key, gen, entry, references(db, kind, j))
+                (own if gen == me else other).append(row)
+    db.close()
+    order = {'exd': 0, 'gl': 1, 'wd': 2}
+    other.sort(key=lambda r: order[r[0]])
+    own.sort(key=lambda r: order[r[0]])
+    return other + own
+
+
+def save_review(out, chunk, items):
+    by_k = {it['key'].strip(): it for it in items or [] if isinstance(it, dict) and it.get('key')}
+    n = 0
+    with gzip.open(out, 'at', encoding='utf-8') as f:
+        for kind, key, gen, entry, _ in chunk:
+            it = by_k.get(key)
+            if not it or not isinstance(it.get('ok'), bool):
+                continue
+            fix = None
+            if not it['ok']:
+                try:
+                    fix = json.loads(it.get('fixed') or '')
+                except ValueError:
+                    fix = None
+                if isinstance(fix, dict):
+                    fix = {**entry, **fix}
+                    if kind in ('exd', 'wd'):
+                        fix['s'] = clean_item({'senses': fix.get('s') or fix.get('senses') or []}, limit=6)
+                        if not fix['s']:
+                            fix = None
+                    elif not (fix.get('tr') or '').strip():
+                        fix = None
+                else:
+                    fix = None
+            f.write(json.dumps({'k': key, 'gen': gen, 'ok': it['ok'], 'note': (it.get('problems') or '')[:300],
+                                'fix': fix}, ensure_ascii=False) + '\n')
+            n += 1
+    return n
+
+
 KINDS.update({
     'expr': (PROMPT, SCHEMA, describe, save, CHUNK),
     'fam': (FAM_PROMPT, FAM_SCHEMA, describe_root, save_fam, 4),
     'gloss': (GLOSS_PROMPT, GLOSS_SCHEMA, describe_gloss, save_gloss, 20),
     'word': (WORD_PROMPT, WORD_SCHEMA, describe_word, save_word, 5),
+    'review': (REVIEW_PROMPT, REVIEW_SCHEMA, describe_review, save_review, 5),
     'syn': (SYN_PROMPT, SYN_SCHEMA, describe_syn, save_syn, 10),
 })
 
@@ -777,6 +924,7 @@ def main():
     ap.add_argument('--minutes', type=float, default=300)
     ap.add_argument('--limit', type=int, default=10 ** 9)
     ap.add_argument('--families', default='', help='word-family results of this service; done after the expressions')
+    ap.add_argument('--review', default='', help='second-model reviews by this service (rv-<service>.jsonl.gz)')
     ap.add_argument('--gloss', default='', help='short Turkish meanings of this service (gl-<service>.jsonl.gz)')
     ap.add_argument('--words', default='', help='word explanations of this service (wd-<service>.jsonl.gz)')
     ap.add_argument('--senses', default='', help='WordNet-sense results of this service (syn-<service>.jsonl.gz)')
@@ -808,20 +956,31 @@ def main():
         gdone = read_done(gl_files, lambda j: f"{j['p']}|{j['c']}")
         gtodo = shard_order(load_gloss_todo(a.dict_db, gdone | done), lambda r: f'{r[0]}|{r[1]}', shard, shards)
         print(f'short meanings: {len(gdone)} done, {len(gtodo)} to go')
-        m = run(svc, gtodo, a.gloss, min(deadline, start + total * 0.25), a.limit, 'gloss')
+        m = run(svc, gtodo, a.gloss, min(deadline, start + total * 0.2), a.limit, 'gloss')
         print(f'short meanings added {m}; remaining {len(gtodo) - m}')
     if not svc.models:
         return
+
+    # Second-model review of what the services wrote; only reviewed entries ship (tools/build_dict.py).
+    if a.review and svc.models and time.time() < deadline:
+        rv_files = [a.review] + [f for f in a.done if os.path.basename(f).startswith('rv-')]
+        reviewed = read_done(rv_files, lambda j: j['k'])
+        gen_files = [f for f in a.done + [a.out, a.gloss, a.words]
+                     if f and os.path.basename(f).startswith(('exd', 'wd-', 'gl-'))]
+        rtodo = load_review_todo(a.dict_db, list(dict.fromkeys(gen_files)), reviewed, a.provider)
+        print(f'reviews: {len(reviewed)} done, {len(rtodo)} to go')
+        m = run(svc, rtodo, a.review, min(deadline, start + total * 0.45), a.limit, 'review')
+        print(f'reviews added {m}')
     # Frequent words with no Turkish at all ("usually", "each"): a few hundred, before the long queues.
     if a.words and svc.models and time.time() < deadline:
         wd_files = [a.words] + [f for f in a.done if os.path.basename(f).startswith('wd-')]
         wdone = read_done(wd_files, lambda j: j['w'])
         mtodo = shard_order(load_word_todo(a.dict_db, wdone, only_missing=True), lambda r: r[0], shard, shards)
         print(f'words without Turkish: {len(mtodo)} to go')
-        m = run(svc, mtodo, a.words, min(deadline, start + total * 0.3), a.limit, 'word')
+        m = run(svc, mtodo, a.words, min(deadline, start + total * 0.5), a.limit, 'word')
         print(f'words without Turkish added {m}')
 
-    n = run(svc, todo, a.out, min(deadline, start + total * 0.4), a.limit, 'expr')
+    n = run(svc, todo, a.out, min(deadline, start + total * 0.65), a.limit, 'expr')
     print(f'added {n}; remaining {len(todo) - n}')
 
     if a.words and svc.models and time.time() < deadline:
@@ -829,7 +988,7 @@ def main():
         wdone = read_done(wd_files, lambda j: j['w'])
         wtodo = shard_order(load_word_todo(a.dict_db, wdone), lambda r: r[0], shard, shards)
         print(f'words: {len(wdone)} done, {len(wtodo)} to go')
-        m = run(svc, wtodo, a.words, min(deadline, start + total * 0.7), a.limit, 'word')
+        m = run(svc, wtodo, a.words, min(deadline, start + total * 0.8), a.limit, 'word')
         print(f'words added {m}; remaining {len(wtodo) - m}')
 
     if a.families and svc.models and time.time() < deadline:
@@ -837,7 +996,7 @@ def main():
         fdone = read_done(wfd_files, lambda j: j['root'])
         ftodo = shard_order(load_fam_todo(a.dict_db, fdone), lambda r: r[0], shard, shards)
         print(f'word families: {len(fdone)} done, {len(ftodo)} to go')
-        m = run(svc, ftodo, a.families, min(deadline, start + total * 0.85), a.limit, 'fam')
+        m = run(svc, ftodo, a.families, min(deadline, start + total * 0.9), a.limit, 'fam')
         print(f'word families added {m}; remaining {len(ftodo) - m}')
 
     if a.senses and svc.models and time.time() < deadline:

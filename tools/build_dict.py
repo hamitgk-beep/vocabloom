@@ -366,6 +366,46 @@ def result_lines(paths):
             yield from f
 
 
+_REVIEWS = None
+_SHIPPED = None
+
+
+def reviewed(kind, j):
+    """The entry as a second model approved or corrected it (tools/pretranslate.py, kind "review"),
+    or None when it was rejected or is not reviewed yet. Entries already shipped in the previous
+    dictionary (REVIEW_KEEP_FROM) stay until their review comes in."""
+    global _REVIEWS, _SHIPPED
+    if _REVIEWS is None:
+        _REVIEWS = {}
+        for line in result_lines(result_files('rv-')):
+            try:
+                r = json.loads(line)
+            except ValueError:
+                continue
+            _REVIEWS.setdefault(r['k'], r)
+        _SHIPPED = set()
+        keep = os.environ.get('REVIEW_KEEP_FROM')
+        if keep and os.path.exists(keep):
+            old = sqlite3.connect(keep)
+            for q, fmt in [('SELECT phrase, cat FROM exd', 'exd:{}|{}'), ('SELECT word, 1 FROM wd', 'wd:{}'),
+                           ('SELECT phrase, cat FROM expr WHERE entr IS NOT NULL', 'gl:{}|{}')]:
+                try:
+                    _SHIPPED |= {fmt.format(*row) for row in old.execute(q)}
+                except sqlite3.OperationalError:
+                    pass
+            old.close()
+        elif not keep:
+            _SHIPPED = None  # a local build without the setting keeps everything
+        print('reviews', len(_REVIEWS), 'kept unreviewed from previous build', 'all' if _SHIPPED is None else len(_SHIPPED))
+    key = f"wd:{j['w']}" if kind == 'wd' else f"{kind}:{j['p']}|{j['c']}"
+    r = _REVIEWS.get(key)
+    if r is not None:
+        if r.get('ok'):
+            return j
+        return {**j, **r['fix']} if isinstance(r.get('fix'), dict) else None
+    return j if _SHIPPED is None or key in _SHIPPED else None
+
+
 def load_exd(db, exprs):
     """The built-in Turkish library made by tools/pretranslate.py (release data-exd)."""
     paths = result_files('exd')
@@ -384,6 +424,9 @@ def load_exd(db, exprs):
         if key not in exprs or not j.get('s') or key in seen:
             continue
         seen.add(key)
+        j = reviewed('exd', j)
+        if j is None or not j.get('s'):
+            continue
         db.execute('INSERT OR REPLACE INTO exd VALUES (?,?,?)', (j['p'], j['c'], json.dumps(j['s'], ensure_ascii=False)))
         n += 1
         if not exprs[key][0] and j.get('tr'):
@@ -519,6 +562,9 @@ def load_gloss(db):
         if key in seen:
             continue
         seen.add(key)
+        j = reviewed('gl', j)
+        if j is None:
+            continue
         db.execute("UPDATE expr SET tr=? WHERE phrase=? AND cat=? AND (tr IS NULL OR tr='')", (j.get('tr') or None, *key))
         filled += db.execute('UPDATE expr SET entr=?, extr=? WHERE phrase=? AND cat=?',
                              (j.get('d') or None, j.get('x') or None, *key)).rowcount
@@ -539,6 +585,9 @@ def load_wd(db):
         except ValueError:
             continue
         if j.get('w') and j.get('s'):
+            j = reviewed('wd', j)
+            if j is None or not j.get('s'):
+                continue
             n += db.execute('INSERT OR IGNORE INTO wd VALUES (?,?,?)',
                             (j['w'], j.get('tr') or '', json.dumps(j['s'], ensure_ascii=False))).rowcount
     print('built-in word explanations', n)
