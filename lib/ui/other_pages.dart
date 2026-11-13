@@ -545,7 +545,13 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ]),
           const SizedBox(height: 12),
-          Text(L('VocaBloom, Hamit Gök tarafından geliştirildi.', 'VocaBloom was developed by Hamit Gök.'), style: theme.textTheme.bodyMedium),
+          Text(
+            L('VocaBloom ile okuduğun her kitap bir İngilizce dersine dönüşür: bilinmeyen kelimeler anında açıklanır, tekrar sistemiyle kalıcı hale gelir. VocaBloom, dil öğrenenlerin gelişimini desteklemek amacıyla tasarlanmış ve geliştirilmiştir.',
+                'With VocaBloom, every book you read becomes an English lesson: unknown words are explained instantly and made permanent through spaced review. VocaBloom is designed and built to support language learners\' progress.'),
+            style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+          ),
+          const SizedBox(height: 10),
+          Text(L('© 2026 Hamit Gök. Tüm hakları saklıdır.', '© 2026 Hamit Gök. All rights reserved.'), style: theme.textTheme.bodySmall),
         ]),
         SectionLabel(L('Veriler ve lisanslar', 'Data and licenses')),
         Panel(children: [
