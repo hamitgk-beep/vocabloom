@@ -16,6 +16,7 @@ Keys come from the environment: GEMINI_API_KEY or ANTHROPIC_API_KEY.
 """
 import argparse
 import gzip
+import hashlib
 import json
 import os
 import sqlite3
@@ -807,6 +808,32 @@ def entry_key(kind, j):
     return f"{kind}:{j['w']}" if kind == 'wd' else f"{kind}:{j['p']}|{j['c']}"
 
 
+def entry_hash(j):
+    """Which version of an entry a review is about: a regenerated entry gets a review of its own."""
+    body = {k: v for k, v in j.items() if k != 'c'}
+    return hashlib.sha1(json.dumps(body, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
+
+
+def rejected_keys(paths):
+    """Entries whose latest review rejected them without a usable correction: to be written again."""
+    out = set()
+    for path in paths:
+        if not os.path.exists(path):
+            continue
+        with gzip.open(path, 'rt', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    r = json.loads(line)
+                except ValueError:
+                    continue
+                k = r['k'].split('#')[0]
+                if r.get('ok') or r.get('fix'):
+                    out.discard(k)
+                else:
+                    out.add(k)
+    return out
+
+
 def references(db, kind, j):
     """What the open dictionaries say, so the reviewer can spot a missing common sense."""
     out = []
@@ -859,12 +886,12 @@ def load_review_todo(dict_path, files, reviewed, me):
             for line in f:
                 try:
                     j = json.loads(line)
-                    key = entry_key(kind, j)
+                    key = f'{entry_key(kind, j)}#{entry_hash(j)}'
                 except (ValueError, KeyError):
                     continue
                 if key in reviewed:
                     continue
-                reviewed.add(key)  # one review per key even when two services made it
+                reviewed.add(key)  # one review per version even when two services made it
                 entry = {k: v for k, v in j.items() if k not in ('c',)}
                 row = (kind, key, gen, entry, references(db, kind, j))
                 (own if gen == me else other).append(row)
@@ -935,7 +962,9 @@ def main():
     deadline = time.time() + a.minutes * 60
 
     exd_files = [a.out] + [f for f in a.done if os.path.basename(f).startswith('exd')]
-    done = read_done(exd_files, lambda j: f"{j['p']}|{j['c']}")
+    rv_all = [a.review] + [f for f in a.done if os.path.basename(f).startswith('rv-')] if a.review else []
+    rejected = rejected_keys(rv_all)  # rejected without a correction: write them again
+    done = read_done(exd_files, lambda j: f"{j['p']}|{j['c']}") - {k[4:] for k in rejected if k.startswith('exd:')}
     todo = shard_order(load_todo(a.dict_db, done), lambda r: f'{r[0]}|{r[1]}', shard, shards)
     print(f'{len(done)} already done, {len(todo)} to go')
     if a.provider == 'claude':
@@ -953,7 +982,7 @@ def main():
     # First a short Turkish meaning for every expression that has none: 30 per request, so it is quick.
     if a.gloss:
         gl_files = [a.gloss] + [f for f in a.done if os.path.basename(f).startswith('gl-')]
-        gdone = read_done(gl_files, lambda j: f"{j['p']}|{j['c']}")
+        gdone = read_done(gl_files, lambda j: f"{j['p']}|{j['c']}") - {k[3:] for k in rejected if k.startswith('gl:')}
         gtodo = shard_order(load_gloss_todo(a.dict_db, gdone | done), lambda r: f'{r[0]}|{r[1]}', shard, shards)
         print(f'short meanings: {len(gdone)} done, {len(gtodo)} to go')
         m = run(svc, gtodo, a.gloss, min(deadline, start + total * 0.2), a.limit, 'gloss')
@@ -975,7 +1004,7 @@ def main():
     # Frequent words with no Turkish at all ("usually", "each"): a few hundred, before the long queues.
     if a.words and svc.models and time.time() < deadline:
         wd_files = [a.words] + [f for f in a.done if os.path.basename(f).startswith('wd-')]
-        wdone = read_done(wd_files, lambda j: j['w'])
+        wdone = read_done(wd_files, lambda j: j['w']) - {k[3:] for k in rejected if k.startswith('wd:')}
         mtodo = shard_order(load_word_todo(a.dict_db, wdone, only_missing=True), lambda r: r[0], shard, shards)
         print(f'words without Turkish: {len(mtodo)} to go')
         m = run(svc, mtodo, a.words, min(deadline, start + total * 0.5), a.limit, 'word')
@@ -986,7 +1015,7 @@ def main():
 
     if a.words and svc.models and time.time() < deadline:
         wd_files = [a.words] + [f for f in a.done if os.path.basename(f).startswith('wd-')]
-        wdone = read_done(wd_files, lambda j: j['w'])
+        wdone = read_done(wd_files, lambda j: j['w']) - {k[3:] for k in rejected if k.startswith('wd:')}
         wtodo = shard_order(load_word_todo(a.dict_db, wdone), lambda r: r[0], shard, shards)
         print(f'words: {len(wdone)} done, {len(wtodo)} to go')
         m = run(svc, wtodo, a.words, min(deadline, start + total * 0.8), a.limit, 'word')

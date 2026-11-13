@@ -10,6 +10,7 @@ Sources (see ASSETS_LICENSES.md):
 Usage: python3 tools/build_dict.py <raw_dir> <out_db>
 """
 import gzip
+import hashlib
 import json
 import os
 import re
@@ -382,7 +383,7 @@ def reviewed(kind, j):
                 r = json.loads(line)
             except ValueError:
                 continue
-            _REVIEWS.setdefault(r['k'], r)
+            _REVIEWS.setdefault(r['k'], r)  # 'exd:walk down|phrasal_verbs#<version>'
         _SHIPPED = set()
         keep = os.environ.get('REVIEW_KEEP_FROM')
         if keep and os.path.exists(keep):
@@ -398,7 +399,9 @@ def reviewed(kind, j):
             _SHIPPED = None  # a local build without the setting keeps everything
         print('reviews', len(_REVIEWS), 'kept unreviewed from previous build', 'all' if _SHIPPED is None else len(_SHIPPED))
     key = f"wd:{j['w']}" if kind == 'wd' else f"{kind}:{j['p']}|{j['c']}"
-    r = _REVIEWS.get(key)
+    body = {k: v for k, v in j.items() if k != 'c'}
+    version = hashlib.sha1(json.dumps(body, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12]
+    r = _REVIEWS.get(f'{key}#{version}') or _REVIEWS.get(key)
     if r is not None:
         if r.get('ok'):
             return j
@@ -423,10 +426,10 @@ def load_exd(db, exprs):
         key = (j['p'], j['c'])
         if key not in exprs or not j.get('s') or key in seen:
             continue
-        seen.add(key)
         j = reviewed('exd', j)
         if j is None or not j.get('s'):
-            continue
+            continue  # rejected: a later, regenerated version of the entry may follow
+        seen.add(key)
         db.execute('INSERT OR REPLACE INTO exd VALUES (?,?,?)', (j['p'], j['c'], json.dumps(j['s'], ensure_ascii=False)))
         n += 1
         if not exprs[key][0] and j.get('tr'):
@@ -561,10 +564,10 @@ def load_gloss(db):
             continue
         if key in seen:
             continue
-        seen.add(key)
         j = reviewed('gl', j)
         if j is None:
             continue
+        seen.add(key)
         db.execute("UPDATE expr SET tr=? WHERE phrase=? AND cat=? AND (tr IS NULL OR tr='')", (j.get('tr') or None, *key))
         filled += db.execute('UPDATE expr SET entr=?, extr=? WHERE phrase=? AND cat=?',
                              (j.get('d') or None, j.get('x') or None, *key)).rowcount
