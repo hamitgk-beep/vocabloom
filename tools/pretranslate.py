@@ -108,6 +108,11 @@ For each root return: "root", "root_tr" (its main Turkish meaning, 1 to 4 words)
 - "note_tr": one short Turkish sentence on how the affix changes the meaning (e.g. "-er eki işi yapan kişiyi gösterir"), "" for the root
 - "note_en": the same in English, "" for the root
 - "negative": true for negative or opposite forms (unhappy, disagree)
+- "example_en": one short, natural everyday English sentence using exactly this word
+- "example_tr": its natural Turkish translation
+Every entry must have a Turkish meaning ("tr"); never leave it empty.
+A note explains the affix against the word it is really built on (differentiation: differentiate + -ion,
+not differentiator + -ation).
 
 Answer with JSON only: {"items": [{"root": ..., "root_tr": ..., "entries": [...]}]}
 
@@ -128,8 +133,9 @@ FAM_SCHEMA = {
                     'tr': {'type': 'string'}, 'affix': {'type': 'string'},
                     'note_tr': {'type': 'string'}, 'note_en': {'type': 'string'},
                     'negative': {'type': 'boolean'},
+                    'example_en': {'type': 'string'}, 'example_tr': {'type': 'string'},
                 },
-                'required': ['word', 'pos', 'tr', 'affix', 'note_tr', 'note_en', 'negative'],
+                'required': ['word', 'pos', 'tr', 'affix', 'note_tr', 'note_en', 'negative', 'example_en', 'example_tr'],
                 'additionalProperties': False,
             }},
         },
@@ -541,6 +547,8 @@ def save_fam(out, chunk, items):
                     'a': f"{affix}: {e.get('note_tr', '').strip()}" if affix else None,
                     'ae': f"{affix}: {e.get('note_en', '').strip()}" if affix else None,
                     'n': e.get('negative') is True,
+                    'x': (e.get('example_en') or '').strip() or None,
+                    'xt': (e.get('example_tr') or '').strip() or None,
                 })
             fam = {'root': root, 'rootTr': (it.get('root_tr') or '').strip(), 'entries': entries}
             f.write(json.dumps({'root': root, 'family': fam}, ensure_ascii=False) + '\n')

@@ -429,7 +429,21 @@ class _WordFamilyViewState extends State<WordFamilyView> {
         Text(title, style: theme.textTheme.labelLarge?.copyWith(color: negative ? theme.colorScheme.error : theme.colorScheme.primary)),
         const SizedBox(height: 4),
         for (final e in items)
-          Container(
+          _familyEntry(theme, e, negative),
+      ]),
+    );
+  }
+
+  Widget _familyEntry(ThemeData theme, FamilyEntry e0, bool negative) {
+    var e = e0;
+    if (e.exEn == null) {
+      final x = widget.app.dict.examples('w:${e.word}', limit: 1);
+      if (x.isNotEmpty) {
+        e = FamilyEntry(e.word, e.pos, tr: e.tr, affixNote: e.affixNote, affixNoteEn: e.affixNoteEn,
+            negative: e.negative, exEn: x.first.$1, exTr: x.first.$2);
+      }
+    }
+    return Container(
             width: double.infinity,
             margin: const EdgeInsets.only(bottom: 6),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -452,10 +466,14 @@ class _WordFamilyViewState extends State<WordFamilyView> {
               ])),
               if (e.note != null)
                 Text(e.note!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+              if (e.exEn != null && (widget.app.showEn || widget.app.showTr)) ...[
+                const SizedBox(height: 4),
+                Text('“${e.exEn}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic, fontSize: 14), false)),
+                if (e.exTr != null && widget.app.showTr)
+                  Padding(padding: const EdgeInsets.only(left: 12), child: Text(e.exTr!, style: trStyle(theme, const TextStyle(fontSize: 14), false))),
+              ],
             ]),
-          ),
-      ]),
-    );
+          );
   }
 }
 

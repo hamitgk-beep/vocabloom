@@ -60,6 +60,8 @@ def clean_freedict(word, senses):
     head = re.compile(r"(?<![\w'])" + re.escape(word) + r"(?![\w])", re.I)
     for s in senses:
         s = re.sub(r'^ba[çg]la[çc]\s+', '(bağlaç) ', s)  # "baçlaç gerçi, ..." in FreeDict
+        # "from ile başka olmak" -> "(from ile) başka olmak": the preposition it goes with
+        s = re.sub(r'^(from|with|to|for|on|in|at|of|by|about|into|over|up|out|off) ile\s+', r'(\1 ile) ', s)
         segs = re.split(r'(?<=[.;])\s+', s)
         keep = []
         for i, seg in enumerate(segs):
@@ -80,7 +82,7 @@ def clean_freedict(word, senses):
             return 3
         if _RARE.match(t):
             return 2
-        if t.startswith('('):
+        if t.startswith('(') and not re.match(r'\(\w+ ile\)', t):
             return 1
         return 0
     return sorted(out, key=rank)

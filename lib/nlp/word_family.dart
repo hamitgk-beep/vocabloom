@@ -13,14 +13,23 @@ class FamilyEntry {
   final String? affixNote;
   final String? affixNoteEn;
   final bool negative;
-  const FamilyEntry(this.word, this.pos, {this.tr, this.affixNote, this.affixNoteEn, this.negative = false});
+
+  /// One example sentence and its Turkish, when known.
+  final String? exEn, exTr;
+  const FamilyEntry(this.word, this.pos,
+      {this.tr, this.affixNote, this.affixNoteEn, this.negative = false, this.exEn, this.exTr});
 
   /// The affix note in the interface language.
   String? get note => uiEnglish ? affixNoteEn ?? affixNote : affixNote;
 
-  Map<String, dynamic> toJson() => {'w': word, 'p': pos, 't': tr, 'a': affixNote, 'ae': affixNoteEn, 'n': negative};
+  Map<String, dynamic> toJson() => {
+        'w': word, 'p': pos, 't': tr, 'a': affixNote, 'ae': affixNoteEn, 'n': negative,
+        if (exEn != null) 'x': exEn,
+        if (exTr != null) 'xt': exTr,
+      };
   factory FamilyEntry.fromJson(Map<String, dynamic> j) => FamilyEntry('${j['w']}', '${j['p']}',
-      tr: j['t'] as String?, affixNote: j['a'] as String?, affixNoteEn: j['ae'] as String?, negative: j['n'] == true);
+      tr: j['t'] as String?, affixNote: j['a'] as String?, affixNoteEn: j['ae'] as String?, negative: j['n'] == true,
+      exEn: j['x'] as String?, exTr: j['xt'] as String?);
 }
 
 class WordFamily {
@@ -124,6 +133,71 @@ String? explainSuffix(String base, String word, String pos) {
   return null;
 }
 
+/// The closest base of [word] among [bases] and the suffix that builds it,
+/// allowing the usual spelling changes: differentiation <- differentiate + -ion,
+/// differentiate <- different + -ate, difference <- differ + -ence,
+/// happiness <- happy + -ness, ability <- able + -ity, stopper <- stop + -er.
+(String, String)? derive(Iterable<String> bases, String word, String pos) {
+  bool fits(String stem, String b) {
+    if (stem == b || '${stem}e' == b || stem == '${b}i') return true;
+    if (b.endsWith('y') && stem == '${b.substring(0, b.length - 1)}i') return true;
+    if (b.endsWith('le') && stem == '${b.substring(0, b.length - 2)}il') return true;
+    if (b.isNotEmpty && stem == b + b[b.length - 1]) return true; // stop -> stopp-er
+    if (b.endsWith('e') && stem == '${b.substring(0, b.length - 1)}i') return true; // create -> creati-ve
+    return false;
+  }
+
+  (String, String)? best;
+  for (final strict in [true, false]) {
+    for (final (suf, _, _, p) in _suffixes) {
+      if (strict && p != null && p != pos) continue;
+      if (!word.endsWith(suf) || word.length - suf.length < 2) continue;
+      final stem = word.substring(0, word.length - suf.length);
+      for (final b in bases) {
+        if (b == word || b.length < 2) continue;
+        if (fits(stem, b) && (best == null || b.length > best.$1.length)) best = (b, suf);
+      }
+    }
+    if (best != null) return best;
+  }
+  return null;
+}
+
+String? _suffixNote(String suf, String pos) {
+  for (final (s, noteTr, noteEn, p) in _suffixes) {
+    if (s == suf && (p == null || p == pos)) return uiEnglish ? noteEn : noteTr;
+  }
+  for (final (s, noteTr, noteEn, _) in _suffixes) {
+    if (s == suf) return uiEnglish ? noteEn : noteTr;
+  }
+  return null;
+}
+
+/// A rough Turkish meaning built from the base's meaning and the suffix, for
+/// family members the dictionary does not list ("differentiator" ->
+/// "≈ ayırdeden kişi ya da şey"). Marked with ≈.
+String? derivedTr(String baseTr, String suf, String pos) {
+  final first = baseTr.split(RegExp(r'[,;]')).first.replaceAll(RegExp(r'\([^)]*\)'), '').trim();
+  if (first.isEmpty) return null;
+  final verb = RegExp(r'(mak|mek)$').hasMatch(first);
+  final stem = verb ? first.substring(0, first.length - 3) : first;
+  final vowels = RegExp('[aıoueiöü]').allMatches(stem).toList();
+  final back = vowels.isEmpty || 'aıou'.contains(vowels.last.group(0)!);
+  final a = back ? 'a' : 'e';
+  if (verb) {
+    if (pos == 'n' && const {'er', 'or', 'ar', 'ant', 'ent', 'ist', 'ee'}.contains(suf)) return '≈ $stem${a}n kişi ya da şey';
+    if (pos == 'n') return '≈ $stem${back ? 'ma' : 'me'}';
+    if (pos == 'a' && (suf == 'able' || suf == 'ible')) return '≈ $stem${back ? 'abilir' : 'ebilir'}';
+    if (pos == 'a') return '≈ $stem${a}n';
+    return null;
+  }
+  if (pos == 'r' && suf == 'ly') return '≈ $first bir şekilde';
+  if (pos == 'n' && const {'ness', 'ity', 'ence', 'ance', 'ency', 'ancy', 'hood', 'dom'}.contains(suf)) return '≈ $first olma durumu';
+  if (pos == 'v') return '≈ $first hale getirmek';
+  if (pos == 'a') return '≈ $first ile ilgili';
+  return null;
+}
+
 String? explainPrefix(String base, String word) {
   for (final (pre, noteTr, noteEn) in _prefixes) {
     final note = uiEnglish ? noteEn : noteTr;
@@ -165,34 +239,43 @@ WordFamily? offlineFamily(DictDb dict, String lemma) {
   final members = (jsonDecode(r.first['members'] as String) as List).cast<List>();
   final negs = (jsonDecode(r.first['negs'] as String) as List).cast<List>();
   final rootPos = members.firstWhere((m) => m[0] == root, orElse: () => members.first)[1] as String;
+  final names = [for (final m in members) m[0] as String];
+  final trOf = {for (final m in members) m[0] as String: trFor(dict, m[0] as String, m[1] as String)};
+  (String, String)? baseOf(String w, String p) => w == root ? null : derive(names.where((b) => b.length < w.length + 2), w, p);
   String? baseNote(String w, String p) {
-    // Explain against the closest shorter member (creatively <- creative).
-    final cands = members.map((m) => m[0] as String).where((b) => b != w && w.startsWith(b.substring(0, (b.length - 2).clamp(3, b.length)))).toList()
-      ..sort((a, b) => b.length.compareTo(a.length));
-    // Only a real base: workable comes from work, not from worker.
-    bool builtOn(String b) {
-      var l = 0;
-      while (l < b.length && b[l] == w[l]) {
-        l++;
-      }
-      return l >= b.length - 1; // happy -> happiness, creative -> creativity
-    }
+    final d = baseOf(w, p);
+    if (d == null) return explainSuffix(root, w, p);
+    final note = _suffixNote(d.$2, p);
+    if (note == null) return null;
+    return d.$1 == root ? '-${d.$2}: $note' : '${d.$1} + -${d.$2}: $note';
+  }
 
-    for (final b in cands.where((b) => b.length < w.length && builtOn(b))) {
-      final n = explainSuffix(b, w, p);
-      if (n != null) return b == root ? n : '$b + $n';
-    }
-    return explainSuffix(root, w, p);
+  String? memberTr(String w, String p) {
+    final t = trOf[w];
+    if (t != null) return t;
+    final d = baseOf(w, p);
+    final bt = d == null ? null : trOf[d.$1];
+    return bt == null ? null : derivedTr(bt, d!.$2, p);
+  }
+
+  (String?, String?) example(String w) {
+    final e = dict.examples('w:$w', limit: 1);
+    return e.isEmpty ? (null, null) : (e.first.$1, e.first.$2);
   }
 
   return WordFamily(root, trFor(dict, root, rootPos), [
     for (final m in members)
       FamilyEntry(m[0] as String, m[1] as String,
-          tr: trFor(dict, m[0] as String, m[1] as String), affixNote: baseNote(m[0] as String, m[1] as String)),
+          tr: memberTr(m[0] as String, m[1] as String),
+          affixNote: baseNote(m[0] as String, m[1] as String),
+          exEn: example(m[0] as String).$1,
+          exTr: example(m[0] as String).$2),
     for (final n in negs)
       FamilyEntry(n[0] as String, n[1] as String,
           tr: trFor(dict, n[0] as String, n[1] as String) ?? negativeTr(dict, n[2] as String, n[1] as String),
           affixNote: explainPrefix(n[2] as String, n[0] as String) ?? L('zıt anlam: ${n[2]}', 'opposite of: ${n[2]}'),
-          negative: true),
+          negative: true,
+          exEn: example(n[0] as String).$1,
+          exTr: example(n[0] as String).$2),
   ]);
 }
