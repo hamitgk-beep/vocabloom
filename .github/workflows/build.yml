@@ -41,16 +41,24 @@ jobs:
       - name: Release signing key
         env:
           KS: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          PW: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -n "$KS" ]; then
-            echo "$KS" | base64 -d > "$RUNNER_TEMP/vocabloom.jks"
+            # Spaces or line breaks picked up while copying are removed.
+            printf '%s' "$KS" | tr -d '[:space:]' | base64 -d > "$RUNNER_TEMP/vocabloom.jks"
+            PW=$(printf '%s' "$PW" | tr -d '[:space:]')
+            echo "::add-mask::$PW"
+            echo "Keystore size: $(stat -c %s "$RUNNER_TEMP/vocabloom.jks") bytes (expected 2131), sha256 starts $(sha256sum "$RUNNER_TEMP/vocabloom.jks" | cut -c1-16) (expected 7feb829e563cea1b)"
+            if ! keytool -list -keystore "$RUNNER_TEMP/vocabloom.jks" -storepass "$PW" >/dev/null 2>&1; then
+              echo "::error::The signing key could not be opened. Check that ANDROID_KEYSTORE_B64 holds the whole text file and ANDROID_KEY_PASSWORD holds only the password."
+              exit 1
+            fi
             echo "VOCABLOOM_KEYSTORE=$RUNNER_TEMP/vocabloom.jks" >> "$GITHUB_ENV"
+            echo "VOCABLOOM_KEY_PASSWORD=$PW" >> "$GITHUB_ENV"
           else
             echo "::warning::ANDROID_KEYSTORE_B64 secret is not set; the APK is signed with a temporary debug key."
           fi
       - run: flutter build apk --release --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }}
-        env:
-          VOCABLOOM_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - uses: actions/upload-artifact@v4
         with:
           name: VocaBloom-Android
