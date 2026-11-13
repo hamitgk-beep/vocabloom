@@ -21,7 +21,8 @@ on:
     - cron: "17 3 * * *"   # once a day, when the free quota is fresh
 
 concurrency:
-  group: dictionary-data
+  # A run for one service can start while another service is still working.
+  group: dictionary-data-${{ inputs.provider || 'all' }}
   cancel-in-progress: false
 
 jobs:
