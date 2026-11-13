@@ -194,6 +194,8 @@ OPENAI_LIKE = {
     'groq': ('https://api.groq.com/openai/v1', 'GROQ_API_KEY', 'openai/gpt-oss-120b', 8.0),
     'cerebras': ('https://api.cerebras.ai/v1', 'CEREBRAS_API_KEY', 'gpt-oss-120b', 4.0),
     'github': ('https://models.github.ai/inference', 'GITHUB_TOKEN', 'openai/gpt-4.1-mini', 8.0),
+    'nvidia': ('https://integrate.api.nvidia.com/v1', 'NVIDIA_API_KEY', 'meta/llama-3.3-70b-instruct', 3.0),
+    'openrouter': ('https://openrouter.ai/api/v1', 'OPENROUTER_API_KEY', 'deepseek/deepseek-chat-v3-0324:free', 4.0),
 }
 
 _use_schema = [True]

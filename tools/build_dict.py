@@ -230,7 +230,7 @@ def load_wiktionary(exprs):
 
 # Several services translate in parallel (exd-gemini.jsonl.gz, exd-mistral.jsonl.gz ...).
 # When two did the same item, the first file in this order wins.
-SERVICE_ORDER = ['gemini', 'mistral', 'github', 'cerebras', 'groq']
+SERVICE_ORDER = ['gemini', 'mistral', 'github', 'nvidia', 'openrouter', 'cerebras', 'groq']
 
 
 def result_files(prefix):

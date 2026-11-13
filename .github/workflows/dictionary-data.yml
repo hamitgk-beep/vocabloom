@@ -9,7 +9,7 @@ on:
         description: "tatoeba or translate"
         default: translate
       provider:
-        description: "all, or one of gemini, mistral, groq, cerebras, github"
+        description: "all, or one of gemini, mistral, groq, cerebras, github, nvidia, openrouter"
         default: all
       model:
         description: "model name (empty = default)"
@@ -66,11 +66,13 @@ jobs:
       matrix:
         include:
           # Each free service takes its own share first, so they do not repeat each other.
-          - { service: gemini,   shard: "0/5" }
-          - { service: mistral,  shard: "1/5" }
-          - { service: groq,     shard: "2/5" }
-          - { service: cerebras, shard: "3/5" }
-          - { service: github,   shard: "4/5" }
+          - { service: gemini,     shard: "0/7" }
+          - { service: mistral,    shard: "1/7" }
+          - { service: groq,       shard: "2/7" }
+          - { service: cerebras,   shard: "3/7" }
+          - { service: github,     shard: "4/7" }
+          - { service: nvidia,     shard: "5/7" }
+          - { service: openrouter, shard: "6/7" }
     steps:
       - uses: actions/checkout@v4
       - name: Get earlier results of all services
@@ -91,6 +93,8 @@ jobs:
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
           MODEL: ${{ inputs.provider == matrix.service && inputs.model || '' }}
           LIMIT: ${{ inputs.limit || '100000' }}
