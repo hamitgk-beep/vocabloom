@@ -29,7 +29,7 @@ const posNames = {'n': 'isim', 'v': 'fiil', 'a': 'sıfat', 'r': 'zarf'};
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {
-  static const _version = '1';
+  static const _version = '2';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -38,6 +38,15 @@ class DictDb {
 
   static Future<DictDb> open(Directory dir) async {
     final file = File(p.join(dir.path, 'dict_v$_version.db'));
+    // Remove copies of older dictionary versions.
+    for (final f in dir.listSync().whereType<File>()) {
+      final n = p.basename(f.path);
+      if (n.startsWith('dict_v') && n.endsWith('.db') && f.path != file.path) {
+        try {
+          f.deleteSync();
+        } catch (_) {}
+      }
+    }
     if (!file.existsSync() || file.lengthSync() < 1000000) {
       final data = await rootBundle.load('assets/dict.db');
       await file.writeAsBytes(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes), flush: true);

@@ -885,6 +885,98 @@ wake|woke|woken | uyanmak
 wear|wore|worn | giymek
 win|won|won | kazanmak
 write|wrote|written | yazmak
+arise|arose|arisen | ortaya çıkmak
+awake|awoke|awoken | uyanmak
+beat|beat|beaten | dövmek; yenmek
+become|became|become | olmak, haline gelmek
+bend|bent|bent | bükmek, eğilmek
+bet|bet|bet | bahse girmek
+bid|bid|bid | teklif vermek
+bind|bound|bound | bağlamak
+bite|bit|bitten | ısırmak
+bleed|bled|bled | kanamak
+blow|blew|blown | esmek, üflemek
+breed|bred|bred | yetiştirmek, üremek
+broadcast|broadcast|broadcast | yayınlamak
+burn|burnt|burnt | yakmak, yanmak
+burst|burst|burst | patlamak
+cast|cast|cast | atmak, fırlatmak
+cling|clung|clung | sıkıca tutunmak
+cost|cost|cost | mal olmak
+creep|crept|crept | sürünmek, sinsice ilerlemek
+cut|cut|cut | kesmek
+deal|dealt|dealt | ilgilenmek, uğraşmak
+dig|dug|dug | kazmak
+dream|dreamt|dreamt | rüya görmek, hayal etmek
+dwell|dwelt|dwelt | ikamet etmek; üzerinde durmak
+feed|fed|fed | beslemek
+flee|fled|fled | kaçmak
+fling|flung|flung | fırlatmak
+forbid|forbade|forbidden | yasaklamak
+forecast|forecast|forecast | tahmin etmek
+foresee|foresaw|foreseen | önceden görmek
+forgive|forgave|forgiven | affetmek
+freeze|froze|frozen | donmak, dondurmak
+hang|hung|hung | asmak
+hit|hit|hit | vurmak
+hurt|hurt|hurt | incitmek, acıtmak
+kneel|knelt|knelt | diz çökmek
+knit|knit|knit | örmek
+lay|laid|laid | yatırmak, sermek
+lean|leant|leant | eğilmek, yaslanmak
+leap|leapt|leapt | sıçramak
+learn|learnt|learnt | öğrenmek
+lend|lent|lent | ödünç vermek
+let|let|let | izin vermek, bırakmak
+light|lit|lit | yakmak, aydınlatmak
+mislead|misled|misled | yanıltmak
+mistake|mistook|mistaken | yanılmak, karıştırmak
+overcome|overcame|overcome | üstesinden gelmek
+overtake|overtook|overtaken | sollamak, geçmek
+prove|proved|proven | kanıtlamak
+put|put|put | koymak
+quit|quit|quit | bırakmak
+read|read|read | okumak
+rid|rid|rid | kurtulmak
+seek|sought|sought | aramak
+set|set|set | koymak, ayarlamak
+sew|sewed|sewn | dikmek
+shed|shed|shed | dökmek
+shrink|shrank|shrunk | küçülmek, çekmek
+shut|shut|shut | kapatmak
+slay|slew|slain | öldürmek
+slide|slid|slid | kaymak
+sling|slung|slung | fırlatmak, asmak
+slit|slit|slit | yarmak
+smell|smelt|smelt | koklamak, kokmak
+sow|sowed|sown | ekmek (tohum)
+speed|sped|sped | hızla gitmek
+spell|spelt|spelt | hecelemek
+spill|spilt|spilt | dökmek
+spin|spun|spun | dönmek, döndürmek
+spit|spat|spat | tükürmek
+split|split|split | bölmek
+spoil|spoilt|spoilt | şımartmak, bozmak
+spread|spread|spread | yaymak
+spring|sprang|sprung | sıçramak
+sting|stung|stung | sokmak (arı)
+stink|stank|stunk | kötü kokmak
+stride|strode|stridden | uzun adımlarla yürümek
+string|strung|strung | dizmek
+strive|strove|striven | çabalamak
+swear|swore|sworn | yemin etmek, küfretmek
+sweep|swept|swept | süpürmek
+swell|swelled|swollen | şişmek
+swing|swung|swung | sallanmak
+thrust|thrust|thrust | itmek, saplamak
+tread|trod|trodden | basmak, çiğnemek
+undergo|underwent|undergone | geçirmek, maruz kalmak
+undertake|undertook|undertaken | üstlenmek
+upset|upset|upset | üzmek
+weave|wove|woven | dokumak
+weep|wept|wept | ağlamak
+withdraw|withdrew|withdrawn | geri çekmek, çekilmek
+wring|wrung|wrung | sıkmak (çamaşır)
 """
 
 CATEGORIES = {
