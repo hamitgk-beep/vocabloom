@@ -582,6 +582,7 @@ def run(svc, todo, out, deadline, limit, kind):
             time.sleep(max(0, svc.pause - (time.time() - t0)))
     except QuotaExhausted as e:
         print(f'{svc.name} stopped: {str(e)[:200]}')
+        svc.models = []  # the service is done for this run, for every kind
     return done
 
 
