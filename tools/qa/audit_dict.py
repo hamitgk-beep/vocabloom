@@ -280,7 +280,21 @@ class Audit:
         for row in c.execute(q):
             if row[0] in topset:
                 senses_of[row[0]].append(row)
+        exc = defaultdict(list)
+        for f_, l_ in c.execute('SELECT form, lemma FROM exc'):
+            exc[f_].append(l_)
+
         def base_known(w):
+            # Inflected forms: the reader looks up their lemma instead.
+            if any(l in ft or l in wd for l in exc.get(w, [])):
+                return True
+            for suf, add in (('ped', ''), ('ted', ''), ('ned', ''), ('ger', ''), ('ter', ''), ('est', ''), ('er', ''), ('er', 'e')):
+                if w.endswith(suf) and len(w) - len(suf) >= 2:
+                    b = w[: len(w) - len(suf)] + add
+                    if suf in ('ped', 'ted', 'ned', 'ger', 'ter'):
+                        b = w[: len(w) - len(suf) + 1] if suf != 'ger' and suf != 'ter' else w[: len(w) - 3]
+                    if b in ft or b in wd:
+                        return True
             for suf, add in (('ies', 'y'), ('es', ''), ('s', ''), ('ed', ''), ('ed', 'e'), ('ing', ''), ('ing', 'e'), ('d', '')):
                 if w.endswith(suf) and len(w) - len(suf) >= 2:
                     b = w[: len(w) - len(suf)] + add
