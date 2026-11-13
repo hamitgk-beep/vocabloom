@@ -214,7 +214,13 @@ class AiService {
           'max_tokens': maxTokens,
         };
     }
-    final res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(const Duration(minutes: 5));
+    // Busy (503/529) or rate-limited (429): wait a little and try again.
+    var res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(const Duration(minutes: 5));
+    for (final wait in const [3, 8, 20]) {
+      if (res.statusCode != 503 && res.statusCode != 529 && res.statusCode != 429) break;
+      await Future<void>.delayed(Duration(seconds: wait));
+      res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(const Duration(minutes: 5));
+    }
     final raw = utf8.decode(res.bodyBytes);
     Map<String, dynamic>? data;
     try {
@@ -228,6 +234,7 @@ class AiService {
         401 || 403 => ' (Anahtar geçersiz ya da bu servise yetkisi yok.)',
         404 => ' (Model adı bulunamadı; model kutusunu değiştirip tekrar deneyin.)',
         429 => ' (Kullanım sınırına takıldı; ücretsiz planda biraz bekleyip tekrar deneyin.)',
+        503 || 529 => ' (Anahtarın çalışıyor, ama model şu an çok yoğun. Biraz sonra tekrar deneyin ya da model adını değiştirin, ör. gemini-flash-lite-latest.)',
         _ => '',
       };
       throw Exception('${cfg.provider.name} hatası (${res.statusCode}): $msg$hint');
