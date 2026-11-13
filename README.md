@@ -3,6 +3,8 @@
 İngilizce kitapları okurken bilmediğin kelimeleri öğrenmen için çevrimdışı çalışan okuyucu.
 Windows, macOS, Linux, Android ve iOS için tek kod tabanı (Flutter).
 
+Geliştiren: Hamit
+
 ## Neler yapar
 
 - **Kitap ekleme:** EPUB, PDF (metinli), TXT, Markdown, HTML, DOCX, ODT, FB2, RTF. Kitap uygulamanın kendi

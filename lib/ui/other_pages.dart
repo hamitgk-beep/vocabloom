@@ -386,6 +386,10 @@ class _SettingsPageState extends State<SettingsPage> {
           Text('Not: ${p.name} resimdeki yazıyı okuyamaz; taranmış PDF için cihazın kendi OCR\'ı kullanılır.',
               style: theme.textTheme.bodySmall),
         const Divider(height: 32),
+        Text('Hakkında', style: theme.textTheme.titleMedium),
+        const SizedBox(height: 6),
+        const Text('VocaBloom, Hamit tarafından geliştirildi.'),
+        const Divider(height: 32),
         Text('Veriler ve lisanslar', style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
         const Text(
