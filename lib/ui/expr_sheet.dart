@@ -8,6 +8,7 @@ import '../nlp/text.dart';
 import '../online/ai_service.dart';
 import '../nlp/word_family.dart';
 import 'panel.dart';
+import 'tap_text.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
 
@@ -15,6 +16,7 @@ import 'word_sheet.dart';
 /// tapped word belongs to.
 /// [ctx] is null when opened from a list (dictionary, word list) instead of a book.
 Future<void> showExprSheet(BuildContext context, AppState app, Expr expr, WordContext? ctx, [List<String>? words]) {
+  panelApp = app;
   return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words ?? expr.phrase.split(' '), scroll: sc));
 }
 
@@ -102,7 +104,7 @@ class _ExprPanelState extends State<ExprPanel> {
         Text(L('Kelimelerin düz anlamı', 'Plain meaning of the words'), style: theme.textTheme.labelLarge?.copyWith(color: theme.hintColor)),
         const SizedBox(height: 2),
         Text(rest.isEmpty ? lemma : '$lemma (+ $rest)', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-        if (enM != null && enM != trM) Text(enM, style: enStyle(theme)),
+        if (enM != null && enM != trM) TapText(enM, style: enStyle(theme)),
         if (trM != null) Text(trM, style: trStyle(theme)),
       ]),
     );
@@ -170,11 +172,11 @@ class _ExprPanelState extends State<ExprPanel> {
                     style: theme.textTheme.labelSmall?.copyWith(color: color)),
               ),
             const SizedBox(height: 4),
-            if (en) Text(s.explainEn, style: enStyle(theme)),
+            if (en) TapText(s.explainEn, style: enStyle(theme)),
             if (tr) Text(s.explainTr, style: trStyle(theme)),
             for (final ex in s.examples) ...[
               const SizedBox(height: 6),
-              if (en || !tr) Text('• ${ex.$1}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              if (en || !tr) TapText('• ${ex.$1}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
               if (tr) Padding(padding: EdgeInsets.only(left: en ? 12 : 0), child: Text(en ? ex.$2 : '• ${ex.$2}', style: trStyle(theme, null, false))),
             ],
           ]),
@@ -210,7 +212,7 @@ class _ExprPanelState extends State<ExprPanel> {
       for (var i = 0; i < defs.length; i++) {
         final t = i < defsTr.length && defsTr.length == defs.length ? defsTr[i] : null;
         if (!en && tr && t == null && defsTr.isNotEmpty) continue;
-        if (en || t == null) children.add(Padding(padding: const EdgeInsets.only(top: 2), child: Text('${i + 1}. ${defs[i]}', style: enStyle(theme))));
+        if (en || t == null) children.add(Padding(padding: const EdgeInsets.only(top: 2), child: TapText('${i + 1}. ${defs[i]}', style: enStyle(theme))));
         if (tr && t != null) children.add(Padding(padding: EdgeInsets.only(top: en ? 0 : 2, left: en ? 14 : 0), child: Text(en ? t : '${i + 1}. $t', style: trStyle(theme))));
       }
       // Turkish definitions in one piece when their number does not match the English ones.
@@ -229,7 +231,7 @@ class _ExprPanelState extends State<ExprPanel> {
       if (expr.ex != null && (en || expr.exTr != null)) {
         children.add(Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: Text('• ${expr.ex}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+          child: TapText('• ${expr.ex}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
         ));
         if (tr && expr.exTr != null) {
           children.add(Padding(padding: const EdgeInsets.only(left: 12), child: Text(expr.exTr!, style: trStyle(theme, null, false))));
@@ -274,7 +276,7 @@ class _ExprPanelState extends State<ExprPanel> {
         children.add(Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+            TapText('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
             if (tr) Padding(padding: const EdgeInsets.only(left: 12), child: Text(t, style: trStyle(theme, null, false))),
           ]),
         ));
