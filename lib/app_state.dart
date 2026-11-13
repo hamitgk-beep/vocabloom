@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'data/dict_db.dart';
+import 'data/review.dart';
 import 'data/user_db.dart';
 import 'nlp/grammar.dart';
 import 'online/auto_analyzer.dart';
@@ -49,9 +50,13 @@ class AppState extends ChangeNotifier {
   bool showTr = true;
   bool showEn = true;
   double fontSize = 19;
+  /// Reader page in day mode: 'white' or 'sepia'.
+  String paper = 'white';
+  double lineHeight = 1.6;
   ThemeMode themeMode = ThemeMode.light;
   int _wordsVersion = 0;
   late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
+  late final ReviewStore review = ReviewStore(user);
 
   AppState(this.dict, this.user) {
     final past = <String>{}, pp = <String>{};
@@ -85,6 +90,8 @@ class AppState extends ChangeNotifier {
     showTr = s['tr'] as bool? ?? true;
     showEn = s['en'] as bool? ?? true;
     fontSize = (s['font'] as num?)?.toDouble() ?? 19;
+    paper = s['paper'] as String? ?? 'white';
+    lineHeight = (s['lh'] as num?)?.toDouble() ?? 1.6;
     themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
     uiEnglish = s['ui'] == 'en';
   }
@@ -105,7 +112,7 @@ class AppState extends ChangeNotifier {
 
   int get wordsVersion => _wordsVersion;
 
-  void _save() => user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr'});
+  void _save() => user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);
@@ -123,6 +130,13 @@ class AppState extends ChangeNotifier {
     showTr = tr ?? showTr;
     showEn = en ?? showEn;
     if (!showTr && !showEn) showTr = true;
+    _save();
+    notifyListeners();
+  }
+
+  void setReading({String? paper, double? lineHeight}) {
+    this.paper = paper ?? this.paper;
+    this.lineHeight = lineHeight ?? this.lineHeight;
     _save();
     notifyListeners();
   }

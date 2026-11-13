@@ -7,6 +7,7 @@ import '../online/ai_service.dart';
 import '../online/update_check.dart';
 import '../l10n.dart';
 import 'panel.dart';
+import 'review_page.dart';
 import 'theme.dart';
 import 'word_sheet.dart';
 
@@ -57,9 +58,15 @@ class WordsPage extends StatelessWidget {
         ),
         body: ListenableBuilder(
           listenable: app,
-          builder: (context, _) => TabBarView(children: [
-            _WordList(app: app, status: WordStatus.learning),
-            _WordList(app: app, status: WordStatus.learned),
+          builder: (context, _) => Column(children: [
+            if (app.user.statuses.containsValue(WordStatus.learning))
+              Padding(padding: const EdgeInsets.fromLTRB(16, 0, 16, 6), child: ReviewBanner(app: app)),
+            Expanded(
+              child: TabBarView(children: [
+                _WordList(app: app, status: WordStatus.learning),
+                _WordList(app: app, status: WordStatus.learned),
+              ]),
+            ),
           ]),
         ),
       ),
