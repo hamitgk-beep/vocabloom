@@ -1,0 +1,92 @@
+name: dictionary-data
+# Builds the inputs of the built-in Turkish library (release assets, used by
+# tools/build_dict.py). Users of the app never need an API key: the AI work
+# happens here, once, and the results are shipped inside the app.
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "tatoeba or translate"
+        default: translate
+      provider:
+        description: "gemini (free) or claude"
+        default: gemini
+      model:
+        description: "model name (empty = default)"
+        default: ""
+      limit:
+        description: "max expressions this run"
+        default: "100000"
+  schedule:
+    - cron: "17 3 * * *"   # once a day, when the free quota is fresh
+
+concurrency:
+  group: dictionary-data
+  cancel-in-progress: false
+
+jobs:
+  tatoeba:
+    if: github.event_name == 'workflow_dispatch' && inputs.job == 'tatoeba'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Tatoeba and extract English-Turkish pairs
+        run: |
+          set -e
+          mkdir -p t && cd t
+          curl -sSfLO https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2
+          curl -sSfLO https://downloads.tatoeba.org/exports/per_language/tur/tur_sentences.tsv.bz2
+          curl -sSfLO https://downloads.tatoeba.org/exports/links.tar.bz2
+          bunzip2 -f eng_sentences.tsv.bz2 tur_sentences.tsv.bz2
+          tar xjf links.tar.bz2
+          python3 ../tools/tatoeba_extract.py eng_sentences.tsv tur_sentences.tsv links.csv ../tatoeba_en_tr.tsv.gz
+          ls -la ../tatoeba_en_tr.tsv.gz
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view data-tatoeba >/dev/null 2>&1 || gh release create data-tatoeba --prerelease \
+            --target "$GITHUB_SHA" --title "Tatoeba data (build input)" \
+            --notes "English-Turkish sentence pairs from Tatoeba (CC BY 2.0 FR). Used by tools/build_dict.py."
+          gh release upload data-tatoeba tatoeba_en_tr.tsv.gz --clobber
+
+  translate:
+    if: github.event_name == 'schedule' || inputs.job == 'translate'
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get earlier results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view data-exd >/dev/null 2>&1 || gh release create data-exd --prerelease \
+            --target "$GITHUB_SHA" --title "Built-in Turkish library (build input)" \
+            --notes "Senses, Turkish explanations and translated examples of every expression. Made once with AI at build time; used by tools/build_dict.py."
+          gh release download data-exd -p exd.jsonl.gz || true
+          ls -la exd.jsonl.gz || true
+      - name: Translate
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PROVIDER: ${{ inputs.provider || 'gemini' }}
+          MODEL: ${{ inputs.model }}
+          LIMIT: ${{ inputs.limit || '100000' }}
+        run: |
+          if [ "$PROVIDER" = claude ]; then pip install -q anthropic; fi
+          python3 tools/pretranslate.py assets/dict.db exd.jsonl.gz --provider "$PROVIDER" --model "$MODEL" \
+            --limit "$LIMIT" --minutes 320
+      - name: Save results
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          [ -f exd.jsonl.gz ] && gh release upload data-exd exd.jsonl.gz --clobber
+          python3 -c "import gzip;print('total', sum(1 for _ in gzip.open('exd.jsonl.gz','rt')))"

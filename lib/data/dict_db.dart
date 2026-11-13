@@ -113,6 +113,31 @@ class DictDb {
   final Map<String, Set<String>> _posCache = {};
 
   /// Parts of speech WordNet knows for [word] (any inflected form).
+  late final bool _hasExd =
+      db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='exd'").isNotEmpty;
+
+  /// Built-in senses of an expression (Turkish + English, with translated
+  /// examples), as JSON in the same shape the AI service returns. Null when
+  /// this dictionary has none for it.
+  String? exprDetail(String phrase, String cat) {
+    if (!_hasExd) return null;
+    final r = db.select('SELECT json FROM exd WHERE phrase=? AND cat=?', [phrase, cat]);
+    return r.isEmpty ? null : r.first.columnAt(0) as String;
+  }
+
+  late final bool _hasExs =
+      db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='exs'").isNotEmpty;
+
+  /// Example sentences with Turkish translations (Tatoeba) for an expression
+  /// ("phrase|cat") or a word ("w:lemma").
+  List<(String, String)> examples(String key, {int limit = 4}) {
+    if (!_hasExs) return const [];
+    return [
+      for (final r in db.select('SELECT en, tr FROM exs WHERE key=? LIMIT ?', [key, limit]))
+        (r.columnAt(0) as String, r.columnAt(1) as String)
+    ];
+  }
+
   Set<String> posOf(String word) => _posCache.putIfAbsent(word, () {
         final out = <String>{};
         for (final l in lemmatizer.lemmas(word)) {

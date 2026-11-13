@@ -117,7 +117,7 @@ class _SentencePanelState extends State<SentencePanel> {
       if (tr != null && showTr)
         Padding(
           padding: const EdgeInsets.only(top: 6),
-          child: SelectableText(tr, style: TextStyle(fontSize: 17, height: 1.45, color: theme.colorScheme.secondary)),
+          child: SelectableText(tr, style: trStyle(theme, const TextStyle(fontSize: 17, height: 1.45))),
         ),
       if (tr == null && loading)
         Padding(
@@ -146,9 +146,9 @@ class _SentencePanelState extends State<SentencePanel> {
       ],
       if ((showEn && onlineExplainEn != null) || (showTr && onlineExplain != null)) ...[
         section(L('Açıklama', 'Explanation')),
-        if (showEn && onlineExplainEn != null) SelectableText(onlineExplainEn!),
+        if (showEn && onlineExplainEn != null) SelectableText(onlineExplainEn!, style: enStyle(theme)),
         if (showEn && onlineExplainEn != null && showTr && onlineExplain != null) const SizedBox(height: 8),
-        if (showTr && onlineExplain != null) SelectableText(onlineExplain!),
+        if (showTr && onlineExplain != null) SelectableText(onlineExplain!, style: trStyle(theme)),
       ],
       if (tr != null && onlineExplain == null && !loading && AiService.fromSettings(app.user) != null)
         Padding(
@@ -194,7 +194,16 @@ class _SentencePanelState extends State<SentencePanel> {
               },
             ),
             title: Text(lemma == t.lower ? t.text : '${t.text}  →  $lemma', style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: m.isEmpty ? null : Text(m, maxLines: 3, overflow: TextOverflow.ellipsis),
+            subtitle: m.isEmpty
+                ? null
+                : Text.rich(
+                    TextSpan(children: [
+                      if (enM != null) TextSpan(text: enM, style: enStyle(theme, null, false)),
+                      if (enM != null && trM != null && trM != enM) const TextSpan(text: '\n'),
+                      if (trM != null && trM != enM) TextSpan(text: trM, style: trStyle(theme)),
+                    ]),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis),
             onTap: () async {
               final i = ctx.sentenceTokens.indexOf(t);
               await showWordSheet(context, app, t.text,

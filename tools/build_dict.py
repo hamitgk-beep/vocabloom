@@ -228,6 +228,118 @@ def load_wiktionary(exprs):
     return examples
 
 
+def load_exd(db, exprs):
+    """The built-in Turkish library made by tools/pretranslate.py (release data-exd)."""
+    path = os.path.join(RAW, 'exd.jsonl.gz')
+    if not os.path.exists(path):
+        print('exd: not found, skipped')
+        return
+    db.execute('CREATE TABLE exd(phrase TEXT, cat TEXT, json TEXT, PRIMARY KEY(phrase, cat))')
+    n = filled = 0
+    with gzip.open(path, 'rt', encoding='utf-8') as f:
+        for line in f:
+            try:
+                j = json.loads(line)
+            except ValueError:
+                continue
+            key = (j['p'], j['c'])
+            if key not in exprs or not j.get('s'):
+                continue
+            db.execute('INSERT OR REPLACE INTO exd VALUES (?,?,?)', (j['p'], j['c'], json.dumps(j['s'], ensure_ascii=False)))
+            n += 1
+            if not exprs[key][0] and j.get('tr'):
+                exprs[key][0] = j['tr']
+                filled += 1
+    print('exd senses', n, 'turkish meanings filled', filled)
+
+
+TOKEN_RE = re.compile(r"[a-z]+(?:'[a-z]+)?")
+
+
+def load_tatoeba(db, exprs):
+    """Translated example sentences (Tatoeba, CC BY 2.0 FR) for expressions and words."""
+    path = os.path.join(RAW, 'tatoeba_en_tr.tsv.gz')
+    if not os.path.exists(path):
+        print('tatoeba: not found, skipped')
+        return
+    pairs = []
+    with gzip.open(path, 'rt', encoding='utf-8') as f:
+        for line in f:
+            en, _, tr = line.rstrip('\n').partition('\t')
+            if en and tr and len(en) <= 140:
+                pairs.append((en, tr))
+    pairs.sort(key=lambda x: len(x[0]))  # shorter examples first
+    toks = [TOKEN_RE.findall(en.lower().replace('’', "'")) for en, _ in pairs]
+    # inflected form -> lemma
+    lemma_of = {}
+    for form, lemma in db.execute('SELECT form, lemma FROM exc'):
+        lemma_of.setdefault(form, lemma)
+    known = {r[0] for r in db.execute('SELECT DISTINCT lemma FROM sense')}
+
+    def lemmas(w):
+        out = {w}
+        if w in lemma_of:
+            out.add(lemma_of[w])
+        for suf, rep in (('ies', 'y'), ('es', ''), ('s', ''), ('ied', 'y'), ('ed', ''), ('ed', 'e'), ('ing', ''), ('ing', 'e')):
+            if w.endswith(suf) and len(w) > len(suf) + 2:
+                b = w[:-len(suf)] + rep
+                if b in known:
+                    out.add(b)
+                if len(b) > 2 and b[-1] == b[-2] and b[:-1] in known:  # stopped -> stop
+                    out.add(b[:-1])
+        return out
+
+    index = {}
+    lem_toks = []
+    for i, ts in enumerate(toks):
+        ls = [lemmas(t) for t in ts]
+        lem_toks.append(ls)
+        for l in set().union(*ls) if ls else ():
+            lst = index.setdefault(l, [])
+            if len(lst) < 4000:
+                lst.append(i)
+    rows = []
+    # expressions: words in order, at most two words in between
+    for (p, cat) in exprs:
+        words = p.replace("one's", '').replace('someone', '').replace('something', '').split()
+        words = [w for w in words if w]
+        if len(words) < 2:
+            continue
+        cand = None
+        for w in words:
+            c = set(index.get(w, ()))
+            cand = c if cand is None else cand & c
+            if not cand:
+                break
+        found = 0
+        for i in sorted(cand or ()):
+            ls = lem_toks[i]
+            pos = -1
+            ok = True
+            for w in words:
+                nxt = next((k for k in range(pos + 1, min(len(ls), pos + 4 if pos >= 0 else len(ls))) if w in ls[k]), None)
+                if nxt is None:
+                    ok = False
+                    break
+                pos = nxt
+            if ok:
+                rows.append((f'{p}|{cat}', pairs[i][0], pairs[i][1]))
+                found += 1
+                if found >= 4:
+                    break
+    n_expr = len(rows)
+    # single words: three short examples per dictionary word
+    for w in known:
+        if "_" in w or ' ' in w:
+            continue
+        for i in index.get(w, ())[:3]:
+            rows.append((f'w:{w}', pairs[i][0], pairs[i][1]))
+    db.execute('CREATE TABLE exs(key TEXT, en TEXT, tr TEXT)')
+    db.executemany('INSERT INTO exs VALUES (?,?,?)', rows)
+    db.execute('CREATE INDEX exs_key ON exs(key)')
+    print('tatoeba pairs', len(pairs), 'expression examples', n_expr, 'word examples', len(rows) - n_expr)
+
+
 def main():
     if os.path.exists(OUT):
         os.remove(OUT)
@@ -285,6 +397,7 @@ def main():
         added[cat] += 1
     print('wordnet-derived expressions', added)
     examples = load_wiktionary(exprs)
+    load_exd(db, exprs)
 
     # English gloss for curated items where WordNet knows the phrase.
     rows = []
@@ -301,6 +414,8 @@ def main():
         rows.append((p, cat, tr, en, json.dumps(forms) if forms else None, examples.get((p, cat))))
     db.executemany('INSERT INTO expr(phrase, cat, tr, en, forms, ex) VALUES (?,?,?,?,?,?)', rows)
     print('expressions total', len(rows))
+
+    load_tatoeba(db, exprs)
 
     from word_family import build_families
     fams = build_families(os.path.join(RAW, 'wordnet'))

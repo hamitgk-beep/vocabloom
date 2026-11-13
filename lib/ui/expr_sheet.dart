@@ -6,6 +6,7 @@ import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../online/ai_service.dart';
+import '../nlp/word_family.dart';
 import 'panel.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
@@ -30,6 +31,7 @@ class ExprPanel extends StatefulWidget {
 
 class _ExprPanelState extends State<ExprPanel> {
   List<ExprSense>? senses;
+  bool fromAi = false;
   bool loading = false;
   String? error;
 
@@ -40,11 +42,14 @@ class _ExprPanelState extends State<ExprPanel> {
   @override
   void initState() {
     super.initState();
+    // Saved AI answer first, then the built-in library. Nothing waits for the
+    // internet: the AI is only asked when the user presses the button.
     final cached = app.user.exprDetail(_key);
-    if (cached != null) {
-      senses = [for (final s in (jsonDecode(cached) as List)) ExprSense.fromJson((s as Map).cast<String, dynamic>())];
-    } else {
-      _load();
+    final builtIn = cached == null ? app.dict.exprDetail(expr.phrase, expr.cat) : null;
+    final js = cached ?? builtIn;
+    if (js != null) {
+      senses = [for (final s in (jsonDecode(js) as List)) ExprSense.fromJson((s as Map).cast<String, dynamic>())];
+      fromAi = cached != null;
     }
   }
 
@@ -58,12 +63,48 @@ class _ExprPanelState extends State<ExprPanel> {
     try {
       final r = await svc.exprDetail(expr.phrase, expr.cat, sentence: widget.ctx.sentence);
       if (r.isNotEmpty) app.user.setExprDetail(_key, jsonEncode([for (final s in r) s.toJson()]));
-      if (mounted) setState(() => senses = r);
+      if (mounted) {
+        setState(() {
+          senses = r;
+          fromAi = true;
+        });
+      }
     } catch (e) {
       if (mounted) setState(() => error = '$e');
     } finally {
       if (mounted) setState(() => loading = false);
     }
+  }
+
+  /// The plain meaning of the expression's main word, e.g. "disagree:
+  /// aynı fikirde olmamak" for "disagree with".
+  Widget? _headWord() {
+    if (expr.cat != 'phrasal_verbs' && expr.cat != 'collocations' && expr.cat != 'prepositional_phrases') return null;
+    final words = expr.phrase.split(' ');
+    final w = words.firstWhere((w) => w.length > 2 && !stopWords.contains(w), orElse: () => '');
+    if (w.isEmpty) return null;
+    final lemma = app.primaryLemma(w);
+    final info = app.dict.lookup(lemma);
+    // A phrasal verb starts with a verb: use the verb senses.
+    final pos = expr.cat == 'phrasal_verbs' ? 'v' : (info.senses.firstOrNull?.pos ?? 'n');
+    final sense = info.senses.where((s) => s.pos == pos).firstOrNull ?? info.senses.firstOrNull;
+    final trM = app.showTr ? trFor(app.dict, lemma, pos) : null;
+    final enM = app.showEn || trM == null ? sense?.gloss : null;
+    if (trM == null && enM == null) return null;
+    final theme = Theme.of(context);
+    final rest = words.where((x) => x != w).join(' ');
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(color: theme.colorScheme.surfaceContainerLow, borderRadius: BorderRadius.circular(8)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(L('Kelimelerin düz anlamı', 'Plain meaning of the words'), style: theme.textTheme.labelLarge?.copyWith(color: theme.hintColor)),
+        const SizedBox(height: 2),
+        Text(rest.isEmpty ? lemma : '$lemma (+ $rest)', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+        if (enM != null && enM != trM) Text(enM, style: enStyle(theme)),
+        if (trM != null) Text(trM, style: trStyle(theme)),
+      ]),
+    );
   }
 
   @override
@@ -99,7 +140,7 @@ class _ExprPanelState extends State<ExprPanel> {
       SentenceText(widget.ctx.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
       if (tr && widget.ctx.sentenceTr != null) ...[
         const SizedBox(height: 6),
-        Text(widget.ctx.sentenceTr!.first, style: TextStyle(fontStyle: FontStyle.italic, color: theme.colorScheme.secondary)),
+        Text(widget.ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
       ],
       section(L('Anlamları ve örnekler', 'Meanings and examples')),
     ];
@@ -116,8 +157,9 @@ class _ExprPanelState extends State<ExprPanel> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('${i + 1}. ${en ? s.titleEn : s.titleTr}', style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-            if (en && tr) Text(s.titleTr, style: TextStyle(fontWeight: FontWeight.w600, color: theme.colorScheme.secondary)),
+            Text('${i + 1}. ${en ? s.titleEn : s.titleTr}',
+                style: (en ? enStyle(theme) : trStyle(theme)).copyWith(fontWeight: FontWeight.w700, fontSize: 16)),
+            if (en && tr) Text(s.titleTr, style: trStyle(theme, const TextStyle(fontSize: 16))),
             if (s.inSentence)
               Padding(
                 padding: const EdgeInsets.only(top: 2),
@@ -125,38 +167,49 @@ class _ExprPanelState extends State<ExprPanel> {
                     style: theme.textTheme.labelSmall?.copyWith(color: color)),
               ),
             const SizedBox(height: 4),
-            if (en) Text(s.explainEn),
-            if (tr) Text(s.explainTr, style: TextStyle(color: en ? theme.colorScheme.secondary : null)),
+            if (en) Text(s.explainEn, style: enStyle(theme)),
+            if (tr) Text(s.explainTr, style: trStyle(theme)),
             for (final ex in s.examples) ...[
               const SizedBox(height: 6),
-              if (en || !tr) Text('• ${ex.$1}', style: const TextStyle(fontStyle: FontStyle.italic)),
-              if (tr) Padding(padding: EdgeInsets.only(left: en ? 12 : 0), child: Text(en ? ex.$2 : '• ${ex.$2}', style: TextStyle(color: theme.hintColor))),
+              if (en || !tr) Text('• ${ex.$1}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              if (tr) Padding(padding: EdgeInsets.only(left: en ? 12 : 0), child: Text(en ? ex.$2 : '• ${ex.$2}', style: trStyle(theme, null, false))),
             ],
           ]),
         ));
       }
-      children.add(Text(L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)));
+      children.add(Text(
+          fromAi ? L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)') : L('Kaynak: dahili sözlük', 'Source: built-in dictionary'),
+          style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)));
     } else {
-      // Offline: dictionary definitions.
+      // Offline: the plain meaning of the main word first, because dictionaries
+      // often list only the special sense ("disagree with" = upset the stomach).
+      final head = _headWord();
+      // Without a Turkish meaning for the expression, the plain meaning leads.
+      if (head != null && expr.trShown == null) children.add(head);
       final defs = (expr.en ?? '').split('; ').where((d) => d.trim().isNotEmpty).toList();
-      if (en) {
-        for (var i = 0; i < defs.length; i++) {
-          children.add(Padding(padding: const EdgeInsets.only(bottom: 4), child: Text('${i + 1}. ${defs[i]}')));
-        }
-      }
-      if (tr && expr.trShown != null) {
+      if (defs.isNotEmpty || expr.trShown != null) {
         children.add(Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Text(expr.trShown!, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+          padding: const EdgeInsets.only(top: 6, bottom: 4),
+          child: Text(head == null || expr.trShown != null ? L('Kalıbın anlamı', 'Meaning of the expression') : L('Kalıp olarak özel anlamı', 'Special meaning as an expression'),
+              style: theme.textTheme.labelLarge?.copyWith(color: color)),
         ));
       }
-      if (tr && expr.aiExp != null) children.add(Text(expr.aiExp!));
+      if (tr && expr.trShown != null) {
+        children.add(Text(expr.trShown!, style: trStyle(theme, const TextStyle(fontSize: 16))));
+      }
+      if (tr && expr.aiExp != null) children.add(Text(expr.aiExp!, style: trStyle(theme, null, false)));
+      if (en || expr.trShown == null) {
+        for (var i = 0; i < defs.length; i++) {
+          children.add(Padding(padding: const EdgeInsets.only(top: 2), child: Text('${i + 1}. ${defs[i]}', style: enStyle(theme))));
+        }
+      }
       if (expr.ex != null) {
         children.add(Padding(
           padding: const EdgeInsets.only(top: 8),
-          child: Text('• ${expr.ex}', style: const TextStyle(fontStyle: FontStyle.italic)),
+          child: Text('• ${expr.ex}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
         ));
       }
+      if (head != null && expr.trShown != null) children.add(Padding(padding: const EdgeInsets.only(top: 12), child: head));
       if (defs.isEmpty && expr.trShown == null) children.add(Text(L('Sözlükte açıklama yok.', 'No explanation in the dictionary.'), style: TextStyle(color: theme.hintColor)));
       if (loading) {
         children.add(Padding(
@@ -167,12 +220,14 @@ class _ExprPanelState extends State<ExprPanel> {
             Text(L('Anlamlar ve örnekler hazırlanıyor…', 'Preparing meanings and examples…')),
           ]),
         ));
-      } else if (AiService.fromSettings(app.user) == null) {
+      } else if (error == null && AiService.fromSettings(app.user) != null) {
         children.add(Padding(
           padding: const EdgeInsets.only(top: 12),
-          child: Text(
-              L('Ayarlar\'dan bir yapay zekâ servisi bağlarsan her anlam için Türkçe açıklama ve çevirili örnek cümleler de gelir.', 'Connect an AI service in Settings to also get a Turkish explanation and translated example sentences for each meaning.'),
-              style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: FilledButton.tonalIcon(
+                onPressed: _load, icon: const Icon(Icons.auto_awesome), label: Text(L('Yapay zekâ ile ayrıntılı göster', 'Show details with AI'))),
+          ),
         ));
       } else if (error != null) {
         children.add(Padding(
@@ -180,6 +235,21 @@ class _ExprPanelState extends State<ExprPanel> {
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(error!, style: TextStyle(color: theme.colorScheme.error)),
             TextButton.icon(onPressed: _load, icon: const Icon(Icons.refresh), label: Text(L('Tekrar dene', 'Try again'))),
+          ]),
+        ));
+      }
+    }
+
+    // Real sentences with translations (Tatoeba), offline.
+    final exs = app.dict.examples('${expr.phrase}|${expr.cat}');
+    if (exs.isNotEmpty) {
+      children.add(section(L('Çevirili örnek cümleler', 'Example sentences with translations')));
+      for (final (e, t) in exs) {
+        children.add(Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+            if (tr) Padding(padding: const EdgeInsets.only(left: 12), child: Text(t, style: trStyle(theme, null, false))),
           ]),
         ));
       }

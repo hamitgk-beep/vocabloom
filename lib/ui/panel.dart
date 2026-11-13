@@ -39,3 +39,13 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
     ),
   );
 }
+
+/// English text: bold blue. Turkish text: bold in the normal text color.
+/// So the two languages can be told apart at a glance.
+Color enColor(ThemeData t) => t.brightness == Brightness.dark ? const Color(0xFF90CAF9) : const Color(0xFF1565C0);
+
+TextStyle enStyle(ThemeData t, [TextStyle? base, bool bold = true]) =>
+    (base ?? const TextStyle()).copyWith(color: enColor(t), fontWeight: bold ? FontWeight.w600 : null);
+
+TextStyle trStyle(ThemeData t, [TextStyle? base, bool bold = true]) =>
+    (base ?? const TextStyle()).copyWith(color: t.colorScheme.onSurface, fontWeight: bold ? FontWeight.w600 : null);

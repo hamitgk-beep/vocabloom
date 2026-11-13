@@ -145,11 +145,11 @@ class _WordPanelState extends State<WordPanel> {
             child: Text(posNames[best!.pos] ?? '', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           ),
       ]),
-      if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: Text(best!.gloss, style: theme.textTheme.titleMedium)),
+      if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: Text(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
       if (tr && _trMain != null)
         Padding(
           padding: const EdgeInsets.only(top: 2),
-          child: Text(_trMain!, style: theme.textTheme.titleLarge?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600)),
+          child: Text(_trMain!, style: trStyle(theme, theme.textTheme.titleLarge)),
         ),
       const SizedBox(height: 10),
       Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
@@ -179,7 +179,7 @@ class _WordPanelState extends State<WordPanel> {
         SentenceText(ctx.sentence, widget.surface),
         if (ctx.sentenceTr != null && tr) ...[
           const SizedBox(height: 6),
-          Text(ctx.sentenceTr!.first, style: TextStyle(fontStyle: FontStyle.italic, color: theme.colorScheme.secondary)),
+          Text(ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
         ],
         for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
         if (best != null) ...[
@@ -187,11 +187,11 @@ class _WordPanelState extends State<WordPanel> {
           Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? L('Kelimenin tek başına anlamı:', 'Meaning of the word on its own:') : L('Bu cümledeki anlamı:', 'Meaning in this sentence:'),
               style: theme.textTheme.labelLarge),
           const SizedBox(height: 4),
-          if (en) Text(best!.gloss, style: theme.textTheme.bodyLarge),
-          if (tr && _trMain != null) Text(_trMain!, style: theme.textTheme.titleMedium),
+          if (en) Text(best!.gloss, style: enStyle(theme, theme.textTheme.bodyLarge)),
+          if (tr && _trMain != null) Text(_trMain!, style: trStyle(theme, theme.textTheme.titleMedium)),
           if (en)
             for (final e in best!.examples.take(2))
-              Padding(padding: const EdgeInsets.only(top: 4), child: Text('• $e', style: const TextStyle(fontStyle: FontStyle.italic))),
+              Padding(padding: const EdgeInsets.only(top: 4), child: Text('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false))),
         ],
       ]));
     }
@@ -200,7 +200,7 @@ class _WordPanelState extends State<WordPanel> {
     if (tr && info.trFreeDict.isNotEmpty) {
       children.add(_Section(L('Türkçe karşılıklar', 'Turkish equivalents'), [
         for (var i = 0; i < info.trFreeDict.length && i < 12; i++)
-          Padding(padding: const EdgeInsets.only(bottom: 3), child: Text('${i + 1}. ${info.trFreeDict[i]}')),
+          Padding(padding: const EdgeInsets.only(bottom: 3), child: Text('${i + 1}. ${info.trFreeDict[i]}', style: trStyle(theme))),
       ]));
     }
     if (surfaceInfo != null && tr && surfaceInfo!.trFreeDict.isNotEmpty) {
@@ -231,16 +231,30 @@ class _WordPanelState extends State<WordPanel> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              if (en) Text(s.gloss, style: TextStyle(fontWeight: tr && s.tr.isNotEmpty ? null : FontWeight.w600)),
-              if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: const TextStyle(fontWeight: FontWeight.w600)),
+              if (en) Text(s.gloss, style: enStyle(theme)),
+              if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: trStyle(theme)),
               if (en && s.synonyms.isNotEmpty)
                 Text(L('eş anlamlı: ${s.synonyms.take(5).join(', ')}', 'synonyms: ${s.synonyms.take(5).join(', ')}'), style: TextStyle(color: theme.hintColor, fontSize: 13)),
-              if (en) for (final ex in s.examples.take(2)) Text('“$ex”', style: const TextStyle(fontStyle: FontStyle.italic)),
+              if (en) for (final ex in s.examples.take(2)) Text('“$ex”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
             ]),
           ));
         }
       }
       children.add(_Section(en ? L('Anlamlar (WordNet)', 'Meanings (WordNet)') : L('Anlamlar', 'Meanings'), items));
+    }
+
+    final exs = app.dict.examples('w:$lemma', limit: 3);
+    if (exs.isNotEmpty) {
+      children.add(_Section(L('Çevirili örnek cümleler', 'Example sentences with translations'), [
+        for (final (e, t) in exs)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              if (tr) Padding(padding: const EdgeInsets.only(left: 12), child: Text(t, style: trStyle(theme, null, false))),
+            ]),
+          ),
+      ]));
     }
 
     if (bookExamples.isNotEmpty) {
@@ -477,14 +491,9 @@ class _ExprCardState extends State<ExprCard> {
   AppState get app => widget.app;
   Expr get expr => widget.expr;
 
-  @override
-  void initState() {
-    super.initState();
-    _translateIfNeeded();
-  }
-
-  /// Entries with only an English definition are translated right away when
-  /// an AI service is connected; the result is saved on the device.
+  /// Entries with only an English definition can be translated on request when
+  /// an AI service is connected; the result is saved on the device. Nothing is
+  /// fetched automatically, so the panel never waits for the internet.
   Future<void> _translateIfNeeded() async {
     if (!expr.needsAi) return;
     final svc = AiService.fromSettings(app.user);
@@ -520,9 +529,9 @@ class _ExprCardState extends State<ExprCard> {
           Expanded(child: Text(expr.phrase, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
           Text(uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
-        if (showEn && expr.en != null) Text(expr.en!, style: TextStyle(color: app.showTr && tr != null ? theme.hintColor : null)),
-        if (app.showTr && tr != null) Text(tr, style: const TextStyle(fontWeight: FontWeight.w600)),
-        if (app.showTr && expr.aiExp != null) Text(expr.aiExp!),
+        if (showEn && expr.en != null) Text(expr.en!, style: enStyle(theme)),
+        if (app.showTr && tr != null) Text(tr, style: trStyle(theme)),
+        if (app.showTr && expr.aiExp != null) Text(expr.aiExp!, style: trStyle(theme, null, false)),
         if (translating)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
@@ -535,7 +544,7 @@ class _ExprCardState extends State<ExprCard> {
         if (expr.ex != null)
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Text('“${expr.ex}”', style: const TextStyle(fontStyle: FontStyle.italic)),
+            child: Text('“${expr.ex}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
           ),
         const SizedBox(height: 6),
         Wrap(spacing: 8, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
@@ -546,6 +555,12 @@ class _ExprCardState extends State<ExprCard> {
               widget.onChanged();
             },
           ),
+          if (expr.needsAi && !translating && AiService.fromSettings(app.user) != null)
+            TextButton.icon(
+              onPressed: _translateIfNeeded,
+              icon: const Icon(Icons.auto_awesome, size: 18),
+              label: Text(L('Türkçeye çevir', 'Translate to Turkish')),
+            ),
           if (widget.ctx != null && expr.pattern.length > 1)
             TextButton.icon(
               onPressed: () => showExprSheet(context, app, expr, widget.ctx!, expr.phrase.split(' ')),
