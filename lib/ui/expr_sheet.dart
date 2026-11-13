@@ -13,17 +13,18 @@ import 'word_sheet.dart';
 
 /// Opens the whole expression (phrasal verb, idiom, collocation ...) that the
 /// tapped word belongs to.
-Future<void> showExprSheet(BuildContext context, AppState app, Expr expr, WordContext ctx, List<String> words) {
-  return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words, scroll: sc));
+/// [ctx] is null when opened from a list (dictionary, word list) instead of a book.
+Future<void> showExprSheet(BuildContext context, AppState app, Expr expr, WordContext? ctx, [List<String>? words]) {
+  return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words ?? expr.phrase.split(' '), scroll: sc));
 }
 
 class ExprPanel extends StatefulWidget {
   final AppState app;
   final Expr expr;
-  final WordContext ctx;
+  final WordContext? ctx;
   final List<String> words; // the words of the expression as written in the book
   final ScrollController? scroll;
-  const ExprPanel({super.key, required this.app, required this.expr, required this.ctx, required this.words, this.scroll});
+  const ExprPanel({super.key, required this.app, required this.expr, this.ctx, required this.words, this.scroll});
 
   @override
   State<ExprPanel> createState() => _ExprPanelState();
@@ -61,7 +62,7 @@ class _ExprPanelState extends State<ExprPanel> {
       error = null;
     });
     try {
-      final r = await svc.exprDetail(expr.phrase, expr.cat, sentence: widget.ctx.sentence);
+      final r = await svc.exprDetail(expr.phrase, expr.cat, sentence: widget.ctx?.sentence);
       if (r.isNotEmpty) app.user.setExprDetail(_key, jsonEncode([for (final s in r) s.toJson()]));
       if (mounted) {
         setState(() {
@@ -130,17 +131,19 @@ class _ExprPanelState extends State<ExprPanel> {
           status: st,
           onChanged: (s) {
             app.setWord(expr.phrase, s,
-                context: widget.ctx.sentence, book: widget.ctx.bookTitle, meaning: expr.trShown ?? expr.en);
+                context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: expr.trShown ?? expr.en);
             setState(() {});
           },
         ),
         LangToggles(app: app, onChanged: () => setState(() {})),
       ]),
-      section(L('Bu cümlede', 'In this sentence')),
-      SentenceText(widget.ctx.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
-      if (tr && widget.ctx.sentenceTr != null) ...[
-        const SizedBox(height: 6),
-        Text(widget.ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+      if (widget.ctx != null) ...[
+        section(L('Bu cümlede', 'In this sentence')),
+        SentenceText(widget.ctx!.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
+        if (tr && widget.ctx!.sentenceTr != null) ...[
+          const SizedBox(height: 6),
+          Text(widget.ctx!.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+        ],
       ],
       section(L('Anlamları ve örnekler', 'Meanings and examples')),
     ];

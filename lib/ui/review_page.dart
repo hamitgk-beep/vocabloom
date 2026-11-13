@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../data/review.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
+import 'expr_sheet.dart';
 import 'panel.dart';
 import 'theme.dart';
 import 'word_sheet.dart';
@@ -52,6 +53,15 @@ class _ReviewPageState extends State<ReviewPage> {
       pos++;
       shown = false;
     });
+  }
+
+  void _openInDictionary(String lemma) {
+    final e = lemma.contains(' ') ? app.dict.exprs.where((e) => e.phrase == lemma).firstOrNull : null;
+    if (e != null) {
+      showExprSheet(context, app, e, null);
+    } else {
+      showWordSheet(context, app, lemma, lemma: lemma);
+    }
   }
 
   String _hint(ReviewAnswer a, int box) {
@@ -152,7 +162,7 @@ class _ReviewPageState extends State<ReviewPage> {
                             const SizedBox(height: 8),
                             TextButton.icon(
                               style: TextButton.styleFrom(padding: EdgeInsets.zero),
-                              onPressed: () => showWordSheet(context, app, w.lemma, lemma: w.lemma),
+                              onPressed: () => _openInDictionary(w.lemma),
                               icon: const Icon(Icons.menu_book_outlined, size: 18),
                               label: Text(L('Sözlükte aç', 'Open in dictionary')),
                             ),

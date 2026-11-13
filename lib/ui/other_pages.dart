@@ -6,6 +6,7 @@ import '../nlp/text.dart';
 import '../online/ai_service.dart';
 import '../online/update_check.dart';
 import '../l10n.dart';
+import 'expr_sheet.dart';
 import 'panel.dart';
 import 'review_page.dart';
 import 'theme.dart';
@@ -120,11 +121,7 @@ class _WordList extends StatelessWidget {
               if (isPhrase) {
                 final e = app.dict.exprs.where((e) => e.phrase == w.lemma).firstOrNull;
                 if (e != null) {
-                  showModalBottomSheet(
-                    context: context,
-                    showDragHandle: true,
-                    builder: (_) => Padding(padding: const EdgeInsets.fromLTRB(20, 0, 20, 24), child: StatefulBuilder(builder: (c, set) => ExprCard(app: app, expr: e, onChanged: () => set(() {})))),
-                  );
+                  showExprSheet(context, app, e, null);
                   return;
                 }
               }
@@ -198,13 +195,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     if (q.isEmpty) return;
     final e = widget.app.dict.exprs.where((e) => e.phrase == q).firstOrNull;
     if (e != null && q.contains(' ')) {
-      showModalBottomSheet(
-        context: context,
-        showDragHandle: true,
-        builder: (_) => Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-            child: StatefulBuilder(builder: (c, set) => ExprCard(app: widget.app, expr: e, onChanged: () => set(() {})))),
-      );
+      showExprSheet(context, widget.app, e, null);
       return;
     }
     showWordSheet(context, widget.app, q);
@@ -327,16 +318,10 @@ class _CategoryListState extends State<_CategoryList> {
                 title: Text(e.phrase, style: TextStyle(fontWeight: FontWeight.w600, color: widget.cat.color)),
                 subtitle: Text([if (app.showTr && e.trShown != null) e.trShown!, if ((app.showEn || e.trShown == null) && e.en != null) e.en!].join('\n'), maxLines: 3),
                 trailing: st == null ? null : Icon(Icons.circle, size: 12, color: st == WordStatus.learning ? learningColor : learnedColor),
-                onTap: () => showModalBottomSheet(
-                  context: context,
-                  showDragHandle: true,
-                  builder: (_) => Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-                      child: StatefulBuilder(builder: (c, set) => ExprCard(app: app, expr: e, onChanged: () {
-                            set(() {});
-                            setState(() {});
-                          }))),
-                ),
+                onTap: () async {
+                  await showExprSheet(context, app, e, null);
+                  if (mounted) setState(() {});
+                },
               );
             },
           ),
