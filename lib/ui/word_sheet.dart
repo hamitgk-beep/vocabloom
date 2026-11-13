@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import '../online/ai_service.dart';
 import 'paragraph_view.dart';
 
 /// Context in which a word was tapped (null when opened from a list).
@@ -284,15 +285,51 @@ class LangToggles extends StatelessWidget {
   }
 }
 
-class ExprCard extends StatelessWidget {
+class ExprCard extends StatefulWidget {
   final AppState app;
   final Expr expr;
   final VoidCallback onChanged;
   const ExprCard({super.key, required this.app, required this.expr, required this.onChanged});
 
   @override
+  State<ExprCard> createState() => _ExprCardState();
+}
+
+class _ExprCardState extends State<ExprCard> {
+  bool translating = false;
+
+  AppState get app => widget.app;
+  Expr get expr => widget.expr;
+
+  @override
+  void initState() {
+    super.initState();
+    _translateIfNeeded();
+  }
+
+  /// Entries with only an English definition are translated right away when
+  /// an AI service is connected; the result is saved on the device.
+  Future<void> _translateIfNeeded() async {
+    if (!expr.needsAi) return;
+    final svc = AiService.fromSettings(app.user);
+    if (svc == null) return;
+    setState(() => translating = true);
+    try {
+      await app.analyzer.translateExprsNow(svc, [expr]);
+    } catch (_) {
+      // Offline or service error: the English definition stays visible.
+    } finally {
+      if (mounted) setState(() => translating = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final c = categoryById[expr.cat]!;
+    final theme = Theme.of(context);
+    final tr = expr.trShown;
+    // Without a Turkish meaning, the English definition is always shown.
+    final showEn = app.showEn || tr == null;
     final st = app.user.statuses[expr.phrase] ?? WordStatus.none;
     return Container(
       margin: const EdgeInsets.only(top: 8),
@@ -307,14 +344,29 @@ class ExprCard extends StatelessWidget {
           Expanded(child: Text(expr.phrase, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
           Text(app.showEn && !app.showTr ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
-        if (app.showTr && expr.tr != null) Text(expr.tr!),
-        if (app.showEn && expr.en != null) Text(expr.en!, style: TextStyle(color: Theme.of(context).hintColor)),
+        if (app.showTr && tr != null) Text(tr, style: const TextStyle(fontWeight: FontWeight.w600)),
+        if (app.showTr && expr.aiExp != null) Text(expr.aiExp!),
+        if (translating)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(children: [
+              const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2)),
+              const SizedBox(width: 8),
+              Text('Türkçeye çevriliyor…', style: theme.textTheme.bodySmall),
+            ]),
+          ),
+        if (showEn && expr.en != null) Text(expr.en!, style: TextStyle(color: theme.hintColor)),
+        if (expr.ex != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text('“${expr.ex}”', style: const TextStyle(fontStyle: FontStyle.italic)),
+          ),
         const SizedBox(height: 6),
         StatusButtons(
           status: st,
           onChanged: (s) {
-            app.setWord(expr.phrase, s, meaning: expr.tr ?? expr.en);
-            onChanged();
+            app.setWord(expr.phrase, s, meaning: expr.trShown ?? expr.en);
+            widget.onChanged();
           },
         ),
       ]),

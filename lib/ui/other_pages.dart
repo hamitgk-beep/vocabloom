@@ -178,7 +178,7 @@ class _CategoryListState extends State<_CategoryList> {
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
-    final list = q.isEmpty ? all : all.where((e) => e.phrase.contains(q) || (e.tr?.toLowerCase().contains(q) ?? false)).toList();
+    final list = q.isEmpty ? all : all.where((e) => e.phrase.contains(q) || (e.trShown?.toLowerCase().contains(q) ?? false)).toList();
     return Scaffold(
       appBar: AppBar(title: Text(widget.cat.name)),
       body: Column(children: [
@@ -197,7 +197,7 @@ class _CategoryListState extends State<_CategoryList> {
               final st = app.user.statuses[e.phrase];
               return ListTile(
                 title: Text(e.phrase, style: TextStyle(fontWeight: FontWeight.w600, color: widget.cat.color)),
-                subtitle: Text([if (app.showTr && e.tr != null) e.tr!, if (app.showEn && e.en != null) e.en!].join('\n'), maxLines: 3),
+                subtitle: Text([if (app.showTr && e.trShown != null) e.trShown!, if ((app.showEn || e.trShown == null) && e.en != null) e.en!].join('\n'), maxLines: 3),
                 trailing: st == null ? null : Icon(Icons.circle, size: 12, color: st == WordStatus.learning ? learningColor : learnedColor),
                 onTap: () => showModalBottomSheet(
                   context: context,
@@ -375,12 +375,19 @@ class _SettingsPageState extends State<SettingsPage> {
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('İnternet olunca kitapları otomatik tara'),
-          subtitle: const Text('Kapalıysa kitap menüsünden elle başlatabilirsin.'),
+          subtitle: const Text('Kitaplar çevrilir, sonra sözlükte yalnızca İngilizce açıklaması olan kalıplar Türkçeye '
+              'çevrilip cihaza kaydedilir. Kapalıysa kitap menüsünden elle başlatabilirsin.'),
           value: u.getSetting('auto_analyze') != '0',
           onChanged: (v) => setState(() {
             u.setSetting('auto_analyze', v ? null : '0');
             if (v) app.analyzer.tick();
           }),
+        ),
+        ValueListenableBuilder<String?>(
+          valueListenable: app.analyzer.dictStatus,
+          builder: (context, s, _) => s == null
+              ? const SizedBox.shrink()
+              : Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(s, style: theme.textTheme.bodySmall)),
         ),
         if (!p.vision)
           Text('Not: ${p.name} resimdeki yazıyı okuyamaz; taranmış PDF için cihazın kendi OCR\'ı kullanılır.',
@@ -400,6 +407,7 @@ class _SettingsPageState extends State<SettingsPage> {
           '• Princeton WordNet 3.0 (WordNet lisansı)\n'
           '• KeNet Türkçe WordNet, Starlang / Özyeğin Üniversitesi (CC BY-SA 4.0)\n'
           '• Collaborative Interlingual Index (CC BY 4.0)\n'
+          '• Wiktionary kalıpları, kaikki.org üzerinden (CC BY-SA 4.0)\n'
           '• Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0).',
         ),
       ]),

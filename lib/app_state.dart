@@ -46,7 +46,7 @@ class AppState extends ChangeNotifier {
   double fontSize = 19;
   ThemeMode themeMode = ThemeMode.light;
   int _wordsVersion = 0;
-  late final AutoAnalyzer analyzer = AutoAnalyzer(user);
+  late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
 
   AppState(this.dict, this.user) {
     final past = <String>{}, pp = <String>{};
@@ -65,6 +65,16 @@ class AppState extends ChangeNotifier {
       }
     }
     tenses = TenseDetector(dict.lemmatizer, past, pp);
+    final ai = user.exprAi();
+    if (ai.isNotEmpty) {
+      for (final e in dict.exprs) {
+        final t = ai['${e.phrase}|${e.cat}'];
+        if (t != null) {
+          e.aiTr = t.$1;
+          e.aiExp = t.$2;
+        }
+      }
+    }
     final s = user.getJson('prefs');
     enabledCats = ((s['cats'] as List?) ?? const []).cast<String>().toSet();
     showTr = s['tr'] as bool? ?? true;

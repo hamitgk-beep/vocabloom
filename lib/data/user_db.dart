@@ -79,6 +79,7 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS words(lemma TEXT PRIMARY KEY, status INTEGER, context TEXT, book TEXT,
         meaning TEXT, added INTEGER);
       CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
+      CREATE TABLE IF NOT EXISTS expr_ai(phrase TEXT, cat TEXT, tr TEXT, exp TEXT, PRIMARY KEY(phrase, cat));
     ''');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
@@ -87,6 +88,15 @@ class UserDb {
     }
     return u;
   }
+
+  // ---- AI translations of dictionary expressions
+  Map<String, (String, String?)> exprAi() => {
+        for (final r in db.select('SELECT phrase, cat, tr, exp FROM expr_ai'))
+          '${r['phrase']}|${r['cat']}': (r['tr'] as String, r['exp'] as String?),
+      };
+
+  void setExprAi(String phrase, String cat, String tr, String? exp) =>
+      db.execute('INSERT OR REPLACE INTO expr_ai(phrase, cat, tr, exp) VALUES (?,?,?,?)', [phrase, cat, tr, exp]);
 
   // ---- settings
   String? getSetting(String key) {

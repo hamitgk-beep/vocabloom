@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/data/dict_db.dart';
+import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/nlp/grammar.dart';
 import 'package:kelime_okur/nlp/text.dart';
@@ -79,5 +80,20 @@ void main() {
       print('${e.title} ${e.chapters.map((c) => '${c.title}:${c.paragraphs.length}').join(' | ')}');
       expect(e.chapters, isNotEmpty);
     }
+  });
+
+  test('dictionary: Wiktionary entries and saved AI translations', () {
+    final idiom = d.exprs.firstWhere((e) => e.phrase == 'off the hook');
+    expect(idiom.en, isNotNull);
+    expect(d.exprs.where((e) => e.cat == 'idioms').length, greaterThan(3000));
+    final dir = Directory.systemTemp.createTempSync('vb_user');
+    final u = UserDb.open(dir);
+    final e = d.exprs.firstWhere((x) => x.needsAi);
+    u.setExprAi(e.phrase, e.cat, 'deneme', 'açıklama');
+    final saved = u.exprAi()['${e.phrase}|${e.cat}'];
+    expect(saved?.$1, 'deneme');
+    expect(saved?.$2, 'açıklama');
+    u.db.dispose();
+    dir.deleteSync(recursive: true);
   });
 }

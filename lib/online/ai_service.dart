@@ -262,6 +262,44 @@ class AiService {
     return (translations: (r['translations'] as List).map((e) => '$e').toList(), summary: '${r['summary'] ?? ''}');
   }
 
+  /// Turkish meanings for dictionary expressions that only have English
+  /// definitions. Returns one (meaning, explanation) per input, in order.
+  Future<List<({String tr, String exp})>> translateExprs(List<({String phrase, String cat, String en})> items) async {
+    final numbered = [
+      for (var i = 0; i < items.length; i++) '[$i] ${items[i].phrase} (${items[i].cat.replaceAll('_', ' ')}): ${items[i].en}'
+    ].join('\n');
+    final r = await _json(
+      'Below are ${items.length} English dictionary entries for Turkish learners of English, numbered from 0, '
+      'each with its category and English definition(s). Return JSON {"items": [...]} with exactly ${items.length} '
+      'objects in the same order. For each: "tr" is the Turkish meaning as a short dictionary-style equivalent '
+      '(a few words, or the matching Turkish idiom/proverb if one exists; separate different senses with "; "), and '
+      '"exp" is a Turkish translation of the English definition(s), one or two short sentences.\n\n$numbered',
+      {
+        'type': 'object',
+        'properties': {
+          'items': {
+            'type': 'array',
+            'items': {
+              'type': 'object',
+              'properties': {
+                'tr': {'type': 'string'},
+                'exp': {'type': 'string'},
+              },
+              'required': ['tr', 'exp'],
+              'additionalProperties': false,
+            },
+          },
+        },
+        'required': ['items'],
+        'additionalProperties': false,
+      },
+    );
+    return [
+      for (final x in (r['items'] as List? ?? const []))
+        (tr: '${(x as Map)['tr'] ?? ''}'.trim(), exp: '${x['exp'] ?? ''}'.trim())
+    ];
+  }
+
   /// Translation plus a Turkish breakdown of one sentence (used on demand).
   Future<({String translation, String explanation})> explainSentence(String sentence, String context) async {
     final r = await _json(

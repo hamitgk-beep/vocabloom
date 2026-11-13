@@ -2,20 +2,29 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
+import '../data/dict_db.dart';
 import '../data/user_db.dart';
+import '../nlp/text.dart';
 import 'ai_service.dart';
 
 /// Watches for an internet connection and analyses every book that has not
 /// been analysed yet. Finished paragraphs are stored, so nothing is done twice
 /// and an interrupted analysis continues where it stopped.
+///
+/// After the books, it translates dictionary expressions that only have an
+/// English definition (expressions found in the user's books first).
 class AutoAnalyzer {
   final UserDb db;
+  final DictDb? dict;
   final status = ValueNotifier<Map<int, String>>({});
+
+  /// Progress of the dictionary translation, shown in Settings.
+  final dictStatus = ValueNotifier<String?>(null);
   Timer? _timer;
   bool _running = false;
   String? lastError;
 
-  AutoAnalyzer(this.db);
+  AutoAnalyzer(this.db, [this.dict]);
 
   bool get enabled => db.getSetting('auto_analyze') != '0';
 
@@ -57,8 +66,72 @@ class AutoAnalyzer {
         }
         _set(b.id, null);
       }
+      if (onlyBook == null) await _translateDictionary(svc);
     } finally {
       _running = false;
+    }
+  }
+
+  final Set<int> _scannedBooks = {};
+  final Set<int> _inBooks = {};
+
+  /// Expression ids that occur in the user's books (computed once per book).
+  Future<void> _scanBooks() async {
+    final d = dict;
+    if (d == null) return;
+    for (final b in db.books()) {
+      if (!_scannedBooks.add(b.id)) continue;
+      for (final ch in db.chapters(b.id)) {
+        await Future<void>.delayed(Duration.zero); // keep the UI responsive
+        for (final p in db.paras(b.id, ch.idx)) {
+          for (final m in d.matcher.match(tokenize(p.text))) {
+            _inBooks.add(m.expr.id);
+          }
+        }
+      }
+    }
+  }
+
+  Future<void> _translateDictionary(AiService svc) async {
+    final d = dict;
+    if (d == null) return;
+    await _scanBooks();
+    final pending = d.exprs.where((e) => e.needsAi).toList()
+      ..sort((a, b) => (_inBooks.contains(a.id) ? 0 : 1).compareTo(_inBooks.contains(b.id) ? 0 : 1));
+    if (pending.isEmpty) {
+      dictStatus.value = null;
+      return;
+    }
+    final total = d.exprs.where((e) => e.en != null && e.tr == null).length;
+    const batch = 40;
+    for (var i = 0; i < pending.length; i += batch) {
+      if (!enabled) break;
+      final part = pending.sublist(i, (i + batch).clamp(0, pending.length));
+      final done = total - pending.length + i;
+      dictStatus.value = 'Sözlük Türkçeye çevriliyor: $done/$total (${svc.cfg.provider.name})';
+      try {
+        await translateExprsNow(svc, part);
+      } catch (e) {
+        lastError = '$e';
+        dictStatus.value = 'Sözlük çevirisi durdu, sonra devam edecek: $e';
+        return;
+      }
+    }
+    dictStatus.value = null;
+  }
+
+  /// Translates [items] with the AI and saves the result on the device.
+  Future<void> translateExprsNow(AiService svc, List<Expr> items) async {
+    final todo = items.where((e) => e.needsAi).toList();
+    if (todo.isEmpty) return;
+    final r = await svc.translateExprs([for (final e in todo) (phrase: e.phrase, cat: e.cat, en: e.en!)]);
+    if (r.length != todo.length) throw Exception('Yapay zekâ ${todo.length} yerine ${r.length} sonuç döndürdü.');
+    for (var k = 0; k < todo.length; k++) {
+      if (r[k].tr.isEmpty) continue;
+      final e = todo[k];
+      e.aiTr = r[k].tr;
+      e.aiExp = r[k].exp.isEmpty ? null : r[k].exp;
+      db.setExprAi(e.phrase, e.cat, e.aiTr!, e.aiExp);
     }
   }
 }

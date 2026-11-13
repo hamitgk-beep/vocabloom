@@ -101,7 +101,20 @@ class Expr {
   final String? tr;
   final String? en;
   final List<String> pattern;
-  Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern);
+
+  /// Example sentence from the dictionary (Wiktionary), if any.
+  String? ex;
+
+  /// Turkish meaning / explanation made by the user's AI service (saved on device).
+  String? aiTr;
+  String? aiExp;
+  Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern, {this.ex});
+
+  /// Turkish meaning: from the dictionary, otherwise from the AI translation.
+  String? get trShown => tr ?? aiTr;
+
+  /// Whether the AI still has something to translate for this entry.
+  bool get needsAi => tr == null && aiTr == null && en != null;
 }
 
 class Match {
@@ -190,6 +203,9 @@ class PhraseMatcher {
       if (_det.contains(t.lower)) keys.add('*det');
       for (final k in keys) {
         for (final e in _byFirst[k] ?? const <Expr>[]) {
+          // "the dog out", "a bed in": after a determiner the word is a noun,
+          // not the verb of a phrasal verb.
+          if (e.cat == 'phrasal_verbs' && i > 0 && _det.contains(toks[i - 1].lower)) continue;
           final m = _matchAt(e, toks, i);
           if (m != null) out.add(Match(e, m));
         }

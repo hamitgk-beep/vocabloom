@@ -9,6 +9,7 @@ Sources (see ASSETS_LICENSES.md):
 
 Usage: python3 tools/build_dict.py <raw_dir> <out_db>
 """
+import gzip
 import json
 import os
 import re
@@ -160,6 +161,73 @@ def norm_phrase(p):
     return re.sub(r'\s+', ' ', p.strip().lower().replace('’', "'"))
 
 
+# Very common words: a Wiktionary entry made only of these ("go to", "you think",
+# "like that") would colour ordinary text, so such entries are left out.
+COMMON = set('''
+a an the and or but if so as than that this these those there here what which who whom whose when where why how
+i me my you your he him his she her it its we us our they them their one one's oneself someone something somebody
+be am is are was were been being have has had do does did go goes went gone get got say said know knew known think
+thought like see saw come came take took make made want look give use find tell ask work seem feel try leave call
+can could will would shall should may might must not no yes all some any every each other more most much many
+to of in on at by for with from up down out off over about into back just now then too very well way time thing
+let put keep mean
+'''.split())
+WIKT_PV_PARTICLES = {'up', 'down', 'out', 'off', 'in', 'on', 'over', 'away', 'back', 'through', 'around',
+                     'about', 'along', 'across', 'by', 'forward', 'ahead', 'apart', 'aside', 'together'}
+WIKT_SKIP = {'a', 'an', 'the', 'and', 'or', 'but'}  # too common to colour as their own entry
+WIKT_SKIP_RE = re.compile(r"\b(fuck|shit|cunt|dick|cock|piss|ass|arse|bitch|bastard|wank|tits?)\b")
+
+
+def load_wiktionary(exprs):
+    """Adds Wiktionary expressions (tools/wiktionary_extract.py output) to [exprs].
+
+    Fills missing English definitions / Turkish meanings of existing entries and
+    adds new entries that no other source has. Returns {(phrase, cat): example}.
+    """
+    path = os.path.join(RAW, 'wiktionary_phrases.json.gz')
+    examples = {}
+    if not os.path.exists(path):
+        print('wiktionary: not found, skipped')
+        return examples
+    with gzip.open(path, 'rt', encoding='utf-8') as f:
+        items = json.load(f)
+    by_phrase = {}
+    for (p, cat) in exprs:
+        by_phrase.setdefault(p, set()).add(cat)
+    added = {}
+    for it in items:
+        p, cat = norm_phrase(it['p']), it['c']
+        toks = p.split()
+        if p in WIKT_SKIP or WIKT_SKIP_RE.search(p) or len(toks) > 7:
+            continue
+        if (p, cat) not in exprs:
+            if len(toks) == 1:
+                continue  # single words (mostly conjunctions) come from the curated lists
+            if all(t in COMMON for t in toks):
+                continue
+            if cat == 'phrasal_verbs' and (len(toks) != 2 or toks[1] not in WIKT_PV_PARTICLES
+                                           or toks[0] in ('be', 'have', 'do')):
+                continue
+        en = '; '.join(it['en'][:3]) or None
+        tr = ', '.join(it['tr'][:4]) or None
+        if (p, cat) in exprs:
+            e = exprs[(p, cat)]
+            if e[0] is None and tr:
+                e[0] = tr
+            if e[1] is None and en:
+                e[1] = en
+        elif p in by_phrase:
+            continue  # already listed under another category
+        else:
+            exprs[(p, cat)] = [tr, en, None]
+            by_phrase.setdefault(p, set()).add(cat)
+            added[cat] = added.get(cat, 0) + 1
+        if it.get('ex'):
+            examples[(p, cat)] = it['ex']
+    print('wiktionary-added expressions', added)
+    return examples
+
+
 def main():
     if os.path.exists(OUT):
         os.remove(OUT)
@@ -170,7 +238,7 @@ def main():
       CREATE TABLE syn(id INTEGER PRIMARY KEY, pos TEXT, gloss TEXT, examples TEXT, words TEXT, tr TEXT);
       CREATE TABLE sense(lemma TEXT, pos TEXT, rank INTEGER, syn_id INTEGER);
       CREATE TABLE exc(form TEXT, lemma TEXT, pos TEXT);
-      CREATE TABLE expr(id INTEGER PRIMARY KEY, phrase TEXT, cat TEXT, tr TEXT, en TEXT, forms TEXT);
+      CREATE TABLE expr(id INTEGER PRIMARY KEY, phrase TEXT, cat TEXT, tr TEXT, en TEXT, forms TEXT, ex TEXT);
     ''')
     ft = load_freedict(db)
     kenet = load_kenet()
@@ -214,6 +282,7 @@ def main():
         exprs[(p, cat)] = [', '.join(tr_list[:4]) if tr_list else None, gloss, None]
         added[cat] += 1
     print('wordnet-derived expressions', added)
+    examples = load_wiktionary(exprs)
 
     # English gloss for curated items where WordNet knows the phrase.
     rows = []
@@ -227,8 +296,8 @@ def main():
                     and cat not in ('false_friends', 'proverbs'):
                 r = None  # only a different part of speech exists; it would mislead
             en = r[0] if r else None
-        rows.append((p, cat, tr, en, json.dumps(forms) if forms else None))
-    db.executemany('INSERT INTO expr(phrase, cat, tr, en, forms) VALUES (?,?,?,?,?)', rows)
+        rows.append((p, cat, tr, en, json.dumps(forms) if forms else None, examples.get((p, cat))))
+    db.executemany('INSERT INTO expr(phrase, cat, tr, en, forms, ex) VALUES (?,?,?,?,?,?)', rows)
     print('expressions total', len(rows))
 
     db.executescript('''
