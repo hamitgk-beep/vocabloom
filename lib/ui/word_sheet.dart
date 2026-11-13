@@ -10,6 +10,7 @@ import '../nlp/word_family.dart';
 import '../online/ai_service.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
+import 'tap_text.dart';
 import 'sense_cards.dart';
 import '../l10n.dart';
 import 'paragraph_view.dart';
@@ -44,6 +45,7 @@ WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? 
 }
 
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
+  panelApp = app;
   return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
 }
 
@@ -74,6 +76,15 @@ class _WordPanelState extends State<WordPanel> {
     final lower = widget.surface.toLowerCase().replaceAll('’', "'");
     final cands = app.dict.lemmatizer.lemmas(lower);
     lemma = widget.lemma ?? cands.first;
+    // A word that is itself common beats a rare base form the suffix rules
+    // produce ("never" is not a form of "neve").
+    if (widget.lemma == null && lemma != lower && cands.contains(lower)) {
+      int freq(String w) {
+        final r = app.dict.db.select('SELECT n FROM wfreq WHERE word=?', [w]);
+        return r.isEmpty ? 0 : r.first['n'] as int;
+      }
+      if (freq(lower) >= freq(lemma)) lemma = lower;
+    }
     info = app.dict.lookup(lemma);
     if (info.isEmpty) {
       for (final c in cands) {
@@ -157,7 +168,7 @@ class _WordPanelState extends State<WordPanel> {
             child: Text(posNames[best!.pos] ?? '', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           ),
       ]),
-      if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: Text(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
+      if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: TapText(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
       if (tr && _trMain != null)
         Padding(
           padding: const EdgeInsets.only(top: 2),
@@ -199,14 +210,14 @@ class _WordPanelState extends State<WordPanel> {
           Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? L('Kelimenin tek başına anlamı:', 'Meaning of the word on its own:') : L('Bu cümledeki anlamı:', 'Meaning in this sentence:'),
               style: theme.textTheme.labelLarge),
           const SizedBox(height: 4),
-          if (en) Text(best!.gloss, style: enStyle(theme, theme.textTheme.bodyLarge)),
+          if (en) TapText(best!.gloss, style: enStyle(theme, theme.textTheme.bodyLarge)),
           if (tr && _trMain != null) Text(_trMain!, style: trStyle(theme, theme.textTheme.titleMedium)),
           for (var k = 0; k < best!.examples.length && k < 2; k++)
             if (en || (tr && k < best!.examplesTr.length))
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('• ${best!.examples[k]}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+                  TapText('• ${best!.examples[k]}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
                   if (tr && k < best!.examplesTr.length)
                     Padding(padding: const EdgeInsets.only(left: 12), child: Text(best!.examplesTr[k], style: trStyle(theme, null, false))),
                 ]),
@@ -268,13 +279,13 @@ class _WordPanelState extends State<WordPanel> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              if (en) Text(s.gloss, style: enStyle(theme)),
+              if (en) TapText(s.gloss, style: enStyle(theme)),
               if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: trStyle(theme)),
               if (en && s.synonyms.isNotEmpty)
                 Text(L('eş anlamlı: ${s.synonyms.take(5).join(', ')}', 'synonyms: ${s.synonyms.take(5).join(', ')}'), style: TextStyle(color: theme.hintColor, fontSize: 13)),
               for (var k = 0; k < s.examples.length && k < 2; k++)
                 if (en || (tr && k < s.examplesTr.length)) ...[
-                  Text('“${s.examples[k]}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+                  TapText('“${s.examples[k]}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
                   if (tr && k < s.examplesTr.length)
                     Padding(padding: const EdgeInsets.only(left: 12), child: Text(s.examplesTr[k], style: trStyle(theme, null, false))),
                 ],
@@ -292,7 +303,7 @@ class _WordPanelState extends State<WordPanel> {
           Padding(
             padding: const EdgeInsets.only(bottom: 6),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              TapText('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
               if (tr) Padding(padding: const EdgeInsets.only(left: 12), child: Text(t, style: trStyle(theme, null, false))),
             ]),
           ),
@@ -486,7 +497,7 @@ class _WordFamilyViewState extends State<WordFamilyView> {
                 Text(e.note!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
               if (e.exEn != null && (widget.app.showEn || widget.app.showTr)) ...[
                 const SizedBox(height: 4),
-                Text('“${e.exEn}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic, fontSize: 14), false)),
+                TapText('“${e.exEn}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic, fontSize: 14), false)),
                 if (e.exTr != null && widget.app.showTr)
                   Padding(padding: const EdgeInsets.only(left: 12), child: Text(e.exTr!, style: trStyle(theme, const TextStyle(fontSize: 14), false))),
               ],
@@ -628,7 +639,7 @@ class _ExprCardState extends State<ExprCard> {
           Expanded(child: Text(expr.phrase, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
           Text(uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
-        if (showEn && expr.en != null) Text(expr.en!, style: enStyle(theme)),
+        if (showEn && expr.en != null) TapText(expr.en!, style: enStyle(theme)),
         if (app.showTr && tr != null) Text(tr, style: trStyle(theme)),
         // No Turkish yet: at least the words one by one, never English alone.
         if (app.showTr && tr == null && _gloss != null)
@@ -647,7 +658,7 @@ class _ExprCardState extends State<ExprCard> {
           Padding(
             padding: const EdgeInsets.only(top: 4),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('“${ex.$1}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+              TapText('“${ex.$1}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
               if (app.showTr && ex.$2 != null)
                 Padding(padding: const EdgeInsets.only(left: 12), child: Text(ex.$2!, style: trStyle(theme, null, false))),
             ]),
@@ -705,18 +716,6 @@ class SentenceText extends StatelessWidget {
   const SentenceText(this.sentence, this.word, {this.highlight});
 
   @override
-  Widget build(BuildContext context) {
-    final toks = tokenize(sentence);
-    final spans = <TextSpan>[];
-    var pos = 0;
-    final hl = highlight ?? {word!.toLowerCase()};
-    for (final t in toks) {
-      if (t.start > pos) spans.add(TextSpan(text: sentence.substring(pos, t.start)));
-      final on = hl.contains(t.lower) || (highlight != null && hl.any((h) => t.lower.startsWith(h) && t.lower.length <= h.length + 3));
-      spans.add(TextSpan(text: t.text, style: on ? const TextStyle(fontWeight: FontWeight.w800, decoration: TextDecoration.underline) : null));
-      pos = t.end;
-    }
-    if (pos < sentence.length) spans.add(TextSpan(text: sentence.substring(pos)));
-    return SelectableText.rich(TextSpan(style: const TextStyle(fontSize: 16, height: 1.45), children: spans));
-  }
+  Widget build(BuildContext context) =>
+      TapText(sentence, style: const TextStyle(fontSize: 16, height: 1.45), highlight: highlight ?? {word!.toLowerCase()});
 }
