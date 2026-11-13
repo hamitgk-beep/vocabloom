@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import 'theme.dart';
 
 class ParaAnalysis {
   final List<Token> tokens;
@@ -66,7 +67,7 @@ class _ParagraphViewState extends State<ParagraphView> {
       fontSize: heading ? app.fontSize * 1.3 : app.fontSize,
       height: 1.6,
       fontWeight: heading ? FontWeight.w700 : FontWeight.w400,
-      fontFamily: 'serif',
+      fontFamily: readingFont,
     );
 
     // category per token (first enabled category in display order wins)

@@ -66,6 +66,28 @@ flutter:
   assets:
     - assets/dict.db
 
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-400.ttf
+        - asset: assets/fonts/Inter-500.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-600.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-700.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-800.ttf
+          weight: 800
+    - family: Literata
+      fonts:
+        - asset: assets/fonts/Literata-400.ttf
+        - asset: assets/fonts/Literata-400-italic.ttf
+          style: italic
+        - asset: assets/fonts/Literata-600.ttf
+          weight: 600
+        - asset: assets/fonts/Literata-700.ttf
+          weight: 700
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

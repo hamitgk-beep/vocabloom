@@ -9,6 +9,7 @@ import 'data/user_db.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'ui/other_pages.dart';
+import 'ui/theme.dart';
 
 import 'l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,22 +61,6 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
 
   @override
   Widget build(BuildContext context) {
-    const seed = Color(0xFF3F51B5);
-    final light = ColorScheme.fromSeed(seedColor: seed).copyWith(
-      surface: Colors.white,
-      surfaceContainerLowest: Colors.white,
-      surfaceContainerLow: const Color(0xFFF7F7F9),
-      surfaceContainer: const Color(0xFFF3F3F6),
-    );
-    // Night mode: dark grey (not pure black) with soft off-white text.
-    final dark =
-        ColorScheme.fromSeed(
-          seedColor: seed,
-          brightness: Brightness.dark,
-        ).copyWith(
-          surface: const Color(0xFF16171B),
-          onSurface: const Color(0xFFD9D6CF),
-        );
     final a = app;
     return ListenableBuilder(
       listenable: a ?? ValueNotifier(0),
@@ -83,16 +68,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         title: 'VocaBloom',
         debugShowCheckedModeBanner: false,
         themeMode: a?.themeMode ?? ThemeMode.light,
-        theme: ThemeData(
-          colorScheme: light,
-          scaffoldBackgroundColor: Colors.white,
-          useMaterial3: true,
-        ),
-        darkTheme: ThemeData(
-          colorScheme: dark,
-          scaffoldBackgroundColor: const Color(0xFF16171B),
-          useMaterial3: true,
-        ),
+        theme: buildTheme(Brightness.light),
+        darkTheme: buildTheme(Brightness.dark),
         home: app != null
             ? HomePage(app: app!)
             : Scaffold(
@@ -172,10 +149,10 @@ class _HomePageState extends State<HomePage> {
       SettingsPage(app: widget.app),
     ];
     final dests = [
-      (Icons.menu_book_outlined, Icons.menu_book, L('Kitaplık', 'Library')),
-      (Icons.bookmark_border, Icons.bookmark, L('Kelimelerim', 'My words')),
-      (Icons.category_outlined, Icons.category, L('Sözlük', 'Dictionary')),
-      (Icons.settings_outlined, Icons.settings, L('Ayarlar', 'Settings')),
+      (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
+      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimelerim', 'My words')),
+      (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
+      (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
     final wide = MediaQuery.sizeOf(context).width >= 720;
     final body = IndexedStack(index: tab, children: pages);
@@ -186,6 +163,9 @@ class _HomePageState extends State<HomePage> {
             NavigationRail(
               selectedIndex: tab,
               labelType: NavigationRailLabelType.all,
+              minWidth: 88,
+              groupAlignment: -0.9,
+              leading: const Padding(padding: EdgeInsets.only(top: 12, bottom: 20), child: BrandMark(size: 40)),
               onDestinationSelected: (i) => setState(() => tab = i),
               destinations: [
                 for (final d in dests)
@@ -204,7 +184,9 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       body: body,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant))),
+        child: NavigationBar(
         selectedIndex: tab,
         onDestinationSelected: (i) => setState(() => tab = i),
         destinations: [
@@ -215,6 +197,7 @@ class _HomePageState extends State<HomePage> {
               label: d.$3,
             ),
         ],
+      ),
       ),
     );
   }

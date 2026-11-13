@@ -5,6 +5,7 @@ import '../data/user_db.dart';
 import 'expr_sheet.dart';
 import 'paragraph_view.dart';
 import 'sentence_sheet.dart';
+import 'theme.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
 
@@ -101,24 +102,45 @@ class _ReaderPageState extends State<ReaderPage> {
     final ch = chapters[chapter];
     final wide = MediaQuery.sizeOf(context).width > 1000;
     final filters = FilterPanel(app: app);
+    final paper = readerPaper(theme);
     return Scaffold(
       key: _scaffold,
+      backgroundColor: paper,
       appBar: AppBar(
+        backgroundColor: paper,
         leading: const BackButton(),
+        titleSpacing: 0,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(widget.book.title, style: theme.textTheme.titleMedium, overflow: TextOverflow.ellipsis),
-          Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+          Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}',
+              style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
         ]),
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(3),
+          child: LinearProgressIndicator(
+            value: (chapter + 1) / chapters.length,
+            minHeight: 3,
+            borderRadius: BorderRadius.zero,
+            backgroundColor: theme.colorScheme.outlineVariant.withValues(alpha: 0.6),
+          ),
+        ),
         actions: [
           IconButton(
             tooltip: L('Yazı boyutu', 'Font size'),
             icon: const Icon(Icons.format_size),
             onPressed: () => showModalBottomSheet(
               context: context,
+              showDragHandle: true,
               builder: (_) => StatefulBuilder(
                 builder: (c, set) => Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Row(children: [
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 28),
+                  child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(L('Yazı boyutu', 'Font size'), style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 4),
+                    Text('The quick brown fox jumps over the lazy dog.',
+                        style: TextStyle(fontFamily: readingFont, fontSize: app.fontSize, height: 1.5)),
+                    const SizedBox(height: 8),
+                    Row(children: [
                     const Text('A', style: TextStyle(fontSize: 14)),
                     Expanded(
                       child: Slider(
@@ -134,6 +156,7 @@ class _ReaderPageState extends State<ReaderPage> {
                       ),
                     ),
                     const Text('A', style: TextStyle(fontSize: 28)),
+                  ]),
                   ]),
                 ),
               ),
@@ -163,17 +186,44 @@ class _ReaderPageState extends State<ReaderPage> {
       ),
       drawer: Drawer(
         child: SafeArea(
-          child: ListView.builder(
-            itemCount: chapters.length,
-            itemBuilder: (c, i) => ListTile(
-              selected: i == chapter,
-              title: Text(chapterName(chapters[i].title), maxLines: 2, overflow: TextOverflow.ellipsis),
-              onTap: () {
-                Navigator.pop(c);
-                _go(i);
-              },
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+              child: Row(children: [
+                BookCover(title: widget.book.title, format: widget.book.format, width: 44),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(widget.book.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleMedium),
+                    Text(L('${chapters.length} bölüm', '${chapters.length} chapters'), style: theme.textTheme.bodySmall),
+                  ]),
+                ),
+              ]),
             ),
-          ),
+            const Divider(),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                itemCount: chapters.length,
+                itemBuilder: (c, i) => ListTile(
+                  selected: i == chapter,
+                  selectedTileColor: theme.colorScheme.primaryContainer,
+                  leading: Text('${i + 1}'.padLeft(2, '0'),
+                      style: theme.textTheme.labelLarge?.copyWith(
+                          color: i == chapter ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
+                          fontFeatures: const [FontFeature.tabularFigures()])),
+                  minLeadingWidth: 24,
+                  title: Text(chapterName(chapters[i].title), maxLines: 2, overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyLarge?.copyWith(fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500,
+                          color: i == chapter ? theme.colorScheme.primary : null)),
+                  onTap: () {
+                    Navigator.pop(c);
+                    _go(i);
+                  },
+                ),
+              ),
+            ),
+          ]),
         ),
       ),
       endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
@@ -190,21 +240,28 @@ class _ReaderPageState extends State<ReaderPage> {
                   if (i == 0) {
                     return ch.summary == null || !app.showTr
                         ? const SizedBox.shrink()
-                        : Card(
-                            margin: const EdgeInsets.only(bottom: 16),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge),
-                                const SizedBox(height: 4),
-                                Text(ch.summary!),
-                              ]),
+                        : Container(
+                            margin: const EdgeInsets.only(bottom: 20),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55),
+                              borderRadius: BorderRadius.circular(16),
                             ),
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Row(children: [
+                                Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
+                                const SizedBox(width: 6),
+                                Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'),
+                                    style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+                              ]),
+                              const SizedBox(height: 6),
+                              Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
+                            ]),
                           );
                   }
                   if (i == paras.length + 1) {
                     return Padding(
-                      padding: const EdgeInsets.only(top: 24),
+                      padding: const EdgeInsets.only(top: 28),
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                         OutlinedButton.icon(
                           onPressed: chapter > 0 ? () => _go(chapter - 1) : null,
@@ -228,7 +285,7 @@ class _ReaderPageState extends State<ReaderPage> {
         ),
         if (wide) ...[
           const VerticalDivider(width: 1),
-          SizedBox(width: 320, child: filters),
+          SizedBox(width: 320, child: ColoredBox(color: theme.colorScheme.surface, child: filters)),
         ],
       ]),
     );
@@ -244,9 +301,9 @@ class FilterPanel extends StatelessWidget {
     final theme = Theme.of(context);
     return ListenableBuilder(
       listenable: app,
-      builder: (context, _) => ListView(padding: const EdgeInsets.all(12), children: [
+      builder: (context, _) => ListView(padding: const EdgeInsets.fromLTRB(16, 16, 12, 16), children: [
         Row(children: [
-          Expanded(child: Text(L('Filtreler', 'Filters'), style: theme.textTheme.titleMedium)),
+          Expanded(child: Text(L('Filtreler', 'Filters'), style: theme.textTheme.titleLarge?.copyWith(fontSize: 19))),
           TextButton(onPressed: () => app.setAllCats(true), child: Text(L('Tümü', 'All'))),
           TextButton(onPressed: () => app.setAllCats(false), child: Text(L('Hiçbiri', 'None'))),
         ]),
