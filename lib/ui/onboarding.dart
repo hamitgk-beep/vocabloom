@@ -54,12 +54,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 12, 8, 0),
                 child: Row(children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: BorderRadius.circular(9)),
-                    child: const Icon(Icons.local_florist_rounded, color: Colors.white, size: 18),
-                  ),
+                  const BrandMark(),
                   const SizedBox(width: 10),
                   Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
                   const Spacer(),

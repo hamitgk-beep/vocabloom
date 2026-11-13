@@ -320,3 +320,15 @@ class BookCover extends StatelessWidget {
 
 /// Page color behind the book text: warm paper by day, the night grey at night.
 Color readerPaper(ThemeData t) => t.brightness == Brightness.dark ? Brand.dBg : const Color(0xFFFCFAF6);
+
+/// The app logo (same art as the launcher icon).
+class BrandMark extends StatelessWidget {
+  final double size;
+  const BrandMark({super.key, this.size = 30});
+
+  @override
+  Widget build(BuildContext context) => ClipRRect(
+        borderRadius: BorderRadius.circular(size * 0.28),
+        child: Image.asset('assets/brand/logo.png', width: size, height: size, filterQuality: FilterQuality.medium),
+      );
+}

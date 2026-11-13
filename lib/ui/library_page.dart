@@ -204,20 +204,6 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 }
 
-/// Small rounded app mark (a book that blooms).
-class BrandMark extends StatelessWidget {
-  final double size;
-  const BrandMark({super.key, this.size = 30});
-
-  @override
-  Widget build(BuildContext context) => Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: BorderRadius.circular(size * 0.3)),
-        child: Icon(Icons.local_florist_rounded, color: Colors.white, size: size * 0.6),
-      );
-}
-
 class _StatsStrip extends StatelessWidget {
   final int books, learning, learned;
   const _StatsStrip({required this.books, required this.learning, required this.learned});
