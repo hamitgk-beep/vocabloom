@@ -31,7 +31,7 @@ const providers = <ProviderInfo>[
       keyHelp: 'console.anthropic.com → API Keys'),
   ProviderInfo('openai', 'OpenAI ChatGPT', ApiKind.openai, 'https://api.openai.com/v1', 'gpt-4o-mini',
       keyHelp: 'platform.openai.com → API keys'),
-  ProviderInfo('gemini', 'Google Gemini', ApiKind.gemini, 'https://generativelanguage.googleapis.com', 'gemini-2.5-flash',
+  ProviderInfo('gemini', 'Google Gemini', ApiKind.gemini, 'https://generativelanguage.googleapis.com', 'gemini-flash-latest',
       keyHelp: 'aistudio.google.com → Get API key'),
   ProviderInfo('azure', 'Microsoft Copilot / Azure OpenAI', ApiKind.azure, '', 'gpt-4o-mini',
       keyHelp: 'Azure AI Foundry: uç nokta adresi + anahtar. Copilot uygulamasının kendisi geliştiricilere API sunmuyor; '
@@ -223,7 +223,14 @@ class AiService {
     if (res.statusCode != 200 || data == null) {
       final err = data?['error'];
       final msg = err is Map ? err['message'] : (err ?? raw);
-      throw Exception('${cfg.provider.name} hatası (${res.statusCode}): $msg');
+      final hint = switch (res.statusCode) {
+        400 when '$msg'.toLowerCase().contains('api key') => ' (Anahtar geçersiz görünüyor; kopyalarken eksik/boşluk kalmış olabilir.)',
+        401 || 403 => ' (Anahtar geçersiz ya da bu servise yetkisi yok.)',
+        404 => ' (Model adı bulunamadı; model kutusunu değiştirip tekrar deneyin.)',
+        429 => ' (Kullanım sınırına takıldı; ücretsiz planda biraz bekleyip tekrar deneyin.)',
+        _ => '',
+      };
+      throw Exception('${cfg.provider.name} hatası (${res.statusCode}): $msg$hint');
     }
     switch (kind) {
       case ApiKind.anthropic:
