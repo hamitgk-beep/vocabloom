@@ -47,6 +47,8 @@ jobs:
             # Spaces or line breaks picked up while copying are removed.
             printf '%s' "$KS" | tr -d '[:space:]' | base64 -d > "$RUNNER_TEMP/vocabloom.jks"
             PW=$(printf '%s' "$PW" | tr -d '[:space:]')
+            # If the whole README was pasted, keep only what follows the last colon.
+            PW=${PW##*:}
             echo "::add-mask::$PW"
             echo "Keystore size: $(stat -c %s "$RUNNER_TEMP/vocabloom.jks") bytes (expected 2131), sha256 starts $(sha256sum "$RUNNER_TEMP/vocabloom.jks" | cut -c1-16) (expected 7feb829e563cea1b)"
             if ! keytool -list -keystore "$RUNNER_TEMP/vocabloom.jks" -storepass "$PW" >/dev/null 2>&1; then
