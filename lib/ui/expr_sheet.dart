@@ -7,6 +7,7 @@ import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../online/ai_service.dart';
 import 'panel.dart';
+import '../l10n.dart';
 import 'word_sheet.dart';
 
 /// Opens the whole expression (phrasal verb, idiom, collocation ...) that the
@@ -81,7 +82,7 @@ class _ExprPanelState extends State<ExprPanel> {
     final children = <Widget>[
       Text(expr.phrase, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700)),
       const SizedBox(height: 2),
-      Text(en && !tr ? c.name : (en ? '${c.name} · ${c.tr}' : c.tr), style: TextStyle(color: color, fontWeight: FontWeight.w600)),
+      Text(uiEnglish || (en && !tr) ? c.name : (en ? '${c.name} · ${c.tr}' : c.tr), style: TextStyle(color: color, fontWeight: FontWeight.w600)),
       const SizedBox(height: 10),
       Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
         StatusButtons(
@@ -94,13 +95,13 @@ class _ExprPanelState extends State<ExprPanel> {
         ),
         LangToggles(app: app, onChanged: () => setState(() {})),
       ]),
-      section('Bu cümlede'),
+      section(L('Bu cümlede', 'In this sentence')),
       SentenceText(widget.ctx.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
       if (tr && widget.ctx.sentenceTr != null) ...[
         const SizedBox(height: 6),
         Text(widget.ctx.sentenceTr!.first, style: TextStyle(fontStyle: FontStyle.italic, color: theme.colorScheme.secondary)),
       ],
-      section('Anlamları ve örnekler'),
+      section(L('Anlamları ve örnekler', 'Meanings and examples')),
     ];
 
     if (senses != null && senses!.isNotEmpty) {
@@ -120,7 +121,7 @@ class _ExprPanelState extends State<ExprPanel> {
             if (s.inSentence)
               Padding(
                 padding: const EdgeInsets.only(top: 2),
-                child: Text(tr ? 'Bu cümledeki anlamı' : 'Meaning in this sentence',
+                child: Text(tr ? L('Bu cümledeki anlamı', 'Meaning in this sentence') : 'Meaning in this sentence',
                     style: theme.textTheme.labelSmall?.copyWith(color: color)),
               ),
             const SizedBox(height: 4),
@@ -134,7 +135,7 @@ class _ExprPanelState extends State<ExprPanel> {
           ]),
         ));
       }
-      children.add(Text('Kaynak: yapay zekâ (cihaza kaydedildi)', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)));
+      children.add(Text(L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)));
     } else {
       // Offline: dictionary definitions.
       final defs = (expr.en ?? '').split('; ').where((d) => d.trim().isNotEmpty).toList();
@@ -156,21 +157,21 @@ class _ExprPanelState extends State<ExprPanel> {
           child: Text('• ${expr.ex}', style: const TextStyle(fontStyle: FontStyle.italic)),
         ));
       }
-      if (defs.isEmpty && expr.trShown == null) children.add(Text('Sözlükte açıklama yok.', style: TextStyle(color: theme.hintColor)));
+      if (defs.isEmpty && expr.trShown == null) children.add(Text(L('Sözlükte açıklama yok.', 'No explanation in the dictionary.'), style: TextStyle(color: theme.hintColor)));
       if (loading) {
-        children.add(const Padding(
+        children.add(Padding(
           padding: EdgeInsets.only(top: 12),
           child: Row(children: [
             SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
             SizedBox(width: 10),
-            Text('Anlamlar ve örnekler hazırlanıyor…'),
+            Text(L('Anlamlar ve örnekler hazırlanıyor…', 'Preparing meanings and examples…')),
           ]),
         ));
       } else if (AiService.fromSettings(app.user) == null) {
         children.add(Padding(
           padding: const EdgeInsets.only(top: 12),
           child: Text(
-              'Ayarlar\'dan bir yapay zekâ servisi bağlarsan her anlam için Türkçe açıklama ve çevirili örnek cümleler de gelir.',
+              L('Ayarlar\'dan bir yapay zekâ servisi bağlarsan her anlam için Türkçe açıklama ve çevirili örnek cümleler de gelir.', 'Connect an AI service in Settings to also get a Turkish explanation and translated example sentences for each meaning.'),
               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
         ));
       } else if (error != null) {
@@ -178,14 +179,14 @@ class _ExprPanelState extends State<ExprPanel> {
           padding: const EdgeInsets.only(top: 8),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(error!, style: TextStyle(color: theme.colorScheme.error)),
-            TextButton.icon(onPressed: _load, icon: const Icon(Icons.refresh), label: const Text('Tekrar dene')),
+            TextButton.icon(onPressed: _load, icon: const Icon(Icons.refresh), label: Text(L('Tekrar dene', 'Try again'))),
           ]),
         ));
       }
     }
 
     // The single words of the expression.
-    children.add(section('Kalıptaki kelimeler'));
+    children.add(section(L('Kalıptaki kelimeler', 'Words in the expression')));
     children.add(Wrap(spacing: 8, runSpacing: 8, children: [
       for (final w in widget.words)
         ActionChip(

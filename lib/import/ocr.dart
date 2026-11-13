@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:path/path.dart' as p;
 
+import '../l10n.dart';
 import '../online/ai_service.dart';
 
 /// Turns a page image (PNG) into text.
@@ -43,7 +44,7 @@ Future<File> _tempPng(Uint8List png) async {
 /// Google ML Kit, runs fully on the phone (Android / iOS).
 class _MlKitOcr extends OcrEngine {
   @override
-  String get name => 'ML Kit (cihaz üzerinde)';
+  String get name => L('ML Kit (cihaz üzerinde)', 'ML Kit (on device)');
   @override
   Future<String> recognize(Uint8List png) async {
     final f = await _tempPng(png);
@@ -62,7 +63,7 @@ class _MlKitOcr extends OcrEngine {
 /// Windows 10/11 built-in OCR (Windows.Media.Ocr), called through PowerShell.
 class _WindowsOcr extends OcrEngine {
   @override
-  String get name => 'Windows OCR (çevrimdışı)';
+  String get name => L('Windows OCR (çevrimdışı)', 'Windows OCR (offline)');
 
   static const _script = r'''
 param([string]$path)
@@ -120,9 +121,9 @@ foreach ($line in $result.Lines) {
       if (r.exitCode != 0) {
         final err = '${r.stderr}';
         if (err.contains('NO_OCR_LANGUAGE')) {
-          throw Exception('Windows OCR için dil paketi yok. Ayarlar > Saat ve dil > Dil bölümünden İngilizce ekleyin.');
+          throw Exception(L('Windows OCR için dil paketi yok. Ayarlar > Saat ve dil > Dil bölümünden İngilizce ekleyin.', 'No language pack for Windows OCR. Add English under Settings > Time & language > Language.'));
         }
-        throw Exception('Windows OCR çalışmadı: $err');
+        throw Exception(L('Windows OCR çalışmadı: $err', 'Windows OCR failed: $err'));
       }
       return '${r.stdout}';
     } finally {
@@ -134,13 +135,13 @@ foreach ($line in $result.Lines) {
 /// Tesseract command line (Linux, macOS with Homebrew).
 class _TesseractOcr extends OcrEngine {
   @override
-  String get name => 'Tesseract (çevrimdışı)';
+  String get name => L('Tesseract (çevrimdışı)', 'Tesseract (offline)');
   @override
   Future<String> recognize(Uint8List png) async {
     final f = await _tempPng(png);
     try {
       final r = await Process.run('tesseract', [f.path, 'stdout', '-l', 'eng', '--psm', '3']);
-      if (r.exitCode != 0) throw Exception('Tesseract hatası: ${r.stderr}');
+      if (r.exitCode != 0) throw Exception(L('Tesseract hatası: ${r.stderr}', 'Tesseract error: ${r.stderr}'));
       return '${r.stdout}';
     } finally {
       await f.parent.delete(recursive: true);
@@ -152,7 +153,7 @@ class _AiOcr extends OcrEngine {
   final AiService ai;
   _AiOcr(this.ai);
   @override
-  String get name => 'Yapay zekâ (${ai.cfg.provider.name})';
+  String get name => L('Yapay zekâ (${ai.cfg.provider.name})', 'AI (${ai.cfg.provider.name})');
   @override
   Future<String> recognize(Uint8List png) => ai.ocrPage(png);
 }

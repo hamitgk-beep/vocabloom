@@ -5,6 +5,7 @@ import '../data/user_db.dart';
 import 'expr_sheet.dart';
 import 'paragraph_view.dart';
 import 'sentence_sheet.dart';
+import '../l10n.dart';
 import 'word_sheet.dart';
 
 class ReaderPage extends StatefulWidget {
@@ -106,11 +107,11 @@ class _ReaderPageState extends State<ReaderPage> {
         leading: const BackButton(),
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(widget.book.title, style: theme.textTheme.titleMedium, overflow: TextOverflow.ellipsis),
-          Text('${ch.title}  ·  ${chapter + 1}/${chapters.length}', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+          Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
         ]),
         actions: [
           IconButton(
-            tooltip: 'Yazı boyutu',
+            tooltip: L('Yazı boyutu', 'Font size'),
             icon: const Icon(Icons.format_size),
             onPressed: () => showModalBottomSheet(
               context: context,
@@ -139,18 +140,18 @@ class _ReaderPageState extends State<ReaderPage> {
             ),
           ),
           IconButton(
-            tooltip: theme.brightness == Brightness.dark ? 'Gündüz modu' : 'Gece modu',
+            tooltip: theme.brightness == Brightness.dark ? L('Gündüz modu', 'Day mode') : L('Gece modu', 'Night mode'),
             icon: Icon(theme.brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
             onPressed: () => app.setTheme(theme.brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark),
           ),
           IconButton(
-            tooltip: 'Bölümler',
+            tooltip: L('Bölümler', 'Chapters'),
             icon: const Icon(Icons.list),
             onPressed: () => _scaffold.currentState!.openDrawer(),
           ),
           if (!wide)
             IconButton(
-              tooltip: 'Filtreler',
+              tooltip: L('Filtreler', 'Filters'),
               icon: Badge(
                 isLabelVisible: app.enabledCats.isNotEmpty,
                 label: Text('${app.enabledCats.length}'),
@@ -166,7 +167,7 @@ class _ReaderPageState extends State<ReaderPage> {
             itemCount: chapters.length,
             itemBuilder: (c, i) => ListTile(
               selected: i == chapter,
-              title: Text(chapters[i].title, maxLines: 2, overflow: TextOverflow.ellipsis),
+              title: Text(chapterName(chapters[i].title), maxLines: 2, overflow: TextOverflow.ellipsis),
               onTap: () {
                 Navigator.pop(c);
                 _go(i);
@@ -194,7 +195,7 @@ class _ReaderPageState extends State<ReaderPage> {
                             child: Padding(
                               padding: const EdgeInsets.all(12),
                               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                                Text('Bu bölümde neler anlatılıyor', style: theme.textTheme.labelLarge),
+                                Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge),
                                 const SizedBox(height: 4),
                                 Text(ch.summary!),
                               ]),
@@ -208,12 +209,12 @@ class _ReaderPageState extends State<ReaderPage> {
                         OutlinedButton.icon(
                           onPressed: chapter > 0 ? () => _go(chapter - 1) : null,
                           icon: const Icon(Icons.chevron_left),
-                          label: const Text('Önceki'),
+                          label: Text(L('Önceki', 'Previous')),
                         ),
                         FilledButton.icon(
                           onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
                           icon: const Icon(Icons.chevron_right),
-                          label: const Text('Sonraki bölüm'),
+                          label: Text(L('Sonraki bölüm', 'Next chapter')),
                         ),
                       ]),
                     );
@@ -245,11 +246,11 @@ class FilterPanel extends StatelessWidget {
       listenable: app,
       builder: (context, _) => ListView(padding: const EdgeInsets.all(12), children: [
         Row(children: [
-          Expanded(child: Text('Filtreler', style: theme.textTheme.titleMedium)),
-          TextButton(onPressed: () => app.setAllCats(true), child: const Text('Tümü')),
-          TextButton(onPressed: () => app.setAllCats(false), child: const Text('Hiçbiri')),
+          Expanded(child: Text(L('Filtreler', 'Filters'), style: theme.textTheme.titleMedium)),
+          TextButton(onPressed: () => app.setAllCats(true), child: Text(L('Tümü', 'All'))),
+          TextButton(onPressed: () => app.setAllCats(false), child: Text(L('Hiçbiri', 'None'))),
         ]),
-        Text('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', style: theme.textTheme.bodySmall),
+        Text(L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'), style: theme.textTheme.bodySmall),
         const SizedBox(height: 8),
         for (final c in categories)
           CheckboxListTile(
@@ -259,15 +260,15 @@ class FilterPanel extends StatelessWidget {
             onChanged: (_) => app.toggleCat(c.id),
             secondary: Container(width: 14, height: 14, decoration: BoxDecoration(color: c.color, shape: BoxShape.circle)),
             title: Text(c.name, style: TextStyle(color: theme.brightness == Brightness.dark ? Color.lerp(c.color, Colors.white, 0.35) : c.color, fontWeight: FontWeight.w600)),
-            subtitle: Text(c.tr),
+            subtitle: Text(uiEnglish ? c.desc : c.tr),
           ),
         const Divider(),
-        Text('Kelime renkleri', style: theme.textTheme.titleSmall),
+        Text(L('Kelime renkleri', 'Word colors'), style: theme.textTheme.titleSmall),
         const SizedBox(height: 6),
-        _legend(learningColor, 'Öğreneceğim listesindeki kelimeler'),
-        _legend(learnedColor, 'Öğrendim dediğin kelimeler'),
+        _legend(learningColor, L('Öğreneceğim listesindeki kelimeler', 'Words on your To learn list')),
+        _legend(learnedColor, L('Öğrendim dediğin kelimeler', 'Words you marked as Learned')),
         const SizedBox(height: 10),
-        Text('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', style: theme.textTheme.bodySmall),
+        Text(L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'), style: theme.textTheme.bodySmall),
       ]),
     );
   }
@@ -278,7 +279,7 @@ class FilterPanel extends StatelessWidget {
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               color: c.withValues(alpha: 0.38),
-              child: const Text('kelime')),
+              child: Text(L('kelime', 'words'))),
           const SizedBox(width: 8),
           Expanded(child: Text(t)),
         ]),

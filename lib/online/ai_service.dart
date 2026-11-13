@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import '../data/user_db.dart';
 import '../nlp/word_family.dart';
+import '../l10n.dart';
 import '../nlp/text.dart';
 
 /// The kinds of HTTP API the providers speak.
@@ -13,15 +14,19 @@ enum ApiKind { anthropic, openai, gemini, azure }
 
 class ProviderInfo {
   final String id;
-  final String name;
+  final String nameTr;
   final ApiKind kind;
   final String baseUrl; // for openai-compatible providers
   final String defaultModel;
   final bool needsKey;
   final bool vision;
-  final String keyHelp;
-  const ProviderInfo(this.id, this.name, this.kind, this.baseUrl, this.defaultModel,
-      {this.needsKey = true, this.vision = true, this.keyHelp = ''});
+  final String keyHelpTr;
+  final String? nameEn, keyHelpEn;
+  const ProviderInfo(this.id, this.nameTr, this.kind, this.baseUrl, this.defaultModel,
+      {this.needsKey = true, this.vision = true, String keyHelp = '', this.nameEn, this.keyHelpEn}) : keyHelpTr = keyHelp;
+
+  String get name => uiEnglish ? nameEn ?? nameTr : nameTr;
+  String get keyHelp => uiEnglish ? keyHelpEn ?? keyHelpTr : keyHelpTr;
 }
 
 /// Supported AI services. Model names can be changed in the settings,
@@ -35,7 +40,8 @@ const providers = <ProviderInfo>[
       keyHelp: 'aistudio.google.com → Get API key'),
   ProviderInfo('azure', 'Microsoft Copilot / Azure OpenAI', ApiKind.azure, '', 'gpt-4o-mini',
       keyHelp: 'Azure AI Foundry: uç nokta adresi + anahtar. Copilot uygulamasının kendisi geliştiricilere API sunmuyor; '
-          'Microsoft\'un aynı modelleri Azure OpenAI üzerinden kullanılır.'),
+          'Microsoft\'un aynı modelleri Azure OpenAI üzerinden kullanılır.', keyHelpEn: 'Azure AI Foundry: endpoint address + key. The Copilot app itself offers no API to developers; '
+          'Microsoft\'s same models are used through Azure OpenAI.'),
   ProviderInfo('deepseek', 'DeepSeek', ApiKind.openai, 'https://api.deepseek.com/v1', 'deepseek-chat',
       vision: false, keyHelp: 'platform.deepseek.com → API keys'),
   ProviderInfo('mistral', 'Mistral AI', ApiKind.openai, 'https://api.mistral.ai/v1', 'mistral-small-latest',
@@ -44,11 +50,11 @@ const providers = <ProviderInfo>[
   ProviderInfo('groq', 'Groq', ApiKind.openai, 'https://api.groq.com/openai/v1', 'llama-3.3-70b-versatile',
       vision: false, keyHelp: 'console.groq.com → API Keys'),
   ProviderInfo('openrouter', 'OpenRouter (yüzlerce model)', ApiKind.openai, 'https://openrouter.ai/api/v1', 'openrouter/auto',
-      keyHelp: 'openrouter.ai → Keys'),
+      keyHelp: 'openrouter.ai → Keys', nameEn: 'OpenRouter (hundreds of models)'),
   ProviderInfo('ollama', 'Ollama (bilgisayarda yerel, internetsiz)', ApiKind.openai, 'http://localhost:11434/v1', 'llama3.2',
-      needsKey: false, vision: false, keyHelp: 'ollama.com programını kur, ardından: ollama pull llama3.2'),
+      needsKey: false, vision: false, keyHelp: 'ollama.com programını kur, ardından: ollama pull llama3.2', nameEn: 'Ollama (local on your computer, offline)', keyHelpEn: 'Install the ollama.com app, then run: ollama pull llama3.2'),
   ProviderInfo('custom', 'Diğer (OpenAI uyumlu adres)', ApiKind.openai, '', '', needsKey: false,
-      keyHelp: 'OpenAI uyumlu herhangi bir servisin adresi, anahtarı ve model adı.'),
+      keyHelp: 'OpenAI uyumlu herhangi bir servisin adresi, anahtarı ve model adı.', nameEn: 'Other (OpenAI-compatible address)', keyHelpEn: 'The address, key and model name of any OpenAI-compatible service.'),
 ];
 
 final providerById = {for (final p in providers) p.id: p};
@@ -127,7 +133,7 @@ class AiService {
     final fence = RegExp(r'```(?:json)?\s*([\s\S]*?)```').firstMatch(t);
     if (fence != null) t = fence.group(1)!.trim();
     final start = t.indexOf('{'), end = t.lastIndexOf('}');
-    if (start < 0 || end < start) throw Exception('Yapay zekâ geçerli JSON döndürmedi.');
+    if (start < 0 || end < start) throw Exception(L('Yapay zekâ geçerli JSON döndürmedi.', 'The AI did not return valid JSON.'));
     return jsonDecode(t.substring(start, end + 1)) as Map<String, dynamic>;
   }
 
@@ -230,19 +236,19 @@ class AiService {
       final err = data?['error'];
       final msg = err is Map ? err['message'] : (err ?? raw);
       final hint = switch (res.statusCode) {
-        400 when '$msg'.toLowerCase().contains('api key') => ' (Anahtar geçersiz görünüyor; kopyalarken eksik/boşluk kalmış olabilir.)',
-        401 || 403 => ' (Anahtar geçersiz ya da bu servise yetkisi yok.)',
-        404 => ' (Model adı bulunamadı; model kutusunu değiştirip tekrar deneyin.)',
-        429 => ' (Kullanım sınırına takıldı; ücretsiz planda biraz bekleyip tekrar deneyin.)',
-        503 || 529 => ' (Anahtarın çalışıyor, ama model şu an çok yoğun. Biraz sonra tekrar deneyin ya da model adını değiştirin, ör. gemini-flash-lite-latest.)',
+        400 when '$msg'.toLowerCase().contains('api key') => L(' (Anahtar geçersiz görünüyor; kopyalarken eksik/boşluk kalmış olabilir.)', ' (The key looks invalid; part of it may be missing or have extra spaces from copying.)'),
+        401 || 403 => L(' (Anahtar geçersiz ya da bu servise yetkisi yok.)', ' (The key is invalid or has no access to this service.)'),
+        404 => L(' (Model adı bulunamadı; model kutusunu değiştirip tekrar deneyin.)', ' (Model name not found; change the model box and try again.)'),
+        429 => L(' (Kullanım sınırına takıldı; ücretsiz planda biraz bekleyip tekrar deneyin.)', ' (Usage limit reached; on the free plan, wait a bit and try again.)'),
+        503 || 529 => L(' (Anahtarın çalışıyor, ama model şu an çok yoğun. Biraz sonra tekrar deneyin ya da model adını değiştirin, ör. gemini-flash-lite-latest.)', ' (Your key works, but the model is very busy right now. Try again a bit later or change the model name, e.g. gemini-flash-lite-latest.)'),
         _ => '',
       };
-      throw Exception('${cfg.provider.name} hatası (${res.statusCode}): $msg$hint');
+      throw Exception(L('${cfg.provider.name} hatası (${res.statusCode}): $msg$hint', '${cfg.provider.name} error (${res.statusCode}): $msg$hint'));
     }
     switch (kind) {
       case ApiKind.anthropic:
-        if (data['stop_reason'] == 'refusal') throw Exception('İstek model tarafından reddedildi.');
-        if (data['stop_reason'] == 'max_tokens') throw Exception('Yanıt çok uzun olduğu için kesildi.');
+        if (data['stop_reason'] == 'refusal') throw Exception(L('İstek model tarafından reddedildi.', 'The request was refused by the model.'));
+        if (data['stop_reason'] == 'max_tokens') throw Exception(L('Yanıt çok uzun olduğu için kesildi.', 'The answer was cut off because it was too long.'));
         return (data['content'] as List).whereType<Map>().where((b) => b['type'] == 'text').map((b) => b['text'] as String).join();
       case ApiKind.gemini:
         final c = (data['candidates'] as List?)?.firstOrNull as Map?;
@@ -251,7 +257,7 @@ class AiService {
       case ApiKind.openai:
       case ApiKind.azure:
         final ch = (data['choices'] as List).first as Map;
-        if (ch['finish_reason'] == 'length') throw Exception('Yanıt çok uzun olduğu için kesildi.');
+        if (ch['finish_reason'] == 'length') throw Exception(L('Yanıt çok uzun olduğu için kesildi.', 'The answer was cut off because it was too long.'));
         return ((ch['message'] as Map)['content'] ?? '') as String;
     }
   }
@@ -438,7 +444,7 @@ class AiService {
 
   /// Reads the text of a scanned page image (online OCR).
   Future<String> ocrPage(Uint8List png) async {
-    if (!cfg.provider.vision) throw Exception('${cfg.provider.name} resimdeki metni okuyamıyor.');
+    if (!cfg.provider.vision) throw Exception(L('${cfg.provider.name} resimdeki metni okuyamıyor.', '${cfg.provider.name} cannot read text in images.'));
     final r = await _json(
       'This is a scanned page of an English book. Transcribe the book text exactly as printed, in reading order. '
       'Separate paragraphs with a blank line. Leave out page numbers, running headers and text inside pictures. '

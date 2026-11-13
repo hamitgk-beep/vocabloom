@@ -7,6 +7,7 @@ import '../data/user_db.dart';
 import '../import/importers.dart';
 import '../import/ocr.dart';
 import '../online/ai_service.dart';
+import '../l10n.dart';
 import 'reader_page.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _LibraryPageState extends State<LibraryPage> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            '"${book.title}" eklendi: ${book.chapters.length} bölüm, ~$words kelime.',
+            L('"${book.title}" eklendi: ${book.chapters.length} bölüm, ~$words kelime.', '"${book.title}" added: ${book.chapters.length} chapters, ~$words words.'),
           ),
         ),
       );
@@ -65,7 +66,7 @@ class _LibraryPageState extends State<LibraryPage> {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text('İçe aktarılamadı: $e'),
+          content: Text(L('İçe aktarılamadı: $e', 'Could not import: $e')),
           duration: const Duration(seconds: 8),
         ),
       );
@@ -84,7 +85,7 @@ class _LibraryPageState extends State<LibraryPage> {
     final books = widget.app.user.books();
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('VocaBloom · Kitaplığım')),
+      appBar: AppBar(title: Text(L('VocaBloom · Kitaplığım', 'VocaBloom · My library'))),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: importing ? null : _import,
         icon: importing
@@ -94,7 +95,7 @@ class _LibraryPageState extends State<LibraryPage> {
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
             : const Icon(Icons.add),
-        label: Text(importing ? 'Dönüştürülüyor…' : 'Kitap ekle'),
+        label: Text(importing ? L('Dönüştürülüyor…', 'Converting…') : L('Kitap ekle', 'Add book')),
       ),
       body: Column(
         children: [
@@ -120,13 +121,12 @@ class _LibraryPageState extends State<LibraryPage> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Henüz kitap yok',
+                            L('Henüz kitap yok', 'No books yet'),
                             style: theme.textTheme.titleLarge,
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF veya Markdown dosyası ekle. '
-                            'Kitap uygulamanın kendi formatına çevrilir ve cihazında saklanır.',
+                            L('EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF veya Markdown dosyası ekle. Kitap uygulamanın kendi formatına çevrilir ve cihazında saklanır.', 'Add an EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF or Markdown file. The book is converted to the app\'s own format and stored on your device.'),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -166,7 +166,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                 Text(
                                   [
                                     if (b.author != null) b.author!,
-                                    '${b.chapterCount} bölüm',
+                                    L('${b.chapterCount} bölüm', '${b.chapterCount} chapters'),
                                   ].join(' · '),
                                 ),
                                 const SizedBox(height: 4),
@@ -187,17 +187,17 @@ class _LibraryPageState extends State<LibraryPage> {
                                   final m = ScaffoldMessenger.of(context);
                                   if (svc == null) {
                                     m.showSnackBar(
-                                      const SnackBar(
+                                      SnackBar(
                                         content: Text(
-                                          'Önce Ayarlar\'dan bir yapay zekâ servisi bağlayın.',
+                                          L('Önce Ayarlar\'dan bir yapay zekâ servisi bağlayın.', 'First connect an AI service in Settings.'),
                                         ),
                                       ),
                                     );
                                   } else if (!await svc.reachable()) {
                                     m.showSnackBar(
-                                      const SnackBar(
+                                      SnackBar(
                                         content: Text(
-                                          'İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.',
+                                          L('İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.', 'No internet. The analysis starts by itself when you are back online.'),
                                         ),
                                       ),
                                     );
@@ -211,20 +211,20 @@ class _LibraryPageState extends State<LibraryPage> {
                                   final ok = await showDialog<bool>(
                                     context: context,
                                     builder: (c) => AlertDialog(
-                                      title: const Text('Kitap silinsin mi?'),
+                                      title: Text(L('Kitap silinsin mi?', 'Delete this book?')),
                                       content: Text(
-                                        '"${b.title}" kitaplıktan kaldırılacak. Kelime listen korunur.',
+                                        L('"${b.title}" kitaplıktan kaldırılacak. Kelime listen korunur.', '"${b.title}" will be removed from the library. Your word list is kept.'),
                                       ),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(c, false),
-                                          child: const Text('Vazgeç'),
+                                          child: Text(L('Vazgeç', 'Cancel')),
                                         ),
                                         FilledButton(
                                           onPressed: () =>
                                               Navigator.pop(c, true),
-                                          child: const Text('Sil'),
+                                          child: Text(L('Sil', 'Delete')),
                                         ),
                                       ],
                                     ),
@@ -235,16 +235,16 @@ class _LibraryPageState extends State<LibraryPage> {
                                   }
                                 }
                               },
-                              itemBuilder: (_) => const [
+                              itemBuilder: (_) => [
                                 PopupMenuItem(
                                   value: 'analyze',
                                   child: Text(
-                                    'Çevrimiçi analiz et (çeviri + özet)',
+                                    L('Çevrimiçi analiz et (çeviri + özet)', 'Analyze online (translation + summary)'),
                                   ),
                                 ),
                                 PopupMenuItem(
                                   value: 'delete',
-                                  child: Text('Sil'),
+                                  child: Text(L('Sil', 'Delete')),
                                 ),
                               ],
                             ),

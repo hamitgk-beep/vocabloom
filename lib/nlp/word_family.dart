@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../l10n.dart';
 import '../data/dict_db.dart';
 
 /// One member of a word family (create, creation, creative, uncreative ...).
@@ -38,67 +39,67 @@ class WordFamily {
 }
 
 // Suffix -> what it does, in Turkish. Longest suffixes first.
-const _suffixes = <(String, String, String?)>[
+const _suffixes = <(String, String, String, String?)>[
   // (suffix, explanation, only for this part of speech)
-  ('ation', 'eylemin kendisi ya da sonucu (isim yapar)', 'n'),
-  ('ition', 'eylemin kendisi ya da sonucu (isim yapar)', 'n'),
-  ('tion', 'eylemin kendisi ya da sonucu (isim yapar)', 'n'),
-  ('sion', 'eylemin kendisi ya da sonucu (isim yapar)', 'n'),
-  ('ion', 'eylemin kendisi ya da sonucu (isim yapar)', 'n'),
-  ('ment', 'eylem ya da onun sonucu (isim yapar)', 'n'),
-  ('ness', 'durum ya da nitelik, Türkçedeki -lık/-lik gibi (isim yapar)', 'n'),
-  ('ity', 'nitelik, Türkçedeki -lık/-lik gibi (isim yapar)', 'n'),
-  ('ancy', 'durum (isim yapar)', 'n'),
-  ('ency', 'durum (isim yapar)', 'n'),
-  ('ance', 'eylem ya da durum (isim yapar)', 'n'),
-  ('ence', 'eylem ya da durum (isim yapar)', 'n'),
-  ('ship', 'durum, ilişki ya da beceri (isim yapar)', 'n'),
-  ('hood', 'dönem ya da durum, ör. childhood: çocukluk (isim yapar)', 'n'),
-  ('dom', 'durum ya da alan, ör. freedom: özgürlük (isim yapar)', 'n'),
-  ('ism', 'akım, inanç ya da sistem, -cılık (isim yapar)', 'n'),
-  ('ist', 'uzman ya da taraftar kişi, -cı (isim yapar)', 'n'),
-  ('ure', 'eylemin sonucu (isim yapar)', 'n'),
-  ('ee', 'işten etkilenen kişi, ör. employee: çalışan (isim yapar)', 'n'),
-  ('al', 'eylemin kendisi, ör. arrival: varış (isim yapar)', 'n'),
-  ('er', 'işi yapan kişi ya da araç, Türkçedeki -cı/-ci gibi (isim yapar)', 'n'),
-  ('or', 'işi yapan kişi ya da araç, Türkçedeki -cı/-ci gibi (isim yapar)', 'n'),
-  ('ar', 'işi yapan kişi (isim yapar)', 'n'),
-  ('ant', 'işi yapan kişi ya da madde (isim yapar)', 'n'),
-  ('ent', 'işi yapan kişi ya da madde (isim yapar)', 'n'),
-  ('ing', 'eylemin kendisi (isim yapar)', 'n'),
-  ('ative', 'o özelliğe sahip (sıfat yapar)', 'a'),
-  ('ive', 'o özelliğe sahip (sıfat yapar)', 'a'),
-  ('able', 'yapılabilir, -ebilir/-abilir (sıfat yapar)', 'a'),
-  ('ible', 'yapılabilir, -ebilir/-abilir (sıfat yapar)', 'a'),
-  ('ful', 'o şeyle dolu, Türkçedeki -lı/-li gibi (sıfat yapar)', 'a'),
-  ('less', 'o şey olmadan, Türkçedeki -sız/-siz gibi (sıfat yapar)', 'a'),
-  ('ious', 'o niteliğe sahip (sıfat yapar)', 'a'),
-  ('ous', 'o niteliğe sahip (sıfat yapar)', 'a'),
-  ('ical', 'ile ilgili (sıfat yapar)', 'a'),
-  ('ic', 'ile ilgili (sıfat yapar)', 'a'),
-  ('al', 'ile ilgili, -sal/-sel (sıfat yapar)', 'a'),
-  ('ish', 'biraz, -ımsı/-imsi (sıfat yapar)', 'a'),
-  ('ant', 'o durumda olan (sıfat yapar)', 'a'),
-  ('ent', 'o durumda olan (sıfat yapar)', 'a'),
-  ('ed', 'o duruma gelmiş, ör. bored: sıkılmış (sıfat yapar)', 'a'),
-  ('ing', 'o etkiyi yaratan, ör. boring: sıkıcı (sıfat yapar)', 'a'),
-  ('y', 'o özelliği taşıyan, ör. rainy: yağmurlu (sıfat yapar)', 'a'),
-  ('ly', 'işin nasıl yapıldığını anlatır, Türkçedeki -ca/-ce, "bir şekilde" (zarf yapar)', 'r'),
-  ('ize', 'o hale getirmek (fiil yapar)', 'v'),
-  ('ise', 'o hale getirmek (fiil yapar)', 'v'),
-  ('ify', 'o hale getirmek (fiil yapar)', 'v'),
-  ('ate', 'o işi yapmak (fiil yapar)', 'v'),
-  ('en', 'o hale getirmek, ör. widen: genişletmek (fiil yapar)', 'v'),
+  ('ation', 'eylemin kendisi ya da sonucu (isim yapar)', 'the action itself or its result (makes a noun)', 'n'),
+  ('ition', 'eylemin kendisi ya da sonucu (isim yapar)', 'the action itself or its result (makes a noun)', 'n'),
+  ('tion', 'eylemin kendisi ya da sonucu (isim yapar)', 'the action itself or its result (makes a noun)', 'n'),
+  ('sion', 'eylemin kendisi ya da sonucu (isim yapar)', 'the action itself or its result (makes a noun)', 'n'),
+  ('ion', 'eylemin kendisi ya da sonucu (isim yapar)', 'the action itself or its result (makes a noun)', 'n'),
+  ('ment', 'eylem ya da onun sonucu (isim yapar)', 'an action or its result (makes a noun)', 'n'),
+  ('ness', 'durum ya da nitelik, Türkçedeki -lık/-lik gibi (isim yapar)', 'a state or quality, like -ness (makes a noun)', 'n'),
+  ('ity', 'nitelik, Türkçedeki -lık/-lik gibi (isim yapar)', 'a quality (makes a noun)', 'n'),
+  ('ancy', 'durum (isim yapar)', 'a state (makes a noun)', 'n'),
+  ('ency', 'durum (isim yapar)', 'a state (makes a noun)', 'n'),
+  ('ance', 'eylem ya da durum (isim yapar)', 'an action or state (makes a noun)', 'n'),
+  ('ence', 'eylem ya da durum (isim yapar)', 'an action or state (makes a noun)', 'n'),
+  ('ship', 'durum, ilişki ya da beceri (isim yapar)', 'a state, relationship or skill (makes a noun)', 'n'),
+  ('hood', 'dönem ya da durum, ör. childhood: çocukluk (isim yapar)', 'a period or state, e.g. childhood (makes a noun)', 'n'),
+  ('dom', 'durum ya da alan, ör. freedom: özgürlük (isim yapar)', 'a state or domain, e.g. freedom (makes a noun)', 'n'),
+  ('ism', 'akım, inanç ya da sistem, -cılık (isim yapar)', 'a movement, belief or system (makes a noun)', 'n'),
+  ('ist', 'uzman ya da taraftar kişi, -cı (isim yapar)', 'an expert or supporter (makes a noun)', 'n'),
+  ('ure', 'eylemin sonucu (isim yapar)', 'the result of an action (makes a noun)', 'n'),
+  ('ee', 'işten etkilenen kişi, ör. employee: çalışan (isim yapar)', 'the person affected by the action, e.g. employee (makes a noun)', 'n'),
+  ('al', 'eylemin kendisi, ör. arrival: varış (isim yapar)', 'the action itself, e.g. arrival (makes a noun)', 'n'),
+  ('er', 'işi yapan kişi ya da araç, Türkçedeki -cı/-ci gibi (isim yapar)', 'the person or tool that does the action (makes a noun)', 'n'),
+  ('or', 'işi yapan kişi ya da araç, Türkçedeki -cı/-ci gibi (isim yapar)', 'the person or tool that does the action (makes a noun)', 'n'),
+  ('ar', 'işi yapan kişi (isim yapar)', 'the person who does the action (makes a noun)', 'n'),
+  ('ant', 'işi yapan kişi ya da madde (isim yapar)', 'the person or substance that does the action (makes a noun)', 'n'),
+  ('ent', 'işi yapan kişi ya da madde (isim yapar)', 'the person or substance that does the action (makes a noun)', 'n'),
+  ('ing', 'eylemin kendisi (isim yapar)', 'the action itself (makes a noun)', 'n'),
+  ('ative', 'o özelliğe sahip (sıfat yapar)', 'having that quality (makes an adjective)', 'a'),
+  ('ive', 'o özelliğe sahip (sıfat yapar)', 'having that quality (makes an adjective)', 'a'),
+  ('able', 'yapılabilir, -ebilir/-abilir (sıfat yapar)', 'can be done (makes an adjective)', 'a'),
+  ('ible', 'yapılabilir, -ebilir/-abilir (sıfat yapar)', 'can be done (makes an adjective)', 'a'),
+  ('ful', 'o şeyle dolu, Türkçedeki -lı/-li gibi (sıfat yapar)', 'full of that thing (makes an adjective)', 'a'),
+  ('less', 'o şey olmadan, Türkçedeki -sız/-siz gibi (sıfat yapar)', 'without that thing (makes an adjective)', 'a'),
+  ('ious', 'o niteliğe sahip (sıfat yapar)', 'having that quality (makes an adjective)', 'a'),
+  ('ous', 'o niteliğe sahip (sıfat yapar)', 'having that quality (makes an adjective)', 'a'),
+  ('ical', 'ile ilgili (sıfat yapar)', 'related to (makes an adjective)', 'a'),
+  ('ic', 'ile ilgili (sıfat yapar)', 'related to (makes an adjective)', 'a'),
+  ('al', 'ile ilgili, -sal/-sel (sıfat yapar)', 'related to (makes an adjective)', 'a'),
+  ('ish', 'biraz, -ımsı/-imsi (sıfat yapar)', 'somewhat, -ish (makes an adjective)', 'a'),
+  ('ant', 'o durumda olan (sıfat yapar)', 'being in that state (makes an adjective)', 'a'),
+  ('ent', 'o durumda olan (sıfat yapar)', 'being in that state (makes an adjective)', 'a'),
+  ('ed', 'o duruma gelmiş, ör. bored: sıkılmış (sıfat yapar)', 'having reached that state, e.g. bored (makes an adjective)', 'a'),
+  ('ing', 'o etkiyi yaratan, ör. boring: sıkıcı (sıfat yapar)', 'causing that effect, e.g. boring (makes an adjective)', 'a'),
+  ('y', 'o özelliği taşıyan, ör. rainy: yağmurlu (sıfat yapar)', 'having that feature, e.g. rainy (makes an adjective)', 'a'),
+  ('ly', 'işin nasıl yapıldığını anlatır, Türkçedeki -ca/-ce, "bir şekilde" (zarf yapar)', 'tells how something is done (makes an adverb)', 'r'),
+  ('ize', 'o hale getirmek (fiil yapar)', 'to make something that way (makes a verb)', 'v'),
+  ('ise', 'o hale getirmek (fiil yapar)', 'to make something that way (makes a verb)', 'v'),
+  ('ify', 'o hale getirmek (fiil yapar)', 'to make something that way (makes a verb)', 'v'),
+  ('ate', 'o işi yapmak (fiil yapar)', 'to do that action (makes a verb)', 'v'),
+  ('en', 'o hale getirmek, ör. widen: genişletmek (fiil yapar)', 'to make something that way, e.g. widen (makes a verb)', 'v'),
 ];
 
-const _prefixes = <(String, String)>[
-  ('non', 'olmayan, -sız (olumsuz yapar)'),
-  ('dis', 'zıt ya da ters anlam (olumsuz yapar)'),
-  ('un', 'zıt anlam, Türkçedeki -sız/-mayan gibi (olumsuz yapar)'),
-  ('in', 'zıt anlam, Türkçedeki -sız/-mayan gibi (olumsuz yapar)'),
-  ('im', 'zıt anlam (p/b/m ile başlayan kelimelerde in- yerine)'),
-  ('il', 'zıt anlam (l ile başlayan kelimelerde in- yerine)'),
-  ('ir', 'zıt anlam (r ile başlayan kelimelerde in- yerine)'),
+const _prefixes = <(String, String, String)>[
+  ('non', 'olmayan, -sız (olumsuz yapar)', 'not, without (makes a negative)'),
+  ('dis', 'zıt ya da ters anlam (olumsuz yapar)', 'the opposite or reverse meaning (makes a negative)'),
+  ('un', 'zıt anlam, Türkçedeki -sız/-mayan gibi (olumsuz yapar)', 'the opposite meaning (makes a negative)'),
+  ('in', 'zıt anlam, Türkçedeki -sız/-mayan gibi (olumsuz yapar)', 'the opposite meaning (makes a negative)'),
+  ('im', 'zıt anlam (p/b/m ile başlayan kelimelerde in- yerine)', 'the opposite meaning (used instead of in- before p/b/m)'),
+  ('il', 'zıt anlam (l ile başlayan kelimelerde in- yerine)', 'the opposite meaning (used instead of in- before l)'),
+  ('ir', 'zıt anlam (r ile başlayan kelimelerde in- yerine)', 'the opposite meaning (used instead of in- before r)'),
 ];
 
 /// "-ation: eylemin kendisi ya da sonucu (isim yapar)" for [word] built from [base].
@@ -109,7 +110,8 @@ String? explainSuffix(String base, String word, String pos) {
     l++;
   }
   if (l < 3 || l < base.length - 3) return null;
-  for (final (suf, note, p) in _suffixes) {
+  for (final (suf, noteTr, noteEn, p) in _suffixes) {
+    final note = uiEnglish ? noteEn : noteTr;
     if (p != null && p != pos) continue;
     if (word.endsWith(suf) && word.length - suf.length >= l - 2 && suf.length <= word.length - l + 3) {
       return '-$suf: $note';
@@ -119,7 +121,8 @@ String? explainSuffix(String base, String word, String pos) {
 }
 
 String? explainPrefix(String base, String word) {
-  for (final (pre, note) in _prefixes) {
+  for (final (pre, noteTr, noteEn) in _prefixes) {
+    final note = uiEnglish ? noteEn : noteTr;
     if (word == '$pre$base') return '$pre-: $note';
   }
   return null;
@@ -166,7 +169,7 @@ WordFamily? offlineFamily(DictDb dict, String lemma) {
     for (final n in negs)
       FamilyEntry(n[0] as String, n[1] as String,
           tr: trFor(dict, n[0] as String, n[1] as String),
-          affixNote: explainPrefix(n[2] as String, n[0] as String) ?? 'zıt anlam: ${n[2]}',
+          affixNote: explainPrefix(n[2] as String, n[0] as String) ?? L('zıt anlam: ${n[2]}', 'opposite of: ${n[2]}'),
           negative: true),
   ]);
 }

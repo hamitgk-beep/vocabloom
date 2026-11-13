@@ -10,6 +10,7 @@ import 'package:xml/xml.dart';
 
 import '../data/user_db.dart';
 import 'ocr.dart';
+import '../l10n.dart';
 import 'pdf_import.dart';
 
 const supportedExtensions = [
@@ -63,10 +64,10 @@ ImportedBook importBytes(List<int> bytes, String ext, String fallbackTitle) {
     case 'rtf':
       book = _fromPlain(_rtfToText(latin1.decode(bytes, allowInvalid: true)), fallbackTitle, 'rtf', markdown: false);
     default:
-      throw ImportException('Bu dosya türü desteklenmiyor: .$ext');
+      throw ImportException(L('Bu dosya türü desteklenmiyor: .$ext', 'This file type is not supported: .$ext'));
   }
   final chapters = book.chapters.where((c) => c.paragraphs.isNotEmpty).toList();
-  if (chapters.isEmpty) throw ImportException('Dosyada okunabilir metin bulunamadı.');
+  if (chapters.isEmpty) throw ImportException(L('Dosyada okunabilir metin bulunamadı.', 'No readable text was found in the file.'));
   return ImportedBook(book.title, book.author, book.format, chapters);
 }
 
@@ -138,7 +139,7 @@ ImportedBook _chunk(ImportedBook b, {int size = 80}) {
   for (var i = 0; i < out.length; i++) {
     if (out[i].title.isEmpty) {
       final h = out[i].paragraphs.where((x) => x.$1 == 'h').map((x) => x.$2).firstOrNull;
-      out[i] = ImportedChapter(h ?? 'Bölüm ${i + 1}', out[i].paragraphs);
+      out[i] = ImportedChapter(h ?? L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), out[i].paragraphs);
     }
   }
   return ImportedBook(b.title, b.author, b.format, out);
@@ -202,7 +203,7 @@ ImportedBook _importEpub(List<int> bytes, String fallbackTitle) {
 
   String read(ArchiveFile f) => utf8.decode(f.content as List<int>, allowMalformed: true);
   final container = find('META-INF/container.xml');
-  if (container == null) throw ImportException('Geçersiz EPUB dosyası.');
+  if (container == null) throw ImportException(L('Geçersiz EPUB dosyası.', 'Invalid EPUB file.'));
   final opfPath = XmlDocument.parse(read(container)).findAllElements('rootfile').first.getAttribute('full-path')!;
   final opfDir = p.posix.dirname(opfPath) == '.' ? '' : '${p.posix.dirname(opfPath)}/';
   final opf = XmlDocument.parse(read(find(opfPath)!));
@@ -248,7 +249,7 @@ ImportedBook _importEpub(List<int> bytes, String fallbackTitle) {
 ImportedBook _importDocx(List<int> bytes, String fallbackTitle) {
   final arc = ZipDecoder().decodeBytes(bytes);
   final f = arc.files.where((f) => f.name == 'word/document.xml').firstOrNull;
-  if (f == null) throw ImportException('Geçersiz DOCX dosyası.');
+  if (f == null) throw ImportException(L('Geçersiz DOCX dosyası.', 'Invalid DOCX file.'));
   final doc = XmlDocument.parse(utf8.decode(f.content as List<int>));
   final chapters = <ImportedChapter>[];
   var cur = ImportedChapter('', []);
@@ -270,7 +271,7 @@ ImportedBook _importDocx(List<int> bytes, String fallbackTitle) {
 ImportedBook _importOdt(List<int> bytes, String fallbackTitle) {
   final arc = ZipDecoder().decodeBytes(bytes);
   final f = arc.files.where((f) => f.name == 'content.xml').firstOrNull;
-  if (f == null) throw ImportException('Geçersiz ODT dosyası.');
+  if (f == null) throw ImportException(L('Geçersiz ODT dosyası.', 'Invalid ODT file.'));
   final doc = XmlDocument.parse(utf8.decode(f.content as List<int>));
   final chapters = <ImportedChapter>[];
   var cur = ImportedChapter('', []);

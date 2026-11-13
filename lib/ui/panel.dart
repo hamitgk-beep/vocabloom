@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n.dart';
 
 /// Shows a detail panel (word, sentence, expression). On wide screens it is a
 /// large centred window so nothing is cut off; on phones a tall bottom sheet.
@@ -17,7 +18,7 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
             Positioned(
               right: 4,
               top: 4,
-              child: IconButton(tooltip: 'Kapat', icon: const Icon(Icons.close), onPressed: () => Navigator.pop(c)),
+              child: IconButton(tooltip: L('Kapat', 'Close'), icon: const Icon(Icons.close), onPressed: () => Navigator.pop(c)),
             ),
           ]),
         ),

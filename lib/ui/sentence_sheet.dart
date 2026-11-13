@@ -8,6 +8,7 @@ import '../nlp/text.dart';
 import '../online/ai_service.dart';
 import 'panel.dart';
 import 'paragraph_view.dart';
+import '../l10n.dart';
 import 'word_sheet.dart';
 
 /// Sentence breakdown: translation, tenses, expressions and word meanings.
@@ -57,7 +58,7 @@ class _SentencePanelState extends State<SentencePanel> {
   Future<void> _explain() async {
     final svc = AiService.fromSettings(widget.app.user);
     if (svc == null) {
-      setState(() => error = 'Çevrimiçi açıklama için Ayarlar > Yapay zekâ bölümünden bir servis bağlayın.');
+      setState(() => error = L('Çevrimiçi açıklama için Ayarlar > Yapay zekâ bölümünden bir servis bağlayın.', 'Connect a service under Settings > AI for an online explanation.'));
       return;
     }
     setState(() {
@@ -74,7 +75,7 @@ class _SentencePanelState extends State<SentencePanel> {
         onlineExplainEn = r.explanationEn.isEmpty ? null : r.explanationEn;
       });
     } catch (e) {
-      if (mounted) setState(() => error = 'Bağlantı kurulamadı: $e');
+      if (mounted) setState(() => error = L('Bağlantı kurulamadı: $e', 'Could not connect: $e'));
     } finally {
       if (mounted) setState(() => loading = false);
     }
@@ -109,7 +110,7 @@ class _SentencePanelState extends State<SentencePanel> {
     }
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
-      Text('Cümle analizi', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+      Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
       const SizedBox(height: 10),
       SelectableText(ctx.sentence, style: const TextStyle(fontSize: 18, height: 1.5, fontFamily: 'serif')),
       // Full Turkish translation right under the English sentence.
@@ -119,12 +120,12 @@ class _SentencePanelState extends State<SentencePanel> {
           child: SelectableText(tr, style: TextStyle(fontSize: 17, height: 1.45, color: theme.colorScheme.secondary)),
         ),
       if (tr == null && loading)
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 8),
           child: Row(children: [
             SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
             SizedBox(width: 10),
-            Text('Cümle çevriliyor…'),
+            Text(L('Cümle çevriliyor…', 'Translating the sentence…')),
           ]),
         ),
       const SizedBox(height: 10),
@@ -133,18 +134,18 @@ class _SentencePanelState extends State<SentencePanel> {
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
-              'Tam cümle çevirisi için Ayarlar\'dan bir yapay zekâ servisi bağla. Aşağıdaki parça parça analiz internetsiz çalışır.',
+              L('Tam cümle çevirisi için Ayarlar\'dan bir yapay zekâ servisi bağla. Aşağıdaki parça parça analiz internetsiz çalışır.', 'Connect an AI service in Settings for a full sentence translation. The step-by-step analysis below works offline.'),
               style: TextStyle(color: theme.hintColor, fontSize: 13)),
         ),
       if (error != null) ...[
         Padding(padding: const EdgeInsets.only(top: 6), child: Text(error!, style: TextStyle(color: theme.colorScheme.error))),
         Align(
           alignment: Alignment.centerLeft,
-          child: TextButton.icon(onPressed: loading ? null : _explain, icon: const Icon(Icons.refresh), label: const Text('Tekrar dene')),
+          child: TextButton.icon(onPressed: loading ? null : _explain, icon: const Icon(Icons.refresh), label: Text(L('Tekrar dene', 'Try again'))),
         ),
       ],
       if ((showEn && onlineExplainEn != null) || (showTr && onlineExplain != null)) ...[
-        section('Açıklama'),
+        section(L('Açıklama', 'Explanation')),
         if (showEn && onlineExplainEn != null) SelectableText(onlineExplainEn!),
         if (showEn && onlineExplainEn != null && showTr && onlineExplain != null) const SizedBox(height: 8),
         if (showTr && onlineExplain != null) SelectableText(onlineExplain!),
@@ -154,26 +155,26 @@ class _SentencePanelState extends State<SentencePanel> {
           padding: const EdgeInsets.only(top: 8),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: FilledButton.tonalIcon(onPressed: _explain, icon: const Icon(Icons.auto_awesome), label: const Text('Ayrıntılı açıkla')),
+            child: FilledButton.tonalIcon(onPressed: _explain, icon: const Icon(Icons.auto_awesome), label: Text(L('Ayrıntılı açıkla', 'Explain in detail'))),
           ),
         ),
-      section('Zaman ve yapı'),
-      if (tenses.isEmpty) Text('Belirgin bir fiil yapısı bulunamadı.', style: TextStyle(color: theme.hintColor)),
+      section(L('Zaman ve yapı', 'Tense and structure')),
+      if (tenses.isEmpty) Text(L('Belirgin bir fiil yapısı bulunamadı.', 'No clear verb structure was found.'), style: TextStyle(color: theme.hintColor)),
       for (final h in tenses)
         Card(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             title: Text(showTr ? (showEn ? '${h.en} · ${h.tr}' : '${h.tr} (${h.en})') : h.en,
                 style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: Text(showTr ? '"${h.words}"  ${h.explain}' : '"${h.words}"'),
+            subtitle: Text(showTr || uiEnglish ? '"${h.words}"  ${h.explain}' : '"${h.words}"'),
           ),
         ),
-      section('Kalıplar ve kategoriler'),
-      if (byCat.isEmpty) Text('Bu cümlede listelerimizdeki bir kalıp bulunamadı.', style: TextStyle(color: theme.hintColor)),
+      section(L('Kalıplar ve kategoriler', 'Expressions and categories')),
+      if (byCat.isEmpty) Text(L('Bu cümlede listelerimizdeki bir kalıp bulunamadı.', 'No expression from our lists was found in this sentence.'), style: TextStyle(color: theme.hintColor)),
       for (final e in byCat.entries) ...[
         for (final m in e.value) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
       ],
-      section('Kelimeler'),
+      section(L('Kelimeler', 'Words')),
       for (final t in contentWords)
         Builder(builder: (context) {
           final lemma = app.primaryLemma(t.lower);

@@ -5,6 +5,7 @@ import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../online/ai_service.dart';
 import '../online/update_check.dart';
+import '../l10n.dart';
 import 'word_sheet.dart';
 
 // ------------------------------------------------------------------ words
@@ -18,8 +19,8 @@ class WordsPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Kelimelerim'),
-          bottom: const TabBar(tabs: [Tab(text: 'Öğreneceğim'), Tab(text: 'Öğrendim')]),
+          title: Text(L('Kelimelerim', 'My words')),
+          bottom: TabBar(tabs: [Tab(text: L('Öğreneceğim', 'To learn')), Tab(text: L('Öğrendim', 'Learned'))]),
         ),
         body: ListenableBuilder(
           listenable: app,
@@ -49,8 +50,8 @@ class _WordList extends StatelessWidget {
           padding: const EdgeInsets.all(32),
           child: Text(
             status == WordStatus.learning
-                ? 'Okurken bir kelimeye dokunup "Öğreneceğim" dediğinde burada görünür ve kitapta turuncu işaretlenir.'
-                : '"Öğrendim" dediğin kelimeler burada toplanır ve kitapta yeşil işaretlenir.',
+                ? L('Okurken bir kelimeye dokunup "Öğreneceğim" dediğinde burada görünür ve kitapta turuncu işaretlenir.', 'When you tap a word while reading and choose "To learn", it shows up here and is marked orange in the book.')
+                : L('"Öğrendim" dediğin kelimeler burada toplanır ve kitapta yeşil işaretlenir.', 'Words you mark as "Learned" are collected here and marked green in the book.'),
             textAlign: TextAlign.center,
           ),
         ),
@@ -73,7 +74,7 @@ class _WordList extends StatelessWidget {
               if (w.bookTitle != null) Text(w.bookTitle!, style: theme.textTheme.bodySmall),
             ]),
             trailing: IconButton(
-              tooltip: status == WordStatus.learning ? 'Öğrendim' : 'Tekrar öğreneceğim',
+              tooltip: status == WordStatus.learning ? L('Öğrendim', 'Learned') : L('Tekrar öğreneceğim', 'Learn again'),
               icon: Icon(status == WordStatus.learning ? Icons.check_circle_outline : Icons.replay),
               onPressed: () => app.setWord(w.lemma, status == WordStatus.learning ? WordStatus.learned : WordStatus.learning),
             ),
@@ -136,13 +137,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
       counts[e.cat] = (counts[e.cat] ?? 0) + 1;
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Sözlük ve kategoriler')),
+      appBar: AppBar(title: Text(L('Sözlük ve kategoriler', 'Dictionary and categories'))),
       body: ListView(padding: const EdgeInsets.all(12), children: [
         TextField(
           controller: search,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             prefixIcon: Icon(Icons.search),
-            hintText: 'Sözlükte ara (kelime veya kalıp)',
+            hintText: L('Sözlükte ara (kelime veya kalıp)', 'Search the dictionary (word or expression)'),
             border: OutlineInputBorder(),
           ),
           onSubmitted: _lookup,
@@ -152,8 +153,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
           Card(
             child: ListTile(
               leading: CircleAvatar(backgroundColor: c.color.withValues(alpha: 0.18), child: Icon(Icons.label, color: c.color)),
-              title: Text('${c.name} · ${c.tr}'),
-              subtitle: Text(c.description),
+              title: Text(uiEnglish ? c.name : '${c.name} · ${c.tr}'),
+              subtitle: Text(c.desc),
               trailing: Text('${counts[c.id] ?? 0}'),
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => _CategoryList(app: app, cat: c))),
             ),
@@ -186,7 +187,7 @@ class _CategoryListState extends State<_CategoryList> {
         Padding(
           padding: const EdgeInsets.all(12),
           child: TextField(
-            decoration: const InputDecoration(prefixIcon: Icon(Icons.search), hintText: 'Ara', border: OutlineInputBorder()),
+            decoration: InputDecoration(prefixIcon: Icon(Icons.search), hintText: L('Ara', 'Search'), border: OutlineInputBorder()),
             onChanged: (v) => setState(() => q = v.toLowerCase()),
           ),
         ),
@@ -264,7 +265,7 @@ class _SettingsPageState extends State<SettingsPage> {
     _save();
     final svc = AiService.fromSettings(widget.app.user);
     if (svc == null) {
-      setState(() => testResult = 'Eksik bilgi var (anahtar, model veya adres).');
+      setState(() => testResult = L('Eksik bilgi var (anahtar, model veya adres).', 'Some information is missing (key, model or address).'));
       return;
     }
     setState(() {
@@ -273,10 +274,10 @@ class _SettingsPageState extends State<SettingsPage> {
     });
     try {
       final r = await svc.translateChunk(['The weather is lovely today.']);
-      setState(() => testResult = 'Çalışıyor ✓  "${r.translations.firstOrNull ?? ''}"');
+      setState(() => testResult = L('Çalışıyor ✓  "${r.translations.firstOrNull ?? ''}"', 'Working ✓  "${r.translations.firstOrNull ?? ''}"'));
       widget.app.analyzer.tick();
     } catch (e) {
-      setState(() => testResult = 'Hata: $e');
+      setState(() => testResult = L('Hata: $e', 'Error: $e'));
     } finally {
       if (mounted) setState(() => testing = false);
     }
@@ -290,38 +291,50 @@ class _SettingsPageState extends State<SettingsPage> {
     final p = providerById[providerId]!;
     final showUrl = p.kind == ApiKind.azure || p.id == 'custom' || p.id == 'ollama' || p.id == 'openrouter';
     return Scaffold(
-      appBar: AppBar(title: const Text('Ayarlar')),
+      appBar: AppBar(title: Text(L('Ayarlar', 'Settings'))),
       body: ListView(padding: const EdgeInsets.all(16), children: [
-        Text('Görünüm', style: theme.textTheme.titleMedium),
+        Text('Uygulama dili / App language', style: theme.textTheme.titleMedium),
+        const SizedBox(height: 8),
+        SegmentedButton<bool>(
+          segments: const [
+            ButtonSegment(value: false, label: Text('Türkçe')),
+            ButtonSegment(value: true, label: Text('English')),
+          ],
+          selected: {app.englishUi},
+          onSelectionChanged: (s) => app.setUiEnglish(s.first),
+        ),
+        const SizedBox(height: 4),
+        Text(L('Menüler, düğmeler ve açıklamalar bu dilde gösterilir.', 'Menus, buttons and explanations are shown in this language.'),
+            style: TextStyle(color: theme.hintColor, fontSize: 13)),
+        const SizedBox(height: 20),
+        Text(L('Görünüm', 'Appearance'), style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         SegmentedButton<ThemeMode>(
-          segments: const [
-            ButtonSegment(value: ThemeMode.light, icon: Icon(Icons.light_mode), label: Text('Gündüz')),
-            ButtonSegment(value: ThemeMode.dark, icon: Icon(Icons.dark_mode), label: Text('Gece')),
-            ButtonSegment(value: ThemeMode.system, icon: Icon(Icons.brightness_auto), label: Text('Sistem')),
+          segments: [
+            ButtonSegment(value: ThemeMode.light, icon: Icon(Icons.light_mode), label: Text(L('Gündüz', 'Day'))),
+            ButtonSegment(value: ThemeMode.dark, icon: Icon(Icons.dark_mode), label: Text(L('Gece', 'Night'))),
+            ButtonSegment(value: ThemeMode.system, icon: Icon(Icons.brightness_auto), label: Text(L('Sistem', 'System'))),
           ],
           selected: {app.themeMode},
           onSelectionChanged: (s) => app.setTheme(s.first),
         ),
         ListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Anlam dili'),
-          subtitle: const Text('Kelime panelinde Türkçe, İngilizce veya ikisi birden.'),
+          title: Text(L('Anlam dili', 'Meaning language')),
+          subtitle: Text(L('Kelime panelinde Türkçe, İngilizce veya ikisi birden.', 'Turkish, English or both in the word panel.')),
           trailing: LangToggles(app: app, onChanged: () => setState(() {})),
         ),
         const Divider(height: 32),
-        Text('Yapay zekâ (isteğe bağlı, internet gerekir)', style: theme.textTheme.titleMedium),
+        Text(L('Yapay zekâ (isteğe bağlı, internet gerekir)', 'AI (optional, needs internet)'), style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
-        const Text(
-          'Bağladığın servis, internet olduğu her an henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve '
-          'bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Yarıda kalırsa kaldığı yerden devam eder. '
-          'Taranmış (resim) PDF\'lerde cihazda OCR yoksa sayfaları da okuyabilir. Kullanım ücreti kendi hesabından düşer.',
+        Text(
+          L('Bağladığın servis, internet olduğu her an henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Yarıda kalırsa kaldığı yerden devam eder. Taranmış (resim) PDF\'lerde cihazda OCR yoksa sayfaları da okuyabilir. Kullanım ücreti kendi hesabından düşer.', 'Whenever there is an internet connection, the service you connect scans books that have not been scanned yet: a Turkish translation of every sentence and chapter summaries are saved on your device and never scanned again. If it stops halfway, it continues where it left off. For scanned (image) PDFs it can also read the pages when the device has no OCR. Usage is billed to your own account.'),
         ),
         const SizedBox(height: 12),
         DropdownButtonFormField<String>(
           initialValue: providerId,
           isExpanded: true,
-          decoration: const InputDecoration(labelText: 'Servis', border: OutlineInputBorder()),
+          decoration: InputDecoration(labelText: L('Servis', 'Service'), border: OutlineInputBorder()),
           items: [for (final x in providers) DropdownMenuItem(value: x.id, child: Text(x.name))],
           onChanged: (v) => setState(() {
             _save();
@@ -337,7 +350,7 @@ class _SettingsPageState extends State<SettingsPage> {
           TextField(
             controller: url,
             decoration: InputDecoration(
-              labelText: p.kind == ApiKind.azure ? 'Uç nokta (https://<kaynak>.openai.azure.com)' : 'Adres (base URL)',
+              labelText: p.kind == ApiKind.azure ? L('Uç nokta (https://<kaynak>.openai.azure.com)', 'Endpoint (https://<resource>.openai.azure.com)') : 'Adres (base URL)',
               border: const OutlineInputBorder(),
             ),
             onChanged: (_) => _save(),
@@ -348,7 +361,7 @@ class _SettingsPageState extends State<SettingsPage> {
           controller: key,
           obscureText: obscure,
           decoration: InputDecoration(
-            labelText: p.needsKey ? 'API anahtarı' : 'API anahtarı (gerekmiyorsa boş bırak)',
+            labelText: p.needsKey ? L('API anahtarı', 'API key') : L('API anahtarı (gerekmiyorsa boş bırak)', 'API key (leave empty if not needed)'),
             border: const OutlineInputBorder(),
             suffixIcon: IconButton(icon: Icon(obscure ? Icons.visibility : Icons.visibility_off), onPressed: () => setState(() => obscure = !obscure)),
           ),
@@ -358,8 +371,8 @@ class _SettingsPageState extends State<SettingsPage> {
         TextField(
           controller: model,
           decoration: InputDecoration(
-            labelText: p.kind == ApiKind.azure ? 'Dağıtım (deployment) adı' : 'Model adı',
-            helperText: 'Servisin model listesinden istediğini yazabilirsin. Varsayılan: ${p.defaultModel}',
+            labelText: p.kind == ApiKind.azure ? L('Dağıtım (deployment) adı', 'Deployment name') : L('Model adı', 'Model name'),
+            helperText: L('Servisin model listesinden istediğini yazabilirsin. Varsayılan: ${p.defaultModel}', 'You can enter any model from the service\'s list. Default: ${p.defaultModel}'),
             border: const OutlineInputBorder(),
           ),
           onChanged: (_) => _save(),
@@ -369,15 +382,14 @@ class _SettingsPageState extends State<SettingsPage> {
           FilledButton.tonalIcon(
             onPressed: testing ? null : _test,
             icon: testing ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.wifi_tethering),
-            label: const Text('Bağlantıyı dene'),
+            label: Text(L('Bağlantıyı dene', 'Test connection')),
           ),
         ]),
         if (testResult != null) Padding(padding: const EdgeInsets.only(top: 6), child: Text(testResult!)),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('İnternet olunca kitapları otomatik tara'),
-          subtitle: const Text('Kitaplar çevrilir, sonra sözlükte yalnızca İngilizce açıklaması olan kalıplar Türkçeye '
-              'çevrilip cihaza kaydedilir. Kapalıysa kitap menüsünden elle başlatabilirsin.'),
+          title: Text(L('İnternet olunca kitapları otomatik tara', 'Scan books automatically when online')),
+          subtitle: Text(L('Kitaplar çevrilir, sonra sözlükte yalnızca İngilizce açıklaması olan kalıplar Türkçeye çevrilip cihaza kaydedilir. Kapalıysa kitap menüsünden elle başlatabilirsin.', 'Books are translated first; then dictionary entries that only have an English definition are translated into Turkish and saved on the device. When off, you can start it from the book menu.')),
           value: u.getSetting('auto_analyze') != '0',
           onChanged: (v) => setState(() {
             u.setSetting('auto_analyze', v ? null : '0');
@@ -391,26 +403,24 @@ class _SettingsPageState extends State<SettingsPage> {
               : Padding(padding: const EdgeInsets.only(bottom: 8), child: Text(s, style: theme.textTheme.bodySmall)),
         ),
         if (!p.vision)
-          Text('Not: ${p.name} resimdeki yazıyı okuyamaz; taranmış PDF için cihazın kendi OCR\'ı kullanılır.',
+          Text(L('Not: ${p.name} resimdeki yazıyı okuyamaz; taranmış PDF için cihazın kendi OCR\'ı kullanılır.', 'Note: ${p.name} cannot read text in images; the device\'s own OCR is used for scanned PDFs.'),
               style: theme.textTheme.bodySmall),
         const Divider(height: 32),
-        Text('Hakkında', style: theme.textTheme.titleMedium),
+        Text(L('Hakkında', 'About'), style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
-        const Text('VocaBloom, Hamit Gök tarafından geliştirildi.'),
-        Text(appBuild == 0 ? 'Sürüm: geliştirme derlemesi' : 'Sürüm: 1.0 (derleme $appBuild)', style: theme.textTheme.bodySmall),
+        Text(L('VocaBloom, Hamit Gök tarafından geliştirildi.', 'VocaBloom was developed by Hamit Gök.')),
+        Text(appBuild == 0 ? L('Sürüm: geliştirme derlemesi', 'Version: development build') : L('Sürüm: 1.0 (derleme $appBuild)', 'Version: 1.0 (build $appBuild)'), style: theme.textTheme.bodySmall),
         const Divider(height: 32),
-        Text('Veriler ve lisanslar', style: theme.textTheme.titleMedium),
+        Text(L('Veriler ve lisanslar', 'Data and licenses'), style: theme.textTheme.titleMedium),
         const SizedBox(height: 6),
-        const Text(
-          'Tüm kitapların, kelime listen ve ayarların yalnızca bu cihazda saklanır. API anahtarları da yalnızca cihazda '
-          'tutulur ve sadece seçtiğin servise gönderilir.\n\n'
-          'Sözlük kaynakları:\n'
+        Text(
+          L('Tüm kitapların, kelime listen ve ayarların yalnızca bu cihazda saklanır. API anahtarları da yalnızca cihazda tutulur ve sadece seçtiğin servise gönderilir.\n\nSözlük kaynakları:\n', 'All your books, your word list and your settings are stored only on this device. API keys are also kept only on the device and are sent only to the service you choose.\n\nDictionary sources:\n') +
           '• FreeDict English–Turkish (GPL-2.0+)\n'
-          '• Princeton WordNet 3.0 (WordNet lisansı)\n'
-          '• KeNet Türkçe WordNet, Starlang / Özyeğin Üniversitesi (CC BY-SA 4.0)\n'
+          '• Princeton WordNet 3.0 (WordNet License)\n'
+          '• KeNet Turkish WordNet, Starlang / Özyeğin University (CC BY-SA 4.0)\n'
           '• Collaborative Interlingual Index (CC BY 4.0)\n'
-          '• Wiktionary kalıpları, kaikki.org üzerinden (CC BY-SA 4.0)\n'
-          '• Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0).',
+          '• Wiktionary expressions via kaikki.org (CC BY-SA 4.0)\n' +
+          L('• Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0).', '• Category lists written for this app (CC BY-SA 4.0).'),
         ),
       ]),
     );

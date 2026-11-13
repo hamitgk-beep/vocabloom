@@ -10,6 +10,7 @@ import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'ui/other_pages.dart';
 
+import 'l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main(List<String> args) {
@@ -99,14 +100,14 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
                   child: error != null
                       ? Padding(
                           padding: const EdgeInsets.all(24),
-                          child: Text('Başlatılamadı: $error'),
+                          child: Text(L('Başlatılamadı: $error', 'Could not start: $error')),
                         )
-                      : const Column(
+                      : Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CircularProgressIndicator(),
                             SizedBox(height: 16),
-                            Text('Sözlük hazırlanıyor…'),
+                            Text(L('Sözlük hazırlanıyor…', 'Preparing the dictionary…')),
                           ],
                         ),
                 ),
@@ -142,20 +143,20 @@ class _HomePageState extends State<HomePage> {
         leading: const Icon(Icons.system_update),
         content: Text(
           Platform.isAndroid
-              ? 'VocaBloom\'un yeni sürümü var. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.'
-              : 'VocaBloom\'un yeni sürümü var.',
+              ? L('VocaBloom\'un yeni sürümü var. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.', 'A new version of VocaBloom is available. Download and open it to install over the current app; your books and words are kept.')
+              : L('VocaBloom\'un yeni sürümü var.', 'A new version of VocaBloom is available.'),
         ),
         actions: [
           TextButton(
             onPressed: m.hideCurrentMaterialBanner,
-            child: const Text('Sonra'),
+            child: Text(L('Sonra', 'Later')),
           ),
           FilledButton(
             onPressed: () {
               m.hideCurrentMaterialBanner();
               launchUrl(Uri.parse(u.url), mode: LaunchMode.externalApplication);
             },
-            child: const Text('İndir'),
+            child: Text(L('İndir', 'Download')),
           ),
         ],
       ),
@@ -170,11 +171,11 @@ class _HomePageState extends State<HomePage> {
       CategoriesPage(app: widget.app),
       SettingsPage(app: widget.app),
     ];
-    const dests = [
-      (Icons.menu_book_outlined, Icons.menu_book, 'Kitaplık'),
-      (Icons.bookmark_border, Icons.bookmark, 'Kelimelerim'),
-      (Icons.category_outlined, Icons.category, 'Sözlük'),
-      (Icons.settings_outlined, Icons.settings, 'Ayarlar'),
+    final dests = [
+      (Icons.menu_book_outlined, Icons.menu_book, L('Kitaplık', 'Library')),
+      (Icons.bookmark_border, Icons.bookmark, L('Kelimelerim', 'My words')),
+      (Icons.category_outlined, Icons.category, L('Sözlük', 'Dictionary')),
+      (Icons.settings_outlined, Icons.settings, L('Ayarlar', 'Settings')),
     ];
     final wide = MediaQuery.sizeOf(context).width >= 720;
     final body = IndexedStack(index: tab, children: pages);

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 
+import '../l10n.dart';
 import '../nlp/text.dart';
 
 class Sense {
@@ -25,7 +26,9 @@ class WordInfo {
   bool get isEmpty => trFreeDict.isEmpty && senses.isEmpty;
 }
 
-const posNames = {'n': 'isim', 'v': 'fiil', 'a': 'sıfat', 'r': 'zarf'};
+Map<String, String> get posNames => uiEnglish
+    ? const {'n': 'noun', 'v': 'verb', 'a': 'adjective', 'r': 'adverb'}
+    : const {'n': 'isim', 'v': 'fiil', 'a': 'sıfat', 'r': 'zarf'};
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {

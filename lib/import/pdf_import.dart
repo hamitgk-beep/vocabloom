@@ -7,6 +7,7 @@ import 'package:pdfrx/pdfrx.dart';
 
 import '../data/user_db.dart';
 import 'importers.dart';
+import '../l10n.dart';
 import 'ocr.dart';
 
 String _clean(String s) => s.replaceAll(RegExp(r'[\s ]+'), ' ').trim();
@@ -22,7 +23,7 @@ Future<Uint8List> _renderPage(PdfPage page) async {
   final scale = (2200 / page.width).clamp(1.5, 4.0);
   final im = await page.render(
       fullWidth: page.width * scale, fullHeight: page.height * scale, backgroundColor: 0xffffffff);
-  if (im == null) throw ImportException('Sayfa görüntüsü oluşturulamadı.');
+  if (im == null) throw ImportException(L('Sayfa görüntüsü oluşturulamadı.', 'Could not render the page image.'));
   try {
     return await _toPng(await im.createImage());
   } finally {
@@ -47,21 +48,25 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
     if (ocrPages.isNotEmpty) {
       if (ocr == null) {
         if (ocrPages.length == n) {
-          throw ImportException('Bu PDF taranmış (resim) bir belge; içinde seçilebilir metin yok. '
-              'Resimden metin okumak için bu cihazda OCR bulunamadı. Ayarlar\'dan resim okuyabilen bir yapay zekâ '
-              'servisi bağlayıp internete bağlıyken tekrar deneyin.');
+          throw ImportException(L(
+              'Bu PDF taranmış (resim) bir belge; içinde seçilebilir metin yok. '
+                  'Resimden metin okumak için bu cihazda OCR bulunamadı. Ayarlar\'dan resim okuyabilen bir yapay zekâ '
+                  'servisi bağlayıp internete bağlıyken tekrar deneyin.',
+              'This PDF is a scanned (image) document with no selectable text. '
+                  'No OCR was found on this device to read text from images. Connect an AI service that can read images '
+                  'in Settings and try again while online.'));
         }
       } else {
         var k = 0;
         for (final i in ocrPages) {
           k++;
-          onProgress?.call('Resimden metin okunuyor (${ocr.name}): sayfa $k/${ocrPages.length}');
+          onProgress?.call(L('Resimden metin okunuyor (${ocr.name}): sayfa $k/${ocrPages.length}', 'Reading text from image (${ocr.name}): page $k/${ocrPages.length}'));
           final png = await _renderPage(doc.pages[i]);
           pages[i] = '\u0001${await ocr.recognize(png)}';
         }
       }
     }
-    onProgress?.call('Paragraflar düzenleniyor…');
+    onProgress?.call(L('Paragraflar düzenleniyor…', 'Arranging paragraphs…'));
     return buildBookFromPages(pages, fallbackTitle, 'pdf', isWord: isWord);
   } finally {
     await doc.dispose();
@@ -72,14 +77,15 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
 Future<ImportedBook> importImage(String path, String fallbackTitle,
     {OcrEngine? ocr, ImportProgress? onProgress, bool Function(String word)? isWord}) async {
   if (ocr == null) {
-    throw ImportException('Resimden metin okumak için bu cihazda OCR bulunamadı. Ayarlar\'dan resim okuyabilen bir '
-        'yapay zekâ servisi bağlayın.');
+    throw ImportException(L(
+        'Resimden metin okumak için bu cihazda OCR bulunamadı. Ayarlar\'dan resim okuyabilen bir yapay zekâ servisi bağlayın.',
+        'No OCR was found on this device to read text from images. Connect an AI service that can read images in Settings.'));
   }
   final bytes = await File(path).readAsBytes();
   final codec = await ui.instantiateImageCodec(bytes);
   final frame = await codec.getNextFrame();
   final png = await _toPng(frame.image);
-  onProgress?.call('Resimden metin okunuyor (${ocr.name})…');
+  onProgress?.call(L('Resimden metin okunuyor (${ocr.name})…', 'Reading text from image (${ocr.name})…'));
   final text = await ocr.recognize(png);
   return buildBookFromPages(['\u0001$text'], fallbackTitle, 'image', isWord: isWord);
 }
@@ -248,7 +254,7 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
   }
   if (cur.paragraphs.isNotEmpty) chapters.add(cur);
   for (var i = 0; i < chapters.length; i++) {
-    if (chapters[i].title.isEmpty) chapters[i] = ImportedChapter('Bölüm ${i + 1}', chapters[i].paragraphs);
+    if (chapters[i].title.isEmpty) chapters[i] = ImportedChapter(L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), chapters[i].paragraphs);
   }
   return ImportedBook(title, null, format, chapters);
 }

@@ -8,6 +8,7 @@ import '../nlp/word_family.dart';
 import '../online/ai_service.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
+import '../l10n.dart';
 import 'paragraph_view.dart';
 
 /// Context in which a word was tapped (null when opened from a list).
@@ -158,8 +159,8 @@ class _WordPanelState extends State<WordPanel> {
       ]),
       const SizedBox(height: 12),
       SegmentedButton<int>(
-        segments: const [
-          ButtonSegment(value: 0, label: Text('Anlam'), icon: Icon(Icons.translate)),
+        segments: [
+          ButtonSegment(value: 0, label: Text(L('Anlam', 'Meaning')), icon: Icon(Icons.translate)),
           ButtonSegment(value: 1, label: Text('Word Family'), icon: Icon(Icons.account_tree_outlined)),
         ],
         selected: {tab},
@@ -174,7 +175,7 @@ class _WordPanelState extends State<WordPanel> {
 
     // ---------------- in this sentence
     if (ctx != null) {
-      children.add(_Section('Bu cümlede', [
+      children.add(_Section(L('Bu cümlede', 'In this sentence'), [
         SentenceText(ctx.sentence, widget.surface),
         if (ctx.sentenceTr != null && tr) ...[
           const SizedBox(height: 6),
@@ -183,7 +184,7 @@ class _WordPanelState extends State<WordPanel> {
         for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
         if (best != null) ...[
           const SizedBox(height: 8),
-          Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? 'Kelimenin tek başına anlamı:' : 'Bu cümledeki anlamı:',
+          Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? L('Kelimenin tek başına anlamı:', 'Meaning of the word on its own:') : L('Bu cümledeki anlamı:', 'Meaning in this sentence:'),
               style: theme.textTheme.labelLarge),
           const SizedBox(height: 4),
           if (en) Text(best!.gloss, style: theme.textTheme.bodyLarge),
@@ -197,13 +198,13 @@ class _WordPanelState extends State<WordPanel> {
 
     // ---------------- Turkish meanings
     if (tr && info.trFreeDict.isNotEmpty) {
-      children.add(_Section('Türkçe karşılıklar', [
+      children.add(_Section(L('Türkçe karşılıklar', 'Turkish equivalents'), [
         for (var i = 0; i < info.trFreeDict.length && i < 12; i++)
           Padding(padding: const EdgeInsets.only(bottom: 3), child: Text('${i + 1}. ${info.trFreeDict[i]}')),
       ]));
     }
     if (surfaceInfo != null && tr && surfaceInfo!.trFreeDict.isNotEmpty) {
-      children.add(_Section('"${widget.surface}" biçimi', [
+      children.add(_Section(L('"${widget.surface}" biçimi', 'The form "${widget.surface}"'), [
         for (final s in surfaceInfo!.trFreeDict.take(5)) Text('• $s'),
       ]));
     }
@@ -233,23 +234,23 @@ class _WordPanelState extends State<WordPanel> {
               if (en) Text(s.gloss, style: TextStyle(fontWeight: tr && s.tr.isNotEmpty ? null : FontWeight.w600)),
               if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: const TextStyle(fontWeight: FontWeight.w600)),
               if (en && s.synonyms.isNotEmpty)
-                Text('eş anlamlı: ${s.synonyms.take(5).join(', ')}', style: TextStyle(color: theme.hintColor, fontSize: 13)),
+                Text(L('eş anlamlı: ${s.synonyms.take(5).join(', ')}', 'synonyms: ${s.synonyms.take(5).join(', ')}'), style: TextStyle(color: theme.hintColor, fontSize: 13)),
               if (en) for (final ex in s.examples.take(2)) Text('“$ex”', style: const TextStyle(fontStyle: FontStyle.italic)),
             ]),
           ));
         }
       }
-      children.add(_Section(en ? 'Anlamlar (WordNet)' : 'Anlamlar', items));
+      children.add(_Section(en ? L('Anlamlar (WordNet)', 'Meanings (WordNet)') : L('Anlamlar', 'Meanings'), items));
     }
 
     if (bookExamples.isNotEmpty) {
-      children.add(_Section('Kitaptan başka örnekler', [
+      children.add(_Section(L('Kitaptan başka örnekler', 'More examples from the book'), [
         for (final s in bookExamples)
           Padding(padding: const EdgeInsets.only(bottom: 6), child: SentenceText(s, null, highlight: {lemma, widget.surface.toLowerCase()})),
       ]));
     }
     if (info.isEmpty && (ctx?.matches.isEmpty ?? true)) {
-      children.add(const Padding(padding: EdgeInsets.all(16), child: Text('Bu kelime sözlükte bulunamadı.')));
+      children.add(Padding(padding: EdgeInsets.all(16), child: Text(L('Bu kelime sözlükte bulunamadı.', 'This word was not found in the dictionary.'))));
     }
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
@@ -298,7 +299,7 @@ class _WordFamilyViewState extends State<WordFamilyView> {
       widget.app.user.setFamilyAi(widget.lemma, f.toJsonString());
       if (mounted) setState(() => ai = f);
     } catch (e) {
-      if (mounted) setState(() => error = 'Yapay zekâya ulaşılamadı: $e');
+      if (mounted) setState(() => error = L('Yapay zekâya ulaşılamadı: $e', 'Could not reach the AI: $e'));
     } finally {
       if (mounted) setState(() => loading = false);
     }
@@ -314,10 +315,10 @@ class _WordFamilyViewState extends State<WordFamilyView> {
       out.add(Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Text(loading
-            ? 'Kelime ailesi hazırlanıyor…'
+            ? L('Kelime ailesi hazırlanıyor…', 'Preparing the word family…')
             : hasAi
-                ? 'Sözlükte bu kelimenin ailesi yok.'
-                : 'Sözlükte bu kelimenin ailesi yok. Ayarlar\'dan bir yapay zekâ servisi bağlarsan oluşturabilirim.'),
+                ? L('Sözlükte bu kelimenin ailesi yok.', 'The dictionary has no family for this word.')
+                : L('Sözlükte bu kelimenin ailesi yok. Ayarlar\'dan bir yapay zekâ servisi bağlarsan oluşturabilirim.', 'The dictionary has no family for this word. Connect an AI service in Settings and I can build one.')),
       ));
     } else {
       out.add(Container(
@@ -328,7 +329,7 @@ class _WordFamilyViewState extends State<WordFamilyView> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(children: [
-          Text('Kök', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+          Text(L('Kök', 'Root'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           const SizedBox(width: 12),
           Text(f.root, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
           if (f.rootTr != null && f.rootTr!.isNotEmpty) ...[
@@ -337,13 +338,13 @@ class _WordFamilyViewState extends State<WordFamilyView> {
           ],
         ]),
       ));
-      const groups = [('v', 'Fiil (Verb)'), ('n', 'İsim (Noun)'), ('a', 'Sıfat (Adjective)'), ('r', 'Zarf (Adverb)')];
+      final groups = [('v', L('Fiil (Verb)', 'Verb')), ('n', L('İsim (Noun)', 'Noun')), ('a', L('Sıfat (Adjective)', 'Adjective')), ('r', L('Zarf (Adverb)', 'Adverb'))];
       for (final (pos, title) in groups) {
         final items = f.byPos(pos);
         if (items.isEmpty) continue;
         out.add(_familyGroup(theme, title, items));
       }
-      if (f.negatives.isNotEmpty) out.add(_familyGroup(theme, 'Olumsuz / zıt halleri', f.negatives, negative: true));
+      if (f.negatives.isNotEmpty) out.add(_familyGroup(theme, L('Olumsuz / zıt halleri', 'Negative / opposite forms'), f.negatives, negative: true));
     }
     if (loading && f != null) {
       out.add(const Padding(padding: EdgeInsets.only(top: 12), child: LinearProgressIndicator()));
@@ -355,14 +356,14 @@ class _WordFamilyViewState extends State<WordFamilyView> {
         child: OutlinedButton.icon(
           onPressed: _askAi,
           icon: const Icon(Icons.auto_awesome),
-          label: const Text('Yapay zekâ ile ayrıntılı göster'),
+          label: Text(L('Yapay zekâ ile ayrıntılı göster', 'Show details with AI')),
         ),
       ));
     }
     if (f != null) {
       out.add(Padding(
         padding: const EdgeInsets.only(top: 12),
-        child: Text(f.fromAi ? 'Kaynak: yapay zekâ (cihaza kaydedildi)' : 'Kaynak: WordNet türetme bağlantıları',
+        child: Text(f.fromAi ? L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)') : L('Kaynak: WordNet türetme bağlantıları', 'Source: WordNet derivation links'),
             style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
       ));
     }
@@ -414,9 +415,9 @@ class StatusButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<WordStatus>(
-      segments: const [
-        ButtonSegment(value: WordStatus.learning, label: Text('Öğreneceğim'), icon: Icon(Icons.bookmark_add_outlined)),
-        ButtonSegment(value: WordStatus.learned, label: Text('Öğrendim'), icon: Icon(Icons.check_circle_outline)),
+      segments: [
+        ButtonSegment(value: WordStatus.learning, label: Text(L('Öğreneceğim', 'To learn')), icon: Icon(Icons.bookmark_add_outlined)),
+        ButtonSegment(value: WordStatus.learned, label: Text(L('Öğrendim', 'Learned')), icon: Icon(Icons.check_circle_outline)),
       ],
       emptySelectionAllowed: true,
       selected: status == WordStatus.none ? {} : {status},
@@ -517,7 +518,7 @@ class _ExprCardState extends State<ExprCard> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           Expanded(child: Text(expr.phrase, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
-          Text(app.showEn && !app.showTr ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
+          Text(uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
         if (showEn && expr.en != null) Text(expr.en!, style: TextStyle(color: app.showTr && tr != null ? theme.hintColor : null)),
         if (app.showTr && tr != null) Text(tr, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -528,7 +529,7 @@ class _ExprCardState extends State<ExprCard> {
             child: Row(children: [
               const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2)),
               const SizedBox(width: 8),
-              Text('Türkçeye çevriliyor…', style: theme.textTheme.bodySmall),
+              Text(L('Türkçeye çevriliyor…', 'Translating into Turkish…'), style: theme.textTheme.bodySmall),
             ]),
           ),
         if (expr.ex != null)
@@ -549,7 +550,7 @@ class _ExprCardState extends State<ExprCard> {
             TextButton.icon(
               onPressed: () => showExprSheet(context, app, expr, widget.ctx!, expr.phrase.split(' ')),
               icon: const Icon(Icons.menu_book_outlined, size: 18),
-              label: const Text('Anlamlar ve örnekler'),
+              label: Text(L('Anlamlar ve örnekler', 'Meanings and examples')),
             ),
         ]),
       ]),

@@ -5,6 +5,7 @@ import 'data/user_db.dart';
 import 'nlp/grammar.dart';
 import 'online/auto_analyzer.dart';
 import 'nlp/text.dart';
+import 'l10n.dart';
 
 class CategoryInfo {
   final String id;
@@ -12,22 +13,26 @@ class CategoryInfo {
   final String tr;
   final Color color;
   final String description;
-  const CategoryInfo(this.id, this.name, this.tr, this.color, this.description);
+  final String descriptionEn;
+  const CategoryInfo(this.id, this.name, this.tr, this.color, this.description, this.descriptionEn);
+
+  /// Description in the interface language.
+  String get desc => uiEnglish ? descriptionEn : description;
 }
 
 const categories = <CategoryInfo>[
-  CategoryInfo('conjunctions', 'Conjunctions', 'Bağlaçlar', Color(0xFF1E88E5), 'Cümleleri ve öğeleri bağlayan sözcükler (and, although, unless).'),
-  CategoryInfo('phrasal_verbs', 'Phrasal Verbs', 'Öbek fiiller', Color(0xFF8E24AA), 'Fiil + edat/zarf; anlamı çoğu zaman tek tek kelimelerden farklıdır (give up).'),
-  CategoryInfo('collocations', 'Collocations', 'Eşdizimler', Color(0xFF00897B), 'Doğal olarak birlikte kullanılan kelimeler (make a decision, heavy rain).'),
-  CategoryInfo('prepositional_phrases', 'Prepositional Phrases', 'Edatlı öbekler', Color(0xFF6D4C41), 'Edatla başlayan kalıplar (at last, in charge of).'),
-  CategoryInfo('proverbs', 'Proverbs & Sayings', 'Atasözleri ve deyişler', Color(0xFFD81B60), 'Kalıplaşmış öğütler ve sözler.'),
-  CategoryInfo('discourse_markers', 'Discourse Markers / Fillers', 'Söylem belirleyiciler / dolgu', Color(0xFF00ACC1), 'Konuşmayı ve metni yönlendiren ifadeler (however, by the way, well).'),
-  CategoryInfo('idioms', 'Idioms', 'Deyimler', Color(0xFFE53935), 'Mecazi anlamlı kalıplar (break the ice).'),
-  CategoryInfo('chunks', 'Chunks', 'Kalıp ifadeler', Color(0xFF3949AB), 'Bütün olarak öğrenilen hazır ifadeler (it depends, no wonder).'),
-  CategoryInfo('binomials', 'Binomials', 'İkili kalıplar', Color(0xFF546E7A), 'Sabit sıralı kelime çiftleri (safe and sound).'),
-  CategoryInfo('false_friends', 'False Friends', 'Yalancı eşdeğerler', Color(0xFF9E9D24), 'Türkçedeki bir kelimeye benzeyip başka anlama gelenler (sympathetic).'),
-  CategoryInfo('modal_verbs', 'Modal Verbs', 'Kip fiilleri', Color(0xFF0D47A1), 'Yetenek, olasılık, zorunluluk bildiren yardımcı fiiller.'),
-  CategoryInfo('irregular_verbs', 'Irregular Verbs', 'Düzensiz fiiller', Color(0xFFAA00FF), 'V2/V3 biçimleri kurala uymayan fiiller (go-went-gone).'),
+  CategoryInfo('conjunctions', 'Conjunctions', 'Bağlaçlar', Color(0xFF1E88E5), 'Cümleleri ve öğeleri bağlayan sözcükler (and, although, unless).', 'Words that join sentences and parts of sentences (and, although, unless).'),
+  CategoryInfo('phrasal_verbs', 'Phrasal Verbs', 'Öbek fiiller', Color(0xFF8E24AA), 'Fiil + edat/zarf; anlamı çoğu zaman tek tek kelimelerden farklıdır (give up).', 'Verb + preposition/adverb; the meaning often differs from the single words (give up).'),
+  CategoryInfo('collocations', 'Collocations', 'Eşdizimler', Color(0xFF00897B), 'Doğal olarak birlikte kullanılan kelimeler (make a decision, heavy rain).', 'Words that naturally go together (make a decision, heavy rain).'),
+  CategoryInfo('prepositional_phrases', 'Prepositional Phrases', 'Edatlı öbekler', Color(0xFF6D4C41), 'Edatla başlayan kalıplar (at last, in charge of).', 'Expressions that start with a preposition (at last, in charge of).'),
+  CategoryInfo('proverbs', 'Proverbs & Sayings', 'Atasözleri ve deyişler', Color(0xFFD81B60), 'Kalıplaşmış öğütler ve sözler.', 'Fixed pieces of advice and sayings.'),
+  CategoryInfo('discourse_markers', 'Discourse Markers / Fillers', 'Söylem belirleyiciler / dolgu', Color(0xFF00ACC1), 'Konuşmayı ve metni yönlendiren ifadeler (however, by the way, well).', 'Expressions that guide speech and text (however, by the way).'),
+  CategoryInfo('idioms', 'Idioms', 'Deyimler', Color(0xFFE53935), 'Mecazi anlamlı kalıplar (break the ice).', 'Expressions with a figurative meaning (break the ice).'),
+  CategoryInfo('chunks', 'Chunks', 'Kalıp ifadeler', Color(0xFF3949AB), 'Bütün olarak öğrenilen hazır ifadeler (it depends, no wonder).', 'Ready-made expressions learned as a whole (it depends, no wonder).'),
+  CategoryInfo('binomials', 'Binomials', 'İkili kalıplar', Color(0xFF546E7A), 'Sabit sıralı kelime çiftleri (safe and sound).', 'Word pairs in a fixed order (safe and sound).'),
+  CategoryInfo('false_friends', 'False Friends', 'Yalancı eşdeğerler', Color(0xFF9E9D24), 'Türkçedeki bir kelimeye benzeyip başka anlama gelenler (sympathetic).', 'Words that look like a Turkish word but mean something else (sympathetic).'),
+  CategoryInfo('modal_verbs', 'Modal Verbs', 'Kip fiilleri', Color(0xFF0D47A1), 'Yetenek, olasılık, zorunluluk bildiren yardımcı fiiller.', 'Helping verbs for ability, possibility and obligation.'),
+  CategoryInfo('irregular_verbs', 'Irregular Verbs', 'Düzensiz fiiller', Color(0xFFAA00FF), 'V2/V3 biçimleri kurala uymayan fiiller (go-went-gone).', 'Verbs whose V2/V3 forms do not follow the rule (go-went-gone).'),
 ];
 
 final categoryById = {for (final c in categories) c.id: c};
@@ -81,6 +86,15 @@ class AppState extends ChangeNotifier {
     showEn = s['en'] as bool? ?? true;
     fontSize = (s['font'] as num?)?.toDouble() ?? 19;
     themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
+    uiEnglish = s['ui'] == 'en';
+  }
+
+  bool get englishUi => uiEnglish;
+
+  void setUiEnglish(bool v) {
+    uiEnglish = v;
+    _save();
+    notifyListeners();
   }
 
   void setTheme(ThemeMode m) {
@@ -91,7 +105,7 @@ class AppState extends ChangeNotifier {
 
   int get wordsVersion => _wordsVersion;
 
-  void _save() => user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name});
+  void _save() => user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr'});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);

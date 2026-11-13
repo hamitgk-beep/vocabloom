@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import '../l10n.dart';
 import 'ai_service.dart';
 
 /// Watches for an internet connection and analyses every book that has not
@@ -53,13 +54,13 @@ class AutoAnalyzer {
       final books = db.books().where((b) => onlyBook == null || b.id == onlyBook);
       for (final b in books) {
         if (db.parasMissingTranslation(b.id).isEmpty) continue;
-        _set(b.id, 'Çevrimiçi analiz başlıyor…');
+        _set(b.id, L('Çevrimiçi analiz başlıyor…', 'Starting online analysis…'));
         try {
-          await analyzeBook(svc, db, b.id, onProgress: (d, t) => _set(b.id, 'Çevrimiçi analiz: $d/$t paragraf (${svc.cfg.provider.name})'));
+          await analyzeBook(svc, db, b.id, onProgress: (d, t) => _set(b.id, L('Çevrimiçi analiz: $d/$t paragraf (${svc.cfg.provider.name})', 'Online analysis: $d/$t paragraphs (${svc.cfg.provider.name})')));
           lastError = null;
         } catch (e) {
           lastError = '$e';
-          _set(b.id, 'Analiz durdu, internet geldiğinde devam edecek: $e');
+          _set(b.id, L('Analiz durdu, internet geldiğinde devam edecek: $e', 'Analysis paused, it will continue when online: $e'));
           await Future.delayed(const Duration(seconds: 8));
           _set(b.id, null);
           return; // try again on the next tick
@@ -108,12 +109,12 @@ class AutoAnalyzer {
       if (!enabled) break;
       final part = pending.sublist(i, (i + batch).clamp(0, pending.length));
       final done = total - pending.length + i;
-      dictStatus.value = 'Sözlük Türkçeye çevriliyor: $done/$total (${svc.cfg.provider.name})';
+      dictStatus.value = L('Sözlük Türkçeye çevriliyor: $done/$total (${svc.cfg.provider.name})', 'Translating the dictionary into Turkish: $done/$total (${svc.cfg.provider.name})');
       try {
         await translateExprsNow(svc, part);
       } catch (e) {
         lastError = '$e';
-        dictStatus.value = 'Sözlük çevirisi durdu, sonra devam edecek: $e';
+        dictStatus.value = L('Sözlük çevirisi durdu, sonra devam edecek: $e', 'Dictionary translation paused, it will continue later: $e');
         return;
       }
     }
@@ -125,7 +126,7 @@ class AutoAnalyzer {
     final todo = items.where((e) => e.needsAi).toList();
     if (todo.isEmpty) return;
     final r = await svc.translateExprs([for (final e in todo) (phrase: e.phrase, cat: e.cat, en: e.en!)]);
-    if (r.length != todo.length) throw Exception('Yapay zekâ ${todo.length} yerine ${r.length} sonuç döndürdü.');
+    if (r.length != todo.length) throw Exception(L('Yapay zekâ ${todo.length} yerine ${r.length} sonuç döndürdü.', 'The AI returned ${r.length} results instead of ${todo.length}.'));
     for (var k = 0; k < todo.length; k++) {
       if (r[k].tr.isEmpty) continue;
       final e = todo[k];
