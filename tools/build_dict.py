@@ -299,6 +299,7 @@ def load_tatoeba(db, exprs):
             if len(lst) < 4000:
                 lst.append(i)
     rows = []
+    freq = []  # how often each expression occurs in Tatoeba: a usage-frequency signal
     # expressions: words in order, at most two words in between
     for (p, cat) in exprs:
         words = p.replace("one's", '').replace('someone', '').replace('something', '').split()
@@ -323,10 +324,13 @@ def load_tatoeba(db, exprs):
                     break
                 pos = nxt
             if ok:
-                rows.append((f'{p}|{cat}', pairs[i][0], pairs[i][1]))
+                if found < 4:
+                    rows.append((f'{p}|{cat}', pairs[i][0], pairs[i][1]))
                 found += 1
-                if found >= 4:
+                if found >= 300:
                     break
+        if found:
+            freq.append((p, cat, found))
     n_expr = len(rows)
     # single words: three short examples per dictionary word
     for w in known:
@@ -337,6 +341,8 @@ def load_tatoeba(db, exprs):
     db.execute('CREATE TABLE exs(key TEXT, en TEXT, tr TEXT)')
     db.executemany('INSERT INTO exs VALUES (?,?,?)', rows)
     db.execute('CREATE INDEX exs_key ON exs(key)')
+    db.execute('CREATE TABLE exfreq(phrase TEXT, cat TEXT, n INTEGER)')
+    db.executemany('INSERT INTO exfreq VALUES (?,?,?)', freq)
     print('tatoeba pairs', len(pairs), 'expression examples', n_expr, 'word examples', len(rows) - n_expr)
 
 

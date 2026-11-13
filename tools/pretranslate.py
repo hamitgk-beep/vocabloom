@@ -111,10 +111,15 @@ def describe(e):
 def load_todo(dict_path, done):
     db = sqlite3.connect(dict_path)
     rows = db.execute('SELECT phrase, cat, en, ex FROM expr').fetchall()
+    try:
+        freq = {(p, c): n for p, c, n in db.execute('SELECT phrase, cat, n FROM exfreq')}
+    except sqlite3.OperationalError:
+        freq = {}
     db.close()
     order = {c: i for i, c in enumerate(CAT_ORDER)}
-    # Within a category: entries with an example or definition first, shorter phrases first.
-    rows.sort(key=lambda r: (order.get(r[1], 99), r[2] is None, len(r[0].split()), r[0]))
+    # Expressions people actually use (frequent in Tatoeba sentences) first, then by category.
+    rows.sort(key=lambda r: (-min(freq.get((r[0], r[1]), 0), 50), order.get(r[1], 99), r[2] is None,
+                             len(r[0].split()), r[0]))
     return [r for r in rows if f'{r[0]}|{r[1]}' not in done]
 
 
