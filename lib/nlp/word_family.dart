@@ -218,6 +218,23 @@ String? trFor(DictDb dict, String lemma, String pos) {
 
 const _glossSkip = {'a', 'an', 'the', 'to', 'of', 'and', 'or', 'one', "one's", 'someone', 'something', 'somebody', 'be', 'is'};
 
+// Short words whose first dictionary meaning is a rare one ("it" -> "ebe").
+const _functionTr = {
+  'it': 'o', 'he': 'o', 'she': 'o', 'they': 'onlar', 'we': 'biz', 'you': 'sen/siz', 'i': 'ben', 'me': 'beni',
+  'him': 'onu', 'her': 'onu/onun', 'them': 'onları', 'us': 'bizi', 'his': 'onun', 'their': 'onların', 'its': 'onun',
+  'this': 'bu', 'that': 'şu/o', 'these': 'bunlar', 'those': 'şunlar', 'about': 'hakkında', 'while': 'iken',
+  'in': 'içinde', 'on': 'üstünde', 'at': '-de/-da', 'by': 'tarafından/yanında', 'for': 'için', 'with': 'ile',
+  'from': '-den/-dan', 'into': 'içine', 'out': 'dışarı', 'up': 'yukarı', 'down': 'aşağı', 'off': 'uzak/kapalı',
+  'over': 'üzerinde', 'under': 'altında', 'all': 'hepsi', 'no': 'hiç', 'not': 'değil', 'as': 'gibi/olarak',
+  'so': 'öyle/bu yüzden', 'if': 'eğer', 'but': 'ama', 'than': '-den daha', 'then': 'sonra', 'now': 'şimdi',
+  'there': 'orada', 'here': 'burada', 'when': 'ne zaman/-ince', 'what': 'ne', 'who': 'kim', 'how': 'nasıl',
+  'why': 'neden', 'where': 'nerede', 'like': 'gibi', 'just': 'sadece', 'too': 'de/çok', 'very': 'çok',
+  'more': 'daha', 'most': 'en', 'any': 'herhangi', 'some': 'biraz/bazı', 'have': 'sahip olmak', 'do': 'yapmak',
+  'get': 'almak/olmak', 'go': 'gitmek', 'make': 'yapmak', 'take': 'almak', 'put': 'koymak', 'come': 'gelmek',
+  'give': 'vermek', 'keep': 'tutmak', 'let': 'izin vermek', 'set': 'koymak/ayarlamak', 'back': 'geri',
+  'away': 'uzağa', 'again': 'tekrar', 'once': 'bir kez', 'never': 'asla', 'ever': 'hiç', 'well': 'iyi',
+};
+
 /// Word-by-word Turkish of an expression the library has no Turkish for yet:
 /// "above board" -> "above: yukarıda · board: tahta". Null when no word is known.
 String? wordGloss(DictDb dict, String phrase) {
@@ -225,7 +242,12 @@ String? wordGloss(DictDb dict, String phrase) {
   var known = 0;
   for (final w in phrase.toLowerCase().split(RegExp(r'\s+'))) {
     if (w.isEmpty || _glossSkip.contains(w)) continue;
-    String? t;
+    String? t = _functionTr[w];
+    if (t != null) {
+      known++;
+      parts.add('$w: $t');
+      continue;
+    }
     for (final l in {w, ...dict.lemmatizer.lemmas(w)}) {
       final info = dict.lookup(l);
       final s = info.senses.where((s) => s.tr.isNotEmpty).firstOrNull;

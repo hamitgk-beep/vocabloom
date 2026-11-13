@@ -51,6 +51,13 @@ ABBR = {
     'sonek': 'son ek', 'önek': 'ön ek', 'slang': 'argo', 'ing': 'İngiliz İngilizcesi', 'sig.': 'sigortacılık',
     'man.': 'mantık', 'zam.': 'zamir',
 }
+_NOT_TR = {'him', 'his', 'her', 'hers', 'their', 'theirs', 'them', 'they', 'those', 'these', 'its', 'our', 'ours',
+           'your', 'yours', 'my', 'mine', 'me', 'us', 'we', 'she', 'it', 'hes', 'nesne', 'özne', 'iyelik hali',
+           'tek', 'tekil', 'çoğul'}
+# English function words: a Turkish line containing them has an English phrase or sentence in it
+_EN_FUNC = {'he', 'she', 'the', 'and', 'of', 'for', 'will', 'would', 'have', 'has', 'had', 'been', 'who', 'whom',
+            'whose', 'you', 'there', 'from', 'should', 'do', 'than', 'is', 'are', 'was', 'were', 'it', 'to', 'we',
+            'they', 'his', 'her', 'my', 'your', 'a', 'an', 'on', 'with', 'by', 'at', 'get', 'can', 'be', 'that', 'this'}
 _RARE = re.compile(r'^\((son ek|ön ek|kısaltma|bakınız|eski|argo|Latince|Fransızca)\)')
 
 
@@ -59,6 +66,8 @@ def clean_freedict(word, senses):
     out = []
     head = re.compile(r"(?<![\w'])" + re.escape(word) + r"(?![\w])", re.I)
     for s in senses:
+        # "tıp(kıs.)ı", "kat(kıs.)ız": a label pasted into the middle of a word in FreeDict
+        s = re.sub(r'(?<=\w)\((kıs|sig|den)\.?\)(?=\w)', r'\1', s)
         s = re.sub(r'^ba[çg]la[çc]\s+', '(bağlaç) ', s)  # "baçlaç gerçi, ..." in FreeDict
         # "from ile başka olmak" -> "(from ile) başka olmak": the preposition it goes with
         s = re.sub(r'^(from|with|to|for|on|in|at|of|by|about|into|over|up|out|off) ile\s+', r'(\1 ile) ', s)
@@ -77,15 +86,40 @@ def clean_freedict(word, senses):
             continue
         out.append(t)
 
+    def plain(t):
+        """Without labels and grammar notes, which confuse learners: "(çoğul) fabrika" -> "fabrika"."""
+        t = re.sub(r'^\((\w+) ile\)\s*', r'\1 ile: ', t)   # (from ile) başka olmak -> from ile: başka olmak
+        t = re.sub(r'^\(bakınız\)\s*', 'bakınız: ', t)     # (bakınız) come -> bakınız: come
+        prev = None
+        while prev != t:
+            prev, t = t, re.sub(r'\([^()]*\)', '', t)
+        t = re.sub(r"\b[A-Za-z']+\)", '', t)                # leftovers of "(çoğul) those)"
+        t = t.replace('(', '').replace(')', '')
+        # English forms and grammar words FreeDict lists inside the Turkish ("nesne, him, o")
+        items = [x.strip() for x in re.split(r'[,;]|\.\s+', t)]
+        items = [x for x in items if x and x.lower() not in _NOT_TR
+                 and (x.startswith('bakınız:') or not (set(re.findall(r"[a-z']+", x.lower())) & _EN_FUNC))]
+        t = ', '.join(items)
+        return re.sub(r'\s+', ' ', t).strip(' ,;.:')
+
     def rank(t):
         if t.startswith(('...', '-', '(son ek)', '(ön ek)')) or '...' in t:
             return 3
+        if re.match(r'^\(bakınız\) [a-z]+$', t):
+            return -1  # "came": "(bakınız) come" is what the reader needs
         if _RARE.match(t):
             return 2
         if t.startswith('(') and not re.match(r'\(\w+ ile\)', t):
             return 1
         return 0
-    return sorted(out, key=rank)
+    result = []
+    for t in sorted(out, key=rank):
+        if rank(t) == 3 or t.startswith('(kısaltma)'):
+            continue  # suffix, prefix and abbreviation readings: not what a reader looks for
+        t = plain(t)
+        if len(t) >= 2 and t not in result:
+            result.append(t)
+    return result
 
 
 def load_freedict(db):
