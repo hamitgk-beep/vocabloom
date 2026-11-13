@@ -50,6 +50,7 @@ jobs:
             echo "::add-mask::$PW"
             echo "Keystore size: $(stat -c %s "$RUNNER_TEMP/vocabloom.jks") bytes (expected 2131), sha256 starts $(sha256sum "$RUNNER_TEMP/vocabloom.jks" | cut -c1-16) (expected 7feb829e563cea1b)"
             if ! keytool -list -keystore "$RUNNER_TEMP/vocabloom.jks" -storepass "$PW" >/dev/null 2>&1; then
+              echo "Password length: ${#PW} (expected 32)"
               echo "::error::The signing key could not be opened. Check that ANDROID_KEYSTORE_B64 holds the whole text file and ANDROID_KEY_PASSWORD holds only the password."
               exit 1
             fi
