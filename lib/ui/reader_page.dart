@@ -5,6 +5,7 @@ import '../data/user_db.dart';
 import 'expr_sheet.dart';
 import 'paragraph_view.dart';
 import 'sentence_sheet.dart';
+import 'reading_sheet.dart';
 import 'theme.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
@@ -102,8 +103,10 @@ class _ReaderPageState extends State<ReaderPage> {
     final ch = chapters[chapter];
     final wide = MediaQuery.sizeOf(context).width > 1000;
     final filters = FilterPanel(app: app);
-    final paper = readerPaper(theme);
-    return Scaffold(
+    final paper = pageColor(app, theme);
+    return Theme(
+      data: readerTheme(app, theme),
+      child: Scaffold(
       key: _scaffold,
       backgroundColor: paper,
       appBar: AppBar(
@@ -126,46 +129,9 @@ class _ReaderPageState extends State<ReaderPage> {
         ),
         actions: [
           IconButton(
-            tooltip: L('Yazı boyutu', 'Font size'),
-            icon: const Icon(Icons.format_size),
-            onPressed: () => showModalBottomSheet(
-              context: context,
-              showDragHandle: true,
-              builder: (_) => StatefulBuilder(
-                builder: (c, set) => Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 28),
-                  child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(L('Yazı boyutu', 'Font size'), style: theme.textTheme.titleMedium),
-                    const SizedBox(height: 4),
-                    Text('The quick brown fox jumps over the lazy dog.',
-                        style: TextStyle(fontFamily: readingFont, fontSize: app.fontSize, height: 1.5)),
-                    const SizedBox(height: 8),
-                    Row(children: [
-                    const Text('A', style: TextStyle(fontSize: 14)),
-                    Expanded(
-                      child: Slider(
-                        value: app.fontSize,
-                        min: 14,
-                        max: 32,
-                        divisions: 18,
-                        label: app.fontSize.round().toString(),
-                        onChanged: (v) {
-                          app.setFont(v);
-                          set(() {});
-                        },
-                      ),
-                    ),
-                    const Text('A', style: TextStyle(fontSize: 28)),
-                  ]),
-                  ]),
-                ),
-              ),
-            ),
-          ),
-          IconButton(
-            tooltip: theme.brightness == Brightness.dark ? L('Gündüz modu', 'Day mode') : L('Gece modu', 'Night mode'),
-            icon: Icon(theme.brightness == Brightness.dark ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () => app.setTheme(theme.brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark),
+            tooltip: L('Okuma görünümü', 'Reading view'),
+            icon: const Icon(Icons.text_fields_rounded),
+            onPressed: () => showReadingSheet(context, app),
           ),
           IconButton(
             tooltip: L('Bölümler', 'Chapters'),
@@ -288,6 +254,7 @@ class _ReaderPageState extends State<ReaderPage> {
           SizedBox(width: 320, child: ColoredBox(color: theme.colorScheme.surface, child: filters)),
         ],
       ]),
+      ),
     );
   }
 }

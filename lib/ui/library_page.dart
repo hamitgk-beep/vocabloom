@@ -9,6 +9,7 @@ import '../import/ocr.dart';
 import '../online/ai_service.dart';
 import '../l10n.dart';
 import 'reader_page.dart';
+import 'review_page.dart';
 import 'theme.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -156,6 +157,10 @@ class _LibraryPageState extends State<LibraryPage> {
                       style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                   const SizedBox(height: 18),
                   _StatsStrip(books: books.length, learning: learning, learned: learned),
+                  if (learning > 0) ...[
+                    const SizedBox(height: 12),
+                    ReviewBanner(app: widget.app),
+                  ],
                   if (importStatus != null) ...[
                     const SizedBox(height: 14),
                     Panel(children: [

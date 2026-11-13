@@ -284,11 +284,12 @@ class BookCover extends StatelessWidget {
   final String title;
   final String format;
   final double width;
-  const BookCover({super.key, required this.title, required this.format, this.width = 56});
+  final List<Color>? colors;
+  const BookCover({super.key, required this.title, required this.format, this.width = 56, this.colors});
 
   @override
   Widget build(BuildContext context) {
-    final c = Brand.coverFor(title);
+    final c = colors ?? Brand.coverFor(title);
     final initials = title.trim().isEmpty ? '?' : title.trim().characters.first.toUpperCase();
     return Container(
       width: width,

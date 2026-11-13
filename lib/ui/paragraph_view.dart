@@ -65,7 +65,7 @@ class _ParagraphViewState extends State<ParagraphView> {
     final heading = widget.para.kind == 'h';
     final base = theme.textTheme.bodyLarge!.copyWith(
       fontSize: heading ? app.fontSize * 1.3 : app.fontSize,
-      height: 1.6,
+      height: app.lineHeight,
       fontWeight: heading ? FontWeight.w700 : FontWeight.w400,
       fontFamily: readingFont,
     );

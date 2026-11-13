@@ -9,6 +9,7 @@ import 'data/user_db.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'ui/other_pages.dart';
+import 'ui/onboarding.dart';
 import 'ui/theme.dart';
 
 import 'l10n.dart';
@@ -71,7 +72,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
         home: app != null
-            ? HomePage(app: app!)
+            ? (OnboardingPage.needed(app!) ? OnboardingPage(app: app!, onDone: () => setState(() {})) : HomePage(app: app!))
             : Scaffold(
                 body: Center(
                   child: error != null
