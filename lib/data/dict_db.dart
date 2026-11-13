@@ -138,6 +138,16 @@ class DictDb {
     ];
   }
 
+  late final bool _hasWfd =
+      db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='wfd'").isNotEmpty;
+
+  /// Built-in detailed word family of [lemma] (same JSON as WordFamily.toJsonString).
+  String? familyDetail(String lemma) {
+    if (!_hasWfd) return null;
+    final r = db.select('SELECT w.json FROM fam f JOIN famg g ON g.id=f.gid JOIN wfd w ON w.root=g.root WHERE f.word=?', [lemma]);
+    return r.isEmpty ? null : r.first.columnAt(0) as String;
+  }
+
   Set<String> posOf(String word) => _posCache.putIfAbsent(word, () {
         final out = <String>{};
         for (final l in lemmatizer.lemmas(word)) {

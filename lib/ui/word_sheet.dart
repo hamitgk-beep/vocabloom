@@ -286,6 +286,7 @@ class WordFamilyView extends StatefulWidget {
 class _WordFamilyViewState extends State<WordFamilyView> {
   WordFamily? offline;
   WordFamily? ai;
+  bool builtIn = false;
   bool loading = false;
   String? error;
 
@@ -293,11 +294,14 @@ class _WordFamilyViewState extends State<WordFamilyView> {
   void initState() {
     super.initState();
     offline = offlineFamily(widget.app.dict, widget.lemma);
+    // Saved AI answer, then the built-in library; the AI is only asked on request.
     final cached = widget.app.user.familyAi(widget.lemma);
+    final bundled = cached == null ? widget.app.dict.familyDetail(widget.lemma) : null;
     if (cached != null) {
       ai = WordFamily.fromJsonString(cached, fromAi: true);
-    } else if (offline == null && AiService.fromSettings(widget.app.user) != null) {
-      _askAi();
+    } else if (bundled != null) {
+      ai = WordFamily.fromJsonString(bundled, fromAi: true);
+      builtIn = true;
     }
   }
 
@@ -311,7 +315,12 @@ class _WordFamilyViewState extends State<WordFamilyView> {
     try {
       final f = await svc.wordFamily(widget.lemma);
       widget.app.user.setFamilyAi(widget.lemma, f.toJsonString());
-      if (mounted) setState(() => ai = f);
+      if (mounted) {
+        setState(() {
+          ai = f;
+          builtIn = false;
+        });
+      }
     } catch (e) {
       if (mounted) setState(() => error = L('Yapay zekâya ulaşılamadı: $e', 'Could not reach the AI: $e'));
     } finally {
@@ -377,7 +386,12 @@ class _WordFamilyViewState extends State<WordFamilyView> {
     if (f != null) {
       out.add(Padding(
         padding: const EdgeInsets.only(top: 12),
-        child: Text(f.fromAi ? L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)') : L('Kaynak: WordNet türetme bağlantıları', 'Source: WordNet derivation links'),
+        child: Text(
+            builtIn
+                ? L('Kaynak: dahili sözlük', 'Source: built-in dictionary')
+                : f.fromAi
+                    ? L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)')
+                    : L('Kaynak: WordNet türetme bağlantıları', 'Source: WordNet derivation links'),
             style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
       ));
     }
@@ -404,16 +418,16 @@ class _WordFamilyViewState extends State<WordFamilyView> {
               Text.rich(TextSpan(children: [
                 TextSpan(
                   text: e.word,
-                  style: TextStyle(
+                  style: enStyle(theme, TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 16,
                     decoration: e.word == widget.lemma ? TextDecoration.underline : null,
-                  ),
+                  )).copyWith(fontWeight: FontWeight.w700),
                 ),
-                if (e.tr != null && e.tr!.isNotEmpty) TextSpan(text: '  ${e.tr}'),
+                if (e.tr != null && e.tr!.isNotEmpty && widget.app.showTr) TextSpan(text: '  ${e.tr}', style: trStyle(theme)),
               ])),
-              if (e.affixNote != null)
-                Text(e.affixNote!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+              if (e.note != null)
+                Text(e.note!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
             ]),
           ),
       ]),

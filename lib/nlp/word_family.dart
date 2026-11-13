@@ -11,12 +11,16 @@ class FamilyEntry {
 
   /// How the affix changes the meaning, e.g. "-ation: eylemin kendisi ya da sonucu (isim yapar)".
   final String? affixNote;
+  final String? affixNoteEn;
   final bool negative;
-  const FamilyEntry(this.word, this.pos, {this.tr, this.affixNote, this.negative = false});
+  const FamilyEntry(this.word, this.pos, {this.tr, this.affixNote, this.affixNoteEn, this.negative = false});
 
-  Map<String, dynamic> toJson() => {'w': word, 'p': pos, 't': tr, 'a': affixNote, 'n': negative};
-  factory FamilyEntry.fromJson(Map<String, dynamic> j) =>
-      FamilyEntry('${j['w']}', '${j['p']}', tr: j['t'] as String?, affixNote: j['a'] as String?, negative: j['n'] == true);
+  /// The affix note in the interface language.
+  String? get note => uiEnglish ? affixNoteEn ?? affixNote : affixNote;
+
+  Map<String, dynamic> toJson() => {'w': word, 'p': pos, 't': tr, 'a': affixNote, 'ae': affixNoteEn, 'n': negative};
+  factory FamilyEntry.fromJson(Map<String, dynamic> j) => FamilyEntry('${j['w']}', '${j['p']}',
+      tr: j['t'] as String?, affixNote: j['a'] as String?, affixNoteEn: j['ae'] as String?, negative: j['n'] == true);
 }
 
 class WordFamily {

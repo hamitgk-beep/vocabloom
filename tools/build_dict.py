@@ -228,28 +228,53 @@ def load_wiktionary(exprs):
     return examples
 
 
+# Several services translate in parallel (exd-gemini.jsonl.gz, exd-mistral.jsonl.gz ...).
+# When two did the same item, the first file in this order wins.
+SERVICE_ORDER = ['gemini', 'mistral', 'github', 'cerebras', 'groq']
+
+
+def result_files(prefix):
+    import glob
+    files = glob.glob(os.path.join(RAW, f'{prefix}*.jsonl.gz'))
+
+    def rank(f):
+        name = os.path.basename(f)
+        for i, s in enumerate(SERVICE_ORDER):
+            if s in name:
+                return i
+        return -1  # the first combined file (exd.jsonl.gz)
+    return sorted(files, key=rank)
+
+
+def result_lines(paths):
+    for path in paths:
+        with gzip.open(path, 'rt', encoding='utf-8') as f:
+            yield from f
+
+
 def load_exd(db, exprs):
     """The built-in Turkish library made by tools/pretranslate.py (release data-exd)."""
-    path = os.path.join(RAW, 'exd.jsonl.gz')
-    if not os.path.exists(path):
+    paths = result_files('exd')
+    if not paths:
         print('exd: not found, skipped')
         return
     db.execute('CREATE TABLE exd(phrase TEXT, cat TEXT, json TEXT, PRIMARY KEY(phrase, cat))')
     n = filled = 0
-    with gzip.open(path, 'rt', encoding='utf-8') as f:
-        for line in f:
-            try:
-                j = json.loads(line)
-            except ValueError:
-                continue
-            key = (j['p'], j['c'])
-            if key not in exprs or not j.get('s'):
-                continue
-            db.execute('INSERT OR REPLACE INTO exd VALUES (?,?,?)', (j['p'], j['c'], json.dumps(j['s'], ensure_ascii=False)))
-            n += 1
-            if not exprs[key][0] and j.get('tr'):
-                exprs[key][0] = j['tr']
-                filled += 1
+    seen = set()
+    for line in result_lines(paths):
+        try:
+            j = json.loads(line)
+        except ValueError:
+            continue
+        key = (j['p'], j['c'])
+        if key not in exprs or not j.get('s') or key in seen:
+            continue
+        seen.add(key)
+        db.execute('INSERT OR REPLACE INTO exd VALUES (?,?,?)', (j['p'], j['c'], json.dumps(j['s'], ensure_ascii=False)))
+        n += 1
+        if not exprs[key][0] and j.get('tr'):
+            exprs[key][0] = j['tr']
+            filled += 1
     print('exd senses', n, 'turkish meanings filled', filled)
 
 
@@ -291,9 +316,12 @@ def load_tatoeba(db, exprs):
 
     index = {}
     lem_toks = []
+    wcount = {}
     for i, ts in enumerate(toks):
         ls = [lemmas(t) for t in ts]
         lem_toks.append(ls)
+        for t in ts:
+            wcount[t] = wcount.get(t, 0) + 1
         for l in set().union(*ls) if ls else ():
             lst = index.setdefault(l, [])
             if len(lst) < 4000:
@@ -341,6 +369,8 @@ def load_tatoeba(db, exprs):
     db.execute('CREATE TABLE exs(key TEXT, en TEXT, tr TEXT)')
     db.executemany('INSERT INTO exs VALUES (?,?,?)', rows)
     db.execute('CREATE INDEX exs_key ON exs(key)')
+    db.execute('CREATE TABLE wfreq(word TEXT PRIMARY KEY, n INTEGER)')
+    db.executemany('INSERT INTO wfreq VALUES (?,?)', [(w, n) for w, n in wcount.items() if n >= 2])
     db.execute('CREATE TABLE exfreq(phrase TEXT, cat TEXT, n INTEGER)')
     db.executemany('INSERT INTO exfreq VALUES (?,?,?)', freq)
     print('tatoeba pairs', len(pairs), 'expression examples', n_expr, 'word examples', len(rows) - n_expr)
@@ -434,6 +464,22 @@ def main():
             db.execute('INSERT INTO famg VALUES (?,?,?,?)', (gid_of[key], g[0], json.dumps(g[1]), json.dumps(g[2])))
         fam_rows.append((w, gid_of[key]))
     db.executemany('INSERT INTO fam VALUES (?,?)', fam_rows)
+    wfd = result_files('wfd')
+    if wfd:
+        roots = {r[0] for r in db.execute('SELECT root FROM famg')}
+        db.execute('CREATE TABLE wfd(root TEXT PRIMARY KEY, json TEXT)')
+        n = 0
+        seen = set()
+        for line in result_lines(wfd):
+            try:
+                j = json.loads(line)
+            except ValueError:
+                continue
+            if j.get('root') in roots and j['root'] not in seen:
+                seen.add(j['root'])
+                db.execute('INSERT OR REPLACE INTO wfd VALUES (?,?)', (j['root'], json.dumps(j['family'], ensure_ascii=False)))
+                n += 1
+        print('built-in word families', n)
     print('word families', len(gid_of), 'words', len(fam_rows))
 
     db.executescript('''

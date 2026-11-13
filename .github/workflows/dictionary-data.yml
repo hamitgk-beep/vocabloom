@@ -9,8 +9,8 @@ on:
         description: "tatoeba or translate"
         default: translate
       provider:
-        description: "gemini (free) or claude"
-        default: gemini
+        description: "all, or one of gemini, mistral, groq, cerebras, github"
+        default: all
       model:
         description: "model name (empty = default)"
         default: ""
@@ -59,34 +59,57 @@ jobs:
     timeout-minutes: 340
     permissions:
       contents: write
+      models: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Each free service takes its own share first, so they do not repeat each other.
+          - { service: gemini,   shard: "0/5" }
+          - { service: mistral,  shard: "1/5" }
+          - { service: groq,     shard: "2/5" }
+          - { service: cerebras, shard: "3/5" }
+          - { service: github,   shard: "4/5" }
     steps:
       - uses: actions/checkout@v4
-      - name: Get earlier results
+      - name: Get earlier results of all services
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
           gh release view data-exd >/dev/null 2>&1 || gh release create data-exd --prerelease \
             --target "$GITHUB_SHA" --title "Built-in Turkish library (build input)" \
-            --notes "Senses, Turkish explanations and translated examples of every expression. Made once with AI at build time; used by tools/build_dict.py."
-          gh release download data-exd -p exd.jsonl.gz || true
-          ls -la exd.jsonl.gz || true
+            --notes "Senses, Turkish explanations and translated examples of every expression, and word families. Made once with AI at build time; used by tools/build_dict.py." || true
+          mkdir -p prev
+          gh release download data-exd -D prev -p 'exd*' -p 'wfd*' || true
+          ls -la prev
       - name: Translate
+        if: inputs.provider == '' || inputs.provider == 'all' || inputs.provider == matrix.service
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          PROVIDER: ${{ inputs.provider || 'gemini' }}
-          MODEL: ${{ inputs.model }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          MODEL: ${{ inputs.provider == matrix.service && inputs.model || '' }}
           LIMIT: ${{ inputs.limit || '100000' }}
         run: |
-          if [ "$PROVIDER" = claude ]; then pip install -q anthropic; fi
-          python3 tools/pretranslate.py assets/dict.db exd.jsonl.gz --provider "$PROVIDER" --model "$MODEL" \
-            --limit "$LIMIT" --minutes 320
+          S=${{ matrix.service }}
+          cp prev/exd-$S.jsonl.gz . 2>/dev/null || true
+          cp prev/wfd-$S.jsonl.gz . 2>/dev/null || true
+          python3 tools/pretranslate.py assets/dict.db exd-$S.jsonl.gz --provider $S --model "$MODEL" \
+            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --shard ${{ matrix.shard }} \
+            --done prev/*.jsonl.gz
       - name: Save results
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          [ -f exd.jsonl.gz ] && gh release upload data-exd exd.jsonl.gz --clobber
-          python3 -c "import gzip;print('total', sum(1 for _ in gzip.open('exd.jsonl.gz','rt')))"
+          S=${{ matrix.service }}
+          for f in exd-$S.jsonl.gz wfd-$S.jsonl.gz; do
+            if [ -f $f ]; then
+              gh release upload data-exd $f --clobber
+              python3 -c "import gzip,sys;print(sys.argv[1], sum(1 for _ in gzip.open(sys.argv[1],'rt')))" $f
+            fi
+          done
