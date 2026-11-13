@@ -483,7 +483,9 @@ def openai_call(base, model, key, prompt, schema):
         f'{base}/chat/completions', data=json.dumps(body).encode(),
         headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}',
                  # Cloudflare in front of some services refuses Python's default agent (403, code 1010).
-                 'User-Agent': 'vocabloom-dictionary-builder/1.0', 'Accept': 'application/json'})
+                 'User-Agent': 'vocabloom-dictionary-builder/1.0', 'Accept': 'application/json',
+                 **({'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
+                    if 'models.github.ai' in base else {})})
     with urllib.request.urlopen(req, timeout=240) as r:
         raw = r.read().decode(errors='replace')
     try:
@@ -506,6 +508,7 @@ class Service:
             base, env, default, pause = OPENAI_LIKE[name]
             self.base, self.key, self.models, self.pause = base, os.environ.get(env, ''), [model or default], pause
         self.misses = 0
+        self.bad = 0
 
     def call(self, chunk, kind):
         prompt, schema, desc, _, _ = KINDS[kind]
@@ -518,7 +521,7 @@ class Service:
                     r = gemini_call(self.models[0], self.key, text, schema)
                 else:
                     r = openai_call(self.base, self.models[0], self.key, text, schema)
-                self.misses = 0
+                self.misses = self.bad = 0
                 return r
             except urllib.error.HTTPError as e:
                 msg = e.read().decode(errors='replace')[:400]
@@ -545,6 +548,9 @@ class Service:
                 print(f'  {self.name} {e.code}: {msg[:200]}')
                 return None
             except (ValueError, KeyError, IndexError, TypeError) as e:
+                self.bad += 1
+                if self.bad >= 12:  # the service answers, but nothing usable (GitHub Models: 'OK')
+                    raise QuotaExhausted(f'{self.name}: 12 unusable answers in a row: {str(e)[:160]}')
                 print('  bad answer, retrying:', str(e)[:100])
                 time.sleep(3)
             except (urllib.error.URLError, TimeoutError, OSError) as e:
