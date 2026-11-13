@@ -154,8 +154,9 @@ For each expression below (with its category and English definition), give:
 - "tr": its natural Turkish meaning in 1 to 5 words, the way a Turkish dictionary would put it
   (an idiom gets its real meaning, not a word-by-word translation: "above board" -> "dürüst, açık, hilesiz")
 - "def_tr": the English definition translated into natural, clear Turkish; keep the "; " between senses
+- "ex_tr": the natural Turkish translation of the example sentence, or "" when there is no example
 
-Answer with JSON only: {"items": [{"p": "<expression exactly as given>", "tr": "...", "def_tr": "..."}]}
+Answer with JSON only: {"items": [{"p": "<expression exactly as given>", "tr": "...", "def_tr": "...", "ex_tr": "..."}]}
 
 Expressions:
 '''
@@ -164,8 +165,9 @@ GLOSS_SCHEMA = {
     'type': 'object',
     'properties': {'items': {'type': 'array', 'items': {
         'type': 'object',
-        'properties': {'p': {'type': 'string'}, 'tr': {'type': 'string'}, 'def_tr': {'type': 'string'}},
-        'required': ['p', 'tr', 'def_tr'],
+        'properties': {'p': {'type': 'string'}, 'tr': {'type': 'string'}, 'def_tr': {'type': 'string'},
+                       'ex_tr': {'type': 'string'}},
+        'required': ['p', 'tr', 'def_tr', 'ex_tr'],
         'additionalProperties': False,
     }}},
     'required': ['items'],
@@ -174,21 +176,26 @@ GLOSS_SCHEMA = {
 
 
 def describe_gloss(r):
-    p, cat, en = r
-    return f'- "{p}" ({cat.replace("_", " ")}): {(en or "")[:400]}'
+    p, cat, en, ex, _ = r
+    s = f'- "{p}" ({cat.replace("_", " ")}): {(en or "(no definition)")[:400]}'
+    if ex:
+        s += f' | example: {ex[:250]}'
+    return s
 
 
 def load_gloss_todo(dict_path, done):
-    """Expressions with no Turkish at all, the most common first."""
+    """Expressions without a full built-in entry: their definition and example get Turkish.
+    The most common first; among equally common ones, those with no Turkish at all."""
     db = sqlite3.connect(dict_path)
     try:
         freq = {(p, c): n for p, c, n in db.execute('SELECT phrase, cat, n FROM exfreq')}
     except sqlite3.OperationalError:
         freq = {}
-    rows = [r for r in db.execute("SELECT phrase, cat, en FROM expr WHERE (tr IS NULL OR tr = '') AND en IS NOT NULL")
+    rows = [r for r in db.execute("SELECT phrase, cat, en, ex, (tr IS NOT NULL AND tr != '') FROM expr "
+                                  "WHERE en IS NOT NULL OR ex IS NOT NULL")
             if f'{r[0]}|{r[1]}' not in done]
     db.close()
-    rows.sort(key=lambda r: -freq.get((r[0], r[1]), 0))
+    rows.sort(key=lambda r: (-min(freq.get((r[0], r[1]), 0), 50), r[4]))
     return rows
 
 
@@ -196,12 +203,12 @@ def save_gloss(out, chunk, items):
     by_p = {it['p'].strip().lower(): it for it in items or [] if isinstance(it, dict) and it.get('p')}
     n = 0
     with gzip.open(out, 'at', encoding='utf-8') as f:
-        for p, cat, _ in chunk:
+        for p, cat, _, ex, _ in chunk:
             it = by_p.get(p.lower())
             if not it or not (it.get('tr') or '').strip():
                 continue
-            f.write(json.dumps({'p': p, 'c': cat, 'tr': it['tr'].strip(), 'd': (it.get('def_tr') or '').strip()},
-                               ensure_ascii=False) + '\n')
+            f.write(json.dumps({'p': p, 'c': cat, 'tr': it['tr'].strip(), 'd': (it.get('def_tr') or '').strip(),
+                                'x': (it.get('ex_tr') or '').strip() if ex else ''}, ensure_ascii=False) + '\n')
             n += 1
     return n
 
@@ -724,7 +731,7 @@ def save(out, chunk, items):
 KINDS.update({
     'expr': (PROMPT, SCHEMA, describe, save, CHUNK),
     'fam': (FAM_PROMPT, FAM_SCHEMA, describe_root, save_fam, 4),
-    'gloss': (GLOSS_PROMPT, GLOSS_SCHEMA, describe_gloss, save_gloss, 30),
+    'gloss': (GLOSS_PROMPT, GLOSS_SCHEMA, describe_gloss, save_gloss, 20),
     'word': (WORD_PROMPT, WORD_SCHEMA, describe_word, save_word, 5),
     'syn': (SYN_PROMPT, SYN_SCHEMA, describe_syn, save_syn, 10),
 })
@@ -770,7 +777,7 @@ def main():
         gdone = read_done(gl_files, lambda j: f"{j['p']}|{j['c']}")
         gtodo = shard_order(load_gloss_todo(a.dict_db, gdone | done), lambda r: f'{r[0]}|{r[1]}', shard, shards)
         print(f'short meanings: {len(gdone)} done, {len(gtodo)} to go')
-        m = run(svc, gtodo, a.gloss, min(deadline, start + total * 0.15), a.limit, 'gloss')
+        m = run(svc, gtodo, a.gloss, min(deadline, start + total * 0.25), a.limit, 'gloss')
         print(f'short meanings added {m}; remaining {len(gtodo) - m}')
     if not svc.models:
         return

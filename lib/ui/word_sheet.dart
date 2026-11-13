@@ -583,9 +583,11 @@ class _ExprCardState extends State<ExprCard> {
         }
       } catch (_) {}
     }
+    if (expr.ex != null && expr.exTr != null) return (expr.ex!, expr.exTr);
     final t = app.dict.examples(key, limit: 1);
     if (t.isNotEmpty) return (t.first.$1, t.first.$2);
-    return expr.ex == null ? null : (expr.ex!, null);
+    // An English-only example only when English is shown.
+    return expr.ex == null || !app.showEn ? null : (expr.ex!, null);
   }();
 
   /// Entries with only an English definition can be translated on request when

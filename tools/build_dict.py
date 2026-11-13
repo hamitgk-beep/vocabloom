@@ -446,6 +446,7 @@ def load_gloss(db):
     """Short Turkish meanings and Turkish definitions (tools/pretranslate.py, kind "gloss")
     for expressions no other source translates."""
     db.execute('ALTER TABLE expr ADD COLUMN entr TEXT')
+    db.execute('ALTER TABLE expr ADD COLUMN extr TEXT')
     paths = result_files('gl-')
     if not paths:
         print('gloss: not found, skipped')
@@ -462,7 +463,8 @@ def load_gloss(db):
             continue
         seen.add(key)
         db.execute("UPDATE expr SET tr=? WHERE phrase=? AND cat=? AND (tr IS NULL OR tr='')", (j.get('tr') or None, *key))
-        filled += db.execute('UPDATE expr SET entr=? WHERE phrase=? AND cat=?', (j.get('d') or None, *key)).rowcount
+        filled += db.execute('UPDATE expr SET entr=?, extr=? WHERE phrase=? AND cat=?',
+                             (j.get('d') or None, j.get('x') or None, *key)).rowcount
     print('short Turkish meanings', filled)
 
 

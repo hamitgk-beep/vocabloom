@@ -108,10 +108,13 @@ class Expr {
   /// Turkish translation of [en] (built-in library), senses separated by "; ".
   String? enTr;
 
+  /// Turkish translation of [ex].
+  String? exTr;
+
   /// Turkish meaning / explanation made by the user's AI service (saved on device).
   String? aiTr;
   String? aiExp;
-  Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern, {this.ex, this.enTr});
+  Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern, {this.ex, this.enTr, this.exTr});
 
   /// Turkish meaning: from the dictionary, otherwise from the AI translation.
   String? get trShown => tr ?? aiTr;

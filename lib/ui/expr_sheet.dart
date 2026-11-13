@@ -225,11 +225,15 @@ class _ExprPanelState extends State<ExprPanel> {
               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor, fontStyle: FontStyle.italic)),
         ));
       }
-      if (expr.ex != null) {
+      // The example only with its Turkish, unless English is on.
+      if (expr.ex != null && (en || expr.exTr != null)) {
         children.add(Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text('• ${expr.ex}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
         ));
+        if (tr && expr.exTr != null) {
+          children.add(Padding(padding: const EdgeInsets.only(left: 12), child: Text(expr.exTr!, style: trStyle(theme, null, false))));
+        }
       }
       if (head != null && expr.trShown != null) children.add(Padding(padding: const EdgeInsets.only(top: 12), child: head));
       if (defs.isEmpty && expr.trShown == null) children.add(Text(L('Sözlükte açıklama yok.', 'No explanation in the dictionary.'), style: TextStyle(color: theme.hintColor)));

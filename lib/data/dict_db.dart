@@ -34,7 +34,7 @@ Map<String, String> get posNames => uiEnglish
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {
-  static const _version = '9';
+  static const _version = '10';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -79,10 +79,10 @@ class DictDb {
     final forms = <int, List<String>>{};
     final cols = {for (final r in db.select('PRAGMA table_info(expr)')) r['name'] as String};
     final hasEx = cols.contains('ex'), hasEnTr = cols.contains('entr');
-    for (final r in db.select('SELECT id, phrase, cat, tr, en, forms${hasEx ? ', ex' : ''}${hasEnTr ? ', entr' : ''} FROM expr')) {
+    for (final r in db.select('SELECT id, phrase, cat, tr, en, forms${hasEx ? ', ex' : ''}${hasEnTr ? ', entr, extr' : ''} FROM expr')) {
       final e = Expr(r['id'] as int, r['phrase'] as String, r['cat'] as String, r['tr'] as String?,
           r['en'] as String?, patternOf(r['phrase'] as String),
-          ex: hasEx ? r['ex'] as String? : null, enTr: hasEnTr ? r['entr'] as String? : null);
+          ex: hasEx ? r['ex'] as String? : null, enTr: hasEnTr ? r['entr'] as String? : null, exTr: hasEnTr ? r['extr'] as String? : null);
       if (e.pattern.isEmpty) continue;
       exprs.add(e);
       exprById[e.id] = e;
