@@ -454,7 +454,7 @@ def load_todo(dict_path, done):
 def clean_item(it, limit=4):
     senses = []
     for s in it.get('senses') or []:
-        if not s.get('title_tr') or not s.get('explain_tr'):
+        if not isinstance(s, dict) or not s.get('title_tr') or not s.get('explain_tr'):
             continue
         senses.append({
             **({'pos': s['pos'].strip()} if s.get('pos') else {}),
@@ -967,8 +967,9 @@ def main():
         reviewed = read_done(rv_files, lambda j: j['k'])
         gen_files = [f for f in a.done + [a.out, a.gloss, a.words]
                      if f and os.path.basename(f).startswith(('exd', 'wd-', 'gl-'))]
+        n_done = len(reviewed)
         rtodo = load_review_todo(a.dict_db, list(dict.fromkeys(gen_files)), reviewed, a.provider)
-        print(f'reviews: {len(reviewed)} done, {len(rtodo)} to go')
+        print(f'reviews: {n_done} done, {len(rtodo)} to go')
         m = run(svc, rtodo, a.review, min(deadline, start + total * 0.45), a.limit, 'review')
         print(f'reviews added {m}')
     # Frequent words with no Turkish at all ("usually", "each"): a few hundred, before the long queues.
