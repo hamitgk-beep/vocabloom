@@ -8,6 +8,7 @@ import 'data/dict_db.dart';
 import 'data/user_db.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
+import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
 import 'ui/onboarding.dart';
 import 'ui/theme.dart';
@@ -122,7 +123,9 @@ class _HomePageState extends State<HomePage> {
         content: Text(
           Platform.isAndroid
               ? L('VocaBloom\'un yeni sürümü var. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.', 'A new version of VocaBloom is available. Download and open it to install over the current app; your books and words are kept.')
-              : L('VocaBloom\'un yeni sürümü var.', 'A new version of VocaBloom is available.'),
+              : Platform.isWindows
+                  ? L('VocaBloom\'un yeni sürümü var. Güncelle\'ye basınca indirilip kurulur ve uygulama yeniden açılır; kitapların ve kelimelerin korunur.', 'A new version of VocaBloom is available. Press Update to download and install it; the app restarts and your books and words are kept.')
+                  : L('VocaBloom\'un yeni sürümü var.', 'A new version of VocaBloom is available.'),
         ),
         actions: [
           TextButton(
@@ -132,13 +135,55 @@ class _HomePageState extends State<HomePage> {
           FilledButton(
             onPressed: () {
               m.hideCurrentMaterialBanner();
-              launchUrl(Uri.parse(u.url), mode: LaunchMode.externalApplication);
+              if (Platform.isWindows) {
+                _installWindowsUpdate(u.url);
+              } else {
+                launchUrl(Uri.parse(u.url), mode: LaunchMode.externalApplication);
+              }
             },
-            child: Text(L('İndir', 'Download')),
+            child: Text(Platform.isWindows ? L('Güncelle', 'Update') : L('İndir', 'Download')),
           ),
         ],
       ),
     );
+  }
+
+  /// Downloads the new Windows build, then replaces the app and restarts it.
+  Future<void> _installWindowsUpdate(String url) async {
+    final progress = ValueNotifier<double?>(null);
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => PopScope(
+        canPop: false,
+        child: AlertDialog(
+          title: Text(L('Güncelleniyor', 'Updating')),
+          content: ValueListenableBuilder<double?>(
+            valueListenable: progress,
+            builder: (_, v, _) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(v == null || v < 1
+                  ? L('Yeni sürüm indiriliyor…', 'Downloading the new version…')
+                  : L('Kuruluyor, VocaBloom birazdan yeniden açılacak…', 'Installing, VocaBloom will reopen in a moment…')),
+              const SizedBox(height: 16),
+              LinearProgressIndicator(value: v),
+              if (v != null) ...[const SizedBox(height: 8), Text('%${(v * 100).round()}')],
+            ]),
+          ),
+        ),
+      ),
+    );
+    try {
+      final dir = await WindowsUpdater.prepare(url, (v) => progress.value = v);
+      progress.value = 1;
+      await WindowsUpdater.installAndRestart(dir);
+    } catch (_) {
+      if (!mounted) return;
+      Navigator.of(context, rootNavigator: true).pop();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(L('Güncelleme kurulamadı. Yeni sürüm tarayıcıda indiriliyor.', 'The update could not be installed. Downloading it in the browser instead.')),
+      ));
+      launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
   }
 
   @override
