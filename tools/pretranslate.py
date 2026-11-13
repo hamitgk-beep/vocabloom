@@ -24,7 +24,7 @@ import time
 import urllib.error
 import urllib.request
 
-CHUNK = 10  # expressions per request
+CHUNK = 6  # expressions per request
 
 # Categories in the order they are translated: the ones readers meet most first.
 CAT_ORDER = ['phrasal_verbs', 'conjunctions', 'discourse_markers', 'chunks', 'collocations', 'modal_verbs',
@@ -141,15 +141,19 @@ def clean_item(it):
 
 # ---------------------------------------------------------------- Gemini (free tier)
 
+_use_schema = [True]
+
+
 def gemini_call(model, key, chunk):
-    body = {
-        'contents': [{'parts': [{'text': PROMPT + '\n'.join(describe(e) for e in chunk)}]}],
-        'generationConfig': {'responseMimeType': 'application/json', 'temperature': 0.3},
-    }
-    req = urllib.request.Request(
-        f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
-        data=json.dumps(body).encode(), headers={'Content-Type': 'application/json', 'x-goog-api-key': key})
-    for attempt in range(5):
+    for attempt in range(4):
+        cfg = {'responseMimeType': 'application/json', 'temperature': 0.3, 'maxOutputTokens': 16000}
+        if _use_schema[0]:
+            cfg['responseJsonSchema'] = SCHEMA
+        body = {'contents': [{'parts': [{'text': PROMPT + '\n'.join(describe(e) for e in chunk)}]}],
+                'generationConfig': cfg}
+        req = urllib.request.Request(
+            f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent',
+            data=json.dumps(body).encode(), headers={'Content-Type': 'application/json', 'x-goog-api-key': key})
         try:
             with urllib.request.urlopen(req, timeout=180) as r:
                 data = json.load(r)
@@ -159,6 +163,10 @@ def gemini_call(model, key, chunk):
             msg = e.read().decode(errors='replace')[:400]
             if e.code == 429 and ('PerDay' in msg or 'per day' in msg.lower() or 'quota' in msg.lower() and attempt >= 2):
                 raise QuotaExhausted(msg)
+            if e.code == 400 and _use_schema[0]:
+                print('  structured output not accepted, continuing without it:', msg[:200])
+                _use_schema[0] = False
+                continue
             if e.code in (429, 500, 503, 529):
                 time.sleep(15 * (attempt + 1))
                 continue
@@ -166,7 +174,7 @@ def gemini_call(model, key, chunk):
         except (ValueError, KeyError, IndexError) as e:
             print('  bad answer, retrying:', e)
             time.sleep(5)
-    raise RuntimeError('Gemini: too many failures')
+    return None  # this chunk failed; the caller splits it
 
 
 def run_gemini(todo, out, model, deadline, limit):
@@ -179,6 +187,15 @@ def run_gemini(todo, out, model, deadline, limit):
         t0 = time.time()
         try:
             items = gemini_call(models[0], key, chunk)
+            if items is None:
+                # Retry one by one; an expression that still fails is skipped this run.
+                items = []
+                for e in chunk:
+                    r = gemini_call(models[0], key, [e])
+                    if r is None:
+                        print('  skipped:', e[0])
+                    else:
+                        items += r
         except QuotaExhausted as e:
             print(f'daily quota of {models[0]} used up: {str(e)[:200]}')
             models.pop(0)
