@@ -18,7 +18,10 @@ on:
         description: "max expressions this run"
         default: "100000"
   schedule:
-    - cron: "17 3 * * *"   # once a day, when the free quota is fresh
+    - cron: "17 3 * * *"   # once a day
+    # GitHub sometimes skips a scheduled run; a second one later in the day picks up what is left
+    # (finished work is skipped, and a used-up quota ends it quickly). Gemini's day starts at 08:00 UTC.
+    - cron: "37 8 * * *"
 
 concurrency:
   # A run for one service can start while another service is still working.
