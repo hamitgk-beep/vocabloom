@@ -73,7 +73,7 @@ class Speech extends ChangeNotifier {
   /// Target: speech is made at least ~3x faster than it plays, so reading
   /// flows and a tapped word answers quickly, on slow and fast phones alike.
   static const _targetRtf = 0.3;
-  static const _wordSteps = int.fromEnvironment('VOCABLOOM_WORD_STEPS', defaultValue: 4);
+  static const _wordSteps = int.fromEnvironment('VOCABLOOM_WORD_STEPS', defaultValue: 2);
 
   void _learnSpeed(double rtf, double secs, int steps) {
     if (secs < 1.5 || rtf <= 0) return; // short clips are mostly overhead
@@ -486,7 +486,7 @@ so.OfflineTts _createEngine(List<String> e, int threads) {
 }
 
 /// Extra takes allowed for a lone word that came out with a stray sound.
-const _wordRetakes = int.fromEnvironment('VOCABLOOM_WORD_RETAKES', defaultValue: 1);
+const _wordRetakes = int.fromEnvironment('VOCABLOOM_WORD_RETAKES', defaultValue: 2);
 
 /// Number of separate loud stretches in a clip (a clean short word has one).
 int _bursts(Float32List x, int sr) {
@@ -502,15 +502,25 @@ int _bursts(Float32List x, int sr) {
   }
   if (e.isEmpty) return 0;
   final th = 0.15 * e.reduce(max);
+  // Count stretches above 15% of the peak, separated by >= 120 ms of quiet,
+  // that reach half the peak: a repeated start ("aand", "gggrow") or a stray
+  // second sound. A soft release after a final consonant is not counted.
+  final peak = e.reduce(max);
   var n = 0, gap = 99;
+  var top = 0.0;
   for (final v in e) {
     if (v > th) {
-      if (gap >= 4) n++;
+      if (gap >= 4) {
+        if (top >= 0.5 * peak) n++;
+        top = 0;
+      }
+      top = max(top, v);
       gap = 0;
     } else {
       gap++;
     }
   }
+  if (top >= 0.5 * peak) n++;
   return n;
 }
 
@@ -549,7 +559,7 @@ void _workerMain(List args) {
       var a = tts.generateWithConfig(text: text, config: cfg);
       if (e[0] == 'supertonic' && !text.contains(' ')) {
         // A single word now and then comes out with a stray extra sound; the
-        // model varies each run, so one more take is made and the cleaner kept.
+        // model varies each run, so up to two more takes are made and the cleanest kept.
         var best = _bursts(a.samples, a.sampleRate);
         for (var k = 0; k < _wordRetakes && best > 1; k++) {
           final b = tts.generateWithConfig(text: text, config: cfg);
