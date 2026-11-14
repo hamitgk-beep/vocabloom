@@ -28,7 +28,7 @@ class _EchoAi extends LocalAi {
   @override
   Future<void> delete(String id) async {}
   @override
-  String? get activeId => 'lite';
+  String? get activeId => 'pro';
   @override
   Future<void> setActive(String id) async {}
   @override
@@ -62,11 +62,10 @@ void main() {
   app.localAi = ai;
   final tutor = Tutor.of(app);
 
-  test('packages: three tiers, sizes as promised, commercial licence', () {
-    expect(aiPackages.map((p) => p.tier), [AiTier.free, AiTier.plus, AiTier.pro]);
-    expect(aiPackages[0].sizeBytes, lessThanOrEqualTo(520e6));
-    expect(aiPackages[1].sizeBytes, lessThanOrEqualTo(1.55e9));
-    expect(aiPackages[2].sizeBytes, lessThanOrEqualTo(3.1e9));
+  test('one premium package, size as shown, commercial licence', () {
+    expect(aiPackages.map((p) => p.id), ['pro']);
+    expect(aiPackages.single.premium, isTrue);
+    expect(aiPackages.single.sizeBytes, lessThanOrEqualTo(3.1e9));
     for (final p in aiPackages) {
       expect(p.licenseName, 'Apache 2.0');
       expect(p.urls.first, startsWith('https://'));
@@ -127,5 +126,23 @@ void main() {
       ..write(f.add('b>dünya'))
       ..write(f.close());
     expect(out.toString(), 'Merhaba <b>dünya');
+  });
+
+  test('chat turns alternate and start with the user', () {
+    expect(alternateTurns([('assistant', 'Hi! Plans?'), ('user', 'Yes'), ('user', 'cinema')]),
+        [('user', 'Hi!'), ('assistant', 'Hi! Plans?'), ('user', 'Yes\n\ncinema')]);
+  });
+
+  test('a correct text is never given invented mistakes', () async {
+    final out = await Tutor.guardNoErrorForTest('I have been living in Izmir since 2018.', Stream.fromIterable([
+      '**Doğru hâli:** I have been living in Izmir since 2018.\n',
+      '**Hatalar:**\n- "have been living" → "have lived"',
+    ])).join();
+    expect(out, contains(Tutor.noErrorAnswer));
+    expect(out, isNot(contains('have lived')));
+    final fixed = await Tutor.guardNoErrorForTest('Yesterday I have went home.', Stream.fromIterable([
+      '**Doğru hâli:** Yesterday I went home.\n**Hatalar:**\n- have went → went: ...',
+    ])).join();
+    expect(fixed, contains('have went → went'));
   });
 }

@@ -10,6 +10,7 @@ Paid APIs (Anthropic, OpenAI ...) work the same way but cost money.
 
     python3 tools/tutor/teacher.py explain [limit]   # -> data/teacher.jsonl (resumes)
     python3 tools/tutor/teacher.py chat [count]      # -> data/teacher_chat.jsonl (resumes)
+    python3 tools/tutor/teacher.py grade [count]     # -> data/teacher_grade.jsonl (resumes): grammar practice feedback
 
 The teacher gets the human Turkish translation of each sentence (Tatoeba) and
 the app's dictionary facts, and must keep the exact answer format of the app.
@@ -143,9 +144,68 @@ def chat(count):
             time.sleep(DELAY)
 
 
+GRADE_TASK = """You write training data for the grammar-practice feature of an English app for Turkish speakers.
+Topic: {title}. Rule: {rule}
+Turkish sentence: "{tr}"
+Correct English versions: {answers}
+
+Write {n} different answers a Turkish learner (level {level}) might really type for this sentence: mostly with
+typical Turkish-speaker mistakes (tense, articles, prepositions, word order, the topic's rule, missing words,
+spelling), and one that is different from the correct versions but still fully correct and natural.
+For each, write the tutor's feedback in Turkish, following the system prompt below exactly (same headings,
+numbered corrections, encouraging first line, never invent mistakes, accept a correct alternative).
+Return only JSON: {{"items": [{{"answer": "...", "feedback": "..."}}]}}
+
+System prompt of the tutor:
+\"\"\"{system}\"\"\"
+"""
+
+
+def grade_user(t, e, answer):
+    """The user turn exactly as Tutor.checkTranslation builds it."""
+    rule = e['note'] if e['note'] else ' / '.join(t['structure'])
+    return ('Konu: %s (%s)\nKural: %s\nTürkçe: "%s"\nDoğru cevaplar:\n%s\nÖğrencinin cevabı: "%s"' % (
+        t['title_tr'], t['title_en'], rule, e['tr'], '\n'.join('- "%s"' % a for a in e['answers']), answer.strip()))
+
+
+def grade(count):
+    root = os.path.dirname(os.path.dirname(HERE))
+    topics = json.load(open(os.path.join(root, 'assets', 'grammar', 'lessons.json'), encoding='utf-8'))['topics']
+    prompts = [json.loads(l) for l in open(os.path.join(DATA, 'prompts.jsonl'), encoding='utf-8')]
+    system = next(p['system'] for p in prompts if p['id'] == 'grade-system')
+    out_path = os.path.join(DATA, 'teacher_grade.jsonl')
+    done = {i.rsplit('-a', 1)[0] for i in done_ids(out_path)}
+    n = 0
+    with open(out_path, 'a', encoding='utf-8') as out:
+        for t in topics:
+            for e in t['exercises']:
+                if e['id'] in done or n >= count:
+                    continue
+                txt = call('You write training data for an English tutoring app. Output JSON only.',
+                           GRADE_TASK.format(title=t['title_en'], rule=e['note'], tr=e['tr'], answers=json.dumps(e['answers']),
+                                             n=4, level=t['level'], system=system), temperature=0.7, json_mode=True)
+                try:
+                    items = json.loads(txt)['items']
+                except Exception:
+                    print('  skipped (bad JSON)', e['id'])
+                    continue
+                for k, it in enumerate(items):
+                    fb = it.get('feedback', '')
+                    if not it.get('answer') or '**Doğru ve doğal kurulumlar:**' not in fb:
+                        continue
+                    out.write(json.dumps({'id': '%s-a%d' % (e['id'], k), 'exercise': e['id'], 'answer': fb,
+                                          'user': grade_user(t, e, it['answer'])}, ensure_ascii=False) + '\n')
+                out.flush()
+                n += 1
+                print(n, e['id'])
+                time.sleep(DELAY)
+
+
 if __name__ == '__main__':
     if len(sys.argv) >= 2 and sys.argv[1] == 'explain':
         explain(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
+    elif len(sys.argv) >= 2 and sys.argv[1] == 'grade':
+        grade(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
     elif len(sys.argv) >= 2 and sys.argv[1] == 'chat':
         chat(int(sys.argv[2]) if len(sys.argv) > 2 else 600)
     else:
