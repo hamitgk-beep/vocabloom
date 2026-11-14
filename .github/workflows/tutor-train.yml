@@ -63,7 +63,7 @@ jobs:
       - name: Publish the GGUF
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          HF_REPO: ${{ vars.HF_REPO }}
+          HF_REPO: ${{ vars.HF_REPO || 'Hamit06/vocabloom-tutor' }}
           GH_TOKEN: ${{ github.token }}
         run: |
           q=$([ "$PKG" = pro ] && echo Q5_K_M || echo Q6_K)
