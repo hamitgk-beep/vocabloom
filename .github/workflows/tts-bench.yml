@@ -1,0 +1,20 @@
+name: tts-bench
+# Measures offline voice speed on an ARM CPU (phone-like) to choose models.
+on:
+  push:
+    paths: [tools/bench/**, .github/workflows/tts-bench.yml]
+  workflow_dispatch:
+jobs:
+  bench:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install sherpa-onnx==1.13.8 soundfile
+      - name: Models
+        run: |
+          mkdir m && cd m
+          for f in kokoro-int8-multi-lang-v1_0 kokoro-multi-lang-v1_0 sherpa-onnx-supertonic-tts-int8-2026-03-06 kitten-nano-en-v0_2-fp16 vits-piper-tr_TR-fahrettin-medium; do
+            curl -sSfL https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/$f.tar.bz2 | tar xj
+          done
+      - run: nproc; lscpu | head -20
+      - run: for t in 1 2 4; do python tools/bench/tts_bench.py m $t supertonic kitten kokoro-fp32 kokoro-int8 piper-tr 2>&1 | grep thr=; done
