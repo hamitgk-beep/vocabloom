@@ -359,31 +359,57 @@ class Speech extends ChangeNotifier {
     final token = ++_sayToken;
     final vo = v ?? voice;
     final sp = speed ?? this.speed;
-    // Words and short texts are kept, so a second tap plays at once.
-    final cacheable = text.length <= 120;
-    final cached = cacheable ? _cacheFile(text, vo, sp) : null;
-    if (cached != null && cached.existsSync()) {
-      await playFile(cached.path, keep: true);
-      return;
+    String? cached;
+    try {
+      cached = await _cached(text, vo, sp);
+    } catch (_) {
+      // a prefetch of it was cancelled (e.g. reading stopped): make it now
+      cached = await _cached(text, vo, sp);
     }
-    final path = await synth(text, v: vo, urgent: true, speed: sp);
-    var play = path;
     if (cached != null) {
-      try {
-        cached.parent.createSync(recursive: true);
-        play = File(path).renameSync(cached.path).path;
-      } catch (_) {
-        try {
-          play = File(path).copySync(cached.path).path;
-          File(path).deleteSync();
-        } catch (_) {}
-      }
-    }
-    if (token != _sayToken) {
-      if (play == path) _deleteQuietly(path);
+      if (token == _sayToken) await playFile(cached, keep: true);
       return;
     }
-    await playFile(play, keep: play != path);
+    // Long text: not kept.
+    final path = await synth(text, v: vo, urgent: true, speed: sp);
+    if (token != _sayToken) {
+      _deleteQuietly(path);
+      return;
+    }
+    await playFile(path);
+  }
+
+  final _making = <String, Future<String?>>{};
+
+  /// Audio file of a word or short text, made once and kept, so a second tap
+  /// plays at once. Null for long text (not kept).
+  Future<String?> _cached(String text, Voice v, double speed, {bool urgent = true}) {
+    if (text.length > 120 || !isReady(v.pack)) return Future.value(null);
+    final f = _cacheFile(text, v, speed);
+    if (f.existsSync()) return Future.value(f.path);
+    return _making.putIfAbsent(f.path, () async {
+      try {
+        final tmp = await synth(text, v: v, urgent: urgent, speed: speed);
+        f.parent.createSync(recursive: true);
+        try {
+          File(tmp).renameSync(f.path);
+        } catch (_) {
+          File(tmp).copySync(f.path);
+          _deleteQuietly(tmp);
+        }
+        return f.path;
+      } finally {
+        _making.remove(f.path);
+      }
+    });
+  }
+
+  /// Makes the audio of [text] ahead of time (e.g. when a word's panel opens),
+  /// so the speaker button answers at once.
+  void prefetch(String text, {String lang = 'en'}) {
+    final v = voiceFor(lang);
+    if (!isReady(v.pack)) return;
+    _cached(text, v, speed, urgent: false).ignore();
   }
 
   static void _deleteQuietly(String path) {
@@ -459,6 +485,9 @@ so.OfflineTts _createEngine(List<String> e, int threads) {
   return so.OfflineTts(so.OfflineTtsConfig(model: model));
 }
 
+/// Extra takes allowed for a lone word that came out with a stray sound.
+const _wordRetakes = int.fromEnvironment('VOCABLOOM_WORD_RETAKES', defaultValue: 1);
+
 /// Number of separate loud stretches in a clip (a clean short word has one).
 int _bursts(Float32List x, int sr) {
   if (sr == 0 || x.isEmpty) return 0;
@@ -520,9 +549,9 @@ void _workerMain(List args) {
       var a = tts.generateWithConfig(text: text, config: cfg);
       if (e[0] == 'supertonic' && !text.contains(' ')) {
         // A single word now and then comes out with a stray extra sound; the
-        // model varies each run, so keep the cleanest of up to three takes.
+        // model varies each run, so one more take is made and the cleaner kept.
         var best = _bursts(a.samples, a.sampleRate);
-        for (var k = 0; k < 2 && best > 1; k++) {
+        for (var k = 0; k < _wordRetakes && best > 1; k++) {
           final b = tts.generateWithConfig(text: text, config: cfg);
           final n = _bursts(b.samples, b.sampleRate);
           if (n < best) {

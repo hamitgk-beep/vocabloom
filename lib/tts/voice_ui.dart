@@ -99,7 +99,10 @@ class SpeakButton extends StatefulWidget {
   final String? tooltip;
   final bool autoPlay;
   final double size;
-  const SpeakButton(this.text, {super.key, this.lang = 'en', this.speed, this.tooltip, this.autoPlay = false, this.size = 24});
+
+  /// Make the audio as soon as the button appears (short texts only).
+  final bool prefetch;
+  const SpeakButton(this.text, {super.key, this.lang = 'en', this.speed, this.tooltip, this.autoPlay = false, this.size = 24, this.prefetch = true});
 
   @override
   State<SpeakButton> createState() => _SpeakButtonState();
@@ -113,7 +116,12 @@ class _SpeakButtonState extends State<SpeakButton> {
   @override
   void initState() {
     super.initState();
-    if (widget.autoPlay && Speech.instance.isReady(_voice.pack)) WidgetsBinding.instance.addPostFrameCallback((_) => _say());
+    if (widget.autoPlay && Speech.instance.isReady(_voice.pack)) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _say());
+    } else if (widget.prefetch && widget.speed == null) {
+      // Make the audio while the panel is read, so the tap plays at once.
+      Speech.instance.prefetch(widget.text, lang: widget.lang);
+    }
   }
 
   Future<void> _say() async {
