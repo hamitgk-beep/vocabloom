@@ -102,6 +102,13 @@ class AppState extends ChangeNotifier {
 
   bool get englishUi => uiEnglish;
 
+  /// The AI tutor tab is a preview until the tuned models land.
+  bool get aiTab => user.getSetting('ai_tab') == '1';
+  void setAiTab(bool v) {
+    user.setSetting('ai_tab', v ? '1' : null);
+    notifyListeners();
+  }
+
   void setUiEnglish(bool v) {
     uiEnglish = v;
     _save();

@@ -121,7 +121,18 @@ class _AiPageState extends State<AiPage> {
     final theme = Theme.of(context);
     final active = ai.packages.where((p) => p.id == ai.activeId && installed.contains(p.id)).firstOrNull;
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 68, title: Text(L('Yapay Zekâ', 'AI Tutor'), style: theme.textTheme.headlineSmall)),
+      appBar: AppBar(
+        toolbarHeight: 68,
+        title: Row(children: [
+          Text(L('Yapay Zekâ', 'AI Tutor'), style: theme.textTheme.headlineSmall),
+          const SizedBox(width: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(8)),
+            child: Text('BETA', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w800, letterSpacing: 1)),
+          ),
+        ]),
+      ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 720),
