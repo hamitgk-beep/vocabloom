@@ -1,0 +1,51 @@
+name: ai-smoke
+# Downloads the offline AI packages and runs the tutor tasks on them, so the
+# download addresses and the llama.cpp engine are checked and the answers can
+# be read in the log.
+on:
+  pull_request:
+    paths: ['lib/ai/**', 'test/ai_*', '.github/workflows/ai-smoke.yml', 'pubspec.yaml']
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Packages to run (lite,plus,pro)'
+        default: 'lite,plus'
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter pub get
+      - name: Check every download address
+        run: |
+          set -e
+          for url in $(grep -o "\$_hf/[^']*\.gguf" lib/ai/packages.dart | sed 's|\$_hf|https://huggingface.co|'); do
+            size=$(curl -sIL "$url" | grep -i '^content-length' | tail -1 | tr -dc '0-9')
+            echo "$url -> $size bytes"
+            [ "${size:-0}" -gt 100000000 ] || { echo "::error::Not reachable: $url"; exit 1; }
+          done
+      - name: Download models
+        env:
+          PKGS: ${{ github.event.inputs.packages || 'lite,plus' }}
+        run: |
+          mkdir -p models
+          for id in ${PKGS//,/ }; do
+            url=$(python3 - "$id" <<'PY'
+          import re, sys
+          src = open('lib/ai/packages.dart').read()
+          block = src.split("id: '%s'" % sys.argv[1], 1)[1]
+          print(re.search(r"\$_hf(/[^']*\.gguf)", block).group(1))
+          PY
+            )
+            curl -sSL --retry 3 -o "models/$id.gguf" "https://huggingface.co$url"
+            ls -la "models/$id.gguf"
+          done
+      - name: Run the tutor on the models
+        env:
+          AI_MODEL_DIR: ${{ github.workspace }}/models
+          AI_PACKAGES: ${{ github.event.inputs.packages || 'lite,plus' }}
+        run: flutter test test/ai_smoke_test.dart --reporter expanded

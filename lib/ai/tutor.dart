@@ -102,15 +102,19 @@ class Tutor {
     final matches = app.dict.matcher.match(toks);
     final exprWords = <int>{};
     if (matches.isNotEmpty) {
-      b.writeln('Kalıplar (sözlükten):');
+      var head = false;
       final seen = <String>{};
       for (final m in matches) {
         final e = m.expr;
         if (!seen.add(e.phrase)) continue;
+        // Single words the reader marks anyway (and, be, went …) only add noise.
+        if (m.tokens.length == 1 && (e.cat == 'irregular_verbs' || _function.contains(e.phrase))) continue;
         exprWords.addAll(m.tokens);
         final mean = e.trShown ?? e.enTr ?? e.en;
         if (mean == null) continue;
         final cat = categoryById[e.cat]?.name ?? e.cat;
+        if (!head) b.writeln('Kalıplar (sözlükten):');
+        head = true;
         b.writeln('- ${e.phrase} ($cat): ${_short(mean)}');
       }
     }
@@ -119,7 +123,9 @@ class Tutor {
       if (exprWords.contains(i)) continue;
       final w = toks[i].lower;
       if (w.length < 3 || _function.contains(w)) continue;
-      final lemma = app.primaryLemma(w);
+      // Names (capitalised inside the sentence) are not looked up: Tom ≠ "erkek kedi".
+      if (i > 0 && toks[i].text[0] != toks[i].text[0].toLowerCase()) continue;
+      final lemma = _lemma(w);
       if (words.any((x) => x.startsWith('$lemma:'))) continue;
       final info = app.dict.lookup(lemma);
       final tr = _meaningIn(info, toks, i) ?? _meaning(info);
@@ -148,6 +154,15 @@ class Tutor {
     return '${out.join(', ')}${pos == null ? '' : ' ($pos)'}';
   }
 
+  /// The word itself when it is a dictionary word, otherwise the longest
+  /// lemma (rivers → river, not "rive"; mother stays mother, not "moth").
+  String _lemma(String w) {
+    final ls = app.dict.lemmatizer.lemmas(w);
+    if (ls.contains(w) && !app.dict.lookup(w).isEmpty) return w;
+    final c = [...ls]..sort((a, b) => b.length.compareTo(a.length));
+    return c.isEmpty ? w : c.first;
+  }
+
   static String? _meaning(WordInfo info) {
     final out = <String>[];
     for (final s in info.senses) {
@@ -170,7 +185,9 @@ class Tutor {
     'did', 'not', "n't", 'you', 'she', 'his', 'her', 'its', 'our', 'their', 'they', 'them', 'him', 'this', 'that',
     'these', 'those', 'with', 'from', 'into', 'onto', 'than', 'then', 'there', 'here', 'what', 'which', 'who',
     'whom', 'whose', 'will', 'would', 'shall', 'should', 'can', 'could', 'may', 'might', 'must', 'very', 'just',
-    "i'm", "it's", "don't", "didn't", "can't", 'all', 'any', 'some',
+    "i'm", "it's", "don't", "didn't", "can't", 'all', 'any', 'some', 'or', 'only', 'also', 'ever', 'never',
+    'one', 'two', 'now', 'out', 'off', 'about', 'over', 'under', 'after', 'before', 'because', 'when', 'while',
+    'myself', 'yourself', 'himself', 'herself', 'itself', 'ourselves', 'themselves', 'more', 'most', 'much',
   };
 
   // -------------------------------------------------------------- tasks
