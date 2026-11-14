@@ -68,7 +68,7 @@ class _LibraryPageState extends State<LibraryPage> {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(L('İçe aktarılamadı: $e', 'Could not import: $e')),
+          content: Text(L('İçe aktarılamadı: ${errorText(e)}', 'Could not import: ${errorText(e)}')),
           duration: const Duration(seconds: 8),
         ),
       );
@@ -273,7 +273,7 @@ class _ContinueCard extends StatelessWidget {
                 Row(children: [
                   Expanded(child: LinearProgressIndicator(value: pct)),
                   const SizedBox(width: 10),
-                  Text('%${(pct * 100).round()}', style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+                  Text(percent((pct * 100).round()), style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                 ]),
                 const SizedBox(height: 12),
                 FilledButton.icon(
@@ -321,7 +321,7 @@ class _BookCard extends StatelessWidget {
                 Row(children: [
                   Expanded(child: LinearProgressIndicator(value: pct, minHeight: 5)),
                   const SizedBox(width: 8),
-                  Text('%${(pct * 100).round()}', style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+                  Text(percent((pct * 100).round()), style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                 ]),
                 if (status != null)
                   Padding(

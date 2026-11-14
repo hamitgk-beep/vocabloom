@@ -24,7 +24,15 @@ class GrammarExercise {
 
   /// The rule this sentence practises, in Turkish.
   final String noteTr;
-  const GrammarExercise(this.id, this.tr, this.answers, this.noteTr);
+
+  /// The same rule in English, for the English interface (from lessons_en.json).
+  final String noteEn;
+  const GrammarExercise(this.id, this.tr, this.answers, this.noteTr, [this.noteEn = '']);
+
+  /// The rule in the interface language.
+  String get note => uiEnglish && noteEn.isNotEmpty ? noteEn : noteTr;
+
+  GrammarExercise withEnglish(String? en) => en == null ? this : GrammarExercise(id, tr, answers, noteTr, en);
 
   factory GrammarExercise.fromJson(Map<String, dynamic> j) => GrammarExercise(
       j['id'] as String, j['tr'] as String, (j['answers'] as List).cast<String>(), (j['note'] ?? '') as String);
@@ -46,6 +54,10 @@ class GrammarTopic {
 
   /// Names a learner may use for this topic in the chat, lower case.
   final List<String> aliases;
+
+  /// The explanation and patterns in English, for the English interface.
+  final String explanationEn;
+  final List<String> structureEn;
   const GrammarTopic({
     required this.id,
     required this.titleTr,
@@ -57,9 +69,38 @@ class GrammarTopic {
     required this.examples,
     required this.exercises,
     this.aliases = const [],
+    this.explanationEn = '',
+    this.structureEn = const [],
   });
 
   String get title => uiEnglish ? titleEn : titleTr;
+
+  /// The other language's title, shown small under [title] on the Turkish
+  /// interface (the English name of the structure is worth learning).
+  String? get subtitle => uiEnglish ? null : titleEn;
+
+  String get explanation => uiEnglish && explanationEn.isNotEmpty ? explanationEn : explanationTr;
+  List<String> get structure => uiEnglish && structureEn.isNotEmpty ? structureEn : structureTr;
+
+  /// Adds the English texts from lessons_en.json ({"explanation", "structure", "notes": {id: note}}).
+  GrammarTopic withEnglish(Map<String, dynamic>? en) {
+    if (en == null) return this;
+    final notes = (en['notes'] as Map<String, dynamic>?) ?? const {};
+    return GrammarTopic(
+      id: id,
+      titleTr: titleTr,
+      titleEn: titleEn,
+      level: level,
+      category: category,
+      explanationTr: explanationTr,
+      structureTr: structureTr,
+      examples: examples,
+      exercises: [for (final e in exercises) e.withEnglish(notes[e.id] as String?)],
+      aliases: aliases,
+      explanationEn: (en['explanation'] as String?) ?? '',
+      structureEn: ((en['structure'] as List?) ?? const []).cast<String>(),
+    );
+  }
 
   factory GrammarTopic.fromJson(Map<String, dynamic> j) => GrammarTopic(
         id: j['id'] as String,
@@ -143,11 +184,22 @@ List<GrammarTopic>? _cache;
 Future<List<GrammarTopic>> loadGrammarTopics() async {
   if (_cache != null) return _cache!;
   final raw = await rootBundle.loadString('assets/grammar/lessons.json');
-  return _cache = parseGrammarTopics(raw);
+  String? en;
+  try {
+    en = await rootBundle.loadString('assets/grammar/lessons_en.json');
+  } catch (_) {}
+  return _cache = parseGrammarTopics(raw, en);
 }
 
-List<GrammarTopic> parseGrammarTopics(String raw) =>
-    [for (final t in (jsonDecode(raw) as Map<String, dynamic>)['topics'] as List) GrammarTopic.fromJson(t as Map<String, dynamic>)];
+/// Parses lessons.json; [rawEn] (lessons_en.json) adds the English
+/// explanations, patterns and notes by topic and exercise id.
+List<GrammarTopic> parseGrammarTopics(String raw, [String? rawEn]) {
+  final en = rawEn == null ? const <String, dynamic>{} : (jsonDecode(rawEn) as Map<String, dynamic>)['topics'] as Map<String, dynamic>;
+  return [
+    for (final t in (jsonDecode(raw) as Map<String, dynamic>)['topics'] as List)
+      GrammarTopic.fromJson(t as Map<String, dynamic>).withEnglish(en[t['id']] as Map<String, dynamic>?)
+  ];
+}
 
 /// Normalises an English sentence for comparing answers: case, apostrophes,
 /// contractions, spaces and punctuation do not matter.

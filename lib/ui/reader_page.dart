@@ -379,8 +379,10 @@ class FilterPanel extends StatelessWidget {
             value: app.enabledCats.contains(c.id),
             onChanged: (_) => app.toggleCat(c.id),
             secondary: Container(width: 14, height: 14, decoration: BoxDecoration(color: c.color, shape: BoxShape.circle)),
-            title: Text(c.name, style: TextStyle(color: theme.brightness == Brightness.dark ? Color.lerp(c.color, Colors.white, 0.35) : c.color, fontWeight: FontWeight.w600)),
-            subtitle: Text(uiEnglish ? c.desc : c.tr),
+            title: Text(uiEnglish ? c.name : c.tr, style: TextStyle(color: theme.brightness == Brightness.dark ? Color.lerp(c.color, Colors.white, 0.35) : c.color, fontWeight: FontWeight.w600)),
+            // The English name of the type is worth learning, so the Turkish
+            // interface shows it after the description.
+            subtitle: Text(uiEnglish ? c.desc : '${c.desc} (${c.name})'),
           ),
         const Divider(),
         Text(L('Kelime renkleri', 'Word colors'), style: theme.textTheme.titleSmall),

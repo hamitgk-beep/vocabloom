@@ -93,7 +93,7 @@ class _GrammarPageState extends State<GrammarPage> {
                       const SizedBox(height: 6),
                       Text(
                         L('Her konuda kısa bir Türkçe anlatım, yapı kalıpları ve örnekler var. Sonra Türkçe cümleleri İngilizceye çevirirsin; doğru mu, nasıl daha doğal söylenir, hemen görürsün.',
-                            'Each topic has a short explanation in Turkish, patterns and examples. Then you translate Turkish sentences into English and see at once whether they are right and how to say them more naturally.'),
+                            'Each topic has a short explanation, patterns and examples. Then you translate Turkish sentences into English and see at once whether they are right and how to say them more naturally.'),
                         style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white.withValues(alpha: 0.9), height: 1.45),
                       ),
                       const SizedBox(height: 14),
@@ -204,13 +204,13 @@ class _NextTopicCard extends StatelessWidget {
                       style: theme.textTheme.labelLarge?.copyWith(color: c, fontWeight: FontWeight.w800, letterSpacing: 0.3)),
                   const SizedBox(height: 2),
                   Row(children: [
-                    Flexible(child: Text(topic.titleTr, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800))),
+                    Flexible(child: Text(topic.title, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800))),
                     const SizedBox(width: 8),
                     _LevelChip(topic.level),
                   ]),
                   const SizedBox(height: 2),
                   Text(
-                    done == 0 ? '${topic.titleEn} · ${L('$n cümle', '$n sentences')}' : '${topic.titleEn} · ${L('$done/$n tamamlandı', '$done of $n done')}',
+                    [?topic.subtitle, done == 0 ? L('$n cümle', '$n sentences') : L('$done/$n tamamlandı', '$done of $n done')].join(' · '),
                     style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant),
                   ),
                 ]),
@@ -244,12 +244,11 @@ class _TopicTile extends StatelessWidget {
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
-                Flexible(child: Text(topic.titleTr, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700))),
+                Flexible(child: Text(topic.title, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700))),
                 const SizedBox(width: 8),
                 _LevelChip(topic.level),
               ]),
-              const SizedBox(height: 2),
-              Text(topic.titleEn, style: theme.textTheme.bodySmall),
+              if (topic.subtitle case final sub?) ...[const SizedBox(height: 2), Text(sub, style: theme.textTheme.bodySmall)],
               const SizedBox(height: 8),
               Row(children: [
                 SizedBox(
@@ -304,7 +303,7 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
     final n = t.exercises.length;
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.titleTr),
+        title: Text(t.title),
         actions: [
           if (done > 0)
             PopupMenuButton<String>(
@@ -320,13 +319,13 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
             Row(children: [
               _LevelChip(t.level),
               const SizedBox(width: 8),
-              Text(t.titleEn, style: theme.textTheme.titleSmall?.copyWith(color: cs.onSurfaceVariant)),
+              if (t.subtitle case final sub?) Flexible(child: Text(sub, style: theme.textTheme.titleSmall?.copyWith(color: cs.onSurfaceVariant))),
             ]),
             const SizedBox(height: 14),
-            Panel(children: [aiRichText(t.explanationTr, theme.textTheme.bodyLarge?.copyWith(height: 1.55))]),
-            if (t.structureTr.isNotEmpty) ...[
+            Panel(children: [aiRichText(t.explanation, theme.textTheme.bodyLarge?.copyWith(height: 1.55))]),
+            if (t.structure.isNotEmpty) ...[
               SectionLabel(L('Yapı', 'Pattern')),
-              for (final s in t.structureTr)
+              for (final s in t.structure)
                 Container(
                   width: double.infinity,
                   margin: const EdgeInsets.only(bottom: 8),
@@ -469,7 +468,7 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
     if (index >= queue.length) return _finished(theme);
     final answered = state != _State.asking && state != _State.checking;
     return Scaffold(
-      appBar: AppBar(title: Text(t.titleTr)),
+      appBar: AppBar(title: Text(t.title)),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 720),
@@ -528,12 +527,12 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Text('•  $a', style: theme.textTheme.bodyLarge?.copyWith(color: cs.primary, fontWeight: FontWeight.w600)),
                     ),
-                  if (e.noteTr.isNotEmpty) ...[
+                  if (e.note.isNotEmpty) ...[
                     const SizedBox(height: 8),
                     Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Icon(Icons.rule_rounded, size: 18, color: cs.onSurfaceVariant),
                       const SizedBox(width: 6),
-                      Expanded(child: Text(e.noteTr, style: theme.textTheme.bodyMedium?.copyWith(height: 1.45))),
+                      Expanded(child: Text(e.note, style: theme.textTheme.bodyMedium?.copyWith(height: 1.45))),
                     ]),
                   ],
                   const Divider(height: 24),
@@ -584,7 +583,7 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
 
   Widget _finished(ThemeData theme) {
     return Scaffold(
-      appBar: AppBar(title: Text(t.titleTr)),
+      appBar: AppBar(title: Text(t.title)),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),

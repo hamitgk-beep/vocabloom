@@ -77,7 +77,7 @@ class _SentencePanelState extends State<SentencePanel> {
         onlineExplainEn = r.explanationEn.isEmpty ? null : r.explanationEn;
       });
     } catch (e) {
-      if (mounted) setState(() => error = L('Bağlantı kurulamadı: $e', 'Could not connect: $e'));
+      if (mounted) setState(() => error = L('Bağlantı kurulamadı: ${errorText(e)}', 'Could not connect: ${errorText(e)}'));
     } finally {
       if (mounted) setState(() => loading = false);
     }

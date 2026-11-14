@@ -83,6 +83,9 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       builder: (context, _) => MaterialApp(
         title: 'VocaBloom',
         debugShowCheckedModeBanner: false,
+        locale: uiLocale,
+        supportedLocales: uiLocales,
+        localizationsDelegates: uiLocalizationsDelegates,
         themeMode: a?.themeMode ?? ThemeMode.light,
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
@@ -180,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                   : L('Kuruluyor, VocaBloom birazdan yeniden açılacak…', 'Installing, VocaBloom will reopen in a moment…')),
               const SizedBox(height: 16),
               LinearProgressIndicator(value: v),
-              if (v != null) ...[const SizedBox(height: 8), Text('%${(v * 100).round()}')],
+              if (v != null) ...[const SizedBox(height: 8), Text(percent((v * 100).round()))],
             ]),
           ),
         ),
