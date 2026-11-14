@@ -85,8 +85,9 @@ class ReadAloud extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<String> _future(int i) => _pending.putIfAbsent(i, () {
-    final f = speech.synth(_text(_items[i]));
+  /// [quick]: the listener waits for this piece now, so make it faster.
+  Future<String> _future(int i, {bool quick = false}) => _pending.putIfAbsent(i, () {
+    final f = speech.synth(_text(_items[i]), quick: quick);
     f.ignore();
     return f;
   });
@@ -110,7 +111,7 @@ class ReadAloud extends ChangeNotifier {
         notifyListeners();
         continue;
       }
-      final f = _future(_idx);
+      final f = _future(_idx, quick: !_pending.containsKey(_idx));
       for (var k = 1; k <= 2 && _idx + k < _items.length; k++) {
         _future(_idx + k);
       }

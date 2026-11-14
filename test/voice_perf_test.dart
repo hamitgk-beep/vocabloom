@@ -38,9 +38,9 @@ void main() {
     await s.warmUp();
     log('warm-up (load + calibrate): ${sw.elapsedMilliseconds} ms, quality steps ${s.qualitySteps}');
 
-    Future<(double, String)> timed(String text, Voice v) async {
+    Future<(double, String)> timed(String text, Voice v, {bool quick = false}) async {
       final t = Stopwatch()..start();
-      final p = await s.synth(text, v: v, urgent: true);
+      final p = await s.synth(text, v: v, urgent: true, quick: quick);
       return (t.elapsedMicroseconds / 1e6, p);
     }
 
@@ -67,7 +67,7 @@ void main() {
     // 2) Reading aloud: first clause of a long sentence, and speed overall.
     const long = 'Although it was raining heavily all morning, she decided to walk to the old library on the hill, because she wanted to finish the book before her friends arrived for dinner.';
     final chunks = speechChunks(long, 0, long.length).map((r) => long.substring(r.$1, r.$2).trim()).toList();
-    final (first, fp) = await timed(chunks.first, en);
+    final (first, fp) = await timed(chunks.first, en, quick: true);
     var gen = first, audio = wavSeconds(File(fp));
     File(fp).deleteSync();
     for (final c in chunks.skip(1)) {

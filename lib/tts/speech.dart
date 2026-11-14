@@ -66,6 +66,9 @@ class Speech extends ChangeNotifier {
   /// Quality steps of the English model, chosen from the measured speed of
   /// this device (more steps = smoother voice, slower).
   int _steps = 5;
+
+  /// Steps for a sentence that must start now (reading starts, a tapped sentence).
+  static const _quickSteps = int.fromEnvironment('VOCABLOOM_QUICK_STEPS', defaultValue: 4);
   int get qualitySteps => _steps;
   final _jobSteps = <int, int>{};
   double? _perStep;
@@ -255,8 +258,9 @@ class Speech extends ChangeNotifier {
   }
 
   /// Synthesizes [text] into a WAV file and returns its path.
-  /// [urgent] jobs (a tapped word) go before queued sentences.
-  Future<String> synth(String text, {Voice? v, bool urgent = false, double? speed}) async {
+  /// [urgent] jobs (a tapped word) go before queued sentences. [quick] uses
+  /// fewer quality steps, for a piece the listener is already waiting for.
+  Future<String> synth(String text, {Voice? v, bool urgent = false, bool quick = false, double? speed}) async {
     final vo = v ?? voice;
     if (!isReady(vo.pack)) throw StateError('voice pack ${vo.pack.id} not downloaded');
     final id = _nextId++;
@@ -265,7 +269,7 @@ class Speech extends ChangeNotifier {
     _waiting[id] = c;
     final dir = packDir(vo.pack).path;
     // A lone word needs few quality steps to sound right, and must answer fast.
-    final steps = text.trim().contains(' ') ? _steps : min(_steps, _wordSteps);
+    final steps = !text.trim().contains(' ') ? min(_steps, _wordSteps) : (quick ? min(_steps, _quickSteps) : _steps);
     final engine = [vo.engine, vo.pack.id, dir, '$steps'];
     if (vo.engine == 'supertonic') _jobSteps[id] = steps;
     final job = _Job(id, _forSpeech(text), vo.sid, speed ?? this.speed, out, engine);
@@ -371,7 +375,7 @@ class Speech extends ChangeNotifier {
       return;
     }
     // Long text: not kept.
-    final path = await synth(text, v: vo, urgent: true, speed: sp);
+    final path = await synth(text, v: vo, urgent: true, quick: true, speed: sp);
     if (token != _sayToken) {
       _deleteQuietly(path);
       return;
