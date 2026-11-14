@@ -17,6 +17,9 @@ on:
       grade:
         description: 'Grammar practice exercises per run (4 answers each)'
         default: '40'
+      lessons:
+        description: 'Grammar topics to write new practice sentences for (6 each, checked); 0 = off'
+        default: '0'
 
 permissions:
   contents: write
@@ -39,6 +42,7 @@ jobs:
             for f in teacher.jsonl teacher_chat.jsonl teacher_grade.jsonl; do
               git show "origin/tutor-data:tools/tutor/data/$f" > "tools/tutor/data/$f" 2>/dev/null || rm -f "tools/tutor/data/$f"
             done
+            git show origin/tutor-data:tools/grammar/generated.jsonl > tools/grammar/generated.jsonl 2>/dev/null || rm -f tools/grammar/generated.jsonl
           fi
           wc -l tools/tutor/data/teacher*.jsonl 2>/dev/null || echo "none yet"
       - uses: subosito/flutter-action@v2
@@ -59,18 +63,23 @@ jobs:
           python3 tools/tutor/teacher.py explain ${{ github.event.inputs.explain || '200' }} || true
           python3 tools/tutor/teacher.py chat ${{ github.event.inputs.chat || '40' }} || true
           python3 tools/tutor/teacher.py grade ${{ github.event.inputs.grade || '40' }} || true
+          if [ "${{ github.event.inputs.lessons || '0' }}" != "0" ]; then
+            python3 tools/tutor/teacher.py lessons 6 ${{ github.event.inputs.lessons || '0' }} || true
+          fi
           python3 tools/tutor/build_sft.py build
       - name: Save on the tutor-data branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           mkdir -p /tmp/keep && cp tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl /tmp/keep/
+          [ -f tools/grammar/generated.jsonl ] && cp tools/grammar/generated.jsonl /tmp/keep-generated.jsonl || true
           if git rev-parse -q --verify origin/tutor-data >/dev/null; then
             git checkout -q -B tutor-data origin/tutor-data
           else
             git checkout -q -B tutor-data
           fi
           cp /tmp/keep/* tools/tutor/data/
+          [ -f /tmp/keep-generated.jsonl ] && cp /tmp/keep-generated.jsonl tools/grammar/generated.jsonl && git add -f tools/grammar/generated.jsonl || true
           git add -f tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl
           git commit -qm "Tutor training data: $(wc -l < tools/tutor/data/teacher.jsonl) explanations, $(wc -l < tools/tutor/data/teacher_chat.jsonl 2>/dev/null || echo 0) conversations" || echo "nothing new"
           git push -q origin tutor-data

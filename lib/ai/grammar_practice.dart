@@ -6,6 +6,7 @@
 library;
 
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -88,8 +89,35 @@ const grammarCategories = <String, (String, String)>{
   'clauses': ('Yan cümleler', 'Clauses'),
   'forms': ('Fiil biçimleri', 'Verb forms'),
   'comparison': ('Karşılaştırma', 'Comparison'),
+  'advanced': ('İleri yapılar', 'Advanced structures'),
   'mixed': ('Karışık tekrar', 'Mixed review'),
 };
+
+/// CEFR levels in order.
+const cefrLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
+/// Topics sorted by CEFR level, keeping the lesson order inside a level.
+List<GrammarTopic> topicsByLevel(List<GrammarTopic> topics) {
+  final order = {for (final (i, t) in topics.indexed) t.id: i};
+  return [...topics]..sort((a, b) {
+      final c = cefrLevels.indexOf(a.level).compareTo(cefrLevels.indexOf(b.level));
+      return c != 0 ? c : order[a.id]!.compareTo(order[b.id]!);
+    });
+}
+
+/// The topic to study next: the first unfinished one at the lowest level,
+/// starting from [level] when the learner's level is known. Topics already
+/// started come before new ones at the same level.
+GrammarTopic? nextGrammarTopic(List<GrammarTopic> topics, GrammarProgress progress, {String? level}) {
+  final from = level == null ? 0 : max(0, cefrLevels.indexOf(level));
+  final open = [
+    for (final t in topicsByLevel(topics))
+      if (cefrLevels.indexOf(t.level) >= from && t.category != 'mixed' && progress.done(t.id).length < t.exercises.length) t
+  ];
+  if (open.isEmpty) return null;
+  final lowest = open.first.level;
+  return open.firstWhere((t) => t.level == lowest && progress.done(t.id).isNotEmpty, orElse: () => open.first);
+}
 
 /// Names a learner may use for a whole category in the chat ("modals çalışalım").
 const grammarCategoryAliases = <String, List<String>>{
@@ -105,6 +133,7 @@ const grammarCategoryAliases = <String, List<String>>{
   'clauses': ['clause', 'clauses', 'cümlecik', 'cümlecikler', 'yan cümle', 'yan cümleler'],
   'forms': ['verb forms', 'fiil biçimleri'],
   'comparison': ['comparison', 'comparisons'],
+  'advanced': ['advanced structures', 'advanced grammar', 'ileri yapılar', 'ileri gramer'],
   'mixed': [],
 };
 

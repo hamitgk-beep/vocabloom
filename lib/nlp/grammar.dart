@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'text.dart';
 import '../l10n.dart';
 
@@ -169,6 +171,150 @@ class TenseDetector {
         break;
       }
     }
+    _structures(toks, w, hits);
     return hits;
+  }
+
+  static const _aux = {
+    'am', 'is', 'are', 'was', 'were', 'do', 'does', 'did', 'have', 'has', 'had', 'will', 'would', 'can', 'could',
+    'shall', 'should', 'may', 'might', 'must'
+  };
+  static const _pronouns = {'i', 'you', 'he', 'she', 'it', 'we', 'they', 'there'};
+  static const _transitions = {
+    'however': ('karşıtlık: ancak', 'contrast: however'),
+    'therefore': ('sonuç: bu nedenle', 'result: therefore'),
+    'moreover': ('ekleme: üstelik', 'addition: moreover'),
+    'furthermore': ('ekleme: ayrıca', 'addition: furthermore'),
+    'nevertheless': ('karşıtlık: yine de', 'contrast: nevertheless'),
+    'consequently': ('sonuç: dolayısıyla', 'result: consequently'),
+    'meanwhile': ('zaman: bu arada', 'time: meanwhile'),
+    'otherwise': ('koşul: aksi hâlde', 'condition: otherwise'),
+  };
+
+  /// Sentence patterns beyond tenses, each pointing to a grammar lesson.
+  void _structures(List<Token> toks, List<String> w, List<TenseHit> hits) {
+    final lw = [for (final t in toks) t.lower];
+    final n = w.length;
+    final ws = ' ${lw.join(' ')} ';
+    void hit(String en, String tr, String trEx, String enEx, String words) => hits.add(TenseHit(en, tr, L(trEx, enEx), words));
+    bool isAux(String x) => _aux.contains(x) || (x.endsWith("n't") && x.length > 3) || x == "won't";
+
+    // Question tag: "…, isn't it?" at the end of a full clause.
+    if (n >= 4 && _pronouns.contains(w[n - 1]) && isAux(lw[n - 2]) && n - 2 >= 2) {
+      hit('Question Tag', 'Onay sorusu (değil mi?)', '"${toks[n - 2].text} ${toks[n - 1].text}" cümlenin sonundaki "değil mi?" sorusudur; olumlu cümleye olumsuz, olumsuz cümleye olumlu etiket gelir.',
+          '"${toks[n - 2].text} ${toks[n - 1].text}" is a question tag: a positive clause takes a negative tag and the other way round.', '${toks[n - 2].text} ${toks[n - 1].text}');
+    }
+    // There is / there are / there was …
+    for (var i = 0; i < n - 1; i++) {
+      if (lw[i] == 'there' && {'is', 'are', 'was', 'were', "there's", 'will', 'has', 'have', 'used'}.contains(lw[i + 1])) {
+        hit('There is / There are', 'Var / yok yapısı', '"there + be" bir şeyin var olduğunu söyler: tekil isimle is/was, çoğulla are/were.',
+            '"there + be" says that something exists: is/was with a singular noun, are/were with a plural.', '${toks[i].text} ${toks[i + 1].text}');
+        break;
+      }
+    }
+    // So do I / Neither can I.
+    for (var i = 0; i < n - 2; i++) {
+      if ((lw[i] == 'so' || lw[i] == 'neither' || lw[i] == 'nor') && isAux(lw[i + 1]) && _pronouns.contains(w[i + 2]) && (i == 0 || i == n - 3)) {
+        hit('So / Neither', 'Ben de / Ben de değil', '"${toks[i].text} + yardımcı fiil + özne" başkasının söylediğine katılmayı gösterir: so olumluya, neither olumsuza.',
+            '"${toks[i].text} + auxiliary + subject" agrees with what was said: so after a positive, neither after a negative.', '${toks[i].text} ${toks[i + 1].text} ${toks[i + 2].text}');
+        break;
+      }
+    }
+    // Causative: have/get + object + V3.
+    for (var i = 0; i < n - 2; i++) {
+      final v = lem.lemmas(lw[i]).first;
+      if ((v == 'have' || v == 'get') && i + 3 < n + 1) {
+        for (var k = i + 2; k <= i + 4 && k < n; k++) {
+          if (_isPP(lw[k]) && {'my', 'your', 'his', 'her', 'our', 'their', 'the', 'a', 'it', 'them'}.contains(lw[i + 1])) {
+            hit('Causative', 'Ettirgen yapı (-tır, -dır)', 'have/get + nesne + V3: işi başkasına yaptırmak (ör. had my hair cut = saçımı kestirdim).',
+                'have/get + object + V3: having someone else do the job (e.g. had my hair cut).', toks.sublist(i, k + 1).map((t) => t.text).join(' '));
+            i = n;
+            break;
+          }
+        }
+      }
+    }
+    // Wish / if only.
+    final wi = lw.indexWhere((x) => x == 'wish' || x == 'wishes' || x == 'wished');
+    if (wi > 0 && _subjects.contains(lw[wi - 1]) && wi + 1 < n && _subjects.contains(lw[wi + 1]) || ws.contains(' if only ')) {
+      hit('Wish', 'Keşke', 'wish + V2 şimdi için, wish + had V3 geçmiş için "keşke" anlamı verir.', 'wish + V2 for the present, wish + had V3 for the past.', wi >= 0 ? toks[wi].text : 'if only');
+    }
+    // Too / enough.
+    for (var i = 0; i < n - 1; i++) {
+      if (lw[i] == 'too' && i + 1 < n && !{'much', 'many'}.contains(lw[i + 1]) && i != n - 1 && (ws.contains(' too ${lw[i + 1]} to ') || i + 2 == n)) {
+        hit('Too + adjective', 'Gereğinden fazla (too)', 'too + sıfat (+ to V1): bir şeyin fazlalığı yüzünden olmadığını anlatır.', 'too + adjective (+ to V1): so much that something is not possible.', '${toks[i].text} ${toks[i + 1].text}');
+        break;
+      }
+      if (lw[i + 1] == 'enough' && i + 2 < n && lw[i + 2] == 'to') {
+        hit('Adjective + enough', 'Yeterince (enough)', 'sıfat + enough + to V1: yeterli derecede.', 'adjective + enough + to V1: to a sufficient degree.', '${toks[i].text} ${toks[i + 1].text}');
+        break;
+      }
+    }
+    // Comparatives and superlatives.
+    for (var i = 0; i < n - 1; i++) {
+      if ((lw[i] == 'more' || lw[i] == 'less' || (lw[i].endsWith('er') && lw[i].length > 4)) && lw[i + 1] == 'than' ||
+          i + 2 < n && lw[i] == 'more' && lw[i + 2] == 'than') {
+        hit('Comparative', 'Karşılaştırma (daha …)', 'sıfat-er / more + sıfat + than: iki şeyi karşılaştırır.', 'adjective-er / more + adjective + than: compares two things.', toks.sublist(i, min(n, i + 3)).map((t) => t.text).join(' '));
+        break;
+      }
+      if (lw[i] == 'the' && (lw[i + 1] == 'most' || lw[i + 1] == 'least' || (lw[i + 1].endsWith('est') && lw[i + 1].length > 4) || {'best', 'worst'}.contains(lw[i + 1]))) {
+        hit('Superlative', 'Üstünlük (en …)', 'the + sıfat-est / the most + sıfat: bir grubun en …si.', 'the + adjective-est / the most + adjective: the extreme of a group.', toks.sublist(i, min(n, i + 3)).map((t) => t.text).join(' '));
+        break;
+      }
+    }
+    // Contrast, purpose and result clauses.
+    for (final (key, en, tr, trEx, enEx) in const [
+      ('although', 'Although', 'Karşıtlık (-e rağmen)', 'although + cümle: -e rağmen.', 'although + clause: contrast.'),
+      ('even though', 'Even though', 'Karşıtlık (-e rağmen)', 'even though + cümle: -mesine rağmen (vurgulu).', 'even though + clause: strong contrast.'),
+      ('despite', 'Despite', 'Karşıtlık (-e rağmen)', 'despite + isim / V-ing: -e rağmen (arkasından cümle gelmez).', 'despite + noun / V-ing: contrast without a clause.'),
+      ('in spite of', 'In spite of', 'Karşıtlık (-e rağmen)', 'in spite of + isim / V-ing: -e rağmen.', 'in spite of + noun / V-ing: contrast.'),
+      ('unless', 'Unless', 'Koşul (-medikçe)', 'unless = if … not: -medikçe, -mezse.', 'unless = if … not.'),
+      ('so that', 'So that', 'Amaç (-sin diye)', 'so that + özne + can/could: amaç bildirir.', 'so that + subject + can/could: purpose.'),
+      ('in order to', 'In order to', 'Amaç (-mek için)', 'in order to + V1: amaç bildirir.', 'in order to + V1: purpose.'),
+      ('as if', 'As if', 'Gibi (-mış gibi)', 'as if + cümle: -mış gibi.', 'as if + clause: as though.'),
+      ('as though', 'As though', 'Gibi (-mış gibi)', 'as though + cümle: -mış gibi.', 'as though + clause.'),
+      ('whereas', 'Whereas', 'Karşıtlık (oysa)', 'whereas + cümle: iki durumu karşılaştırır, "oysa".', 'whereas + clause: compares two facts.'),
+      ('as soon as', 'As soon as', 'Zaman (-er -mez)', 'as soon as + cümle: -er -mez; gelecek için Simple Present alır.', 'as soon as + clause: immediately when; Simple Present for the future.'),
+      ('by the time', 'By the time', 'Zaman (-diğinde çoktan)', 'by the time + cümle: o zamana kadar; ana cümle çoğunlukla Perfect olur.', 'by the time + clause: before that moment; the main clause is often perfect.'),
+      ('not only', 'Not only … but also', 'Sadece … değil, aynı zamanda', 'not only … but also: iki şeyi birlikte vurgular; başa gelirse devrik cümle kurulur.', 'not only … but also; at the start it takes inversion.'),
+    ]) {
+      if (ws.contains(' $key ')) hit(en, tr, trEx, enEx, key);
+    }
+    final so = lw.indexOf('so'), such = lw.indexOf('such');
+    if (so >= 0 && so + 2 < n && lw.indexOf('that', so) > so + 1 && lw.indexOf('that', so) <= so + 3) {
+      hit('So … that', 'Sonuç (o kadar … ki)', 'so + sıfat/zarf + that: o kadar … ki.', 'so + adjective/adverb + that: result.', 'so … that');
+    } else if (such >= 0 && lw.indexOf('that', such) > such + 1 && lw.indexOf('that', such) <= such + 5) {
+      hit('Such … that', 'Sonuç (öyle bir … ki)', 'such + (a) + sıfat + isim + that: öyle … ki.', 'such + (a) + adjective + noun + that: result.', 'such … that');
+    }
+    // Participle clause at the start: "Having finished…", "Walking home, …".
+    if (n > 3 && lw[0] == 'having' && _isPP(lw[1])) {
+      hit('Participle Clause', 'Ortaç cümleciği (-dikten sonra)', 'Having + V3, …: önce olan eylemi kısaltılmış bir yan cümleyle verir.', 'Having + V3, …: a shortened clause for the earlier action.', '${toks[0].text} ${toks[1].text}');
+    }
+    // Inversion after a negative adverb: "Never have I…", "Rarely does she…".
+    if (n > 3 && {'never', 'rarely', 'seldom', 'hardly', 'scarcely', 'little'}.contains(lw[0]) && isAux(lw[1]) && _subjects.contains(w[2]) ||
+        ws.startsWith(' no sooner ') || ws.startsWith(' under no circumstances ') || ws.startsWith(' only when ') && lw.contains('did')) {
+      hit('Inversion', 'Devrik cümle', 'Olumsuz bir zarf başa gelince yardımcı fiil özneden önce gelir (Never have I…).', 'After a negative adverb at the start, the auxiliary comes before the subject.', '${toks[0].text} ${toks[1].text}');
+    }
+    // Cleft sentence: "It was Ali who…", "What I need is…".
+    if (n > 4 && lw[0] == 'it' && (lw[1] == 'was' || lw[1] == 'is') && (lw.sublist(3, min(n, 7)).contains('who') || lw.sublist(3, min(n, 7)).contains('that')) && toks[2].text[0] == toks[2].text[0].toUpperCase() ||
+        n > 4 && lw[0] == 'what' && _subjects.contains(lw[1]) && lw.sublist(2, min(n, 6)).any((x) => x == 'is' || x == 'was')) {
+      hit('Cleft Sentence', 'Vurgulu cümle', 'It was … who/that ya da What … is …: cümlenin bir bölümünü öne çıkarır.', 'It was … who/that or What … is …: puts one part of the sentence in focus.', '${toks[0].text} ${toks[1].text}');
+    }
+    // Transition words.
+    for (var i = 0; i < n; i++) {
+      final t = _transitions[lw[i]];
+      if (t != null) {
+        hit('Transition Word', 'Geçiş sözcüğü', '"${toks[i].text}" (${t.$1}): iki cümleyi mantıkla bağlar, ardından genellikle virgül gelir.', '"${toks[i].text}" (${t.$2}) links two sentences, usually followed by a comma.', toks[i].text);
+        break;
+      }
+    }
+    // Impersonal passive: "It is said that…", "He is believed to…".
+    for (var i = 0; i < n - 2; i++) {
+      if ({'is', 'was', 'are', 'were'}.contains(lw[i]) && {'said', 'believed', 'thought', 'known', 'reported', 'expected', 'considered', 'claimed'}.contains(lw[i + 1]) &&
+          (lw[i + 2] == 'that' || lw[i + 2] == 'to')) {
+        hit('Impersonal Passive', 'Kişisiz edilgen (… olduğu söyleniyor)', 'be + said/believed + that / to V1: söylenti ve haber dilinde kullanılır.', 'be + said/believed + that / to V1: used in reports and rumours.', '${toks[i].text} ${toks[i + 1].text} ${toks[i + 2].text}');
+        break;
+      }
+    }
   }
 }

@@ -67,6 +67,29 @@ void main() {
     expect(t('The letter was written by my father.'), contains('Simple Past (Passive)'));
     expect(t('If I had known, I would have come.'), contains('Conditional'));
     expect(t('He went home early.'), contains('Simple Past'));
+    // Sentence patterns from the grammar lessons.
+    expect(t("It's a lovely day, isn't it?"), contains('Question Tag'));
+    expect(t('There are three books on the table.'), contains('There is / There are'));
+    expect(t('Neither can I.'), contains('So / Neither'));
+    expect(t('I had my car washed yesterday.'), contains('Causative'));
+    expect(t('I wish I had more time.'), contains('Wish'));
+    expect(t('This tea is too hot to drink.'), contains('Too + adjective'));
+    expect(t('She is old enough to drive.'), contains('Adjective + enough'));
+    expect(t('My brother is taller than me.'), contains('Comparative'));
+    expect(t('This is the most interesting book I have ever read.'), contains('Superlative'));
+    expect(t('Although it was raining, we went out.'), contains('Although'));
+    expect(t('It was so cold that we stayed at home.'), contains('So … that'));
+    expect(t('Having finished my work, I went out.'), contains('Participle Clause'));
+    expect(t('Never have I seen such a place.'), contains('Inversion'));
+    expect(t('It was Ali who broke the window.'), contains('Cleft Sentence'));
+    expect(t('The hotel was expensive. However, the staff were kind.'), contains('Transition Word'));
+    expect(t('He is said to be very rich.'), contains('Impersonal Passive'));
+    // Plain sentences get none of them.
+    final plain = t('She works at a hospital and likes her job.');
+    for (final x in ['Question Tag', 'Causative', 'Comparative', 'Inversion', 'Cleft Sentence', 'Wish']) {
+      expect(plain, isNot(contains(x)), reason: x);
+    }
+    expect(t('Where is he?'), isNot(contains('Question Tag')));
   });
 
   test('importers', () {

@@ -903,6 +903,115 @@ topic('mixed_review', 'mixed', 'B1', 'Karışık tekrar', 'Mixed Review', '''
  ('Bana nerede oturduğunu söyler misin?', ['Can you tell me where you live?', 'Could you tell me where you live?'], 'Dolaylı soru: düz sıra.'),
 ])
 
+# ------------------------------------------------------- C1 / C2 topics
+topic('participle_clauses', 'clauses', 'C1', 'Ortaç cümlecikleri (Having finished…, Built in…)', 'Participle Clauses', '''
+**Yan cümleyi kısaltmanın yolu.** Özellikle yazı dilinde ve haberlerde çok kullanılır. Türkçedeki "-ip, -ince, -erek, -dikten sonra" yapılarına benzer.
+- **V-ing (etken, aynı anda):** Walking home, I met an old friend. (Eve yürürken…)
+- **Having + V3 (önce olan):** Having finished my work, I went out. (İşimi bitirdikten sonra…)
+- **V3 (edilgen anlam):** Built in 1890, the bridge is still in use. (1890'da yapılan köprü…)
+- İsimden sonra sıfat cümleciği yerine: The man sitting next to me… (who was sitting), The cars made in Germany… (which are made).
+- **Dikkat:** İki cümlenin öznesi aynı olmalıdır. "Walking home, the rain started" yanlıştır (yağmur yürümüyor!).
+''', ['V-ing …, özne + fiil (aynı anda)', 'Having + V3 …, özne + fiil (önce)', 'V3 …, özne + fiil (edilgen)', 'İsim + V-ing / V3 (kısaltılmış sıfat cümleciği)'],
+[['Having read the instructions, I started the machine.', 'Talimatları okuduktan sonra makineyi çalıştırdım.'], ['Written in simple English, the book is easy to read.', 'Basit bir İngilizceyle yazılmış olan kitabın okunması kolay.']],
+[
+ ('Kahvaltımı bitirdikten sonra işe gittim.', ['Having finished my breakfast, I went to work.', 'Having finished breakfast, I went to work.', 'After finishing my breakfast, I went to work.'], 'Önce olan eylem: Having + V3.'),
+ ('Sokakta yürürken eski bir arkadaşımla karşılaştım.', ['Walking down the street, I ran into an old friend.', 'Walking along the street, I met an old friend.', 'While walking in the street, I bumped into an old friend.'], 'Aynı anda olan eylem: V-ing, özne aynı.'),
+ ('1920\'de yazılan bu roman hâlâ çok okunuyor.', ['Written in 1920, this novel is still widely read.', 'Written in 1920, the novel is still read a lot.'], 'Edilgen anlam: V3 ile başlayan cümlecik.'),
+ ('Pencerenin yanında oturan kadın benim teyzem.', ['The woman sitting by the window is my aunt.', 'The woman sitting next to the window is my aunt.'], 'Kısaltılmış sıfat cümleciği: who is sitting → sitting.'),
+ ('Ne yapacağını bilemediği için bana sordu.', ['Not knowing what to do, he asked me.', 'Not knowing what to do, she asked me for help.'], 'Olumsuz ortaç: Not + V-ing.'),
+ ('Çin\'de üretilen telefonlar dünyanın her yerine satılıyor.', ['Phones made in China are sold all over the world.', 'The phones produced in China are sold all around the world.'], 'İsim + V3: which are made → made.'),
+])
+
+topic('impersonal_passive', 'passive', 'C1', 'Kişisiz edilgen: It is said that…', 'Impersonal Passive (It is said that…)', '''
+**Söylenti, kanı ve haber dilinde kullanılır:** "… olduğu söyleniyor / düşünülüyor / sanılıyor".
+- **It + is/was + V3 + that + cümle:** It is said that he is very rich.
+- **Özne + is/was + V3 + to + V1:** He is said to be very rich. (Daha resmî ve kısa.)
+- Geçmişe dönük olay: **to have + V3:** He is believed to have left the country. (Ülkeyi terk ettiği sanılıyor.)
+- Bu yapıyla sık kullanılan fiiller: say, think, believe, know, report, expect, consider, claim.
+''', ['It is + V3 (said/believed) + that + cümle', 'Özne + is + V3 + to + V1', 'Özne + is + V3 + to have + V3 (geçmiş)'],
+[['It is believed that the castle was built in the 12th century.', 'Kalenin 12. yüzyılda yapıldığı sanılıyor.'], ['She is known to be an excellent cook.', 'Mükemmel bir aşçı olduğu biliniyor.']],
+[
+ ('Onun çok zengin olduğu söyleniyor.', ['It is said that he is very rich.', 'He is said to be very rich.', "It's said that she is very rich."], 'It is said that… / He is said to be…'),
+ ('Hırsızın ülkeyi terk ettiği sanılıyor.', ['The thief is believed to have left the country.', 'It is believed that the thief has left the country.', 'It is thought that the thief left the country.'], 'Geçmiş olay: is believed to have + V3.'),
+ ('Fiyatların gelecek yıl artması bekleniyor.', ['Prices are expected to rise next year.', 'It is expected that prices will rise next year.'], 'are expected to + V1.'),
+ ('Bu kalenin 800 yıllık olduğu düşünülüyor.', ['This castle is thought to be 800 years old.', 'It is thought that this castle is 800 years old.'], 'is thought to be.'),
+ ('Kazada kimsenin yaralanmadığı bildirildi.', ['It was reported that nobody was injured in the accident.', 'It was reported that no one was hurt in the accident.'], 'Geçmiş haber: It was reported that…'),
+ ('Onun dünyanın en iyi oyuncularından biri olduğu kabul edilir.', ['He is considered to be one of the best players in the world.', 'She is considered one of the best players in the world.'], 'is considered (to be).'),
+])
+
+topic('inverted_conditionals', 'conditionals', 'C2', 'Devrik koşul: Had I known…, Should you…', 'Inverted Conditionals', '''
+**if kullanmadan, yardımcı fiili başa alarak kurulan resmî koşul cümleleri.**
+- **Should + özne + V1** (1. tip, "olur da … -rsa"): Should you need help, call me. = If you need help…
+- **Were + özne + to V1 / Were + özne + …** (2. tip): Were I in your position, I would resign. Were he to apologise, I would forgive him.
+- **Had + özne + V3** (3. tip): Had I known, I would have come. = If I had known…
+- Olumsuzda kısaltma yapılmaz: **Had I not seen it**, I wouldn't have believed it (Hadn't I seen değil).
+- Resmî yazı, e-posta ve konuşmalarda kullanılır; günlük konuşmada if daha doğaldır.
+''', ['Should + özne + V1, …', 'Were + özne + to V1 / Were + özne + …, would + V1', 'Had + özne + (not) + V3, would have + V3'],
+[['Should you have any questions, please contact us.', 'Herhangi bir sorunuz olursa lütfen bizimle iletişime geçin.'], ['Had we left earlier, we would have caught the train.', 'Daha erken çıksaydık treni yakalardık.']],
+[
+ ('Bilseydim sana söylerdim.', ['Had I known, I would have told you.', "Had I known, I'd have told you."], 'Devrik 3. tip: Had + özne + V3.'),
+ ('Herhangi bir sorun olursa lütfen bize haber verin.', ['Should there be any problem, please let us know.', 'Should you have any problems, please let us know.'], 'Devrik 1. tip: Should + özne + V1.'),
+ ('Senin yerinde olsam bu teklifi kabul ederdim.', ['Were I you, I would accept this offer.', 'Were I in your position, I would accept the offer.'], 'Devrik 2. tip: Were I…'),
+ ('Onun yardımı olmasaydı başaramazdık.', ["Had it not been for his help, we wouldn't have succeeded.", 'Had it not been for her help, we would not have managed.'], 'Had it not been for… (olmasaydı).'),
+ ('Fikrini değiştirirsen bana haber ver.', ['Should you change your mind, let me know.', 'Should you change your mind, please let me know.'], 'Should you change your mind…'),
+ ('O haberi görmeseydim inanmazdım.', ["Had I not seen the news, I wouldn't have believed it.", 'Had I not seen the news, I would not have believed it.'], 'Olumsuz devrik: Had I not + V3.'),
+])
+
+# -------------------------------------------------------------- advanced
+topic('inversion', 'advanced', 'C1', 'Devrik cümle: Never have I…, Not only…', 'Inversion', '''
+**Vurgu için olumsuz ya da sınırlayıcı bir ifade cümlenin başına gelince yardımcı fiil özneden önce gelir** (soru cümlesi sırası).
+- **Never / Rarely / Seldom + yardımcı fiil + özne:** Never have I seen such a beautiful place.
+- **Not only … but also:** Not only did he lose his job, but he also lost his house.
+- **Hardly / No sooner … :** Hardly had I arrived when the phone rang. No sooner had we sat down than the lights went out.
+- **Only then / Only when / Not until:** Only when I got home did I realise I had lost my wallet.
+- **Under no circumstances / At no time:** Under no circumstances should you open this door.
+- Yardımcı fiil yoksa do/does/did eklenir: Rarely **does** she complain.
+''', ['Olumsuz zarf + yardımcı fiil + özne + fiil', 'Not only + yardımcı fiil + özne …, but … also …', 'Hardly had + özne + V3 … when …', 'Only when + cümle + yardımcı fiil + özne + fiil'],
+[['Never have I eaten such a delicious meal.', 'Hiç bu kadar lezzetli bir yemek yemedim.'], ['Not only is she clever, but she is also very kind.', 'Sadece zeki değil, aynı zamanda çok nazik.']],
+[
+ ('Hayatımda hiç bu kadar güzel bir yer görmedim.', ['Never in my life have I seen such a beautiful place.', 'Never have I seen such a beautiful place.'], 'Never + have + özne + V3.'),
+ ('Sadece işini kaybetmedi, evini de kaybetti.', ['Not only did he lose his job, but he also lost his house.', 'Not only did she lose her job, but she also lost her home.'], 'Not only + did + özne + V1.'),
+ ('Eve varır varmaz telefon çaldı.', ['Hardly had I got home when the phone rang.', 'No sooner had I arrived home than the phone rang.', 'Hardly had I arrived home when the phone rang.'], 'Hardly had … when / No sooner had … than.'),
+ ('Ancak eve gelince cüzdanımı kaybettiğimi fark ettim.', ['Only when I got home did I realise that I had lost my wallet.', 'Only when I got home did I realize I had lost my wallet.'], 'Only when + cümle + did + özne + V1.'),
+ ('Bu kapıyı hiçbir koşulda açmamalısınız.', ['Under no circumstances should you open this door.', 'Under no circumstances must you open this door.'], 'Under no circumstances + should + özne.'),
+ ('Nadiren şikâyet eder.', ['Rarely does she complain.', 'Seldom does he complain.'], 'Rarely + does + özne + V1.'),
+])
+
+topic('cleft_sentences', 'advanced', 'C1', 'Vurgulu cümleler: It was … that / What I need is…', 'Cleft Sentences', '''
+**Cümlenin bir bölümünü öne çıkarıp vurgulamak için ikiye bölünmüş yapı.** Türkçede vurgu kelime sırasıyla yapılır ("Kitabı dün **Ali** aldı"), İngilizcede bu yapılar kullanılır.
+- **It is/was + vurgulanan öğe + that/who + cümle:** It was Ali who took the book. It was yesterday that I saw her.
+- **What + özne + fiil + is/was + …:** What I need is a holiday. What surprised me was his reaction.
+- **All (that) + özne + fiil + is …:** All I want is some peace. (Tek istediğim…)
+- **The thing / The reason / The place … is …:** The reason (why) I called is to apologise.
+''', ['It is/was + öğe + that/who + cümle', 'What + özne + fiil + is/was + öğe', 'All + özne + fiil + is + öğe', 'The reason why + cümle + is + öğe'],
+[['It was my brother who broke the window.', 'Camı kıran ağabeyimdi.'], ['What I love about this city is its people.', 'Bu şehirde sevdiğim şey insanları.']],
+[
+ ('Pencereyi kıran Ali\'ydi, ben değil.', ['It was Ali who broke the window, not me.', 'It was Ali that broke the window, not me.'], 'It was + kişi + who + cümle.'),
+ ('Tek istediğim biraz huzur.', ['All I want is some peace.', 'All I want is a little peace and quiet.'], 'All I want is…'),
+ ('Beni şaşırtan onun tepkisiydi.', ['What surprised me was his reaction.', 'What surprised me was her reaction.'], 'What + fiil + was …'),
+ ('Onunla tanıştığım yer Londra\'ydı.', ['It was in London that I met him.', 'It was London where I met her.'], 'It was + yer + that …'),
+ ('Seni aramamın nedeni özür dilemek.', ['The reason why I called you is to apologise.', 'The reason I called you is to apologize.'], 'The reason (why) … is …'),
+ ('İhtiyacın olan şey biraz dinlenmek.', ['What you need is some rest.', 'What you need is a bit of rest.'], 'What you need is …'),
+])
+
+topic('subjunctive', 'advanced', 'C2', 'Dilek kipi ve resmî kalıplar: I suggest that he be…, It\'s time…', 'Subjunctive and Formal Structures', '''
+**Resmî İngilizcede öneri, zorunluluk ve istek bildiren kalıplar.**
+- **suggest / recommend / insist / demand / require + that + özne + V1 (yalın):** I suggest that he **see** a doctor (sees değil). They insisted that she **be** present.
+- **It is essential / vital / important + that + özne + V1:** It is essential that every student **attend** the meeting.
+- **It's (high) time + özne + V2:** zamanı geldi de geçiyor. It's time we **left**.
+- **would rather + özne + V2:** başkasının yapmasını tercih etmek. I'd rather you **didn't** smoke here.
+- **as it were, be that as it may, so be it** gibi kalıplaşmış ifadeler de bu kipten gelir.
+''', ['suggest / insist + that + özne + V1 (yalın)', 'It is essential / vital + that + özne + V1', "It's (high) time + özne + V2", "Özne + would rather + özne + V2"],
+[['The doctor recommended that she rest for a week.', 'Doktor bir hafta dinlenmesini önerdi.'], ["It's high time you found a job.", 'Artık bir iş bulmanın zamanı geldi de geçiyor.']],
+[
+ ('Doktor onun bir hafta dinlenmesini önerdi.', ['The doctor recommended that he rest for a week.', 'The doctor suggested that she rest for a week.'], 'recommend that + özne + V1 (rests değil).'),
+ ('Her çalışanın toplantıya katılması şart.', ['It is essential that every employee attend the meeting.', 'It is vital that every employee attend the meeting.'], 'It is essential that + özne + V1 (attends değil).'),
+ ('Artık eve gitmemizin zamanı geldi.', ["It's time we went home.", "It's high time we went home.", 'It is time we went home.'], "It's time + özne + V2."),
+ ('Burada sigara içmemeni tercih ederim.', ["I'd rather you didn't smoke here.", 'I would rather you did not smoke here.'], 'would rather + özne + V2.'),
+ ('Onun da orada bulunması konusunda ısrar ettiler.', ['They insisted that she be there too.', 'They insisted that he be present as well.'], 'insist that + özne + be.'),
+ ('Artık büyümenin zamanı geldi de geçiyor.', ["It's high time you grew up."], "It's high time + özne + V2."),
+])
+
 # Display order inside each category (the app groups by category).
 ORDER = [
     'simple_present', 'present_continuous', 'simple_past', 'past_continuous', 'present_perfect',
@@ -911,12 +1020,12 @@ ORDER = [
     'prepositions_time', 'prepositions_place',
     'there_is', 'adverbs_frequency', 'too_enough', 'so_neither', 'question_tags',
     'because_so', 'although_despite', 'unless', 'while_when', 'transition_words',
-    'zero_conditional', 'first_conditional', 'second_conditional', 'third_conditional', 'mixed_conditionals', 'wish',
+    'zero_conditional', 'first_conditional', 'second_conditional', 'third_conditional', 'mixed_conditionals', 'wish', 'inverted_conditionals',
     'ability', 'obligation', 'requests_permission', 'deduction', 'past_modals',
-    'passive', 'reported_speech',
-    'relative_clauses', 'noun_clauses', 'indirect_questions', 'time_clauses', 'adverb_clauses',
+    'passive', 'impersonal_passive', 'reported_speech',
+    'relative_clauses', 'noun_clauses', 'indirect_questions', 'time_clauses', 'adverb_clauses', 'participle_clauses',
     'irregular_verbs', 'gerund_infinitive', 'used_to', 'causative',
-    'comparison', 'mixed_review',
+    'comparison', 'inversion', 'cleft_sentences', 'subjunctive', 'mixed_review',
 ]
 
 # Words a learner may use for a topic in the chat ("bugün modals çalışalım").
@@ -971,15 +1080,42 @@ ALIASES = {
     'used_to': ['used to', 'be used to', 'get used to'],
     'causative': ['causative', 'causatives', 'causative verbs', 'have something done', 'get something done', 'ettirgen'],
     'comparison': ['comparative', 'superlative', 'comparatives', 'superlatives', 'comparative-superlative', 'comparative superlative', 'karşılaştırma', 'üstünlük'],
+    'participle_clauses': ['participle clause', 'participle clauses', 'participles', 'reduced relative clauses', 'ortaç', 'ortac', 'ortaç cümlecikleri'],
+    'impersonal_passive': ['impersonal passive', 'it is said', 'it is said that', 'is said to', 'kişisiz edilgen'],
+    'inverted_conditionals': ['inverted conditional', 'inverted conditionals', 'had i known', 'should you', 'devrik koşul'],
+    'inversion': ['inversion', 'inverted sentences', 'devrik cümle', 'devrik cümleler', 'not only', 'no sooner', 'hardly'],
+    'cleft_sentences': ['cleft sentence', 'cleft sentences', 'cleft', 'vurgulu cümle', 'vurgulu cümleler'],
+    'subjunctive': ['subjunctive', 'dilek kipi', "it's time", 'its high time', 'would rather', 'formal structures'],
     'mixed_review': ['mixed', 'mixed review', 'karışık', 'karisik', 'karışık tekrar', 'genel tekrar'],
 }
+
+# Extra sentences written by tools/tutor/teacher.py lessons (checked by a
+# second model call). They come after the hand-written ones and never replace them.
+gen_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'generated.jsonl')
+if os.path.exists(gen_path):
+    by_id = {t['id']: t for t in T}
+    for line in open(gen_path, encoding='utf-8'):
+        if not line.strip():
+            continue
+        g = json.loads(line)
+        t = by_id.get(g['topic'])
+        if not t or any(e['tr'] == g['tr'] for e in t['exercises']):
+            continue
+        t['exercises'].append({'id': '%s-g%d' % (t['id'], len(t['exercises']) + 1), 'tr': g['tr'],
+                               'answers': g['answers'], 'note': g.get('note', '')})
 
 rank = {k: i for i, k in enumerate(ORDER)}
 assert set(rank) == {t['id'] for t in T}, set(rank) ^ {t['id'] for t in T}
 assert set(ALIASES) == set(rank), set(ALIASES) ^ set(rank)
 T.sort(key=lambda t: rank[t['id']])
+# CEFR level of each topic, following the public CEFR grammar inventories
+# (British Council / EAQUALS Core Inventory for General English). All
+# explanations, examples and sentences here are our own.
+LEVEL = {'simple_present': 'A1', 'present_continuous': 'A1', 'simple_past': 'A2', 'past_continuous': 'A2', 'present_perfect': 'A2', 'present_perfect_continuous': 'B1', 'past_perfect': 'B1', 'future': 'A2', 'future_continuous_perfect': 'B2', 'articles': 'A1', 'countable_uncountable': 'A2', 'quantifiers': 'A2', 'demonstratives': 'A1', 'possessives': 'A1', 'prepositions_time': 'A1', 'prepositions_place': 'A1', 'there_is': 'A1', 'adverbs_frequency': 'A1', 'too_enough': 'B1', 'so_neither': 'B1', 'question_tags': 'B1', 'because_so': 'A2', 'although_despite': 'B1', 'unless': 'B1', 'while_when': 'B1', 'transition_words': 'B2', 'zero_conditional': 'B1', 'first_conditional': 'B1', 'second_conditional': 'B1', 'third_conditional': 'B2', 'mixed_conditionals': 'C1', 'wish': 'B2', 'inverted_conditionals': 'C2', 'ability': 'A1', 'obligation': 'A2', 'requests_permission': 'A2', 'deduction': 'B2', 'past_modals': 'B2', 'passive': 'B1', 'impersonal_passive': 'C1', 'reported_speech': 'B2', 'relative_clauses': 'B1', 'noun_clauses': 'B2', 'indirect_questions': 'B1', 'time_clauses': 'B1', 'adverb_clauses': 'B2', 'participle_clauses': 'C1', 'irregular_verbs': 'A2', 'gerund_infinitive': 'B1', 'used_to': 'B1', 'causative': 'B2', 'comparison': 'A2', 'inversion': 'C1', 'cleft_sentences': 'C1', 'subjunctive': 'C2', 'mixed_review': 'B1'}
+assert set(LEVEL) == set(rank), set(LEVEL) ^ set(rank)
 for t in T:
     t['aliases'] = ALIASES[t['id']]
+    t['level'] = LEVEL[t['id']]
 
 out = {'version': 2, 'topics': T}
 here = os.path.dirname(os.path.abspath(__file__))

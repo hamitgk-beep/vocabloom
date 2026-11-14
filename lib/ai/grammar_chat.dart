@@ -146,7 +146,7 @@ GrammarIntent? parseGrammarIntent(String text, List<GrammarTopic> topics, {Gramm
   }
   // A category name that is longer than the topic match ("modals" vs the
   // single word "must") means the whole category.
-  if (category != null && bestCat >= best) {
+  if (category != null && bestCat > best) {
     final only = topics.where((t) => t.category == category).toList();
     topic = only.length == 1 ? only.single : null;
   }

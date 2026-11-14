@@ -11,6 +11,9 @@ Paid APIs (Anthropic, OpenAI ...) work the same way but cost money.
     python3 tools/tutor/teacher.py explain [limit]   # -> data/teacher.jsonl (resumes)
     python3 tools/tutor/teacher.py chat [count]      # -> data/teacher_chat.jsonl (resumes)
     python3 tools/tutor/teacher.py grade [count]     # -> data/teacher_grade.jsonl (resumes): grammar practice feedback
+    python3 tools/tutor/teacher.py lessons [per_topic] [max_topics]
+                                                     # -> tools/grammar/generated.jsonl: more translation sentences
+                                                     #    per grammar topic, each checked by a second call
 
 The teacher gets the human Turkish translation of each sentence (Tatoeba) and
 the app's dictionary facts, and must keep the exact answer format of the app.
@@ -201,11 +204,84 @@ def grade(count):
                 time.sleep(DELAY)
 
 
+LESSON_TASK = '''Grammar topic: {title} (CEFR {level}).
+Rule summary (Turkish): {rule}
+Sentence patterns: {structure}
+Existing practice sentences (do not repeat or paraphrase them):
+{existing}
+
+Write {n} NEW, original practice sentences for Turkish learners at level {level}. Each one:
+- a natural, everyday Turkish sentence (perfect Turkish spelling and suffixes) that can only be translated well
+  with this topic's structure;
+- 1 to 3 correct, natural English translations, the most common one first (British or American spelling);
+- a one-line Turkish note on the rule the sentence practises.
+Vary subjects, tenses of the context and everyday situations (work, school, family, travel, health, shopping).
+Do not use content from any textbook. Return only JSON:
+{{"items": [{{"tr": "...", "answers": ["...", "..."], "note": "..."}}]}}'''
+
+CHECK_TASK = '''You check practice sentences for an English learning app. For each item, decide whether every English
+answer is a correct, natural translation of the Turkish sentence and uses the topic "{title}". Fix small problems;
+drop an answer that is wrong. Mark "ok": false if the Turkish is unnatural or the item does not practise the topic.
+Return only JSON: {{"items": [{{"tr": "...", "answers": ["..."], "note": "...", "ok": true}}]}}
+
+Items:
+{items}'''
+
+
+def lessons(per_topic, max_topics):
+    root = os.path.dirname(os.path.dirname(HERE))
+    topics = json.load(open(os.path.join(root, 'assets', 'grammar', 'lessons.json'), encoding='utf-8'))['topics']
+    out_path = os.path.join(root, 'tools', 'grammar', 'generated.jsonl')
+    have = {}
+    if os.path.exists(out_path):
+        for l in open(out_path, encoding='utf-8'):
+            if l.strip():
+                g = json.loads(l)
+                have.setdefault(g['topic'], []).append(g)
+    # Topics with the fewest sentences first.
+    order = sorted(topics, key=lambda t: len(t['exercises']) + len(have.get(t['id'], [])))
+    done = 0
+    with open(out_path, 'a', encoding='utf-8') as out:
+        for t in order:
+            if done >= max_topics or t['category'] == 'mixed':
+                continue
+            existing = [e['tr'] for e in t['exercises']] + [g['tr'] for g in have.get(t['id'], [])]
+            txt = call('You are an expert ELT author writing original material. Output JSON only.',
+                       LESSON_TASK.format(title=t['title_en'], level=t['level'], rule=t['explanation'][:900],
+                                          structure=' | '.join(t['structure']), existing='\n'.join('- ' + x for x in existing),
+                                          n=per_topic), temperature=0.8, json_mode=True)
+            time.sleep(DELAY)
+            try:
+                items = json.loads(txt)['items']
+                checked = json.loads(call('You are a careful English and Turkish editor. Output JSON only.',
+                                          CHECK_TASK.format(title=t['title_en'], items=json.dumps(items, ensure_ascii=False)),
+                                          temperature=0.1, json_mode=True))['items']
+            except Exception:
+                print('  skipped (bad JSON)', t['id'])
+                continue
+            seen = {x.strip().lower() for x in existing}
+            n = 0
+            for it in checked:
+                tr, ans = (it.get('tr') or '').strip(), [a.strip() for a in it.get('answers') or [] if a and a.strip()]
+                if not it.get('ok') or not tr or not ans or tr.lower() in seen:
+                    continue
+                seen.add(tr.lower())
+                out.write(json.dumps({'topic': t['id'], 'tr': tr, 'answers': ans[:3], 'note': (it.get('note') or '').strip()},
+                                     ensure_ascii=False) + '\n')
+                n += 1
+            out.flush()
+            done += 1
+            print(done, t['id'], '+%d' % n)
+            time.sleep(DELAY)
+
+
 if __name__ == '__main__':
     if len(sys.argv) >= 2 and sys.argv[1] == 'explain':
         explain(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
     elif len(sys.argv) >= 2 and sys.argv[1] == 'grade':
         grade(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
+    elif len(sys.argv) >= 2 and sys.argv[1] == 'lessons':
+        lessons(int(sys.argv[2]) if len(sys.argv) > 2 else 6, int(sys.argv[3]) if len(sys.argv) > 3 else 10 ** 9)
     elif len(sys.argv) >= 2 and sys.argv[1] == 'chat':
         chat(int(sys.argv[2]) if len(sys.argv) > 2 else 600)
     else:
