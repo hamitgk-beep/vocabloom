@@ -127,6 +127,30 @@ class UserDb {
   void setFamilyAi(String word, String json) =>
       db.execute('INSERT OR REPLACE INTO wfam_ai(word, json) VALUES (?,?)', [word, json]);
 
+  /// Once per device: splits glued words ("witha" -> "with a") in books
+  /// imported from PDFs and images before the import fixed them itself.
+  void repairJoinedWordsOnce(String Function(String text) fix) {
+    const key = 'repair_joined_words_v1';
+    if (getSetting(key) != null) return;
+    final rows = db.select(
+        "SELECT p.id, p.text FROM paras p JOIN books b ON b.id = p.book_id WHERE b.format IN ('pdf', 'image')");
+    db.execute('BEGIN');
+    try {
+      final upd = db.prepare('UPDATE paras SET text=? WHERE id=?');
+      for (final r in rows) {
+        final t = r['text'] as String? ?? '';
+        final f = fix(t);
+        if (f != t) upd.execute([f, r['id']]);
+      }
+      upd.close();
+      db.execute('COMMIT');
+    } catch (_) {
+      db.execute('ROLLBACK');
+      rethrow;
+    }
+    setSetting(key, '1');
+  }
+
   // ---- settings
   String? getSetting(String key) {
     final r = db.select('SELECT value FROM settings WHERE key=?', [key]);

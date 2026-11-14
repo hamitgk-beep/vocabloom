@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'app_state.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
+import 'import/word_gaps.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'online/windows_updater.dart';
@@ -49,6 +50,11 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
+      try {
+        user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
+      } catch (e) {
+        debugPrint('repairJoinedWords: $e');
+      }
       // Optional: import files given on the command line (desktop "Open with").
       for (final f in widget.args.where((a) => File(a).existsSync())) {
         await importForTest(a, f);

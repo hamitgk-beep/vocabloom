@@ -9,6 +9,7 @@ import '../data/user_db.dart';
 import 'importers.dart';
 import '../l10n.dart';
 import 'ocr.dart';
+import 'word_gaps.dart';
 
 String _clean(String s) => s.replaceAll(RegExp(r'[\s ]+'), ' ').trim();
 
@@ -41,7 +42,13 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
     final pages = <String>[];
     final ocrPages = <int>{};
     for (var i = 0; i < n; i++) {
-      final t = (await doc.pages[i].loadText())?.fullText ?? '';
+      final raw = await doc.pages[i].loadText();
+      final t = raw == null
+          ? ''
+          : addGapSpaces(
+              raw.fullText,
+              [for (final r in raw.charRects) (left: r.left, top: r.top, right: r.right, bottom: r.bottom)],
+              isWord);
       pages.add(t);
       if (t.trim().length < 25) ocrPages.add(i);
     }
@@ -202,7 +209,10 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
       return ok / ws.length < 0.6 || (ws.length <= 2 && ws.every((w) => w.length <= 2));
     }
 
-    pageBlocks.add(blocks.where((b) => b.isNotEmpty && !garbage(b)).toList());
+    pageBlocks.add([
+      for (final b in blocks)
+        if (b.isNotEmpty && !garbage(b)) isWord == null ? b : splitJoinedWords(b, isWord)
+    ]);
   }
 
   // 2. join paragraphs that continue on the next page
