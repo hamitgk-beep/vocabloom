@@ -8,14 +8,15 @@ class VoicePack {
   String get url => 'https://github.com/hamitgk-beep/vocabloom/releases/download/voice-models/$id.zip';
 }
 
-/// English: Kokoro-82M v1.0 (Apache 2.0), one model with many voices.
-const kokoroPack = VoicePack('kokoro-en-v1', 120, 'en');
+/// English: Supertonic 2 (Supertone, OpenRAIL-M model / MIT code). Fast on
+/// phones and natural; one model with 10 voices.
+const englishPack = VoicePack('supertonic-en-v2', 80, 'en');
 
 /// Turkish: Piper voices trained on CC0 recordings (NabuCasa voice-datasets).
 const fahrettinPack = VoicePack('piper-tr-fahrettin', 55, 'tr');
 const fettahPack = VoicePack('piper-tr-fettah', 55, 'tr');
 
-const voicePacks = [kokoroPack, fahrettinPack, fettahPack];
+const voicePacks = [englishPack, fahrettinPack, fettahPack];
 
 /// A voice. [sid] is the speaker id inside its model.
 class Voice {
@@ -23,30 +24,28 @@ class Voice {
   final int sid;
   final String name;
   final bool female;
-  final bool british;
   final VoicePack pack;
-  const Voice(this.id, this.sid, this.name, {required this.female, this.british = false, this.pack = kokoroPack});
+  const Voice(this.id, this.sid, this.name, {required this.female, this.pack = englishPack});
 
   String get lang => pack.lang;
-  bool get kokoro => pack == kokoroPack;
 
-  /// Engine settings sent to the synthesis isolate (one loaded model per key).
-  String get engineKey => kokoro ? '${pack.id}|${british ? 'gb' : 'us'}' : pack.id;
+  /// Model family: 'supertonic' or 'piper'.
+  String get engine => pack == englishPack ? 'supertonic' : 'piper';
 }
 
-/// English voices: the clearest of the model, best first in each group.
+/// English voices (American English). Speaker ids 0-4 are the model's
+/// female styles F1-F5, 5-9 the male styles M1-M5.
 const voices = <Voice>[
-  Voice('af_heart', 3, 'Heart', female: true),
-  Voice('af_bella', 2, 'Bella', female: true),
-  Voice('af_nicole', 6, 'Nicole', female: true),
-  Voice('af_sarah', 9, 'Sarah', female: true),
-  Voice('am_michael', 16, 'Michael', female: false),
-  Voice('am_fenrir', 14, 'Fenrir', female: false),
-  Voice('am_puck', 18, 'Puck', female: false),
-  Voice('bf_emma', 21, 'Emma', female: true, british: true),
-  Voice('bf_isabella', 22, 'Isabella', female: true, british: true),
-  Voice('bm_george', 26, 'George', female: false, british: true),
-  Voice('bm_fable', 25, 'Fable', female: false, british: true),
+  Voice('en_f1', 0, 'Ava', female: true),
+  Voice('en_f2', 1, 'Lily', female: true),
+  Voice('en_f3', 2, 'Grace', female: true),
+  Voice('en_f4', 3, 'Mia', female: true),
+  Voice('en_f5', 4, 'Nora', female: true),
+  Voice('en_m1', 5, 'Leo', female: false),
+  Voice('en_m2', 6, 'Sam', female: false),
+  Voice('en_m3', 7, 'Jack', female: false),
+  Voice('en_m4', 8, 'Ben', female: false),
+  Voice('en_m5', 9, 'Max', female: false),
 ];
 
 /// Turkish voices (male; no free female Turkish voice allows commercial use yet).

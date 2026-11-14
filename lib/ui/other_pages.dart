@@ -586,7 +586,7 @@ class _SettingsPageState extends State<SettingsPage> {
           '• Wiktionary expressions via kaikki.org (CC BY-SA 4.0)\n' +
           L('• Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0).', '• Category lists written for this app (CC BY-SA 4.0).') +
           L('\n• Yazı tipleri: Inter ve Literata (SIL Open Font License 1.1)', '\n• Fonts: Inter and Literata (SIL Open Font License 1.1)') +
-          L('\n• Sesler: Kokoro-82M (Apache 2.0), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)', '\n• Voices: Kokoro-82M (Apache 2.0), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)'),
+          L('\n• Sesler: Supertonic 2, Supertone Inc. (OpenRAIL-M), Piper Türkçe sesler (CC0 kayıtlar), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)', '\n• Voices: Supertonic 2, Supertone Inc. (OpenRAIL-M), Piper Turkish voices (CC0 recordings), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)'),
           style: theme.textTheme.bodySmall?.copyWith(height: 1.5),
         ),
         ]),

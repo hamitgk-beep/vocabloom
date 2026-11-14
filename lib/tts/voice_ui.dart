@@ -6,7 +6,7 @@ import 'voices.dart';
 
 /// Makes sure [pack] is on the device; offers the one-time download.
 /// Returns true when it can be used now.
-Future<bool> ensureVoicePack(BuildContext context, [VoicePack pack = kokoroPack]) async {
+Future<bool> ensureVoicePack(BuildContext context, [VoicePack pack = englishPack]) async {
   final s = Speech.instance;
   if (s.isReady(pack)) return true;
   if (!Speech.supported) return false;
@@ -180,16 +180,16 @@ class VoiceSettings extends StatelessWidget {
             value: v.id,
             enabled: ok,
             title: Text(v.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: ok || v.kokoro ? null : Text(L('İndirilmedi (~${v.pack.mb} MB)', 'Not downloaded (~${v.pack.mb} MB)')),
+            subtitle: ok || v.lang == 'en' ? null : Text(L('İndirilmedi (~${v.pack.mb} MB)', 'Not downloaded (~${v.pack.mb} MB)')),
             secondary: ok
                 ? IconButton(tooltip: L('Örneği dinle', 'Play a sample'), icon: const Icon(Icons.play_circle_outline_rounded), onPressed: () => s.say(sampleText, v: v))
                 : IconButton(tooltip: L('İndir', 'Download'), icon: const Icon(Icons.download_rounded), onPressed: () => ensureVoicePack(context, v.pack)),
           );
         }
 
-        Widget group(String title, bool female, bool british) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Widget group(String title, bool female) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(padding: const EdgeInsets.only(top: 10, bottom: 2), child: Text(title, style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary))),
-              for (final v in voices.where((v) => v.female == female && v.british == british)) tile(v, sample),
+              for (final v in voices.where((v) => v.female == female)) tile(v, sample),
             ]);
 
         final english = s.ready
@@ -202,13 +202,11 @@ class VoiceSettings extends StatelessWidget {
                   s.say(sample, v: v);
                 },
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  group(L('Amerikan aksanı · kadın', 'American · female'), true, false),
-                  group(L('Amerikan aksanı · erkek', 'American · male'), false, false),
-                  group(L('İngiliz aksanı · kadın', 'British · female'), true, true),
-                  group(L('İngiliz aksanı · erkek', 'British · male'), false, true),
+                  group(L('Kadın sesleri · Amerikan aksanı', 'Female voices · American'), true),
+                  group(L('Erkek sesleri · Amerikan aksanı', 'Male voices · American'), false),
                 ]),
               )
-            : packBox(kokoroPack);
+            : packBox(englishPack);
 
         final turkish = RadioGroup<String>(
           groupValue: s.trVoice.id,
