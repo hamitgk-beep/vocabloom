@@ -40,6 +40,9 @@ TEACHER_URL=... TEACHER_KEY=... TEACHER_MODEL=... python3 tools/tutor/teacher.py
 python3 tools/tutor/build_sft.py build                # data/train.jsonl, data/eval.jsonl
 ```
 
+GitHub'da bunu `tutor-data` iş akışı her gün otomatik yapar (Gemini ücretsiz katmanı, `GEMINI_TEACHER_KEY` gizli anahtarı);
+cevaplar `tutor-data` dalında birikir ve not defteri o daldaki `train.jsonl` dosyasını okur.
+
 Sonra `train_tutor.ipynb` not defterini Kaggle'da veya Colab'da **ücretsiz GPU** ile çalıştırın (`PACKAGE` =
 `lite`, `plus`, `pro`). Not defteri GGUF dosyasını üretir ve isterseniz Hugging Face hesabınıza yükler. Çıkan adres
 `lib/ai/packages.dart` içindeki `urls` listesinin başına yazılır (ya da uygulamada `ai_url_<paket>` ayarıyla).

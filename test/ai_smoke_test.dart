@@ -13,30 +13,35 @@ import 'package:sqlite3/sqlite3.dart';
 
 void main() {
   final modelDir = Platform.environment['AI_MODEL_DIR'];
-  final ids = (Platform.environment['AI_PACKAGES'] ?? 'lite').split(',');
+  // "lite,plus" or "label=package,…": label.gguf is run with that package's settings
+  // (used to compare candidate models, e.g. "gemma1b=lite").
+  final runs = [
+    for (final x in (Platform.environment['AI_PACKAGES'] ?? 'lite').split(','))
+      if (x.trim().isNotEmpty) (x.split('=').first.trim(), x.split('=').last.trim())
+  ];
 
   test('tutor answers with the downloaded models', () async {
     final d = DictDb();
     d.db = sqlite3.open('assets/dict.db', mode: OpenMode.readOnly);
     d.load();
-    final appDir = Directory.systemTemp.createTempSync('vb_smoke');
-    Directory(p.join(appDir.path, 'ai_models')).createSync();
-    final u = UserDb.open(appDir);
-    u.setSetting('ai_premium', '1');
-    final app = AppState(d, u);
-    final ai = LlamaLocalAi(u, appDir);
-    app.localAi = ai;
-    final tutor = Tutor.of(app);
-    for (final id in ids) {
-      final src = File(p.join(modelDir!, '$id.gguf'));
+    for (final (label, id) in runs) {
+      final src = File(p.join(modelDir!, '$label.gguf'));
       if (!src.existsSync()) continue;
+      final appDir = Directory.systemTemp.createTempSync('vb_smoke');
+      Directory(p.join(appDir.path, 'ai_models')).createSync();
+      final u = UserDb.open(appDir);
+      u.setSetting('ai_premium', '1');
+      final app = AppState(d, u);
+      final ai = LlamaLocalAi(u, appDir);
+      app.localAi = ai;
+      final tutor = Tutor.of(app);
       Link(p.join(appDir.path, 'ai_models', '$id.gguf')).createSync(src.path);
       await ai.setActive(id);
       Future<void> run(String title, Stream<String> s) async {
         final sw = Stopwatch()..start();
         final text = await s.join();
         // ignore: avoid_print
-        print('\n===== [$id] $title (${sw.elapsedMilliseconds} ms, ${text.length} chars)\n$text');
+        print('\n===== [$label] $title (${sw.elapsedMilliseconds} ms, ${text.length} chars)\n$text');
         expect(text.trim(), isNotEmpty);
         expect(text, isNot(contains('<think>')));
       }

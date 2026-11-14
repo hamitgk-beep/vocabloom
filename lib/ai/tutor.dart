@@ -55,22 +55,59 @@ class Tutor {
       'Emin olmadığın bir şeyi uydurmazsın; sana verilen sözlük bilgisi ile dilbilgisi analizini doğru kabul edip '
       'onlara dayanırsın. Bölüm başlıklarını **kalın** yazarsın, maddeler için "- " kullanırsın; başka biçimlendirme kullanmazsın.';
 
+  // Small models copy an example far better than they follow a description,
+  // so each task carries one short, flawless example answer.
   static String _explainSystem() => '$_teacher\n\n'
-      'Görev: Verilen İngilizce cümleyi Türk bir öğrenciye açıkla. Yanıtın şu sırayla olsun:\n'
-      '**Çeviri:** cümlenin doğal Türkçe çevirisi (kelimesi kelimesine değil).\n'
-      '**Yapı:** cümlenin zamanı ve önemli dilbilgisi yapıları, neden kullanıldıkları (1-3 madde).\n'
-      '**Kalıplar:** varsa deyim, phrasal verb ve kalıpların bu cümledeki anlamı.\n'
-      '**İpucu:** Türklerin bu cümlede sık yaptığı bir hata veya hatırlatma (1 cümle).\n'
-      'Toplam 120 kelimeyi geçme.';
+      'Görev: Verilen İngilizce cümleyi Türk bir öğrenciye kısaca (en fazla 120 kelime) açıkla. Yanıtın dört '
+      'bölümden oluşur: **Çeviri:** (doğal Türkçe çeviri), **Yapı:** (zaman ve dilbilgisi yapıları, 1-3 madde), '
+      '**Kalıplar:** (varsa deyim ve phrasal verb; yoksa bu bölümü yazma), **İpucu:** (Türklerin sık yaptığı bir hata, '
+      '1 cümle). Türkçe yazımın kusursuz olsun; Türkçe cümlelerin içine İngilizce kelime karıştırma.\n\n'
+      'Örnek cümle: "I have been waiting for you since nine o\'clock."\n'
+      'Örnek yanıt:\n'
+      '**Çeviri:** Saat dokuzdan beri seni bekliyorum.\n'
+      '**Yapı:**\n'
+      '- "have been waiting": Present Perfect Continuous (geçmişten beri süregelen zaman). Bekleme geçmişte başladı '
+      've hâlâ sürüyor.\n'
+      '- "since nine o\'clock": "since" başlangıç noktasını verir (-den beri).\n'
+      '**Kalıplar:**\n'
+      '- wait for someone: birini beklemek.\n'
+      '**İpucu:** "since" ile şimdiki zaman kullanılmaz; "I am waiting since nine" yanlıştır.';
 
   static String _correctSystem() => '$_teacher\n\n'
-      'Görev: Öğrencinin yazdığı İngilizce metni düzelt. Yanıtın şu biçimde olsun:\n'
-      '**Doğru hâli:** metnin dilbilgisi ve kullanım açısından doğru, doğal hâli. Anlamı değiştirme; gereksiz yere '
-      'üslubu değiştirme.\n'
-      '**Hatalar:** her hata için bir madde: yanlış → doğru: kısa Türkçe gerekçe (kural adıyla).\n'
-      '**Daha doğal:** istersen anadili İngilizce olan birinin söyleyeceği bir alternatif (1 cümle).\n'
-      'Metin zaten doğruysa yalnızca "**Doğru hâli:**" satırına aynısını yaz ve "**Hatalar:** Hata yok, tebrikler!" de.\n'
-      'Öğrenci Türkçe yazdıysa cümlenin İngilizcesini ver ve nasıl kurulduğunu açıkla.';
+      'Görev: Öğrencinin yazdığı İngilizce metindeki dilbilgisi ve kelime hatalarını düzelt. Yalnızca gerçekten '
+      'yanlış olanları yaz; doğru bir kullanımı asla hata olarak gösterme, üslup ve noktalama hatası arama. Anlamı '
+      'değiştirme. Yanıtın: **Doğru hâli:** (metnin doğru hâli), **Hatalar:** (her hata için "- yanlış → doğru: kısa '
+      'Türkçe gerekçe"), isteğe bağlı **Daha doğal:** (anadili İngilizce olan birinin söyleyişi, 1 cümle).\n\n'
+      'Örnek metin: "Yesterday I have went to school."\n'
+      'Örnek yanıt:\n'
+      '**Doğru hâli:** Yesterday I went to school.\n'
+      '**Hatalar:**\n'
+      '- have went → went: "yesterday" bitmiş bir zamanı gösterir, bu yüzden Simple Past (geçmiş zaman) kullanılır.\n\n'
+      'Metin zaten doğruysa yanıt yalnızca şudur:\n'
+      '**Doğru hâli:** (metnin aynısı)\n'
+      '**Hatalar:** Hata yok, tebrikler!';
+
+  static String _translateSystem() => '$_teacher\n\n'
+      'Görev: Öğrenci ne demek istediğini Türkçe yazdı. Bunu günlük hayatta söylenecek doğal İngilizceyle ver ve '
+      'cümlenin nasıl kurulduğunu kısaca açıkla. Yanıtın: **İngilizcesi:** (cümle), **Nasıl kuruldu:** (1-3 madde).\n\n'
+      'Örnek metin: "Ne zamandır burada yaşıyorsun?"\n'
+      'Örnek yanıt:\n'
+      '**İngilizcesi:** How long have you been living here?\n'
+      '**Nasıl kuruldu:**\n'
+      '- "Ne zamandır" süre sorduğu için "How long" ile başlar.\n'
+      '- Geçmişte başlayıp hâlâ süren durum Present Perfect Continuous ile söylenir: have you been living.';
+
+  /// Whether [text] is Turkish rather than English.
+  static bool isTurkish(String text) {
+    final t = text.toLowerCase();
+    if (RegExp('[çğışöü]').hasMatch(t)) return true;
+    final words = RegExp(r"[a-z']+").allMatches(t).map((m) => m.group(0)!).toList();
+    const tr = {'ve', 'bir', 'bu', 'ne', 'mi', 'mı', 'ben', 'sen', 'biz', 'için', 'ama', 'çok', 'var', 'yok', 'de', 'da',
+      'gibi', 'nasil', 'neden', 'evet', 'hayir', 'tamam', 'merhaba', 'yarin', 'bugun', 'dun'};
+    const en = {'the', 'a', 'an', 'is', 'are', 'i', 'you', 'to', 'and', 'of', 'in', 'it', 'have', 'was', 'do', 'my'};
+    final nTr = words.where(tr.contains).length, nEn = words.where(en.contains).length;
+    return nTr > nEn;
+  }
 
   static String _chatSystem(String level, String? topic, List<String> words) =>
       'You are Bloom, a friendly English conversation partner in the VocaBloom app. The learner is Turkish, level '
@@ -81,7 +118,7 @@ class Tutor {
       '${words.isEmpty ? '' : 'When it fits naturally, use some of these words the learner is studying: ${words.join(', ')}. '}'
       'If the learner\'s last message has a mistake, first reply naturally, then add one line that starts with '
       '"💡 " and gives the correction with a very short reason in Turkish. Do not correct style or punctuation. '
-      'If there is no mistake, do not add that line. If the learner writes in Turkish, answer in simple English and '
+      'If there is no mistake, never add that line, and never add it to your own sentences. If the learner writes in Turkish, answer in simple English and '
       'add a "💡 " line showing how to say their message in English.';
 
   // ---------------------------------------------------------- grounding
@@ -205,6 +242,10 @@ class Tutor {
 
   /// Corrects the learner's English (or helps with a Turkish sentence).
   Stream<String> correct(String userText) {
+    if (isTurkish(userText)) {
+      return ai.generate(_translateSystem(), [('user', 'Öğrencinin metni:\n"""\n${userText.trim()}\n"""')],
+          maxTokens: 260, temperature: 0.2);
+    }
     final facts = grounding(userText);
     final user = 'Öğrencinin metni:\n"""\n${userText.trim()}\n"""'
         '${facts.isEmpty ? '' : '\n\nYardımcı bilgi (yalnızca kelime anlamları için kullan; metnin doğru olduğu '

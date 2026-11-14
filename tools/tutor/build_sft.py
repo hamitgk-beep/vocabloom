@@ -78,7 +78,7 @@ def valid(task, answer):
     if task == 'explain':
         return all(h in answer for h in HEAD_EXPLAIN)
     if task == 'correct':
-        return all(h in answer for h in HEAD_CORRECT)
+        return all(h in answer for h in HEAD_CORRECT) or '**İngilizcesi:**' in answer
     return True
 
 
