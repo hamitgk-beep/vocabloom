@@ -14,6 +14,8 @@ import 'tap_text.dart';
 import 'sense_cards.dart';
 import '../l10n.dart';
 import 'paragraph_view.dart';
+import '../tts/speech.dart';
+import '../tts/voice_ui.dart';
 
 /// Context in which a word was tapped (null when opened from a list).
 class WordContext {
@@ -157,6 +159,11 @@ class _WordPanelState extends State<WordPanel> {
     final children = <Widget>[
       Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Flexible(child: Text(lemma, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700))),
+        if (Speech.supported)
+          Padding(
+            padding: const EdgeInsets.only(left: 2),
+            child: SpeakButton(lemma, key: ValueKey('say-$lemma'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), autoPlay: Speech.instance.autoWord, size: 28),
+          ),
         if (widget.surface.toLowerCase() != lemma)
           Padding(
             padding: const EdgeInsets.only(left: 8, bottom: 4),
@@ -172,7 +179,10 @@ class _WordPanelState extends State<WordPanel> {
       if (tr && _trMain != null)
         Padding(
           padding: const EdgeInsets.only(top: 2),
-          child: Text(_trMain!, style: trStyle(theme, theme.textTheme.titleLarge)),
+          child: Row(children: [
+            Flexible(child: Text(_trMain!, style: trStyle(theme, theme.textTheme.titleLarge))),
+            if (Speech.supported) SpeakButton(_trMain!, lang: 'tr', size: 20),
+          ]),
         ),
       const SizedBox(height: 10),
       Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
@@ -199,10 +209,16 @@ class _WordPanelState extends State<WordPanel> {
     // ---------------- in this sentence
     if (ctx != null) {
       children.add(_Section(L('Bu cümlede', 'In this sentence'), [
-        SentenceText(ctx.sentence, widget.surface),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(child: SentenceText(ctx.sentence, widget.surface)),
+          if (Speech.supported) SpeakButton(ctx.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
+        ]),
         if (ctx.sentenceTr != null && tr) ...[
           const SizedBox(height: 6),
-          Text(ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(child: Text(ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false))),
+            if (Speech.supported) SpeakButton(ctx.sentenceTr!.first, lang: 'tr', size: 20),
+          ]),
         ],
         for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
         if (best != null && (en || (tr && _trMain != null && _trMain != _selfExprTr))) ...[

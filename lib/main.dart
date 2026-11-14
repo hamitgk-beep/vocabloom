@@ -16,6 +16,7 @@ import 'ui/onboarding.dart';
 import 'ui/ai/ai_page.dart';
 import 'ai/tutor.dart';
 import 'ui/theme.dart';
+import 'tts/speech.dart';
 
 import 'l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,6 +55,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
       a.localAi = LlamaLocalAi(user, dir);
+      Speech.instance.init(dir, user);
       try {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {
