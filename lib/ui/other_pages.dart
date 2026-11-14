@@ -448,6 +448,16 @@ class _SettingsPageState extends State<SettingsPage> {
         Panel(children: [const VoiceSettings()]),
         SectionLabel(L('Yapay zekâ · isteğe bağlı', 'AI · optional')),
         Panel(children: [
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text(L('Cihazda çalışan yapay zekâ (Beta)', 'On-device AI tutor (Beta)')),
+          subtitle: Text(L('Ana menüye "Yapay Zekâ" sekmesini ekler. Deneme aşamasında; yanıtlar hatalı olabilir.', 'Adds the "AI Tutor" tab to the main menu. In preview; answers may be wrong.')),
+          value: app.aiTab,
+          onChanged: (v) => setState(() => app.setAiTab(v)),
+        ),
+        ]),
+        const SizedBox(height: 12),
+        Panel(children: [
         Row(children: [
           Container(
             width: 40,
