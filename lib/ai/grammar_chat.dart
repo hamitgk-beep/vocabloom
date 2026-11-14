@@ -8,6 +8,7 @@ library;
 
 import 'dart:math';
 
+import '../l10n.dart';
 import 'grammar_practice.dart';
 
 enum GrammarMode {
@@ -193,18 +194,20 @@ GrammarDrill startDrill(GrammarIntent intent, List<GrammarTopic> topics, {Set<St
   return GrammarDrill(intentTitle(intent), items.take(count).toList());
 }
 
-String intentTitle(GrammarIntent i) => i.topic != null ? i.topic!.titleTr : grammarCategories[i.category]?.$1 ?? '';
+String intentTitle(GrammarIntent i) => i.topic != null
+    ? (uiEnglish ? i.topic!.titleEn : i.topic!.titleTr)
+    : (uiEnglish ? grammarCategories[i.category]?.$2 : grammarCategories[i.category]?.$1) ?? '';
 
 /// The rule of a topic, written from the lesson.
 String topicExplanation(GrammarTopic t, {bool short = false}) {
   final b = StringBuffer('**${t.titleTr}** (${t.titleEn}, ${t.level})\n\n');
   b.writeln(t.explanationTr.trim());
-  b.writeln('\n**Yapı:**');
+  b.writeln(L('\n**Yapı:**', '\n**Structure:**'));
   for (final s in t.structureTr) {
     b.writeln('- $s');
   }
   if (!short && t.examples.isNotEmpty) {
-    b.writeln('\n**Örnekler:**');
+    b.writeln(L('\n**Örnekler:**', '\n**Examples:**'));
     for (final (en, tr) in t.examples) {
       b.writeln('- $en ($tr)');
     }
@@ -215,7 +218,8 @@ String topicExplanation(GrammarTopic t, {bool short = false}) {
 /// A whole category: each topic with its sentence patterns.
 String categoryOverview(String category, List<GrammarTopic> topics) {
   final ts = topics.where((t) => t.category == category).toList();
-  final b = StringBuffer('**${grammarCategories[category]!.$1}** konusunda ${ts.length} ders var:\n\n');
+  final c = grammarCategories[category]!;
+  final b = StringBuffer(L('**${c.$1}** konusunda ${ts.length} ders var:\n\n', '**${c.$2}** has ${ts.length} lessons:\n\n'));
   for (final t in ts) {
     b.writeln('**${t.titleTr}** (${t.level})');
     for (final s in t.structureTr) {
@@ -224,19 +228,20 @@ String categoryOverview(String category, List<GrammarTopic> topics) {
     b.writeln();
   }
   final ex = ts.isEmpty ? '' : ts.first.titleEn;
-  b.write('Birini ayrıntılı anlatmamı istersen adını yaz (ör. "$ex anlat").');
+  b.write(L('Birini ayrıntılı anlatmamı istersen adını yaz (ör. "$ex anlat").', 'To learn one in detail, write its name (e.g. "Explain $ex").'));
   return b.toString().trim();
 }
 
 /// Every category with its topics.
 String topicList(List<GrammarTopic> topics) {
-  final b = StringBuffer('Çalışabileceğimiz gramer konuları:\n\n');
+  final b = StringBuffer(L('Çalışabileceğimiz gramer konuları:\n\n', 'Grammar topics we can study:\n\n'));
   for (final c in grammarCategories.entries) {
     final ts = topics.where((t) => t.category == c.key).toList();
     if (ts.isEmpty) continue;
-    b.writeln('**${c.value.$1}:** ${ts.map((t) => t.titleEn).join(', ')}');
+    b.writeln('**${uiEnglish ? c.value.$2 : c.value.$1}:** ${ts.map((t) => t.titleEn).join(', ')}');
   }
-  b.write('\nÖrneğin "Bugün modals çalışalım", "Relative clause anlat" ya da "Bana passive cümleleri sor" yazabilirsin.');
+  b.write(L('\nÖrneğin "Bugün modals çalışalım", "Relative clause anlat" ya da "Bana passive cümleleri sor" yazabilirsin.',
+      '\nFor example, write "Let\'s study modals", "Explain relative clauses" or "Quiz me on the passive".'));
   return b.toString().trim();
 }
 
@@ -244,21 +249,23 @@ String topicList(List<GrammarTopic> topics) {
 String drillQuestion(GrammarDrill d) {
   final (t, e) = d.current;
   return '**${d.index + 1}/${d.items.length} · ${t.titleEn}**\n'
-      'Şu cümleyi İngilizceye çevir:\n'
+      '${L('Şu cümleyi İngilizceye çevir:', 'Translate this sentence into English:')}\n'
       '**"${e.tr}"**';
 }
 
-const drillHelp = 'Cevabı görmek için "geç", bitirmek için "bitir" yazabilirsin.';
+String get drillHelp => L('Cevabı görmek için "geç", bitirmek için "bitir" yazabilirsin.', 'Write "skip" to see the answer or "stop" to finish.');
 
 /// The closing line of a finished drill.
 String drillSummary(GrammarDrill d) {
   final n = d.index.clamp(0, d.items.length);
-  final b = StringBuffer('**Alıştırma bitti:** $n cümleden ${d.right} tanesi ilk denemede doğru.');
+  final b = StringBuffer(L('**Alıştırma bitti:** $n cümleden ${d.right} tanesi ilk denemede doğru.',
+      '**Practice finished:** ${d.right} of $n sentences right at the first try.'));
   if (n > 0 && d.right == n) {
-    b.write(' Mükemmel! 🎉');
+    b.write(L(' Mükemmel! 🎉', ' Perfect! 🎉'));
   } else if (n > 0 && d.right * 2 >= n) {
-    b.write(' Çok iyi gidiyorsun.');
+    b.write(L(' Çok iyi gidiyorsun.', ' You are doing very well.'));
   }
-  b.write('\nDevam etmek için "cümle sor", başka bir konu için ör. "Bugün tenses çalışalım" yaz.');
+  b.write(L('\nDevam etmek için "cümle sor", başka bir konu için ör. "Bugün tenses çalışalım" yaz.',
+      '\nWrite "quiz me" to go on, or e.g. "Let\'s study tenses" for another topic.'));
   return b.toString();
 }
