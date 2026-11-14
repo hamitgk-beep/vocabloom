@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'ai/local_engine.dart';
 import 'app_state.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
@@ -51,6 +52,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
+      a.localAi = LlamaLocalAi(user, dir);
       Speech.instance.init(dir, user);
       try {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));

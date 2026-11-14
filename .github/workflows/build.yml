@@ -2,6 +2,8 @@ name: build
 on:
   push:
     branches: [main]
+  # Pull requests build every platform too, but never publish a release.
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -75,11 +77,11 @@ jobs:
       - uses: subosito/flutter-action@v2
         with: { channel: stable, flutter-version: 3.50.0 }
       - run: flutter build ios --config-only --release --no-codesign
-      - name: Raise CocoaPods platform for ML Kit
+      - name: Raise CocoaPods platform (ML Kit, llama.cpp need iOS 16.4)
         run: |
           if [ -f ios/Podfile ]; then
-            sed -i '' "s/^# *platform :ios.*/platform :ios, '15.5'/; s/^platform :ios.*/platform :ios, '15.5'/" ios/Podfile
-            grep -q "^platform :ios" ios/Podfile || sed -i '' "1s/^/platform :ios, '15.5'\n/" ios/Podfile
+            sed -i '' "s/^# *platform :ios.*/platform :ios, '16.4'/; s/^platform :ios.*/platform :ios, '16.4'/" ios/Podfile
+            grep -q "^platform :ios" ios/Podfile || sed -i '' "1s/^/platform :ios, '16.4'\n/" ios/Podfile
           fi
       - run: flutter build ios --release --no-codesign --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }}
       - name: Package unsigned IPA (sign with Sideloadly / AltStore)
@@ -107,6 +109,7 @@ jobs:
 
   release:
     needs: [windows, android, ios, macos]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: write

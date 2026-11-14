@@ -1,0 +1,72 @@
+name: tutor-data
+# Writes teacher answers for the AI tutor's training set with the Gemini free
+# tier (secret GEMINI_TEACHER_KEY), a little every day so the free daily limit
+# is never exceeded. Answers are collected on the "tutor-data" branch and the
+# run resumes where the last one stopped.
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+    inputs:
+      explain:
+        description: 'Sentence explanations per run'
+        default: '200'
+      chat:
+        description: 'Practice conversations per run'
+        default: '40'
+
+permissions:
+  contents: write
+
+concurrency: tutor-data
+
+jobs:
+  teacher:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Key present?
+        env: { KEY: '${{ secrets.GEMINI_TEACHER_KEY }}' }
+        run: '[ -n "$KEY" ] || { echo "::error::Add the GEMINI_TEACHER_KEY secret first."; exit 1; }'
+      - name: Answers collected so far
+        run: |
+          if git fetch -q origin tutor-data; then
+            for f in teacher.jsonl teacher_chat.jsonl; do
+              git show "origin/tutor-data:tools/tutor/data/$f" > "tools/tutor/data/$f" 2>/dev/null || rm -f "tools/tutor/data/$f"
+            done
+          fi
+          wc -l tools/tutor/data/teacher*.jsonl 2>/dev/null || echo "none yet"
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter pub get
+      - name: Prompts exactly as the app builds them
+        run: |
+          python3 tools/tutor/build_sft.py sentences 3000
+          python3 tools/tutor/errors.py
+          flutter test tools/tutor/export_prompts_test.dart
+      - name: Teacher answers
+        env:
+          TEACHER_URL: https://generativelanguage.googleapis.com/v1beta/openai
+          TEACHER_MODEL: gemini-flash-latest
+          TEACHER_KEY: ${{ secrets.GEMINI_TEACHER_KEY }}
+          TEACHER_DELAY: '7'
+        run: |
+          python3 tools/tutor/teacher.py explain ${{ github.event.inputs.explain || '200' }} || true
+          python3 tools/tutor/teacher.py chat ${{ github.event.inputs.chat || '40' }} || true
+          python3 tools/tutor/build_sft.py build
+      - name: Save on the tutor-data branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          mkdir -p /tmp/keep && cp tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl /tmp/keep/
+          if git rev-parse -q --verify origin/tutor-data >/dev/null; then
+            git checkout -q -B tutor-data origin/tutor-data
+          else
+            git checkout -q -B tutor-data
+          fi
+          cp /tmp/keep/* tools/tutor/data/
+          git add -f tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl
+          git commit -qm "Tutor training data: $(wc -l < tools/tutor/data/teacher.jsonl) explanations, $(wc -l < tools/tutor/data/teacher_chat.jsonl 2>/dev/null || echo 0) conversations" || echo "nothing new"
+          git push -q origin tutor-data

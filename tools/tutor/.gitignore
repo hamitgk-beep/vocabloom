@@ -1,0 +1,5 @@
+# Rebuilt by the scripts; only seeds, teacher answers and the final train/eval sets are kept.
+data/prompts.jsonl
+data/sentences.tsv
+data/learner_texts.tsv
+data/gold_correct.jsonl
