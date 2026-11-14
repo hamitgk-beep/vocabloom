@@ -81,7 +81,7 @@ class _AiPageState extends State<AiPage> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
-        title: Text(L('${p.nameTr} paketi silinsin mi?', 'Delete the ${p.nameEn} package?')),
+        title: Text(L('Yapay zekâ modeli silinsin mi?', 'Delete the AI model?')),
         content: Text(L('Cihazında ${formatBytes(p.sizeBytes)} yer açılır. İstediğin zaman yeniden indirebilirsin.', 'This frees ${formatBytes(p.sizeBytes)} on your device. You can download it again any time.')),
         actions: [
           TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L('Vazgeç', 'Cancel'))),
@@ -99,8 +99,8 @@ class _AiPageState extends State<AiPage> {
         icon: const Icon(Icons.workspace_premium_rounded, color: _premiumGold, size: 36),
         title: Text(L('VocaBloom Premium', 'VocaBloom Premium')),
         content: Text(L(
-            '${p.nameTr} paketi Premium aboneliğe dahildir. Abonelik çok yakında açılacak; şimdilik ücretsiz paketi kullanabilirsin.',
-            'The ${p.nameEn} package is included with Premium. Subscriptions open very soon; for now you can use the free package.')),
+            '${p.nameTr} modeli Premium aboneliğe dahildir. Abonelik çok yakında açılacak.',
+            'The ${p.nameEn} model is included with Premium. Subscriptions open very soon.')),
         actions: [FilledButton(onPressed: () => Navigator.pop(c), child: Text(L('Tamam', 'OK')))],
       ),
     );
@@ -108,7 +108,7 @@ class _AiPageState extends State<AiPage> {
 
   void _openTool(AiTool tool) {
     if (ai.activeId == null || installed.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L('Önce aşağıdan bir yapay zekâ paketi indir.', 'Download an AI package below first.'))));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L('Önce aşağıdan yapay zekâ modelini indir.', 'Download the AI model below first.'))));
       final c = packagesKey.currentContext;
       if (c != null) Scrollable.ensureVisible(c, duration: const Duration(milliseconds: 350), curve: Curves.easeOutCubic);
       return;
@@ -140,13 +140,13 @@ class _AiPageState extends State<AiPage> {
             _Hero(active: active),
             SectionLabel(L('Neler yapabilirsin', 'What you can do')),
             _ToolGrid(enabled: active != null, onTap: _openTool),
-            SectionLabel(L('Paketler', 'Packages'), padding: const EdgeInsets.fromLTRB(4, 24, 4, 4)),
+            SectionLabel(ai.packages.length == 1 ? L('Yapay zekâ modeli', 'AI model') : L('Paketler', 'Packages'), padding: const EdgeInsets.fromLTRB(4, 24, 4, 4)),
             Padding(
               key: packagesKey,
               padding: const EdgeInsets.fromLTRB(4, 0, 4, 10),
               child: Text(
-                L('Paketler bir kez indirilir ve cihazında çalışır. İnternet gerekmez, yazdıkların cihazından çıkmaz.',
-                    'Packages are downloaded once and run on your device. No internet needed; what you write never leaves your device.'),
+                L('Model bir kez indirilir ve cihazında çalışır. İnternet gerekmez, yazdıkların cihazından çıkmaz.',
+                    'The model is downloaded once and runs on your device. No internet needed; what you write never leaves your device.'),
                 style: theme.textTheme.bodySmall?.copyWith(height: 1.45),
               ),
             ),
@@ -210,8 +210,8 @@ class _Hero extends StatelessWidget {
             const SizedBox(width: 6),
             Text(
               active == null
-                  ? L('Başlamak için bir paket indir', 'Download a package to start')
-                  : L('Kullanılan paket: ${active!.nameTr}', 'Active package: ${active!.nameEn}'),
+                  ? L('Başlamak için modeli indir', 'Download the model to start')
+                  : L('Model hazır: ${active!.nameTr}', 'Model ready: ${active!.nameEn}'),
               style: theme.textTheme.labelLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
             ),
           ]),
@@ -320,7 +320,7 @@ class _PackageCard extends StatelessWidget {
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(free ? Icons.lock_open_rounded : Icons.workspace_premium_rounded, size: 15, color: badgeColor),
               const SizedBox(width: 4),
-              Text(free ? L('Ücretsiz', 'Free') : p.tier == AiTier.pro ? 'Premium Pro' : 'Premium',
+              Text(free ? L('Ücretsiz', 'Free') : 'Premium',
                   style: theme.textTheme.labelMedium?.copyWith(color: badgeColor, fontWeight: FontWeight.w800)),
             ]),
           ),

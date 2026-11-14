@@ -14,6 +14,7 @@ import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
 import 'ui/onboarding.dart';
 import 'ui/ai/ai_page.dart';
+import 'ui/grammar/grammar_page.dart';
 import 'ai/tutor.dart';
 import 'ui/theme.dart';
 import 'tts/speech.dart';
@@ -204,6 +205,7 @@ class _HomePageState extends State<HomePage> {
       LibraryPage(app: widget.app),
       WordsPage(app: widget.app),
       CategoriesPage(app: widget.app),
+      GrammarPage(app: widget.app),
       if (widget.app.aiTab) AiPage(ai: widget.app.localAi, tutor: Tutor.of(widget.app)),
       SettingsPage(app: widget.app),
     ];
@@ -211,6 +213,7 @@ class _HomePageState extends State<HomePage> {
       (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
       (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimelerim', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
+      (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
       if (widget.app.aiTab) (Icons.auto_awesome_outlined, Icons.auto_awesome_rounded, L('Yapay Zekâ', 'AI Tutor')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
@@ -249,6 +252,8 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant))),
         child: NavigationBar(
         selectedIndex: tab,
+        // Six tabs do not fit with every label on a phone.
+        labelBehavior: dests.length > 5 ? NavigationDestinationLabelBehavior.onlyShowSelected : null,
         onDestinationSelected: (i) => setState(() => tab = i),
         destinations: [
           for (final d in dests)
