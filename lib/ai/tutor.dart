@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' show visibleForTesting;
 import '../app_state.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
+import '../l10n.dart';
 import '../nlp/text.dart';
 import 'grammar_chat.dart';
 import 'grammar_practice.dart';
@@ -339,7 +340,7 @@ class Tutor {
       if (isDrillSkip(text)) {
         final (_, e) = drill.current;
         drill.index++;
-        yield '**Doğru cevap:** "${e.answers.first}"\n${e.noteTr}\n\n${_nextOrEnd(session, drill)}';
+        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.noteTr}\n\n${_nextOrEnd(session, drill)}';
         return;
       }
     }
@@ -354,7 +355,8 @@ class Tutor {
     if (drill != null && !drill.finished) {
       final (t, e) = drill.current;
       if (isTurkish(text) && !isCorrectTranslation(e, text)) {
-        yield 'Bu cümleyi İngilizce yazmalısın: **"${e.tr}"**\nİpucu: ${e.noteTr}\n$drillHelp';
+        yield '${L('Bu cümleyi İngilizce yazmalısın:', 'Please write this sentence in English:')} **"${e.tr}"**\n'
+            '${L('İpucu:', 'Hint:')} ${e.noteTr}\n$drillHelp';
         return;
       }
       final right = isCorrectTranslation(e, text);
@@ -386,7 +388,7 @@ class Tutor {
     if (intent.mode == GrammarMode.explain) {
       session.drill = null;
       yield '${t != null ? topicExplanation(t) : categoryOverview(intent.category!, topics)}\n\n'
-          'Bu konuda çeviri alıştırması yapmak istersen **"cümle sor"** yaz.';
+          '${L('Bu konuda çeviri alıştırması yapmak istersen **"cümle sor"** yaz.', 'To practise this topic with translation sentences, write **"quiz me"**.')}';
       return;
     }
     final done = <String>{
@@ -396,8 +398,8 @@ class Tutor {
     final drill = session.drill = startDrill(intent, topics, done: done);
     final intro = intent.mode == GrammarMode.study
         ? '${t != null ? topicExplanation(t, short: true) : categoryOverview(intent.category!, topics).split('\n\nBirini').first}\n\n'
-            'Şimdi pratik yapalım. Türkçe cümleleri İngilizceye çevir, ben de kontrol edeyim. $drillHelp\n\n'
-        : '**${drill.title}** için ${drill.items.length} cümle hazırladım. $drillHelp\n\n';
+            '${L('Şimdi pratik yapalım. Türkçe cümleleri İngilizceye çevir, ben de kontrol edeyim.', 'Now let\'s practise. Translate the Turkish sentences into English and I\'ll check them.')} $drillHelp\n\n'
+        : '${L('**${drill.title}** için ${drill.items.length} cümle hazırladım.', 'I have ${drill.items.length} sentences on **${drill.title}** for you.')} $drillHelp\n\n';
     yield '$intro${drillQuestion(drill)}';
   }
 
@@ -437,8 +439,8 @@ class Tutor {
   Stream<String> checkTranslation(GrammarTopic t, GrammarExercise e, String answer) {
     if (matchesReference(e, answer)) {
       final others = e.answers.where((a) => !matchesReference(GrammarExercise('', '', [a], ''), answer)).take(2).toList();
-      return Stream.value('Harika, tamamen doğru! 🎉'
-          '${others.isEmpty ? '' : '\n**Doğru ve doğal kurulumlar:**\n${others.map((a) => '- "$a"').join('\n')}'}');
+      return Stream.value('${L('Harika, tamamen doğru! 🎉', 'Great, exactly right! 🎉')}'
+          '${others.isEmpty ? '' : '\n${L('**Doğru ve doğal kurulumlar:**', '**Other natural ways to say it:**')}\n${others.map((a) => '- "$a"').join('\n')}'}');
     }
     final user = 'Konu: ${t.titleTr} (${t.titleEn})\n'
         'Kural: ${e.noteTr.isEmpty ? t.structureTr.join(' / ') : e.noteTr}\n'
@@ -491,7 +493,7 @@ class Tutor {
         final opts = [lemma, ...others.take(3).map((x) => x.$1)]..shuffle(rnd);
         out.add(QuizItem(
           question: blank,
-          promptTr: 'Boşluğa hangi kelime gelir?',
+          promptTr: L('Boşluğa hangi kelime gelir?', 'Which word fills the gap?'),
           options: opts,
           answer: opts.indexOf(lemma),
           explanationTr: '"$lemma" = $mean',
@@ -502,10 +504,10 @@ class Tutor {
         if (opts.length < 4) continue;
         out.add(QuizItem(
           question: lemma,
-          promptTr: 'Bu kelimenin Türkçe anlamı hangisi?',
+          promptTr: L('Bu kelimenin Türkçe anlamı hangisi?', 'What does this word mean in Turkish?'),
           options: opts,
           answer: opts.indexOf(mean),
-          explanationTr: '"$lemma" = $mean${ctx == null ? '' : '\nÖrnek: $ctx'}',
+          explanationTr: '"$lemma" = $mean${ctx == null ? '' : '\n${L('Örnek', 'Example')}: $ctx'}',
           word: lemma,
         ));
       }
