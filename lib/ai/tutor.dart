@@ -7,6 +7,7 @@ import '../app_state.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import 'grammar_chat.dart';
 import 'grammar_practice.dart';
 import 'local_ai.dart';
 
@@ -46,6 +47,9 @@ class Tutor {
   final AppState app;
   final LocalAi ai;
   Tutor(this.app, this.ai);
+
+  /// The grammar lessons; tests read them from the file.
+  Future<List<GrammarTopic>> Function() lessons = loadGrammarTopics;
 
   static Tutor of(AppState app) => Tutor(app, app.localAi);
 
@@ -313,6 +317,88 @@ class Tutor {
         // Keep the context small on phones: the last 12 turns.
         : history.sublist(max(0, history.length - 12));
     return ai.generate(_chatSystem(level, topic, learning), msgs, maxTokens: 160, temperature: 0.7);
+  }
+
+  /// The chat: everyday conversation, and grammar study when the learner
+  /// asks for it ("bugün modals çalışalım", "passive anlat", "cümle sor").
+  /// [session] keeps a running translation drill between turns.
+  Stream<String> chat(TutorChatSession session, List<(String, String)> history, {String level = 'B1', String? topic}) async* {
+    final text = history.isNotEmpty && history.last.$1 == 'user' ? history.last.$2.trim() : '';
+    if (text.isEmpty) {
+      yield* chatReply(history, level: level, topic: topic);
+      return;
+    }
+    final topics = await lessons();
+    final drill = session.drill;
+    if (drill != null && !drill.finished) {
+      if (isDrillStop(text)) {
+        session.drill = null;
+        yield drillSummary(drill);
+        return;
+      }
+      if (isDrillSkip(text)) {
+        final (_, e) = drill.current;
+        drill.index++;
+        yield '**Doğru cevap:** "${e.answers.first}"\n${e.noteTr}\n\n${_nextOrEnd(session, drill)}';
+        return;
+      }
+    }
+    final drilling = drill != null && !drill.finished;
+    // During a drill an English line is an answer ("I have to take a test"
+    // is not a request); a new topic is asked for in Turkish.
+    final intent = drilling && !isTurkish(text) ? null : parseGrammarIntent(text, topics, last: session.last);
+    if (intent != null) {
+      yield* _startGrammar(session, intent, topics);
+      return;
+    }
+    if (drill != null && !drill.finished) {
+      final (t, e) = drill.current;
+      if (isTurkish(text) && !isCorrectTranslation(e, text)) {
+        yield 'Bu cümleyi İngilizce yazmalısın: **"${e.tr}"**\nİpucu: ${e.noteTr}\n$drillHelp';
+        return;
+      }
+      final right = isCorrectTranslation(e, text);
+      yield* checkTranslation(t, e, text);
+      if (right) {
+        drill.right++;
+        GrammarProgress(app.user).markDone(t.id, e.id);
+      }
+      drill.index++;
+      yield '\n\n${_nextOrEnd(session, drill)}';
+      return;
+    }
+    yield* chatReply(history, level: level, topic: topic);
+  }
+
+  String _nextOrEnd(TutorChatSession session, GrammarDrill drill) {
+    if (!drill.finished) return drillQuestion(drill);
+    session.drill = null;
+    return drillSummary(drill);
+  }
+
+  Stream<String> _startGrammar(TutorChatSession session, GrammarIntent intent, List<GrammarTopic> topics) async* {
+    if (intent.mode == GrammarMode.list) {
+      yield topicList(topics);
+      return;
+    }
+    session.last = intent;
+    final t = intent.topic;
+    if (intent.mode == GrammarMode.explain) {
+      session.drill = null;
+      yield '${t != null ? topicExplanation(t) : categoryOverview(intent.category!, topics)}\n\n'
+          'Bu konuda çeviri alıştırması yapmak istersen **"cümle sor"** yaz.';
+      return;
+    }
+    final done = <String>{
+      for (final x in topics.where((x) => t != null ? x.id == t.id : x.category == intent.category))
+        ...GrammarProgress(app.user).done(x.id)
+    };
+    final drill = session.drill = startDrill(intent, topics, done: done);
+    final intro = intent.mode == GrammarMode.study
+        ? '${t != null ? topicExplanation(t, short: true) : categoryOverview(intent.category!, topics).split('\n\nBirini').first}\n\n'
+            'Şimdi pratik yapalım. Türkçe cümleleri İngilizceye çevir, ben de kontrol edeyim. $drillHelp\n\n'
+        : '**${drill.title}** için ${drill.items.length} cümle hazırladım. $drillHelp\n\n';
+    yield '$intro${drillQuestion(drill)}';
   }
 
   // ------------------------------------------------------ grammar practice

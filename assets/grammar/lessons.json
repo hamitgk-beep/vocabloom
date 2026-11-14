@@ -1,10 +1,10 @@
 {
- "version": 1,
+ "version": 2,
  "topics": [
   {
    "id": "simple_present",
    "category": "tenses",
-   "level": "A2",
+   "level": "A1",
    "title_tr": "Geniş zaman",
    "title_en": "Simple Present",
    "explanation": "**Ne zaman kullanılır?** Alışkanlıklar, tekrar eden eylemler, genel doğrular ve kalıcı durumlar için.\n- Türkçedeki \"-ir, -ar\" (geniş zaman) ve çoğu zaman \"-iyor\" ile anlatılan alışkanlıklar buna karşılık gelir: \"Her sabah koşuyorum\" = I run every morning.\n- He, she, it öznelerinde fiile **-s / -es** eklenir: she works, he watches.\n- Olumsuz ve soru için **do / does** kullanılır; does kullanılınca fiil yalın kalır: She doesn't like tea. Does he work here?\n- Sık kullanılan zaman zarfları: always, usually, often, sometimes, never, every day.",
@@ -81,12 +81,18 @@
      ],
      "note": "Tarifeler ve programlar geniş zamanla anlatılır."
     }
+   ],
+   "aliases": [
+    "simple present",
+    "present simple",
+    "geniş zaman",
+    "genis zaman"
    ]
   },
   {
    "id": "present_continuous",
    "category": "tenses",
-   "level": "A2",
+   "level": "A1",
    "title_tr": "Şimdiki zaman",
    "title_en": "Present Continuous",
    "explanation": "**Ne zaman kullanılır?** Şu anda olan, bu sıralar süren ya da yakın gelecekte planlanmış eylemler için.\n- \"Şu an kitap okuyorum\" = I am reading a book now.\n- \"Bu ay yeni bir proje üzerinde çalışıyorum\" = I'm working on a new project this month.\n- Planlanmış yakın gelecek: \"Yarın Ankara'ya gidiyorum\" = I'm going to Ankara tomorrow.\n- **Dikkat:** know, like, want, need, believe, understand gibi durum fiilleri genellikle -ing almaz: I know (I am knowing değil).",
@@ -160,6 +166,12 @@
      ],
      "note": "\"understand\" durum fiilidir, -ing almaz: I understand."
     }
+   ],
+   "aliases": [
+    "present continuous",
+    "present progressive",
+    "şimdiki zaman",
+    "simdiki zaman"
    ]
   },
   {
@@ -238,12 +250,109 @@
      ],
      "note": "\"Nobody\" zaten olumsuzdur; fiil olumlu kalır: Nobody came."
     }
+   ],
+   "aliases": [
+    "simple past",
+    "past simple",
+    "past tense",
+    "geçmiş zaman",
+    "gecmis zaman",
+    "di'li geçmiş"
+   ]
+  },
+  {
+   "id": "past_continuous",
+   "category": "tenses",
+   "level": "A2",
+   "title_tr": "Geçmişte süren zaman",
+   "title_en": "Past Continuous",
+   "explanation": "**Ne zaman kullanılır?** Geçmişte belli bir anda sürmekte olan eylemler için. Türkçedeki \"-iyordu\" ekine karşılık gelir.\n- \"Dün akşam sekizde yemek yiyordum\" = I was eating dinner at eight last night.\n- Uzun süren eylemin ortasında kısa bir eylem olduğunda: süren eylem **was/were + V-ing**, araya giren eylem **Simple Past**: I was walking home when it started to rain.\n- Aynı anda süren iki eylem **while** ile bağlanır: While I was cooking, he was watching TV.\n- I, he, she, it ile **was**; you, we, they ile **were**.",
+   "structure": [
+    "Özne + was/were + V-ing",
+    "Özne + was/were + not + V-ing",
+    "Was/Were + özne + V-ing?"
+   ],
+   "examples": [
+    [
+     "I was reading when the phone rang.",
+     "Telefon çaldığında kitap okuyordum."
+    ],
+    [
+     "What were you doing at ten last night?",
+     "Dün gece saat onda ne yapıyordun?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "past_continuous-1",
+     "tr": "Dün akşam saat sekizde televizyon izliyordum.",
+     "answers": [
+      "I was watching TV at eight last night.",
+      "I was watching television at eight o'clock yesterday evening.",
+      "At eight last night, I was watching TV."
+     ],
+     "note": "Geçmişte belli bir anda süren eylem: was + V-ing."
+    },
+    {
+     "id": "past_continuous-2",
+     "tr": "Sen aradığında duş alıyordum.",
+     "answers": [
+      "I was having a shower when you called.",
+      "I was taking a shower when you called.",
+      "When you called, I was having a shower."
+     ],
+     "note": "Süren eylem was + V-ing, araya giren eylem V2: called."
+    },
+    {
+     "id": "past_continuous-3",
+     "tr": "Çocuklar uyurken biz film izliyorduk.",
+     "answers": [
+      "While the children were sleeping, we were watching a film.",
+      "We were watching a movie while the kids were sleeping."
+     ],
+     "note": "Aynı anda süren iki eylem: while + Past Continuous."
+    },
+    {
+     "id": "past_continuous-4",
+     "tr": "Eve yürürken yağmur başladı.",
+     "answers": [
+      "It started to rain while I was walking home.",
+      "While I was walking home, it started raining.",
+      "It began to rain while I was walking home."
+     ],
+     "note": "Uzun eylem: was walking; kısa eylem: started."
+    },
+    {
+     "id": "past_continuous-5",
+     "tr": "O sırada ne yapıyordun?",
+     "answers": [
+      "What were you doing at that time?",
+      "What were you doing then?"
+     ],
+     "note": "Soru: What were you doing…?"
+    },
+    {
+     "id": "past_continuous-6",
+     "tr": "Ders sırasında dinlemiyordum, o yüzden anlamadım.",
+     "answers": [
+      "I wasn't listening during the lesson, so I didn't understand.",
+      "I wasn't listening in class, so I didn't understand."
+     ],
+     "note": "Olumsuz: wasn't + V-ing."
+    }
+   ],
+   "aliases": [
+    "past continuous",
+    "past progressive",
+    "geçmişte süren",
+    "şimdiki zamanın hikayesi",
+    "şimdiki zamanın hikâyesi"
    ]
   },
   {
    "id": "present_perfect",
    "category": "tenses",
-   "level": "B1",
+   "level": "A2",
    "title_tr": "Yakın geçmiş zaman",
    "title_en": "Present Perfect",
    "explanation": "**Ne zaman kullanılır?** Geçmişte olan ama etkisi ya da sonucu şimdiye uzanan eylemler, yaşam deneyimleri ve \"hâlâ süren\" durumlar için.\n- Deneyim: \"Hiç Japonya'ya gittin mi?\" = Have you ever been to Japan?\n- Yeni biten ve sonucu önemli: \"Anahtarımı kaybettim (hâlâ yok)\" = I've lost my key.\n- Süren durum: \"Onu on yıldır tanıyorum\" = I've known him for ten years.\n- **for** + süre (for two years), **since** + başlangıç (since 2020).\n- **Dikkat:** yesterday, last year, ago gibi bitmiş zamanlarla kullanılmaz; onlarla Simple Past gerekir.",
@@ -322,6 +431,11 @@
      ],
      "note": "Şimdiye kadarki tekrar sayısı Present Perfect ile söylenir."
     }
+   ],
+   "aliases": [
+    "present perfect",
+    "yakın geçmiş",
+    "yakin gecmis"
    ]
   },
   {
@@ -402,6 +516,10 @@
      ],
      "note": "İzi görünen yakın süregelen eylem: have been crying."
     }
+   ],
+   "aliases": [
+    "present perfect continuous",
+    "present perfect progressive"
    ]
   },
   {
@@ -483,6 +601,12 @@
      ],
      "note": "By the time + Simple Past, had + V3."
     }
+   ],
+   "aliases": [
+    "past perfect",
+    "miş'li geçmişin hikayesi",
+    "miş'li geçmişin hikâyesi",
+    "had v3"
    ]
   },
   {
@@ -563,6 +687,1221 @@
      ],
      "note": "Plan sorusu genellikle be going to ile sorulur."
     }
+   ],
+   "aliases": [
+    "future simple",
+    "future tense",
+    "be going to",
+    "gelecek zaman",
+    "will"
+   ]
+  },
+  {
+   "id": "future_continuous_perfect",
+   "category": "tenses",
+   "level": "B2",
+   "title_tr": "Gelecekte süren ve bitmiş zaman",
+   "title_en": "Future Continuous / Future Perfect",
+   "explanation": "**İki ileri gelecek zaman:**\n- **will be + V-ing (Future Continuous):** gelecekte belli bir anda sürmekte olacak eylem (-iyor olacağım). This time tomorrow I'll be flying to London.\n- **will have + V3 (Future Perfect):** gelecekte belli bir zamandan önce bitmiş olacak eylem (-miş olacağım). By 2030 I will have finished university.\n- Future Perfect çoğunlukla **by** ile kullanılır: by Friday, by the time you arrive, by next year.\n- **Dikkat:** by the time'dan sonra gelen yan cümle Simple Present olur: by the time you arrive (will arrive değil).",
+   "structure": [
+    "Özne + will be + V-ing",
+    "Özne + will have + V3",
+    "By + zaman, özne + will have + V3"
+   ],
+   "examples": [
+    [
+     "This time next week, I'll be lying on the beach.",
+     "Gelecek hafta bu saatlerde plajda uzanıyor olacağım."
+    ],
+    [
+     "By the time you get home, I'll have cooked dinner.",
+     "Sen eve gelene kadar yemeği pişirmiş olacağım."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "future_continuous_perfect-1",
+     "tr": "Yarın bu saatte sınava giriyor olacağım.",
+     "answers": [
+      "This time tomorrow I'll be taking an exam.",
+      "At this time tomorrow, I will be taking the exam.",
+      "This time tomorrow I'll be sitting an exam."
+     ],
+     "note": "Gelecekte belli bir anda süren eylem: will be + V-ing."
+    },
+    {
+     "id": "future_continuous_perfect-2",
+     "tr": "Cumaya kadar raporu bitirmiş olacağım.",
+     "answers": [
+      "I'll have finished the report by Friday.",
+      "I will have finished the report by Friday.",
+      "By Friday, I will have finished the report."
+     ],
+     "note": "by + zaman: will have + V3."
+    },
+    {
+     "id": "future_continuous_perfect-3",
+     "tr": "Saat dokuzda toplantıda olacağım, beni aramayın.",
+     "answers": [
+      "I'll be having a meeting at nine, so don't call me.",
+      "I'll be in a meeting at nine, so don't call me."
+     ],
+     "note": "Gelecekte süren durum: will be + V-ing ya da will be in a meeting."
+    },
+    {
+     "id": "future_continuous_perfect-4",
+     "tr": "Sen geldiğinde biz yemeği yemiş olacağız.",
+     "answers": [
+      "We will have eaten by the time you arrive.",
+      "By the time you come, we'll have had dinner.",
+      "We'll have eaten when you arrive."
+     ],
+     "note": "by the time + Simple Present, ana cümle will have + V3."
+    },
+    {
+     "id": "future_continuous_perfect-5",
+     "tr": "Gelecek yıl bu zamanlar yeni evimizde yaşıyor olacağız.",
+     "answers": [
+      "This time next year we'll be living in our new house.",
+      "At this time next year, we will be living in our new home."
+     ],
+     "note": "This time next year + will be + V-ing."
+    },
+    {
+     "id": "future_continuous_perfect-6",
+     "tr": "Haziran ayına kadar on kitap okumuş olacağım.",
+     "answers": [
+      "I'll have read ten books by June.",
+      "By June, I will have read ten books."
+     ],
+     "note": "by June: will have + V3 (read)."
+    }
+   ],
+   "aliases": [
+    "future continuous",
+    "future perfect",
+    "future progressive"
+   ]
+  },
+  {
+   "id": "articles",
+   "category": "nouns",
+   "level": "A1",
+   "title_tr": "Artikeller: a / an / the",
+   "title_en": "Articles: a / an / the",
+   "explanation": "**Türkçede artikel yoktur, İngilizcede tekil sayılabilen isim yalnız kullanılmaz.**\n- **a / an:** ilk kez söz edilen, herhangi bir tekil sayılabilen isim (bir). a book, an apple. Sesli harf **sesiyle** başlayan kelimeden önce **an**: an hour, an umbrella; ama a university.\n- **the:** iki tarafın da bildiği, daha önce söz edilen ya da tek olan şey. The sun, the book I bought.\n- Meslekler: She is **a** doctor (a olmadan söylenmez).\n- **Artikel yok:** genel anlamda çoğul ve sayılamayan isimler (I like cats. Water is important.), öğünler, diller, çoğu ülke ve şehir adı.\n- the ile kullanılanlar: the USA, the UK, nehirler, denizler, çalgılar (play the piano).",
+   "structure": [
+    "a + ünsüz sesle başlayan tekil isim",
+    "an + ünlü sesle başlayan tekil isim",
+    "the + bilinen / tek olan isim",
+    "(artikel yok) + genel çoğul / sayılamayan isim"
+   ],
+   "examples": [
+    [
+     "I saw a dog. The dog was very big.",
+     "Bir köpek gördüm. Köpek çok büyüktü."
+    ],
+    [
+     "My sister is an engineer.",
+     "Kız kardeşim mühendis."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "articles-1",
+     "tr": "Babam öğretmen.",
+     "answers": [
+      "My father is a teacher.",
+      "My dad is a teacher."
+     ],
+     "note": "Meslekte a gerekir: a teacher."
+    },
+    {
+     "id": "articles-2",
+     "tr": "Bir saat bekledim.",
+     "answers": [
+      "I waited for an hour.",
+      "I waited an hour."
+     ],
+     "note": "h okunmuyor, ünlü sesle başlar: an hour."
+    },
+    {
+     "id": "articles-3",
+     "tr": "Kediyi severim ama köpeklerden korkarım.",
+     "answers": [
+      "I like cats, but I'm afraid of dogs.",
+      "I love cats but I am scared of dogs."
+     ],
+     "note": "Genel anlamda çoğul isim artikelsiz: cats, dogs."
+    },
+    {
+     "id": "articles-4",
+     "tr": "Dün bir film izledim. Film çok sıkıcıydı.",
+     "answers": [
+      "I watched a film yesterday. The film was very boring.",
+      "Yesterday I watched a movie. The movie was really boring."
+     ],
+     "note": "İlk kez: a film; ikinci kez: the film."
+    },
+    {
+     "id": "articles-5",
+     "tr": "Güneş doğudan doğar.",
+     "answers": [
+      "The sun rises in the east."
+     ],
+     "note": "Tek olan şeyler: the sun, the east."
+    },
+    {
+     "id": "articles-6",
+     "tr": "Kardeşim gitar çalıyor.",
+     "answers": [
+      "My brother plays the guitar.",
+      "My sister plays the guitar.",
+      "My brother is playing the guitar."
+     ],
+     "note": "Çalgılar the ile: play the guitar."
+    }
+   ],
+   "aliases": [
+    "article",
+    "articles",
+    "artikel",
+    "artikeller",
+    "a an the",
+    "a/an/the"
+   ]
+  },
+  {
+   "id": "countable_uncountable",
+   "category": "nouns",
+   "level": "A2",
+   "title_tr": "Sayılabilen ve sayılamayan isimler",
+   "title_en": "Countable and Uncountable Nouns",
+   "explanation": "**Sayılabilen isimler** tekil ve çoğul olur: a chair, two chairs. **Sayılamayan isimler** çoğul yapılmaz ve a/an almaz: water, money, information, advice, furniture, bread, news.\n- Türkçede sayılabilen ama İngilizcede sayılamayan sık hatalar: **advice** (tavsiye), **information** (bilgi), **news** (haber), **furniture** (mobilya), **homework**, **luggage**.\n- Sayılamayanı saymak için ölçü kullanılır: a piece of advice, a glass of water, a loaf of bread, a bottle of milk.\n- **How many** + çoğul sayılabilen, **how much** + sayılamayan.\n- Sayılamayan isim tekil fiil alır: The news **is** good.",
+   "structure": [
+    "a / an / one / two + sayılabilen isim",
+    "some / much / a piece of + sayılamayan isim",
+    "How many + çoğul isim? / How much + sayılamayan isim?"
+   ],
+   "examples": [
+    [
+     "Can you give me some advice?",
+     "Bana biraz tavsiye verebilir misin?"
+    ],
+    [
+     "How many eggs do we need?",
+     "Kaç yumurtaya ihtiyacımız var?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "countable_uncountable-1",
+     "tr": "Sana bir tavsiye vereyim.",
+     "answers": [
+      "Let me give you a piece of advice.",
+      "Let me give you some advice."
+     ],
+     "note": "advice sayılamaz: a piece of advice (an advice değil)."
+    },
+    {
+     "id": "countable_uncountable-2",
+     "tr": "Bu konuda çok fazla bilgi yok.",
+     "answers": [
+      "There isn't much information about this.",
+      "There is not much information on this subject."
+     ],
+     "note": "information sayılamaz: much information (informations değil)."
+    },
+    {
+     "id": "countable_uncountable-3",
+     "tr": "Ne kadar şeker istersin?",
+     "answers": [
+      "How much sugar do you want?",
+      "How much sugar would you like?"
+     ],
+     "note": "Sayılamayan: how much."
+    },
+    {
+     "id": "countable_uncountable-4",
+     "tr": "Sınıfta kaç öğrenci var?",
+     "answers": [
+      "How many students are there in the class?",
+      "How many students are in the class?"
+     ],
+     "note": "Sayılabilen: how many + çoğul."
+    },
+    {
+     "id": "countable_uncountable-5",
+     "tr": "Haberler çok iyi.",
+     "answers": [
+      "The news is very good.",
+      "The news is really good."
+     ],
+     "note": "news tekil fiil alır: is."
+    },
+    {
+     "id": "countable_uncountable-6",
+     "tr": "İki şişe su aldım.",
+     "answers": [
+      "I bought two bottles of water.",
+      "I got two bottles of water."
+     ],
+     "note": "Sayılamayanı saymak: two bottles of water."
+    }
+   ],
+   "aliases": [
+    "countable",
+    "uncountable",
+    "countable uncountable",
+    "countable-uncountable",
+    "sayılabilen",
+    "sayılamayan",
+    "sayilabilen",
+    "sayilamayan"
+   ]
+  },
+  {
+   "id": "quantifiers",
+   "category": "nouns",
+   "level": "A2",
+   "title_tr": "Miktar belirleyiciler: some / any / much / many / a few / a little",
+   "title_en": "Quantifiers",
+   "explanation": "**Ne kadar? Kaç tane?**\n- **some:** olumlu cümlede ve teklif/ricada (biraz, birkaç). I have some friends. Would you like some coffee?\n- **any:** olumsuz ve soruda. I don't have any money. Do you have any questions?\n- **many:** sayılabilen çoğul (çok), **much:** sayılamayan (çok); çoğunlukla olumsuz ve soruda. **a lot of / lots of:** ikisiyle de, olumlu cümlede doğal.\n- **a few** (sayılabilen) / **a little** (sayılamayan): biraz, birkaç (olumlu anlam). **few / little:** çok az, neredeyse hiç (olumsuz anlam).\n- **no / none:** hiç. There is no milk. None of them came.",
+   "structure": [
+    "some + isim (olumlu)",
+    "any + isim (olumsuz / soru)",
+    "many + çoğul / much + sayılamayan",
+    "a few + çoğul / a little + sayılamayan"
+   ],
+   "examples": [
+    [
+     "There are a few apples in the fridge.",
+     "Buzdolabında birkaç elma var."
+    ],
+    [
+     "I don't have much time today.",
+     "Bugün pek zamanım yok."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "quantifiers-1",
+     "tr": "Buzdolabında hiç süt yok.",
+     "answers": [
+      "There isn't any milk in the fridge.",
+      "There is no milk in the fridge."
+     ],
+     "note": "Olumsuz: not any / no."
+    },
+    {
+     "id": "quantifiers-2",
+     "tr": "Birkaç arkadaşımı davet ettim.",
+     "answers": [
+      "I invited a few friends.",
+      "I invited a few of my friends.",
+      "I've invited a few friends."
+     ],
+     "note": "Sayılabilen, olumlu: a few."
+    },
+    {
+     "id": "quantifiers-3",
+     "tr": "Biraz süt ister misin?",
+     "answers": [
+      "Would you like some milk?",
+      "Do you want some milk?"
+     ],
+     "note": "Teklifte some kullanılır."
+    },
+    {
+     "id": "quantifiers-4",
+     "tr": "Bu yıl çok kitap okumadım.",
+     "answers": [
+      "I haven't read many books this year.",
+      "I didn't read many books this year."
+     ],
+     "note": "Sayılabilen, olumsuz: many."
+    },
+    {
+     "id": "quantifiers-5",
+     "tr": "Çorbaya biraz tuz ekle.",
+     "answers": [
+      "Add a little salt to the soup.",
+      "Put some salt in the soup."
+     ],
+     "note": "Sayılamayan: a little salt."
+    },
+    {
+     "id": "quantifiers-6",
+     "tr": "Toplantıya çok az kişi geldi.",
+     "answers": [
+      "Very few people came to the meeting.",
+      "Few people came to the meeting."
+     ],
+     "note": "Neredeyse hiç: few (a few değil)."
+    }
+   ],
+   "aliases": [
+    "quantifier",
+    "quantifiers",
+    "some any",
+    "much many",
+    "a few",
+    "a little",
+    "miktar"
+   ]
+  },
+  {
+   "id": "demonstratives",
+   "category": "nouns",
+   "level": "A1",
+   "title_tr": "İşaret sözcükleri: this / that / these / those",
+   "title_en": "Demonstratives",
+   "explanation": "**Yakın – uzak, tekil – çoğul:**\n- **this** (bu, yakın, tekil), **these** (bunlar, yakın, çoğul).\n- **that** (şu/o, uzak, tekil), **those** (şunlar/onlar, uzak, çoğul).\n- İsimden önce sıfat gibi (this book) ya da tek başına zamir gibi (This is my book) kullanılır.\n- İsim çoğulsa işaret sözcüğü de çoğul olmalı: these shoes (this shoes değil).\n- Telefonda kendini tanıtırken: This is Ali. Geçmişteki bir dönemden söz ederken that: in those days.",
+   "structure": [
+    "this / that + tekil isim",
+    "these / those + çoğul isim",
+    "This is … / These are …"
+   ],
+   "examples": [
+    [
+     "This bag is mine, and that one is yours.",
+     "Bu çanta benim, şu da senin."
+    ],
+    [
+     "Those people over there are my neighbours.",
+     "Şuradaki insanlar komşularım."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "demonstratives-1",
+     "tr": "Bu ayakkabılar çok rahat.",
+     "answers": [
+      "These shoes are very comfortable.",
+      "These shoes are really comfortable."
+     ],
+     "note": "Çoğul ve yakın: these shoes."
+    },
+    {
+     "id": "demonstratives-2",
+     "tr": "Şu ev kimin?",
+     "answers": [
+      "Whose house is that?",
+      "Whose is that house?"
+     ],
+     "note": "Uzak, tekil: that."
+    },
+    {
+     "id": "demonstratives-3",
+     "tr": "Bu benim kardeşim, Ayşe.",
+     "answers": [
+      "This is my sister, Ayşe.",
+      "This is my sister Ayse."
+     ],
+     "note": "Tanıştırırken: This is…"
+    },
+    {
+     "id": "demonstratives-4",
+     "tr": "Şu ağaçlar çok yaşlı.",
+     "answers": [
+      "Those trees are very old."
+     ],
+     "note": "Uzak, çoğul: those."
+    },
+    {
+     "id": "demonstratives-5",
+     "tr": "O günlerde çok mutluyduk.",
+     "answers": [
+      "We were very happy in those days.",
+      "In those days we were very happy."
+     ],
+     "note": "Geçmiş dönem: in those days."
+    },
+    {
+     "id": "demonstratives-6",
+     "tr": "Bunu sevdim ama şunu sevmedim.",
+     "answers": [
+      "I liked this one, but I didn't like that one.",
+      "I like this one but I don't like that one."
+     ],
+     "note": "Tekrarı önlemek için: this one / that one."
+    }
+   ],
+   "aliases": [
+    "demonstrative",
+    "demonstratives",
+    "this that",
+    "these those",
+    "işaret sıfatları",
+    "işaret zamirleri"
+   ]
+  },
+  {
+   "id": "possessives",
+   "category": "nouns",
+   "level": "A1",
+   "title_tr": "İyelik sıfatları ve zamirleri: my / mine",
+   "title_en": "Possessive Adjectives and Pronouns",
+   "explanation": "**İyelik sıfatları** isimden önce gelir: **my, your, his, her, its, our, their** + isim (my car).\n**İyelik zamirleri** tek başına kullanılır, isim almaz: **mine, yours, his, hers, ours, theirs** (The car is mine).\n- **his** hem sıfat hem zamir; **its** (onun, cansız/hayvan) ile **it's** (it is) karışmamalı.\n- İsimlerde 's: Ali's phone, my parents' house (çoğulda kesme sonda).\n- \"Benim bir arkadaşım\" = a friend of mine.\n- **Dikkat:** Türkçedeki gibi \"the my book\" denmez; artikel ile iyelik birlikte kullanılmaz.",
+   "structure": [
+    "my / your / his / her / its / our / their + isim",
+    "mine / yours / his / hers / ours / theirs (isimsiz)",
+    "isim + 's (Ali's car)"
+   ],
+   "examples": [
+    [
+     "That isn't my umbrella. Mine is black.",
+     "O benim şemsiyem değil. Benimki siyah."
+    ],
+    [
+     "Is this your book or hers?",
+     "Bu senin kitabın mı yoksa onunki mi?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "possessives-1",
+     "tr": "Bu çanta benim değil, onunki.",
+     "answers": [
+      "This bag isn't mine; it's hers.",
+      "This bag isn't mine, it's his.",
+      "This bag is not mine. It is hers."
+     ],
+     "note": "İsimsiz kullanım: mine, hers."
+    },
+    {
+     "id": "possessives-2",
+     "tr": "Onların evi bizimkinden büyük.",
+     "answers": [
+      "Their house is bigger than ours."
+     ],
+     "note": "Sıfat: their house; zamir: ours."
+    },
+    {
+     "id": "possessives-3",
+     "tr": "Ali'nin telefonu masada.",
+     "answers": [
+      "Ali's phone is on the table."
+     ],
+     "note": "İsimlerde iyelik: Ali's."
+    },
+    {
+     "id": "possessives-4",
+     "tr": "Köpek kuyruğunu sallıyor.",
+     "answers": [
+      "The dog is wagging its tail."
+     ],
+     "note": "its (onun) ile it's (it is) farklıdır."
+    },
+    {
+     "id": "possessives-5",
+     "tr": "O benim eski bir arkadaşım.",
+     "answers": [
+      "He is an old friend of mine.",
+      "She's an old friend of mine."
+     ],
+     "note": "a friend of mine."
+    },
+    {
+     "id": "possessives-6",
+     "tr": "Bu ceket senin mi?",
+     "answers": [
+      "Is this jacket yours?",
+      "Is this your jacket?"
+     ],
+     "note": "yours (zamir) ya da your jacket (sıfat)."
+    }
+   ],
+   "aliases": [
+    "possessive",
+    "possessives",
+    "possessive adjectives",
+    "possessive pronouns",
+    "possessive adjectives-pronouns",
+    "iyelik"
+   ]
+  },
+  {
+   "id": "prepositions_time",
+   "category": "prepositions",
+   "level": "A1",
+   "title_tr": "Zaman edatları: in / on / at",
+   "title_en": "Prepositions of Time",
+   "explanation": "**Türkçede tek bir \"-de\" eki, İngilizcede üç edat:**\n- **at:** saatler ve kısa anlar: at 7 o'clock, at noon, at night, at the weekend (İngiliz İngilizcesi).\n- **on:** günler ve tarihler: on Monday, on 5 May, on my birthday, on the weekend (Amerikan).\n- **in:** aylar, yıllar, mevsimler, yüzyıllar ve günün bölümleri: in June, in 2020, in summer, in the morning.\n- **Edat yok:** this, next, last, every, tomorrow, yesterday önünde: next week, last year (in next week değil).\n- **for** + süre (for two hours), **since** + başlangıç (since Monday), **during** + olay (during the film), **by** + son tarih (by Friday), **until** + bitiş (until 6).",
+   "structure": [
+    "at + saat / kısa an",
+    "on + gün / tarih",
+    "in + ay / yıl / mevsim / günün bölümü",
+    "next / last / every + zaman (edatsız)"
+   ],
+   "examples": [
+    [
+     "The meeting is on Monday at ten.",
+     "Toplantı pazartesi saat onda."
+    ],
+    [
+     "I was born in 1998.",
+     "1998'de doğdum."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "prepositions_time-1",
+     "tr": "Film saat dokuzda başlıyor.",
+     "answers": [
+      "The film starts at nine.",
+      "The movie starts at nine o'clock."
+     ],
+     "note": "Saat: at."
+    },
+    {
+     "id": "prepositions_time-2",
+     "tr": "Doğum günüm mayısta.",
+     "answers": [
+      "My birthday is in May."
+     ],
+     "note": "Ay: in."
+    },
+    {
+     "id": "prepositions_time-3",
+     "tr": "Cumartesi sabahı buluşalım.",
+     "answers": [
+      "Let's meet on Saturday morning."
+     ],
+     "note": "Belli bir günün sabahı: on Saturday morning."
+    },
+    {
+     "id": "prepositions_time-4",
+     "tr": "Gelecek hafta İzmir'e gidiyorum.",
+     "answers": [
+      "I'm going to Izmir next week.",
+      "I am going to İzmir next week."
+     ],
+     "note": "next week önünde edat yok."
+    },
+    {
+     "id": "prepositions_time-5",
+     "tr": "Film sırasında telefonum çaldı.",
+     "answers": [
+      "My phone rang during the film.",
+      "My phone rang during the movie."
+     ],
+     "note": "Olay boyunca: during."
+    },
+    {
+     "id": "prepositions_time-6",
+     "tr": "Raporu cumaya kadar bitirmeliyim.",
+     "answers": [
+      "I have to finish the report by Friday.",
+      "I must finish the report by Friday."
+     ],
+     "note": "Son tarih: by (until değil)."
+    }
+   ],
+   "aliases": [
+    "prepositions of time",
+    "time prepositions",
+    "in on at",
+    "zaman edatları"
+   ]
+  },
+  {
+   "id": "prepositions_place",
+   "category": "prepositions",
+   "level": "A1",
+   "title_tr": "Yer ve yön edatları",
+   "title_en": "Prepositions of Place and Movement",
+   "explanation": "**Yer bildiren edatlar:**\n- **in:** içinde (in the box, in Istanbul, in the kitchen). **on:** üzerinde, yüzeyinde (on the table, on the wall, on the bus). **at:** belli bir nokta, adres ya da etkinlik (at the door, at school, at a party).\n- **under** (altında), **next to / beside** (yanında), **between** (ikisinin arasında), **behind** (arkasında), **in front of** (önünde), **opposite** (karşısında), **above / over** (yukarısında).\n**Yön bildiren edatlar:** **to** (-e doğru: go to school), **into** (içine), **out of** (dışarı), **from** (-den), **through** (içinden geçerek), **across** (karşıya), **along** (boyunca).\n- **Dikkat:** go home, come home (to almaz); arrive **in** a city, arrive **at** a place.",
+   "structure": [
+    "in / on / at + yer",
+    "next to / between / behind / in front of + yer",
+    "go to / into / out of / across + yer"
+   ],
+   "examples": [
+    [
+     "The keys are on the table, next to the lamp.",
+     "Anahtarlar masada, lambanın yanında."
+    ],
+    [
+     "She walked into the room.",
+     "Odaya girdi."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "prepositions_place-1",
+     "tr": "Kitap masanın üstünde.",
+     "answers": [
+      "The book is on the table."
+     ],
+     "note": "Yüzey: on."
+    },
+    {
+     "id": "prepositions_place-2",
+     "tr": "Okul, eczane ile banka arasında.",
+     "answers": [
+      "The school is between the pharmacy and the bank."
+     ],
+     "note": "İkisinin arası: between."
+    },
+    {
+     "id": "prepositions_place-3",
+     "tr": "Arabayı evin önüne park ettim.",
+     "answers": [
+      "I parked the car in front of the house."
+     ],
+     "note": "Önünde: in front of."
+    },
+    {
+     "id": "prepositions_place-4",
+     "tr": "Sınavdan sonra eve gittim.",
+     "answers": [
+      "I went home after the exam."
+     ],
+     "note": "go home (to home değil)."
+    },
+    {
+     "id": "prepositions_place-5",
+     "tr": "Karşıdan karşıya dikkatlice geç.",
+     "answers": [
+      "Cross the road carefully.",
+      "Go across the street carefully."
+     ],
+     "note": "Karşıya geçmek: cross / go across."
+    },
+    {
+     "id": "prepositions_place-6",
+     "tr": "Saat altıda havaalanına vardık.",
+     "answers": [
+      "We arrived at the airport at six.",
+      "We got to the airport at six o'clock."
+     ],
+     "note": "Belli bir yer: arrive at."
+    }
+   ],
+   "aliases": [
+    "prepositions of place",
+    "place prepositions",
+    "prepositions of movement",
+    "yer edatları",
+    "yön edatları"
+   ]
+  },
+  {
+   "id": "there_is",
+   "category": "sentence",
+   "level": "A1",
+   "title_tr": "There is / There are (var / yok)",
+   "title_en": "There is / There are",
+   "explanation": "**Türkçedeki \"var / yok\" yapısı.**\n- **There is** + tekil ya da sayılamayan isim: There is a cat in the garden. There is some milk.\n- **There are** + çoğul isim: There are three books on the desk.\n- Olumsuz: there isn't / there aren't (any). Soru: Is there…? Are there…?\n- Geçmiş: there was / there were. Gelecek: there will be. Yakın geçmiş: there has been.\n- **Dikkat:** \"Bahçede bir ağaç var\" = There is a tree in the garden (The garden has a tree da olur ama \"In the garden is a tree\" denmez). \"have\" ile karıştırmayın: I have a car (bende araba var).",
+   "structure": [
+    "There is + tekil / sayılamayan isim",
+    "There are + çoğul isim",
+    "Is there / Are there + isim?",
+    "There was / There were + isim"
+   ],
+   "examples": [
+    [
+     "There are two banks on this street.",
+     "Bu sokakta iki banka var."
+    ],
+    [
+     "Is there a pharmacy near here?",
+     "Buralarda bir eczane var mı?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "there_is-1",
+     "tr": "Odada üç sandalye var.",
+     "answers": [
+      "There are three chairs in the room."
+     ],
+     "note": "Çoğul: there are."
+    },
+    {
+     "id": "there_is-2",
+     "tr": "Yakınlarda bir market var mı?",
+     "answers": [
+      "Is there a supermarket near here?",
+      "Is there a market nearby?",
+      "Is there a grocery store nearby?"
+     ],
+     "note": "Soru: Is there…?"
+    },
+    {
+     "id": "there_is-3",
+     "tr": "Buzdolabında hiç yumurta yok.",
+     "answers": [
+      "There aren't any eggs in the fridge.",
+      "There are no eggs in the fridge."
+     ],
+     "note": "Olumsuz çoğul: there aren't any."
+    },
+    {
+     "id": "there_is-4",
+     "tr": "Dün gece bir kaza oldu.",
+     "answers": [
+      "There was an accident last night."
+     ],
+     "note": "Geçmiş: there was."
+    },
+    {
+     "id": "there_is-5",
+     "tr": "Partide çok insan vardı.",
+     "answers": [
+      "There were a lot of people at the party.",
+      "There were many people at the party."
+     ],
+     "note": "Geçmiş, çoğul: there were."
+    },
+    {
+     "id": "there_is-6",
+     "tr": "Yarın toplantı olacak mı?",
+     "answers": [
+      "Will there be a meeting tomorrow?",
+      "Is there going to be a meeting tomorrow?"
+     ],
+     "note": "Gelecek soru: Will there be…?"
+    }
+   ],
+   "aliases": [
+    "there is",
+    "there are",
+    "there is there are",
+    "there is-there are",
+    "var yok"
+   ]
+  },
+  {
+   "id": "adverbs_frequency",
+   "category": "sentence",
+   "level": "A1",
+   "title_tr": "Sıklık zarfları: always / usually / never",
+   "title_en": "Adverbs of Frequency",
+   "explanation": "**Bir şeyi ne sıklıkla yaptığımızı söyler:** always (her zaman) > usually (genellikle) > often (sık sık) > sometimes (bazen) > rarely / seldom (nadiren) > never (asla).\n- **Yeri:** ana fiilden **önce** (I often read), ama **be fiilinden sonra** (She is always late) ve yardımcı fiilden sonra (I have never been there).\n- **sometimes** cümle başında da olabilir: Sometimes I walk to work.\n- **never** zaten olumsuzdur, not ile kullanılmaz: I never eat meat (I don't never değil).\n- Soru: How often do you…? Cevapta: once a week, twice a month, every day.",
+   "structure": [
+    "Özne + sıklık zarfı + ana fiil",
+    "Özne + am/is/are + sıklık zarfı",
+    "How often + do/does + özne + V1?"
+   ],
+   "examples": [
+    [
+     "I usually get up at seven.",
+     "Genellikle yedide kalkarım."
+    ],
+    [
+     "She's never late for work.",
+     "İşe asla geç kalmaz."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "adverbs_frequency-1",
+     "tr": "Kahvaltıda genellikle çay içerim.",
+     "answers": [
+      "I usually drink tea at breakfast.",
+      "I usually have tea for breakfast."
+     ],
+     "note": "Zarf ana fiilden önce: usually drink."
+    },
+    {
+     "id": "adverbs_frequency-2",
+     "tr": "O her zaman çok kibar.",
+     "answers": [
+      "She is always very polite.",
+      "He's always very kind."
+     ],
+     "note": "be fiilinden sonra: is always."
+    },
+    {
+     "id": "adverbs_frequency-3",
+     "tr": "Asla et yemem.",
+     "answers": [
+      "I never eat meat."
+     ],
+     "note": "never + olumlu fiil."
+    },
+    {
+     "id": "adverbs_frequency-4",
+     "tr": "Ne sıklıkla spor yaparsın?",
+     "answers": [
+      "How often do you exercise?",
+      "How often do you do sport?",
+      "How often do you work out?"
+     ],
+     "note": "How often…?"
+    },
+    {
+     "id": "adverbs_frequency-5",
+     "tr": "Bazen işe yürüyerek giderim.",
+     "answers": [
+      "Sometimes I walk to work.",
+      "I sometimes walk to work.",
+      "I sometimes go to work on foot."
+     ],
+     "note": "sometimes başta ya da fiilden önce."
+    },
+    {
+     "id": "adverbs_frequency-6",
+     "tr": "Haftada iki kez yüzmeye gideriz.",
+     "answers": [
+      "We go swimming twice a week."
+     ],
+     "note": "Sıklık ifadesi sonda: twice a week."
+    }
+   ],
+   "aliases": [
+    "adverbs of frequency",
+    "adverb of frequency",
+    "frequency adverbs",
+    "sıklık zarfları",
+    "siklik zarflari"
+   ]
+  },
+  {
+   "id": "too_enough",
+   "category": "sentence",
+   "level": "B1",
+   "title_tr": "Too / Enough (çok / yeterince)",
+   "title_en": "Too / Enough",
+   "explanation": "**İkisi de bir ölçünün fazla ya da yeterli olduğunu söyler:**\n- **too + sıfat/zarf:** gereğinden fazla, olumsuz sonuçlu. This coffee is too hot (to drink).\n- **sıfat/zarf + enough:** yeterince (enough sıfattan **sonra** gelir). She is old enough to drive.\n- **enough + isim:** yeterli miktarda (isimden **önce**). We don't have enough time.\n- **too much / too many + isim:** gereğinden fazla. There are too many people here.\n- Çoğu zaman **to + V1** ile devam eder: too tired to walk, rich enough to buy.\n- **Dikkat:** \"very\" yalnızca dereceyi artırır, \"too\" sorun olduğunu anlatır: The bag is very heavy (ama taşıyabilirim) / too heavy (taşıyamıyorum).",
+   "structure": [
+    "too + sıfat + (to + V1)",
+    "sıfat + enough + (to + V1)",
+    "enough + isim",
+    "too much / too many + isim"
+   ],
+   "examples": [
+    [
+     "I'm too tired to go out tonight.",
+     "Bu akşam dışarı çıkamayacak kadar yorgunum."
+    ],
+    [
+     "He isn't tall enough to reach the shelf.",
+     "Rafa uzanacak kadar uzun değil."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "too_enough-1",
+     "tr": "Bu çanta taşıyamayacağım kadar ağır.",
+     "answers": [
+      "This bag is too heavy for me to carry.",
+      "This bag is too heavy to carry."
+     ],
+     "note": "too + sıfat + to + V1."
+    },
+    {
+     "id": "too_enough-2",
+     "tr": "Araba kullanacak kadar büyük değilsin.",
+     "answers": [
+      "You aren't old enough to drive.",
+      "You're not old enough to drive."
+     ],
+     "note": "sıfat + enough (old enough)."
+    },
+    {
+     "id": "too_enough-3",
+     "tr": "Yeterince paramız yok.",
+     "answers": [
+      "We don't have enough money.",
+      "We haven't got enough money."
+     ],
+     "note": "enough + isim."
+    },
+    {
+     "id": "too_enough-4",
+     "tr": "Burada çok fazla insan var.",
+     "answers": [
+      "There are too many people here."
+     ],
+     "note": "Çoğul isim: too many."
+    },
+    {
+     "id": "too_enough-5",
+     "tr": "Çay içilemeyecek kadar sıcak.",
+     "answers": [
+      "The tea is too hot to drink."
+     ],
+     "note": "too hot to drink."
+    },
+    {
+     "id": "too_enough-6",
+     "tr": "Yeterince hızlı koşmadı, o yüzden yarışı kaybetti.",
+     "answers": [
+      "He didn't run fast enough, so he lost the race.",
+      "She didn't run fast enough, so she lost the race."
+     ],
+     "note": "Zarf + enough: fast enough."
+    }
+   ],
+   "aliases": [
+    "too enough",
+    "too-enough",
+    "too",
+    "enough"
+   ]
+  },
+  {
+   "id": "so_neither",
+   "category": "sentence",
+   "level": "B1",
+   "title_tr": "So / Neither / Too / Either (ben de)",
+   "title_en": "So / Neither / Too / Either",
+   "explanation": "**\"Ben de\" ve \"Ben de … değil\" demenin yolları:**\n- **Olumlu cümleye katılmak:** **So + yardımcı fiil + özne** ya da **özne + yardımcı fiil + too.** \"I like coffee.\" – \"So do I.\" / \"I do too.\" / \"Me too.\"\n- **Olumsuz cümleye katılmak:** **Neither / Nor + yardımcı fiil + özne** ya da **özne + yardımcı fiil + not + either.** \"I can't swim.\" – \"Neither can I.\" / \"I can't either.\" / \"Me neither.\"\n- Yardımcı fiil cümledeki zamana uyar: I went → So did I. She has finished → So have I.\n- **Dikkat:** Neither'dan sonra fiil olumlu kalır: Neither do I (Neither don't I değil).\n- **either … or** (ya … ya da), **neither … nor** (ne … ne de): Neither Ali nor Ayşe came.",
+   "structure": [
+    "So + yardımcı fiil + özne (ben de)",
+    "Neither + yardımcı fiil + özne (ben de değil)",
+    "Özne + yardımcı fiil + too / not + either"
+   ],
+   "examples": [
+    [
+     "\"I am hungry.\" – \"So am I.\"",
+     "\"Acıktım.\" – \"Ben de.\""
+    ],
+    [
+     "\"I didn't like the film.\" – \"Neither did I.\"",
+     "\"Filmi beğenmedim.\" – \"Ben de beğenmedim.\""
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "so_neither-1",
+     "tr": "\"Çay severim.\" \"Ben de.\"",
+     "answers": [
+      "\"I like tea.\" \"So do I.\"",
+      "\"I like tea.\" \"Me too.\"",
+      "\"I love tea.\" \"So do I.\""
+     ],
+     "note": "Geniş zamanda: So do I."
+    },
+    {
+     "id": "so_neither-2",
+     "tr": "\"Yüzemem.\" \"Ben de yüzemem.\"",
+     "answers": [
+      "\"I can't swim.\" \"Neither can I.\"",
+      "\"I can't swim.\" \"Me neither.\"",
+      "\"I can't swim.\" \"I can't either.\""
+     ],
+     "note": "Olumsuza katılmak: Neither can I."
+    },
+    {
+     "id": "so_neither-3",
+     "tr": "\"Dün çok yoruldum.\" \"Ben de.\"",
+     "answers": [
+      "\"I was very tired yesterday.\" \"So was I.\"",
+      "\"I got really tired yesterday.\" \"So did I.\""
+     ],
+     "note": "was → So was I; got → So did I."
+    },
+    {
+     "id": "so_neither-4",
+     "tr": "Ne Ali ne de Ayşe toplantıya geldi.",
+     "answers": [
+      "Neither Ali nor Ayşe came to the meeting.",
+      "Neither Ali nor Ayse came to the meeting."
+     ],
+     "note": "neither … nor + olumlu fiil."
+    },
+    {
+     "id": "so_neither-5",
+     "tr": "Ya çay ya da kahve içebilirsin.",
+     "answers": [
+      "You can drink either tea or coffee.",
+      "You can have either tea or coffee."
+     ],
+     "note": "either … or: ya … ya da."
+    },
+    {
+     "id": "so_neither-6",
+     "tr": "O filmi izlemedim, kardeşim de izlemedi.",
+     "answers": [
+      "I haven't seen that film, and neither has my brother.",
+      "I didn't watch that movie, and my sister didn't either."
+     ],
+     "note": "neither has / didn't either."
+    }
+   ],
+   "aliases": [
+    "neither",
+    "either",
+    "so too",
+    "neither either",
+    "neither-either-so-too",
+    "so neither",
+    "me too",
+    "me neither"
+   ]
+  },
+  {
+   "id": "question_tags",
+   "category": "sentence",
+   "level": "B1",
+   "title_tr": "Onay soruları (question tags)",
+   "title_en": "Question Tags",
+   "explanation": "**Türkçedeki \"… değil mi?\"** İngilizcede cümlenin yardımcı fiiliyle kurulur.\n- **Olumlu cümle → olumsuz etiket:** You are tired, **aren't you?**\n- **Olumsuz cümle → olumlu etiket:** She doesn't eat meat, **does she?**\n- Yardımcı fiil yoksa do / does / did kullanılır: You live here, don't you? He called you, didn't he?\n- Etiketteki özne zamirdir: Ali is here, isn't **he**?\n- Özel durumlar: I am → **aren't I?** / Let's → **shall we?** / Emir → **will you?** / There is → **isn't there?**",
+   "structure": [
+    "Olumlu cümle, yardımcı fiil + not + zamir?",
+    "Olumsuz cümle, yardımcı fiil + zamir?"
+   ],
+   "examples": [
+    [
+     "It's a beautiful day, isn't it?",
+     "Güzel bir gün, değil mi?"
+    ],
+    [
+     "You haven't seen my keys, have you?",
+     "Anahtarlarımı görmedin, değil mi?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "question_tags-1",
+     "tr": "Hava çok soğuk, değil mi?",
+     "answers": [
+      "It's very cold, isn't it?",
+      "It is really cold, isn't it?",
+      "The weather is very cold, isn't it?"
+     ],
+     "note": "is → isn't it?"
+    },
+    {
+     "id": "question_tags-2",
+     "tr": "İngilizce konuşuyorsun, değil mi?",
+     "answers": [
+      "You speak English, don't you?"
+     ],
+     "note": "Yardımcı fiil yoksa: don't you?"
+    },
+    {
+     "id": "question_tags-3",
+     "tr": "Dün onu aramadın, değil mi?",
+     "answers": [
+      "You didn't call him yesterday, did you?",
+      "You didn't call her yesterday, did you?"
+     ],
+     "note": "Olumsuz → olumlu etiket: did you?"
+    },
+    {
+     "id": "question_tags-4",
+     "tr": "Ali gelecek, değil mi?",
+     "answers": [
+      "Ali will come, won't he?",
+      "Ali is coming, isn't he?"
+     ],
+     "note": "Etikette zamir: won't he?"
+    },
+    {
+     "id": "question_tags-5",
+     "tr": "Hadi yürüyüşe çıkalım, olur mu?",
+     "answers": [
+      "Let's go for a walk, shall we?"
+     ],
+     "note": "Let's → shall we?"
+    },
+    {
+     "id": "question_tags-6",
+     "tr": "Daha önce burada bulunmadın, değil mi?",
+     "answers": [
+      "You haven't been here before, have you?"
+     ],
+     "note": "haven't → have you?"
+    }
+   ],
+   "aliases": [
+    "question tag",
+    "question tags",
+    "tag question",
+    "tag questions",
+    "değil mi soruları",
+    "onay soruları"
+   ]
+  },
+  {
+   "id": "because_so",
+   "category": "conjunctions",
+   "level": "A2",
+   "title_tr": "Because / So / Because of",
+   "title_en": "Because / So / Because of",
+   "explanation": "**Sebep ve sonuç bağlaçları:**\n- **because + tam cümle:** sebebi verir (çünkü / -dığı için). I stayed home because I was ill.\n- **because of + isim:** I stayed home because of the rain.\n- **so + tam cümle:** sonucu verir (bu yüzden). I was ill, so I stayed home.\n- **Dikkat:** Türkçede \"-dığı için\" cümlenin başında gelse de İngilizcede because ile başlayan kısım genellikle sonra gelir. \"because\" ve \"so\" aynı cümlede birlikte kullanılmaz.",
+   "structure": [
+    "Ana cümle + because + özne + fiil",
+    "Ana cümle + because of + isim",
+    "Sebep cümlesi, so + sonuç cümlesi"
+   ],
+   "examples": [
+    [
+     "I'm hungry because I didn't eat breakfast.",
+     "Açım çünkü kahvaltı etmedim."
+    ],
+    [
+     "It was late, so we took a taxi.",
+     "Geç olmuştu, bu yüzden taksiye bindik."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "because_so-1",
+     "tr": "Hasta olduğu için okula gelmedi.",
+     "answers": [
+      "He didn't come to school because he was ill.",
+      "She didn't come to school because she was sick.",
+      "He did not come to school because he was ill."
+     ],
+     "note": "because + tam cümle (he was ill)."
+    },
+    {
+     "id": "because_so-2",
+     "tr": "Trafik yüzünden geç kaldım.",
+     "answers": [
+      "I was late because of the traffic.",
+      "I was late due to the traffic."
+     ],
+     "note": "İsimle \"because of\" kullanılır."
+    },
+    {
+     "id": "because_so-3",
+     "tr": "Hava çok sıcaktı, bu yüzden denize girdik.",
+     "answers": [
+      "It was very hot, so we went swimming in the sea.",
+      "It was very hot, so we swam in the sea.",
+      "It was really hot, so we went into the sea."
+     ],
+     "note": "Sonuç: so + tam cümle."
+    },
+    {
+     "id": "because_so-4",
+     "tr": "Param yoktu, bu yüzden o ceketi alamadım.",
+     "answers": [
+      "I didn't have any money, so I couldn't buy that jacket.",
+      "I had no money, so I couldn't buy that jacket."
+     ],
+     "note": "so + sonuç; \"alamadım\" = couldn't buy."
+    },
+    {
+     "id": "because_so-5",
+     "tr": "Yağmur yüzünden piknik iptal edildi.",
+     "answers": [
+      "The picnic was cancelled because of the rain.",
+      "The picnic was canceled because of the rain."
+     ],
+     "note": "because of + the rain."
+    },
+    {
+     "id": "because_so-6",
+     "tr": "Erken yattım çünkü çok yorgundum.",
+     "answers": [
+      "I went to bed early because I was very tired.",
+      "I went to bed early because I was really tired."
+     ],
+     "note": "because + I was very tired."
+    }
+   ],
+   "aliases": [
+    "because",
+    "because of",
+    "neden sonuç"
    ]
   },
   {
@@ -646,87 +1985,13 @@
      ],
      "note": "\"yaşı\" bir isimdir: despite his age."
     }
-   ]
-  },
-  {
-   "id": "because_so",
-   "category": "conjunctions",
-   "level": "A2",
-   "title_tr": "Because / So / Because of",
-   "title_en": "Because / So / Because of",
-   "explanation": "**Sebep ve sonuç bağlaçları:**\n- **because + tam cümle:** sebebi verir (çünkü / -dığı için). I stayed home because I was ill.\n- **because of + isim:** I stayed home because of the rain.\n- **so + tam cümle:** sonucu verir (bu yüzden). I was ill, so I stayed home.\n- **Dikkat:** Türkçede \"-dığı için\" cümlenin başında gelse de İngilizcede because ile başlayan kısım genellikle sonra gelir. \"because\" ve \"so\" aynı cümlede birlikte kullanılmaz.",
-   "structure": [
-    "Ana cümle + because + özne + fiil",
-    "Ana cümle + because of + isim",
-    "Sebep cümlesi, so + sonuç cümlesi"
    ],
-   "examples": [
-    [
-     "I'm hungry because I didn't eat breakfast.",
-     "Açım çünkü kahvaltı etmedim."
-    ],
-    [
-     "It was late, so we took a taxi.",
-     "Geç olmuştu, bu yüzden taksiye bindik."
-    ]
-   ],
-   "exercises": [
-    {
-     "id": "because_so-1",
-     "tr": "Hasta olduğu için okula gelmedi.",
-     "answers": [
-      "He didn't come to school because he was ill.",
-      "She didn't come to school because she was sick.",
-      "He did not come to school because he was ill."
-     ],
-     "note": "because + tam cümle (he was ill)."
-    },
-    {
-     "id": "because_so-2",
-     "tr": "Trafik yüzünden geç kaldım.",
-     "answers": [
-      "I was late because of the traffic.",
-      "I was late due to the traffic."
-     ],
-     "note": "İsimle \"because of\" kullanılır."
-    },
-    {
-     "id": "because_so-3",
-     "tr": "Hava çok sıcaktı, bu yüzden denize girdik.",
-     "answers": [
-      "It was very hot, so we went swimming in the sea.",
-      "It was very hot, so we swam in the sea.",
-      "It was really hot, so we went into the sea."
-     ],
-     "note": "Sonuç: so + tam cümle."
-    },
-    {
-     "id": "because_so-4",
-     "tr": "Param yoktu, bu yüzden o ceketi alamadım.",
-     "answers": [
-      "I didn't have any money, so I couldn't buy that jacket.",
-      "I had no money, so I couldn't buy that jacket."
-     ],
-     "note": "so + sonuç; \"alamadım\" = couldn't buy."
-    },
-    {
-     "id": "because_so-5",
-     "tr": "Yağmur yüzünden piknik iptal edildi.",
-     "answers": [
-      "The picnic was cancelled because of the rain.",
-      "The picnic was canceled because of the rain."
-     ],
-     "note": "because of + the rain."
-    },
-    {
-     "id": "because_so-6",
-     "tr": "Erken yattım çünkü çok yorgundum.",
-     "answers": [
-      "I went to bed early because I was very tired.",
-      "I went to bed early because I was really tired."
-     ],
-     "note": "because + I was very tired."
-    }
+   "aliases": [
+    "although",
+    "despite",
+    "in spite of",
+    "even though",
+    "rağmen"
    ]
   },
   {
@@ -807,6 +2072,9 @@
      ],
      "note": "Genel durum: geniş zaman + unless."
     }
+   ],
+   "aliases": [
+    "unless"
    ]
   },
   {
@@ -887,12 +2155,195 @@
      ],
      "note": "when + geniş zaman (graduate), gelecek zaman değil."
     }
+   ],
+   "aliases": [
+    "when while",
+    "as soon as"
+   ]
+  },
+  {
+   "id": "transition_words",
+   "category": "conjunctions",
+   "level": "B2",
+   "title_tr": "Geçiş sözcükleri: however / therefore / moreover",
+   "title_en": "Transition Words",
+   "explanation": "**İki cümleyi ya da paragrafı mantıklı biçimde bağlar.** Genellikle yeni cümlenin başında gelir ve ardından **virgül** konur.\n- **Ekleme:** moreover, furthermore, in addition, also (ayrıca, üstelik).\n- **Karşıtlık:** however (ancak), nevertheless (yine de), on the other hand (öte yandan), in contrast.\n- **Sonuç:** therefore (bu nedenle), as a result, consequently, so.\n- **Örnek verme:** for example, for instance, such as.\n- **Sıralama ve özet:** first, then, finally, in conclusion, to sum up.\n- **Dikkat:** however iki cümleyi virgülle bağlayamaz: \"It was late, however we went\" yanlıştır → It was late. However, we went. (ya da noktalı virgül: It was late; however, we went.)",
+   "structure": [
+    "Cümle. However, + cümle.",
+    "Cümle; therefore, + cümle.",
+    "Cümle. Moreover / In addition, + cümle."
+   ],
+   "examples": [
+    [
+     "The hotel was expensive. However, the service was excellent.",
+     "Otel pahalıydı. Ancak hizmet mükemmeldi."
+    ],
+    [
+     "He missed the bus. As a result, he was late for work.",
+     "Otobüsü kaçırdı. Sonuç olarak işe geç kaldı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "transition_words-1",
+     "tr": "Hava kötüydü. Yine de yürüyüşe çıktık.",
+     "answers": [
+      "The weather was bad. However, we went for a walk.",
+      "The weather was bad. Nevertheless, we went for a walk.",
+      "The weather was terrible; however, we still went for a walk."
+     ],
+     "note": "Karşıtlık: However, / Nevertheless,"
+    },
+    {
+     "id": "transition_words-2",
+     "tr": "Çok çalıştı. Bu nedenle sınavı geçti.",
+     "answers": [
+      "He worked very hard. Therefore, he passed the exam.",
+      "She studied a lot. As a result, she passed the exam."
+     ],
+     "note": "Sonuç: Therefore, / As a result,"
+    },
+    {
+     "id": "transition_words-3",
+     "tr": "Bu ev çok büyük. Üstelik bahçesi de var.",
+     "answers": [
+      "This house is very big. Moreover, it has a garden.",
+      "This house is really big. In addition, it has a garden.",
+      "This house is very big. What is more, it has a garden."
+     ],
+     "note": "Ekleme: Moreover, / In addition,"
+    },
+    {
+     "id": "transition_words-4",
+     "tr": "Birçok meyve severim, örneğin elma ve muz.",
+     "answers": [
+      "I like many fruits, for example apples and bananas.",
+      "I love lots of fruits, such as apples and bananas.",
+      "I like many fruits, for instance apples and bananas."
+     ],
+     "note": "Örnek: for example / such as."
+    },
+    {
+     "id": "transition_words-5",
+     "tr": "Şehirde yaşamak pahalı. Öte yandan çok fırsat var.",
+     "answers": [
+      "Living in the city is expensive. On the other hand, there are a lot of opportunities.",
+      "Living in a city is expensive. On the other hand, there are many opportunities."
+     ],
+     "note": "Karşılaştırma: On the other hand,"
+    },
+    {
+     "id": "transition_words-6",
+     "tr": "Sonuç olarak, düzenli spor sağlık için çok önemlidir.",
+     "answers": [
+      "In conclusion, regular exercise is very important for health.",
+      "To sum up, regular exercise is very important for your health."
+     ],
+     "note": "Özet: In conclusion, / To sum up,"
+    }
+   ],
+   "aliases": [
+    "transition word",
+    "transition words",
+    "transitions",
+    "linking words",
+    "linkers",
+    "however",
+    "therefore",
+    "moreover",
+    "geçiş sözcükleri",
+    "geçiş kelimeleri",
+    "bağlayıcılar"
+   ]
+  },
+  {
+   "id": "zero_conditional",
+   "category": "conditionals",
+   "level": "B1",
+   "title_tr": "Sıfırıncı tip koşul",
+   "title_en": "Zero Conditional",
+   "explanation": "**Ne zaman kullanılır?** Her zaman doğru olan sonuçlar, bilimsel gerçekler ve alışkanlıklar için. \"Eğer … -rsa, … -r\" anlamı taşır ve if yerine **when** de kullanılabilir.\n- \"Buzu ısıtırsan erir\" = If you heat ice, it melts.\n- **İki tarafta da Simple Present** kullanılır.\n- Talimatlarda ana cümle emir olabilir: If you feel sick, call me.",
+   "structure": [
+    "If/When + özne + V1, özne + V1",
+    "If + özne + V1, emir cümlesi"
+   ],
+   "examples": [
+    [
+     "If you mix red and blue, you get purple.",
+     "Kırmızıyla maviyi karıştırırsan mor elde edersin."
+    ],
+    [
+     "When I drink coffee at night, I can't sleep.",
+     "Gece kahve içtiğimde uyuyamam."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "zero_conditional-1",
+     "tr": "Suyu ısıtırsan kaynar.",
+     "answers": [
+      "If you heat water, it boils.",
+      "When you heat water, it boils."
+     ],
+     "note": "Genel doğru: if + V1, V1."
+    },
+    {
+     "id": "zero_conditional-2",
+     "tr": "Geç yattığımda sabah yorgun olurum.",
+     "answers": [
+      "When I go to bed late, I'm tired in the morning.",
+      "If I go to bed late, I feel tired in the morning."
+     ],
+     "note": "Alışkanlık: when + V1, V1."
+    },
+    {
+     "id": "zero_conditional-3",
+     "tr": "Bitkiler su almazsa ölür.",
+     "answers": [
+      "If plants don't get water, they die.",
+      "Plants die if they don't get water."
+     ],
+     "note": "Olumsuz koşul: if + don't + V1."
+    },
+    {
+     "id": "zero_conditional-4",
+     "tr": "Kendini kötü hissedersen beni ara.",
+     "answers": [
+      "If you feel bad, call me.",
+      "If you feel sick, call me.",
+      "Call me if you feel unwell."
+     ],
+     "note": "Talimat: if + V1, emir."
+    },
+    {
+     "id": "zero_conditional-5",
+     "tr": "Annem kızdığında sesini yükseltmez.",
+     "answers": [
+      "When my mother gets angry, she doesn't raise her voice.",
+      "My mum doesn't raise her voice when she gets angry."
+     ],
+     "note": "when + V1 (gets), V1 (doesn't raise)."
+    },
+    {
+     "id": "zero_conditional-6",
+     "tr": "Buzu güneşte bırakırsan erir.",
+     "answers": [
+      "If you leave ice in the sun, it melts.",
+      "Ice melts if you leave it in the sun."
+     ],
+     "note": "Bilimsel gerçek: iki tarafta Simple Present."
+    }
+   ],
+   "aliases": [
+    "zero conditional",
+    "type 0",
+    "sıfırıncı tip"
    ]
   },
   {
    "id": "first_conditional",
    "category": "conditionals",
-   "level": "A2",
+   "level": "B1",
    "title_tr": "Birinci tip koşul",
    "title_en": "First Conditional",
    "explanation": "**Ne zaman kullanılır?** Gelecekte gerçekleşmesi mümkün olan koşullar ve sonuçları için.\n- \"Yağmur yağarsa evde kalırız\" = If it rains, we'll stay at home.\n- **if tarafında geniş zaman**, ana cümlede **will + V1** kullanılır.\n- **Sık yapılan hata:** if tarafında will kullanmak: If it will rain… yanlıştır.",
@@ -965,6 +2416,11 @@
      ],
      "note": "if + geniş zaman: goes down / drops."
     }
+   ],
+   "aliases": [
+    "first conditional",
+    "type 1",
+    "birinci tip"
    ]
   },
   {
@@ -1042,6 +2498,11 @@
      ],
      "note": "Olumsuz koşul: if I weren't."
     }
+   ],
+   "aliases": [
+    "second conditional",
+    "type 2",
+    "ikinci tip"
    ]
   },
   {
@@ -1120,6 +2581,354 @@
      ],
      "note": "\"Kaybolmak\" = get lost: wouldn't have got lost."
     }
+   ],
+   "aliases": [
+    "third conditional",
+    "type 3",
+    "üçüncü tip"
+   ]
+  },
+  {
+   "id": "mixed_conditionals",
+   "category": "conditionals",
+   "level": "C1",
+   "title_tr": "Karışık koşul cümleleri",
+   "title_en": "Mixed Conditionals",
+   "explanation": "**Ne zaman kullanılır?** Koşul ile sonuç farklı zamanlara ait olduğunda.\n- **Geçmişteki koşul → şimdiki sonuç:** If + had + V3, would + V1. \"Dün gece uyusaydım şimdi yorgun olmazdım\" = If I had slept last night, I wouldn't be tired now.\n- **Şimdiki/kalıcı durum → geçmişteki sonuç:** If + V2, would have + V3. \"İngilizcem iyi olsaydı o işi alırdım\" = If my English were better, I would have got that job.\n- İpucu: \"now, today\" görürsen sonuç tarafı would + V1; geçmişte olmuş bir olay görürsen would have + V3.",
+   "structure": [
+    "If + had + V3, özne + would + V1 (now)",
+    "If + V2, özne + would have + V3"
+   ],
+   "examples": [
+    [
+     "If I had taken the job, I would be living in London now.",
+     "O işi kabul etseydim şimdi Londra'da yaşıyor olurdum."
+    ],
+    [
+     "If she weren't so shy, she would have spoken to him.",
+     "Bu kadar utangaç olmasaydı onunla konuşurdu."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "mixed_conditionals-1",
+     "tr": "Dün gece erken yatsaydım şimdi yorgun olmazdım.",
+     "answers": [
+      "If I had gone to bed early last night, I wouldn't be tired now.",
+      "If I'd gone to bed earlier last night, I wouldn't be tired now."
+     ],
+     "note": "Geçmiş koşul (had gone) → şimdiki sonuç (wouldn't be)."
+    },
+    {
+     "id": "mixed_conditionals-2",
+     "tr": "Haritayı alsaydık şimdi kaybolmuş olmazdık.",
+     "answers": [
+      "If we had taken the map, we wouldn't be lost now.",
+      "If we'd brought the map, we wouldn't be lost now."
+     ],
+     "note": "had + V3 → would + be + now."
+    },
+    {
+     "id": "mixed_conditionals-3",
+     "tr": "Tıp okusaydım şimdi doktor olurdum.",
+     "answers": [
+      "If I had studied medicine, I would be a doctor now.",
+      "If I'd studied medicine, I'd be a doctor now."
+     ],
+     "note": "Geçmişteki seçim → bugünkü durum."
+    },
+    {
+     "id": "mixed_conditionals-4",
+     "tr": "Bu kadar tembel olmasaydı sınavı geçerdi.",
+     "answers": [
+      "If he weren't so lazy, he would have passed the exam.",
+      "If she wasn't so lazy, she'd have passed the exam."
+     ],
+     "note": "Kalıcı özellik (weren't lazy) → geçmiş sonuç (would have passed)."
+    },
+    {
+     "id": "mixed_conditionals-5",
+     "tr": "Fransızca bilseydim dün onlara yardım ederdim.",
+     "answers": [
+      "If I spoke French, I would have helped them yesterday.",
+      "If I knew French, I'd have helped them yesterday."
+     ],
+     "note": "Şimdiki durum (spoke/knew) → geçmişteki sonuç."
+    },
+    {
+     "id": "mixed_conditionals-6",
+     "tr": "O uçağa binseydik şimdi Paris'te olurduk.",
+     "answers": [
+      "If we had caught that plane, we would be in Paris now.",
+      "If we'd taken that flight, we'd be in Paris now."
+     ],
+     "note": "had + V3 → would be + now."
+    }
+   ],
+   "aliases": [
+    "mixed conditional",
+    "mixed conditionals",
+    "karışık koşul"
+   ]
+  },
+  {
+   "id": "wish",
+   "category": "conditionals",
+   "level": "B2",
+   "title_tr": "Keşke (wish / if only)",
+   "title_en": "Wish / If only",
+   "explanation": "**Keşke cümleleri:**\n- **Şimdi için (keşke … olsa):** wish + V2. I wish I had a car. I wish I were taller.\n- **Geçmiş için (keşke … olsaydı):** wish + had + V3. I wish I had studied harder.\n- **Başkasının davranışından yakınma:** wish + would + V1. I wish you would stop talking.\n- **If only** aynı yapıyla kullanılır ve daha güçlü bir duygu katar: If only I knew!\n- **Dikkat:** Türkçede \"keşke\" her zaman aynıdır, İngilizcede zaman bir geriye kayar.",
+   "structure": [
+    "Özne + wish + özne + V2 (şimdi)",
+    "Özne + wish + özne + had + V3 (geçmiş)",
+    "Özne + wish + özne + would + V1 (yakınma)"
+   ],
+   "examples": [
+    [
+     "I wish I could speak Japanese.",
+     "Keşke Japonca konuşabilsem."
+    ],
+    [
+     "I wish I hadn't said that.",
+     "Keşke bunu söylemeseydim."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "wish-1",
+     "tr": "Keşke daha çok boş zamanım olsa.",
+     "answers": [
+      "I wish I had more free time.",
+      "If only I had more free time."
+     ],
+     "note": "Şimdi için: wish + V2 (had)."
+    },
+    {
+     "id": "wish-2",
+     "tr": "Keşke o arabayı almasaydım.",
+     "answers": [
+      "I wish I hadn't bought that car.",
+      "I wish I had not bought that car.",
+      "If only I hadn't bought that car."
+     ],
+     "note": "Geçmiş pişmanlık: wish + hadn't + V3."
+    },
+    {
+     "id": "wish-3",
+     "tr": "Keşke burada olsaydın.",
+     "answers": [
+      "I wish you were here.",
+      "I wish you were here with me."
+     ],
+     "note": "Şimdi için: wish + were."
+    },
+    {
+     "id": "wish-4",
+     "tr": "Keşke gürültü yapmayı bıraksan.",
+     "answers": [
+      "I wish you would stop making noise.",
+      "I wish you'd stop making so much noise."
+     ],
+     "note": "Yakınma: wish + would + V1."
+    },
+    {
+     "id": "wish-5",
+     "tr": "Keşke çocukken piyano öğrenseydim.",
+     "answers": [
+      "I wish I had learned the piano when I was a child.",
+      "I wish I'd learnt to play the piano as a child."
+     ],
+     "note": "Geçmiş için: wish + had + V3."
+    },
+    {
+     "id": "wish-6",
+     "tr": "Keşke yüzme bilsem.",
+     "answers": [
+      "I wish I could swim.",
+      "I wish I knew how to swim."
+     ],
+     "note": "Yetenek için: wish + could + V1."
+    }
+   ],
+   "aliases": [
+    "wish",
+    "if only",
+    "keşke",
+    "keske"
+   ]
+  },
+  {
+   "id": "inverted_conditionals",
+   "category": "conditionals",
+   "level": "C2",
+   "title_tr": "Devrik koşul: Had I known…, Should you…",
+   "title_en": "Inverted Conditionals",
+   "explanation": "**if kullanmadan, yardımcı fiili başa alarak kurulan resmî koşul cümleleri.**\n- **Should + özne + V1** (1. tip, \"olur da … -rsa\"): Should you need help, call me. = If you need help…\n- **Were + özne + to V1 / Were + özne + …** (2. tip): Were I in your position, I would resign. Were he to apologise, I would forgive him.\n- **Had + özne + V3** (3. tip): Had I known, I would have come. = If I had known…\n- Olumsuzda kısaltma yapılmaz: **Had I not seen it**, I wouldn't have believed it (Hadn't I seen değil).\n- Resmî yazı, e-posta ve konuşmalarda kullanılır; günlük konuşmada if daha doğaldır.",
+   "structure": [
+    "Should + özne + V1, …",
+    "Were + özne + to V1 / Were + özne + …, would + V1",
+    "Had + özne + (not) + V3, would have + V3"
+   ],
+   "examples": [
+    [
+     "Should you have any questions, please contact us.",
+     "Herhangi bir sorunuz olursa lütfen bizimle iletişime geçin."
+    ],
+    [
+     "Had we left earlier, we would have caught the train.",
+     "Daha erken çıksaydık treni yakalardık."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "inverted_conditionals-1",
+     "tr": "Bilseydim sana söylerdim.",
+     "answers": [
+      "Had I known, I would have told you.",
+      "Had I known, I'd have told you."
+     ],
+     "note": "Devrik 3. tip: Had + özne + V3."
+    },
+    {
+     "id": "inverted_conditionals-2",
+     "tr": "Herhangi bir sorun olursa lütfen bize haber verin.",
+     "answers": [
+      "Should there be any problem, please let us know.",
+      "Should you have any problems, please let us know."
+     ],
+     "note": "Devrik 1. tip: Should + özne + V1."
+    },
+    {
+     "id": "inverted_conditionals-3",
+     "tr": "Senin yerinde olsam bu teklifi kabul ederdim.",
+     "answers": [
+      "Were I you, I would accept this offer.",
+      "Were I in your position, I would accept the offer."
+     ],
+     "note": "Devrik 2. tip: Were I…"
+    },
+    {
+     "id": "inverted_conditionals-4",
+     "tr": "Onun yardımı olmasaydı başaramazdık.",
+     "answers": [
+      "Had it not been for his help, we wouldn't have succeeded.",
+      "Had it not been for her help, we would not have managed."
+     ],
+     "note": "Had it not been for… (olmasaydı)."
+    },
+    {
+     "id": "inverted_conditionals-5",
+     "tr": "Fikrini değiştirirsen bana haber ver.",
+     "answers": [
+      "Should you change your mind, let me know.",
+      "Should you change your mind, please let me know."
+     ],
+     "note": "Should you change your mind…"
+    },
+    {
+     "id": "inverted_conditionals-6",
+     "tr": "O haberi görmeseydim inanmazdım.",
+     "answers": [
+      "Had I not seen the news, I wouldn't have believed it.",
+      "Had I not seen the news, I would not have believed it."
+     ],
+     "note": "Olumsuz devrik: Had I not + V3."
+    }
+   ],
+   "aliases": [
+    "inverted conditional",
+    "inverted conditionals",
+    "had i known",
+    "should you",
+    "devrik koşul"
+   ]
+  },
+  {
+   "id": "ability",
+   "category": "modals",
+   "level": "A1",
+   "title_tr": "Can / Could / Be able to",
+   "title_en": "Can / Could / Be able to",
+   "explanation": "**Yetenek ve olasılık:**\n- **can + V1:** şimdiki yetenek (-ebilmek). I can swim.\n- **could + V1:** geçmişteki genel yetenek: When I was five, I could read.\n- **was/were able to, managed to:** geçmişte belli bir durumda başarılan iş: I was able to finish the project on time.\n- **will be able to:** gelecekte yetenek. İki modal yan yana gelmez: will can yanlıştır.\n- Kibar rica: Could you help me? (Can you'dan daha kibar.)",
+   "structure": [
+    "Özne + can / could + V1",
+    "Özne + was/were able to + V1",
+    "Özne + will be able to + V1"
+   ],
+   "examples": [
+    [
+     "She can speak three languages.",
+     "Üç dil konuşabiliyor."
+    ],
+    [
+     "I'll be able to help you next week.",
+     "Gelecek hafta sana yardım edebileceğim."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "ability-1",
+     "tr": "Üç yaşındayken yüzebiliyordum.",
+     "answers": [
+      "I could swim when I was three.",
+      "When I was three, I could swim.",
+      "I was able to swim when I was three years old."
+     ],
+     "note": "Geçmişteki genel yetenek: could."
+    },
+    {
+     "id": "ability-2",
+     "tr": "Pencereyi açabilir misiniz, lütfen?",
+     "answers": [
+      "Could you open the window, please?",
+      "Could you please open the window?",
+      "Can you open the window, please?"
+     ],
+     "note": "Kibar rica: Could you…?"
+    },
+    {
+     "id": "ability-3",
+     "tr": "Gelecek yıl araba kullanabileceğim.",
+     "answers": [
+      "I'll be able to drive next year.",
+      "I will be able to drive next year."
+     ],
+     "note": "Gelecekte yetenek: will be able to (will can değil)."
+    },
+    {
+     "id": "ability-4",
+     "tr": "Sonunda anahtarı bulabildim.",
+     "answers": [
+      "I was finally able to find the key.",
+      "I finally managed to find the key.",
+      "Finally, I was able to find the key."
+     ],
+     "note": "Belli bir durumda başarı: was able to / managed to."
+    },
+    {
+     "id": "ability-5",
+     "tr": "Bu gürültüde seni duyamıyorum.",
+     "answers": [
+      "I can't hear you in this noise.",
+      "I can't hear you with all this noise."
+     ],
+     "note": "Şimdiki yetersizlik: can't + V1."
+    },
+    {
+     "id": "ability-6",
+     "tr": "Kardeşim çok iyi gitar çalabilir.",
+     "answers": [
+      "My brother can play the guitar very well.",
+      "My sister can play the guitar really well."
+     ],
+     "note": "can + V1 (-s almaz): can play."
+    }
+   ],
+   "aliases": [
+    "can could",
+    "be able to",
+    "ability",
+    "yetenek"
    ]
   },
   {
@@ -1200,88 +3009,280 @@
      ],
      "note": "should + V1; \"more often\" sonda."
     }
+   ],
+   "aliases": [
+    "must",
+    "have to",
+    "should",
+    "obligation",
+    "zorunluluk"
    ]
   },
   {
-   "id": "ability",
+   "id": "requests_permission",
    "category": "modals",
    "level": "A2",
-   "title_tr": "Can / Could / Be able to",
-   "title_en": "Can / Could / Be able to",
-   "explanation": "**Yetenek ve olasılık:**\n- **can + V1:** şimdiki yetenek (-ebilmek). I can swim.\n- **could + V1:** geçmişteki genel yetenek: When I was five, I could read.\n- **was/were able to, managed to:** geçmişte belli bir durumda başarılan iş: I was able to finish the project on time.\n- **will be able to:** gelecekte yetenek. İki modal yan yana gelmez: will can yanlıştır.\n- Kibar rica: Could you help me? (Can you'dan daha kibar.)",
+   "title_tr": "Rica ve izin: Could you / May I / Would you mind",
+   "title_en": "Requests and Permission",
+   "explanation": "**Kibar rica ve izin kalıpları:**\n- **Can / Could you + V1?** bir şey rica etmek. Could you help me? (could daha kibar)\n- **Can / Could / May I + V1?** izin istemek. May I come in? (may en resmîsi)\n- **Would you mind + V-ing?** … eder misiniz? Would you mind closing the door? Cevap \"No, not at all\" = hayır, sorun değil (yani yaparım).\n- **Do you mind if I + V1?** … sakıncası var mı? Do you mind if I sit here?\n- **Would you like…?** teklif: Would you like some tea?",
    "structure": [
-    "Özne + can / could + V1",
-    "Özne + was/were able to + V1",
-    "Özne + will be able to + V1"
+    "Could you + V1?",
+    "Can / May I + V1?",
+    "Would you mind + V-ing?",
+    "Do you mind if I + V1?"
    ],
    "examples": [
     [
-     "She can speak three languages.",
-     "Üç dil konuşabiliyor."
+     "Could you speak more slowly, please?",
+     "Daha yavaş konuşabilir misiniz, lütfen?"
     ],
     [
-     "I'll be able to help you next week.",
-     "Gelecek hafta sana yardım edebileceğim."
+     "Would you mind waiting a moment?",
+     "Bir dakika beklemenizin sakıncası var mı?"
     ]
    ],
    "exercises": [
     {
-     "id": "ability-1",
-     "tr": "Üç yaşındayken yüzebiliyordum.",
+     "id": "requests_permission-1",
+     "tr": "Bana tuzu uzatabilir misin?",
      "answers": [
-      "I could swim when I was three.",
-      "When I was three, I could swim.",
-      "I was able to swim when I was three years old."
+      "Could you pass me the salt?",
+      "Can you pass me the salt, please?",
+      "Could you pass the salt, please?"
      ],
-     "note": "Geçmişteki genel yetenek: could."
+     "note": "Rica: Could / Can you + V1?"
     },
     {
-     "id": "ability-2",
-     "tr": "Pencereyi açabilir misiniz, lütfen?",
+     "id": "requests_permission-2",
+     "tr": "İçeri girebilir miyim?",
      "answers": [
-      "Could you open the window, please?",
-      "Could you please open the window?",
-      "Can you open the window, please?"
+      "May I come in?",
+      "Can I come in?",
+      "Could I come in?"
      ],
-     "note": "Kibar rica: Could you…?"
+     "note": "İzin: May / Can I + V1?"
     },
     {
-     "id": "ability-3",
-     "tr": "Gelecek yıl araba kullanabileceğim.",
+     "id": "requests_permission-3",
+     "tr": "Pencereyi kapatır mısınız?",
      "answers": [
-      "I'll be able to drive next year.",
-      "I will be able to drive next year."
+      "Would you mind closing the window?",
+      "Could you close the window, please?"
      ],
-     "note": "Gelecekte yetenek: will be able to (will can değil)."
+     "note": "Would you mind + V-ing (closing)."
     },
     {
-     "id": "ability-4",
-     "tr": "Sonunda anahtarı bulabildim.",
+     "id": "requests_permission-4",
+     "tr": "Buraya oturmamın sakıncası var mı?",
      "answers": [
-      "I was finally able to find the key.",
-      "I finally managed to find the key.",
-      "Finally, I was able to find the key."
+      "Do you mind if I sit here?",
+      "Would you mind if I sat here?"
      ],
-     "note": "Belli bir durumda başarı: was able to / managed to."
+     "note": "Do you mind if I + V1?"
     },
     {
-     "id": "ability-5",
-     "tr": "Bu gürültüde seni duyamıyorum.",
+     "id": "requests_permission-5",
+     "tr": "Biraz çay ister misiniz?",
      "answers": [
-      "I can't hear you in this noise.",
-      "I can't hear you with all this noise."
+      "Would you like some tea?",
+      "Would you like a cup of tea?"
      ],
-     "note": "Şimdiki yetersizlik: can't + V1."
+     "note": "Teklif: Would you like…?"
     },
     {
-     "id": "ability-6",
-     "tr": "Kardeşim çok iyi gitar çalabilir.",
+     "id": "requests_permission-6",
+     "tr": "Telefonunuzu kullanabilir miyim, lütfen?",
      "answers": [
-      "My brother can play the guitar very well.",
-      "My sister can play the guitar really well."
+      "Could I use your phone, please?",
+      "May I use your phone, please?",
+      "Can I use your phone, please?"
      ],
-     "note": "can + V1 (-s almaz): can play."
+     "note": "İzin: Could / May I…?"
     }
+   ],
+   "aliases": [
+    "requests",
+    "permission",
+    "would you mind",
+    "may i",
+    "rica",
+    "izin"
+   ]
+  },
+  {
+   "id": "deduction",
+   "category": "modals",
+   "level": "B2",
+   "title_tr": "Olasılık ve tahmin: may / might / must / can't",
+   "title_en": "Possibility and Deduction",
+   "explanation": "**Olasılık ve çıkarım bildiren kipler:**\n- **may / might / could + V1:** belki, olabilir (emin değilim). It might rain later.\n- **must + V1:** kesin gibi görünen olumlu çıkarım (-meli, -dır). You must be tired after the trip.\n- **can't + V1:** imkânsız olduğuna dair çıkarım (olamaz). That can't be true.\n- Şu anda süren bir şey için **must/might + be + V-ing:** He must be sleeping.\n- **Dikkat:** Olumsuz çıkarımda \"mustn't\" değil **can't** kullanılır.",
+   "structure": [
+    "Özne + may / might / could + V1",
+    "Özne + must + V1 (eminim)",
+    "Özne + can't + V1 (imkânsız)"
+   ],
+   "examples": [
+    [
+     "She isn't answering. She might be busy.",
+     "Telefonu açmıyor. Meşgul olabilir."
+    ],
+    [
+     "You've worked all day. You must be exhausted.",
+     "Bütün gün çalıştın. Çok yorgun olmalısın."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "deduction-1",
+     "tr": "Yarın yağmur yağabilir.",
+     "answers": [
+      "It might rain tomorrow.",
+      "It may rain tomorrow.",
+      "It could rain tomorrow."
+     ],
+     "note": "Olasılık: might / may + V1."
+    },
+    {
+     "id": "deduction-2",
+     "tr": "Bütün gün yürüdün, aç olmalısın.",
+     "answers": [
+      "You've walked all day, so you must be hungry.",
+      "You walked all day; you must be hungry."
+     ],
+     "note": "Olumlu çıkarım: must + be."
+    },
+    {
+     "id": "deduction-3",
+     "tr": "Bu doğru olamaz.",
+     "answers": [
+      "That can't be true.",
+      "This can't be true.",
+      "That cannot be true."
+     ],
+     "note": "İmkânsız: can't + V1 (mustn't değil)."
+    },
+    {
+     "id": "deduction-4",
+     "tr": "Işıklar kapalı, evde olmayabilirler.",
+     "answers": [
+      "The lights are off. They might not be at home.",
+      "The lights are off, so they may not be home."
+     ],
+     "note": "Olumsuz olasılık: might not / may not."
+    },
+    {
+     "id": "deduction-5",
+     "tr": "Telefonu açmıyor, uyuyor olmalı.",
+     "answers": [
+      "He isn't answering the phone; he must be sleeping.",
+      "She's not answering her phone. She must be asleep."
+     ],
+     "note": "Şu an süren eylem: must be + V-ing."
+    },
+    {
+     "id": "deduction-6",
+     "tr": "O adam senin kardeşin olamaz, çok yaşlı.",
+     "answers": [
+      "That man can't be your brother; he's too old.",
+      "That man can't be your brother. He's very old."
+     ],
+     "note": "can't be: olamaz."
+    }
+   ],
+   "aliases": [
+    "deduction",
+    "possibility",
+    "may might",
+    "might",
+    "olasılık",
+    "tahmin"
+   ]
+  },
+  {
+   "id": "past_modals",
+   "category": "modals",
+   "level": "B2",
+   "title_tr": "Geçmişe yönelik kipler (should have, must have…)",
+   "title_en": "Past Modals",
+   "explanation": "**Modal + have + V3:** geçmişle ilgili pişmanlık, eleştiri ve tahmin.\n- **should have + V3:** yapmalıydın (ama yapmadın). You should have told me.\n- **shouldn't have + V3:** yapmamalıydın (ama yaptın).\n- **must have + V3:** kesin öyle olmuş olmalı. She must have forgotten.\n- **might / may / could have + V3:** olmuş olabilir. They might have missed the bus.\n- **can't / couldn't have + V3:** olmuş olamaz. He can't have seen us.\n- **could have + V3:** yapabilirdin ama yapmadın. You could have died!",
+   "structure": [
+    "Özne + should / shouldn't have + V3",
+    "Özne + must / might / can't have + V3",
+    "Özne + could have + V3"
+   ],
+   "examples": [
+    [
+     "You should have called me.",
+     "Beni aramalıydın."
+    ],
+    [
+     "She must have left already.",
+     "Çoktan çıkmış olmalı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "past_modals-1",
+     "tr": "Daha erken çıkmalıydık.",
+     "answers": [
+      "We should have left earlier.",
+      "We should have left sooner."
+     ],
+     "note": "Pişmanlık: should have + V3."
+    },
+    {
+     "id": "past_modals-2",
+     "tr": "O kadar çok yememeliydim.",
+     "answers": [
+      "I shouldn't have eaten so much.",
+      "I should not have eaten that much."
+     ],
+     "note": "Yapılmaması gereken: shouldn't have + V3."
+    },
+    {
+     "id": "past_modals-3",
+     "tr": "Anahtarlarını evde unutmuş olmalı.",
+     "answers": [
+      "He must have left his keys at home.",
+      "She must have forgotten her keys at home."
+     ],
+     "note": "Geçmişe yönelik kesin tahmin: must have + V3."
+    },
+    {
+     "id": "past_modals-4",
+     "tr": "Otobüsü kaçırmış olabilirler.",
+     "answers": [
+      "They might have missed the bus.",
+      "They may have missed the bus.",
+      "They could have missed the bus."
+     ],
+     "note": "Olasılık: might / may have + V3."
+    },
+    {
+     "id": "past_modals-5",
+     "tr": "Bizi görmüş olamaz, çok uzaktaydık.",
+     "answers": [
+      "He can't have seen us; we were too far away.",
+      "She couldn't have seen us. We were very far away."
+     ],
+     "note": "İmkânsız: can't have + V3."
+    },
+    {
+     "id": "past_modals-6",
+     "tr": "Bana söyleyebilirdin!",
+     "answers": [
+      "You could have told me!"
+     ],
+     "note": "Yapılabilirdi ama yapılmadı: could have + V3."
+    }
+   ],
+   "aliases": [
+    "past modals",
+    "perfect modals",
+    "should have",
+    "must have",
+    "could have",
+    "modal perfect"
    ]
   },
   {
@@ -1361,6 +3362,100 @@
      ],
      "note": "\"Doğmak\" edilgendir: I was born."
     }
+   ],
+   "aliases": [
+    "passive",
+    "passive voice",
+    "edilgen",
+    "edilgen yapı"
+   ]
+  },
+  {
+   "id": "impersonal_passive",
+   "category": "passive",
+   "level": "C1",
+   "title_tr": "Kişisiz edilgen: It is said that…",
+   "title_en": "Impersonal Passive (It is said that…)",
+   "explanation": "**Söylenti, kanı ve haber dilinde kullanılır:** \"… olduğu söyleniyor / düşünülüyor / sanılıyor\".\n- **It + is/was + V3 + that + cümle:** It is said that he is very rich.\n- **Özne + is/was + V3 + to + V1:** He is said to be very rich. (Daha resmî ve kısa.)\n- Geçmişe dönük olay: **to have + V3:** He is believed to have left the country. (Ülkeyi terk ettiği sanılıyor.)\n- Bu yapıyla sık kullanılan fiiller: say, think, believe, know, report, expect, consider, claim.",
+   "structure": [
+    "It is + V3 (said/believed) + that + cümle",
+    "Özne + is + V3 + to + V1",
+    "Özne + is + V3 + to have + V3 (geçmiş)"
+   ],
+   "examples": [
+    [
+     "It is believed that the castle was built in the 12th century.",
+     "Kalenin 12. yüzyılda yapıldığı sanılıyor."
+    ],
+    [
+     "She is known to be an excellent cook.",
+     "Mükemmel bir aşçı olduğu biliniyor."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "impersonal_passive-1",
+     "tr": "Onun çok zengin olduğu söyleniyor.",
+     "answers": [
+      "It is said that he is very rich.",
+      "He is said to be very rich.",
+      "It's said that she is very rich."
+     ],
+     "note": "It is said that… / He is said to be…"
+    },
+    {
+     "id": "impersonal_passive-2",
+     "tr": "Hırsızın ülkeyi terk ettiği sanılıyor.",
+     "answers": [
+      "The thief is believed to have left the country.",
+      "It is believed that the thief has left the country.",
+      "It is thought that the thief left the country."
+     ],
+     "note": "Geçmiş olay: is believed to have + V3."
+    },
+    {
+     "id": "impersonal_passive-3",
+     "tr": "Fiyatların gelecek yıl artması bekleniyor.",
+     "answers": [
+      "Prices are expected to rise next year.",
+      "It is expected that prices will rise next year."
+     ],
+     "note": "are expected to + V1."
+    },
+    {
+     "id": "impersonal_passive-4",
+     "tr": "Bu kalenin 800 yıllık olduğu düşünülüyor.",
+     "answers": [
+      "This castle is thought to be 800 years old.",
+      "It is thought that this castle is 800 years old."
+     ],
+     "note": "is thought to be."
+    },
+    {
+     "id": "impersonal_passive-5",
+     "tr": "Kazada kimsenin yaralanmadığı bildirildi.",
+     "answers": [
+      "It was reported that nobody was injured in the accident.",
+      "It was reported that no one was hurt in the accident."
+     ],
+     "note": "Geçmiş haber: It was reported that…"
+    },
+    {
+     "id": "impersonal_passive-6",
+     "tr": "Onun dünyanın en iyi oyuncularından biri olduğu kabul edilir.",
+     "answers": [
+      "He is considered to be one of the best players in the world.",
+      "She is considered one of the best players in the world."
+     ],
+     "note": "is considered (to be)."
+    }
+   ],
+   "aliases": [
+    "impersonal passive",
+    "it is said",
+    "it is said that",
+    "is said to",
+    "kişisiz edilgen"
    ]
   },
   {
@@ -1442,6 +3537,12 @@
      ],
      "note": "can → could."
     }
+   ],
+   "aliases": [
+    "reported speech",
+    "indirect speech",
+    "dolaylı anlatım",
+    "dolayli anlatim"
    ]
   },
   {
@@ -1522,6 +3623,104 @@
      ],
      "note": "Nesne konumu: the film (that) we watched."
     }
+   ],
+   "aliases": [
+    "relative clause",
+    "relative clauses",
+    "adjective clause",
+    "adjective clauses",
+    "relative (adjective) clause",
+    "sıfat cümleciği",
+    "sıfat cümlecikleri",
+    "who which that"
+   ]
+  },
+  {
+   "id": "noun_clauses",
+   "category": "clauses",
+   "level": "B2",
+   "title_tr": "İsim cümlecikleri (that / what / whether)",
+   "title_en": "Noun Clauses",
+   "explanation": "**Bir cümlenin bütün olarak isim gibi kullanılması.** Türkçedeki \"-dığını, -eceğini, -ip -mediğini\" yapılarına karşılık gelir.\n- **that** + cümle: düşünce, bilgi ve duygularda. I think (that) he is right. I'm sure that she will come. (that çoğu zaman düşer.)\n- **what / where / why / how** + düz cümle: I know what you mean. What he said surprised me.\n- **whether / if** + cümle: … olup olmadığını. I don't know whether he will come.\n- Özne olarak: **What** you need is rest. **That** he lied is obvious (daha doğalı: It's obvious that he lied).\n- **Dikkat:** İçteki cümle soru sırası almaz: I don't know where she lives (where does she live değil).",
+   "structure": [
+    "Özne + fiil + (that) + özne + fiil",
+    "Özne + fiil + what/where/why + özne + fiil",
+    "What + özne + fiil + is/was …",
+    "Özne + fiil + whether/if + özne + fiil"
+   ],
+   "examples": [
+    [
+     "I don't think that he's coming.",
+     "Onun geleceğini sanmıyorum."
+    ],
+    [
+     "What I need is a long holiday.",
+     "İhtiyacım olan şey uzun bir tatil."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "noun_clauses-1",
+     "tr": "Haklı olduğunu düşünüyorum.",
+     "answers": [
+      "I think that you're right.",
+      "I think you are right."
+     ],
+     "note": "think + (that) + cümle."
+    },
+    {
+     "id": "noun_clauses-2",
+     "tr": "Ne dediğini duymadım.",
+     "answers": [
+      "I didn't hear what you said.",
+      "I didn't hear what he said."
+     ],
+     "note": "what + düz cümle."
+    },
+    {
+     "id": "noun_clauses-3",
+     "tr": "Gelip gelmeyeceğini bilmiyorum.",
+     "answers": [
+      "I don't know whether he will come.",
+      "I don't know if she's coming.",
+      "I don't know whether or not he'll come."
+     ],
+     "note": "whether / if: olup olmadığı."
+    },
+    {
+     "id": "noun_clauses-4",
+     "tr": "Senin ihtiyacın olan şey iyi bir uyku.",
+     "answers": [
+      "What you need is a good sleep.",
+      "What you need is a good night's sleep."
+     ],
+     "note": "Özne olarak: What you need is…"
+    },
+    {
+     "id": "noun_clauses-5",
+     "tr": "Onun yalan söylediği belli.",
+     "answers": [
+      "It's obvious that he lied.",
+      "It is clear that she lied.",
+      "It's obvious that he's lying."
+     ],
+     "note": "It's obvious that + cümle."
+    },
+    {
+     "id": "noun_clauses-6",
+     "tr": "Nerede yaşadığını hatırlamıyorum.",
+     "answers": [
+      "I don't remember where she lives.",
+      "I can't remember where he lives."
+     ],
+     "note": "Düz sıra: where she lives."
+    }
+   ],
+   "aliases": [
+    "noun clause",
+    "noun clauses",
+    "isim cümleciği",
+    "isim cümlecikleri"
    ]
   },
   {
@@ -1599,6 +3798,375 @@
      ],
      "note": "what you meant (düz sıra)."
     }
+   ],
+   "aliases": [
+    "indirect question",
+    "indirect questions",
+    "embedded questions",
+    "dolaylı soru",
+    "dolaylı sorular"
+   ]
+  },
+  {
+   "id": "time_clauses",
+   "category": "clauses",
+   "level": "B1",
+   "title_tr": "Zaman cümlecikleri (before / after / until / by the time)",
+   "title_en": "Time Clauses",
+   "explanation": "**Zaman bildiren yan cümleler:** when (-dığında), before (-meden önce), after (-dikten sonra), until / till (-e kadar), as soon as (-er -mez), while (-ken), since (-den beri), by the time (-e kadar, -diğinde çoktan), once (-ince).\n- **Altın kural:** gelecekten söz ederken zaman cümleciğinde **will kullanılmaz**, Simple Present kullanılır: I'll call you **when I arrive** (when I will arrive değil).\n- Bitmiş olmayı vurgulamak için Present Perfect de olur: I'll leave after I have finished.\n- Geçmişte: By the time we arrived, the film had started (Past Perfect).\n- before / after + V-ing de kullanılır: Wash your hands before eating.",
+   "structure": [
+    "Ana cümle (will) + when / before / after / until / as soon as + Simple Present",
+    "By the time + özne + V2, özne + had + V3",
+    "before / after + V-ing"
+   ],
+   "examples": [
+    [
+     "I'll text you as soon as I get home.",
+     "Eve varır varmaz sana mesaj atarım."
+    ],
+    [
+     "By the time we got there, the shop had closed.",
+     "Oraya vardığımızda dükkân çoktan kapanmıştı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "time_clauses-1",
+     "tr": "Eve gelince seni ararım.",
+     "answers": [
+      "I'll call you when I get home.",
+      "I will call you when I come home.",
+      "When I get home, I'll call you."
+     ],
+     "note": "when + Simple Present (will değil)."
+    },
+    {
+     "id": "time_clauses-2",
+     "tr": "Yatmadan önce dişlerini fırçala.",
+     "answers": [
+      "Brush your teeth before you go to bed.",
+      "Brush your teeth before going to bed."
+     ],
+     "note": "before + cümle ya da before + V-ing."
+    },
+    {
+     "id": "time_clauses-3",
+     "tr": "Sen gelene kadar burada bekleyeceğim.",
+     "answers": [
+      "I'll wait here until you come.",
+      "I will wait here until you arrive.",
+      "I'll wait here till you come."
+     ],
+     "note": "until + Simple Present."
+    },
+    {
+     "id": "time_clauses-4",
+     "tr": "Haberi duyar duymaz ona söyledim.",
+     "answers": [
+      "As soon as I heard the news, I told him.",
+      "I told her as soon as I heard the news."
+     ],
+     "note": "as soon as: -er -mez."
+    },
+    {
+     "id": "time_clauses-5",
+     "tr": "İstasyona vardığımızda tren çoktan kalkmıştı.",
+     "answers": [
+      "By the time we got to the station, the train had already left.",
+      "When we arrived at the station, the train had already left."
+     ],
+     "note": "By the time + V2, had + V3."
+    },
+    {
+     "id": "time_clauses-6",
+     "tr": "Üniversiteyi bitirdikten sonra yurt dışında çalışmak istiyorum.",
+     "answers": [
+      "After I finish university, I want to work abroad.",
+      "I want to work abroad after I graduate from university.",
+      "After finishing university, I want to work abroad."
+     ],
+     "note": "after + Simple Present (gelecek anlamında)."
+    }
+   ],
+   "aliases": [
+    "time clause",
+    "time clauses",
+    "zaman cümleciği",
+    "zaman cümlecikleri",
+    "by the time",
+    "until"
+   ]
+  },
+  {
+   "id": "adverb_clauses",
+   "category": "clauses",
+   "level": "B2",
+   "title_tr": "Zarf cümlecikleri: amaç, sonuç, karşıtlık",
+   "title_en": "Adverb Clauses: Purpose, Result, Contrast",
+   "explanation": "**Ana cümleyi neden, amaç, sonuç ya da karşıtlık yönünden niteleyen yan cümleler.** (Zaman bildirenler için \"Zaman cümlecikleri\", koşul için \"Koşul cümleleri\" konusuna bak.)\n- **Amaç (için, -sin diye):** **so that** + özne + can/could/will: I left early so that I could catch the bus. **(in order) to + V1:** I went out to buy bread.\n- **Sonuç (o kadar … ki):** **so + sıfat/zarf + that:** It was so cold that we stayed in. **such + (a) + sıfat + isim + that:** It was such a nice day that we went out.\n- **Neden:** because, since, as (-dığı için). Since it was late, we took a taxi.\n- **Karşıtlık:** although / even though (-e rağmen), **whereas / while** (oysa, -ken diğeri): I like tea, whereas my wife prefers coffee.\n- **Tarz:** as if / as though (-mış gibi): He talks as if he knew everything.",
+   "structure": [
+    "Ana cümle + so that + özne + can/could + V1",
+    "so + sıfat + that + cümle / such + (a) + sıfat + isim + that",
+    "Ana cümle + whereas / while + cümle",
+    "Ana cümle + as if + cümle"
+   ],
+   "examples": [
+    [
+     "I'm saving money so that I can buy a car.",
+     "Araba alabilmek için para biriktiriyorum."
+    ],
+    [
+     "The film was so boring that I fell asleep.",
+     "Film o kadar sıkıcıydı ki uyuyakaldım."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "adverb_clauses-1",
+     "tr": "Treni kaçırmamak için erken çıktım.",
+     "answers": [
+      "I left early so that I wouldn't miss the train.",
+      "I left early so as not to miss the train.",
+      "I left early so I wouldn't miss the train."
+     ],
+     "note": "Olumsuz amaç: so that … wouldn't / so as not to."
+    },
+    {
+     "id": "adverb_clauses-2",
+     "tr": "Hava o kadar sıcaktı ki dışarı çıkamadık.",
+     "answers": [
+      "It was so hot that we couldn't go out.",
+      "The weather was so hot that we couldn't go outside."
+     ],
+     "note": "so + sıfat + that."
+    },
+    {
+     "id": "adverb_clauses-3",
+     "tr": "O kadar güzel bir gündü ki pikniğe gittik.",
+     "answers": [
+      "It was such a lovely day that we went for a picnic.",
+      "It was such a beautiful day that we had a picnic."
+     ],
+     "note": "such + a + sıfat + isim + that."
+    },
+    {
+     "id": "adverb_clauses-4",
+     "tr": "Ben sabahları çalışmayı severim, oysa kardeşim geceleri çalışır.",
+     "answers": [
+      "I like working in the mornings, whereas my brother works at night.",
+      "I like to work in the morning, while my sister works at night."
+     ],
+     "note": "Karşıtlık: whereas / while."
+    },
+    {
+     "id": "adverb_clauses-5",
+     "tr": "Her şeyi biliyormuş gibi konuşuyor.",
+     "answers": [
+      "He talks as if he knew everything.",
+      "She speaks as if she knows everything.",
+      "He talks as though he knew everything."
+     ],
+     "note": "as if / as though: -mış gibi."
+    },
+    {
+     "id": "adverb_clauses-6",
+     "tr": "Geç olduğu için taksiye bindik.",
+     "answers": [
+      "Since it was late, we took a taxi.",
+      "As it was late, we took a taxi.",
+      "We took a taxi because it was late."
+     ],
+     "note": "Neden: since / as / because."
+    }
+   ],
+   "aliases": [
+    "adverb clause",
+    "adverb clauses",
+    "adverbial clause",
+    "adverbial clauses",
+    "zarf cümleciği",
+    "zarf cümlecikleri",
+    "so that",
+    "such that",
+    "as if"
+   ]
+  },
+  {
+   "id": "participle_clauses",
+   "category": "clauses",
+   "level": "C1",
+   "title_tr": "Ortaç cümlecikleri (Having finished…, Built in…)",
+   "title_en": "Participle Clauses",
+   "explanation": "**Yan cümleyi kısaltmanın yolu.** Özellikle yazı dilinde ve haberlerde çok kullanılır. Türkçedeki \"-ip, -ince, -erek, -dikten sonra\" yapılarına benzer.\n- **V-ing (etken, aynı anda):** Walking home, I met an old friend. (Eve yürürken…)\n- **Having + V3 (önce olan):** Having finished my work, I went out. (İşimi bitirdikten sonra…)\n- **V3 (edilgen anlam):** Built in 1890, the bridge is still in use. (1890'da yapılan köprü…)\n- İsimden sonra sıfat cümleciği yerine: The man sitting next to me… (who was sitting), The cars made in Germany… (which are made).\n- **Dikkat:** İki cümlenin öznesi aynı olmalıdır. \"Walking home, the rain started\" yanlıştır (yağmur yürümüyor!).",
+   "structure": [
+    "V-ing …, özne + fiil (aynı anda)",
+    "Having + V3 …, özne + fiil (önce)",
+    "V3 …, özne + fiil (edilgen)",
+    "İsim + V-ing / V3 (kısaltılmış sıfat cümleciği)"
+   ],
+   "examples": [
+    [
+     "Having read the instructions, I started the machine.",
+     "Talimatları okuduktan sonra makineyi çalıştırdım."
+    ],
+    [
+     "Written in simple English, the book is easy to read.",
+     "Basit bir İngilizceyle yazılmış olan kitabın okunması kolay."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "participle_clauses-1",
+     "tr": "Kahvaltımı bitirdikten sonra işe gittim.",
+     "answers": [
+      "Having finished my breakfast, I went to work.",
+      "Having finished breakfast, I went to work.",
+      "After finishing my breakfast, I went to work."
+     ],
+     "note": "Önce olan eylem: Having + V3."
+    },
+    {
+     "id": "participle_clauses-2",
+     "tr": "Sokakta yürürken eski bir arkadaşımla karşılaştım.",
+     "answers": [
+      "Walking down the street, I ran into an old friend.",
+      "Walking along the street, I met an old friend.",
+      "While walking in the street, I bumped into an old friend."
+     ],
+     "note": "Aynı anda olan eylem: V-ing, özne aynı."
+    },
+    {
+     "id": "participle_clauses-3",
+     "tr": "1920'de yazılan bu roman hâlâ çok okunuyor.",
+     "answers": [
+      "Written in 1920, this novel is still widely read.",
+      "Written in 1920, the novel is still read a lot."
+     ],
+     "note": "Edilgen anlam: V3 ile başlayan cümlecik."
+    },
+    {
+     "id": "participle_clauses-4",
+     "tr": "Pencerenin yanında oturan kadın benim teyzem.",
+     "answers": [
+      "The woman sitting by the window is my aunt.",
+      "The woman sitting next to the window is my aunt."
+     ],
+     "note": "Kısaltılmış sıfat cümleciği: who is sitting → sitting."
+    },
+    {
+     "id": "participle_clauses-5",
+     "tr": "Ne yapacağını bilemediği için bana sordu.",
+     "answers": [
+      "Not knowing what to do, he asked me.",
+      "Not knowing what to do, she asked me for help."
+     ],
+     "note": "Olumsuz ortaç: Not + V-ing."
+    },
+    {
+     "id": "participle_clauses-6",
+     "tr": "Çin'de üretilen telefonlar dünyanın her yerine satılıyor.",
+     "answers": [
+      "Phones made in China are sold all over the world.",
+      "The phones produced in China are sold all around the world."
+     ],
+     "note": "İsim + V3: which are made → made."
+    }
+   ],
+   "aliases": [
+    "participle clause",
+    "participle clauses",
+    "participles",
+    "reduced relative clauses",
+    "ortaç",
+    "ortac",
+    "ortaç cümlecikleri"
+   ]
+  },
+  {
+   "id": "irregular_verbs",
+   "category": "forms",
+   "level": "A2",
+   "title_tr": "Düzensiz fiiller (fiil listesi: V1 / V2 / V3)",
+   "title_en": "Irregular Verbs (Verb List)",
+   "explanation": "**Fiillerin üç hâli:** V1 (yalın: go), V2 (geçmiş: went), V3 (geçmiş ortaç: gone).\n- **Düzenli fiiller** V2 ve V3'te -ed alır: work – worked – worked.\n- **Düzensiz fiiller** ezberlenir. En sık kullanılanlar: be – was/were – been, have – had – had, do – did – done, go – went – gone, see – saw – seen, take – took – taken, give – gave – given, eat – ate – eaten, write – wrote – written, buy – bought – bought, think – thought – thought, bring – brought – brought, teach – taught – taught, find – found – found, leave – left – left, make – made – made, know – knew – known, begin – began – begun, speak – spoke – spoken, break – broke – broken, forget – forgot – forgotten.\n- **V2** Simple Past'te (I went), **V3** Present Perfect (I have gone), Past Perfect (had gone) ve edilgen yapıda (it was written) kullanılır.\n- **Dikkat:** did / didn't'ten sonra V1 gelir: I didn't go (didn't went değil).",
+   "structure": [
+    "Simple Past: özne + V2",
+    "Perfect: have/has/had + V3",
+    "Edilgen: be + V3"
+   ],
+   "examples": [
+    [
+     "I bought a new phone and I have already broken it!",
+     "Yeni bir telefon aldım ve çoktan kırdım bile!"
+    ],
+    [
+     "This book was written in 1950.",
+     "Bu kitap 1950'de yazıldı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "irregular_verbs-1",
+     "tr": "Dün çok güzel bir rüya gördüm.",
+     "answers": [
+      "I had a beautiful dream last night.",
+      "I had a very nice dream yesterday."
+     ],
+     "note": "have a dream → had (see değil)."
+    },
+    {
+     "id": "irregular_verbs-2",
+     "tr": "Ona bir hediye aldım.",
+     "answers": [
+      "I bought him a present.",
+      "I bought her a gift.",
+      "I bought a present for him."
+     ],
+     "note": "buy – bought – bought."
+    },
+    {
+     "id": "irregular_verbs-3",
+     "tr": "Bu mektubu kim yazdı?",
+     "answers": [
+      "Who wrote this letter?"
+     ],
+     "note": "write – wrote – written; özne sorusunda did kullanılmaz."
+    },
+    {
+     "id": "irregular_verbs-4",
+     "tr": "Şifremi unuttum.",
+     "answers": [
+      "I've forgotten my password.",
+      "I forgot my password."
+     ],
+     "note": "forget – forgot – forgotten."
+    },
+    {
+     "id": "irregular_verbs-5",
+     "tr": "Hiç bu kadar uzun bir köprü görmemiştim.",
+     "answers": [
+      "I had never seen such a long bridge.",
+      "I'd never seen a bridge this long."
+     ],
+     "note": "Past Perfect: had + seen (V3)."
+    },
+    {
+     "id": "irregular_verbs-6",
+     "tr": "Bardak yere düştü ve kırıldı.",
+     "answers": [
+      "The glass fell on the floor and broke.",
+      "The glass fell to the floor and broke."
+     ],
+     "note": "fall – fell – fallen, break – broke – broken."
+    }
+   ],
+   "aliases": [
+    "verb list",
+    "irregular verbs",
+    "irregular verb",
+    "düzensiz fiiller",
+    "fiil listesi",
+    "v1 v2 v3"
    ]
   },
   {
@@ -1681,6 +4249,16 @@
      ],
      "note": "without + V-ing."
     }
+   ],
+   "aliases": [
+    "gerund",
+    "infinitive",
+    "gerunds",
+    "infinitives",
+    "gerund infinitive",
+    "gerund-infinitives",
+    "gerund-infinitive",
+    "ing mi to mu"
    ]
   },
   {
@@ -1759,6 +4337,100 @@
      ],
      "note": "get used to + isim."
     }
+   ],
+   "aliases": [
+    "used to",
+    "be used to",
+    "get used to"
+   ]
+  },
+  {
+   "id": "causative",
+   "category": "forms",
+   "level": "B2",
+   "title_tr": "Ettirgen yapı: have / get something done",
+   "title_en": "Causative: have / get something done",
+   "explanation": "**Bir işi başkasına yaptırmak.** Türkçedeki \"-tır, -dır\" (yaptırdım, kestirdim) ekine karşılık gelir.\n- **have + nesne + V3:** I had my hair cut. (Saçımı kestirdim.) We're having the house painted.\n- **get + nesne + V3:** daha günlük: I need to get my car repaired.\n- **have + kişi + V1:** birine bir şey yaptırmak: I had the mechanic check the brakes.\n- **get + kişi + to + V1:** birini ikna edip yaptırmak: I got my brother to help me.\n- **make + kişi + V1:** zorla yaptırmak: My boss made me work late. **let + kişi + V1:** izin vermek: My parents let me stay out late.",
+   "structure": [
+    "Özne + have/get + nesne + V3",
+    "Özne + have + kişi + V1",
+    "Özne + get + kişi + to + V1",
+    "Özne + make / let + kişi + V1"
+   ],
+   "examples": [
+    [
+     "I had my car washed yesterday.",
+     "Dün arabamı yıkattım."
+    ],
+    [
+     "She got her sister to drive her to the airport.",
+     "Kız kardeşine onu havaalanına bıraktırdı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "causative-1",
+     "tr": "Dün saçımı kestirdim.",
+     "answers": [
+      "I had my hair cut yesterday.",
+      "I got my hair cut yesterday."
+     ],
+     "note": "have/get + nesne + V3: had my hair cut."
+    },
+    {
+     "id": "causative-2",
+     "tr": "Arabamı tamir ettirmem lazım.",
+     "answers": [
+      "I need to have my car repaired.",
+      "I need to get my car fixed.",
+      "I have to get my car repaired."
+     ],
+     "note": "get/have + car + repaired."
+    },
+    {
+     "id": "causative-3",
+     "tr": "Evimizi boyatıyoruz.",
+     "answers": [
+      "We're having our house painted.",
+      "We are getting our house painted."
+     ],
+     "note": "Şimdiki zaman: are having + nesne + V3."
+    },
+    {
+     "id": "causative-4",
+     "tr": "Öğretmen bize kompozisyonu yeniden yazdırdı.",
+     "answers": [
+      "The teacher made us rewrite the essay.",
+      "The teacher had us rewrite the essay."
+     ],
+     "note": "make/have + kişi + V1."
+    },
+    {
+     "id": "causative-5",
+     "tr": "Annem gece geç saate kadar dışarıda kalmama izin vermez.",
+     "answers": [
+      "My mother doesn't let me stay out late at night.",
+      "My mum won't let me stay out late."
+     ],
+     "note": "let + kişi + V1."
+    },
+    {
+     "id": "causative-6",
+     "tr": "Kardeşimi bana yardım etmeye ikna ettim.",
+     "answers": [
+      "I got my brother to help me.",
+      "I persuaded my sister to help me."
+     ],
+     "note": "get + kişi + to + V1."
+    }
+   ],
+   "aliases": [
+    "causative",
+    "causatives",
+    "causative verbs",
+    "have something done",
+    "get something done",
+    "ettirgen"
    ]
   },
   {
@@ -1837,6 +4509,400 @@
      ],
      "note": "The more …, the better …"
     }
+   ],
+   "aliases": [
+    "comparative",
+    "superlative",
+    "comparatives",
+    "superlatives",
+    "comparative-superlative",
+    "comparative superlative",
+    "karşılaştırma",
+    "üstünlük"
+   ]
+  },
+  {
+   "id": "inversion",
+   "category": "advanced",
+   "level": "C1",
+   "title_tr": "Devrik cümle: Never have I…, Not only…",
+   "title_en": "Inversion",
+   "explanation": "**Vurgu için olumsuz ya da sınırlayıcı bir ifade cümlenin başına gelince yardımcı fiil özneden önce gelir** (soru cümlesi sırası).\n- **Never / Rarely / Seldom + yardımcı fiil + özne:** Never have I seen such a beautiful place.\n- **Not only … but also:** Not only did he lose his job, but he also lost his house.\n- **Hardly / No sooner … :** Hardly had I arrived when the phone rang. No sooner had we sat down than the lights went out.\n- **Only then / Only when / Not until:** Only when I got home did I realise I had lost my wallet.\n- **Under no circumstances / At no time:** Under no circumstances should you open this door.\n- Yardımcı fiil yoksa do/does/did eklenir: Rarely **does** she complain.",
+   "structure": [
+    "Olumsuz zarf + yardımcı fiil + özne + fiil",
+    "Not only + yardımcı fiil + özne …, but … also …",
+    "Hardly had + özne + V3 … when …",
+    "Only when + cümle + yardımcı fiil + özne + fiil"
+   ],
+   "examples": [
+    [
+     "Never have I eaten such a delicious meal.",
+     "Hiç bu kadar lezzetli bir yemek yemedim."
+    ],
+    [
+     "Not only is she clever, but she is also very kind.",
+     "Sadece zeki değil, aynı zamanda çok nazik."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "inversion-1",
+     "tr": "Hayatımda hiç bu kadar güzel bir yer görmedim.",
+     "answers": [
+      "Never in my life have I seen such a beautiful place.",
+      "Never have I seen such a beautiful place."
+     ],
+     "note": "Never + have + özne + V3."
+    },
+    {
+     "id": "inversion-2",
+     "tr": "Sadece işini kaybetmedi, evini de kaybetti.",
+     "answers": [
+      "Not only did he lose his job, but he also lost his house.",
+      "Not only did she lose her job, but she also lost her home."
+     ],
+     "note": "Not only + did + özne + V1."
+    },
+    {
+     "id": "inversion-3",
+     "tr": "Eve varır varmaz telefon çaldı.",
+     "answers": [
+      "Hardly had I got home when the phone rang.",
+      "No sooner had I arrived home than the phone rang.",
+      "Hardly had I arrived home when the phone rang."
+     ],
+     "note": "Hardly had … when / No sooner had … than."
+    },
+    {
+     "id": "inversion-4",
+     "tr": "Ancak eve gelince cüzdanımı kaybettiğimi fark ettim.",
+     "answers": [
+      "Only when I got home did I realise that I had lost my wallet.",
+      "Only when I got home did I realize I had lost my wallet."
+     ],
+     "note": "Only when + cümle + did + özne + V1."
+    },
+    {
+     "id": "inversion-5",
+     "tr": "Bu kapıyı hiçbir koşulda açmamalısınız.",
+     "answers": [
+      "Under no circumstances should you open this door.",
+      "Under no circumstances must you open this door."
+     ],
+     "note": "Under no circumstances + should + özne."
+    },
+    {
+     "id": "inversion-6",
+     "tr": "Nadiren şikâyet eder.",
+     "answers": [
+      "Rarely does she complain.",
+      "Seldom does he complain."
+     ],
+     "note": "Rarely + does + özne + V1."
+    }
+   ],
+   "aliases": [
+    "inversion",
+    "inverted sentences",
+    "devrik cümle",
+    "devrik cümleler",
+    "not only",
+    "no sooner",
+    "hardly"
+   ]
+  },
+  {
+   "id": "cleft_sentences",
+   "category": "advanced",
+   "level": "C1",
+   "title_tr": "Vurgulu cümleler: It was … that / What I need is…",
+   "title_en": "Cleft Sentences",
+   "explanation": "**Cümlenin bir bölümünü öne çıkarıp vurgulamak için ikiye bölünmüş yapı.** Türkçede vurgu kelime sırasıyla yapılır (\"Kitabı dün **Ali** aldı\"), İngilizcede bu yapılar kullanılır.\n- **It is/was + vurgulanan öğe + that/who + cümle:** It was Ali who took the book. It was yesterday that I saw her.\n- **What + özne + fiil + is/was + …:** What I need is a holiday. What surprised me was his reaction.\n- **All (that) + özne + fiil + is …:** All I want is some peace. (Tek istediğim…)\n- **The thing / The reason / The place … is …:** The reason (why) I called is to apologise.",
+   "structure": [
+    "It is/was + öğe + that/who + cümle",
+    "What + özne + fiil + is/was + öğe",
+    "All + özne + fiil + is + öğe",
+    "The reason why + cümle + is + öğe"
+   ],
+   "examples": [
+    [
+     "It was my brother who broke the window.",
+     "Camı kıran ağabeyimdi."
+    ],
+    [
+     "What I love about this city is its people.",
+     "Bu şehirde sevdiğim şey insanları."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "cleft_sentences-1",
+     "tr": "Pencereyi kıran Ali'ydi, ben değil.",
+     "answers": [
+      "It was Ali who broke the window, not me.",
+      "It was Ali that broke the window, not me."
+     ],
+     "note": "It was + kişi + who + cümle."
+    },
+    {
+     "id": "cleft_sentences-2",
+     "tr": "Tek istediğim biraz huzur.",
+     "answers": [
+      "All I want is some peace.",
+      "All I want is a little peace and quiet."
+     ],
+     "note": "All I want is…"
+    },
+    {
+     "id": "cleft_sentences-3",
+     "tr": "Beni şaşırtan onun tepkisiydi.",
+     "answers": [
+      "What surprised me was his reaction.",
+      "What surprised me was her reaction."
+     ],
+     "note": "What + fiil + was …"
+    },
+    {
+     "id": "cleft_sentences-4",
+     "tr": "Onunla tanıştığım yer Londra'ydı.",
+     "answers": [
+      "It was in London that I met him.",
+      "It was London where I met her."
+     ],
+     "note": "It was + yer + that …"
+    },
+    {
+     "id": "cleft_sentences-5",
+     "tr": "Seni aramamın nedeni özür dilemek.",
+     "answers": [
+      "The reason why I called you is to apologise.",
+      "The reason I called you is to apologize."
+     ],
+     "note": "The reason (why) … is …"
+    },
+    {
+     "id": "cleft_sentences-6",
+     "tr": "İhtiyacın olan şey biraz dinlenmek.",
+     "answers": [
+      "What you need is some rest.",
+      "What you need is a bit of rest."
+     ],
+     "note": "What you need is …"
+    }
+   ],
+   "aliases": [
+    "cleft sentence",
+    "cleft sentences",
+    "cleft",
+    "vurgulu cümle",
+    "vurgulu cümleler"
+   ]
+  },
+  {
+   "id": "subjunctive",
+   "category": "advanced",
+   "level": "C2",
+   "title_tr": "Dilek kipi ve resmî kalıplar: I suggest that he be…, It's time…",
+   "title_en": "Subjunctive and Formal Structures",
+   "explanation": "**Resmî İngilizcede öneri, zorunluluk ve istek bildiren kalıplar.**\n- **suggest / recommend / insist / demand / require + that + özne + V1 (yalın):** I suggest that he **see** a doctor (sees değil). They insisted that she **be** present.\n- **It is essential / vital / important + that + özne + V1:** It is essential that every student **attend** the meeting.\n- **It's (high) time + özne + V2:** zamanı geldi de geçiyor. It's time we **left**.\n- **would rather + özne + V2:** başkasının yapmasını tercih etmek. I'd rather you **didn't** smoke here.\n- **as it were, be that as it may, so be it** gibi kalıplaşmış ifadeler de bu kipten gelir.",
+   "structure": [
+    "suggest / insist + that + özne + V1 (yalın)",
+    "It is essential / vital + that + özne + V1",
+    "It's (high) time + özne + V2",
+    "Özne + would rather + özne + V2"
+   ],
+   "examples": [
+    [
+     "The doctor recommended that she rest for a week.",
+     "Doktor bir hafta dinlenmesini önerdi."
+    ],
+    [
+     "It's high time you found a job.",
+     "Artık bir iş bulmanın zamanı geldi de geçiyor."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "subjunctive-1",
+     "tr": "Doktor onun bir hafta dinlenmesini önerdi.",
+     "answers": [
+      "The doctor recommended that he rest for a week.",
+      "The doctor suggested that she rest for a week."
+     ],
+     "note": "recommend that + özne + V1 (rests değil)."
+    },
+    {
+     "id": "subjunctive-2",
+     "tr": "Her çalışanın toplantıya katılması şart.",
+     "answers": [
+      "It is essential that every employee attend the meeting.",
+      "It is vital that every employee attend the meeting."
+     ],
+     "note": "It is essential that + özne + V1 (attends değil)."
+    },
+    {
+     "id": "subjunctive-3",
+     "tr": "Artık eve gitmemizin zamanı geldi.",
+     "answers": [
+      "It's time we went home.",
+      "It's high time we went home.",
+      "It is time we went home."
+     ],
+     "note": "It's time + özne + V2."
+    },
+    {
+     "id": "subjunctive-4",
+     "tr": "Burada sigara içmemeni tercih ederim.",
+     "answers": [
+      "I'd rather you didn't smoke here.",
+      "I would rather you did not smoke here."
+     ],
+     "note": "would rather + özne + V2."
+    },
+    {
+     "id": "subjunctive-5",
+     "tr": "Onun da orada bulunması konusunda ısrar ettiler.",
+     "answers": [
+      "They insisted that she be there too.",
+      "They insisted that he be present as well."
+     ],
+     "note": "insist that + özne + be."
+    },
+    {
+     "id": "subjunctive-6",
+     "tr": "Artık büyümenin zamanı geldi de geçiyor.",
+     "answers": [
+      "It's high time you grew up."
+     ],
+     "note": "It's high time + özne + V2."
+    }
+   ],
+   "aliases": [
+    "subjunctive",
+    "dilek kipi",
+    "it's time",
+    "its high time",
+    "would rather",
+    "formal structures"
+   ]
+  },
+  {
+   "id": "mixed_review",
+   "category": "mixed",
+   "level": "B1",
+   "title_tr": "Karışık tekrar",
+   "title_en": "Mixed Review",
+   "explanation": "**Bu bölümde farklı konulardan cümleler karışık gelir.** Her cümlede önce hangi yapının gerektiğini düşün:\n- Zaman ifadesine bak: yesterday → Simple Past, since/for → Present Perfect, şu an → Present Continuous.\n- \"-se, -seydi\" → koşul cümlesi; \"keşke\" → wish; \"-tır, -dır (yaptırmak)\" → causative.\n- \"-ılır, -ıldı\" → edilgen yapı; \"değil mi?\" → question tag; \"var / yok\" → there is / there are.\n- Cevabın doğruysa kutlanırsın, yanlışsa hangi kuralın gerektiği açıklanır.",
+   "structure": [
+    "Zamanı belirle → yapıyı seç → cümleyi kur"
+   ],
+   "examples": [
+    [
+     "If I had known, I would have come.",
+     "Bilseydim gelirdim."
+    ],
+    [
+     "The museum was opened in 2010.",
+     "Müze 2010'da açıldı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "mixed_review-1",
+     "tr": "İki yıldır İngilizce öğreniyorum.",
+     "answers": [
+      "I've been learning English for two years.",
+      "I have been studying English for two years."
+     ],
+     "note": "Süregelen eylem + for: Present Perfect Continuous."
+    },
+    {
+     "id": "mixed_review-2",
+     "tr": "Bu köprü geçen yıl yapıldı.",
+     "answers": [
+      "This bridge was built last year."
+     ],
+     "note": "Geçmiş edilgen: was built."
+    },
+    {
+     "id": "mixed_review-3",
+     "tr": "Keşke daha çok kitap okusam.",
+     "answers": [
+      "I wish I read more books.",
+      "I wish I read more."
+     ],
+     "note": "Şimdi için keşke: wish + V2."
+    },
+    {
+     "id": "mixed_review-4",
+     "tr": "Masada iki bardak var.",
+     "answers": [
+      "There are two glasses on the table."
+     ],
+     "note": "Çoğul: there are."
+    },
+    {
+     "id": "mixed_review-5",
+     "tr": "Sen gelmeden önce yemeği bitirmiştik.",
+     "answers": [
+      "We had finished dinner before you came.",
+      "We had finished eating before you arrived."
+     ],
+     "note": "Geçmişte daha önce olan: had + V3."
+    },
+    {
+     "id": "mixed_review-6",
+     "tr": "Gözlüğümü tamir ettirdim.",
+     "answers": [
+      "I had my glasses repaired.",
+      "I got my glasses fixed."
+     ],
+     "note": "Causative: had + nesne + V3."
+    },
+    {
+     "id": "mixed_review-7",
+     "tr": "Hava güzel, değil mi?",
+     "answers": [
+      "The weather is nice, isn't it?",
+      "It's a nice day, isn't it?"
+     ],
+     "note": "Question tag: isn't it?"
+    },
+    {
+     "id": "mixed_review-8",
+     "tr": "Yarın yağmur yağarsa evde kalacağız.",
+     "answers": [
+      "If it rains tomorrow, we'll stay at home.",
+      "We will stay at home if it rains tomorrow."
+     ],
+     "note": "Birinci tip koşul: if + V1, will + V1."
+    },
+    {
+     "id": "mixed_review-9",
+     "tr": "Bu, şimdiye kadar gördüğüm en güzel manzara.",
+     "answers": [
+      "This is the most beautiful view I've ever seen.",
+      "This is the most beautiful view I have ever seen."
+     ],
+     "note": "Üstünlük + ever + Present Perfect."
+    },
+    {
+     "id": "mixed_review-10",
+     "tr": "Bana nerede oturduğunu söyler misin?",
+     "answers": [
+      "Can you tell me where you live?",
+      "Could you tell me where you live?"
+     ],
+     "note": "Dolaylı soru: düz sıra."
+    }
+   ],
+   "aliases": [
+    "mixed",
+    "mixed review",
+    "karışık",
+    "karisik",
+    "karışık tekrar",
+    "genel tekrar"
    ]
   }
  ]

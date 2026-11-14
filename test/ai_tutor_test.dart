@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kelime_okur/ai/grammar_chat.dart';
+import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
 import 'package:kelime_okur/ai/local_engine.dart';
 import 'package:kelime_okur/ai/packages.dart';
@@ -60,7 +62,7 @@ void main() {
   final app = AppState(d, u);
   final ai = _EchoAi();
   app.localAi = ai;
-  final tutor = Tutor.of(app);
+  final tutor = Tutor.of(app)..lessons = () async => parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync());
 
   test('one premium package, size as shown, commercial licence', () {
     expect(aiPackages.map((p) => p.id), ['pro']);
@@ -144,5 +146,48 @@ void main() {
       '**Doğru hâli:** Yesterday I went home.\n**Hatalar:**\n- have went → went: ...',
     ])).join();
     expect(fixed, contains('have went → went'));
+  });
+
+  test('grammar study in the chat: explain, drill, grade, stop', () async {
+    final s = TutorChatSession();
+    final h = <(String, String)>[];
+    Future<String> say(String text) async {
+      h.add(('user', text));
+      final out = await tutor.chat(s, h).join();
+      h.add(('assistant', out));
+      return out;
+    }
+
+    ai.lastSystem = null;
+    final explained = await say('Passive anlat');
+    expect(explained, contains('be + V3'));
+    expect(explained, contains('cümle sor'));
+    expect(ai.lastSystem, isNull, reason: 'lessons need no model');
+
+    final q = await say('cümle sor');
+    expect(s.drill, isNotNull);
+    expect(q, contains('1/'));
+    final e = s.drill!.current.$2;
+    expect(q, contains(e.tr));
+    final graded = await say(e.answers.first);
+    expect(graded, contains('tamamen doğru'));
+    expect(graded, contains('2/'));
+    expect(s.drill!.right, 1);
+    expect(GrammarProgress(u).done('passive'), contains(e.id));
+
+    final next = s.drill!.current.$2;
+    await say('This is wrong.');
+    expect(ai.lastMessages!.single.$2, contains(next.tr), reason: 'a wrong answer goes to the model with the sentence');
+    final turkish = await say('anlamadım');
+    expect(turkish, contains('İngilizce yaz'));
+    final skipped = await say('geç');
+    expect(skipped, contains('Doğru cevap'));
+    final end = await say('bitir');
+    expect(end, contains('Alıştırma bitti'));
+    expect(s.drill, isNull);
+
+    ai.lastSystem = null;
+    await say('I will study tonight.');
+    expect(ai.lastSystem, contains('Bloom'), reason: 'ordinary chat goes to the model');
   });
 }
