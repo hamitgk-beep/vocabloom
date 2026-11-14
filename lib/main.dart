@@ -12,6 +12,7 @@ import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
+import 'ui/settings_page.dart';
 import 'ui/onboarding.dart';
 import 'ui/ai/ai_page.dart';
 import 'ui/grammar/grammar_page.dart';
