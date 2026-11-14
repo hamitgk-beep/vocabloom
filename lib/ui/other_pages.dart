@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../tts/voice_ui.dart';
+
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
@@ -442,6 +444,8 @@ class _SettingsPageState extends State<SettingsPage> {
         const SizedBox(height: 10),
         Align(alignment: Alignment.centerLeft, child: LangToggles(app: app, onChanged: () => setState(() {}))),
         ]),
+        SectionLabel(L('Sesli okuma · çevrimdışı', 'Read aloud · offline')),
+        Panel(children: [const VoiceSettings()]),
         SectionLabel(L('Yapay zekâ · isteğe bağlı', 'AI · optional')),
         Panel(children: [
         Row(children: [
@@ -571,7 +575,8 @@ class _SettingsPageState extends State<SettingsPage> {
           '• Collaborative Interlingual Index (CC BY 4.0)\n'
           '• Wiktionary expressions via kaikki.org (CC BY-SA 4.0)\n' +
           L('• Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0).', '• Category lists written for this app (CC BY-SA 4.0).') +
-          L('\n• Yazı tipleri: Inter ve Literata (SIL Open Font License 1.1)', '\n• Fonts: Inter and Literata (SIL Open Font License 1.1)'),
+          L('\n• Yazı tipleri: Inter ve Literata (SIL Open Font License 1.1)', '\n• Fonts: Inter and Literata (SIL Open Font License 1.1)') +
+          L('\n• Sesler: Kokoro-82M (Apache 2.0), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)', '\n• Voices: Kokoro-82M (Apache 2.0), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)'),
           style: theme.textTheme.bodySmall?.copyWith(height: 1.5),
         ),
         ]),

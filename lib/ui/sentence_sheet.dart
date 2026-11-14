@@ -10,6 +10,8 @@ import 'panel.dart';
 import 'paragraph_view.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
+import '../tts/speech.dart';
+import '../tts/voice_ui.dart';
 
 /// Sentence breakdown: translation, tenses, expressions and word meanings.
 Future<void> showSentenceSheet(BuildContext context, AppState app, Para para, ParaAnalysis a, int ti,
@@ -110,14 +112,23 @@ class _SentencePanelState extends State<SentencePanel> {
     }
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
-      Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+      Row(children: [
+        Expanded(child: Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700))),
+        if (Speech.supported) ...[
+          SpeakButton(ctx.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
+          SpeakButton(ctx.sentence, speed: 0.75, tooltip: L('Yavaş dinle', 'Listen slowly'), size: 20),
+        ],
+      ]),
       const SizedBox(height: 10),
       SelectableText(ctx.sentence, style: const TextStyle(fontSize: 18, height: 1.5, fontFamily: 'serif')),
       // Full Turkish translation right under the English sentence.
       if (tr != null && showTr)
         Padding(
           padding: const EdgeInsets.only(top: 6),
-          child: SelectableText(tr, style: trStyle(theme, const TextStyle(fontSize: 17, height: 1.45))),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Expanded(child: SelectableText(tr, style: trStyle(theme, const TextStyle(fontSize: 17, height: 1.45)))),
+            if (Speech.supported) SpeakButton(tr, lang: 'tr', size: 20),
+          ]),
         ),
       if (tr == null && loading)
         Padding(

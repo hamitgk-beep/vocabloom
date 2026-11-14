@@ -32,7 +32,10 @@ class ParagraphView extends StatefulWidget {
   final Para para;
   final WordTap onWord;
   final WordTap onSentence;
-  const ParagraphView({super.key, required this.app, required this.para, required this.onWord, required this.onSentence});
+
+  /// Sentence being read aloud in this paragraph ([start, end) in its text).
+  final (int, int)? speaking;
+  const ParagraphView({super.key, required this.app, required this.para, required this.onWord, required this.onSentence, this.speaking});
 
   @override
   State<ParagraphView> createState() => _ParagraphViewState();
@@ -40,6 +43,39 @@ class ParagraphView extends StatefulWidget {
 
 class _ParagraphViewState extends State<ParagraphView> {
   final _key = GlobalKey();
+
+  @override
+  void didUpdateWidget(ParagraphView old) {
+    super.didUpdateWidget(old);
+    if (widget.speaking != null && widget.speaking != old.speaking) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _followSpeech());
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.speaking != null) WidgetsBinding.instance.addPostFrameCallback((_) => _followSpeech());
+  }
+
+  /// Keeps the sentence being read aloud in view (about a quarter from the top).
+  void _followSpeech() {
+    final r = widget.speaking;
+    final ro = _key.currentContext?.findRenderObject();
+    if (!mounted || r == null || ro is! RenderParagraph || !ro.attached) return;
+    final scrollable = Scrollable.maybeOf(context);
+    final vp = scrollable?.context.findRenderObject();
+    if (scrollable == null || vp is! RenderBox) return;
+    final boxes = ro.getBoxesForSelection(TextSelection(baseOffset: r.$1, extentOffset: r.$2));
+    if (boxes.isEmpty) return;
+    final top = ro.localToGlobal(Offset(0, boxes.first.top), ancestor: vp).dy;
+    final bottom = ro.localToGlobal(Offset(0, boxes.last.bottom), ancestor: vp).dy;
+    final h = vp.size.height;
+    if (top >= 8 && bottom <= h - 24) return;
+    final pos = scrollable.position;
+    final target = (pos.pixels + top - h * 0.22).clamp(pos.minScrollExtent, pos.maxScrollExtent);
+    pos.animateTo(target, duration: const Duration(milliseconds: 450), curve: Curves.easeOutCubic);
+  }
 
   int? _tokenAt(Offset local, ParaAnalysis a) {
     final ro = _key.currentContext?.findRenderObject();
@@ -90,6 +126,9 @@ class _ParagraphViewState extends State<ParagraphView> {
 
     final spans = <InlineSpan>[];
     var pos = 0;
+    final sp = widget.speaking;
+    final speakBg = theme.colorScheme.primary.withValues(alpha: theme.brightness == Brightness.dark ? 0.32 : 0.16);
+    bool inSpeech(int a, int b) => sp != null && a >= sp.$1 && b <= sp.$2;
     for (var i = 0; i < a.tokens.length; i++) {
       final t = a.tokens[i];
       if (t.start > pos) {
@@ -98,7 +137,12 @@ class _ParagraphViewState extends State<ParagraphView> {
         final gc = gapCat == null ? null : categoryById[gapCat]!.color;
         spans.add(TextSpan(
           text: text.substring(pos, t.start),
-          style: gc == null ? null : TextStyle(decoration: TextDecoration.underline, decorationColor: gc, decorationThickness: 2.2),
+          style: TextStyle(
+            decoration: gc == null ? null : TextDecoration.underline,
+            decorationColor: gc,
+            decorationThickness: 2.2,
+            backgroundColor: inSpeech(pos, t.start) ? speakBg : null,
+          ),
         ));
       }
       var st = app.statusOf(t);
@@ -113,7 +157,7 @@ class _ParagraphViewState extends State<ParagraphView> {
           backgroundColor: switch (st) {
             WordStatus.learning => learningColor.withValues(alpha: 0.38),
             WordStatus.learned => learnedColor.withValues(alpha: 0.32),
-            _ => null,
+            _ => inSpeech(t.start, t.end) ? speakBg : null,
           },
           color: cc,
           decoration: cc == null ? null : TextDecoration.underline,

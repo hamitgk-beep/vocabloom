@@ -13,6 +13,7 @@ import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
 import 'ui/onboarding.dart';
 import 'ui/theme.dart';
+import 'tts/speech.dart';
 
 import 'l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,6 +51,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
+      Speech.instance.init(dir, user);
       try {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {
