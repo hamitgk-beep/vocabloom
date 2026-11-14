@@ -7,6 +7,7 @@ import '../app_state.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import 'grammar_practice.dart';
 import 'local_ai.dart';
 
 /// One multiple-choice question.
@@ -312,6 +313,53 @@ class Tutor {
         // Keep the context small on phones: the last 12 turns.
         : history.sublist(max(0, history.length - 12));
     return ai.generate(_chatSystem(level, topic, learning), msgs, maxTokens: 160, temperature: 0.7);
+  }
+
+  // ------------------------------------------------------ grammar practice
+
+  static String _gradeSystem() => '$_teacher\n\n'
+      'Görev: Gramer pratiği. Öğrenci verilen Türkçe cümleyi İngilizceye çevirdi. Cevabını, sana verilen doğru '
+      'cevaplar ve konunun kuralıyla karşılaştırarak değerlendir. Doğru cevaplar kesin doğrudur; öğrencinin cevabı '
+      'onlardan farklı ama dilbilgisi ve anlam olarak da doğruysa bunu kabul et. Yalnızca gerçek hataları göster.\n'
+      'Yanıtın şu biçimde olsun:\n'
+      '1. İlk satır: kısa, cesaret verici bir değerlendirme (ör. "Harika bir deneme! Anlamı neredeyse tam verdin.").\n'
+      '2. **Düzeltmeler:** her hata için numaralı madde: kuralın adı, neyin yanlış olduğu ve doğru biçimi.\n'
+      '3. **Doğru ve doğal kurulumlar:** "- " ile doğru cevaplardan en uygun bir veya iki tanesi, gerekirse kısa bir not.\n'
+      'Cevap tamamen doğruysa yalnızca övgü satırını ve **Doğru ve doğal kurulumlar:** bölümünü yaz.\n\n'
+      'Örnek:\n'
+      'Türkçe: "İş yüküm artmasına rağmen projeyi zamanında bitirebildim."\n'
+      'Öğrencinin cevabı: "I was able to complete the project although increase my workload"\n'
+      'Örnek yanıt:\n'
+      'Harika bir deneme! Anlamı neredeyse tam verdin, sadece "although" sonrasındaki yapıyı düzeltmemiz gerekiyor.\n'
+      '**Düzeltmeler:**\n'
+      '1. "Although" yapısı: although bir bağlaçtır, arkasından tam bir cümle (özne + fiil) gelir: "although my '
+      'workload increased".\n'
+      '2. "Despite" seçeneği: arkasından cümle değil isim getirmek istersen "despite" kullanılır: "despite my '
+      'increased workload".\n'
+      '3. "Zamanında" karşılığı eksik: "on time" eklenmeli.\n'
+      '**Doğru ve doğal kurulumlar:**\n'
+      '- "I was able to finish the project on time, although my workload increased."\n'
+      '- "I managed to finish the project on time despite my increased workload." ("managed to", "üstesinden gelerek '
+      'başardım" vurgusu katar.)';
+
+  /// Whether [answer] is one of the correct versions (no model needed).
+  bool isCorrectTranslation(GrammarExercise e, String answer) => matchesReference(e, answer);
+
+  /// Feedback on the learner's translation of [e]. A right answer is praised
+  /// at once without the model; otherwise the model compares it with the
+  /// correct versions and the topic's rule.
+  Stream<String> checkTranslation(GrammarTopic t, GrammarExercise e, String answer) {
+    if (matchesReference(e, answer)) {
+      final others = e.answers.where((a) => !matchesReference(GrammarExercise('', '', [a], ''), answer)).take(2).toList();
+      return Stream.value('Harika, tamamen doğru! 🎉'
+          '${others.isEmpty ? '' : '\n**Doğru ve doğal kurulumlar:**\n${others.map((a) => '- "$a"').join('\n')}'}');
+    }
+    final user = 'Konu: ${t.titleTr} (${t.titleEn})\n'
+        'Kural: ${e.noteTr.isEmpty ? t.structureTr.join(' / ') : e.noteTr}\n'
+        'Türkçe: "${e.tr}"\n'
+        'Doğru cevaplar:\n${e.answers.map((a) => '- "$a"').join('\n')}\n'
+        'Öğrencinin cevabı: "${answer.trim()}"';
+    return ai.generate(_gradeSystem(), [('user', user)], maxTokens: 420, temperature: 0.2);
   }
 
   /// Multiple-choice questions on the learner's words.

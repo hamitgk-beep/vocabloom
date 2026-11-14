@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_engine.dart';
 import 'package:kelime_okur/ai/tutor.dart';
 import 'package:kelime_okur/app_state.dart';
@@ -56,6 +57,13 @@ void main() {
         ('assistant', 'Hi! Do you have any plans for the weekend?'),
         ('user', 'Yes, I will go to my grandmother house and we will cooking together.'),
       ], level: 'A2'));
+      final topics = parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync());
+      final t = topics.firstWhere((x) => x.id == 'although_despite');
+      await run('grammar practice', tutor.checkTranslation(t, t.exercises.first,
+          'I was able to complete the project althought increase my workload'));
+      final c = topics.firstWhere((x) => x.id == 'third_conditional');
+      await run('grammar practice 2', tutor.checkTranslation(c, c.exercises.first,
+          'If you would decide before, we would not lose so much time.'));
       await ai.unload();
     }
   }, skip: modelDir == null ? 'AI_MODEL_DIR not set' : false, timeout: const Timeout(Duration(minutes: 40)));

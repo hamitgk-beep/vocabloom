@@ -91,7 +91,7 @@ def build(eval_share=0.06, seed=11):
     rows = []
     skipped = 0
     for id_, p in prompts.items():
-        if p['task'] == 'chat':
+        if p['task'] in ('chat', 'grade'):
             continue
         a = answers.get(id_)
         if not valid(p['task'], a):
@@ -102,6 +102,15 @@ def build(eval_share=0.06, seed=11):
             {'role': 'user', 'content': p['user']},
             {'role': 'assistant', 'content': a.strip()},
         ]})
+    # Grammar practice feedback (teacher.py grade): user turns carry their own text.
+    grade_sys = prompts.get('grade-system', {}).get('system')
+    for g in read_jsonl(os.path.join(DATA, 'teacher_grade.jsonl')):
+        if grade_sys and g.get('user') and g.get('answer'):
+            rows.append({'task': 'grade', 'id': g['id'], 'messages': [
+                {'role': 'system', 'content': grade_sys},
+                {'role': 'user', 'content': g['user']},
+                {'role': 'assistant', 'content': g['answer'].strip()},
+            ]})
     # Conversations: the app's chat system prompt + multi-turn dialogs.
     chat_sys = {p['id'].split('-')[-1]: p['system'] for p in prompts.values() if p['task'] == 'chat'}
     for name in ('seed_chat.jsonl', 'teacher_chat.jsonl'):

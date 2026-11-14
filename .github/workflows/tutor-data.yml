@@ -14,6 +14,9 @@ on:
       chat:
         description: 'Practice conversations per run'
         default: '40'
+      grade:
+        description: 'Grammar practice exercises per run (4 answers each)'
+        default: '40'
 
 permissions:
   contents: write
@@ -33,7 +36,7 @@ jobs:
       - name: Answers collected so far
         run: |
           if git fetch -q origin tutor-data; then
-            for f in teacher.jsonl teacher_chat.jsonl; do
+            for f in teacher.jsonl teacher_chat.jsonl teacher_grade.jsonl; do
               git show "origin/tutor-data:tools/tutor/data/$f" > "tools/tutor/data/$f" 2>/dev/null || rm -f "tools/tutor/data/$f"
             done
           fi
@@ -55,6 +58,7 @@ jobs:
         run: |
           python3 tools/tutor/teacher.py explain ${{ github.event.inputs.explain || '200' }} || true
           python3 tools/tutor/teacher.py chat ${{ github.event.inputs.chat || '40' }} || true
+          python3 tools/tutor/teacher.py grade ${{ github.event.inputs.grade || '40' }} || true
           python3 tools/tutor/build_sft.py build
       - name: Save on the tutor-data branch
         run: |

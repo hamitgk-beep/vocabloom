@@ -72,6 +72,7 @@ flutter:
   assets:
     - assets/dict.db
     - assets/brand/logo.png
+    - assets/grammar/lessons.json
 
   fonts:
     - family: Inter
