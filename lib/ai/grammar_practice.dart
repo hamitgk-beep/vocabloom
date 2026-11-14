@@ -42,6 +42,9 @@ class GrammarTopic {
   final List<String> structureTr;
   final List<(String, String)> examples;
   final List<GrammarExercise> exercises;
+
+  /// Names a learner may use for this topic in the chat, lower case.
+  final List<String> aliases;
   const GrammarTopic({
     required this.id,
     required this.titleTr,
@@ -52,6 +55,7 @@ class GrammarTopic {
     required this.structureTr,
     required this.examples,
     required this.exercises,
+    this.aliases = const [],
   });
 
   String get title => uiEnglish ? titleEn : titleTr;
@@ -66,13 +70,17 @@ class GrammarTopic {
         structureTr: (j['structure'] as List).cast<String>(),
         examples: [for (final e in j['examples'] as List) ((e as List)[0] as String, e[1] as String)],
         exercises: [for (final e in j['exercises'] as List) GrammarExercise.fromJson(e as Map<String, dynamic>)],
+        aliases: ((j['aliases'] ?? const []) as List).cast<String>(),
       );
 }
 
 /// Category names in display order.
 const grammarCategories = <String, (String, String)>{
   'tenses': ('Zamanlar', 'Tenses'),
-  'conjunctions': ('Bağlaçlar', 'Conjunctions'),
+  'nouns': ('İsimler ve belirleyiciler', 'Nouns and determiners'),
+  'prepositions': ('Edatlar', 'Prepositions'),
+  'sentence': ('Temel cümle kalıpları', 'Sentence patterns'),
+  'conjunctions': ('Bağlaçlar ve geçiş sözcükleri', 'Conjunctions and transitions'),
   'conditionals': ('Koşul cümleleri', 'Conditionals'),
   'modals': ('Kip fiilleri', 'Modal verbs'),
   'passive': ('Edilgen yapı', 'Passive voice'),
@@ -80,6 +88,24 @@ const grammarCategories = <String, (String, String)>{
   'clauses': ('Yan cümleler', 'Clauses'),
   'forms': ('Fiil biçimleri', 'Verb forms'),
   'comparison': ('Karşılaştırma', 'Comparison'),
+  'mixed': ('Karışık tekrar', 'Mixed review'),
+};
+
+/// Names a learner may use for a whole category in the chat ("modals çalışalım").
+const grammarCategoryAliases = <String, List<String>>{
+  'tenses': ['tense', 'tenses', 'zamanlar', 'zamanları', 'fiil zamanları'],
+  'nouns': ['nouns', 'determiners', 'isimler', 'belirleyiciler'],
+  'prepositions': ['preposition', 'prepositions', 'edat', 'edatlar'],
+  'sentence': ['sentence patterns', 'cümle kalıpları'],
+  'conjunctions': ['conjunction', 'conjunctions', 'bağlaç', 'bağlaçlar', 'baglac', 'baglaclar'],
+  'conditionals': ['conditional', 'conditionals', 'if clause', 'if clauses', 'koşul', 'koşul cümleleri', 'kosul'],
+  'modals': ['modal', 'modals', 'modal verbs', 'modal verb', 'kip', 'kipler', 'kip fiilleri'],
+  'passive': ['pasif'],
+  'reported': ['reported'],
+  'clauses': ['clause', 'clauses', 'cümlecik', 'cümlecikler', 'yan cümle', 'yan cümleler'],
+  'forms': ['verb forms', 'fiil biçimleri'],
+  'comparison': ['comparison', 'comparisons'],
+  'mixed': [],
 };
 
 List<GrammarTopic>? _cache;

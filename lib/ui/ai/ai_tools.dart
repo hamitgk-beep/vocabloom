@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../l10n.dart';
+import '../../ai/grammar_chat.dart';
 import '../../ai/local_ai.dart';
 import '../../ai/tutor.dart';
 
@@ -242,6 +243,7 @@ class _ChatViewState extends State<_ChatView> {
   String? topic;
   bool busy = false;
   StreamSubscription<String>? sub;
+  final session = TutorChatSession();
 
   static const topics = [('Kitaplar', 'Books'), ('Seyahat', 'Travel'), ('İş görüşmesi', 'Job interview'), ('Günlük hayat', 'Daily life')];
 
@@ -263,7 +265,7 @@ class _ChatViewState extends State<_ChatView> {
       busy = true;
     });
     final history = msgs.sublist(0, msgs.length - 1);
-    sub = widget.tutor.chatReply(history, level: level, topic: topic).listen((c) {
+    sub = widget.tutor.chat(session, history, level: level, topic: topic).listen((c) {
       setState(() => msgs[msgs.length - 1] = ('assistant', msgs.last.$2 + c));
       _toEnd();
     }, onDone: () => setState(() => busy = false), onError: (Object e) => setState(() {
@@ -307,7 +309,8 @@ class _ChatViewState extends State<_ChatView> {
             ]),
             const SizedBox(height: 18),
             Text(
-              L('Yapay zekâ seviyene uygun İngilizce cevap verir ve hatalarını nazikçe düzeltir.', 'The AI answers in English at your level and gently corrects your mistakes.'),
+              L('Yapay zekâ seviyene uygun İngilizce cevap verir ve hatalarını nazikçe düzeltir. Gramer de çalışabilirsin: "Bugün modals çalışalım", "Relative clause anlat" ya da "Bana passive cümleleri sor" yaz.',
+                  'The AI answers in English at your level and gently corrects your mistakes. You can also study grammar: write "Let\'s study modals", "Explain relative clauses" or "Quiz me on the passive".'),
               style: theme.textTheme.bodySmall?.copyWith(height: 1.45),
             ),
           ],
