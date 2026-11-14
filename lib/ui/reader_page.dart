@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../data/user_db.dart';
+import '../tts/read_aloud.dart';
+import '../tts/speech.dart';
+import '../tts/voice_ui.dart';
 import 'expr_sheet.dart';
 import 'paragraph_view.dart';
 import 'sentence_sheet.dart';
@@ -25,6 +28,8 @@ class _ReaderPageState extends State<ReaderPage> {
   List<Para> paras = [];
   final scroll = ScrollController();
   final _scaffold = GlobalKey<ScaffoldState>();
+  final _paraKeys = <int, GlobalKey>{};
+  late final reader = ReadAloud(paras: () => paras, nextChapter: _nextChapterForSpeech);
 
   AppState get app => widget.app;
 
@@ -36,12 +41,14 @@ class _ReaderPageState extends State<ReaderPage> {
     _load(restoreOffset: widget.book.lastParagraph.toDouble());
     scroll.addListener(_saveSoon);
     app.addListener(_onApp);
+    reader.addListener(_onApp);
   }
 
   @override
   void dispose() {
     _save();
     app.removeListener(_onApp);
+    reader.dispose();
     scroll.dispose();
     super.dispose();
   }
@@ -70,11 +77,90 @@ class _ReaderPageState extends State<ReaderPage> {
 
   void _go(int c) {
     if (c < 0 || c >= chapters.length) return;
+    reader.stop();
     setState(() {
       chapter = c;
       _load();
     });
     _save();
+  }
+
+  Future<bool> _nextChapterForSpeech() async {
+    if (!mounted || chapter >= chapters.length - 1) return false;
+    setState(() {
+      chapter++;
+      _load();
+    });
+    _save();
+    return true;
+  }
+
+  /// Index of the first paragraph whose text is on screen.
+  int _firstVisiblePara() {
+    final vp = context.findRenderObject();
+    var best = -1;
+    double bestTop = double.infinity;
+    for (final e in _paraKeys.entries) {
+      final ro = e.value.currentContext?.findRenderObject();
+      if (ro is! RenderBox || !ro.attached || e.key >= paras.length) continue;
+      final top = ro.localToGlobal(Offset.zero, ancestor: vp).dy;
+      final bottom = top + ro.size.height;
+      // below the app bar and not already scrolled past
+      if (bottom > kToolbarHeight + 40 && top < bestTop) {
+        bestTop = top;
+        best = e.key;
+      }
+    }
+    return best < 0 ? 0 : best;
+  }
+
+  Future<void> _toggleReadAloud() async {
+    if (reader.active) {
+      reader.stop();
+      return;
+    }
+    if (!await ensureVoicePack(context)) return;
+    if (!mounted) return;
+    reader.start(_firstVisiblePara());
+  }
+
+  Widget _speechBar(ThemeData theme) {
+    final s = Speech.instance;
+    return Material(
+      color: theme.colorScheme.surfaceContainerHigh,
+      child: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(children: [
+            const SizedBox(width: 6),
+            Icon(Icons.headphones_rounded, size: 20, color: theme.colorScheme.primary),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(s.voice.name, style: theme.textTheme.titleSmall, overflow: TextOverflow.ellipsis),
+            ),
+            IconButton(tooltip: L('Önceki cümle', 'Previous sentence'), onPressed: () => reader.skip(-1), icon: const Icon(Icons.skip_previous_rounded)),
+            IconButton.filled(
+              tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
+              onPressed: reader.toggle,
+              icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
+            ),
+            IconButton(tooltip: L('Sonraki cümle', 'Next sentence'), onPressed: () => reader.skip(1), icon: const Icon(Icons.skip_next_rounded)),
+            PopupMenuButton<double>(
+              tooltip: L('Hız', 'Speed'),
+              initialValue: s.speed,
+              onSelected: (v) {
+                s.speed = v;
+                reader.skip(0);
+              },
+              itemBuilder: (_) => [for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×'))],
+              child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8), child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 0 : 2)}×', style: theme.textTheme.labelLarge)),
+            ),
+            IconButton(tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'), onPressed: reader.stop, icon: const Icon(Icons.close_rounded)),
+          ]),
+        ),
+      ),
+    );
   }
 
   void _onWord(Para p, ParaAnalysis a, int i) async {
@@ -128,6 +214,12 @@ class _ReaderPageState extends State<ReaderPage> {
           ),
         ),
         actions: [
+          if (Speech.supported)
+            IconButton(
+              tooltip: reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud'),
+              icon: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
+              onPressed: _toggleReadAloud,
+            ),
           IconButton(
             tooltip: L('Okuma görünümü', 'Reading view'),
             icon: const Icon(Icons.text_fields_rounded),
@@ -192,6 +284,7 @@ class _ReaderPageState extends State<ReaderPage> {
           ]),
         ),
       ),
+      bottomNavigationBar: reader.active ? _speechBar(theme) : null,
       endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
       body: Row(children: [
         Expanded(
@@ -243,7 +336,10 @@ class _ReaderPageState extends State<ReaderPage> {
                     );
                   }
                   final p = paras[i - 1];
-                  return ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence);
+                  return KeyedSubtree(
+                    key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
+                    child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
+                  );
                 },
               ),
             ),

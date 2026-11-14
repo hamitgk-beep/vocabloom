@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Voice pack download, AI services and update check. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="VocaBloom"
         android:name="${applicationName}"
