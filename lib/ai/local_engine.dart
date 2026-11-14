@@ -253,7 +253,7 @@ class LlamaLocalAi extends LocalAi {
     final pk = _pkg(_loadedId!);
     final msgs = [
       LlamaChatMessage.fromText(role: LlamaChatRole.system, text: system),
-      for (final (role, text) in messages)
+      for (final (role, text) in alternateTurns(messages))
         LlamaChatMessage.fromText(role: role == 'assistant' ? LlamaChatRole.assistant : LlamaChatRole.user, text: text),
     ];
     final stream = e.create(
@@ -367,4 +367,21 @@ class ThinkFilter {
     _buf = '';
     return s;
   }
+}
+
+/// Turns that start with the user and alternate user/assistant, as strict chat
+/// templates (Gemma, Mistral) require: same-role neighbours are joined, and a
+/// conversation the assistant opened gets a short user turn in front.
+List<(String, String)> alternateTurns(List<(String, String)> messages) {
+  final out = <(String, String)>[];
+  for (final (role, text) in messages) {
+    final r = role == 'assistant' ? 'assistant' : 'user';
+    if (out.isNotEmpty && out.last.$1 == r) {
+      out[out.length - 1] = (r, '${out.last.$2}\n\n$text');
+    } else {
+      out.add((r, text));
+    }
+  }
+  if (out.isNotEmpty && out.first.$1 == 'assistant') out.insert(0, ('user', 'Hi!'));
+  return out;
 }

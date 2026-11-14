@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
 import 'package:kelime_okur/ai/packages.dart';
 import 'package:kelime_okur/ai/tutor.dart';
@@ -101,6 +102,13 @@ void main() {
         write(parts[0], 'correct');
       }
     }
+    // Grammar practice: the system prompt; teacher.py builds the user turns the
+    // same way Tutor.checkTranslation does.
+    final topics = parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync());
+    final t = topics.first;
+    await tutor.checkTranslation(t, t.exercises.first, 'xx').drain<void>();
+    out.writeln(jsonEncode({'id': 'grade-system', 'task': 'grade', 'system': cap.system, 'user': cap.messages.last.$2}));
+    n++;
     for (final level in ['A2', 'B1', 'B2']) {
       await tutor.chatReply(const [], level: level).drain<void>();
       out.writeln(jsonEncode({'id': 'chat-system-$level', 'task': 'chat', 'system': cap.system, 'user': ''}));

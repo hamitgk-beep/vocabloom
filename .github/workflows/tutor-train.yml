@@ -1,0 +1,91 @@
+name: tutor-train
+# Fine-tunes one AI tutor package on Kaggle's free GPU and publishes the GGUF.
+# Secrets: KAGGLE_USERNAME + KAGGLE_API_TOKEN (or KAGGLE_KEY); HF_TOKEN and the
+# HF_REPO variable to publish on Hugging Face (needed for files over 2 GB).
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package id'
+        default: 'pro'
+      epochs:
+        description: 'Training epochs'
+        default: '2'
+
+permissions:
+  contents: write
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+      PKG: ${{ github.event.inputs.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q "kaggle>=1.7" huggingface_hub
+      - name: Prepare the Kaggle notebook
+        run: |
+          [ -n "$KAGGLE_USERNAME" ] || { echo "::error::Add the KAGGLE_USERNAME secret."; exit 1; }
+          mkdir -p kernel
+          python3 - <<'PY'
+          import json, os
+          nb = json.load(open('tools/tutor/train_tutor.ipynb'))
+          for c in nb['cells']:
+              if c['cell_type'] == 'code' and 'PACKAGE =' in ''.join(c['source']):
+                  c['source'] = "PACKAGE = %r\nHF_REPO = ''\nEPOCHS = %s\n" % (os.environ['PKG'], '${{ github.event.inputs.epochs }}')
+          json.dump(nb, open('kernel/train_tutor.ipynb', 'w'))
+          json.dump({
+              'id': '%s/vocabloom-tutor-%s' % (os.environ['KAGGLE_USERNAME'], os.environ['PKG']),
+              'title': 'vocabloom-tutor-%s' % os.environ['PKG'],
+              'code_file': 'train_tutor.ipynb', 'language': 'python', 'kernel_type': 'notebook',
+              'is_private': True, 'enable_gpu': True, 'enable_internet': True,
+          }, open('kernel/kernel-metadata.json', 'w'))
+          PY
+      - name: Run on Kaggle
+        run: |
+          kaggle kernels push -p kernel
+          ref="$KAGGLE_USERNAME/vocabloom-tutor-$PKG"
+          for i in $(seq 1 330); do
+            sleep 60
+            s=$(kaggle kernels status "$ref" 2>&1 || true)
+            echo "$(date +%H:%M) $s"
+            case "$s" in
+              *COMPLETE*|*complete*) break ;;
+              *ERROR*|*error*|*CANCEL*|*cancel*) kaggle kernels output "$ref" -p out || true; tail -c 4000 out/*.log 2>/dev/null; exit 1 ;;
+            esac
+          done
+          kaggle kernels output "$ref" -p out
+          ls -la out out/gguf 2>/dev/null || true
+      - name: Publish the GGUF
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_REPO: ${{ vars.HF_REPO }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          q=$([ "$PKG" = pro ] && echo Q5_K_M || echo Q6_K)
+          f=$(find out -iname "*${q}*.gguf" | head -1)
+          [ -n "$f" ] || { echo "::error::No $q GGUF in the Kaggle output"; exit 1; }
+          name="vocabloom-tutor-$PKG-${q,,}.gguf"
+          size=$(stat -c %s "$f"); sum=$(sha256sum "$f" | cut -d' ' -f1)
+          if [ -n "$HF_TOKEN" ] && [ -n "$HF_REPO" ]; then
+            python3 -c "
+          from huggingface_hub import HfApi; import os
+          api = HfApi(token=os.environ['HF_TOKEN']); api.create_repo(os.environ['HF_REPO'], exist_ok=True)
+          api.upload_file(path_or_fileobj='$f', path_in_repo='$name', repo_id=os.environ['HF_REPO'])"
+            url="https://huggingface.co/$HF_REPO/resolve/main/$name"
+          elif [ "$size" -lt 2000000000 ]; then
+            cp "$f" "$name"
+            gh release view tutor-models >/dev/null 2>&1 || gh release create tutor-models --title "AI tutor models" --notes "Fine-tuned VocaBloom tutor models (GGUF)."
+            gh release upload tutor-models "$name" --clobber
+            url="https://github.com/${{ github.repository }}/releases/download/tutor-models/$name"
+          else
+            echo "::error::$name is over 2 GB: add HF_TOKEN and HF_REPO to publish it on Hugging Face."; exit 1
+          fi
+          echo "### $PKG" >> $GITHUB_STEP_SUMMARY
+          echo "url: $url" >> $GITHUB_STEP_SUMMARY
+          echo "size: $size" >> $GITHUB_STEP_SUMMARY
+          echo "sha256: $sum" >> $GITHUB_STEP_SUMMARY
