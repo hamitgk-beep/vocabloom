@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../l10n.dart';
-import 'ai_types.dart';
+import '../../ai/local_ai.dart';
+import '../../ai/tutor.dart';
 
 enum AiTool {
   explain(Icons.lightbulb_outline_rounded, Color(0xFF5B3FD9)),
@@ -30,14 +31,45 @@ enum AiTool {
       };
 }
 
-/// Answers use **bold** for headings; this draws them without a Markdown package.
-Widget aiRichText(String text, TextStyle? style) {
-  final parts = text.split('**');
-  return SelectableText.rich(TextSpan(style: style, children: [
+/// Answers use **bold** headings and "- " bullets; a chat line starting with
+/// "💡 " is the Turkish correction hint. Drawn without a Markdown package.
+Widget aiRichText(String text, TextStyle? style, {Color? hintColor}) {
+  final lines = text.split('\n');
+  final main = <String>[];
+  String? hint;
+  for (final l in lines) {
+    if (l.trimLeft().startsWith('💡')) {
+      hint = l.trimLeft().substring(2).trim();
+    } else {
+      main.add(l.startsWith('- ') ? '•  ${l.substring(2)}' : l);
+    }
+  }
+  final parts = main.join('\n').trim().split('**');
+  final body = SelectableText.rich(TextSpan(style: style, children: [
     for (var i = 0; i < parts.length; i++)
       TextSpan(text: parts[i], style: i.isOdd ? const TextStyle(fontWeight: FontWeight.w800) : null),
   ]));
+  if (hint == null || hint.isEmpty) return body;
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    body,
+    Builder(builder: (context) {
+      final t = Theme.of(context);
+      final c = hintColor ?? const Color(0xFFB45309);
+      return Container(
+        margin: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        decoration: BoxDecoration(color: c.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(Icons.tips_and_updates_outlined, size: 16, color: c),
+          const SizedBox(width: 6),
+          Expanded(child: Text(hint!, style: t.textTheme.bodyMedium?.copyWith(color: t.colorScheme.onSurface, height: 1.4))),
+        ]),
+      );
+    }),
+  ]);
 }
+
+String aiError(Object e) => e is AiException ? e.message : L('Yanıt üretilemedi. Tekrar dene.', 'Could not produce an answer. Try again.');
 
 class AiDisclaimer extends StatelessWidget {
   const AiDisclaimer({super.key});
@@ -64,8 +96,8 @@ class AiToolPage extends StatelessWidget {
   final LocalAi ai;
   final Tutor tutor;
   final String? initialText;
-  final List<String> quizWords;
-  const AiToolPage({super.key, required this.tool, required this.ai, required this.tutor, this.initialText, this.quizWords = const []});
+  final List<String>? quizWords;
+  const AiToolPage({super.key, required this.tool, required this.ai, required this.tutor, this.initialText, this.quizWords});
 
   @override
   Widget build(BuildContext context) {
@@ -142,10 +174,10 @@ class _AskViewState extends State<_AskView> {
       answer = '';
       busy = true;
     });
-    sub = widget.run(s).listen((c) => setState(() => answer += c), onDone: () => setState(() => busy = false), onError: (_) {
+    sub = widget.run(s).listen((c) => setState(() => answer += c), onDone: () => setState(() => busy = false), onError: (Object e) {
       setState(() {
         busy = false;
-        answer = L('Yanıt üretilemedi. Tekrar dene.', 'Could not produce an answer. Try again.');
+        answer = aiError(e);
       });
     });
   }
@@ -234,7 +266,10 @@ class _ChatViewState extends State<_ChatView> {
     sub = widget.tutor.chatReply(history, level: level, topic: topic).listen((c) {
       setState(() => msgs[msgs.length - 1] = ('assistant', msgs.last.$2 + c));
       _toEnd();
-    }, onDone: () => setState(() => busy = false), onError: (_) => setState(() => busy = false));
+    }, onDone: () => setState(() => busy = false), onError: (Object e) => setState(() {
+          busy = false;
+          msgs[msgs.length - 1] = ('assistant', aiError(e));
+        }));
     _toEnd();
   }
 
@@ -328,7 +363,7 @@ class _ChatViewState extends State<_ChatView> {
 
 class _QuizView extends StatefulWidget {
   final Tutor tutor;
-  final List<String> words;
+  final List<String>? words;
   const _QuizView({required this.tutor, required this.words});
 
   @override
@@ -340,6 +375,25 @@ class _QuizViewState extends State<_QuizView> {
   int i = 0, right = 0;
   int? picked;
   String? error;
+  String more = '';
+  bool moreBusy = false;
+  StreamSubscription<String>? moreSub;
+
+  @override
+  void dispose() {
+    moreSub?.cancel();
+    super.dispose();
+  }
+
+  void _explain(QuizItem q) {
+    setState(() => moreBusy = true);
+    moreSub = widget.tutor.explain(q).listen((c) => setState(() => more += c),
+        onDone: () => setState(() => moreBusy = false),
+        onError: (Object e) => setState(() {
+              moreBusy = false;
+              more = aiError(e);
+            }));
+  }
 
   @override
   void initState() {
@@ -356,10 +410,13 @@ class _QuizViewState extends State<_QuizView> {
       picked = null;
     });
     try {
-      final q = await widget.tutor.quiz(widget.words);
+      final q = await widget.tutor.quiz(words: widget.words);
       if (mounted) setState(() => items = q);
-    } catch (_) {
-      if (mounted) setState(() => error = L('Test hazırlanamadı. Tekrar dene.', 'Could not build the quiz. Try again.'));
+    } catch (e) {
+      if (mounted) setState(() => error = e is AiException ? e.message : L('Test hazırlanamadı. Tekrar dene.', 'Could not build the quiz. Try again.'));
+    }
+    if (mounted && items != null && items!.isEmpty) {
+      setState(() => error = L('Test için önce birkaç kelimeyi "Öğreneceğim" listene ekle.', 'Add a few words to your "To learn" list first.'));
     }
   }
 
@@ -406,6 +463,10 @@ class _QuizViewState extends State<_QuizView> {
       const SizedBox(height: 8),
       ClipRRect(borderRadius: BorderRadius.circular(4), child: LinearProgressIndicator(value: i / qs.length, minHeight: 6)),
       const SizedBox(height: 20),
+      if (q.promptTr.isNotEmpty) ...[
+        Text(q.promptTr, style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant)),
+        const SizedBox(height: 6),
+      ],
       Text(q.question, style: theme.textTheme.titleLarge?.copyWith(height: 1.4)),
       const SizedBox(height: 16),
       for (var k = 0; k < q.options.length; k++)
@@ -447,13 +508,31 @@ class _QuizViewState extends State<_QuizView> {
         Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(color: cs.surfaceContainerHighest.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(14)),
-          child: Text(q.explanationTr, style: theme.textTheme.bodyMedium?.copyWith(height: 1.45)),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(q.explanationTr, style: theme.textTheme.bodyMedium?.copyWith(height: 1.45)),
+            if (more.isNotEmpty) ...[
+              const Divider(height: 20),
+              aiRichText(more, theme.textTheme.bodyMedium?.copyWith(height: 1.45)),
+            ],
+            if (more.isEmpty)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: moreBusy ? null : () => _explain(q),
+                  icon: moreBusy ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.auto_awesome_rounded, size: 18),
+                  label: Text(L('Yapay zekâ ile ayrıntılı açıkla', 'Explain in detail with AI')),
+                ),
+              ),
+          ]),
         ),
         const SizedBox(height: 14),
         FilledButton(
           onPressed: () => setState(() {
             i++;
             picked = null;
+            moreSub?.cancel();
+            more = '';
+            moreBusy = false;
           }),
           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
           child: Text(i + 1 < qs.length ? L('Sonraki soru', 'Next question') : L('Sonucu gör', 'See result')),

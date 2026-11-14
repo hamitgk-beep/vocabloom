@@ -13,6 +13,8 @@ import 'online/update_check.dart';
 import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
 import 'ui/onboarding.dart';
+import 'ui/ai/ai_page.dart';
+import 'ai/tutor.dart';
 import 'ui/theme.dart';
 
 import 'l10n.dart';
@@ -200,12 +202,14 @@ class _HomePageState extends State<HomePage> {
       LibraryPage(app: widget.app),
       WordsPage(app: widget.app),
       CategoriesPage(app: widget.app),
+      AiPage(ai: widget.app.localAi, tutor: Tutor.of(widget.app)),
       SettingsPage(app: widget.app),
     ];
     final dests = [
       (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
       (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimelerim', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
+      (Icons.auto_awesome_outlined, Icons.auto_awesome_rounded, L('Yapay Zekâ', 'AI Tutor')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
     final wide = MediaQuery.sizeOf(context).width >= 720;

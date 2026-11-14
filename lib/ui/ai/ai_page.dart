@@ -5,15 +5,10 @@ import 'package:flutter/material.dart';
 import '../../l10n.dart';
 import '../theme.dart';
 import 'ai_tools.dart';
-import 'ai_types.dart';
+import '../../ai/local_ai.dart';
+import '../../ai/tutor.dart';
 
 const _premiumGold = Color(0xFFD99A1E);
-
-String fmtSize(int bytes) {
-  final gb = bytes / (1024 * 1024 * 1024);
-  if (gb >= 1) return '${gb.toStringAsFixed(gb >= 2.95 ? 0 : 1).replaceAll('.', uiEnglish ? '.' : ',')} GB';
-  return '${(bytes / (1024 * 1024)).round()} MB';
-}
 
 /// The "Yapay Zekâ" tab: on-device tutor packages and what you can do with them.
 class AiPage extends StatefulWidget {
@@ -57,14 +52,16 @@ class _AiPageState extends State<AiPage> {
   }
 
   void _download(AiPackage p) {
-    setState(() => progress[p.id] = AiDownload(0, p.sizeBytes));
+    setState(() => progress[p.id] = AiDownload(p.id, 0, 0));
     subs[p.id] = ai.download(p.id).listen(
       (d) => setState(() => progress[p.id] = d),
       onError: (Object e) {
         setState(() => progress.remove(p.id));
         subs.remove(p.id);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(L('İndirme yarıda kaldı. Tekrar denediğinde kaldığı yerden devam eder.', 'The download stopped. It will resume where it left off when you try again.'))));
+            content: Text(e is AiException
+                ? e.message
+                : L('İndirme yarıda kaldı. Tekrar denediğinde kaldığı yerden devam eder.', 'The download stopped. It will resume where it left off when you try again.'))));
       },
       onDone: () {
         setState(() => progress.remove(p.id));
@@ -85,7 +82,7 @@ class _AiPageState extends State<AiPage> {
       context: context,
       builder: (c) => AlertDialog(
         title: Text(L('${p.nameTr} paketi silinsin mi?', 'Delete the ${p.nameEn} package?')),
-        content: Text(L('Cihazında ${fmtSize(p.sizeBytes)} yer açılır. İstediğin zaman yeniden indirebilirsin.', 'This frees ${fmtSize(p.sizeBytes)} on your device. You can download it again any time.')),
+        content: Text(L('Cihazında ${formatBytes(p.sizeBytes)} yer açılır. İstediğin zaman yeniden indirebilirsin.', 'This frees ${formatBytes(p.sizeBytes)} on your device. You can download it again any time.')),
         actions: [
           TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L('Vazgeç', 'Cancel'))),
           FilledButton(onPressed: () => Navigator.pop(c, true), child: Text(L('Sil', 'Delete'))),
@@ -102,8 +99,8 @@ class _AiPageState extends State<AiPage> {
         icon: const Icon(Icons.workspace_premium_rounded, color: _premiumGold, size: 36),
         title: Text(L('VocaBloom Premium', 'VocaBloom Premium')),
         content: Text(L(
-            '${p.nameTr} paketi Premium aboneliğe dahildir. Abonelik çok yakında açılacak; şimdilik ücretsiz Hafif paketi kullanabilirsin.',
-            'The ${p.nameEn} package is included with Premium. Subscriptions open very soon; for now you can use the free Lite package.')),
+            '${p.nameTr} paketi Premium aboneliğe dahildir. Abonelik çok yakında açılacak; şimdilik ücretsiz paketi kullanabilirsin.',
+            'The ${p.nameEn} package is included with Premium. Subscriptions open very soon; for now you can use the free package.')),
         actions: [FilledButton(onPressed: () => Navigator.pop(c), child: Text(L('Tamam', 'OK')))],
       ),
     );
@@ -149,7 +146,7 @@ class _AiPageState extends State<AiPage> {
                 active: ai.activeId == p.id && installed.contains(p.id),
                 locked: p.premium && !ai.premiumUnlocked,
                 ramMb: ramMb,
-                progress: progress[p.id],
+                progress: progress[p.id] ?? ai.downloads[p.id],
                 onDownload: () => _download(p),
                 onCancel: () => _cancel(p),
                 onDelete: () => _delete(p),
@@ -285,7 +282,7 @@ class _PackageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
-    final free = p.tier == 'free';
+    final free = p.tier == AiTier.free;
     final badgeColor = free ? const Color(0xFF15803D) : _premiumGold;
     final heavy = ramMb != null && ramMb! < p.minRamGb * 1024 - 512;
     final pr = progress;
@@ -301,9 +298,9 @@ class _PackageCard extends StatelessWidget {
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(uiEnglish ? p.nameEn : p.nameTr, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+              Text(p.name, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
               const SizedBox(height: 2),
-              Text('${fmtSize(p.sizeBytes)} · ${p.model}', style: theme.textTheme.bodySmall),
+              Text('${p.sizeLabel} · ${p.model}', style: theme.textTheme.bodySmall),
             ]),
           ),
           Container(
@@ -312,24 +309,24 @@ class _PackageCard extends StatelessWidget {
             child: Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(free ? Icons.lock_open_rounded : Icons.workspace_premium_rounded, size: 15, color: badgeColor),
               const SizedBox(width: 4),
-              Text(free ? L('Ücretsiz', 'Free') : 'Premium',
+              Text(free ? L('Ücretsiz', 'Free') : p.tier == AiTier.pro ? 'Premium Pro' : 'Premium',
                   style: theme.textTheme.labelMedium?.copyWith(color: badgeColor, fontWeight: FontWeight.w800)),
             ]),
           ),
         ]),
         const SizedBox(height: 10),
-        Text(uiEnglish ? p.descEn : p.descTr, style: theme.textTheme.bodyMedium?.copyWith(height: 1.45)),
+        Text(p.desc, style: theme.textTheme.bodyMedium?.copyWith(height: 1.45)),
         const SizedBox(height: 12),
-        for (final r in p.ratings) _RatingRow(label: uiEnglish ? r.$2 : r.$1, score: r.$3),
+        for (final r in p.ratings) _RatingRow(label: r.label, score: r.score),
         const SizedBox(height: 8),
-        _Note(icon: Icons.info_outline_rounded, text: uiEnglish ? p.noteEn : p.noteTr),
+        _Note(icon: Icons.info_outline_rounded, text: p.note),
         _Note(
           icon: heavy ? Icons.warning_amber_rounded : Icons.smartphone_rounded,
           color: heavy ? const Color(0xFFB45309) : null,
           text: heavy
               ? L('Önerilen: en az ${p.minRamGb} GB RAM. Telefonun için ağır olabilir, yavaş çalışabilir.',
                   'Recommended: at least ${p.minRamGb} GB RAM. It may be heavy and slow on your phone.')
-              : L('Önerilen: en az ${p.minRamGb} GB RAM olan telefonlar.', 'Recommended: phones with at least ${p.minRamGb} GB RAM.'),
+              : L('Önerilen: ${p.device}', 'Recommended: ${p.device}'),
         ),
         _Note(icon: Icons.verified_outlined, text: L('Lisans: ${p.licenseName}', 'License: ${p.licenseName}')),
         const SizedBox(height: 12),
@@ -338,7 +335,7 @@ class _PackageCard extends StatelessWidget {
           const SizedBox(height: 8),
           Row(children: [
             Expanded(
-              child: Text('%${(pr.fraction * 100).round()} · ${fmtSize(pr.received)} / ${fmtSize(pr.total)}',
+              child: Text(pr.fraction == null ? L('İndirme başlıyor…', 'Starting download…') : '%${(pr.fraction! * 100).round()} · ${formatBytes(pr.received)} / ${formatBytes(pr.total)}',
                   style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
             ),
             TextButton(onPressed: onCancel, child: Text(L('Durdur', 'Pause'))),
@@ -383,7 +380,7 @@ class _PackageCard extends StatelessWidget {
               onPressed: onDownload,
               style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(46)),
               icon: const Icon(Icons.download_rounded, size: 20),
-              label: Text(L('İndir · ${fmtSize(p.sizeBytes)}', 'Download · ${fmtSize(p.sizeBytes)}')),
+              label: Text(L('İndir · ${formatBytes(p.sizeBytes)}', 'Download · ${formatBytes(p.sizeBytes)}')),
             ),
           ),
       ]),
