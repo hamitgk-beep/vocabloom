@@ -493,7 +493,7 @@ class Tutor {
         final opts = [lemma, ...others.take(3).map((x) => x.$1)]..shuffle(rnd);
         out.add(QuizItem(
           question: blank,
-          promptTr: 'Boşluğa hangi kelime gelir?',
+          promptTr: L('Boşluğa hangi kelime gelir?', 'Which word fills the gap?'),
           options: opts,
           answer: opts.indexOf(lemma),
           explanationTr: '"$lemma" = $mean',
@@ -504,10 +504,10 @@ class Tutor {
         if (opts.length < 4) continue;
         out.add(QuizItem(
           question: lemma,
-          promptTr: 'Bu kelimenin Türkçe anlamı hangisi?',
+          promptTr: L('Bu kelimenin Türkçe anlamı hangisi?', 'What does this word mean in Turkish?'),
           options: opts,
           answer: opts.indexOf(mean),
-          explanationTr: '"$lemma" = $mean${ctx == null ? '' : '\nÖrnek: $ctx'}',
+          explanationTr: '"$lemma" = $mean${ctx == null ? '' : '\n${L('Örnek', 'Example')}: $ctx'}',
           word: lemma,
         ));
       }
