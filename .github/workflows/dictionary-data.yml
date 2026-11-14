@@ -177,10 +177,23 @@ jobs:
                   except sqlite3.OperationalError:
                       out[name] = 0
               return out
+          import hashlib
+          def content(path):
+              db = sqlite3.connect(path)
+              h = hashlib.sha1()
+              for q in ['SELECT phrase, cat, json FROM exd ORDER BY 1, 2', 'SELECT word, json FROM wd ORDER BY 1',
+                        'SELECT phrase, cat, tr, entr, extr FROM expr ORDER BY 1, 2', 'SELECT root, json FROM wfd ORDER BY 1']:
+                  try:
+                      for row in db.execute(q):
+                          h.update(repr(row).encode())
+                  except sqlite3.OperationalError:
+                      pass
+              return h.hexdigest()
           old, new = stats('old.db'), stats('assets/dict.db')
           grew = {k: new[k] - old[k] for k in new if new[k] > old[k]}
-          print('NEW=' + ('1' if grew else '0'))
-          print('MSG=' + ', '.join(f'{v} new {k}' for k, v in grew.items()))
+          changed = content('old.db') != content('assets/dict.db')  # e.g. corrections from the review
+          print('NEW=' + ('1' if grew or changed else '0'))
+          print('MSG=' + (', '.join(f'{v} new {k}' for k, v in grew.items()) or 'reviewed corrections'))
           print('TOTAL=' + ', '.join(f'{k} {v}' for k, v in new.items()))
           PY
           cat stats.txt

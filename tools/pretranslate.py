@@ -896,7 +896,8 @@ def load_review_todo(dict_path, files, reviewed, me):
                 row = (kind, key, gen, entry, references(db, kind, j))
                 (own if gen == me else other).append(row)
     db.close()
-    order = {'exd': 0, 'gl': 1, 'wd': 2}
+    # Short meanings first: they bring Turkish to entries that have none, and are quick to check.
+    order = {'gl': 0, 'exd': 1, 'wd': 2}
     other.sort(key=lambda r: order[r[0]])
     own.sort(key=lambda r: order[r[0]])
     return other + own
