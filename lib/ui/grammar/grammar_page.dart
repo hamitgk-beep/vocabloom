@@ -17,7 +17,8 @@ Color _levelColor(String level) => switch (level) {
       'A1' || 'A2' => const Color(0xFF0E9F6E),
       'B1' => const Color(0xFF2563EB),
       'B2' => const Color(0xFF7C3AED),
-      _ => const Color(0xFFE0752D),
+      'C1' => const Color(0xFFE0752D),
+      _ => const Color(0xFFDC2626),
     };
 
 class _LevelChip extends StatelessWidget {
@@ -48,6 +49,14 @@ class _GrammarPageState extends State<GrammarPage> {
   List<GrammarTopic>? topics;
   late final progress = GrammarProgress(widget.app.user);
 
+  /// The CEFR level the list is filtered to; null shows every level.
+  late String? level = cefrLevels.contains(widget.app.user.getSetting('grammar_level')) ? widget.app.user.getSetting('grammar_level') : null;
+
+  void _setLevel(String? v) {
+    widget.app.user.setSetting('grammar_level', v);
+    setState(() => level = v);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -66,6 +75,7 @@ class _GrammarPageState extends State<GrammarPage> {
     final ts = topics;
     final total = ts?.fold<int>(0, (a, t) => a + t.exercises.length) ?? 0;
     final done = ts?.fold<int>(0, (a, t) => a + progress.done(t.id).length) ?? 0;
+    final shown = ts == null ? const <GrammarTopic>[] : topicsByLevel([for (final t in ts) if (level == null || t.level == level) t]);
     return Scaffold(
       appBar: AppBar(toolbarHeight: 68, title: Text(L('Gramer', 'Grammar'), style: theme.textTheme.headlineSmall)),
       body: ts == null
@@ -101,15 +111,40 @@ class _GrammarPageState extends State<GrammarPage> {
                           style: theme.textTheme.labelLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700)),
                     ]),
                   ),
+                  if (nextGrammarTopic(ts, progress, level: level) case final next?)
+                    _NextTopicCard(topic: next, done: progress.done(next.id).length, onTap: () => _open(next)),
+                  const SizedBox(height: 14),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: [
+                      for (final l in [null, ...cefrLevels])
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: ChoiceChip(
+                            label: Text(l ?? L('Tüm seviyeler', 'All levels')),
+                            selected: level == l,
+                            showCheckmark: false,
+                            labelStyle: TextStyle(fontWeight: FontWeight.w700, color: level == l ? Colors.white : (l == null ? null : _levelColor(l))),
+                            selectedColor: l == null ? cs.primary : _levelColor(l),
+                            onSelected: (_) => _setLevel(l),
+                          ),
+                        ),
+                    ]),
+                  ),
+                  if (level != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(_levelNote(level!), style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant, height: 1.4)),
+                    ),
                   for (final cat in grammarCategories.entries)
-                    if (ts.any((t) => t.category == cat.key)) ...[
+                    if (shown.any((t) => t.category == cat.key)) ...[
                       SectionLabel(uiEnglish ? cat.value.$2 : cat.value.$1),
                       Material(
                         color: cs.surface,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: cs.outlineVariant)),
                         clipBehavior: Clip.antiAlias,
                         child: Column(children: [
-                          for (final (i, t) in ts.where((t) => t.category == cat.key).indexed) ...[
+                          for (final (i, t) in shown.where((t) => t.category == cat.key).indexed) ...[
                             if (i > 0) Divider(height: 1, indent: 16, endIndent: 16, color: cs.outlineVariant),
                             _TopicTile(topic: t, done: progress.done(t.id).length, onTap: () => _open(t)),
                           ],
@@ -119,6 +154,72 @@ class _GrammarPageState extends State<GrammarPage> {
                 ]),
               ),
             ),
+    );
+  }
+}
+
+String _levelNote(String level) => switch (level) {
+      'A1' => L('A1 · Başlangıç: kendini tanıtma, günlük basit cümleler.', 'A1 · Beginner: introducing yourself, simple everyday sentences.'),
+      'A2' => L('A2 · Temel: geçmiş ve gelecek, karşılaştırma, günlük konular.', 'A2 · Elementary: past and future, comparing, everyday topics.'),
+      'B1' => L('B1 · Orta: deneyim anlatma, koşul cümleleri, görüş bildirme.', 'B1 · Intermediate: telling experiences, conditionals, giving opinions.'),
+      'B2' => L('B2 · Orta üstü: akıcı ve ayrıntılı anlatım, edilgen ve dolaylı yapılar.', 'B2 · Upper intermediate: fluent, detailed speech, passive and indirect forms.'),
+      'C1' => L('C1 · İleri: vurgulu ve resmî yapılar, ince anlam farkları.', 'C1 · Advanced: emphatic and formal structures, fine shades of meaning.'),
+      _ => L('C2 · Ustalık: anadili gibi doğal ve esnek kullanım.', 'C2 · Proficiency: natural, flexible, near-native use.'),
+    };
+
+/// The suggested next topic, shown under the hero.
+class _NextTopicCard extends StatelessWidget {
+  final GrammarTopic topic;
+  final int done;
+  final VoidCallback onTap;
+  const _NextTopicCard({required this.topic, required this.done, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final c = _levelColor(topic.level);
+    final n = topic.exercises.length;
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Material(
+        color: c.withValues(alpha: 0.08),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: c.withValues(alpha: 0.35))),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+            child: Row(children: [
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(color: c, borderRadius: BorderRadius.circular(14)),
+                child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 28),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(L('Sıradaki konu', 'Up next'),
+                      style: theme.textTheme.labelLarge?.copyWith(color: c, fontWeight: FontWeight.w800, letterSpacing: 0.3)),
+                  const SizedBox(height: 2),
+                  Row(children: [
+                    Flexible(child: Text(topic.titleTr, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800))),
+                    const SizedBox(width: 8),
+                    _LevelChip(topic.level),
+                  ]),
+                  const SizedBox(height: 2),
+                  Text(
+                    done == 0 ? '${topic.titleEn} · ${L('$n cümle', '$n sentences')}' : '${topic.titleEn} · ${L('$done/$n tamamlandı', '$done of $n done')}',
+                    style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant),
+                  ),
+                ]),
+              ),
+              Icon(Icons.chevron_right_rounded, color: c),
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
