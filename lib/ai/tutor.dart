@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart' show visibleForTesting;
+
 import '../app_state.dart';
 import '../data/dict_db.dart';
 import '../data/user_db.dart';
@@ -250,7 +252,55 @@ class Tutor {
     final user = 'Öğrencinin metni:\n"""\n${userText.trim()}\n"""'
         '${facts.isEmpty ? '' : '\n\nYardımcı bilgi (yalnızca kelime anlamları için kullan; metnin doğru olduğu '
             'anlamına gelmez):\n$facts'}';
-    return ai.generate(_correctSystem(), [('user', user)], maxTokens: 380, temperature: 0.1);
+    return _guardNoError(userText, ai.generate(_correctSystem(), [('user', user)], maxTokens: 380, temperature: 0.1));
+  }
+
+  @visibleForTesting
+  static Stream<String> guardNoErrorForTest(String original, Stream<String> answer) => _guardNoError(original, answer);
+
+  static const noErrorAnswer = '**Hatalar:** Hata yok, tebrikler!';
+
+  /// Small models sometimes list "mistakes" in a correct text. When the
+  /// corrected text the model gives is the learner's text itself, the answer is
+  /// "no mistakes", whatever else it wrote. The answer is streamed as usual
+  /// once the "Doğru hâli" line is complete.
+  static Stream<String> _guardNoError(String original, Stream<String> answer) async* {
+    final buf = StringBuffer();
+    var decided = false;
+    await for (final piece in answer) {
+      if (decided) {
+        yield piece;
+        continue;
+      }
+      buf.write(piece);
+      final text = buf.toString();
+      final m = RegExp(r'\*\*Doğru hâli:\*\*\s*(.+?)\s*\n\s*\*\*Hatalar', dotAll: true).firstMatch(text);
+      if (m == null) {
+        if (text.length > 1200) {
+          decided = true;
+          yield text;
+        }
+        continue;
+      }
+      decided = true;
+      if (sameText(m.group(1)!, original)) {
+        yield '**Doğru hâli:** ${original.trim()}\n$noErrorAnswer';
+        return;
+      }
+      yield text;
+    }
+    if (!decided) yield buf.toString();
+  }
+
+  /// Equal apart from case, quotes, spaces and final punctuation.
+  static bool sameText(String a, String b) {
+    String n(String s) => s
+        .toLowerCase()
+        .replaceAll(RegExp('[’‘]'), "'")
+        .replaceAll(RegExp(r'["“”]'), '')
+        .replaceAll(RegExp(r'[.!?,;:\s]+'), ' ')
+        .trim();
+    return n(a) == n(b);
   }
 
   /// Next turn of an everyday conversation. [history] is (role, text) with

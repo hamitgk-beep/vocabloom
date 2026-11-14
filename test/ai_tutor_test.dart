@@ -128,4 +128,22 @@ void main() {
       ..write(f.close());
     expect(out.toString(), 'Merhaba <b>dünya');
   });
+
+  test('chat turns alternate and start with the user', () {
+    expect(alternateTurns([('assistant', 'Hi! Plans?'), ('user', 'Yes'), ('user', 'cinema')]),
+        [('user', 'Hi!'), ('assistant', 'Hi! Plans?'), ('user', 'Yes\n\ncinema')]);
+  });
+
+  test('a correct text is never given invented mistakes', () async {
+    final out = await Tutor.guardNoErrorForTest('I have been living in Izmir since 2018.', Stream.fromIterable([
+      '**Doğru hâli:** I have been living in Izmir since 2018.\n',
+      '**Hatalar:**\n- "have been living" → "have lived"',
+    ])).join();
+    expect(out, contains(Tutor.noErrorAnswer));
+    expect(out, isNot(contains('have lived')));
+    final fixed = await Tutor.guardNoErrorForTest('Yesterday I have went home.', Stream.fromIterable([
+      '**Doğru hâli:** Yesterday I went home.\n**Hatalar:**\n- have went → went: ...',
+    ])).join();
+    expect(fixed, contains('have went → went'));
+  });
 }
