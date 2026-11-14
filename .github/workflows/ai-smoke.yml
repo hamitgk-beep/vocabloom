@@ -10,6 +10,9 @@ on:
       packages:
         description: 'Packages to run (lite,plus,pro)'
         default: 'lite,plus'
+      candidates:
+        description: 'Other models to compare, as label=package=url (space separated)'
+        default: ''
 
 jobs:
   smoke:
@@ -44,8 +47,23 @@ jobs:
             curl -sSL --retry 3 -o "models/$id.gguf" "https://huggingface.co$url"
             ls -la "models/$id.gguf"
           done
+      - name: Download candidate models
+        if: github.event.inputs.candidates != ''
+        env:
+          CANDIDATES: ${{ github.event.inputs.candidates }}
+        run: |
+          for c in $CANDIDATES; do
+            label=${c%%=*}; rest=${c#*=}; url=${rest#*=}
+            curl -sSL --retry 3 -o "models/$label.gguf" "$url"
+            ls -la "models/$label.gguf"
+          done
       - name: Run the tutor on the models
         env:
           AI_MODEL_DIR: ${{ github.workspace }}/models
-          AI_PACKAGES: ${{ github.event.inputs.packages || 'lite,plus' }}
-        run: flutter test test/ai_smoke_test.dart --reporter expanded
+          PKGS: ${{ github.event.inputs.packages || 'lite,plus' }}
+          CANDIDATES: ${{ github.event.inputs.candidates }}
+        run: |
+          AI_PACKAGES="$PKGS"
+          for c in $CANDIDATES; do label=${c%%=*}; rest=${c#*=}; AI_PACKAGES="$AI_PACKAGES,$label=${rest%%=*}"; done
+          export AI_PACKAGES
+          flutter test test/ai_smoke_test.dart --reporter expanded

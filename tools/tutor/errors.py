@@ -174,10 +174,18 @@ CORRECT = [
 ]
 
 TURKISH = [
-    ('Yarın sinemaya gidelim mi?', 'Shall we go to the cinema tomorrow?'),
-    ('Bu kitabı çok sevdim.', 'I really loved this book.'),
-    ('Ne zamandır burada yaşıyorsun?', 'How long have you been living here?'),
-    ('Keşke daha erken gelseydin.', 'I wish you had come earlier.'),
+    ('Yarın sinemaya gidelim mi?', 'Shall we go to the cinema tomorrow?',
+     '"-elim mi?" diye öneri yaparken "Shall we …?" kullanılır; ardından fiil yalın hâldedir.'),
+    ('Bu kitabı çok sevdim.', 'I really loved this book.',
+     'Geçmişte olan bir duygu Simple Past ile söylenir; "çok" burada "really" ile karşılanır.'),
+    ('Yarın hava güzel olursa pikniğe gideceğiz.', 'If the weather is nice tomorrow, we will go on a picnic.',
+     'Birinci tip koşul: "if" tarafında geniş zaman (is), sonuç tarafında "will" kullanılır.'),
+    ('Keşke daha erken gelseydin.', 'I wish you had come earlier.',
+     'Geçmişle ilgili pişmanlık "I wish + Past Perfect" ile söylenir: had come.'),
+    ('Bu akşam ne yapıyorsun?', 'What are you doing this evening?',
+     'Yakın gelecekteki planlar Present Continuous ile sorulur: are you doing.'),
+    ('Sana yardım edebilir miyim?', 'Can I help you?',
+     '"-ebilir miyim?" izin veya teklif bildirir; "Can I …?" ile kurulur.'),
 ]
 
 
@@ -217,9 +225,8 @@ def build(per_pattern=3, seed=7):
                 break
     for i, s in enumerate(CORRECT):
         rows.append(('ok-%d' % i, s, '**Doğru hâli:** %s\n**Hatalar:** Hata yok, tebrikler!' % s))
-    for i, (tr, en) in enumerate(TURKISH):
-        rows.append(('tr-%d' % i, tr, None if en is None else '**Doğru hâli:** %s\n**Hatalar:** Türkçe yazdın; '
-                     'İngilizcesi yukarıdaki gibidir.' % en))
+    for i, (tr, en, how) in enumerate(TURKISH):
+        rows.append(('tr-%d' % i, tr, '**İngilizcesi:** %s\n**Nasıl kuruldu:**\n- %s' % (en, how)))
     # Two mistakes in one text, so the model learns to list each.
     for i in range(40):
         (w1, r1, e1), (w2, r2, e2) = rnd.sample(PATTERNS, 2)
