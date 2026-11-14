@@ -236,7 +236,11 @@ Future<void> _settle(WidgetTester tester) async {
   for (var i = 0; i < 5; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
-  while (tester.takeException() != null) {}
+  Object? ex;
+  while ((ex = tester.takeException()) != null) {
+    // A longer translation must not break the layout.
+    if ('$ex'.contains('overflowed')) failures.add('${uiEnglish ? 'en' : 'tr'}\tlayout\t${'$ex'.split('\n').first}');
+  }
 }
 
 String get _lang => uiEnglish ? 'en' : 'tr';
