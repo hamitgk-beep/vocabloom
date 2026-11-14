@@ -14,9 +14,12 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with: { channel: stable, flutter-version: 3.50.0 }
-      - run: flutter pub get
+      # No prebuilt Flutter for Linux ARM: the git checkout fetches the ARM Dart SDK itself.
+      - name: Flutter 3.50.0 (ARM)
+        run: |
+          git clone --depth 1 --branch 3.50.0 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - run: flutter --version && flutter pub get
       - name: Voice speed and stutter test (1 thread, scaled to a low-end phone)
         run: |
           lib=$(find ~/.pub-cache/hosted/pub.dev -path '*sherpa_onnx_linux-*/linux/aarch64' -type d | head -1)

@@ -1,5 +1,0 @@
-warm-up (load + calibrate): 2015 ms, quality steps 10
-  stray sound: en_f1 "night" (2 bursts)
-word: median 153 ms, p90 266 ms here; low-end phone ~798 ms; stray sounds 1/40
-long sentence: 3 parts, first part ready in 595 ms (low-end ~1785 ms), real-time factor 0.17666322389302253 (low-end ~0.53)
-turkish word: 51 ms
