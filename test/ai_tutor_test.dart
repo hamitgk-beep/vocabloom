@@ -28,7 +28,7 @@ class _EchoAi extends LocalAi {
   @override
   Future<void> delete(String id) async {}
   @override
-  String? get activeId => 'lite';
+  String? get activeId => 'pro';
   @override
   Future<void> setActive(String id) async {}
   @override
@@ -62,11 +62,10 @@ void main() {
   app.localAi = ai;
   final tutor = Tutor.of(app);
 
-  test('packages: three tiers, sizes as promised, commercial licence', () {
-    expect(aiPackages.map((p) => p.tier), [AiTier.free, AiTier.plus, AiTier.pro]);
-    expect(aiPackages[0].sizeBytes, lessThanOrEqualTo(520e6));
-    expect(aiPackages[1].sizeBytes, lessThanOrEqualTo(1.55e9));
-    expect(aiPackages[2].sizeBytes, lessThanOrEqualTo(3.1e9));
+  test('one premium package, size as shown, commercial licence', () {
+    expect(aiPackages.map((p) => p.id), ['pro']);
+    expect(aiPackages.single.premium, isTrue);
+    expect(aiPackages.single.sizeBytes, lessThanOrEqualTo(3.1e9));
     for (final p in aiPackages) {
       expect(p.licenseName, 'Apache 2.0');
       expect(p.urls.first, startsWith('https://'));

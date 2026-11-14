@@ -9,7 +9,7 @@ on:
     inputs:
       packages:
         description: 'Packages to run (lite,plus,pro)'
-        default: 'lite,plus'
+        default: 'pro'
       candidates:
         description: 'Other models to compare, as label=package=url (space separated)'
         default: ''
@@ -33,7 +33,7 @@ jobs:
           done
       - name: Download models
         env:
-          PKGS: ${{ github.event.inputs.packages || 'lite,plus' }}
+          PKGS: ${{ github.event.inputs.packages || 'pro' }}
         run: |
           mkdir -p models
           for id in ${PKGS//,/ }; do
@@ -60,7 +60,7 @@ jobs:
       - name: Run the tutor on the models
         env:
           AI_MODEL_DIR: ${{ github.workspace }}/models
-          PKGS: ${{ github.event.inputs.packages || 'lite,plus' }}
+          PKGS: ${{ github.event.inputs.packages || 'pro' }}
           CANDIDATES: ${{ github.event.inputs.candidates }}
         run: |
           AI_PACKAGES="$PKGS"

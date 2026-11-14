@@ -3,13 +3,10 @@
 Uygulamadaki "Yapay Zekâ" bölümünün üç paketi açık kaynaklı Qwen3 modelleridir (Apache 2.0, ticari kullanıma
 açık). Telefonda llama.cpp ile internetsiz çalışırlar (`lib/ai/`).
 
-| Paket | Model | Dosya | Kimler |
-|---|---|---|---|
-| Hafif | Qwen3 0.6B, Q6_K | ~495 MB | Herkes (ücretsiz) |
-| Gelişmiş | Qwen3 1.7B, Q6_K | ~1,4 GB | Ücretli aboneler |
-| Profesyonel | Qwen3 4B Instruct 2507, Q5_K_M | ~2,9 GB | Ücretli aboneler |
+Tek paket vardır: **VocaBloom Yapay Zekâ Öğretmeni**, Qwen3 4B Instruct 2507 (Q5_K_M, ~2,9 GB). Gemma 3 1B/4B ve
+Qwen3 0.6B/1.7B ile aynı görevlerde karşılaştırıldı; dilbilgisi ve düzeltmelerde en doğru sonucu bu model verdi.
 
-Abonelik henüz yok; ücretli paketler `ai_premium` ayarı veya `--dart-define=AI_PREMIUM=true` ile açılır.
+Abonelik henüz yok; paket `ai_premium` ayarı veya `--dart-define=AI_PREMIUM=true` ile açılır.
 
 ## Kalite nasıl sağlanıyor
 
@@ -43,13 +40,12 @@ python3 tools/tutor/build_sft.py build                # data/train.jsonl, data/e
 GitHub'da bunu `tutor-data` iş akışı her gün otomatik yapar (Gemini ücretsiz katmanı, `GEMINI_TEACHER_KEY` gizli anahtarı);
 cevaplar `tutor-data` dalında birikir ve not defteri o daldaki `train.jsonl` dosyasını okur.
 
-Sonra `train_tutor.ipynb` not defterini Kaggle'da veya Colab'da **ücretsiz GPU** ile çalıştırın (`PACKAGE` =
-`lite`, `plus`, `pro`). Not defteri GGUF dosyasını üretir ve isterseniz Hugging Face hesabınıza yükler. Çıkan adres
+Sonra `train_tutor.ipynb` not defterini Kaggle'da veya Colab'da **ücretsiz GPU** ile çalıştırın (`PACKAGE = 'pro'`). Not defteri GGUF dosyasını üretir ve isterseniz Hugging Face hesabınıza yükler. Çıkan adres
 `lib/ai/packages.dart` içindeki `urls` listesinin başına yazılır (ya da uygulamada `ai_url_<paket>` ayarıyla).
 
 ## Kontrol
 
-`.github/workflows/ai-smoke.yml` her PR'da indirme adreslerini kontrol eder, Hafif ve Gelişmiş modelleri indirip
+`.github/workflows/ai-smoke.yml` her PR'da indirme adreslerini kontrol eder, modeli indirip
 uygulamanın gerçek görevlerini çalıştırır; cevaplar iş akışı kaydında okunabilir.
 
 ## Lisanslar

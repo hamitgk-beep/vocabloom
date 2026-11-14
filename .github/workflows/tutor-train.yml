@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: 'lite, plus or pro'
-        default: 'lite'
+        description: 'Package id'
+        default: 'pro'
       epochs:
         description: 'Training epochs'
         default: '2'

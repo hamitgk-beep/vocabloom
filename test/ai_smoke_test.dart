@@ -16,7 +16,7 @@ void main() {
   // "lite,plus" or "label=package,…": label.gguf is run with that package's settings
   // (used to compare candidate models, e.g. "gemma1b=lite").
   final runs = [
-    for (final x in (Platform.environment['AI_PACKAGES'] ?? 'lite').split(','))
+    for (final x in (Platform.environment['AI_PACKAGES'] ?? 'pro').split(','))
       if (x.trim().isNotEmpty) (x.split('=').first.trim(), x.split('=').last.trim())
   ];
 
