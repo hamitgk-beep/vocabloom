@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/dict_db.dart';
 import 'data/review.dart';
 import 'data/user_db.dart';
+import 'ai/local_ai.dart';
 import 'nlp/grammar.dart';
 import 'online/auto_analyzer.dart';
 import 'nlp/text.dart';
@@ -57,6 +58,9 @@ class AppState extends ChangeNotifier {
   int _wordsVersion = 0;
   late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
   late final ReviewStore review = ReviewStore(user);
+
+  /// Offline AI tutor ("Yapay Zekâ" section). Set in main() before the UI starts.
+  late final LocalAi localAi;
 
   AppState(this.dict, this.user) {
     final past = <String>{}, pp = <String>{};
