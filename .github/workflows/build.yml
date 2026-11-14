@@ -16,6 +16,10 @@ jobs:
       - run: flutter pub get
       - run: flutter test
 
+  voice:
+    needs: test
+    uses: ./.github/workflows/voice-perf.yml
+
   windows:
     needs: test
     runs-on: windows-latest
@@ -108,7 +112,7 @@ jobs:
           path: build/macos/Build/Products/Release/VocaBloom.app
 
   release:
-    needs: [windows, android, ios, macos]
+    needs: [voice, windows, android, ios, macos]
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:

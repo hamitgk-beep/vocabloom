@@ -73,6 +73,7 @@ class Speech extends ChangeNotifier {
   /// Target: speech is made at least ~3x faster than it plays, so reading
   /// flows and a tapped word answers quickly, on slow and fast phones alike.
   static const _targetRtf = 0.3;
+  static const _wordSteps = int.fromEnvironment('VOCABLOOM_WORD_STEPS', defaultValue: 4);
 
   void _learnSpeed(double rtf, double secs, int steps) {
     if (secs < 1.5 || rtf <= 0) return; // short clips are mostly overhead
@@ -231,7 +232,8 @@ class Speech extends ChangeNotifier {
         _pump();
       }
     });
-    final threads = max(1, min(4, Platform.numberOfProcessors - 1));
+    // VOCABLOOM_TTS_THREADS lets tests act like a phone with few fast cores.
+    final threads = int.tryParse(Platform.environment['VOCABLOOM_TTS_THREADS'] ?? '') ?? max(1, min(4, Platform.numberOfProcessors - 1));
     _isolate = await Isolate.spawn(_workerMain, [inbox.sendPort, threads]);
     final port = await c.future;
     _starting = null;
@@ -262,8 +264,10 @@ class Speech extends ChangeNotifier {
     final c = Completer<String>();
     _waiting[id] = c;
     final dir = packDir(vo.pack).path;
-    final engine = [vo.engine, vo.pack.id, dir, '$_steps'];
-    if (vo.engine == 'supertonic') _jobSteps[id] = _steps;
+    // A lone word needs few quality steps to sound right, and must answer fast.
+    final steps = text.trim().contains(' ') ? _steps : min(_steps, _wordSteps);
+    final engine = [vo.engine, vo.pack.id, dir, '$steps'];
+    if (vo.engine == 'supertonic') _jobSteps[id] = steps;
     final job = _Job(id, _forSpeech(text), vo.sid, speed ?? this.speed, out, engine);
     urgent ? _queue.addFirst(job) : _queue.add(job);
     await _ensureWorker();
@@ -441,6 +445,7 @@ so.OfflineTts _createEngine(List<String> e, int threads) {
             voiceStyle: '$dir/voice.bin',
           ),
           numThreads: threads,
+          debug: false,
         )
       : so.OfflineTtsModelConfig(
           vits: so.OfflineTtsVitsModelConfig(
@@ -449,6 +454,7 @@ so.OfflineTts _createEngine(List<String> e, int threads) {
             dataDir: '$dir/espeak-ng-data',
           ),
           numThreads: threads,
+          debug: false,
         );
   return so.OfflineTts(so.OfflineTtsConfig(model: model));
 }
