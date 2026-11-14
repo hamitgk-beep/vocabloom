@@ -73,7 +73,7 @@ class _ExprPanelState extends State<ExprPanel> {
         });
       }
     } catch (e) {
-      if (mounted) setState(() => error = '$e');
+      if (mounted) setState(() => error = errorText(e));
     } finally {
       if (mounted) setState(() => loading = false);
     }
@@ -168,7 +168,7 @@ class _ExprPanelState extends State<ExprPanel> {
             if (s.inSentence)
               Padding(
                 padding: const EdgeInsets.only(top: 2),
-                child: Text(tr ? L('Bu cümledeki anlamı', 'Meaning in this sentence') : 'Meaning in this sentence',
+                child: Text(L('Bu cümledeki anlamı', 'Meaning in this sentence'),
                     style: theme.textTheme.labelSmall?.copyWith(color: color)),
               ),
             const SizedBox(height: 4),

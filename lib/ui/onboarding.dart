@@ -179,7 +179,7 @@ class _TapArt extends StatelessWidget {
             Row(children: [
               Text('give up', style: enStyle(t, t.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w800)),
               const Spacer(),
-              Text(uiEnglish ? 'Phrasal Verbs' : 'Öbek fiiller', style: TextStyle(color: categoryById['phrasal_verbs']!.color, fontSize: 12, fontWeight: FontWeight.w700)),
+              Text(L('Öbek fiiller', 'Phrasal Verbs'), style: TextStyle(color: categoryById['phrasal_verbs']!.color, fontSize: 12, fontWeight: FontWeight.w700)),
             ]),
             const SizedBox(height: 2),
             Text('vazgeçmek, bırakmak', style: trStyle(t, t.textTheme.bodyLarge)),

@@ -340,7 +340,7 @@ class Tutor {
       if (isDrillSkip(text)) {
         final (_, e) = drill.current;
         drill.index++;
-        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.noteTr}\n\n${_nextOrEnd(session, drill)}';
+        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.note}\n\n${_nextOrEnd(session, drill)}';
         return;
       }
     }
@@ -356,7 +356,7 @@ class Tutor {
       final (t, e) = drill.current;
       if (isTurkish(text) && !isCorrectTranslation(e, text)) {
         yield '${L('Bu cümleyi İngilizce yazmalısın:', 'Please write this sentence in English:')} **"${e.tr}"**\n'
-            '${L('İpucu:', 'Hint:')} ${e.noteTr}\n$drillHelp';
+            '${L('İpucu:', 'Hint:')} ${e.note}\n$drillHelp';
         return;
       }
       final right = isCorrectTranslation(e, text);

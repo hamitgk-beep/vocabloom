@@ -303,7 +303,8 @@ class _ChatViewState extends State<_ChatView> {
                   label: Text(uiEnglish ? t.$2 : t.$1),
                   onPressed: () {
                     topic = t.$2;
-                    _send(L("Let's talk about ${t.$2.toLowerCase()}.", "Let's talk about ${t.$2.toLowerCase()}."));
+                    // The learner's opening line is English practice in both interface languages.
+                    _send("Let's talk about ${t.$2.toLowerCase()}.");
                   },
                 ),
             ]),

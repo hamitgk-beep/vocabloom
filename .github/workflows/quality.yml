@@ -8,6 +8,9 @@ name: quality
 #     the main pages on phone and desktop sizes, light and dark, and fails on
 #     overflowing layouts, panels that do not fit and empty headings. English
 #     lines without Turkish are listed in the report.
+#  3. qa_test/language_test.dart opens every screen, menu and dialog with the
+#     app language set to Türkçe and to English, screenshots each one
+#     (qa-report/lang/) and fails when a text is in the other language.
 # The report (with screenshots) is uploaded as the "quality-report" artifact
 # and summarised on the run page.
 on:
@@ -67,6 +70,12 @@ jobs:
             echo '|---|---:|'
             sed 's/\t/ | /; s/^/| /; s/$/ |/' qa-report/ui-summary.txt || true
             echo
+            echo "## Arayüz dili (Türkçe / English)"
+            echo
+            n=$(($(wc -l < qa-report/lang/problems.tsv 2>/dev/null || echo 1) - 1))
+            echo "Yanlış dilde kalan metin: $n"
+            [ "$n" -gt 0 ] && { echo; echo '```'; tail -n +2 qa-report/lang/problems.tsv | head -40; echo '```'; }
+            echo
             echo "Ayrıntılar ve ekran görüntüleri: quality-report dosyası (bu çalıştırmanın Artifacts bölümü)."
           } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
@@ -77,4 +86,4 @@ jobs:
       - name: Result
         run: |
           [ "${{ steps.audit.outputs.status }}" = 0 ] || { echo "::error::Dictionary audit: a bug count went up (see summary)"; exit 1; }
-          [ "${{ steps.ui.outputs.status }}" = 0 ] || { echo "::error::Panel check failed: layout problem or empty heading (see qa-report/ui-test.log)"; exit 1; }
+          [ "${{ steps.ui.outputs.status }}" = 0 ] || { echo "::error::Panel check failed: layout problem, empty heading or text in the wrong language (see qa-report/ui-test.log)"; exit 1; }

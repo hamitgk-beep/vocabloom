@@ -22,6 +22,7 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
+import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
 import 'package:kelime_okur/ui/other_pages.dart';
 import 'package:kelime_okur/ui/settings_page.dart';
@@ -338,7 +339,7 @@ void main() {
                 (c) => showWordSheet(c, app, word, ctx: buildContext(app, para, a, ti)),
                 shotName: mode == 'tr+en' ? name : null);
             // Word Family tab.
-            final fam = find.text('Word Family');
+            final fam = find.text(L('Kelime ailesi', 'Word Family'));
             if (fam.evaluate().isNotEmpty) {
               await tester.tap(fam.first);
               await tester.pumpAndSettle();

@@ -28,11 +28,19 @@ Geliştiren: Hamit Gök
   her cümlenin Türkçe çevirisi ve her bölümün özeti çıkarılıp cihaza kaydedilir; sonra internetsiz görünür.
   Sözlükte yalnızca İngilizce açıklaması olan kalıplar da (önce kitaplarında geçenler) Türkçeye çevrilip kaydedilir.
 
+## Arayüz dili
+
+Ayarlar > Uygulama dili ile tüm menüler, düğmeler, açıklamalar, hata mesajları ve Flutter'ın kendi metinleri
+(geri, kopyala/yapıştır …) Türkçe ya da İngilizce olur. Her metin `L('Türkçe', 'English')` ile yazılır.
+Gramer konularının İngilizce açıklamaları `assets/grammar/lessons_en.json` dosyasındadır. Öğrenme içeriği
+(İngilizce örnek cümleler, kitap metni, Türkçe çeviri alıştırmaları) her iki dilde de olduğu gibi kalır.
+
 ## Geliştirme
 
 ```bash
 python3 tools/build_dict.py <ham_veri_klasörü> assets/dict.db   # sözlüğü yeniden üret
-flutter test
+flutter test                              # birim testleri + kaynakta sabit metin denetimi (test/l10n_test.dart)
+flutter test qa_test/language_test.dart   # her ekranı Türkçe ve İngilizce açar, yanlış dilde metin arar, ekran görüntüsü alır
 flutter run -d windows   # veya linux, macos, android cihaz
 ```
 

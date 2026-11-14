@@ -208,11 +208,13 @@ class _Hero extends StatelessWidget {
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Icon(active == null ? Icons.download_rounded : Icons.check_circle_rounded, color: Colors.white, size: 18),
             const SizedBox(width: 6),
-            Text(
-              active == null
-                  ? L('Başlamak için modeli indir', 'Download the model to start')
-                  : L('Model hazır: ${active!.nameTr}', 'Model ready: ${active!.nameEn}'),
-              style: theme.textTheme.labelLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+            Flexible(
+              child: Text(
+                active == null
+                    ? L('Başlamak için modeli indir', 'Download the model to start')
+                    : L('Model hazır: ${active!.nameTr}', 'Model ready: ${active!.nameEn}'),
+                style: theme.textTheme.labelLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),
+              ),
             ),
           ]),
         ),

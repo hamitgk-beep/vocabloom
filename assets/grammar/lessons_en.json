@@ -1,0 +1,902 @@
+{
+ "version": 1,
+ "note": "English explanations, patterns and notes for the English interface; keyed by the ids in lessons.json.",
+ "topics": {
+  "simple_present": {
+   "explanation": "**When is it used?** For habits, repeated actions, general truths and permanent situations.\n- It matches the Turkish aorist (\"-ir, -ar\") and the habits Turkish often says with \"-iyor\": \"Her sabah koşuyorum\" = I run every morning.\n- With he, she and it the verb takes **-s / -es**: she works, he watches.\n- Negatives and questions use **do / does**; after does the verb stays in its base form: She doesn't like tea. Does he work here?\n- Common time words: always, usually, often, sometimes, never, every day.",
+   "structure": [
+    "Subject + V1 (he/she/it: V1 + s)",
+    "Subject + do/does + not + V1",
+    "Do/Does + subject + V1?"
+   ],
+   "notes": {
+    "simple_present-1": "With he/she/it the verb takes -s: plays.",
+    "simple_present-2": "The third person singular negative is \"doesn't + V1\".",
+    "simple_present-3": "General truths take the Simple Present.",
+    "simple_present-4": "Ask about permanent situations in the Simple Present: Where do you live?",
+    "simple_present-5": "\"Geç kalmak\" is usually \"be late\"; \"never\" goes before a main verb but after \"be\".",
+    "simple_present-6": "Timetables and schedules take the Simple Present."
+   }
+  },
+  "present_continuous": {
+   "explanation": "**When is it used?** For actions happening now, situations going on around this time and plans for the near future.\n- \"Şu an kitap okuyorum\" = I am reading a book now.\n- \"Bu ay yeni bir proje üzerinde çalışıyorum\" = I'm working on a new project this month.\n- Planned near future: \"Yarın Ankara'ya gidiyorum\" = I'm going to Ankara tomorrow.\n- **Careful:** state verbs such as know, like, want, need, believe and understand usually do not take -ing: I know (not I am knowing).",
+   "structure": [
+    "Subject + am/is/are + V-ing",
+    "Subject + am/is/are + not + V-ing",
+    "Am/Is/Are + subject + V-ing?"
+   ],
+   "notes": {
+    "present_continuous-1": "An action happening now: am + V-ing.",
+    "present_continuous-2": "With a plural subject: are + V-ing.",
+    "present_continuous-3": "Temporary situations around this time take the Present Continuous.",
+    "present_continuous-4": "Ask about near-future plans with the Present Continuous.",
+    "present_continuous-5": "Question: Why + are + subject + V-ing?",
+    "present_continuous-6": "\"understand\" is a state verb and does not take -ing: I understand."
+   }
+  },
+  "simple_past": {
+   "explanation": "**When is it used?** For actions that happened and finished at a definite time in the past. It matches the Turkish \"-di\" ending.\n- Regular verbs take **-ed**: worked, visited. The V2 form of irregular verbs has to be learned: go → went, see → saw.\n- Negatives and questions use **did**, and the verb goes back to its base form: I didn't go. Did you see it? (not didn't went!)\n- Time words: yesterday, last week, two years ago, in 2019.",
+   "structure": [
+    "Subject + V2",
+    "Subject + did not + V1",
+    "Did + subject + V1?"
+   ],
+   "notes": {
+    "simple_past-1": "Finished past: V2 (watched).",
+    "simple_past-2": "\"go\" is irregular: went.",
+    "simple_past-3": "Negative question: Why didn't + subject + V1?",
+    "simple_past-4": "lose → lost, find → found.",
+    "simple_past-5": "\"ago\" takes the Simple Past; read (V2) is spelled the same but pronounced \"red\".",
+    "simple_past-6": "\"Nobody\" is already negative, so the verb stays positive: Nobody came."
+   }
+  },
+  "past_continuous": {
+   "explanation": "**When is it used?** For actions that were in progress at a certain moment in the past. It matches the Turkish \"-iyordu\" ending.\n- \"Dün akşam sekizde yemek yiyordum\" = I was eating dinner at eight last night.\n- When a short action happens in the middle of a longer one: the longer action is **was/were + V-ing**, the short one is **Simple Past**: I was walking home when it started to rain.\n- Two actions going on at the same time are joined with **while**: While I was cooking, he was watching TV.\n- **was** with I, he, she, it; **were** with you, we, they.",
+   "structure": [
+    "Subject + was/were + V-ing",
+    "Subject + was/were + not + V-ing",
+    "Was/Were + subject + V-ing?"
+   ],
+   "notes": {
+    "past_continuous-1": "An action in progress at a moment in the past: was + V-ing.",
+    "past_continuous-2": "The action in progress is was + V-ing, the interrupting one is V2: called.",
+    "past_continuous-3": "Two actions at the same time: while + Past Continuous.",
+    "past_continuous-4": "Long action: was walking; short action: started.",
+    "past_continuous-5": "Question: What were you doing…?",
+    "past_continuous-6": "Negative: wasn't + V-ing."
+   }
+  },
+  "present_perfect": {
+   "explanation": "**When is it used?** For past actions whose effect or result reaches the present, for life experiences and for situations that are still going on.\n- Experience: \"Hiç Japonya'ya gittin mi?\" = Have you ever been to Japan?\n- Just finished, the result matters: \"Anahtarımı kaybettim (hâlâ yok)\" = I've lost my key.\n- Ongoing situation: \"Onu on yıldır tanıyorum\" = I've known him for ten years.\n- **for** + a length of time (for two years), **since** + a starting point (since 2020).\n- **Careful:** it is not used with finished times such as yesterday, last year or ago; those need the Simple Past.",
+   "structure": [
+    "Subject + have/has + V3",
+    "Subject + have/has + not + V3",
+    "Have/Has + subject + (ever) + V3?"
+   ],
+   "notes": {
+    "present_perfect-1": "Question about experience: Have you ever + V3?",
+    "present_perfect-2": "An ongoing situation with \"for + time\": have known.",
+    "present_perfect-3": "\"yet\" is used with the Present Perfect in negative sentences.",
+    "present_perfect-4": "\"just\" shows that the action is recent: has just called.",
+    "present_perfect-5": "\"since + starting point\" needs the Present Perfect, not the present tense.",
+    "present_perfect-6": "How many times something has happened so far takes the Present Perfect."
+   }
+  },
+  "present_perfect_continuous": {
+   "explanation": "**When is it used?** For actions that started in the past and have continued without a break up to now (and often still go on), especially when the length of time is stressed.\n- \"İki saattir seni bekliyorum\" = I've been waiting for you for two hours.\n- Turkish says \"-iyorum\" here, but when there is **for / since** English uses this tense, not the present tense.\n- \"How long…?\" questions: How long have you been learning English?\n- State verbs (know, have = own) are not used in this tense: I've known her for years.",
+   "structure": [
+    "Subject + have/has + been + V-ing",
+    "How long + have/has + subject + been + V-ing?"
+   ],
+   "notes": {
+    "present_perfect_continuous-1": "for + time: have been waiting. \"wait\" takes its object with \"for\".",
+    "present_perfect_continuous-2": "Asking how long: How long have you been + V-ing?",
+    "present_perfect_continuous-3": "since + starting point: has been snowing.",
+    "present_perfect_continuous-4": "for three years: has been working.",
+    "present_perfect_continuous-5": "An ongoing action that explains a present result (being tired).",
+    "present_perfect_continuous-6": "A recent ongoing action whose traces you can see: have been crying."
+   }
+  },
+  "past_perfect": {
+   "explanation": "**When is it used?** To say which of two past events happened **earlier**. It matches the Turkish \"-mişti\" ending.\n- \"Vardığımızda film başlamıştı\" = When we arrived, the film had started.\n- Common linking words: when, by the time, before, after, already.\n- If the events are already told in order, the Past Perfect is not needed: I came home and cooked dinner.",
+   "structure": [
+    "Subject + had + V3",
+    "By the time / When + Simple Past, subject + had + V3"
+   ],
+   "notes": {
+    "past_perfect-1": "The earlier event: had + V3.",
+    "past_perfect-2": "Before a moment in the past: had read.",
+    "past_perfect-3": "\"already\" goes between had and V3.",
+    "past_perfect-4": "\"never\" goes between had and V3.",
+    "past_perfect-5": "The action that happened before the noticing: had left.",
+    "past_perfect-6": "By the time + Simple Past, had + V3."
+   }
+  },
+  "future": {
+   "explanation": "**The difference between the two:**\n- **be going to + V1:** decisions and plans made earlier, or a future you can already see coming: \"Seneye araba alacağım (karar verdim)\" = I'm going to buy a car next year. \"Bak, yağmur yağacak\" = Look, it's going to rain.\n- **will + V1:** decisions made while speaking, offers, promises and predictions: \"Telefon çalıyor, ben bakarım\" = The phone's ringing, I'll get it.\n- **Careful:** after will the verb is in its base form (will go, not will to go). After \"when, before, after, as soon as\" use the Simple Present, not the future: I'll call you when I arrive.",
+   "structure": [
+    "Subject + will + V1",
+    "Subject + am/is/are + going to + V1"
+   ],
+   "notes": {
+    "future-1": "An offer or promise made on the spot: will.",
+    "future-2": "A decision made earlier: be going to.",
+    "future-3": "A future you can see coming: be going to.",
+    "future-4": "After \"when\" use the Simple Present: when I get home (not will get).",
+    "future-5": "A prediction based on opinion: I think + will.",
+    "future-6": "Questions about plans usually use be going to."
+   }
+  },
+  "future_continuous_perfect": {
+   "explanation": "**Two advanced future tenses:**\n- **will be + V-ing (Future Continuous):** an action that will be in progress at a certain moment in the future. This time tomorrow I'll be flying to London.\n- **will have + V3 (Future Perfect):** an action that will be finished before a certain time in the future. By 2030 I will have finished university.\n- The Future Perfect is mostly used with **by**: by Friday, by the time you arrive, by next year.\n- **Careful:** the clause after by the time is in the Simple Present: by the time you arrive (not will arrive).",
+   "structure": [
+    "Subject + will be + V-ing",
+    "Subject + will have + V3",
+    "By + time, subject + will have + V3"
+   ],
+   "notes": {
+    "future_continuous_perfect-1": "An action in progress at a moment in the future: will be + V-ing.",
+    "future_continuous_perfect-2": "by + time: will have + V3.",
+    "future_continuous_perfect-3": "A situation in progress in the future: will be + V-ing or will be in a meeting.",
+    "future_continuous_perfect-4": "by the time + Simple Present, main clause will have + V3.",
+    "future_continuous_perfect-5": "This time next year + will be + V-ing.",
+    "future_continuous_perfect-6": "by June: will have + V3 (read)."
+   }
+  },
+  "articles": {
+   "explanation": "**Turkish has no articles, but in English a singular countable noun cannot stand alone.**\n- **a / an:** any one singular countable thing, mentioned for the first time. a book, an apple. Use **an** before a word that starts with a vowel **sound**: an hour, an umbrella; but a university.\n- **the:** something both speakers know, something mentioned before, or the only one. The sun, the book I bought.\n- Jobs: She is **a** doctor (it is never said without a).\n- **No article:** plural and uncountable nouns in a general sense (I like cats. Water is important.), meals, languages, most country and city names.\n- Used with the: the USA, the UK, rivers, seas, musical instruments (play the piano).",
+   "structure": [
+    "a + singular noun starting with a consonant sound",
+    "an + singular noun starting with a vowel sound",
+    "the + known / only noun",
+    "(no article) + general plural / uncountable noun"
+   ],
+   "notes": {
+    "articles-1": "Jobs need a: a teacher.",
+    "articles-2": "The h is silent, so it starts with a vowel sound: an hour.",
+    "articles-3": "Plural nouns in a general sense take no article: cats, dogs.",
+    "articles-4": "First time: a film; second time: the film.",
+    "articles-5": "Things there is only one of: the sun, the east.",
+    "articles-6": "Instruments take the: play the guitar."
+   }
+  },
+  "countable_uncountable": {
+   "explanation": "**Countable nouns** have singular and plural forms: a chair, two chairs. **Uncountable nouns** have no plural and do not take a/an: water, money, information, advice, furniture, bread, news.\n- Common mistakes with words that are countable in Turkish but uncountable in English: **advice**, **information**, **news**, **furniture**, **homework**, **luggage**.\n- To count something uncountable, use a measure: a piece of advice, a glass of water, a loaf of bread, a bottle of milk.\n- **How many** + plural countable noun, **how much** + uncountable noun.\n- An uncountable noun takes a singular verb: The news **is** good.",
+   "structure": [
+    "a / an / one / two + countable noun",
+    "some / much / a piece of + uncountable noun",
+    "How many + plural noun? / How much + uncountable noun?"
+   ],
+   "notes": {
+    "countable_uncountable-1": "advice is uncountable: a piece of advice (not an advice).",
+    "countable_uncountable-2": "information is uncountable: much information (not informations).",
+    "countable_uncountable-3": "Uncountable: how much.",
+    "countable_uncountable-4": "Countable: how many + plural.",
+    "countable_uncountable-5": "news takes a singular verb: is.",
+    "countable_uncountable-6": "Counting something uncountable: two bottles of water."
+   }
+  },
+  "quantifiers": {
+   "explanation": "**How much? How many?**\n- **some:** in positive sentences and in offers or requests. I have some friends. Would you like some coffee?\n- **any:** in negatives and questions. I don't have any money. Do you have any questions?\n- **many:** with plural countable nouns, **much:** with uncountable nouns; mostly in negatives and questions. **a lot of / lots of:** with both, natural in positive sentences.\n- **a few** (countable) / **a little** (uncountable): some, a small number or amount (positive meaning). **few / little:** very few, almost none (negative meaning).\n- **no / none:** not any. There is no milk. None of them came.",
+   "structure": [
+    "some + noun (positive)",
+    "any + noun (negative / question)",
+    "many + plural / much + uncountable",
+    "a few + plural / a little + uncountable"
+   ],
+   "notes": {
+    "quantifiers-1": "Negative: not any / no.",
+    "quantifiers-2": "Countable, positive: a few.",
+    "quantifiers-3": "Offers take some.",
+    "quantifiers-4": "Countable, negative: many.",
+    "quantifiers-5": "Uncountable: a little salt.",
+    "quantifiers-6": "Almost none: few (not a few)."
+   }
+  },
+  "demonstratives": {
+   "explanation": "**Near or far, singular or plural:**\n- **this** (near, singular), **these** (near, plural).\n- **that** (far, singular), **those** (far, plural).\n- They are used before a noun like an adjective (this book) or alone like a pronoun (This is my book).\n- If the noun is plural, the demonstrative must be plural too: these shoes (not this shoes).\n- Introducing yourself on the phone: This is Ali. Talking about a time in the past: in those days.",
+   "structure": [
+    "this / that + singular noun",
+    "these / those + plural noun",
+    "This is … / These are …"
+   ],
+   "notes": {
+    "demonstratives-1": "Plural and near: these shoes.",
+    "demonstratives-2": "Far, singular: that.",
+    "demonstratives-3": "Introducing someone: This is…",
+    "demonstratives-4": "Far, plural: those.",
+    "demonstratives-5": "A time in the past: in those days.",
+    "demonstratives-6": "To avoid repeating the noun: this one / that one."
+   }
+  },
+  "possessives": {
+   "explanation": "**Possessive adjectives** come before a noun: **my, your, his, her, its, our, their** + noun (my car).\n**Possessive pronouns** stand alone, without a noun: **mine, yours, his, hers, ours, theirs** (The car is mine).\n- **his** is both an adjective and a pronoun; do not mix up **its** (belonging to it) and **it's** (it is).\n- 's on nouns: Ali's phone, my parents' house (with plurals the apostrophe goes at the end).\n- \"Benim bir arkadaşım\" = a friend of mine.\n- **Careful:** you cannot say \"the my book\"; an article and a possessive are not used together.",
+   "structure": [
+    "my / your / his / her / its / our / their + noun",
+    "mine / yours / his / hers / ours / theirs (no noun)",
+    "noun + 's (Ali's car)"
+   ],
+   "notes": {
+    "possessives-1": "Without a noun: mine, hers.",
+    "possessives-2": "Adjective: their house; pronoun: ours.",
+    "possessives-3": "Possession with names: Ali's.",
+    "possessives-4": "its (belonging to it) is not the same as it's (it is).",
+    "possessives-5": "a friend of mine.",
+    "possessives-6": "yours (pronoun) or your jacket (adjective)."
+   }
+  },
+  "prepositions_time": {
+   "explanation": "**One Turkish ending (\"-de\"), three English prepositions:**\n- **at:** clock times and short moments: at 7 o'clock, at noon, at night, at the weekend (British English).\n- **on:** days and dates: on Monday, on 5 May, on my birthday, on the weekend (American English).\n- **in:** months, years, seasons, centuries and parts of the day: in June, in 2020, in summer, in the morning.\n- **No preposition:** before this, next, last, every, tomorrow, yesterday: next week, last year (not in next week).\n- **for** + a length of time (for two hours), **since** + a starting point (since Monday), **during** + an event (during the film), **by** + a deadline (by Friday), **until** + an end point (until 6).",
+   "structure": [
+    "at + clock time / short moment",
+    "on + day / date",
+    "in + month / year / season / part of the day",
+    "next / last / every + time (no preposition)"
+   ],
+   "notes": {
+    "prepositions_time-1": "Clock time: at.",
+    "prepositions_time-2": "Month: in.",
+    "prepositions_time-3": "The morning of a particular day: on Saturday morning.",
+    "prepositions_time-4": "No preposition before next week.",
+    "prepositions_time-5": "All through an event: during.",
+    "prepositions_time-6": "Deadline: by (not until)."
+   }
+  },
+  "prepositions_place": {
+   "explanation": "**Prepositions of place:**\n- **in:** inside (in the box, in Istanbul, in the kitchen). **on:** on top of, on a surface (on the table, on the wall, on the bus). **at:** a particular point, address or event (at the door, at school, at a party).\n- **under**, **next to / beside**, **between** (in the middle of two things), **behind**, **in front of**, **opposite**, **above / over**.\n**Prepositions of movement:** **to** (go to school), **into**, **out of**, **from**, **through** (passing inside something), **across** (to the other side), **along**.\n- **Careful:** go home, come home (no to); arrive **in** a city, arrive **at** a place.",
+   "structure": [
+    "in / on / at + place",
+    "next to / between / behind / in front of + place",
+    "go to / into / out of / across + place"
+   ],
+   "notes": {
+    "prepositions_place-1": "A surface: on.",
+    "prepositions_place-2": "In the middle of two things: between.",
+    "prepositions_place-3": "In front: in front of.",
+    "prepositions_place-4": "go home (not to home).",
+    "prepositions_place-5": "Crossing to the other side: cross / go across.",
+    "prepositions_place-6": "A particular place: arrive at."
+   }
+  },
+  "there_is": {
+   "explanation": "**The English for Turkish \"var / yok\".**\n- **There is** + a singular or uncountable noun: There is a cat in the garden. There is some milk.\n- **There are** + a plural noun: There are three books on the desk.\n- Negative: there isn't / there aren't (any). Question: Is there…? Are there…?\n- Past: there was / there were. Future: there will be. Recent past: there has been.\n- **Careful:** \"Bahçede bir ağaç var\" = There is a tree in the garden (The garden has a tree also works, but \"In the garden is a tree\" is not said). Do not mix it up with \"have\": I have a car.",
+   "structure": [
+    "There is + singular / uncountable noun",
+    "There are + plural noun",
+    "Is there / Are there + noun?",
+    "There was / There were + noun"
+   ],
+   "notes": {
+    "there_is-1": "Plural: there are.",
+    "there_is-2": "Question: Is there…?",
+    "there_is-3": "Plural negative: there aren't any.",
+    "there_is-4": "Past: there was.",
+    "there_is-5": "Past, plural: there were.",
+    "there_is-6": "Future question: Will there be…?"
+   }
+  },
+  "adverbs_frequency": {
+   "explanation": "**They tell how often we do something:** always > usually > often > sometimes > rarely / seldom > never.\n- **Position:** **before** the main verb (I often read), but **after be** (She is always late) and after an auxiliary verb (I have never been there).\n- **sometimes** can also start the sentence: Sometimes I walk to work.\n- **never** is already negative and is not used with not: I never eat meat (not I don't never).\n- Question: How often do you…? In the answer: once a week, twice a month, every day.",
+   "structure": [
+    "Subject + adverb of frequency + main verb",
+    "Subject + am/is/are + adverb of frequency",
+    "How often + do/does + subject + V1?"
+   ],
+   "notes": {
+    "adverbs_frequency-1": "The adverb goes before the main verb: usually drink.",
+    "adverbs_frequency-2": "After be: is always.",
+    "adverbs_frequency-3": "never + positive verb.",
+    "adverbs_frequency-4": "How often…?",
+    "adverbs_frequency-5": "sometimes at the start or before the verb.",
+    "adverbs_frequency-6": "Frequency expressions go at the end: twice a week."
+   }
+  },
+  "too_enough": {
+   "explanation": "**Both say whether an amount is too much or sufficient:**\n- **too + adjective/adverb:** more than is needed, with a bad result. This coffee is too hot (to drink).\n- **adjective/adverb + enough:** sufficiently (enough comes **after** the adjective). She is old enough to drive.\n- **enough + noun:** a sufficient amount (**before** the noun). We don't have enough time.\n- **too much / too many + noun:** more than is needed. There are too many people here.\n- They are often followed by **to + V1**: too tired to walk, rich enough to buy.\n- **Careful:** \"very\" only makes something stronger, \"too\" says there is a problem: The bag is very heavy (but I can carry it) / too heavy (I can't carry it).",
+   "structure": [
+    "too + adjective + (to + V1)",
+    "adjective + enough + (to + V1)",
+    "enough + noun",
+    "too much / too many + noun"
+   ],
+   "notes": {
+    "too_enough-1": "too + adjective + to + V1.",
+    "too_enough-2": "adjective + enough (old enough).",
+    "too_enough-3": "enough + noun.",
+    "too_enough-4": "Plural noun: too many.",
+    "too_enough-5": "too hot to drink.",
+    "too_enough-6": "Adverb + enough: fast enough."
+   }
+  },
+  "so_neither": {
+   "explanation": "**Ways to say \"me too\" and \"me neither\":**\n- **Agreeing with a positive sentence:** **So + auxiliary + subject** or **subject + auxiliary + too.** \"I like coffee.\" – \"So do I.\" / \"I do too.\" / \"Me too.\"\n- **Agreeing with a negative sentence:** **Neither / Nor + auxiliary + subject** or **subject + auxiliary + not + either.** \"I can't swim.\" – \"Neither can I.\" / \"I can't either.\" / \"Me neither.\"\n- The auxiliary follows the tense of the sentence: I went → So did I. She has finished → So have I.\n- **Careful:** after Neither the verb stays positive: Neither do I (not Neither don't I).\n- **either … or** (one or the other), **neither … nor** (not one and not the other): Neither Ali nor Ayşe came.",
+   "structure": [
+    "So + auxiliary + subject (me too)",
+    "Neither + auxiliary + subject (me neither)",
+    "Subject + auxiliary + too / not + either"
+   ],
+   "notes": {
+    "so_neither-1": "In the Simple Present: So do I.",
+    "so_neither-2": "Agreeing with a negative: Neither can I.",
+    "so_neither-3": "was → So was I; got → So did I.",
+    "so_neither-4": "neither … nor + positive verb.",
+    "so_neither-5": "either … or: one or the other.",
+    "so_neither-6": "neither has / didn't either."
+   }
+  },
+  "question_tags": {
+   "explanation": "**The Turkish \"… değil mi?\"** is made in English with the sentence's auxiliary verb.\n- **Positive sentence → negative tag:** You are tired, **aren't you?**\n- **Negative sentence → positive tag:** She doesn't eat meat, **does she?**\n- If there is no auxiliary, use do / does / did: You live here, don't you? He called you, didn't he?\n- The subject in the tag is a pronoun: Ali is here, isn't **he**?\n- Special cases: I am → **aren't I?** / Let's → **shall we?** / Command → **will you?** / There is → **isn't there?**",
+   "structure": [
+    "Positive sentence, auxiliary + not + pronoun?",
+    "Negative sentence, auxiliary + pronoun?"
+   ],
+   "notes": {
+    "question_tags-1": "is → isn't it?",
+    "question_tags-2": "With no auxiliary: don't you?",
+    "question_tags-3": "Negative → positive tag: did you?",
+    "question_tags-4": "A pronoun in the tag: won't he?",
+    "question_tags-5": "Let's → shall we?",
+    "question_tags-6": "haven't → have you?"
+   }
+  },
+  "because_so": {
+   "explanation": "**Linking words for cause and result:**\n- **because + full clause:** gives the reason. I stayed home because I was ill.\n- **because of + noun:** I stayed home because of the rain.\n- **so + full clause:** gives the result. I was ill, so I stayed home.\n- **Careful:** in Turkish the \"-dığı için\" part often comes first, but in English the because part usually comes after. \"because\" and \"so\" are not used together in one sentence.",
+   "structure": [
+    "Main clause + because + subject + verb",
+    "Main clause + because of + noun",
+    "Reason clause, so + result clause"
+   ],
+   "notes": {
+    "because_so-1": "because + full clause (he was ill).",
+    "because_so-2": "With a noun use \"because of\".",
+    "because_so-3": "Result: so + full clause.",
+    "because_so-4": "so + result; \"alamadım\" = couldn't buy.",
+    "because_so-5": "because of + the rain.",
+    "because_so-6": "because + I was very tired."
+   }
+  },
+  "although_despite": {
+   "explanation": "**There are two ways to say \"in spite of something\" (Turkish \"-e rağmen\"):**\n- **although / even though / though + full clause (subject + verb):** although it was raining. \"Even though\" adds stronger emphasis.\n- **despite / in spite of + noun or V-ing:** despite the rain, despite being tired.\n- **Common mistake:** putting a noun after \"although\" or a full clause after \"despite\". There is no \"despite of\"; say \"in spite of\" or \"despite\".\n- If you want a clause after despite: despite the fact that + full clause.",
+   "structure": [
+    "Although + subject + verb, main clause",
+    "Despite / In spite of + noun / V-ing, main clause"
+   ],
+   "notes": {
+    "although_despite-1": "although + full clause (my workload increased); despite + noun (my increased workload).",
+    "although_despite-2": "although + subject + verb; despite + V-ing.",
+    "although_despite-3": "With a noun use \"despite / in spite of\".",
+    "although_despite-4": "\"Çok çalışmak\" here is \"study hard\".",
+    "although_despite-5": "although + it was expensive.",
+    "although_despite-6": "\"yaşı\" (his age) is a noun: despite his age."
+   }
+  },
+  "unless": {
+   "explanation": "**unless = if … not.** It means \"except if\".\n- \"Acele etmezsen treni kaçıracaksın\" = You'll miss the train unless you hurry. (= if you don't hurry)\n- **Careful:** unless is already negative, so the verb after it stays positive: unless you hurry (not unless you don't hurry).\n- As in the first conditional, the unless part takes the Simple Present, not the future.",
+   "structure": [
+    "Main clause (will + V1) + unless + subject + V1 (Simple Present)",
+    "Unless + subject + V1, main clause"
+   ],
+   "notes": {
+    "unless-1": "unless + positive verb: unless it's urgent.",
+    "unless-2": "unless you study (= if you don't study).",
+    "unless-3": "Simple Present in the unless part: unless it rains.",
+    "unless-4": "unless + passive: unless I'm invited.",
+    "unless-5": "unless we leave (not the future).",
+    "unless-6": "A general situation: Simple Present + unless."
+   }
+  },
+  "while_when": {
+   "explanation": "**Linking words of time:**\n- **when:** at the time that. When I got home, I made tea.\n- **while:** during an action in progress (mostly with the Past Continuous): While I was cooking, the phone rang.\n- **as soon as:** immediately after. As soon as I arrive, I'll call you.\n- **Careful:** do not use the future after these words: when I arrive (not when I will arrive).",
+   "structure": [
+    "While + subject + was/were + V-ing, subject + V2",
+    "As soon as + subject + V1, subject + will + V1"
+   ],
+   "notes": {
+    "while_when-1": "Action in progress (was cooking) + short action (rang).",
+    "while_when-2": "as soon as = immediately after.",
+    "while_when-3": "when = at the time that; past habit: used to / would.",
+    "while_when-4": "when + Simple Past.",
+    "while_when-5": "while = during; \"bakmak\" here is look after / take care of.",
+    "while_when-6": "when + Simple Present (graduate), not the future."
+   }
+  },
+  "transition_words": {
+   "explanation": "**They join two sentences or paragraphs in a logical way.** They usually start the new sentence and are followed by a **comma**.\n- **Adding:** moreover, furthermore, in addition, also.\n- **Contrast:** however, nevertheless, on the other hand, in contrast.\n- **Result:** therefore, as a result, consequently, so.\n- **Giving examples:** for example, for instance, such as.\n- **Order and summary:** first, then, finally, in conclusion, to sum up.\n- **Careful:** however cannot join two sentences with a comma: \"It was late, however we went\" is wrong → It was late. However, we went. (or with a semicolon: It was late; however, we went.)",
+   "structure": [
+    "Sentence. However, + sentence.",
+    "Sentence; therefore, + sentence.",
+    "Sentence. Moreover / In addition, + sentence."
+   ],
+   "notes": {
+    "transition_words-1": "Contrast: However, / Nevertheless,",
+    "transition_words-2": "Result: Therefore, / As a result,",
+    "transition_words-3": "Adding: Moreover, / In addition,",
+    "transition_words-4": "Example: for example / such as.",
+    "transition_words-5": "Comparing: On the other hand,",
+    "transition_words-6": "Summary: In conclusion, / To sum up,"
+   }
+  },
+  "zero_conditional": {
+   "explanation": "**When is it used?** For results that are always true, scientific facts and habits. It means \"if this happens, that happens\", and **when** can be used instead of if.\n- \"Buzu ısıtırsan erir\" = If you heat ice, it melts.\n- **Both parts are in the Simple Present.**\n- In instructions the main clause can be a command: If you feel sick, call me.",
+   "structure": [
+    "If/When + subject + V1, subject + V1",
+    "If + subject + V1, command"
+   ],
+   "notes": {
+    "zero_conditional-1": "A general truth: if + V1, V1.",
+    "zero_conditional-2": "A habit: when + V1, V1.",
+    "zero_conditional-3": "Negative condition: if + don't + V1.",
+    "zero_conditional-4": "Instruction: if + V1, command.",
+    "zero_conditional-5": "when + V1 (gets), V1 (doesn't raise).",
+    "zero_conditional-6": "A scientific fact: Simple Present in both parts."
+   }
+  },
+  "first_conditional": {
+   "explanation": "**When is it used?** For possible conditions in the future and their results.\n- \"Yağmur yağarsa evde kalırız\" = If it rains, we'll stay at home.\n- The **if part takes the Simple Present**, the main clause **will + V1**.\n- **Common mistake:** using will in the if part: If it will rain… is wrong.",
+   "structure": [
+    "If + subject + V1 (Simple Present), subject + will + V1"
+   ],
+   "notes": {
+    "first_conditional-1": "if + Simple Present (have), will + V1.",
+    "first_conditional-2": "No will in the if part: If the weather is nice.",
+    "first_conditional-3": "Negative result: won't + V1.",
+    "first_conditional-4": "\"İlaç almak\" = take medicine.",
+    "first_conditional-5": "if + negative Simple Present: if we don't hurry.",
+    "first_conditional-6": "if + Simple Present: goes down / drops."
+   }
+  },
+  "second_conditional": {
+   "explanation": "**When is it used?** For imaginary situations in the present that are not true or are unlikely. It matches the Turkish \"-se … -erdi\" pattern.\n- \"Zengin olsaydım dünyayı gezerdim\" = If I were rich, I would travel the world.\n- The **if part takes the Simple Past (V2)**, the main clause **would + V1**.\n- For \"be\", **were** is correct with every subject: If I were you…\n- **Careful:** do not use would in the if part: If I would have… is wrong.",
+   "structure": [
+    "If + subject + V2 (were), subject + would + V1"
+   ],
+   "notes": {
+    "second_conditional-1": "Giving advice: If I were you, I would…",
+    "second_conditional-2": "if + V2 (had), would + V1.",
+    "second_conditional-3": "An unreal present situation: if + had.",
+    "second_conditional-4": "\"apply for a job\" = işe başvurmak.",
+    "second_conditional-5": "Question: What would you do if + V2?",
+    "second_conditional-6": "Negative condition: if I weren't."
+   }
+  },
+  "third_conditional": {
+   "explanation": "**When is it used?** To talk about something that did not happen in the past and its imaginary result. It matches the Turkish \"-seydi … -ardı / -mış olurdu\" pattern.\n- \"Erken kalksaydım treni kaçırmazdım\" = If I had got up early, I wouldn't have missed the train.\n- The **if part takes the Past Perfect (had + V3)**, the main clause **would have + V3**.\n- **Careful:** do not use would have in the if part: If I would have known… is wrong.",
+   "structure": [
+    "If + subject + had + V3, subject + would have + V3"
+   ],
+   "notes": {
+    "third_conditional-1": "if + had + V3 (had made), wouldn't have + V3 (lost / wasted).",
+    "third_conditional-2": "if + had known, would have + V3.",
+    "third_conditional-3": "A past condition that did not happen: had studied.",
+    "third_conditional-4": "\"Alarm çalmak\" = the alarm goes off.",
+    "third_conditional-5": "if + had asked, would have helped.",
+    "third_conditional-6": "\"Kaybolmak\" = get lost: wouldn't have got lost."
+   }
+  },
+  "mixed_conditionals": {
+   "explanation": "**When is it used?** When the condition and the result belong to different times.\n- **Past condition → present result:** If + had + V3, would + V1. \"Dün gece uyusaydım şimdi yorgun olmazdım\" = If I had slept last night, I wouldn't be tired now.\n- **Present or permanent situation → past result:** If + V2, would have + V3. \"İngilizcem iyi olsaydı o işi alırdım\" = If my English were better, I would have got that job.\n- Tip: if you see \"now, today\", the result part is would + V1; if you see something that happened in the past, it is would have + V3.",
+   "structure": [
+    "If + had + V3, subject + would + V1 (now)",
+    "If + V2, subject + would have + V3"
+   ],
+   "notes": {
+    "mixed_conditionals-1": "Past condition (had gone) → present result (wouldn't be).",
+    "mixed_conditionals-2": "had + V3 → would + be + now.",
+    "mixed_conditionals-3": "A choice in the past → the situation today.",
+    "mixed_conditionals-4": "A permanent quality (weren't lazy) → a past result (would have passed).",
+    "mixed_conditionals-5": "A present situation (spoke/knew) → a past result.",
+    "mixed_conditionals-6": "had + V3 → would be + now."
+   }
+  },
+  "wish": {
+   "explanation": "**Sentences with wish:**\n- **About now:** wish + V2. I wish I had a car. I wish I were taller.\n- **About the past:** wish + had + V3. I wish I had studied harder.\n- **Complaining about someone's behaviour:** wish + would + V1. I wish you would stop talking.\n- **If only** works the same way and shows a stronger feeling: If only I knew!\n- **Careful:** Turkish \"keşke\" never changes, but in English the tense moves one step back.",
+   "structure": [
+    "Subject + wish + subject + V2 (now)",
+    "Subject + wish + subject + had + V3 (past)",
+    "Subject + wish + subject + would + V1 (complaint)"
+   ],
+   "notes": {
+    "wish-1": "About now: wish + V2 (had).",
+    "wish-2": "Regret about the past: wish + hadn't + V3.",
+    "wish-3": "About now: wish + were.",
+    "wish-4": "Complaint: wish + would + V1.",
+    "wish-5": "About the past: wish + had + V3.",
+    "wish-6": "About ability: wish + could + V1."
+   }
+  },
+  "inverted_conditionals": {
+   "explanation": "**Formal conditional sentences made without if, by putting the auxiliary first.**\n- **Should + subject + V1** (first type, \"if by any chance\"): Should you need help, call me. = If you need help…\n- **Were + subject + to V1 / Were + subject + …** (second type): Were I in your position, I would resign. Were he to apologise, I would forgive him.\n- **Had + subject + V3** (third type): Had I known, I would have come. = If I had known…\n- No contractions in the negative: **Had I not seen it**, I wouldn't have believed it (not Hadn't I seen).\n- Used in formal writing, emails and speeches; in everyday speech if is more natural.",
+   "structure": [
+    "Should + subject + V1, …",
+    "Were + subject + to V1 / Were + subject + …, would + V1",
+    "Had + subject + (not) + V3, would have + V3"
+   ],
+   "notes": {
+    "inverted_conditionals-1": "Inverted third type: Had + subject + V3.",
+    "inverted_conditionals-2": "Inverted first type: Should + subject + V1.",
+    "inverted_conditionals-3": "Inverted second type: Were I…",
+    "inverted_conditionals-4": "Had it not been for… (if it had not been for).",
+    "inverted_conditionals-5": "Should you change your mind…",
+    "inverted_conditionals-6": "Negative inversion: Had I not + V3."
+   }
+  },
+  "ability": {
+   "explanation": "**Ability and possibility:**\n- **can + V1:** ability now. I can swim.\n- **could + V1:** general ability in the past: When I was five, I could read.\n- **was/were able to, managed to:** something achieved in a particular situation in the past: I was able to finish the project on time.\n- **will be able to:** ability in the future. Two modals cannot stand together: will can is wrong.\n- Polite request: Could you help me? (more polite than Can you.)",
+   "structure": [
+    "Subject + can / could + V1",
+    "Subject + was/were able to + V1",
+    "Subject + will be able to + V1"
+   ],
+   "notes": {
+    "ability-1": "General ability in the past: could.",
+    "ability-2": "Polite request: Could you…?",
+    "ability-3": "Ability in the future: will be able to (not will can).",
+    "ability-4": "Success in a particular situation: was able to / managed to.",
+    "ability-5": "Not able to now: can't + V1.",
+    "ability-6": "can + V1 (no -s): can play."
+   }
+  },
+  "obligation": {
+   "explanation": "**Obligation and advice:**\n- **must + V1:** an obligation the speaker feels is necessary, strict rules. You must wear a seatbelt.\n- **have to + V1:** an obligation that comes from outside rules. I have to work on Saturdays.\n- **should + V1:** advice. You should see a doctor.\n- **don't have to:** it is not necessary. **mustn't:** it is not allowed. These two are very different!\n- After modals there is no \"to\" and the verb takes no -s: She must go (not She must to go / must goes). For the past, use \"had to\" instead of \"must\".",
+   "structure": [
+    "Subject + must / should + V1",
+    "Subject + have/has to + V1",
+    "Subject + don't have to / mustn't + V1"
+   ],
+   "notes": {
+    "obligation-1": "Advice: should + V1.",
+    "obligation-2": "An obligation from outside: have to.",
+    "obligation-3": "Not allowed: mustn't + V1.",
+    "obligation-4": "Not necessary: don't have to.",
+    "obligation-5": "Obligation in the past: had to.",
+    "obligation-6": "should + V1; \"more often\" goes at the end."
+   }
+  },
+  "requests_permission": {
+   "explanation": "**Polite requests and asking for permission:**\n- **Can / Could you + V1?** asking someone to do something. Could you help me? (could is more polite)\n- **Can / Could / May I + V1?** asking for permission. May I come in? (may is the most formal)\n- **Would you mind + V-ing?** Would you mind closing the door? The answer \"No, not at all\" means no problem (so I will do it).\n- **Do you mind if I + V1?** Do you mind if I sit here?\n- **Would you like…?** an offer: Would you like some tea?",
+   "structure": [
+    "Could you + V1?",
+    "Can / May I + V1?",
+    "Would you mind + V-ing?",
+    "Do you mind if I + V1?"
+   ],
+   "notes": {
+    "requests_permission-1": "Request: Could / Can you + V1?",
+    "requests_permission-2": "Permission: May / Can I + V1?",
+    "requests_permission-3": "Would you mind + V-ing (closing).",
+    "requests_permission-4": "Do you mind if I + V1?",
+    "requests_permission-5": "Offer: Would you like…?",
+    "requests_permission-6": "Permission: Could / May I…?"
+   }
+  },
+  "deduction": {
+   "explanation": "**Modals of possibility and deduction:**\n- **may / might / could + V1:** maybe, it is possible (I'm not sure). It might rain later.\n- **must + V1:** a positive conclusion that seems almost certain. You must be tired after the trip.\n- **can't + V1:** a conclusion that something is impossible. That can't be true.\n- For something going on right now: **must/might + be + V-ing:** He must be sleeping.\n- **Careful:** a negative conclusion uses **can't**, not \"mustn't\".",
+   "structure": [
+    "Subject + may / might / could + V1",
+    "Subject + must + V1 (I'm sure)",
+    "Subject + can't + V1 (impossible)"
+   ],
+   "notes": {
+    "deduction-1": "Possibility: might / may + V1.",
+    "deduction-2": "Positive conclusion: must + be.",
+    "deduction-3": "Impossible: can't + V1 (not mustn't).",
+    "deduction-4": "Negative possibility: might not / may not.",
+    "deduction-5": "An action going on now: must be + V-ing.",
+    "deduction-6": "can't be: it is impossible."
+   }
+  },
+  "past_modals": {
+   "explanation": "**Modal + have + V3:** regret, criticism and guesses about the past.\n- **should have + V3:** it would have been right to do it (but you didn't). You should have told me.\n- **shouldn't have + V3:** it was wrong to do it (but you did).\n- **must have + V3:** it almost certainly happened. She must have forgotten.\n- **might / may / could have + V3:** it possibly happened. They might have missed the bus.\n- **can't / couldn't have + V3:** it cannot have happened. He can't have seen us.\n- **could have + V3:** it was possible but did not happen. You could have died!",
+   "structure": [
+    "Subject + should / shouldn't have + V3",
+    "Subject + must / might / can't have + V3",
+    "Subject + could have + V3"
+   ],
+   "notes": {
+    "past_modals-1": "Regret: should have + V3.",
+    "past_modals-2": "Something that should not have been done: shouldn't have + V3.",
+    "past_modals-3": "A confident guess about the past: must have + V3.",
+    "past_modals-4": "Possibility: might / may have + V3.",
+    "past_modals-5": "Impossible: can't have + V3.",
+    "past_modals-6": "Possible, but it did not happen: could have + V3."
+   }
+  },
+  "passive": {
+   "explanation": "**When is it used?** When we don't know who did the action, when it doesn't matter, or when the action itself is what matters. It matches the Turkish \"-ıl, -ın\" endings (yapıldı, yazılır).\n- Pattern: **be + V3.** The form of \"be\" shows the tense: is made, was built, has been sold, will be finished.\n- To say who did it, use **by**: The book was written by Orhan Pamuk.\n- **Careful:** \"to be born\" is passive in English: I was born in 1995.",
+   "structure": [
+    "Subject + am/is/are + V3 (present)",
+    "Subject + was/were + V3 (past)",
+    "Subject + has/have been + V3",
+    "Subject + will be + V3"
+   ],
+   "notes": {
+    "passive-1": "Past passive: was + V3.",
+    "passive-2": "steal → stole → stolen: was stolen.",
+    "passive-3": "Passive; \"ertelemek\" = postpone / put off.",
+    "passive-4": "\"translate into\" = to translate into a language.",
+    "passive-5": "Future passive: will be + V3.",
+    "passive-6": "\"To be born\" is passive: I was born."
+   }
+  },
+  "impersonal_passive": {
+   "explanation": "**Used for rumours, opinions and in the language of the news:** \"it is said / thought / believed that …\".\n- **It + is/was + V3 + that + clause:** It is said that he is very rich.\n- **Subject + is/was + V3 + to + V1:** He is said to be very rich. (More formal and shorter.)\n- For an earlier event: **to have + V3:** He is believed to have left the country.\n- Verbs often used this way: say, think, believe, know, report, expect, consider, claim.",
+   "structure": [
+    "It is + V3 (said/believed) + that + clause",
+    "Subject + is + V3 + to + V1",
+    "Subject + is + V3 + to have + V3 (past)"
+   ],
+   "notes": {
+    "impersonal_passive-1": "It is said that… / He is said to be…",
+    "impersonal_passive-2": "An earlier event: is believed to have + V3.",
+    "impersonal_passive-3": "are expected to + V1.",
+    "impersonal_passive-4": "is thought to be.",
+    "impersonal_passive-5": "Past news: It was reported that…",
+    "impersonal_passive-6": "is considered (to be)."
+   }
+  },
+  "reported_speech": {
+   "explanation": "**When is it used?** When passing on what someone said. If the reporting verb is in the past (said, told, asked), the tense usually moves one step back.\n- am/is → was, present → past, will → would, can → could, past → past perfect.\n- **say** takes no person (said that…), **tell** takes a person (told me that…). said me is wrong.\n- Reported questions do not use question word order: She asked me where I lived (not where did I live). For yes/no questions use **if / whether**.",
+   "structure": [
+    "Subject + said (that) + clause (one tense back)",
+    "Subject + told + person + (that) + clause",
+    "Subject + asked + (person) + question word / if + subject + verb"
+   ],
+   "notes": {
+    "reported_speech-1": "tell + person: told me; is → was.",
+    "reported_speech-2": "will → would; tomorrow → the next day.",
+    "reported_speech-3": "Normal word order in a reported question: where I lived.",
+    "reported_speech-4": "Yes/no question: if / whether; have finished → had finished.",
+    "reported_speech-5": "Negative command: told me not to + V1.",
+    "reported_speech-6": "can → could."
+   }
+  },
+  "relative_clauses": {
+   "explanation": "**When is it used?** For clauses that describe a noun. They match the Turkish \"-en, -dığı\" endings.\n- **who:** for people. The woman who lives next door is a doctor.\n- **which:** for things and animals. The car which I bought is red.\n- **that:** for both (very common in everyday English).\n- **where:** for places. This is the café where we met.\n- **whose:** possession. The man whose car was stolen.\n- When the person or thing is the object of the clause, who/which/that can be dropped: The book (that) you gave me.",
+   "structure": [
+    "Noun + who/that + verb …",
+    "Noun + (which/that) + subject + verb …",
+    "Place + where + subject + verb"
+   ],
+   "notes": {
+    "relative_clauses-1": "who for people: the woman who lives…",
+    "relative_clauses-2": "As the object, which/that can be dropped: the book (that) you gave me.",
+    "relative_clauses-3": "where for places.",
+    "relative_clauses-4": "Possession: whose.",
+    "relative_clauses-5": "someone who + verb.",
+    "relative_clauses-6": "Object position: the film (that) we watched."
+   }
+  },
+  "noun_clauses": {
+   "explanation": "**A whole clause used like a noun.** It matches the Turkish \"-dığını, -eceğini, -ip -mediğini\" patterns.\n- **that** + clause: for thoughts, knowledge and feelings. I think (that) he is right. I'm sure that she will come. (that is often dropped.)\n- **what / where / why / how** + normal word order: I know what you mean. What he said surprised me.\n- **whether / if** + clause: I don't know whether he will come.\n- As the subject: **What** you need is rest. **That** he lied is obvious (more natural: It's obvious that he lied).\n- **Careful:** the inner clause does not use question word order: I don't know where she lives (not where does she live).",
+   "structure": [
+    "Subject + verb + (that) + subject + verb",
+    "Subject + verb + what/where/why + subject + verb",
+    "What + subject + verb + is/was …",
+    "Subject + verb + whether/if + subject + verb"
+   ],
+   "notes": {
+    "noun_clauses-1": "think + (that) + clause.",
+    "noun_clauses-2": "what + normal word order.",
+    "noun_clauses-3": "whether / if: whether or not.",
+    "noun_clauses-4": "As the subject: What you need is…",
+    "noun_clauses-5": "It's obvious that + clause.",
+    "noun_clauses-6": "Normal word order: where she lives."
+   }
+  },
+  "indirect_questions": {
+   "explanation": "**When is it used?** In polite questions: Do you know…? Can you tell me…? I wonder…\n- When a question goes inside a bigger sentence, use **normal word order** (subject + verb): Do you know where the station is? (not where is the station)\n- do/does/did are not used: Can you tell me what time it starts? (not what time does it start)\n- For yes/no questions use **if / whether**: Do you know if he is at home?",
+   "structure": [
+    "Do you know / Can you tell me + question word + subject + verb?",
+    "… + if/whether + subject + verb?"
+   ],
+   "notes": {
+    "indirect_questions-1": "Normal word order: where the station is.",
+    "indirect_questions-2": "No does: what time the film starts.",
+    "indirect_questions-3": "Yes/no: if / whether.",
+    "indirect_questions-4": "I wonder + why + subject + verb.",
+    "indirect_questions-5": "how much this bag is / costs.",
+    "indirect_questions-6": "what you meant (normal word order)."
+   }
+  },
+  "time_clauses": {
+   "explanation": "**Clauses of time:** when, before, after, until / till, as soon as, while, since, by the time, once.\n- **Golden rule:** when talking about the future, **do not use will** in the time clause; use the Simple Present: I'll call you **when I arrive** (not when I will arrive).\n- To stress that something will be finished, the Present Perfect also works: I'll leave after I have finished.\n- In the past: By the time we arrived, the film had started (Past Perfect).\n- before / after + V-ing is also used: Wash your hands before eating.",
+   "structure": [
+    "Main clause (will) + when / before / after / until / as soon as + Simple Present",
+    "By the time + subject + V2, subject + had + V3",
+    "before / after + V-ing"
+   ],
+   "notes": {
+    "time_clauses-1": "when + Simple Present (not will).",
+    "time_clauses-2": "before + clause or before + V-ing.",
+    "time_clauses-3": "until + Simple Present.",
+    "time_clauses-4": "as soon as: immediately after.",
+    "time_clauses-5": "By the time + V2, had + V3.",
+    "time_clauses-6": "after + Simple Present (with a future meaning)."
+   }
+  },
+  "adverb_clauses": {
+   "explanation": "**Clauses that tell the reason, purpose, result or contrast of the main clause.** (For time see \"Time clauses\", for conditions see the conditionals.)\n- **Purpose:** **so that** + subject + can/could/will: I left early so that I could catch the bus. **(in order) to + V1:** I went out to buy bread.\n- **Result:** **so + adjective/adverb + that:** It was so cold that we stayed in. **such + (a) + adjective + noun + that:** It was such a nice day that we went out.\n- **Reason:** because, since, as. Since it was late, we took a taxi.\n- **Contrast:** although / even though, **whereas / while** (comparing two sides): I like tea, whereas my wife prefers coffee.\n- **Manner:** as if / as though: He talks as if he knew everything.",
+   "structure": [
+    "Main clause + so that + subject + can/could + V1",
+    "so + adjective + that + clause / such + (a) + adjective + noun + that",
+    "Main clause + whereas / while + clause",
+    "Main clause + as if + clause"
+   ],
+   "notes": {
+    "adverb_clauses-1": "Negative purpose: so that … wouldn't / so as not to.",
+    "adverb_clauses-2": "so + adjective + that.",
+    "adverb_clauses-3": "such + a + adjective + noun + that.",
+    "adverb_clauses-4": "Contrast: whereas / while.",
+    "adverb_clauses-5": "as if / as though: in a way that suggests.",
+    "adverb_clauses-6": "Reason: since / as / because."
+   }
+  },
+  "participle_clauses": {
+   "explanation": "**A way to shorten a clause.** Very common in writing and in the news. Similar to the Turkish \"-ip, -ince, -erek, -dikten sonra\" forms.\n- **V-ing (active, at the same time):** Walking home, I met an old friend.\n- **Having + V3 (happened earlier):** Having finished my work, I went out.\n- **V3 (passive meaning):** Built in 1890, the bridge is still in use.\n- After a noun, instead of a relative clause: The man sitting next to me… (who was sitting), The cars made in Germany… (which are made).\n- **Careful:** both clauses must have the same subject. \"Walking home, the rain started\" is wrong (the rain isn't walking!).",
+   "structure": [
+    "V-ing …, subject + verb (at the same time)",
+    "Having + V3 …, subject + verb (earlier)",
+    "V3 …, subject + verb (passive)",
+    "Noun + V-ing / V3 (shortened relative clause)"
+   ],
+   "notes": {
+    "participle_clauses-1": "The earlier action: Having + V3.",
+    "participle_clauses-2": "An action at the same time: V-ing, same subject.",
+    "participle_clauses-3": "Passive meaning: a clause starting with V3.",
+    "participle_clauses-4": "Shortened relative clause: who is sitting → sitting.",
+    "participle_clauses-5": "Negative participle: Not + V-ing.",
+    "participle_clauses-6": "Noun + V3: which are made → made."
+   }
+  },
+  "irregular_verbs": {
+   "explanation": "**The three forms of a verb:** V1 (base: go), V2 (past: went), V3 (past participle: gone).\n- **Regular verbs** take -ed in V2 and V3: work – worked – worked.\n- **Irregular verbs** have to be learned. The most common: be – was/were – been, have – had – had, do – did – done, go – went – gone, see – saw – seen, take – took – taken, give – gave – given, eat – ate – eaten, write – wrote – written, buy – bought – bought, think – thought – thought, bring – brought – brought, teach – taught – taught, find – found – found, leave – left – left, make – made – made, know – knew – known, begin – began – begun, speak – spoke – spoken, break – broke – broken, forget – forgot – forgotten.\n- **V2** is used in the Simple Past (I went), **V3** in the Present Perfect (I have gone), the Past Perfect (had gone) and the passive (it was written).\n- **Careful:** after did / didn't comes V1: I didn't go (not didn't went).",
+   "structure": [
+    "Simple Past: subject + V2",
+    "Perfect: have/has/had + V3",
+    "Passive: be + V3"
+   ],
+   "notes": {
+    "irregular_verbs-1": "have a dream → had (not see).",
+    "irregular_verbs-2": "buy – bought – bought.",
+    "irregular_verbs-3": "write – wrote – written; subject questions do not use did.",
+    "irregular_verbs-4": "forget – forgot – forgotten.",
+    "irregular_verbs-5": "Past Perfect: had + seen (V3).",
+    "irregular_verbs-6": "fall – fell – fallen, break – broke – broken."
+   }
+  },
+  "gerund_infinitive": {
+   "explanation": "**Some verbs are followed by -ing, others by to + V1; they have to be learned.**\n- **Followed by -ing:** enjoy, finish, avoid, mind, suggest, keep, consider, give up: I enjoy reading.\n- **Followed by to + V1:** want, decide, hope, plan, agree, promise, need, would like: I decided to leave.\n- After prepositions (in, at, of, about, without, before, after) always use -ing: I'm good at cooking. look forward to seeing you.\n- **stop:** stop smoking (quit) is different from stop to smoke (stop in order to smoke).",
+   "structure": [
+    "enjoy / finish / avoid + V-ing",
+    "want / decide / hope + to + V1",
+    "Preposition + V-ing"
+   ],
+   "notes": {
+    "gerund_infinitive-1": "enjoy + V-ing.",
+    "gerund_infinitive-2": "decide + to + V1.",
+    "gerund_infinitive-3": "give up / stop / quit + V-ing.",
+    "gerund_infinitive-4": "look forward to + V-ing (to is a preposition here).",
+    "gerund_infinitive-5": "mind + V-ing / mind if…",
+    "gerund_infinitive-6": "without + V-ing."
+   }
+  },
+  "used_to": {
+   "explanation": "**Two different patterns:**\n- **used to + V1:** past habits that are no longer true. I used to play football. Negative/question: didn't use to, did you use to?\n- **be used to + V-ing / noun:** to be accustomed to something. I'm used to getting up early.\n- **get used to + V-ing / noun:** to become accustomed to something (a process). I'm getting used to the cold.",
+   "structure": [
+    "Subject + used to + V1",
+    "Subject + am/is/are used to + V-ing",
+    "Subject + get used to + V-ing"
+   ],
+   "notes": {
+    "used_to-1": "A past habit: used to + V1.",
+    "used_to-2": "be used to + V-ing.",
+    "used_to-3": "get used to + noun: the process of getting used to it.",
+    "used_to-4": "Negative: didn't use to + V1.",
+    "used_to-5": "There used to be: in the past there was …",
+    "used_to-6": "get used to + noun."
+   }
+  },
+  "causative": {
+   "explanation": "**Having someone else do a job for you.** It matches the Turkish \"-tır, -dır\" ending (yaptırdım, kestirdim).\n- **have + object + V3:** I had my hair cut. We're having the house painted.\n- **get + object + V3:** more informal: I need to get my car repaired.\n- **have + person + V1:** having a person do something: I had the mechanic check the brakes.\n- **get + person + to + V1:** persuading someone to do something: I got my brother to help me.\n- **make + person + V1:** forcing someone: My boss made me work late. **let + person + V1:** allowing: My parents let me stay out late.",
+   "structure": [
+    "Subject + have/get + object + V3",
+    "Subject + have + person + V1",
+    "Subject + get + person + to + V1",
+    "Subject + make / let + person + V1"
+   ],
+   "notes": {
+    "causative-1": "have/get + object + V3: had my hair cut.",
+    "causative-2": "get/have + car + repaired.",
+    "causative-3": "Present Continuous: are having + object + V3.",
+    "causative-4": "make/have + person + V1.",
+    "causative-5": "let + person + V1.",
+    "causative-6": "get + person + to + V1."
+   }
+  },
+  "comparison": {
+   "explanation": "**Comparatives (more …):**\n- Short adjectives: **-er + than:** taller than, cheaper than. Long adjectives: **more + adjective + than:** more expensive than.\n- **Careful:** do not use both together: more taller is wrong.\n**Superlatives (the most …):** **the + -est** (the tallest) or **the most + adjective** (the most beautiful).\n- Irregular: good → better → the best, bad → worse → the worst, far → farther/further.\n- Equality: as + adjective + as: as tall as. Negative: not as … as.",
+   "structure": [
+    "Adjective-er / more + adjective + than",
+    "the + adjective-est / the most + adjective",
+    "as + adjective + as"
+   ],
+   "notes": {
+    "comparison-1": "A two-syllable -ed adjective: more crowded than.",
+    "comparison-2": "the most + long adjective; ever + Present Perfect.",
+    "comparison-3": "not as … as.",
+    "comparison-4": "bad → worse.",
+    "comparison-5": "the + -est: the youngest; \"in my family\".",
+    "comparison-6": "The more …, the better …"
+   }
+  },
+  "inversion": {
+   "explanation": "**For emphasis, when a negative or limiting expression starts the sentence, the auxiliary comes before the subject** (question word order).\n- **Never / Rarely / Seldom + auxiliary + subject:** Never have I seen such a beautiful place.\n- **Not only … but also:** Not only did he lose his job, but he also lost his house.\n- **Hardly / No sooner … :** Hardly had I arrived when the phone rang. No sooner had we sat down than the lights went out.\n- **Only then / Only when / Not until:** Only when I got home did I realise I had lost my wallet.\n- **Under no circumstances / At no time:** Under no circumstances should you open this door.\n- If there is no auxiliary, add do/does/did: Rarely **does** she complain.",
+   "structure": [
+    "Negative adverb + auxiliary + subject + verb",
+    "Not only + auxiliary + subject …, but … also …",
+    "Hardly had + subject + V3 … when …",
+    "Only when + clause + auxiliary + subject + verb"
+   ],
+   "notes": {
+    "inversion-1": "Never + have + subject + V3.",
+    "inversion-2": "Not only + did + subject + V1.",
+    "inversion-3": "Hardly had … when / No sooner had … than.",
+    "inversion-4": "Only when + clause + did + subject + V1.",
+    "inversion-5": "Under no circumstances + should + subject.",
+    "inversion-6": "Rarely + does + subject + V1."
+   }
+  },
+  "cleft_sentences": {
+   "explanation": "**A sentence split in two to bring one part forward and stress it.** Turkish stresses a word through word order (\"Kitabı dün **Ali** aldı\"); English uses these patterns.\n- **It is/was + stressed part + that/who + clause:** It was Ali who took the book. It was yesterday that I saw her.\n- **What + subject + verb + is/was + …:** What I need is a holiday. What surprised me was his reaction.\n- **All (that) + subject + verb + is …:** All I want is some peace.\n- **The thing / The reason / The place … is …:** The reason (why) I called is to apologise.",
+   "structure": [
+    "It is/was + part + that/who + clause",
+    "What + subject + verb + is/was + part",
+    "All + subject + verb + is + part",
+    "The reason why + clause + is + part"
+   ],
+   "notes": {
+    "cleft_sentences-1": "It was + person + who + clause.",
+    "cleft_sentences-2": "All I want is…",
+    "cleft_sentences-3": "What + verb + was …",
+    "cleft_sentences-4": "It was + place + that …",
+    "cleft_sentences-5": "The reason (why) … is …",
+    "cleft_sentences-6": "What you need is …"
+   }
+  },
+  "subjunctive": {
+   "explanation": "**Patterns in formal English for suggestions, necessity and wishes.**\n- **suggest / recommend / insist / demand / require + that + subject + V1 (base form):** I suggest that he **see** a doctor (not sees). They insisted that she **be** present.\n- **It is essential / vital / important + that + subject + V1:** It is essential that every student **attend** the meeting.\n- **It's (high) time + subject + V2:** it should already have happened. It's time we **left**.\n- **would rather + subject + V2:** preferring that someone else does something. I'd rather you **didn't** smoke here.\n- Fixed phrases such as **as it were, be that as it may, so be it** also come from this mood.",
+   "structure": [
+    "suggest / insist + that + subject + V1 (base form)",
+    "It is essential / vital + that + subject + V1",
+    "It's (high) time + subject + V2",
+    "Subject + would rather + subject + V2"
+   ],
+   "notes": {
+    "subjunctive-1": "recommend that + subject + V1 (not rests).",
+    "subjunctive-2": "It is essential that + subject + V1 (not attends).",
+    "subjunctive-3": "It's time + subject + V2.",
+    "subjunctive-4": "would rather + subject + V2.",
+    "subjunctive-5": "insist that + subject + be.",
+    "subjunctive-6": "It's high time + subject + V2."
+   }
+  },
+  "mixed_review": {
+   "explanation": "**In this section, sentences from different topics come in mixed order.** For each sentence, first think about which structure it needs:\n- Look at the time words: yesterday → Simple Past, since/for → Present Perfect, right now → Present Continuous.\n- \"-se, -seydi\" → a conditional; \"keşke\" → wish; \"-tır, -dır (having something done)\" → causative.\n- \"-ılır, -ıldı\" → the passive; \"değil mi?\" → a question tag; \"var / yok\" → there is / there are.\n- If your answer is right you are congratulated; if not, you see which rule was needed.",
+   "structure": [
+    "Find the time → choose the structure → build the sentence"
+   ],
+   "notes": {
+    "mixed_review-1": "An ongoing action + for: Present Perfect Continuous.",
+    "mixed_review-2": "Past passive: was built.",
+    "mixed_review-3": "A wish about now: wish + V2.",
+    "mixed_review-4": "Plural: there are.",
+    "mixed_review-5": "The earlier of two past events: had + V3.",
+    "mixed_review-6": "Causative: had + object + V3.",
+    "mixed_review-7": "Question tag: isn't it?",
+    "mixed_review-8": "First conditional: if + V1, will + V1.",
+    "mixed_review-9": "Superlative + ever + Present Perfect.",
+    "mixed_review-10": "Indirect question: normal word order."
+   }
+  }
+ }
+}

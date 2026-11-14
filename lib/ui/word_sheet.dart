@@ -194,7 +194,7 @@ class _WordPanelState extends State<WordPanel> {
       SegmentedButton<int>(
         segments: [
           ButtonSegment(value: 0, label: Text(L('Anlam', 'Meaning')), icon: Icon(Icons.translate)),
-          ButtonSegment(value: 1, label: Text('Word Family'), icon: Icon(Icons.account_tree_outlined)),
+          ButtonSegment(value: 1, label: Text(L('Kelime ailesi', 'Word Family')), icon: Icon(Icons.account_tree_outlined)),
         ],
         selected: {tab},
         showSelectedIcon: false,
@@ -391,7 +391,7 @@ class _WordFamilyViewState extends State<WordFamilyView> {
         });
       }
     } catch (e) {
-      if (mounted) setState(() => error = L('Yapay zekâya ulaşılamadı: $e', 'Could not reach the AI: $e'));
+      if (mounted) setState(() => error = L('Yapay zekâya ulaşılamadı: ${errorText(e)}', 'Could not reach the AI: ${errorText(e)}'));
     } finally {
       if (mounted) setState(() => loading = false);
     }
@@ -424,7 +424,7 @@ class _WordFamilyViewState extends State<WordFamilyView> {
           Text(L('Kök', 'Root'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           const SizedBox(width: 12),
           Text(f.root, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-          if (f.rootTr != null && f.rootTr!.isNotEmpty) ...[
+          if (f.rootTr != null && f.rootTr!.isNotEmpty && widget.app.showTr) ...[
             const SizedBox(width: 8),
             Flexible(child: Text('(${f.rootTr})', style: theme.textTheme.titleMedium)),
           ],

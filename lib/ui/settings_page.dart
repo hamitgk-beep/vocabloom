@@ -453,7 +453,7 @@ class _AiServicePageState extends State<AiServicePage> {
       setState(() => testResult = L('Çalışıyor ✓  "${r.translations.firstOrNull ?? ''}"', 'Working ✓  "${r.translations.firstOrNull ?? ''}"'));
       widget.app.analyzer.tick();
     } catch (e) {
-      if (mounted) setState(() => testResult = L('Hata: $e', 'Error: $e'));
+      if (mounted) setState(() => testResult = L('Hata: ${errorText(e)}', 'Error: ${errorText(e)}'));
     } finally {
       if (mounted) setState(() => testing = false);
     }
