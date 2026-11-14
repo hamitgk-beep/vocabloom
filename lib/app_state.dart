@@ -106,6 +106,8 @@ class AppState extends ChangeNotifier {
   bool get aiTab => user.getSetting('ai_tab') == '1';
   void setAiTab(bool v) {
     user.setSetting('ai_tab', v ? '1' : null);
+    // There are no subscriptions yet: Beta testers get the Premium model.
+    user.setSetting('ai_premium', v ? '1' : null);
     notifyListeners();
   }
 
