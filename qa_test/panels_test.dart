@@ -24,6 +24,7 @@ import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
 import 'package:kelime_okur/ui/other_pages.dart';
+import 'package:kelime_okur/ui/settings_page.dart';
 import 'package:kelime_okur/ui/panel.dart';
 import 'package:kelime_okur/ui/paragraph_view.dart';
 import 'package:kelime_okur/ui/review_page.dart';
@@ -423,6 +424,10 @@ void main() {
           'dictionary': CategoriesPage(app: app),
           'my_words': WordsPage(app: app),
           'settings': SettingsPage(app: app),
+          'settings_voice': const VoiceSettingsPage(),
+          'settings_service': AiServicePage(app: app),
+          'settings_about': const AboutPage(),
+          'settings_licenses': const LicensesPage(),
           'review': ReviewPage(app: app, cards: app.review.due(now: DateTime.now().add(const Duration(days: 1)), limit: 5)),
         };
         for (final MapEntry(key: name, value: page) in pages.entries) {
