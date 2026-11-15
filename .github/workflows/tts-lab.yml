@@ -1,0 +1,23 @@
+name: tts-lab
+# Temporary: Turkish voice comparison on an ARM CPU. Removed before merge.
+on:
+  push:
+    branches-ignore: [main]
+    paths: [tools/tts_lab/**, .github/workflows/tts-lab.yml]
+jobs:
+  lab:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch ema-lightning sherpa-onnx==1.13.8 faster-whisper soundfile scipy huggingface_hub
+      - name: Piper Turkish models
+        run: |
+          mkdir -p models && cd models
+          for v in fahrettin fettah dfki; do curl -sSfL https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-tr_TR-$v-medium.tar.bz2 | tar xj || echo "no $v"; done
+      - run: OUT=out python tools/tts_lab/tr_lab.py 2>&1 | grep -v -E "Warning|warn\(" 
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: tr-samples, path: out}
