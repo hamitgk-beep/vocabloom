@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch ema-lightning onnx onnxruntime huggingface_hub
-      - run: python -u tools/tts_lab/ema_export.py ema-onnx
+      - run: python -u tools/tts_lab/ema_export.py ema-onnx 2>&1 | grep -v -E '^ +%|aten::|onnx::' ; exit ${PIPESTATUS[0]}
       - name: Publish to the 'voice-lab' release (scratch, not used by the app)
         env:
           GH_TOKEN: ${{ github.token }}

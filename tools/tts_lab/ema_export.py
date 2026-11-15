@@ -10,6 +10,8 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else 'ema-onnx'; os.makedirs(OUT, exist_o
 R = 'canberkkkkkk/ema-lightning'
 am = load_acoustic(hf_hub_download(R, 'ema.pt'), 'cpu'); dec = load_decoder(hf_hub_download(R, 'decoder.pt'), 'cpu')
 
+torch.expm1 = lambda x: torch.exp(x) - 1  # no ONNX op for expm1
+
 class Text(torch.nn.Module):
     def forward(self, ids):
         return am.text_stage(ids, ids != 0)
