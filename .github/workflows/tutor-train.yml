@@ -26,6 +26,14 @@ jobs:
       PKG: ${{ github.event.inputs.package }}
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Training data from the tutor-data branch
+        run: |
+          git fetch -q origin tutor-data
+          mkdir -p data
+          git show origin/tutor-data:tools/tutor/data/train.jsonl > data/train.jsonl
+          git show origin/tutor-data:tools/tutor/data/eval.jsonl > data/eval.jsonl
+          wc -l data/*.jsonl
       - run: pip install -q "kaggle>=1.7" huggingface_hub
       - name: Prepare the Kaggle notebook
         run: |
@@ -34,9 +42,18 @@ jobs:
           python3 - <<'PY'
           import json, os
           nb = json.load(open('tools/tutor/train_tutor.ipynb'))
+          import base64
           for c in nb['cells']:
-              if c['cell_type'] == 'code' and 'PACKAGE =' in ''.join(c['source']):
+              src = ''.join(c['source'])
+              if c['cell_type'] == 'code' and 'PACKAGE =' in src:
                   c['source'] = "PACKAGE = %r\nHF_REPO = ''\nEPOCHS = %s\n" % (os.environ['PKG'], '${{ github.event.inputs.epochs }}')
+              elif c['cell_type'] == 'code' and 'git clone' in src:
+                  # The repository may be private: the training data travels inside the notebook.
+                  files = {n: base64.b64encode(open('data/' + n, 'rb').read()).decode() for n in ('train.jsonl', 'eval.jsonl')}
+                  c['source'] = ("%%%%capture\n!pip install -q unsloth\nimport base64, os\n"
+                                 "os.makedirs('vocabloom/tools/tutor/data', exist_ok=True)\n"
+                                 "for n, b in %r.items():\n"
+                                 "    open('vocabloom/tools/tutor/data/' + n, 'wb').write(base64.b64decode(b))\n" % files)
           json.dump(nb, open('kernel/train_tutor.ipynb', 'w'))
           json.dump({
               'id': '%s/vocabloom-tutor-%s' % (os.environ['KAGGLE_USERNAME'], os.environ['PKG']),
