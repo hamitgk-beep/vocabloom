@@ -12,6 +12,7 @@ import 'package:path/path.dart' as p;
 import 'package:sherpa_onnx/sherpa_onnx.dart' as so;
 
 import '../data/user_db.dart';
+import '../l10n.dart';
 import 'voices.dart';
 
 enum PackState { missing, downloading, extracting, ready, failed }
@@ -58,6 +59,15 @@ class Speech extends ChangeNotifier {
   PackState stateOf(VoicePack pk) => _state[pk.id] ?? PackState.missing;
   double progressOf(VoicePack pk) => _progress[pk.id] ?? 0;
   String? errorOf(VoicePack pk) => _error[pk.id];
+
+  /// A download failure in the interface language.
+  static String _downloadError(Object e) {
+    final m = e is HttpException ? e.message : e is FileSystemException ? e.message : '';
+    if (m == 'download interrupted') return L('İndirme yarıda kesildi.', 'The download was interrupted.');
+    if (m.startsWith('HTTP ')) return L('Sunucu dosyayı vermedi ($m).', 'The server did not send the file ($m).');
+    if (m == 'voice pack is incomplete') return L('Ses paketi eksik indi.', 'The voice pack arrived incomplete.');
+    return errorText(e);
+  }
   bool isReady(VoicePack pk) => stateOf(pk) == PackState.ready;
 
   /// The English voice pack is installed.
@@ -178,7 +188,7 @@ class Speech extends ChangeNotifier {
       unawaited(warmUp());
     } catch (e) {
       debugPrint('voice pack ${pk.id}: $e');
-      _error[pk.id] = '$e';
+      _error[pk.id] = _downloadError(e);
       _state[pk.id] = PackState.failed;
       try {
         if (zip.existsSync()) zip.deleteSync();
