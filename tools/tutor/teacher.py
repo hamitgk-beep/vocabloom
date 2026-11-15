@@ -23,6 +23,7 @@ import os
 import random
 import sys
 import time
+import urllib.error
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -62,7 +63,15 @@ TOPICS = [
 ]
 
 
+class TeacherDown(Exception):
+    """The API keeps failing (bad key, wrong model, daily quota used up)."""
+
+
+_failures = 0
+
+
 def call(system, user, temperature=0.4, json_mode=False):
+    global _failures
     body = {'model': MODEL, 'temperature': temperature,
             'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': user}]}
     if json_mode:
@@ -70,17 +79,28 @@ def call(system, user, temperature=0.4, json_mode=False):
     req = urllib.request.Request(URL + '/chat/completions', data=json.dumps(body).encode(),
                                  headers={'Content-Type': 'application/json',
                                           **({'Authorization': 'Bearer ' + KEY} if KEY else {})})
-    for attempt in range(5):
+    for attempt in range(4):
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
-                out = json.loads(r.read())['choices'][0]['message']['content']
+            with urllib.request.urlopen(req, timeout=120) as r:
+                out = json.loads(r.read())['choices'][0]['message']['content'] or ''
             if '</think>' in out:
                 out = out.split('</think>', 1)[1]
+            _failures = 0
             return out.strip()
-        except Exception as e:  # rate limits, timeouts
-            wait = 20 * (attempt + 1)
-            print('  retry in %ds: %s' % (wait, e))
-            time.sleep(wait)
+        except urllib.error.HTTPError as e:
+            detail = e.read().decode('utf-8', 'replace')[:300]
+            print('  HTTP %d: %s' % (e.code, detail), flush=True)
+            if e.code in (400, 401, 403, 404):
+                raise TeacherDown('HTTP %d: %s' % (e.code, detail))
+            if e.code == 429 and 'day' in detail.lower():
+                raise TeacherDown('daily quota used up')
+            time.sleep(30 * (attempt + 1))
+        except Exception as e:  # timeouts, network
+            print('  retry: %s' % e, flush=True)
+            time.sleep(20 * (attempt + 1))
+    _failures += 1
+    if _failures >= 5:
+        raise TeacherDown('5 requests in a row failed')
     return None
 
 
@@ -99,14 +119,15 @@ def explain(limit):
             human[en] = tr
     out_path = os.path.join(DATA, 'teacher.jsonl')
     done = done_ids(out_path)
-    n = 0
+    n = tried = 0
     with open(os.path.join(DATA, 'prompts.jsonl'), encoding='utf-8') as f, open(out_path, 'a', encoding='utf-8') as out:
         for line in f:
             p = json.loads(line)
             if p['task'] != 'explain' or p['id'] in done:
                 continue
-            if n >= limit:
+            if n >= limit or tried >= 2 * limit:
                 break
+            tried += 1
             en = p['user'].split('Cümle: "', 1)[1].split('"\n', 1)[0]
             user = p['user'] + ('\n\nİnsan çevirisi: ' + human[en] if human.get(en) else '')
             ans = call(p['system'] + '\n' + QUALITY, user, temperature=0.3)
@@ -275,7 +296,7 @@ def lessons(per_topic, max_topics):
             time.sleep(DELAY)
 
 
-if __name__ == '__main__':
+def main():
     if len(sys.argv) >= 2 and sys.argv[1] == 'explain':
         explain(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
     elif len(sys.argv) >= 2 and sys.argv[1] == 'grade':
@@ -286,3 +307,11 @@ if __name__ == '__main__':
         chat(int(sys.argv[2]) if len(sys.argv) > 2 else 600)
     else:
         print(__doc__)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except TeacherDown as e:
+        print('Teacher API stopped:', e, flush=True)
+        sys.exit(3)

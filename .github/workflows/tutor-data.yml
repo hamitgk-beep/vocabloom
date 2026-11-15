@@ -56,19 +56,28 @@ jobs:
       - name: Teacher answers
         env:
           TEACHER_URL: https://generativelanguage.googleapis.com/v1beta/openai
-          TEACHER_MODEL: gemini-flash-latest
+          TEACHER_MODEL: gemini-2.5-flash
           TEACHER_KEY: ${{ secrets.GEMINI_TEACHER_KEY }}
           TEACHER_DELAY: '7'
+          PYTHONUNBUFFERED: '1'
+        # Each part has its own time limit and a stopped API ends the part at
+        # once, so the answers written so far are always saved below.
         run: |
-          python3 tools/tutor/teacher.py explain ${{ github.event.inputs.explain || '200' }} || true
-          python3 tools/tutor/teacher.py chat ${{ github.event.inputs.chat || '40' }} || true
-          python3 tools/tutor/teacher.py grade ${{ github.event.inputs.grade || '40' }} || true
-          if [ "${{ github.event.inputs.lessons || '0' }}" != "0" ]; then
-            python3 tools/tutor/teacher.py lessons 6 ${{ github.event.inputs.lessons || '0' }} || true
-          fi
-          python3 tools/tutor/build_sft.py build
+          run() { timeout "$1" python3 tools/tutor/teacher.py "${@:2}"; rc=$?; echo "teacher $2 exit $rc"; [ $rc -eq 3 ] && exit 0; return 0; }
+          (
+            run 100m explain ${{ github.event.inputs.explain || '200' }}
+            run 40m chat ${{ github.event.inputs.chat || '40' }}
+            run 60m grade ${{ github.event.inputs.grade || '40' }}
+            if [ "${{ github.event.inputs.lessons || '0' }}" != "0" ]; then
+              run 60m lessons 6 ${{ github.event.inputs.lessons || '0' }}
+            fi
+          ) || true
+          wc -l tools/tutor/data/teacher*.jsonl 2>/dev/null || true
       - name: Save on the tutor-data branch
+        if: always()
         run: |
+          python3 tools/tutor/build_sft.py build || true
+          touch tools/tutor/data/teacher.jsonl
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           mkdir -p /tmp/keep && cp tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl /tmp/keep/
