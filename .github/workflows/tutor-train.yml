@@ -84,7 +84,7 @@ jobs:
             echo "$(date +%H:%M) $s"
             case "$s" in
               *COMPLETE*|*complete*) break ;;
-              *ERROR*|*error*|*CANCEL*|*cancel*) kaggle kernels output "$ref" -p out || true; tail -c 4000 out/*.log 2>/dev/null; exit 1 ;;
+              *ERROR*|*error*|*CANCEL*|*cancel*) kaggle kernels output "$ref" -p out || true; grep -o "pip exit.\{0,3000\}" out/*.log 2>/dev/null | head -c 3500; tail -c 3000 out/*.log 2>/dev/null; exit 1 ;;
             esac
           done
           kaggle kernels output "$ref" -p out
