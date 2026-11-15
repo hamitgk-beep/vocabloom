@@ -3,55 +3,80 @@ class VoicePack {
   final String id;
   final int mb;
   final String lang; // 'en' or 'tr'
-  const VoicePack(this.id, this.mb, this.lang);
+
+  /// Model family run by sherpa-onnx: 'kokoro' or 'piper'.
+  final String engine;
+  const VoicePack(this.id, this.mb, this.lang, this.engine);
 
   String get url => 'https://github.com/hamitgk-beep/vocabloom/releases/download/voice-models/$id.zip';
 }
 
-/// English: Supertonic 2 (Supertone, OpenRAIL-M model / MIT code). Fast on
-/// phones and natural; one model with 10 voices.
-const englishPack = VoicePack('supertonic-en-v2', 80, 'en');
+/// English, natural: Kokoro-82M v1.0 (hexgrad, Apache 2.0), full precision.
+/// In tests it read 0 of 483 words wrong and sounds the most human.
+const kokoroPack = VoicePack('kokoro-en-fp32-v1', 330, 'en', 'kokoro');
+
+/// English, light: Piper trained on LibriTTS-R (CC BY 4.0). About 15x faster,
+/// used on phones too slow for Kokoro, and while Kokoro is still downloading.
+const lightPack = VoicePack('piper-en-libritts-v1', 70, 'en', 'piper');
+
+/// The English voices are downloaded together, the small pack first.
+const englishPack = kokoroPack;
+const englishPacks = [lightPack, kokoroPack];
 
 /// Turkish: Piper voices trained on CC0 recordings (NabuCasa voice-datasets).
-const fahrettinPack = VoicePack('piper-tr-fahrettin', 55, 'tr');
-const fettahPack = VoicePack('piper-tr-fettah', 55, 'tr');
+const fahrettinPack = VoicePack('piper-tr-fahrettin', 55, 'tr', 'piper');
+const fettahPack = VoicePack('piper-tr-fettah', 55, 'tr', 'piper');
 
-const voicePacks = [englishPack, fahrettinPack, fettahPack];
+const voicePacks = [lightPack, kokoroPack, fahrettinPack, fettahPack];
 
-/// A voice. [sid] is the speaker id inside its model.
+/// A voice. [sid] is the speaker id inside its model; [accent] is 'us', 'gb'
+/// or 'tr'.
 class Voice {
   final String id;
   final int sid;
   final String name;
   final bool female;
   final VoicePack pack;
-  const Voice(this.id, this.sid, this.name, {required this.female, this.pack = englishPack});
+  final String accent;
+  const Voice(this.id, this.sid, this.name, {required this.female, required this.pack, this.accent = 'us'});
 
   String get lang => pack.lang;
+  String get engine => pack.engine;
 
-  /// Model family: 'supertonic' or 'piper'.
-  String get engine => pack == englishPack ? 'supertonic' : 'piper';
+  /// Models kept loaded side by side: one per kind of use.
+  String get family => pack == kokoroPack ? 'en-natural' : pack.lang == 'en' ? 'en-light' : 'tr';
 }
 
-/// English voices (American English). Speaker ids 0-4 are the model's
-/// female styles F1-F5, 5-9 the male styles M1-M5.
+/// Natural English voices (Kokoro speaker ids from the model's voice table),
+/// the best-rated ones of each kind first.
 const voices = <Voice>[
-  Voice('en_f1', 0, 'Ava', female: true),
-  Voice('en_f2', 1, 'Lily', female: true),
-  Voice('en_f3', 2, 'Grace', female: true),
-  Voice('en_f4', 3, 'Mia', female: true),
-  Voice('en_f5', 4, 'Nora', female: true),
-  Voice('en_m1', 5, 'Leo', female: false),
-  Voice('en_m2', 6, 'Sam', female: false),
-  Voice('en_m3', 7, 'Jack', female: false),
-  Voice('en_m4', 8, 'Ben', female: false),
-  Voice('en_m5', 9, 'Max', female: false),
+  Voice('k_af_heart', 3, 'Heart', female: true, pack: kokoroPack),
+  Voice('k_af_bella', 2, 'Bella', female: true, pack: kokoroPack),
+  Voice('k_af_nicole', 6, 'Nicole', female: true, pack: kokoroPack),
+  Voice('k_af_sarah', 9, 'Sarah', female: true, pack: kokoroPack),
+  Voice('k_am_michael', 16, 'Michael', female: false, pack: kokoroPack),
+  Voice('k_am_fenrir', 14, 'Fenrir', female: false, pack: kokoroPack),
+  Voice('k_am_puck', 18, 'Puck', female: false, pack: kokoroPack),
+  Voice('k_bf_emma', 21, 'Emma', female: true, pack: kokoroPack, accent: 'gb'),
+  Voice('k_bf_isabella', 22, 'Isabella', female: true, pack: kokoroPack, accent: 'gb'),
+  Voice('k_bm_george', 26, 'George', female: false, pack: kokoroPack, accent: 'gb'),
+  Voice('k_bm_fable', 25, 'Fable', female: false, pack: kokoroPack, accent: 'gb'),
+  Voice('k_bm_lewis', 27, 'Lewis', female: false, pack: kokoroPack, accent: 'gb'),
+];
+
+/// Light English voices (LibriTTS-R speaker ids, picked by pitch and by how
+/// often Whisper heard single words right).
+const lightVoices = <Voice>[
+  Voice('l_f1', 513, 'Anna', female: true, pack: lightPack),
+  Voice('l_f2', 702, 'Kate', female: true, pack: lightPack),
+  Voice('l_m1', 720, 'Tom', female: false, pack: lightPack),
+  Voice('l_m2', 522, 'Mark', female: false, pack: lightPack),
 ];
 
 /// Turkish voices (male; no free female Turkish voice allows commercial use yet).
 const trVoices = <Voice>[
-  Voice('tr_fahrettin', 0, 'Fahrettin', female: false, pack: fahrettinPack),
-  Voice('tr_fettah', 0, 'Fettah', female: false, pack: fettahPack),
+  Voice('tr_fahrettin', 0, 'Fahrettin', female: false, pack: fahrettinPack, accent: 'tr'),
+  Voice('tr_fettah', 0, 'Fettah', female: false, pack: fettahPack, accent: 'tr'),
 ];
 
-final voiceById = {for (final v in [...voices, ...trVoices]) v.id: v};
+final voiceById = {for (final v in [...voices, ...lightVoices, ...trVoices]) v.id: v};
