@@ -215,14 +215,12 @@ class _HomePageState extends State<HomePage> {
       if (widget.app.aiTab) AiPage(ai: widget.app.localAi, tutor: Tutor.of(widget.app)),
       SettingsPage(app: widget.app),
     ];
-    // The bottom bar of a phone has room for one short word per tab.
-    final wideLabels = MediaQuery.sizeOf(context).width >= 720;
     final dests = [
       (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
-      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, wideLabels ? L('Kelimelerim', 'My words') : L('Kelimeler', 'Words')),
+      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimelerim', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
-      if (widget.app.aiTab) (Icons.auto_awesome_outlined, Icons.auto_awesome_rounded, wideLabels ? L('Yapay Zekâ', 'AI Tutor') : L('Öğretmen', 'Tutor')),
+      if (widget.app.aiTab) (Icons.auto_awesome_outlined, Icons.auto_awesome_rounded, L('Yapay Zekâ', 'AI Tutor')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
     if (tab >= pages.length) tab = pages.length - 1;
@@ -258,11 +256,7 @@ class _HomePageState extends State<HomePage> {
       body: body,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant))),
-        child: NavigationBarTheme(
-          data: NavigationBarTheme.of(context).copyWith(
-            labelTextStyle: WidgetStatePropertyAll(Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w600)),
-          ),
-          child: NavigationBar(
+        child: NavigationBar(
         selectedIndex: tab,
         // Six tabs do not fit with every label on a phone.
         labelBehavior: dests.length > 5 ? NavigationDestinationLabelBehavior.onlyShowSelected : null,
@@ -276,7 +270,6 @@ class _HomePageState extends State<HomePage> {
             ),
         ],
       ),
-        ),
       ),
     );
   }
