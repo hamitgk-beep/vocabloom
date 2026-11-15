@@ -17,7 +17,7 @@ import 'word_sheet.dart';
 /// [ctx] is null when opened from a list (dictionary, word list) instead of a book.
 Future<void> showExprSheet(BuildContext context, AppState app, Expr expr, WordContext? ctx, [List<String>? words]) {
   panelApp = app;
-  return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words ?? expr.phrase.split(' '), scroll: sc));
+  return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words ?? expr.phrase.split(' ').where((w) => !placeholderWords.contains(w)).toList(), scroll: sc));
 }
 
 class ExprPanel extends StatefulWidget {
@@ -124,7 +124,7 @@ class _ExprPanelState extends State<ExprPanel> {
         );
 
     final children = <Widget>[
-      Text(expr.phrase, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700)),
+      Text(displayPhrase(expr.phrase), style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700)),
       const SizedBox(height: 2),
       Text(uiEnglish || (en && !tr) ? c.name : (en ? '${c.name} · ${c.tr}' : c.tr), style: TextStyle(color: color, fontWeight: FontWeight.w600)),
       const SizedBox(height: 10),

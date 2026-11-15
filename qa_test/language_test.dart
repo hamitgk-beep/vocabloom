@@ -31,6 +31,7 @@ import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
+import 'package:kelime_okur/nlp/text.dart' show displayPhrase;
 import 'package:kelime_okur/online/ai_service.dart';
 import 'package:kelime_okur/ui/ai/ai_page.dart';
 import 'package:kelime_okur/ui/ai/ai_tools.dart';
@@ -566,7 +567,7 @@ void main() {
     content.add(sentence);
     // Dictionary expressions and their English definitions.
     for (final e in d.exprs) {
-      content.add(e.phrase);
+      content.addAll([e.phrase, displayPhrase(e.phrase)]);
       if (e.en != null) content.addAll(e.en!.split('\n').map((x) => x.trim()));
     }
     // Meanings shown in the word lists and the quiz.
