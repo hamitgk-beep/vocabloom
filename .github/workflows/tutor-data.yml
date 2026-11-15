@@ -57,6 +57,9 @@ jobs:
         env:
           TEACHER_URL: https://generativelanguage.googleapis.com/v1beta/openai
           TEACHER_MODEL: auto
+          # Free-tier limits are per model and per day; when one model's day is
+          # used up the script moves on to the next.
+          TEACHER_MODELS: gemini-2.5-flash,gemini-flash-latest,gemini-3-flash-preview,gemini-2.5-flash-lite
           TEACHER_KEY: ${{ secrets.GEMINI_TEACHER_KEY }}
           TEACHER_DELAY: '7'
           PYTHONUNBUFFERED: '1'
@@ -83,9 +86,9 @@ jobs:
           mkdir -p /tmp/keep && cp tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl /tmp/keep/
           [ -f tools/grammar/generated.jsonl ] && cp tools/grammar/generated.jsonl /tmp/keep-generated.jsonl || true
           if git rev-parse -q --verify origin/tutor-data >/dev/null; then
-            git checkout -q -B tutor-data origin/tutor-data
+            git checkout -q -f -B tutor-data origin/tutor-data
           else
-            git checkout -q -B tutor-data
+            git checkout -q -f -B tutor-data
           fi
           cp /tmp/keep/* tools/tutor/data/
           [ -f /tmp/keep-generated.jsonl ] && cp /tmp/keep-generated.jsonl tools/grammar/generated.jsonl && git add -f tools/grammar/generated.jsonl || true

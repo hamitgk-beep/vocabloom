@@ -63,8 +63,23 @@ TOPICS = [
 ]
 
 
+FALLBACK = []
+
+
+def next_model(reason):
+    """Moves on to the next model in TEACHER_MODELS; False when none is left."""
+    global MODEL, _failures
+    if not FALLBACK:
+        return False
+    print('model %s stopped (%s), switching to %s' % (MODEL, reason[:120], FALLBACK[0]), flush=True)
+    MODEL = FALLBACK.pop(0)
+    _failures = 0
+    return True
+
+
 def pick_model():
-    """With TEACHER_MODEL=auto: the newest general "flash" model the key can use."""
+    """With TEACHER_MODEL=auto: the models in TEACHER_MODELS that the key can
+    use, in that order, else the newest general "flash" model."""
     global MODEL
     if MODEL != 'auto':
         return
@@ -78,6 +93,10 @@ def pick_model():
         m = re.search(r'(\d+(?:\.\d+)?)', i)
         return (float(m.group(1)) if m else 0, 'latest' in i)
     MODEL = max(good, key=ver) if good else ids[0]
+    wanted = [m for m in os.environ.get('TEACHER_MODELS', '').split(',') if m.strip() in ids]
+    if wanted:
+        MODEL = wanted[0]
+        FALLBACK.extend(wanted[1:])
     print('models:', ', '.join(sorted(ids))[:1500], flush=True)
     print('teacher model:', MODEL, flush=True)
 
@@ -98,7 +117,7 @@ def call(system, user, temperature=0.4, json_mode=False):
     req = urllib.request.Request(URL + '/chat/completions', data=json.dumps(body).encode(),
                                  headers={'Content-Type': 'application/json',
                                           **({'Authorization': 'Bearer ' + KEY} if KEY else {})})
-    for attempt in range(4):
+    for attempt in range(8):
         try:
             with urllib.request.urlopen(req, timeout=120) as r:
                 out = json.loads(r.read())['choices'][0]['message']['content'] or ''
@@ -109,16 +128,20 @@ def call(system, user, temperature=0.4, json_mode=False):
         except urllib.error.HTTPError as e:
             detail = ' '.join(e.read().decode('utf-8', 'replace').split())[:400]
             print('  HTTP %d: %s' % (e.code, detail), flush=True)
-            if e.code in (400, 401, 403, 404):
+            if e.code in (400, 401, 403, 404) or e.code == 429 and 'quota' in detail.lower():
+                if next_model('HTTP %d' % e.code):
+                    body['model'] = MODEL
+                    req.data = json.dumps(body).encode()
+                    continue
                 raise TeacherDown('HTTP %d: %s' % (e.code, detail))
-            if e.code == 429 and 'day' in detail.lower():
-                raise TeacherDown('daily quota used up')
-            time.sleep(30 * (attempt + 1))
+            time.sleep(min(120, 30 * (attempt + 1)))
         except Exception as e:  # timeouts, network
             print('  retry: %s' % e, flush=True)
-            time.sleep(20 * (attempt + 1))
+            time.sleep(min(90, 20 * (attempt + 1)))
     _failures += 1
     if _failures >= 5:
+        if next_model('5 requests in a row failed'):
+            return None
         raise TeacherDown('5 requests in a row failed')
     return None
 
