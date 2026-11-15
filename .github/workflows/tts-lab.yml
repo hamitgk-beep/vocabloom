@@ -12,12 +12,18 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch ema-lightning sherpa-onnx==1.13.8 faster-whisper soundfile scipy huggingface_hub
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch ema-lightning sherpa-onnx==1.13.8 faster-whisper soundfile scipy huggingface_hub torchaudio
       - name: Piper Turkish models
         run: |
           mkdir -p models && cd models
           for v in fahrettin fettah dfki; do curl -sSfL https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-tr_TR-$v-medium.tar.bz2 | tar xj || echo "no $v"; done
-      - run: OUT=out python tools/tts_lab/tr_lab.py 2>&1 | grep -v -E "Warning|warn\(" 
+      - name: trnorm (Ahenk's Turkish text normaliser)
+        run: |
+          git clone --depth 1 https://github.com/ozguradmin/ahenk-turkish-tts ahenk
+          find ahenk -maxdepth 4 -name "trnorm*" | head
+          d=$(dirname "$(find ahenk -maxdepth 4 -type d -name trnorm | head -1)")
+          echo "PYTHONPATH=$PWD/$d" >> "$GITHUB_ENV"
+      - run: OUT=out python -u tools/tts_lab/tr_lab.py 2>&1 | grep -v -E "Warning|warn\(" | tee out/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: tr-samples, path: out}

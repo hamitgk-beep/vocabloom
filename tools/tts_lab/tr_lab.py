@@ -11,7 +11,7 @@ S = ["Öğrenmek için her gün biraz okumalısın.",
      "Öğretmen sorunun cevabını tahtaya yazdı.",
      "Pencereden içeri serin bir rüzgâr esiyordu.",
      "Kardeşim her akşam piyano çalışıyor.",
-     "Trenin kalkmasına sadece beş dakika kalmıştı.",
+     "Trenin kalkmasına sadece birkaç dakika kalmıştı.",
      "Sessizce kapıyı açtı ve odaya girdi.",
      "Bu kelimenin anlamını sözlükte buldum.",
      "Deniz kenarında uzun bir yürüyüş yaptık.",
@@ -70,6 +70,7 @@ def evaluate(name, gen, threads):
     for l in shown[:8]: print('   ', l)
 
 engines = {}
+piper = {}
 # Piper baselines (sherpa-onnx 1.13.8)
 import sherpa_onnx as so
 for v in sys.argv[1:] or ['fahrettin', 'fettah', 'dfki']:
@@ -81,7 +82,7 @@ for v in sys.argv[1:] or ['fahrettin', 'fettah', 'dfki']:
         def g(s):
             a = t.generate(s, sid=0, speed=1.0); return np.array(a.samples, dtype=np.float32), a.sample_rate
         return g
-    engines['piper-' + v] = mk
+    piper['piper-' + v] = mk
 try:
     from ema_lightning import EMA
     ema = EMA(device='cpu')
@@ -95,7 +96,7 @@ except Exception:
 try:
     from huggingface_hub import snapshot_download
     p = snapshot_download('ozgurguler/ahenk-cep-tr'); sys.path.insert(0, p)
-    print('ahenk files', os.listdir(p))
+    print('ahenk files', os.listdir(p), os.listdir(os.path.join(p, 'onnx')) if os.path.isdir(os.path.join(p, 'onnx')) else '')
     import ahenk_cep, inspect
     print(inspect.signature(ahenk_cep.AhenkCep))
     ac = ahenk_cep.AhenkCep(os.path.join(p, 'student.pt'), os.path.join(p, 'decoder.pt'))
@@ -109,6 +110,7 @@ try:
 except Exception:
     traceback.print_exc()
 
+engines.update(piper)
 for name, mk in engines.items():
     for th in (1, 4):
         try: evaluate(name, mk(th), th)
