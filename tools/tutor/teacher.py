@@ -20,6 +20,7 @@ the app's dictionary facts, and must keep the exact answer format of the app.
 """
 import json
 import os
+import re
 import random
 import sys
 import time
@@ -86,7 +87,6 @@ def pick_model():
     req = urllib.request.Request(URL + '/models', headers={**({'Authorization': 'Bearer ' + KEY} if KEY else {})})
     with urllib.request.urlopen(req, timeout=60) as r:
         ids = [m['id'].split('/')[-1] for m in json.loads(r.read()).get('data', [])]
-    import re
     good = [i for i in ids if 'flash' in i and not re.search(r'lite|image|tts|live|audio|thinking|exp|preview|embed|8b', i)]
     good = good or [i for i in ids if 'flash' in i and not re.search(r'image|tts|live|audio|embed', i)]
     def ver(i):
@@ -126,9 +126,20 @@ def call(system, user, temperature=0.4, json_mode=False):
             _failures = 0
             return out.strip()
         except urllib.error.HTTPError as e:
-            detail = ' '.join(e.read().decode('utf-8', 'replace').split())[:400]
-            print('  HTTP %d: %s' % (e.code, detail), flush=True)
-            if e.code in (400, 401, 403, 404) or e.code == 429 and 'quota' in detail.lower():
+            full = ' '.join(e.read().decode('utf-8', 'replace').split())
+            detail = full[:400]
+            quota_ids = sorted(set(re.findall(r'"quotaId": "([^"]+)"', full)))
+            print('  HTTP %d: %s %s' % (e.code, detail[:160], ' '.join(quota_ids)), flush=True)
+            per_day = any('PerDay' in q for q in quota_ids) or 'per day' in full.lower()
+            if e.code == 429 and not per_day:
+                # Requests-per-minute limit: wait for the next minute.
+                wait = 65
+                m = re.search(r'retry in ([0-9.]+)s', full, re.I) or re.search(r'"retryDelay": "([0-9.]+)s"', full)
+                if m:
+                    wait = min(120, float(m.group(1)) + 3)
+                time.sleep(wait)
+                continue
+            if e.code in (400, 401, 403, 404) or e.code == 429:
                 if next_model('HTTP %d' % e.code):
                     body['model'] = MODEL
                     req.data = json.dumps(body).encode()
