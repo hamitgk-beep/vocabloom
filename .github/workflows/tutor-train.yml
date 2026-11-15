@@ -50,7 +50,7 @@ jobs:
                   # The repository may be private: the training data comes as a private Kaggle dataset.
                   c['source'] = ("import subprocess, sys\n"
                                  "r = subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', 'unsloth'], capture_output=True, text=True)\n"
-                                 "print('pip exit', r.returncode, r.stdout[-1500:], r.stderr[-3000:])\n"
+                                 "print('pip exit', r.returncode, r.stdout[-1500:], r.stderr[-3000:], file=sys.stderr)\n"
                                  "if r.returncode: raise SystemExit('pip install unsloth failed (is internet on for this Kaggle notebook? It needs a phone-verified account.)')\n"
                                  "import glob, os, shutil\n"
                                  "os.makedirs('vocabloom/tools/tutor/data', exist_ok=True)\n"
