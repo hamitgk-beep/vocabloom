@@ -266,6 +266,24 @@ class LlamaLocalAi extends LocalAi {
       {int maxTokens = 512, double temperature = 0.3}) async* {
     // A phone short of memory or a stuck model must not leave the learner
     // waiting forever: give up with a clear message instead.
+    // One answer at a time: the word panel can ask for the meaning while
+    // the learner already taps a question, and llama.cpp runs one
+    // generation per model. The second waits for the first.
+    final previous = _queue;
+    final mine = Completer<void>();
+    _queue = mine.future;
+    try {
+      await previous;
+      yield* _answer(system, messages, maxTokens: maxTokens, temperature: temperature);
+    } finally {
+      mine.complete();
+    }
+  }
+
+  Future<void> _queue = Future.value();
+
+  Stream<String> _answer(String system, List<(String, String)> messages,
+      {int maxTokens = 512, double temperature = 0.3}) async* {
     final e = await _ensure().timeout(loadTimeout,
         onTimeout: () => throw const AiException(
             'Yapay zekâ modeli yüklenemedi (çok uzun sürdü). Telefonu yeniden başlatıp tekrar dene.',

@@ -51,6 +51,15 @@ void main() {
       print('AI answer in ${sw.elapsed.inMilliseconds} ms:\n$out\n-----');
       expect(out.toString().trim(), isNotEmpty);
     }
+    // Two questions at once, as when the word panel's meaning is still being
+    // written and the learner taps a question: both must be answered.
+    sw.reset();
+    final both = await Future.wait([
+      ai.generate('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek?')], maxTokens: 40).join(),
+      ai.generate('Kısa cevap ver.', [('user', '"book" Türkçede ne demek?')], maxTokens: 40).join(),
+    ]);
+    print('AI two at once in ${sw.elapsed.inMilliseconds} ms:\n${both.join('\n---\n')}\n-----');
+    expect(both.every((a) => a.trim().isNotEmpty), isTrue);
     await ai.unload();
   }, timeout: const Timeout(Duration(minutes: 50)));
 }
