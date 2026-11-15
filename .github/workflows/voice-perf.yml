@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
   push:
     branches-ignore: [main]
-    paths: [lib/tts/**, test/voice_perf_test.dart, .github/workflows/voice-perf.yml]
+    paths: [lib/tts/**, test/voice_perf_test.dart, .github/workflows/voice-perf.yml, tools/ema_export.py]
 
 jobs:
   voice:
@@ -28,6 +28,9 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/asr" && cd "$RUNNER_TEMP/asr"
           curl -sSfL https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-base.tar.bz2 | tar xj
+          # Turkish needs a larger Whisper; only its int8 files are kept.
+          curl -sSfL https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-small.tar.bz2 | tar xj
+          find sherpa-onnx-whisper-small -name '*.onnx' ! -name '*int8*' -delete
       - name: Weak phone (1 thread, light voice)
         run: |
           lib=$(find ~/.pub-cache/hosted/pub.dev -path '*sherpa_onnx_linux-*/linux/aarch64' -type d | head -1)
@@ -43,6 +46,7 @@ jobs:
           lib=$(find ~/.pub-cache/hosted/pub.dev -path '*sherpa_onnx_linux-*/linux/aarch64' -type d | head -1)
           SHERPA_ONNX_LIB_DIR=$lib LD_LIBRARY_PATH=$lib VOCABLOOM_TTS_THREADS=4 VOCABLOOM_VOICE_PROFILE=mid \
           VOCABLOOM_ASR_DIR=$RUNNER_TEMP/asr/sherpa-onnx-whisper-base \
+          VOCABLOOM_ASR_TR_DIR=$RUNNER_TEMP/asr/sherpa-onnx-whisper-small \
           VOCABLOOM_VOICE_BASE=https://github.com/${{ github.repository }}/releases/download/voice-models \
           flutter test test/voice_perf_test.dart || st=$?
           cat voice-perf-report.txt >> report.txt || true

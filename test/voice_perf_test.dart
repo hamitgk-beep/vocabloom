@@ -40,7 +40,7 @@ void main() {
     final natural = profile == 'mid';
     s.quality = natural ? 'natural' : 'light';
     final list = natural ? voices : lightVoices;
-    final en = list.firstWhere((v) => v.female), enM = natural ? voiceById['k_bm_george']! : list.firstWhere((v) => !v.female), tr = voiceById['tr_fahrettin']!;
+    final en = list.firstWhere((v) => v.female), enM = natural ? voiceById['k_bm_george']! : list.firstWhere((v) => !v.female), tr = trVoices.first;
     // The natural male is British, so both accents are checked.
     log('## ${natural ? 'Natural voice (Kokoro), ordinary phone' : 'Light voice (Piper), weak phone'}: times x$slow');
 
@@ -136,6 +136,39 @@ void main() {
       log('sentences: ${(100 * werErrors / werWords).toStringAsFixed(1)}% words wrong ($werErrors of $werWords), sentences with a skipped or extra word: $badSentences of $checked');
     }
 
+    // 5) Turkish: sentences and single words, written down by a larger
+    // Whisper (the small one hardly knows Turkish).
+    final trDir = Platform.environment['VOCABLOOM_ASR_TR_DIR'];
+    var trErrors = 0, trWords = 0, trBad = 0, trOk = 0;
+    if (trDir != null) {
+      final tasr = Asr(trDir, size: 'small', language: 'tr');
+      for (final text in _turkishSentences) {
+        final p = await s.synth(text, v: tr);
+        final heard = tasr.transcribe(p);
+        File(p).deleteSync();
+        final (e, n) = turkishWordErrors(text, heard);
+        trErrors += e;
+        trWords += n;
+        if (e >= 2) trBad++;
+        if (e > 0) log('  ${tr.name}: "$text" -> "$heard"');
+      }
+      final lead = await s.synth('Sıradaki kelime.', v: tr);
+      for (final w in _turkishWords) {
+        final p = await s.synth(w, v: tr);
+        final heard = tasr.transcribeJoined(lead, p);
+        File(p).deleteSync();
+        final ws = _trWords(heard);
+        if (ws.isNotEmpty && ws.last == _trWords(w).single) {
+          trOk++;
+        } else {
+          log('  ${tr.name} word "$w" heard as "${heard.trim()}"');
+        }
+      }
+      File(lead).deleteSync();
+      tasr.free();
+      log('turkish sentences: ${(100 * trErrors / trWords).toStringAsFixed(1)}% words wrong ($trErrors of $trWords), sentences with a skipped or extra word: $trBad of ${_turkishSentences.length}; words heard right $trOk of ${_turkishWords.length}');
+    }
+
     File('voice-perf-report.txt').writeAsStringSync(report.toString());
 
     // Gates, as the phone would feel them.
@@ -151,6 +184,11 @@ void main() {
       expect(wordsOk / wordsChecked, greaterThanOrEqualTo(natural ? 0.85 : 0.8), reason: 'single words must be said whole and clearly');
       expect(werErrors / werWords, lessThan(natural ? 0.01 : 0.03), reason: 'words must not be skipped or repeated');
       expect(badSentences, lessThanOrEqualTo(natural ? 0 : 3), reason: 'sentences must not lose or gain words');
+    }
+    if (trDir != null) {
+      expect(trErrors / trWords, lessThan(0.04), reason: 'Turkish words must not be skipped or garbled');
+      expect(trBad, lessThanOrEqualTo(1), reason: 'Turkish sentences must not lose or gain words');
+      expect(trOk / _turkishWords.length, greaterThanOrEqualTo(0.8), reason: 'single Turkish words must be clear');
     }
   }, skip: base == null ? 'set VOCABLOOM_VOICE_BASE' : false, timeout: const Timeout(Duration(minutes: 20)));
 }
@@ -174,9 +212,15 @@ const _numbers = {'1': 'one', '2': 'two', '3': 'three', '4': 'four', '5': 'five'
 
 List<String> _words(String t) => RegExp(r"[a-z0-9']+").allMatches(t.toLowerCase()).map((m) => _numbers[m[0]] ?? m[0]!).toList();
 
+List<String> _trWords(String t) =>
+    RegExp(r"[a-zçğıöşü0-9]+").allMatches(t.replaceAll('İ', 'i').replaceAll('I', 'ı').toLowerCase().replaceAll('â', 'a').replaceAll("'", '')).map((m) => m[0]!).toList();
+
+(int, int) turkishWordErrors(String meant, String heard) => _distance(_trWords(meant), _trWords(heard));
+
 /// Word-level edit distance between what was meant and what was heard.
-(int, int) wordErrors(String meant, String heard) {
-  final r = _words(meant), h = _words(heard);
+(int, int) wordErrors(String meant, String heard) => _distance(_words(meant), _words(heard));
+
+(int, int) _distance(List<String> r, List<String> h) {
   var d = List<int>.generate(h.length + 1, (j) => j);
   for (var i = 1; i <= r.length; i++) {
     final nd = List<int>.filled(h.length + 1, 0)..[0] = i;
@@ -191,14 +235,16 @@ List<String> _words(String t) => RegExp(r"[a-z0-9']+").allMatches(t.toLowerCase(
 /// Whisper (base, English) through sherpa-onnx: writes down what a clip says.
 class Asr {
   final so.OfflineRecognizer r;
-  Asr(String dir) : r = _make(dir);
 
-  static so.OfflineRecognizer _make(String dir) {
+  /// Whisper in [dir]; [size] is the file prefix ('base', 'small').
+  Asr(String dir, {String size = 'base', String language = 'en'}) : r = _make(dir, size, language);
+
+  static so.OfflineRecognizer _make(String dir, String size, String language) {
     so.initBindings(Platform.environment['SHERPA_ONNX_LIB_DIR']);
     return so.OfflineRecognizer(so.OfflineRecognizerConfig(
           model: so.OfflineModelConfig(
-            whisper: so.OfflineWhisperModelConfig(encoder: '$dir/base-encoder.int8.onnx', decoder: '$dir/base-decoder.int8.onnx', language: 'en', task: 'transcribe'),
-            tokens: '$dir/base-tokens.txt',
+            whisper: so.OfflineWhisperModelConfig(encoder: '$dir/$size-encoder.int8.onnx', decoder: '$dir/$size-decoder.int8.onnx', language: language, task: 'transcribe'),
+            tokens: '$dir/$size-tokens.txt',
             modelType: 'whisper',
             numThreads: 2,
             debug: false,
@@ -231,3 +277,18 @@ class Asr {
 
   void free() => r.free();
 }
+
+const _turkishSentences = [
+  'Öğrenmek için her gün biraz okumalısın.',
+  'Kapının önünde küçük bir kedi oturuyordu.',
+  'Yarın sabah erkenden yola çıkacağız.',
+  'Hava kararınca çocuklar eve döndü.',
+  'Öğretmen sorunun cevabını tahtaya yazdı.',
+  'Pencereden içeri serin bir rüzgâr esiyordu.',
+  'Trenin kalkmasına sadece birkaç dakika kalmıştı.',
+  'Bu kelimenin anlamını sözlükte buldum.',
+  'Deniz kenarında uzun bir yürüyüş yaptık.',
+  'Gülümsedi ama hiçbir şey söylemedi.',
+];
+
+const _turkishWords = ['bisiklet', 'rağmen', 'çekmece', 'şemsiye', 'öğretmen', 'kelebek', 'pencere', 'gözlük', 'yağmur', 'kitap', 'kahvaltı', 'yavaşça'];

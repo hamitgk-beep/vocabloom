@@ -333,7 +333,7 @@ class _VoiceSettingsState extends State<VoiceSettings> {
           Text(L('Türkçe anlamların ve çevirilerin yanındaki hoparlöre dokununca okunur.', 'Used by the speaker next to Turkish meanings and translations.'), style: theme.textTheme.bodySmall),
           const SizedBox(height: 8),
           _voicePicker(trVoices, s.trVoice, sampleTr, (v) => s.trVoice = v),
-          for (final p in [fahrettinPack, fettahPack])
+          for (final p in [emaPack, fahrettinPack])
             if (!s.isReady(p))
               Padding(
                 padding: const EdgeInsets.only(top: 8),
