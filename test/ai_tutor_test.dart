@@ -190,4 +190,22 @@ void main() {
     await say('I will study tonight.');
     expect(ai.lastSystem, contains('Bloom'), reason: 'ordinary chat goes to the model');
   });
+
+  test('discuss puts the exercise facts into the first question', () async {
+    await tutor.discuss('Türkçe cümle: "Dün geldim."\nÖğrencinin cevabı: "I come yesterday"', [('user', 'Neden yanlış?')]).join();
+    expect(ai.lastMessages!.first.$1, 'user');
+    expect(ai.lastMessages!.first.$2, contains('I come yesterday'));
+    expect(ai.lastMessages!.first.$2, contains('Neden yanlış?'));
+    expect(ai.lastSystem, contains('itiraz'));
+    await tutor.discuss('x', [('user', 'a'), ('assistant', 'b'), ('user', 'c')]).join();
+    expect(ai.lastMessages!.map((m) => m.$1), ['user', 'assistant', 'user']);
+    expect(ai.lastMessages!.last.$2, 'c');
+  });
+
+  test('wordMeaning gives the dictionary gloss and the sentence', () async {
+    await tutor.wordMeaning('pedicab', sentence: 'We took a pedicab.', gloss: 'a tricycle with a seat for passengers').join();
+    expect(ai.lastMessages!.single.$2, contains('pedicab'));
+    expect(ai.lastMessages!.single.$2, contains('tricycle'));
+    expect(ai.lastSystem, contains('Türkçesi:'));
+  });
 }

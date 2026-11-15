@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
+import '../ai/tutor.dart';
 import '../online/ai_service.dart';
+import 'ai/device_translation.dart';
+import 'ai/local_ai_card.dart';
 import 'panel.dart';
 import 'paragraph_view.dart';
 import '../l10n.dart';
@@ -130,6 +133,7 @@ class _SentencePanelState extends State<SentencePanel> {
             if (Speech.supported) SpeakButton(tr, lang: 'tr', size: 20),
           ]),
         ),
+      if (tr == null && showTr && !loading) DeviceTranslation(key: ValueKey('mt-${ctx.sentence}'), app: app, text: ctx.sentence, style: const TextStyle(fontSize: 17, height: 1.45)),
       if (tr == null && loading)
         Padding(
           padding: EdgeInsets.only(top: 8),
@@ -141,11 +145,20 @@ class _SentencePanelState extends State<SentencePanel> {
         ),
       const SizedBox(height: 10),
       LangToggles(app: app, onChanged: () => setState(() {})),
-      if (tr == null && !loading && AiService.fromSettings(app.user) == null)
+      if (LocalAiCard.available(app) && AiService.fromSettings(app.user) == null)
+        LocalAiCard(
+          app: app,
+          cacheKey: 'sentence:${ctx.sentence}',
+          title: L('Yapay zekâ: çeviri ve açıklama', 'AI: translation and explanation'),
+          button: L('Yapay zekâ ile çevir ve açıkla', 'Translate and explain with AI'),
+          auto: tr == null,
+          run: () => Tutor.of(app).explainSentence(ctx.sentence, paragraph: widget.para.text, bookTitle: ctx.bookTitle),
+        ),
+      if (tr == null && !loading && AiService.fromSettings(app.user) == null && !LocalAiCard.available(app))
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
-              L('Tam cümle çevirisi için Ayarlar\'dan bir yapay zekâ servisi bağla. Aşağıdaki parça parça analiz internetsiz çalışır.', 'Connect an AI service in Settings for a full sentence translation. The step-by-step analysis below works offline.'),
+              L('Tam cümle çevirisi için Yapay Zekâ sekmesinden cihaz içi modeli indir (internetsiz çalışır). Aşağıdaki parça parça analiz de internetsiz çalışır.', 'For a full sentence translation, download the on-device model in the AI tab (works offline). The step-by-step analysis below works offline too.'),
               style: TextStyle(color: theme.hintColor, fontSize: 13)),
         ),
       if (error != null) ...[

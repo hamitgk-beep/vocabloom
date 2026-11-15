@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../ai/grammar_practice.dart';
 import '../../ai/tutor.dart';
+import '../ai/ai_ask_box.dart';
 import '../../app_state.dart';
 import '../../l10n.dart';
 import '../ai/ai_page.dart';
@@ -612,6 +613,18 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
     );
   }
 
+  /// What the AI is told about the exercise on the screen.
+  String _aboutExercise() {
+    final a = input.text.trim();
+    return 'Gramer konusu: ${t.titleTr} (${t.titleEn})\n'
+        'Kural: ${e.noteTr.isEmpty ? t.structureTr.join(' / ') : e.noteTr}\n'
+        '${e.isGap ? 'Boşluk doldurma: "${e.gap}"\nTam hâli: "${e.gapSolved}"\n' : 'Türkçe cümle: "${e.tr}"\n'}'
+        'Doğru cevaplar:\n${e.answers.map((x) => '- "$x"').join('\n')}\n'
+        'Öğrencinin cevabı: ${a.isEmpty ? '(cevap vermedi, cevabı gösterdi)' : '"$a"'}\n'
+        'Sonuç: ${results[e] == _Result.wrong ? 'yanlış' : 'doğru'}'
+        '${feedback.trim().isEmpty ? '' : '\nUygulamanın geri bildirimi: ${feedback.trim()}'}';
+  }
+
   void _openAi() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -842,6 +855,19 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                       ],
                     ],
                   ),
+                ),
+              if (answered)
+                AiAskBox(
+                  key: ValueKey('ask-${e.id}'),
+                  app: widget.app,
+                  title: L('Yapay zekâya sor', 'Ask the AI'),
+                  suggestions: [
+                    if (results[e] == _Result.wrong) L('Neden yanlış?', 'Why is it wrong?'),
+                    if (results[e] == _Result.wrong && !e.isGap) L('Benim cevabım da doğru değil mi?', 'Isn\'t my answer right too?'),
+                    L('Kuralı kısaca anlat', 'Explain the rule briefly'),
+                    L('Bir örnek daha ver', 'Give me another example'),
+                  ],
+                  about: _aboutExercise(),
                 ),
               if (answered) ...[
                 const SizedBox(height: 14),

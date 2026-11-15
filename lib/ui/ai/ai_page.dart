@@ -201,6 +201,13 @@ class _Hero extends StatelessWidget {
               'It explains sentences, corrects your writing, chats with you in English and builds quizzes from your words. Runs fully on your device, offline.'),
           style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white.withValues(alpha: 0.9), height: 1.45),
         ),
+        const SizedBox(height: 10),
+        Text(
+          L('Nerede kullanılır: okurken bir kelimeye dokun (Türkçe anlamı ve "Bu kelimeyi yapay zekâya sor"), bir cümleye uzun bas (çeviri ve açıklama), Gramer alıştırmasında çevirini kontrol eder ve "Yapay zekâya sor" ile neden yanlış olduğunu konuşursun; ayrıca aşağıdaki araçlarda.',
+              'Where it works: tap a word while reading (Turkish meaning and "Ask the AI about this word"), long-press a sentence (translation and explanation), in Grammar practice it checks your translation and "Ask the AI" lets you talk about why it was wrong; and in the tools below.'),
+          key: const ValueKey('ai-where'),
+          style: theme.textTheme.bodySmall?.copyWith(color: Colors.white.withValues(alpha: 0.9), height: 1.45),
+        ),
         const SizedBox(height: 14),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
