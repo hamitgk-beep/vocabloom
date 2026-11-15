@@ -428,12 +428,26 @@ Future<void> allScreens(WidgetTester tester) async {
   await tester.pumpWidget(shell(GrammarTopicPage(app: app, topic: topic)));
   await capture(tester, 'grammar_topic');
   fakeAi.fail = true;
-  await tester.pumpWidget(shell(GrammarPracticePage(app: app, topic: topic)));
+  final tx = topic.exercises.firstWhere((e) => !e.isGap), gx = topic.exercises.firstWhere((e) => e.isGap);
+  // Tall enough that the whole practice page (answer card, buttons) is built.
+  await tester.binding.setSurfaceSize(const Size(800, 1600));
+  await tester.pumpWidget(shell(GrammarPracticePage(app: app, topic: topic, round: [tx, gx])));
   await capture(tester, 'grammar_practice');
   await tester.enterText(find.byType(TextField).first, 'I am going to the school');
   await tester.testTextInput.receiveAction(TextInputAction.done);
   await capture(tester, 'grammar_practice_no_model');
   fakeAi.fail = false;
+  // The gap sentence, its hint, a wrong answer and the round score.
+  await tapText(tester, 'Sıradaki cümle', 'Next sentence');
+  await capture(tester, 'grammar_gap');
+  await tester.tap(find.byKey(const ValueKey('grammar-hint')));
+  await capture(tester, 'grammar_gap_hint');
+  await tester.enterText(find.byType(TextField).first, 'xyz');
+  await tester.testTextInput.receiveAction(TextInputAction.done);
+  await capture(tester, 'grammar_gap_answer');
+  await tapText(tester, 'Sonucu gör', 'See your score');
+  await capture(tester, 'grammar_score');
+  await tester.binding.setSurfaceSize(null);
 
   // AI: without a model, with a model and each tool.
   fakeAi.fail = true;
@@ -543,6 +557,10 @@ void main() {
       content.addAll([for (final e in t.examples) ...[e.$1, e.$2]]);
       for (final e in t.exercises) {
         content.addAll([e.tr, ...e.answers]);
+        if (e.isGap) {
+          content.addAll([e.gap!, e.gapSolved, '"${e.gapSolved}"', e.gap!.replaceAll(GrammarExercise.gapMark, '  ______  ')]);
+          content.addAll(hintWords(e));
+        }
       }
     }
     content.add(sentence);

@@ -27,15 +27,32 @@ class GrammarExercise {
 
   /// The same rule in English, for the English interface (from lessons_en.json).
   final String noteEn;
-  const GrammarExercise(this.id, this.tr, this.answers, this.noteTr, [this.noteEn = '']);
+
+  /// For a fill-in-the-gap exercise: the English sentence with [gapMark]
+  /// where the answer goes ([tr] is then its meaning). Null for a translation.
+  final String? gap;
+  const GrammarExercise(this.id, this.tr, this.answers, this.noteTr, [this.noteEn = '', this.gap]);
+
+  static const gapMark = '___';
+
+  bool get isGap => gap != null;
+
+  /// The gap sentence with the main answer filled in.
+  String get gapSolved => gap?.replaceFirst(gapMark, answers.first) ?? answers.first;
 
   /// The rule in the interface language.
   String get note => uiEnglish && noteEn.isNotEmpty ? noteEn : noteTr;
 
-  GrammarExercise withEnglish(String? en) => en == null ? this : GrammarExercise(id, tr, answers, noteTr, en);
+  GrammarExercise withEnglish(String? en) => en == null ? this : GrammarExercise(id, tr, answers, noteTr, en, gap);
 
   factory GrammarExercise.fromJson(Map<String, dynamic> j) => GrammarExercise(
-      j['id'] as String, j['tr'] as String, (j['answers'] as List).cast<String>(), (j['note'] ?? '') as String);
+    j['id'] as String,
+    j['tr'] as String,
+    (j['answers'] as List).cast<String>(),
+    (j['note'] ?? '') as String,
+    '',
+    j['gap'] as String?,
+  );
 }
 
 class GrammarTopic {
@@ -103,17 +120,17 @@ class GrammarTopic {
   }
 
   factory GrammarTopic.fromJson(Map<String, dynamic> j) => GrammarTopic(
-        id: j['id'] as String,
-        titleTr: j['title_tr'] as String,
-        titleEn: j['title_en'] as String,
-        level: j['level'] as String,
-        category: j['category'] as String,
-        explanationTr: j['explanation'] as String,
-        structureTr: (j['structure'] as List).cast<String>(),
-        examples: [for (final e in j['examples'] as List) ((e as List)[0] as String, e[1] as String)],
-        exercises: [for (final e in j['exercises'] as List) GrammarExercise.fromJson(e as Map<String, dynamic>)],
-        aliases: ((j['aliases'] ?? const []) as List).cast<String>(),
-      );
+    id: j['id'] as String,
+    titleTr: j['title_tr'] as String,
+    titleEn: j['title_en'] as String,
+    level: j['level'] as String,
+    category: j['category'] as String,
+    explanationTr: j['explanation'] as String,
+    structureTr: (j['structure'] as List).cast<String>(),
+    examples: [for (final e in j['examples'] as List) ((e as List)[0] as String, e[1] as String)],
+    exercises: [for (final e in j['exercises'] as List) GrammarExercise.fromJson(e as Map<String, dynamic>)],
+    aliases: ((j['aliases'] ?? const []) as List).cast<String>(),
+  );
 }
 
 /// Category names in display order.
@@ -141,9 +158,9 @@ const cefrLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 List<GrammarTopic> topicsByLevel(List<GrammarTopic> topics) {
   final order = {for (final (i, t) in topics.indexed) t.id: i};
   return [...topics]..sort((a, b) {
-      final c = cefrLevels.indexOf(a.level).compareTo(cefrLevels.indexOf(b.level));
-      return c != 0 ? c : order[a.id]!.compareTo(order[b.id]!);
-    });
+    final c = cefrLevels.indexOf(a.level).compareTo(cefrLevels.indexOf(b.level));
+    return c != 0 ? c : order[a.id]!.compareTo(order[b.id]!);
+  });
 }
 
 /// The topic to study next: the first unfinished one at the lowest level,
@@ -153,7 +170,7 @@ GrammarTopic? nextGrammarTopic(List<GrammarTopic> topics, GrammarProgress progre
   final from = level == null ? 0 : max(0, cefrLevels.indexOf(level));
   final open = [
     for (final t in topicsByLevel(topics))
-      if (cefrLevels.indexOf(t.level) >= from && t.category != 'mixed' && progress.done(t.id).length < t.exercises.length) t
+      if (cefrLevels.indexOf(t.level) >= from && t.category != 'mixed' && progress.done(t.id).length < t.exercises.length) t,
   ];
   if (open.isEmpty) return null;
   final lowest = open.first.level;
@@ -197,7 +214,7 @@ List<GrammarTopic> parseGrammarTopics(String raw, [String? rawEn]) {
   final en = rawEn == null ? const <String, dynamic>{} : (jsonDecode(rawEn) as Map<String, dynamic>)['topics'] as Map<String, dynamic>;
   return [
     for (final t in (jsonDecode(raw) as Map<String, dynamic>)['topics'] as List)
-      GrammarTopic.fromJson(t as Map<String, dynamic>).withEnglish(en[t['id']] as Map<String, dynamic>?)
+      GrammarTopic.fromJson(t as Map<String, dynamic>).withEnglish(en[t['id']] as Map<String, dynamic>?),
   ];
 }
 
@@ -206,9 +223,21 @@ List<GrammarTopic> parseGrammarTopics(String raw, [String? rawEn]) {
 String normalizeAnswer(String s) {
   var t = s.toLowerCase().replaceAll(RegExp('[’‘`´]'), "'").replaceAll(RegExp(r'["“”]'), '');
   const contractions = {
-    "won't": 'will not', "can't": 'cannot', "shan't": 'shall not', "n't": ' not', "'re": ' are', "'ve": ' have',
-    "'ll": ' will', "'m": ' am', "it's": 'it is', "that's": 'that is', "there's": 'there is',
-    "he's": 'he is', "she's": 'she is', "what's": 'what is', "let's": 'let us',
+    "won't": 'will not',
+    "can't": 'cannot',
+    "shan't": 'shall not',
+    "n't": ' not',
+    "'re": ' are',
+    "'ve": ' have',
+    "'ll": ' will',
+    "'m": ' am',
+    "it's": 'it is',
+    "that's": 'that is',
+    "there's": 'there is',
+    "he's": 'he is',
+    "she's": 'she is',
+    "what's": 'what is',
+    "let's": 'let us',
   };
   for (final e in contractions.entries) {
     t = t.replaceAll(e.key, e.value);
@@ -223,7 +252,7 @@ Set<String> answerVariants(String s) {
   while (out.any((x) => x.contains("'d"))) {
     out = {
       for (final x in out)
-        if (x.contains("'d")) ...[x.replaceFirst("'d", ' had'), x.replaceFirst("'d", ' would')] else x
+        if (x.contains("'d")) ...[x.replaceFirst("'d", ' had'), x.replaceFirst("'d", ' would')] else x,
     }.map((x) => x.replaceAll(RegExp(r'\s+'), ' ')).toSet();
   }
   return out;
@@ -263,5 +292,77 @@ class GrammarProgress {
   void reset(String topicId) {
     final all = _all()..remove(topicId);
     db.setSetting(_key, jsonEncode(all));
+    final w = _wrongAll()..remove(topicId);
+    db.setSetting(_wrongKey, jsonEncode(w));
+  }
+
+  // Sentences answered wrong, asked again first in later rounds until right.
+  static const _wrongKey = 'grammar_wrong';
+
+  Map<String, dynamic> _wrongAll() {
+    try {
+      final s = db.getSetting(_wrongKey);
+      return s == null ? {} : jsonDecode(s) as Map<String, dynamic>;
+    } catch (_) {
+      return {};
+    }
+  }
+
+  /// Exercises of [topicId] answered wrong and not yet answered right.
+  Set<String> wrong(String topicId) => {...?(_wrongAll()[topicId] as List?)?.cast<String>()};
+
+  /// Records an answer: done either way; a wrong one is asked again later,
+  /// a right one is taken off that list.
+  void record(String topicId, String exerciseId, {required bool right}) {
+    markDone(topicId, exerciseId);
+    final all = _wrongAll();
+    final s = wrong(topicId);
+    right ? s.remove(exerciseId) : s.add(exerciseId);
+    if (s.isEmpty) {
+      all.remove(topicId);
+    } else {
+      all[topicId] = s.toList();
+    }
+    db.setSetting(_wrongKey, jsonEncode(all));
   }
 }
+
+/// Sentences in one scored practice round.
+const grammarRoundSize = 10;
+
+/// The next round for [t]: sentences answered wrong before come first, then
+/// new ones, then ones already done, up to [size].
+List<GrammarExercise> grammarRound(GrammarTopic t, GrammarProgress p, {int size = grammarRoundSize, Random? random}) {
+  final rnd = random ?? Random();
+  final done = p.done(t.id), wrong = p.wrong(t.id);
+  List<GrammarExercise> pick(bool Function(GrammarExercise) f) => t.exercises.where(f).toList()..shuffle(rnd);
+  return [
+    ...pick((e) => wrong.contains(e.id)),
+    ...pick((e) => !done.contains(e.id)),
+    ...pick((e) => done.contains(e.id) && !wrong.contains(e.id)),
+  ].take(size).toList();
+}
+
+final _edgePunct = RegExp(r"^[^A-Za-z0-9']+|[^A-Za-z0-9']+$");
+
+/// The words of the main answer in a random order, for the hint button that
+/// shows one more word each time it is pressed. A one-word gap answer is
+/// shown a letter at a time instead ("w…", "wo…").
+List<String> hintWords(GrammarExercise e, {Random? random}) {
+  final one = e.answers.first.trim();
+  if (e.isGap && !one.contains(' ')) {
+    return [for (var i = 1; i < one.length; i++) '${one.substring(0, i)}…'];
+  }
+  final words = [
+    for (final w in e.answers.first.split(RegExp(r'\s+')))
+      if (w.replaceAll(_edgePunct, '') case final x when x.isNotEmpty) x,
+  ];
+  final shuffled = [...words]..shuffle(random ?? Random());
+  // Never in the answer's own order when another order exists.
+  if (words.toSet().length > 1 && shuffled.join(' ') == words.join(' ')) shuffled.add(shuffled.removeAt(0));
+  return shuffled;
+}
+
+/// Whether model feedback on a non-matching answer still found mistakes (the
+/// grading prompt writes a corrections section only then).
+bool feedbackHasCorrections(String feedback) => RegExp(r'Düzeltmeler|Corrections', caseSensitive: false).hasMatch(feedback);

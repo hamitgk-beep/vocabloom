@@ -1089,6 +1089,46 @@ ALIASES = {
     'mixed_review': ['mixed', 'mixed review', 'karışık', 'karisik', 'karışık tekrar', 'genel tekrar'],
 }
 
+# More hand-written sentences (tools/grammar/extra/*.py): X adds translation
+# sentences, G adds fill-in-the-gap sentences. Their English notes go into
+# lessons_en.json.
+EXTRA_EN = {}
+
+def _by_id(tid):
+    for t in T:
+        if t['id'] == tid:
+            return t
+    raise KeyError(tid)
+
+def X(tid, items):
+    t = _by_id(tid)
+    for tr, answers, note, note_en in items:
+        assert answers and all(a.strip() for a in answers), (tid, tr)
+        if any(e['tr'] == tr for e in t['exercises']):
+            raise ValueError('duplicate sentence %s: %s' % (tid, tr))
+        n = sum(1 for e in t['exercises'] if 'gap' not in e) + 1
+        e = {'id': '%s-%d' % (tid, n), 'tr': tr, 'answers': answers, 'note': note}
+        t['exercises'].append(e)
+        EXTRA_EN.setdefault(tid, {})[e['id']] = note_en
+
+def G(tid, items):
+    t = _by_id(tid)
+    for gap, answers, tr, note, note_en in items:
+        assert gap.count('___') == 1, (tid, gap)
+        assert answers and all(a.strip() for a in answers), (tid, gap)
+        if any(e.get('gap') == gap for e in t['exercises']):
+            raise ValueError('duplicate gap %s: %s' % (tid, gap))
+        n = sum(1 for e in t['exercises'] if 'gap' in e) + 1
+        e = {'id': '%s-b%d' % (tid, n), 'gap': gap, 'tr': tr, 'answers': answers, 'note': note}
+        t['exercises'].append(e)
+        EXTRA_EN.setdefault(tid, {})[e['id']] = note_en
+
+_extra_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'extra')
+for _f in sorted(os.listdir(_extra_dir)) if os.path.isdir(_extra_dir) else []:
+    if _f.endswith('.py'):
+        with open(os.path.join(_extra_dir, _f), encoding='utf-8') as fh:
+            exec(compile(fh.read(), _f, 'exec'), {'X': X, 'G': G})
+
 # Extra sentences written by tools/tutor/teacher.py lessons (checked by a
 # second model call). They come after the hand-written ones and never replace them.
 gen_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'generated.jsonl')
@@ -1122,4 +1162,14 @@ here = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(here, '..', '..', 'assets', 'grammar', 'lessons.json')
 with open(path, 'w', encoding='utf-8') as f:
     json.dump(out, f, ensure_ascii=False, indent=1)
-print('topics', len(T), 'exercises', sum(len(t['exercises']) for t in T))
+# English notes of the extra sentences.
+en_path = os.path.join(here, '..', '..', 'assets', 'grammar', 'lessons_en.json')
+with open(en_path, encoding='utf-8') as f:
+    en = json.load(f)
+for tid, notes in EXTRA_EN.items():
+    en['topics'].setdefault(tid, {}).setdefault('notes', {}).update(notes)
+with open(en_path, 'w', encoding='utf-8') as f:
+    json.dump(en, f, ensure_ascii=False, indent=1)
+    f.write('\n')
+print('topics', len(T), 'exercises', sum(len(t['exercises']) for t in T),
+      'gaps', sum(1 for t in T for e in t['exercises'] if 'gap' in e))

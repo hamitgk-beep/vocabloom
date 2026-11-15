@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/ai/grammar_practice.dart';
@@ -56,5 +58,53 @@ void main() {
     }
     expect(nextGrammarTopic(topics, p)!.level, 'A2');
     expect(nextGrammarTopic(topics, p, level: 'C1')!.level, 'C1');
+  });
+
+  test('every topic has many translations and gap sentences, with English notes', () {
+    final en = (jsonDecode(File('assets/grammar/lessons_en.json').readAsStringSync()) as Map)['topics'] as Map;
+    for (final t in topics) {
+      expect(t.exercises.where((e) => !e.isGap).length, greaterThanOrEqualTo(16), reason: t.id);
+      expect(t.exercises.where((e) => e.isGap).length, greaterThanOrEqualTo(12), reason: t.id);
+      final notes = (en[t.id] as Map)['notes'] as Map;
+      for (final e in t.exercises) {
+        expect(notes[e.id], isA<String>(), reason: 'English note of ${e.id}');
+        if (e.isGap) {
+          expect(GrammarExercise.gapMark.allMatches(e.gap!), hasLength(1), reason: e.id);
+          expect(e.gapSolved, isNot(contains(GrammarExercise.gapMark)), reason: e.id);
+          expect(matchesReference(e, e.answers.first), isTrue, reason: e.id);
+        }
+      }
+    }
+  });
+
+  test('a round is ten sentences, wrong ones first, and a right answer clears them', () {
+    final u = UserDb.open(Directory.systemTemp.createTempSync('vb_round'));
+    final p = GrammarProgress(u);
+    final t = topics.firstWhere((t) => t.id == 'present_perfect');
+    expect(grammarRound(t, p, random: Random(1)), hasLength(grammarRoundSize));
+    final w = t.exercises[5];
+    p.record(t.id, w.id, right: false);
+    expect(p.wrong(t.id), {w.id});
+    expect(p.done(t.id), contains(w.id));
+    expect(grammarRound(t, p, random: Random(2)).first, w);
+    p.record(t.id, w.id, right: true);
+    expect(p.wrong(t.id), isEmpty);
+    // Done sentences come after new ones.
+    expect(grammarRound(t, p, random: Random(3)), isNot(contains(w)));
+    p.record(t.id, t.exercises[1].id, right: false);
+    p.reset(t.id);
+    expect(p.wrong(t.id), isEmpty);
+    expect(p.done(t.id), isEmpty);
+  });
+
+  test('a hint shows the answer words in another order, or a gap word letter by letter', () {
+    const e = GrammarExercise('x', 'Bunu biliyorum.', ['I know this, really.'], '');
+    final h = hintWords(e, random: Random(4));
+    expect(h.toSet(), {'I', 'know', 'this', 'really'});
+    expect(h.join(' '), isNot('I know this really'));
+    const g = GrammarExercise('y', 'O gitti.', ['went'], '', '', 'She ___ home.');
+    expect(hintWords(g), ['w…', 'we…', 'wen…']);
+    expect(g.gapSolved, 'She went home.');
+    expect(matchesReference(g, ' Went '), isTrue);
   });
 }
