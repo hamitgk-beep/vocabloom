@@ -84,11 +84,13 @@ jobs:
             echo "$(date +%H:%M) $s"
             case "$s" in
               *COMPLETE*|*complete*) break ;;
-              *ERROR*|*error*|*CANCEL*|*cancel*) kaggle kernels output "$ref" -p out || true; grep -o "pip exit.\{0,3000\}" out/*.log 2>/dev/null | head -c 3500; tail -c 3000 out/*.log 2>/dev/null; exit 1 ;;
+              *ERROR*|*error*|*CANCEL*|*cancel*) kaggle kernels output "$ref" -p out || true; grep -o "pip exit.\{0,3000\}" out/*.log 2>/dev/null | head -c 3500; python3 tools/tutor/kaggle_log.py out/*.log | grep -E -A14 "SANITY|LOSS|SAMPLE|Error|assert" | head -400; exit 1 ;;
             esac
           done
           kaggle kernels output "$ref" -p out
           ls -la out out/gguf 2>/dev/null || true
+          # The masking check, the losses and the sample answers.
+          python3 tools/tutor/kaggle_log.py out/*.log | grep -E -A14 "SANITY|LOSS|SAMPLE" | head -400 || true
       - name: Publish the GGUF
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}

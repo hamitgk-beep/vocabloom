@@ -64,9 +64,9 @@ void main() {
   app.localAi = ai;
   final tutor = Tutor.of(app)..lessons = () async => parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync());
 
-  test('one premium package, size as shown, commercial licence', () {
+  test('one free package, size as shown, commercial licence', () {
     expect(aiPackages.map((p) => p.id), ['pro']);
-    expect(aiPackages.single.premium, isTrue);
+    expect(aiPackages.single.premium, isFalse);
     expect(aiPackages.single.sizeBytes, lessThanOrEqualTo(3.1e9));
     for (final p in aiPackages) {
       expect(p.licenseName, 'Apache 2.0');
@@ -75,13 +75,8 @@ void main() {
     }
   });
 
-  test('premium packages are locked without the flag', () async {
-    final real = LlamaLocalAi(u, dir);
-    expect(real.premiumUnlocked, isFalse);
-    await expectLater(real.download('pro'), emitsError(isA<AiException>()));
-    u.setSetting('ai_premium', '1');
-    expect(real.premiumUnlocked, isTrue);
-    u.setSetting('ai_premium', null);
+  test('the app is free: no package is locked', () {
+    expect(aiPackages.where((p) => p.premium), isEmpty);
   });
 
   test('grounding carries tenses, expressions and meanings', () {
@@ -189,5 +184,41 @@ void main() {
     ai.lastSystem = null;
     await say('I will study tonight.');
     expect(ai.lastSystem, contains('Bloom'), reason: 'ordinary chat goes to the model');
+  });
+
+  test('discuss puts the exercise facts into the first question', () async {
+    await tutor.discuss('Türkçe cümle: "Dün geldim."\nÖğrencinin cevabı: "I come yesterday"', [('user', 'Neden yanlış?')]).join();
+    expect(ai.lastMessages!.first.$1, 'user');
+    expect(ai.lastMessages!.first.$2, contains('I come yesterday'));
+    expect(ai.lastMessages!.first.$2, contains('Neden yanlış?'));
+    expect(ai.lastSystem, contains('itiraz'));
+    await tutor.discuss('x', [('user', 'a'), ('assistant', 'b'), ('user', 'c')]).join();
+    expect(ai.lastMessages!.map((m) => m.$1), ['user', 'assistant', 'user']);
+    expect(ai.lastMessages!.last.$2, 'c');
+  });
+
+  test('wordMeaning gives the dictionary gloss and the sentence', () async {
+    await tutor.wordMeaning('pedicab', sentence: 'We took a pedicab.', gloss: 'a tricycle with a seat for passengers').join();
+    expect(ai.lastMessages!.single.$2, contains('pedicab'));
+    expect(ai.lastMessages!.single.$2, contains('tricycle'));
+    expect(ai.lastSystem, contains('Türkçesi:'));
+  });
+
+  test('"supposed to" drill goes on round after round until "bitir"', () async {
+    final session = TutorChatSession();
+    final h = <(String, String)>[('user', 'supposed to çalışalım')];
+    final first = await tutor.chat(session, h).join();
+    expect(first, anyOf(contains('Translate'), contains('çevir')));
+    expect(session.drill!.items.first.$1.id, 'supposed_to');
+    var last = '';
+    for (var k = 0; k < grammarRoundSize; k++) {
+      last = await tutor.chat(session, [('user', session.drill!.current.$2.answers.first)]).join();
+    }
+    expect(last, contains('Tur bitti'));
+    expect(session.drill, isNotNull);
+    expect(session.drill!.finished, isFalse);
+    final end = await tutor.chat(session, [('user', 'bitir')]).join();
+    expect(end, contains('Alıştırma bitti'));
+    expect(session.drill, isNull);
   });
 }

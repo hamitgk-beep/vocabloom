@@ -248,6 +248,54 @@ class Tutor {
     return ai.generate(_explainSystem(), [('user', user)], maxTokens: 420, temperature: 0.2);
   }
 
+  /// Explains a word the learner tapped while reading: its Turkish meaning in
+  /// this sentence, a short explanation and the sentence in Turkish. Used when
+  /// the dictionary has no Turkish meaning ("pedicab") or the learner asks.
+  Stream<String> wordMeaning(String word, {String? sentence, String? gloss, String? turkish}) {
+    final user = 'Kelime: $word\n'
+        '${gloss == null || gloss.isEmpty ? '' : 'İngilizce tanımı (sözlükten): $gloss\n'}'
+        '${turkish == null || turkish.isEmpty ? '' : 'Sözlükteki Türkçe karşılıkları: $turkish\n'}'
+        '${sentence == null ? '' : 'Okuduğu cümle: "$sentence"\n'}'
+        '\nBu kelimeyi açıkla.';
+    return ai.generate(_wordSystem(), [('user', user)], maxTokens: 260, temperature: 0.2);
+  }
+
+  static String _wordSystem() => '$_teacher\n\n'
+      'Görev: Öğrenci okuduğu İngilizce metinde bir kelimeyi bilmiyor. Kelimeyi Türkçe olarak kısaca (en fazla 80 '
+      'kelime) açıkla. Yanıtın şu bölümlerden oluşur: **Türkçesi:** (1-3 Türkçe karşılık, bu cümledeki anlamı önce), '
+      '**Açıklama:** (ne demek, nerede kullanılır; 1-2 cümle), cümle verildiyse **Bu cümlede:** (cümlenin doğal Türkçe '
+      'çevirisi). Sözlük tanımına dayan; emin olmadığın bir anlam uydurma.\n\n'
+      'Örnek:\n'
+      'Kelime: rickshaw\n'
+      'İngilizce tanımı (sözlükten): a small two-wheeled cart pulled by a person\n'
+      'Okuduğu cümle: "We took a rickshaw to the market."\n'
+      'Örnek yanıt:\n'
+      '**Türkçesi:** çekçek, insan gücüyle çekilen taksi arabası\n'
+      '**Açıklama:** Asya ülkelerinde yolcu taşımak için kullanılan, bir kişinin çektiği ya da pedalla sürdüğü küçük, '
+      'iki tekerlekli araç.\n'
+      '**Bu cümlede:** Pazara bir çekçekle gittik.';
+
+  /// A short conversation about something on the screen: a grammar exercise
+  /// the learner just answered, or a word they tapped. [about] holds the facts
+  /// (the sentence, the right answers, the learner's answer, the feedback);
+  /// [history] is (role, text) with role 'user' or 'assistant'.
+  Stream<String> discuss(String about, List<(String, String)> history) {
+    final recent = history.sublist(max(0, history.length - 8));
+    final msgs = <(String, String)>[
+      for (var i = 0; i < recent.length; i++)
+        if (i == 0 && recent[i].$1 == 'user') ('user', 'Durum:\n$about\n\nÖğrencinin sorusu: ${recent[i].$2}') else recent[i],
+    ];
+    if (msgs.isEmpty || msgs.first.$1 != 'user') msgs.insert(0, ('user', 'Durum:\n$about'));
+    return ai.generate(_discussSystem(), msgs, maxTokens: 360, temperature: 0.3);
+  }
+
+  static String _discussSystem() => '$_teacher\n\n'
+      'Görev: Öğrenci ekrandaki alıştırma ya da kelime hakkında sana soru soruyor ("neden yanlış?", "benim cevabım da '
+      'doğru değil mi?", "bir örnek daha ver"). "Durum" bölümündeki bilgilere dayanarak kısa (en fazla 120 kelime), '
+      'net ve Türkçe cevap ver. Öğrencinin cevabı da doğru ve doğal bir İngilizce cümleyse bunu açıkça kabul et; '
+      'değilse hatayı kurala bağlayarak göster ve doğru hâlini yaz. Verilen doğru cevaplar kesin doğrudur; yine de '
+      'öğrenci itiraz ederse nedenini sabırla açıkla. Konu dışına çıkma.\n\n';
+
   /// Corrects the learner's English (or helps with a Turkish sentence).
   Stream<String> correct(String userText) {
     if (isTurkish(userText)) {
@@ -341,7 +389,7 @@ class Tutor {
         final (st, e) = drill.current;
         GrammarProgress(app.user).record(st.id, e.id, right: false);
         drill.index++;
-        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.note}\n\n${_nextOrEnd(session, drill)}';
+        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.note}\n\n${_nextOrEnd(session, drill, topics)}';
         return;
       }
     }
@@ -376,16 +424,29 @@ class Tutor {
       if (right) drill.right++;
       GrammarProgress(app.user).record(t.id, e.id, right: right);
       drill.index++;
-      yield '\n\n${_nextOrEnd(session, drill)}';
+      yield '\n\n${_nextOrEnd(session, drill, topics)}';
       return;
     }
     yield* chatReply(history, level: level, topic: topic);
   }
 
-  String _nextOrEnd(TutorChatSession session, GrammarDrill drill) {
+  /// The next sentence; after the last one of a round, the score and a new
+  /// round on the same topic, so practice goes on until the learner says
+  /// "bitir".
+  String _nextOrEnd(TutorChatSession session, GrammarDrill drill, List<GrammarTopic> topics) {
     if (!drill.finished) return drillQuestion(drill);
-    session.drill = null;
-    return drillSummary(drill);
+    final last = session.last;
+    if (last == null || (last.topic == null && last.category == null)) {
+      session.drill = null;
+      return drillSummary(drill);
+    }
+    final mine = topics.where((x) => last.topic != null ? x.id == last.topic!.id : x.category == last.category);
+    final p = GrammarProgress(app.user);
+    final next = session.drill = startDrill(GrammarIntent(GrammarMode.drill, topic: last.topic, category: last.category), topics,
+        done: {for (final x in mine) ...p.done(x.id)}, wrong: {for (final x in mine) ...p.wrong(x.id)});
+    return '${drillSummary(drill, more: true)}\n\n'
+        '${L('Devam ediyoruz: ${next.items.length} cümle daha. Bitirmek için "bitir" yaz.', 'Let\'s go on: ${next.items.length} more sentences. Write "stop" to finish.')}\n\n'
+        '${drillQuestion(next)}';
   }
 
   Stream<String> _startGrammar(TutorChatSession session, GrammarIntent intent, List<GrammarTopic> topics) async* {

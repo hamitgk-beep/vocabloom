@@ -7,7 +7,12 @@ import '../data/dict_db.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
 import '../nlp/word_family.dart';
+import '../ai/tutor.dart';
 import '../online/ai_service.dart';
+import '../ai/device_translate.dart';
+import 'ai/ai_ask_box.dart';
+import 'ai/device_translation.dart';
+import 'ai/local_ai_card.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
 import 'tap_text.dart';
@@ -176,6 +181,7 @@ class _WordPanelState extends State<WordPanel> {
           ),
       ]),
       if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: TapText(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
+      if (tr && _trMain == null) DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge),
       if (tr && _trMain != null)
         Padding(
           padding: const EdgeInsets.only(top: 2),
@@ -206,6 +212,43 @@ class _WordPanelState extends State<WordPanel> {
       return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
     }
 
+    // ---------------- on-device AI: Turkish meaning for words the dictionary
+    // has no Turkish for ("pedicab"), on a tap for the rest.
+    if (LocalAiCard.available(app)) {
+      children.add(LocalAiCard(
+        key: ValueKey('ai-word-$lemma'),
+        app: app,
+        cacheKey: 'word:$lemma|${ctx?.sentence ?? ''}',
+        title: L('Yapay zekâ: Türkçe anlamı', 'AI: meaning in Turkish'),
+        button: L('Yapay zekâ ile açıkla', 'Explain with AI'),
+        auto: tr && _trMain == null,
+        run: () => Tutor.of(app).wordMeaning(lemma,
+            sentence: ctx?.sentence, gloss: best?.gloss ?? info.senses.firstOrNull?.gloss, turkish: _trMain),
+      ));
+      children.add(AiAskBox(
+        key: ValueKey('ai-ask-$lemma'),
+        app: app,
+        title: L('Bu kelimeyi yapay zekâya sor', 'Ask the AI about this word'),
+        suggestions: [
+          L('Başka örnek cümle ver', 'Give more example sentences'),
+          L('Benzer kelimelerden farkı ne?', 'How is it different from similar words?'),
+          L('Nasıl telaffuz edilir?', 'How is it pronounced?'),
+        ],
+        about: 'Kelime: $lemma\n'
+            '${(best?.gloss ?? info.senses.firstOrNull?.gloss) == null ? '' : 'İngilizce tanımı: ${best?.gloss ?? info.senses.first.gloss}\n'}'
+            '${_trMain == null ? '' : 'Türkçe karşılıkları: $_trMain\n'}'
+            '${ctx == null ? '' : 'Okuduğu cümle: "${ctx.sentence}"'}',
+      ));
+    } else if (tr && _trMain == null) {
+      children.add(Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Text(
+            L('Bu kelimenin sözlükte Türkçesi yok. Yapay Zekâ sekmesinden cihaz içi modeli indirirsen Türkçe anlamını burada otomatik yazar.',
+                'The dictionary has no Turkish for this word. Download the on-device model in the AI tab and its Turkish meaning appears here automatically.'),
+            style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+      ));
+    }
+
     // ---------------- in this sentence
     if (ctx != null) {
       children.add(_Section(L('Bu cümlede', 'In this sentence'), [
@@ -213,6 +256,8 @@ class _WordPanelState extends State<WordPanel> {
           Expanded(child: SentenceText(ctx.sentence, widget.surface)),
           if (Speech.supported) SpeakButton(ctx.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
         ]),
+        if (ctx.sentenceTr == null && tr && DeviceTranslate.instance.ready(app.user))
+          DeviceTranslation(key: ValueKey('mt-s-${ctx.sentence}'), app: app, text: ctx.sentence, style: const TextStyle(fontStyle: FontStyle.italic)),
         if (ctx.sentenceTr != null && tr) ...[
           const SizedBox(height: 6),
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [

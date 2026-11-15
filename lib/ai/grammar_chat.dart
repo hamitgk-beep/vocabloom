@@ -259,7 +259,7 @@ String drillQuestion(GrammarDrill d) {
 String get drillHelp => L('Cevabı görmek için "geç", bitirmek için "bitir" yazabilirsin.', 'Write "skip" to see the answer or "stop" to finish.');
 
 /// The closing line of a finished drill.
-String drillSummary(GrammarDrill d) {
+String drillSummary(GrammarDrill d, {bool more = false}) {
   final n = d.index.clamp(0, d.items.length);
   final b = StringBuffer(L('**Alıştırma bitti:** $n cümleden ${d.right} tanesi ilk denemede doğru.',
       '**Practice finished:** ${d.right} of $n sentences right at the first try.'));
@@ -268,6 +268,7 @@ String drillSummary(GrammarDrill d) {
   } else if (n > 0 && d.right * 2 >= n) {
     b.write(L(' Çok iyi gidiyorsun.', ' You are doing very well.'));
   }
+  if (more) return b.toString().replaceFirst(L('Alıştırma bitti:', 'Practice finished:'), L('Tur bitti:', 'Round finished:'));
   b.write(L('\nDevam etmek için "cümle sor", başka bir konu için ör. "Bugün tenses çalışalım" yaz.',
       '\nWrite "quiz me" to go on, or e.g. "Let\'s study tenses" for another topic.'));
   return b.toString();

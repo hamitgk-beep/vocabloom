@@ -102,12 +102,11 @@ class AppState extends ChangeNotifier {
 
   bool get englishUi => uiEnglish;
 
-  /// The AI tutor tab is a preview until the tuned models land.
-  bool get aiTab => user.getSetting('ai_tab') == '1';
+  /// The AI tutor tab: on unless the learner turned it off in Settings. The
+  /// app and its model are free for everyone.
+  bool get aiTab => user.getSetting('ai_tab') != '0';
   void setAiTab(bool v) {
-    user.setSetting('ai_tab', v ? '1' : null);
-    // There are no subscriptions yet: Beta testers get the Premium model.
-    user.setSetting('ai_premium', v ? '1' : null);
+    user.setSetting('ai_tab', v ? null : '0');
     notifyListeners();
   }
 
