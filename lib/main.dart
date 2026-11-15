@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
     ];
     final dests = [
       (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
-      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimelerim', 'My words')),
+      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimeler', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
       if (widget.app.aiTab) (Icons.auto_awesome_outlined, Icons.auto_awesome_rounded, L('Yapay Zekâ', 'AI Tutor')),
@@ -254,22 +254,99 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       body: body,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(border: Border(top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant))),
-        child: NavigationBar(
-        selectedIndex: tab,
-        // Six tabs do not fit with every label on a phone.
-        labelBehavior: dests.length > 5 ? NavigationDestinationLabelBehavior.onlyShowSelected : null,
-        onDestinationSelected: (i) => setState(() => tab = i),
-        destinations: [
-          for (final d in dests)
-            NavigationDestination(
-              icon: Icon(d.$1),
-              selectedIcon: Icon(d.$2),
-              label: d.$3,
-            ),
-        ],
+      bottomNavigationBar: _BottomNav(
+        selected: tab,
+        items: dests,
+        onSelect: (i) => setState(() => tab = i),
       ),
+    );
+  }
+}
+
+/// Phone bottom bar. Every tab shows its label on one line: a label that
+/// does not fit (six tabs, large system font) is scaled down, never wrapped.
+class _BottomNav extends StatelessWidget {
+  final int selected;
+  final List<(IconData, IconData, String)> items;
+  final ValueChanged<int> onSelect;
+  const _BottomNav({required this.selected, required this.items, required this.onSelect});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final mq = MediaQuery.of(context);
+    // Keep the bar readable but bounded when the system font is very large.
+    final scaler = mq.textScaler.clamp(maxScaleFactor: 1.15);
+    // One font size for every label: the largest at which the longest label
+    // still fits its tab, so no label looks smaller than its neighbours.
+    final base = theme.textTheme.labelSmall?.copyWith(fontSize: 11.5, letterSpacing: 0, fontWeight: FontWeight.w700) ?? const TextStyle(fontSize: 11.5);
+    final slot = mq.size.width / items.length - 6;
+    var widest = 0.0;
+    for (final d in items) {
+      final tp = TextPainter(text: TextSpan(text: d.$3, style: base), textDirection: TextDirection.ltr, textScaler: scaler, maxLines: 1)..layout();
+      if (tp.width > widest) widest = tp.width;
+      tp.dispose();
+    }
+    final fontSize = widest > slot ? 11.5 * slot / widest : 11.5;
+    return Container(
+      decoration: BoxDecoration(color: cs.surface, border: Border(top: BorderSide(color: cs.outlineVariant))),
+      child: SafeArea(
+        top: false,
+        child: MediaQuery(
+          data: mq.copyWith(textScaler: scaler),
+          child: SizedBox(
+            height: 66,
+            child: Row(children: [
+              for (final (i, d) in items.indexed)
+                Expanded(
+                  key: ValueKey('nav_$i'),
+                  child: Semantics(
+                    selected: i == selected,
+                    button: true,
+                    label: d.$3,
+                    excludeSemantics: true,
+                    child: InkResponse(
+                      onTap: () => onSelect(i),
+                      radius: 36,
+                      highlightShape: BoxShape.rectangle,
+                      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeOut,
+                          width: i == selected ? 52 : 40,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: i == selected ? cs.primaryContainer : Colors.transparent,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(i == selected ? d.$2 : d.$1, size: 23, color: i == selected ? cs.primary : cs.onSurfaceVariant),
+                        ),
+                        const SizedBox(height: 4),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2),
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              d.$3,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                fontSize: fontSize,
+                                letterSpacing: 0,
+                                color: i == selected ? cs.primary : cs.onSurfaceVariant,
+                                fontWeight: i == selected ? FontWeight.w700 : FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
+                    ),
+                  ),
+                ),
+            ]),
+          ),
+        ),
       ),
     );
   }
