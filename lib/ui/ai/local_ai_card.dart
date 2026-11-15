@@ -59,7 +59,7 @@ class _LocalAiCardState extends State<LocalAiCard> {
     sub = widget.run().listen(
       (c) => setState(() => text += c),
       onError: (Object e) {
-        if (mounted) setState(() => error = L('Yapay zekâ şu an yanıt veremedi. Tekrar dene.', 'The AI could not answer right now. Try again.'));
+        if (mounted) setState(() => error = aiError(e));
         running = false;
       },
       onDone: () {
