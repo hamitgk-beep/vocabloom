@@ -44,7 +44,7 @@ jobs:
           nb = json.load(open('tools/tutor/train_tutor.ipynb'))
           for c in nb['cells']:
               src = ''.join(c['source'])
-              if c['cell_type'] == 'code' and 'PACKAGE =' in src:
+              if c['cell_type'] == 'code' and src.lstrip().startswith('# Which package'):
                   c['source'] = "PACKAGE = %r\nHF_REPO = ''\nEPOCHS = %s\n" % (os.environ['PKG'], '${{ github.event.inputs.epochs }}')
               elif c['cell_type'] == 'code' and 'git clone' in src:
                   # The repository may be private: the training data comes as a private Kaggle dataset.
