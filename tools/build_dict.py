@@ -20,6 +20,7 @@ import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(__file__))
 from categories import CATEGORIES  # noqa: E402
+import expr_fixes  # noqa: E402
 
 RAW = sys.argv[1]
 OUT = sys.argv[2]
@@ -289,6 +290,32 @@ WIKT_SKIP = {'a', 'an', 'the', 'and', 'or', 'but'}  # too common to colour as th
 WIKT_SKIP_RE = re.compile(r"\b(fuck|shit|cunt|dick|cock|piss|ass|arse|bitch|bastard|wank|tits?)\b")
 
 
+NOT_ENGLISH = re.compile(expr_fixes.NOT_ENGLISH_RE, re.I)
+
+
+def apply_fixes(exprs):
+    """Hand-checked corrections (tools/expr_fixes.py) win over every other source."""
+    curated = {(norm_phrase(l.split(' | ')[0].split('|')[0]), cat)
+               for cat, text in CATEGORIES.items() for l in text.strip().splitlines() if '|' in l}
+    for k, en in expr_fixes.EN.items():
+        p, cat = k.split('|')
+        if (p, cat) in exprs:
+            exprs[(p, cat)][1] = en
+    dropped = 0
+    for key in list(exprs):
+        en = exprs[key][1]
+        if f'{key[0]}|{key[1]}' in expr_fixes.DROP or (key not in curated and en and NOT_ENGLISH.match(en)):
+            del exprs[key]
+            dropped += 1
+    n = 0
+    for k, tr in expr_fixes.TR.items():
+        p, cat = k.split('|')
+        if (p, cat) in exprs:
+            exprs[(p, cat)][0] = tr
+            n += 1
+    print('hand fixes: dropped', dropped, 'Turkish meanings', n)
+
+
 def load_wiktionary(exprs):
     """Adds Wiktionary expressions (tools/wiktionary_extract.py output) to [exprs].
 
@@ -321,6 +348,10 @@ def load_wiktionary(exprs):
                 continue
         # "Used other than figuratively or idiomatically: see above, grass." teaches nothing
         defs = [d for d in it['en'] if not re.match(r'(often )?used other than (figuratively|as an idiom)', d, re.I)]
+        # "let along: Eggcorn of let alone." is a mistake to avoid, not a phrase to learn
+        if it['en'] and all(NOT_ENGLISH.match(d) for d in it['en']) and (p, cat) not in exprs:
+            continue
+        defs = [d for d in defs if not NOT_ENGLISH.match(d)]
         en = '; '.join(defs[:3]) or None
         tr = ', '.join(it['tr'][:4]) or None
         if not en and not tr and (p, cat) not in exprs:
@@ -683,6 +714,7 @@ def main():
     print('wordnet-derived expressions', added)
     examples = load_wiktionary(exprs)
     load_exd(db, exprs)
+    apply_fixes(exprs)
 
     # English gloss for curated items where WordNet knows the phrase.
     rows = []

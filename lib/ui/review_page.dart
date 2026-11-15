@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../data/review.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
+import '../nlp/text.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
 import 'theme.dart';
@@ -135,7 +136,7 @@ class _ReviewPageState extends State<ReviewPage> {
                 constraints: BoxConstraints(minHeight: box.maxHeight),
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const SizedBox(height: 16),
-                  Text(w.lemma, style: enStyle(theme, theme.textTheme.headlineLarge).copyWith(fontWeight: FontWeight.w800)),
+                  Text(displayPhrase(w.lemma), style: enStyle(theme, theme.textTheme.headlineLarge).copyWith(fontWeight: FontWeight.w800)),
                   if (w.context != null) ...[
                     const SizedBox(height: 16),
                     DefaultTextStyle.merge(

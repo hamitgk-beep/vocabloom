@@ -333,7 +333,7 @@ class _ChatViewState extends State<_ChatView> {
                   ),
                 ),
                 child: m.$2.isEmpty
-                    ? const SizedBox(width: 28, height: 16, child: LinearProgressIndicator())
+                    ? AiWaiting(ai: widget.tutor.ai)
                     : aiRichText(m.$2.trim(), theme.textTheme.bodyLarge?.copyWith(color: m.$1 == 'user' ? cs.onPrimary : cs.onSurface, height: 1.45)),
               ),
             ),
@@ -543,5 +543,32 @@ class _QuizViewState extends State<_QuizView> {
         ),
       ],
     ]);
+  }
+}
+
+/// What the learner sees before the first word of an answer: loading the
+/// model into memory takes a while the first time, so say so.
+class AiWaiting extends StatelessWidget {
+  final LocalAi ai;
+  const AiWaiting({super.key, required this.ai});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ListenableBuilder(
+      listenable: ai,
+      builder: (c, _) => Row(mainAxisSize: MainAxisSize.min, children: [
+        const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)),
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(
+            ai.loaded
+                ? L('Yapay zekâ düşünüyor…', 'The AI is thinking…')
+                : L('Yapay zekâ belleğe yükleniyor… İlk seferde 1 dakikayı bulabilir.', 'Loading the AI into memory… The first time can take a minute.'),
+            style: theme.textTheme.bodySmall?.copyWith(height: 1.4),
+          ),
+        ),
+      ]),
+    );
   }
 }

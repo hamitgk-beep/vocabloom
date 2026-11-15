@@ -34,7 +34,7 @@ Map<String, String> get posNames => uiEnglish
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {
-  static const _version = '13';
+  static const _version = '15';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;

@@ -697,7 +697,7 @@ class _ExprCardState extends State<ExprCard> {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
-          Expanded(child: Text(expr.phrase, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
+          Expanded(child: Text(displayPhrase(expr.phrase), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
           Text(uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
         ]),
         if (showEn && expr.en != null) TapText(expr.en!, style: enStyle(theme)),

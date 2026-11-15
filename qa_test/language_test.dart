@@ -31,6 +31,7 @@ import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
+import 'package:kelime_okur/nlp/text.dart' show displayPhrase;
 import 'package:kelime_okur/online/ai_service.dart';
 import 'package:kelime_okur/ui/ai/ai_page.dart';
 import 'package:kelime_okur/ui/ai/ai_tools.dart';
@@ -331,10 +332,9 @@ Future<void> allScreens(WidgetTester tester) async {
   app.user.setSetting('ai_tab', '1');
   await tester.pumpWidget(shell(HomePage(app: app)));
   await capture(tester, 'tab_library');
-  final dests = find.byType(NavigationDestination);
   final names = ['library', 'my_words', 'dictionary', 'grammar', 'ai', 'settings'];
-  for (var i = 1; i < dests.evaluate().length && i < names.length; i++) {
-    await tester.tap(find.byType(NavigationDestination).at(i));
+  for (var i = 1; i < names.length && find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty; i++) {
+    await tester.tap(find.byKey(ValueKey('nav_$i')));
     await capture(tester, 'tab_${names[i]}');
   }
 
@@ -566,7 +566,7 @@ void main() {
     content.add(sentence);
     // Dictionary expressions and their English definitions.
     for (final e in d.exprs) {
-      content.add(e.phrase);
+      content.addAll([e.phrase, displayPhrase(e.phrase)]);
       if (e.en != null) content.addAll(e.en!.split('\n').map((x) => x.trim()));
     }
     // Meanings shown in the word lists and the quiz.
