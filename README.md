@@ -20,10 +20,11 @@ Geliştiren: Hamit Gök
   Discourse Markers / Fillers, Idioms, Chunks, Binomials, False Friends, Modal Verbs, Irregular Verbs.
   Seçilen her tür kitapta kendi rengiyle altı çizili görünür.
 - **Doğal sesli okuma (çevrimdışı):** kelimenin telaffuzu (hoparlör düğmesi), cümleyi normal veya yavaş dinleme,
-  kitabı baştan sona sesli okuma (okunan cümle/parça vurgulanır, sayfa kendiliğinden kayar). İngilizce: Supertonic 2
-  (10 ses, kadın/erkek; telefonun hızını ölçüp kaliteyi kendisi ayarlar, dinlenen kelimeleri saklar).
+  kitabı baştan sona sesli okuma (okunan cümle/parça vurgulanır, sayfa kendiliğinden kayar). İngilizce: Kokoro-82M
+  (12 doğal ses, kadın/erkek, ABD/İngiliz aksanı) ve yavaş telefonlar için hafif Piper LibriTTS-R sesi; uygulama
+  telefonun hızını ölçüp hangisini kullanacağını kendisi seçer, dinlenen kelimeleri saklar).
   Türkçe anlam ve çeviriler: Piper Fahrettin / Fettah. Ses paketleri ilk kullanımda bir kez indirilir
-  (İngilizce ~80 MB, her Türkçe ses ~55 MB), sonra internetsiz çalışır.
+  (İngilizce ~400 MB: önce 70 MB'lık hafif ses, sonra doğal ses; her Türkçe ses ~55 MB), sonra internetsiz çalışır.
   Paketler `tools/build_voice_packs.sh` ile hazırlanır ve "voice-models" iş akışı ile yayınlanır.
 - **İsteğe bağlı çevrimiçi analiz:** Ayarlar'a bir yapay zekâ servisinin (Anthropic, OpenAI, Gemini vb.) API anahtarı girilirse kitap eklenirken (internet varsa)
   her cümlenin Türkçe çevirisi ve her bölümün özeti çıkarılıp cihaza kaydedilir; sonra internetsiz görünür.
@@ -57,7 +58,8 @@ sürümlerini otomatik derler.
 - KeNet Turkish WordNet (Starlang Software / Özyeğin Üniversitesi): CC BY-SA 4.0
 - Collaborative Interlingual Index: CC BY 4.0
 - Wiktionary (deyim, phrasal verb, atasözü vb. kalıplar; kaikki.org/wiktextract üzerinden): CC BY-SA 4.0
-- Supertonic 2 ses modeli (Supertone Inc.): OpenRAIL-M; örnek kod MIT
+- Kokoro-82M ses modeli (hexgrad): Apache 2.0
+- Piper LibriTTS-R İngilizce ses: CC BY 4.0
 - Piper Türkçe sesler (Fahrettin, Fettah): NabuCasa voice-datasets kayıtları, CC0
 - sherpa-onnx: Apache 2.0 · eSpeak NG (telaffuz verisi): GPL-3.0
 - `tools/categories.py` kalıp listeleri bu proje için yazıldı: CC BY-SA 4.0

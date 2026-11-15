@@ -2,16 +2,20 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
 
 import '../data/user_db.dart';
 import '../nlp/text.dart';
 import 'speech.dart';
+import 'wav.dart';
 
 /// One spoken piece of the chapter (a sentence, or a clause of a long one): paragraph index and [start, end) in its text.
 typedef SpokenSentence = ({int para, int start, int end});
 
 /// Reads the open chapter aloud sentence by sentence. The next sentences are
-/// synthesized while the current one plays, so reading flows without gaps.
+/// made while the current ones play and are joined into one clip with a
+/// natural pause (a breath) between sentences, so reading flows like a person
+/// reading, without the player stopping and starting at every sentence.
 class ReadAloud extends ChangeNotifier {
   final List<Para> Function() paras;
 
@@ -31,6 +35,15 @@ class ReadAloud extends ChangeNotifier {
   int _gen = 0;
   final _pending = <int, Future<String>>{};
 
+  /// Completes when playback may go on (set while paused between pieces).
+  Completer<void>? _held;
+
+  void _release() {
+    final h = _held;
+    _held = null;
+    if (h != null && !h.isCompleted) h.complete();
+  }
+
   SpokenSentence? get current => active && _idx < _items.length ? _items[_idx] : null;
 
   /// Sentence currently read in paragraph [para], if any.
@@ -45,8 +58,23 @@ class ReadAloud extends ChangeNotifier {
       for (var i = fromPara; i < ps.length; i++)
         for (final r in sentenceRanges(ps[i].text))
           if (RegExp(r'[A-Za-z0-9]').hasMatch(ps[i].text.substring(r.$1, r.$2)))
-            for (final c in speechChunks(ps[i].text, r.$1, r.$2)) (para: i, start: c.$1, end: c.$2),
+            for (final c in speechChunks(ps[i].text, r.$1, r.$2, maxWords: 22)) (para: i, start: c.$1, end: c.$2),
     ];
+  }
+
+  /// Reading starts (or restarts) at [_idx] and nothing is made yet: a long
+  /// first sentence is said in clauses so the voice starts quickly.
+  void _splitColdStart() {
+    if (_idx >= _items.length || _pending.containsKey(_idx)) return;
+    final it = _items[_idx];
+    final parts = speechChunks(paras()[it.para].text, it.start, it.end);
+    if (parts.length < 2) return;
+    _items.replaceRange(_idx, _idx + 1, [for (final c in parts) (para: it.para, start: c.$1, end: c.$2)]);
+  }
+
+  double _pauseAfter(int i) {
+    final paraEnd = i + 1 >= _items.length || _items[i + 1].para != _items[i].para;
+    return pauseAfter(_text(_items[i]), paragraphEnd: paraEnd);
   }
 
   String _text(SpokenSentence s) => paras()[s.para].text.substring(s.start, s.end).trim();
@@ -59,7 +87,13 @@ class ReadAloud extends ChangeNotifier {
     paused = false;
     _interrupted = false;
     speech.onSay = _onWordSaid;
+    speech.onBackground = _onBackground;
     _restart();
+  }
+
+  /// Screen locked or app left: pause, and go on from here on return.
+  void _onBackground() {
+    if (active && !paused) unawaited(toggle());
   }
 
   void _onWordSaid() {
@@ -85,20 +119,22 @@ class ReadAloud extends ChangeNotifier {
     } catch (_) {}
   }
 
-  /// [quick]: the listener waits for this piece now, so make it faster.
-  Future<String> _future(int i, {bool quick = false}) => _pending.putIfAbsent(i, () {
-    final f = speech.synth(_text(_items[i]), quick: quick);
+  /// [urgent]: the listener waits for this piece now.
+  Future<String> _future(int i, {bool urgent = false}) => _pending.putIfAbsent(i, () {
+    final f = speech.synth(_text(_items[i]), urgent: urgent);
     f.ignore();
     return f;
   });
 
   void _restart() {
     final gen = ++_gen;
+    _release();
     notifyListeners();
     unawaited(_loop(gen));
   }
 
   Future<void> _loop(int gen) async {
+    var batch = 1; // pieces joined into the next clip: 1 at first, then more
     while (active && gen == _gen) {
       if (_idx >= _items.length) {
         _discard();
@@ -108,33 +144,92 @@ class ReadAloud extends ChangeNotifier {
         }
         _items = _build(0);
         _idx = 0;
+        batch = 1;
         notifyListeners();
         continue;
       }
-      final f = _future(_idx, quick: !_pending.containsKey(_idx));
-      for (var k = 1; k <= 2 && _idx + k < _items.length; k++) {
-        _future(_idx + k);
+      final cold = !_pending.containsKey(_idx);
+      if (cold) {
+        _splitColdStart();
+        batch = 1;
+      }
+      final from = _idx, to = (from + batch).clamp(0, _items.length);
+      final futures = [for (var i = from; i < to; i++) _future(i, urgent: cold && i == from)];
+      // Meanwhile make the next clip's pieces.
+      for (var i = to; i < to + (batch * 2).clamp(1, 6) && i < _items.length; i++) {
+        _future(i);
       }
       notifyListeners();
-      String path;
-      try {
-        path = await f;
-      } catch (_) {
-        if (gen != _gen) return;
-        _pending.remove(_idx);
-        _idx++;
-        continue;
+      final paths = <String>[], idxs = <int>[];
+      for (var k = 0; k < futures.length; k++) {
+        try {
+          paths.add(await futures[k]);
+          idxs.add(from + k);
+        } catch (_) {
+          if (gen != _gen) return;
+        }
+        _pending.remove(from + k);
       }
       if (gen != _gen) {
-        _deleteQuietly(path);
+        paths.forEach(_deleteQuietly);
         return;
       }
-      _pending.remove(_idx);
-      await speech.playFile(path);
+      if (paths.isEmpty) {
+        _idx = to;
+        continue;
+      }
+      final clip = p.join(Directory.systemTemp.path, 'vocabloom_read_${pid}_${_clipNo++}.wav');
+      List<double> starts;
+      try {
+        final pauses = [for (final i in idxs) _pauseAfter(i)];
+        // The next clip starts with a little lead-in silence of its own.
+        pauses[pauses.length - 1] = (pauses.last - 0.12).clamp(0.05, 1.0);
+        starts = await compute(_join, (paths, pauses, clip));
+      } catch (_) {
+        _idx = to;
+        continue;
+      } finally {
+        paths.forEach(_deleteQuietly);
+      }
+      if (gen != _gen) {
+        _deleteQuietly(clip);
+        return;
+      }
+      if (paused) {
+        // Paused while this clip was being made: wait to play it.
+        await (_held ??= Completer<void>()).future;
+        if (gen != _gen) {
+          _deleteQuietly(clip);
+          return;
+        }
+      }
+      // Follow the clip's position, so the highlighted sentence is the one heard.
+      final sub = speech.position.listen((pos) {
+        if (gen != _gen) return;
+        final t = pos.inMilliseconds / 1000;
+        var k = 0;
+        while (k + 1 < starts.length && starts[k + 1] <= t) {
+          k++;
+        }
+        if (_idx != idxs[k]) {
+          _idx = idxs[k];
+          notifyListeners();
+        }
+      });
+      try {
+        await speech.playFile(clip);
+      } finally {
+        await sub.cancel();
+      }
       if (gen != _gen) return;
-      _idx++;
+      _idx = to;
+      batch = (batch * 2).clamp(1, 6);
     }
   }
+
+  int _clipNo = 0;
+
+  static List<double> _join((List<String>, List<double>, String) a) => joinWavs(a.$1, a.$2, a.$3);
 
   /// Play / pause.
   Future<void> toggle() async {
@@ -144,6 +239,9 @@ class ReadAloud extends ChangeNotifier {
       if (_interrupted) {
         _interrupted = false;
         _restart();
+      } else if (_held != null) {
+        _release();
+        notifyListeners();
       } else {
         await speech.resume();
         notifyListeners();
@@ -172,8 +270,10 @@ class ReadAloud extends ChangeNotifier {
     active = false;
     paused = false;
     _gen++;
+    _release();
     _discard();
     if (speech.onSay == _onWordSaid) speech.onSay = null;
+    if (speech.onBackground == _onBackground) speech.onBackground = null;
     unawaited(speech.stop());
     notifyListeners();
   }
