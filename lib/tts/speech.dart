@@ -98,9 +98,11 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
   double? _rtf;
   double? get naturalSpeed => _rtf;
 
-  /// Above this the natural voice cannot keep up with reading on this phone,
-  /// so the light voice is used (unless chosen otherwise in Settings).
-  static const slowRtf = 0.65;
+  /// Seconds of work per second of speech above which the natural voice is
+  /// too close to falling behind while reading on this phone, so the light
+  /// voice is used (unless chosen otherwise in Settings). Below 1 it keeps up;
+  /// 0.8 leaves room for a busy or warm phone.
+  static const slowRtf = 0.8;
 
   void _learnSpeed(double rtf, double secs) {
     if (secs < 1.5 || rtf <= 0) return; // short clips are mostly overhead
