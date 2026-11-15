@@ -4,7 +4,7 @@ class VoicePack {
   final int mb;
   final String lang; // 'en' or 'tr'
 
-  /// Model family run by sherpa-onnx: 'kokoro' or 'piper'.
+  /// Model family: 'kokoro' or 'piper' (run by sherpa-onnx), or 'ema' (ema.dart).
   final String engine;
   const VoicePack(this.id, this.mb, this.lang, this.engine);
 
@@ -23,11 +23,15 @@ const lightPack = VoicePack('piper-en-libritts-v1', 70, 'en', 'piper');
 const englishPack = kokoroPack;
 const englishPacks = [lightPack, kokoroPack];
 
-/// Turkish: Piper voices trained on CC0 recordings (NabuCasa voice-datasets).
-const fahrettinPack = VoicePack('piper-tr-fahrettin', 55, 'tr', 'piper');
-const fettahPack = VoicePack('piper-tr-fettah', 55, 'tr', 'piper');
+/// Turkish, natural: EMA Lightning (canberk7, Apache 2.0 code and weights),
+/// exported to ONNX by tools/ema_export.py. A female voice.
+const emaPack = VoicePack('ema-tr-v1', 75, 'tr', 'ema');
 
-const voicePacks = [lightPack, kokoroPack, fahrettinPack, fettahPack];
+/// Turkish, male: a Piper voice trained on CC0 recordings (NabuCasa
+/// voice-datasets). Less natural; there is no free natural male voice yet.
+const fahrettinPack = VoicePack('piper-tr-fahrettin', 55, 'tr', 'piper');
+
+const voicePacks = [lightPack, kokoroPack, emaPack, fahrettinPack];
 
 /// A voice. [sid] is the speaker id inside its model; [accent] is 'us', 'gb'
 /// or 'tr'.
@@ -73,10 +77,10 @@ const lightVoices = <Voice>[
   Voice('l_m2', 522, 'Mark', female: false, pack: lightPack),
 ];
 
-/// Turkish voices (male; no free female Turkish voice allows commercial use yet).
+/// Turkish voices, the natural one first.
 const trVoices = <Voice>[
+  Voice('tr_ema', 0, 'Defne', female: true, pack: emaPack, accent: 'tr'),
   Voice('tr_fahrettin', 0, 'Fahrettin', female: false, pack: fahrettinPack, accent: 'tr'),
-  Voice('tr_fettah', 0, 'Fettah', female: false, pack: fettahPack, accent: 'tr'),
 ];
 
 final voiceById = {for (final v in [...voices, ...lightVoices, ...trVoices]) v.id: v};

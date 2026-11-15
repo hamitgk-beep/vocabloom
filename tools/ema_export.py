@@ -1,5 +1,7 @@
-"""Export EMA Lightning (Apache-2.0) to three ONNX graphs for batch 1, check them against PyTorch,
-and time them with onnxruntime. Writes OUT/{text,sound,decoder}.onnx and OUT/config.json."""
+"""Export EMA Lightning (canberk7, Apache-2.0 code and weights) to the three ONNX graphs the app runs
+(lib/tts/ema.dart), for one sentence at a time; check them against PyTorch and time them with
+onnxruntime. Writes OUT/{text,sound,decoder}.onnx and OUT/config.json.
+Needs: pip install torch ema-lightning onnx onnxruntime huggingface_hub"""
 import os, sys, json, time
 import numpy as np, torch, onnxruntime as ort
 from huggingface_hub import hf_hub_download

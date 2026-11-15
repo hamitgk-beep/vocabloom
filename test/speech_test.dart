@@ -22,8 +22,8 @@ void main() {
       voices.first: ['and', 'grow', 'Hermione', 'Although it was raining heavily all morning, she decided to walk to the old library.'],
       voiceById['k_bm_george']!: ['though', 'It was the best of times, it was the worst of times.'],
       lightVoices.first: ['and', 'It was the best of times, it was the worst of times.'],
-      voiceById['tr_fahrettin']!: ['rağmen', 'Öğrenmek için her gün biraz okumalısın.'],
-      voiceById['tr_fettah']!: ['Öğrenmek için her gün biraz okumalısın.'],
+      voiceById['tr_ema']!: ['rağmen', 'Öğrenmek için her gün biraz okumalısın.', 'Saat 3\'te 25 kişi geldi'],
+      voiceById['tr_fahrettin']!: ['rağmen'],
     };
     await s.warmUp();
     for (final e in cases.entries) {
