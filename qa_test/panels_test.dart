@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart';
 
+import 'package:kelime_okur/ai/local_engine.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
@@ -88,8 +89,10 @@ AppState openApp() {
   final d = DictDb();
   d.db = sqlite3.open('assets/dict.db', mode: OpenMode.readOnly);
   d.load();
-  final u = UserDb.open(Directory.systemTemp.createTempSync('vocabloom_qa'));
-  return AppState(d, u);
+  final dir = Directory.systemTemp.createTempSync('vocabloom_qa');
+  final u = UserDb.open(dir);
+  // No AI model downloaded, as on a fresh install.
+  return AppState(d, u)..localAi = LlamaLocalAi(u, dir);
 }
 
 // ------------------------------------------------------------------ checks

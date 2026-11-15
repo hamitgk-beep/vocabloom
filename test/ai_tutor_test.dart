@@ -64,9 +64,9 @@ void main() {
   app.localAi = ai;
   final tutor = Tutor.of(app)..lessons = () async => parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync());
 
-  test('one premium package, size as shown, commercial licence', () {
+  test('one free package, size as shown, commercial licence', () {
     expect(aiPackages.map((p) => p.id), ['pro']);
-    expect(aiPackages.single.premium, isTrue);
+    expect(aiPackages.single.premium, isFalse);
     expect(aiPackages.single.sizeBytes, lessThanOrEqualTo(3.1e9));
     for (final p in aiPackages) {
       expect(p.licenseName, 'Apache 2.0');
@@ -75,13 +75,8 @@ void main() {
     }
   });
 
-  test('premium packages are locked without the flag', () async {
-    final real = LlamaLocalAi(u, dir);
-    expect(real.premiumUnlocked, isFalse);
-    await expectLater(real.download('pro'), emitsError(isA<AiException>()));
-    u.setSetting('ai_premium', '1');
-    expect(real.premiumUnlocked, isTrue);
-    u.setSetting('ai_premium', null);
+  test('the app is free: no package is locked', () {
+    expect(aiPackages.where((p) => p.premium), isEmpty);
   });
 
   test('grounding carries tenses, expressions and meanings', () {
@@ -207,5 +202,23 @@ void main() {
     expect(ai.lastMessages!.single.$2, contains('pedicab'));
     expect(ai.lastMessages!.single.$2, contains('tricycle'));
     expect(ai.lastSystem, contains('Türkçesi:'));
+  });
+
+  test('"supposed to" drill goes on round after round until "bitir"', () async {
+    final session = TutorChatSession();
+    final h = <(String, String)>[('user', 'supposed to çalışalım')];
+    final first = await tutor.chat(session, h).join();
+    expect(first, anyOf(contains('Translate'), contains('çevir')));
+    expect(session.drill!.items.first.$1.id, 'supposed_to');
+    var last = '';
+    for (var k = 0; k < grammarRoundSize; k++) {
+      last = await tutor.chat(session, [('user', session.drill!.current.$2.answers.first)]).join();
+    }
+    expect(last, contains('Tur bitti'));
+    expect(session.drill, isNotNull);
+    expect(session.drill!.finished, isFalse);
+    final end = await tutor.chat(session, [('user', 'bitir')]).join();
+    expect(end, contains('Alıştırma bitti'));
+    expect(session.drill, isNull);
   });
 }

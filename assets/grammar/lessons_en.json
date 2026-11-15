@@ -2129,6 +2129,45 @@
     "mixed_review-b11": "Past continuous.",
     "mixed_review-b12": "Causative: had + past participle."
    }
+  },
+  "supposed_to": {
+   "explanation": "**be supposed to + base verb:** what should happen because of a rule, a plan or an expectation.\n- A rule or duty: You're supposed to wear a helmet here.\n- A plan or timetable: The train is supposed to arrive at six.\n- **was/were supposed to:** expected, but it did not happen: I was supposed to call her, but I forgot.\n- Something people say: This film is supposed to be very good.\n- Negative **isn't/aren't supposed to:** against the rules: You aren't supposed to park here.\n- **Careful:** don't drop \"be\" (not I supposed to, but I'm supposed to), and the verb after \"to\" is the base form. \"I suppose so\" (I think so) is a different meaning.",
+   "structure": [
+    "Subject + am/is/are + supposed to + V1",
+    "Subject + was/were + supposed to + V1 (but it did not happen)",
+    "Subject + isn't/aren't + supposed to + V1",
+    "Am/Is/Are + subject + supposed to + V1?"
+   ],
+   "notes": {
+    "supposed_to-1": "A duty or expectation: be supposed to + base verb.",
+    "supposed_to-2": "Against the rules: aren't supposed to.",
+    "supposed_to-3": "Expected but not done: was supposed to.",
+    "supposed_to-4": "Something people say: is supposed to be.",
+    "supposed_to-5": "A plan or timetable: is supposed to.",
+    "supposed_to-6": "Question: What + am/is/are + subject + supposed to + base verb?",
+    "supposed_to-7": "A duty or rule: be supposed to.",
+    "supposed_to-8": "Planned but it did not happen: was supposed to.",
+    "supposed_to-9": "Against the rules: aren't supposed to.",
+    "supposed_to-10": "Negative question: weren't you supposed to …?",
+    "supposed_to-11": "Something people say: is supposed to be.",
+    "supposed_to-12": "Expected but it did not happen: was supposed to.",
+    "supposed_to-13": "Past negative: wasn't supposed to.",
+    "supposed_to-14": "An instruction: be supposed to + base verb.",
+    "supposed_to-15": "Question: What am I supposed to …?",
+    "supposed_to-16": "An expectation: is supposed to be.",
+    "supposed_to-b1": "Negative: aren't supposed to.",
+    "supposed_to-b2": "was supposed to.",
+    "supposed_to-b3": "supposed to + base verb.",
+    "supposed_to-b4": "Question: What am I supposed to …?",
+    "supposed_to-b5": "Past: was supposed to.",
+    "supposed_to-b6": "supposed to: never drop \"to\".",
+    "supposed_to-b7": "we are supposed to.",
+    "supposed_to-b8": "weren't supposed to + base verb.",
+    "supposed_to-b9": "Question: Are we supposed to …?",
+    "supposed_to-b10": "was supposed to + base verb.",
+    "supposed_to-b11": "is supposed to.",
+    "supposed_to-b12": "are not supposed to + base verb."
+   }
   }
  }
 }

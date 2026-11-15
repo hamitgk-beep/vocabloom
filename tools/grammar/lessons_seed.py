@@ -270,6 +270,25 @@ topic('obligation', 'modals', 'A2', 'Must / Have to / Should', 'Must / Have to /
  ('Anneme daha sık telefon etmeliyim.', ['I should call my mother more often.', 'I should phone my mum more often.'], 'should + V1; "more often" sonda.'),
 ])
 
+topic('supposed_to', 'modals', 'B1', 'Be supposed to', 'Be supposed to', '''
+**be supposed to + V1:** kurallara, plana ya da beklentiye göre olması gereken şey (-mesi gerekiyor, -mesi bekleniyor).
+- Kural / görev: You're supposed to wear a helmet here. (Burada kask takman gerekiyor.)
+- Plan / tarife: The train is supposed to arrive at six. (Trenin altıda gelmesi gerekiyor.)
+- **was/were supposed to:** beklenen ama olmayan şey: I was supposed to call her, but I forgot. (Onu aramam gerekiyordu ama unuttum.)
+- Duyulan bilgi: This film is supposed to be very good. (Bu filmin çok iyi olduğu söyleniyor.)
+- Olumsuz **isn't/aren't supposed to:** kurala göre yapılmaması gereken: You aren't supposed to park here.
+- **Dikkat:** "be" unutulmaz (I supposed to değil, I'm supposed to) ve "to"dan sonra fiil yalın gelir. "I suppose so" (sanırım öyle) farklı bir anlamdır.
+''', ['Özne + am/is/are + supposed to + V1', 'Özne + was/were + supposed to + V1 (ama olmadı)', "Özne + isn't/aren't + supposed to + V1", 'Am/Is/Are + özne + supposed to + V1?'],
+[["You're supposed to wear a helmet here.", 'Burada kask takman gerekiyor.'], ['I was supposed to call her, but I forgot.', 'Onu aramam gerekiyordu ama unuttum.']],
+[
+ ('Saat dokuzda ofiste olmam gerekiyor.', ["I'm supposed to be at the office at nine.", 'I am supposed to be in the office at nine.', "I'm supposed to be at the office at 9."], 'Görev / beklenti: be supposed to + V1.'),
+ ('Burada fotoğraf çekmememiz gerekiyor.', ["We aren't supposed to take photos here.", "We're not supposed to take pictures here.", 'We are not supposed to take photos here.'], "Kurala göre yapmamamız gereken: aren't supposed to."),
+ ('Onu aramam gerekiyordu ama unuttum.', ['I was supposed to call him, but I forgot.', 'I was supposed to call her, but I forgot.', 'I was supposed to phone him, but I forgot.'], 'Beklenen ama yapılmayan: was supposed to.'),
+ ('Bu filmin çok iyi olduğu söyleniyor.', ['This film is supposed to be very good.', 'This movie is supposed to be really good.', 'This film is supposed to be really good.'], 'Duyulan bilgi: is supposed to be.'),
+ ('Trenin altıda gelmesi gerekiyor.', ['The train is supposed to arrive at six.', 'The train is supposed to arrive at 6.', 'The train is supposed to come at six.'], 'Plan / tarife: is supposed to.'),
+ ('Ne yapmam gerekiyor?', ['What am I supposed to do?'], 'Soru: What + am/is/are + özne + supposed to + V1?'),
+])
+
 topic('ability', 'modals', 'A2', 'Can / Could / Be able to', 'Can / Could / Be able to', '''
 **Yetenek ve olasılık:**
 - **can + V1:** şimdiki yetenek (-ebilmek). I can swim.
@@ -1021,7 +1040,7 @@ ORDER = [
     'there_is', 'adverbs_frequency', 'too_enough', 'so_neither', 'question_tags',
     'because_so', 'although_despite', 'unless', 'while_when', 'transition_words',
     'zero_conditional', 'first_conditional', 'second_conditional', 'third_conditional', 'mixed_conditionals', 'wish', 'inverted_conditionals',
-    'ability', 'obligation', 'requests_permission', 'deduction', 'past_modals',
+    'ability', 'obligation', 'supposed_to', 'requests_permission', 'deduction', 'past_modals',
     'passive', 'impersonal_passive', 'reported_speech',
     'relative_clauses', 'noun_clauses', 'indirect_questions', 'time_clauses', 'adverb_clauses', 'participle_clauses',
     'irregular_verbs', 'gerund_infinitive', 'used_to', 'causative',
@@ -1065,6 +1084,7 @@ ALIASES = {
     'wish': ['wish', 'if only', 'keşke', 'keske'],
     'ability': ['can could', 'be able to', 'ability', 'yetenek'],
     'obligation': ['must', 'have to', 'should', 'obligation', 'zorunluluk'],
+    'supposed_to': ['supposed to', 'be supposed to', 'is supposed to', 'are supposed to', 'was supposed to', 'were supposed to', 'supposed'],
     'requests_permission': ['requests', 'permission', 'would you mind', 'may i', 'rica', 'izin'],
     'deduction': ['deduction', 'possibility', 'may might', 'might', 'olasılık', 'tahmin'],
     'past_modals': ['past modals', 'perfect modals', 'should have', 'must have', 'could have', 'modal perfect'],
@@ -1151,7 +1171,7 @@ T.sort(key=lambda t: rank[t['id']])
 # CEFR level of each topic, following the public CEFR grammar inventories
 # (British Council / EAQUALS Core Inventory for General English). All
 # explanations, examples and sentences here are our own.
-LEVEL = {'simple_present': 'A1', 'present_continuous': 'A1', 'simple_past': 'A2', 'past_continuous': 'A2', 'present_perfect': 'A2', 'present_perfect_continuous': 'B1', 'past_perfect': 'B1', 'future': 'A2', 'future_continuous_perfect': 'B2', 'articles': 'A1', 'countable_uncountable': 'A2', 'quantifiers': 'A2', 'demonstratives': 'A1', 'possessives': 'A1', 'prepositions_time': 'A1', 'prepositions_place': 'A1', 'there_is': 'A1', 'adverbs_frequency': 'A1', 'too_enough': 'B1', 'so_neither': 'B1', 'question_tags': 'B1', 'because_so': 'A2', 'although_despite': 'B1', 'unless': 'B1', 'while_when': 'B1', 'transition_words': 'B2', 'zero_conditional': 'B1', 'first_conditional': 'B1', 'second_conditional': 'B1', 'third_conditional': 'B2', 'mixed_conditionals': 'C1', 'wish': 'B2', 'inverted_conditionals': 'C2', 'ability': 'A1', 'obligation': 'A2', 'requests_permission': 'A2', 'deduction': 'B2', 'past_modals': 'B2', 'passive': 'B1', 'impersonal_passive': 'C1', 'reported_speech': 'B2', 'relative_clauses': 'B1', 'noun_clauses': 'B2', 'indirect_questions': 'B1', 'time_clauses': 'B1', 'adverb_clauses': 'B2', 'participle_clauses': 'C1', 'irregular_verbs': 'A2', 'gerund_infinitive': 'B1', 'used_to': 'B1', 'causative': 'B2', 'comparison': 'A2', 'inversion': 'C1', 'cleft_sentences': 'C1', 'subjunctive': 'C2', 'mixed_review': 'B1'}
+LEVEL = {'simple_present': 'A1', 'present_continuous': 'A1', 'simple_past': 'A2', 'past_continuous': 'A2', 'present_perfect': 'A2', 'present_perfect_continuous': 'B1', 'past_perfect': 'B1', 'future': 'A2', 'future_continuous_perfect': 'B2', 'articles': 'A1', 'countable_uncountable': 'A2', 'quantifiers': 'A2', 'demonstratives': 'A1', 'possessives': 'A1', 'prepositions_time': 'A1', 'prepositions_place': 'A1', 'there_is': 'A1', 'adverbs_frequency': 'A1', 'too_enough': 'B1', 'so_neither': 'B1', 'question_tags': 'B1', 'because_so': 'A2', 'although_despite': 'B1', 'unless': 'B1', 'while_when': 'B1', 'transition_words': 'B2', 'zero_conditional': 'B1', 'first_conditional': 'B1', 'second_conditional': 'B1', 'third_conditional': 'B2', 'mixed_conditionals': 'C1', 'wish': 'B2', 'inverted_conditionals': 'C2', 'ability': 'A1', 'obligation': 'A2', 'supposed_to': 'B1', 'requests_permission': 'A2', 'deduction': 'B2', 'past_modals': 'B2', 'passive': 'B1', 'impersonal_passive': 'C1', 'reported_speech': 'B2', 'relative_clauses': 'B1', 'noun_clauses': 'B2', 'indirect_questions': 'B1', 'time_clauses': 'B1', 'adverb_clauses': 'B2', 'participle_clauses': 'C1', 'irregular_verbs': 'A2', 'gerund_infinitive': 'B1', 'used_to': 'B1', 'causative': 'B2', 'comparison': 'A2', 'inversion': 'C1', 'cleft_sentences': 'C1', 'subjunctive': 'C2', 'mixed_review': 'B1'}
 assert set(LEVEL) == set(rank), set(LEVEL) ^ set(rank)
 for t in T:
     t['aliases'] = ALIASES[t['id']]

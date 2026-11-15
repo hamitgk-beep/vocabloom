@@ -80,8 +80,8 @@ class SettingsPage extends StatelessWidget {
               SettingsSwitchTile(
                 icon: Icons.psychology_rounded,
                 color: const Color(0xFF6D28D9),
-                title: L('Cihazda yapay zekâ (Beta)', 'On-device AI (Beta)'),
-                subtitle: L('Ana menüye Yapay Zekâ sekmesini ekler', 'Adds the AI tab to the main menu'),
+                title: L('Cihazda yapay zekâ', 'On-device AI'),
+                subtitle: L('Ana menüde Yapay Zekâ sekmesini gösterir (ücretsiz)', 'Shows the AI tab in the main menu (free)'),
                 value: app.aiTab,
                 onChanged: app.setAiTab,
               ),

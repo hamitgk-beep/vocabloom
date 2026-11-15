@@ -389,7 +389,7 @@ class Tutor {
         final (st, e) = drill.current;
         GrammarProgress(app.user).record(st.id, e.id, right: false);
         drill.index++;
-        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.note}\n\n${_nextOrEnd(session, drill)}';
+        yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.note}\n\n${_nextOrEnd(session, drill, topics)}';
         return;
       }
     }
@@ -424,16 +424,29 @@ class Tutor {
       if (right) drill.right++;
       GrammarProgress(app.user).record(t.id, e.id, right: right);
       drill.index++;
-      yield '\n\n${_nextOrEnd(session, drill)}';
+      yield '\n\n${_nextOrEnd(session, drill, topics)}';
       return;
     }
     yield* chatReply(history, level: level, topic: topic);
   }
 
-  String _nextOrEnd(TutorChatSession session, GrammarDrill drill) {
+  /// The next sentence; after the last one of a round, the score and a new
+  /// round on the same topic, so practice goes on until the learner says
+  /// "bitir".
+  String _nextOrEnd(TutorChatSession session, GrammarDrill drill, List<GrammarTopic> topics) {
     if (!drill.finished) return drillQuestion(drill);
-    session.drill = null;
-    return drillSummary(drill);
+    final last = session.last;
+    if (last == null || (last.topic == null && last.category == null)) {
+      session.drill = null;
+      return drillSummary(drill);
+    }
+    final mine = topics.where((x) => last.topic != null ? x.id == last.topic!.id : x.category == last.category);
+    final p = GrammarProgress(app.user);
+    final next = session.drill = startDrill(GrammarIntent(GrammarMode.drill, topic: last.topic, category: last.category), topics,
+        done: {for (final x in mine) ...p.done(x.id)}, wrong: {for (final x in mine) ...p.wrong(x.id)});
+    return '${drillSummary(drill, more: true)}\n\n'
+        '${L('Devam ediyoruz: ${next.items.length} cümle daha. Bitirmek için "bitir" yaz.', 'Let\'s go on: ${next.items.length} more sentences. Write "stop" to finish.')}\n\n'
+        '${drillQuestion(next)}';
   }
 
   Stream<String> _startGrammar(TutorChatSession session, GrammarIntent intent, List<GrammarTopic> topics) async* {

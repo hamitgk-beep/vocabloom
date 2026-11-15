@@ -10311,6 +10311,306 @@
    ]
   },
   {
+   "id": "supposed_to",
+   "category": "modals",
+   "level": "B1",
+   "title_tr": "Be supposed to",
+   "title_en": "Be supposed to",
+   "explanation": "**be supposed to + V1:** kurallara, plana ya da beklentiye göre olması gereken şey (-mesi gerekiyor, -mesi bekleniyor).\n- Kural / görev: You're supposed to wear a helmet here. (Burada kask takman gerekiyor.)\n- Plan / tarife: The train is supposed to arrive at six. (Trenin altıda gelmesi gerekiyor.)\n- **was/were supposed to:** beklenen ama olmayan şey: I was supposed to call her, but I forgot. (Onu aramam gerekiyordu ama unuttum.)\n- Duyulan bilgi: This film is supposed to be very good. (Bu filmin çok iyi olduğu söyleniyor.)\n- Olumsuz **isn't/aren't supposed to:** kurala göre yapılmaması gereken: You aren't supposed to park here.\n- **Dikkat:** \"be\" unutulmaz (I supposed to değil, I'm supposed to) ve \"to\"dan sonra fiil yalın gelir. \"I suppose so\" (sanırım öyle) farklı bir anlamdır.",
+   "structure": [
+    "Özne + am/is/are + supposed to + V1",
+    "Özne + was/were + supposed to + V1 (ama olmadı)",
+    "Özne + isn't/aren't + supposed to + V1",
+    "Am/Is/Are + özne + supposed to + V1?"
+   ],
+   "examples": [
+    [
+     "You're supposed to wear a helmet here.",
+     "Burada kask takman gerekiyor."
+    ],
+    [
+     "I was supposed to call her, but I forgot.",
+     "Onu aramam gerekiyordu ama unuttum."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "supposed_to-1",
+     "tr": "Saat dokuzda ofiste olmam gerekiyor.",
+     "answers": [
+      "I'm supposed to be at the office at nine.",
+      "I am supposed to be in the office at nine.",
+      "I'm supposed to be at the office at 9."
+     ],
+     "note": "Görev / beklenti: be supposed to + V1."
+    },
+    {
+     "id": "supposed_to-2",
+     "tr": "Burada fotoğraf çekmememiz gerekiyor.",
+     "answers": [
+      "We aren't supposed to take photos here.",
+      "We're not supposed to take pictures here.",
+      "We are not supposed to take photos here."
+     ],
+     "note": "Kurala göre yapmamamız gereken: aren't supposed to."
+    },
+    {
+     "id": "supposed_to-3",
+     "tr": "Onu aramam gerekiyordu ama unuttum.",
+     "answers": [
+      "I was supposed to call him, but I forgot.",
+      "I was supposed to call her, but I forgot.",
+      "I was supposed to phone him, but I forgot."
+     ],
+     "note": "Beklenen ama yapılmayan: was supposed to."
+    },
+    {
+     "id": "supposed_to-4",
+     "tr": "Bu filmin çok iyi olduğu söyleniyor.",
+     "answers": [
+      "This film is supposed to be very good.",
+      "This movie is supposed to be really good.",
+      "This film is supposed to be really good."
+     ],
+     "note": "Duyulan bilgi: is supposed to be."
+    },
+    {
+     "id": "supposed_to-5",
+     "tr": "Trenin altıda gelmesi gerekiyor.",
+     "answers": [
+      "The train is supposed to arrive at six.",
+      "The train is supposed to arrive at 6.",
+      "The train is supposed to come at six."
+     ],
+     "note": "Plan / tarife: is supposed to."
+    },
+    {
+     "id": "supposed_to-6",
+     "tr": "Ne yapmam gerekiyor?",
+     "answers": [
+      "What am I supposed to do?"
+     ],
+     "note": "Soru: What + am/is/are + özne + supposed to + V1?"
+    },
+    {
+     "id": "supposed_to-7",
+     "tr": "Ödevi cumaya kadar teslim etmemiz gerekiyor.",
+     "answers": [
+      "We are supposed to hand in the homework by Friday.",
+      "We're supposed to hand in our homework by Friday.",
+      "We're supposed to submit the homework by Friday."
+     ],
+     "note": "Görev / kural: be supposed to."
+    },
+    {
+     "id": "supposed_to-8",
+     "tr": "Toplantının üçte başlaması gerekiyordu.",
+     "answers": [
+      "The meeting was supposed to start at three.",
+      "The meeting was supposed to begin at three.",
+      "The meeting was supposed to start at 3."
+     ],
+     "note": "Planlanan ama olmayan: was supposed to."
+    },
+    {
+     "id": "supposed_to-9",
+     "tr": "Hastanede cep telefonu kullanmaman gerekiyor.",
+     "answers": [
+      "You aren't supposed to use your mobile phone in the hospital.",
+      "You're not supposed to use your phone in the hospital.",
+      "You are not supposed to use a mobile phone in the hospital."
+     ],
+     "note": "Kurala göre yapılmaması gereken: aren't supposed to."
+    },
+    {
+     "id": "supposed_to-10",
+     "tr": "Bugün çalışman gerekmiyor muydu?",
+     "answers": [
+      "Weren't you supposed to be working today?",
+      "Weren't you supposed to work today?",
+      "Were you not supposed to work today?"
+     ],
+     "note": "Olumsuz soru: weren't you supposed to …?"
+    },
+    {
+     "id": "supposed_to-11",
+     "tr": "Bu restoranın Türkiye'nin en iyisi olduğu söyleniyor.",
+     "answers": [
+      "This restaurant is supposed to be the best in Turkey.",
+      "This restaurant is supposed to be the best one in Turkey."
+     ],
+     "note": "Duyulan bilgi: is supposed to be."
+    },
+    {
+     "id": "supposed_to-12",
+     "tr": "Uçağın on dakika önce inmesi gerekiyordu.",
+     "answers": [
+      "The plane was supposed to land ten minutes ago.",
+      "The plane was supposed to land 10 minutes ago."
+     ],
+     "note": "Beklenen ama olmayan: was supposed to."
+    },
+    {
+     "id": "supposed_to-13",
+     "tr": "Bunu kimseye söylememem gerekiyordu.",
+     "answers": [
+      "I wasn't supposed to tell anyone this.",
+      "I wasn't supposed to tell anybody this.",
+      "I was not supposed to tell anyone this.",
+      "I wasn't supposed to tell anyone."
+     ],
+     "note": "Geçmişte olumsuz: wasn't supposed to."
+    },
+    {
+     "id": "supposed_to-14",
+     "tr": "Bu ilacı yemekten sonra almam gerekiyor.",
+     "answers": [
+      "I'm supposed to take this medicine after meals.",
+      "I am supposed to take this medicine after eating.",
+      "I'm supposed to take this medicine after a meal."
+     ],
+     "note": "Talimat: be supposed to + V1."
+    },
+    {
+     "id": "supposed_to-15",
+     "tr": "Partiye ne giymem gerekiyor?",
+     "answers": [
+      "What am I supposed to wear to the party?",
+      "What am I supposed to wear for the party?"
+     ],
+     "note": "Soru: What am I supposed to …?"
+    },
+    {
+     "id": "supposed_to-16",
+     "tr": "Yarın havanın güneşli olması bekleniyor.",
+     "answers": [
+      "It's supposed to be sunny tomorrow.",
+      "It is supposed to be sunny tomorrow.",
+      "The weather is supposed to be sunny tomorrow."
+     ],
+     "note": "Beklenti: is supposed to be."
+    },
+    {
+     "id": "supposed_to-b1",
+     "gap": "You ___ supposed to park here.",
+     "tr": "Buraya park etmemen gerekiyor.",
+     "answers": [
+      "aren't",
+      "are not"
+     ],
+     "note": "Olumsuz: aren't supposed to."
+    },
+    {
+     "id": "supposed_to-b2",
+     "gap": "I was ___ to meet her yesterday.",
+     "tr": "Dün onunla buluşmam gerekiyordu.",
+     "answers": [
+      "supposed"
+     ],
+     "note": "was supposed to."
+    },
+    {
+     "id": "supposed_to-b3",
+     "gap": "The bus is supposed to ___ (leave) at seven.",
+     "tr": "Otobüsün yedide kalkması gerekiyor.",
+     "answers": [
+      "leave"
+     ],
+     "note": "supposed to + V1 (yalın fiil)."
+    },
+    {
+     "id": "supposed_to-b4",
+     "gap": "What ___ I supposed to do now?",
+     "tr": "Şimdi ne yapmam gerekiyor?",
+     "answers": [
+      "am"
+     ],
+     "note": "Soru: What am I supposed to …?"
+    },
+    {
+     "id": "supposed_to-b5",
+     "gap": "She ___ supposed to be here an hour ago.",
+     "tr": "Onun bir saat önce burada olması gerekiyordu.",
+     "answers": [
+      "was"
+     ],
+     "note": "Geçmiş: was supposed to."
+    },
+    {
+     "id": "supposed_to-b6",
+     "gap": "This book is supposed ___ be really interesting.",
+     "tr": "Bu kitabın çok ilginç olduğu söyleniyor.",
+     "answers": [
+      "to"
+     ],
+     "note": "supposed to: \"to\" düşmez."
+    },
+    {
+     "id": "supposed_to-b7",
+     "gap": "We ___ supposed to wear a uniform at school.",
+     "tr": "Okulda üniforma giymemiz gerekiyor.",
+     "answers": [
+      "are"
+     ],
+     "note": "we are supposed to."
+    },
+    {
+     "id": "supposed_to-b8",
+     "gap": "You weren't supposed to ___ (open) that letter!",
+     "tr": "O mektubu açmaman gerekiyordu!",
+     "answers": [
+      "open"
+     ],
+     "note": "weren't supposed to + V1."
+    },
+    {
+     "id": "supposed_to-b9",
+     "gap": "___ we supposed to bring our own food?",
+     "tr": "Kendi yiyeceğimizi getirmemiz gerekiyor mu?",
+     "answers": [
+      "Are"
+     ],
+     "note": "Soru: Are we supposed to …?"
+    },
+    {
+     "id": "supposed_to-b10",
+     "gap": "The film was supposed to ___ (start) at eight, but it started late.",
+     "tr": "Filmin sekizde başlaması gerekiyordu ama geç başladı.",
+     "answers": [
+      "start"
+     ],
+     "note": "was supposed to + V1."
+    },
+    {
+     "id": "supposed_to-b11",
+     "gap": "He is ___ to call me tonight.",
+     "tr": "Bu akşam beni araması gerekiyor.",
+     "answers": [
+      "supposed"
+     ],
+     "note": "is supposed to."
+    },
+    {
+     "id": "supposed_to-b12",
+     "gap": "Students are not supposed to ___ (use) phones in class.",
+     "tr": "Öğrencilerin derste telefon kullanmaması gerekiyor.",
+     "answers": [
+      "use"
+     ],
+     "note": "are not supposed to + V1."
+    }
+   ],
+   "aliases": [
+    "supposed to",
+    "be supposed to",
+    "is supposed to",
+    "are supposed to",
+    "was supposed to",
+    "were supposed to",
+    "supposed"
+   ]
+  },
+  {
    "id": "requests_permission",
    "category": "modals",
    "level": "A2",

@@ -16,7 +16,7 @@ const aiPackages = <AiPackage>[
     id: 'pro',
     nameTr: 'VocaBloom Yapay Zekâ Öğretmeni',
     nameEn: 'VocaBloom AI Tutor',
-    tier: AiTier.pro,
+    tier: AiTier.free,
     sizeBytes: 2890 * 1000 * 1000,
     model: 'Qwen3 4B Instruct 2507 (Q5_K_M)',
     licenseName: 'Apache 2.0',
