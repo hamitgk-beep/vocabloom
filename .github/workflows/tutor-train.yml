@@ -48,7 +48,11 @@ jobs:
                   c['source'] = "PACKAGE = %r\nHF_REPO = ''\nEPOCHS = %s\n" % (os.environ['PKG'], '${{ github.event.inputs.epochs }}')
               elif c['cell_type'] == 'code' and 'git clone' in src:
                   # The repository may be private: the training data comes as a private Kaggle dataset.
-                  c['source'] = ("%%capture\n!pip install -q unsloth\nimport glob, os, shutil\n"
+                  c['source'] = ("import subprocess, sys\n"
+                                 "r = subprocess.run([sys.executable, '-m', 'pip', 'install', '-q', 'unsloth'], capture_output=True, text=True)\n"
+                                 "print('pip exit', r.returncode, r.stdout[-1500:], r.stderr[-3000:])\n"
+                                 "if r.returncode: raise SystemExit('pip install unsloth failed (is internet on for this Kaggle notebook? It needs a phone-verified account.)')\n"
+                                 "import glob, os, shutil\n"
                                  "os.makedirs('vocabloom/tools/tutor/data', exist_ok=True)\n"
                                  "for n in ('train.jsonl', 'eval.jsonl'):\n"
                                  "    shutil.copy(glob.glob('/kaggle/input/**/' + n, recursive=True)[0], 'vocabloom/tools/tutor/data/' + n)\n")
