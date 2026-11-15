@@ -63,6 +63,25 @@ TOPICS = [
 ]
 
 
+def pick_model():
+    """With TEACHER_MODEL=auto: the newest general "flash" model the key can use."""
+    global MODEL
+    if MODEL != 'auto':
+        return
+    req = urllib.request.Request(URL + '/models', headers={**({'Authorization': 'Bearer ' + KEY} if KEY else {})})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        ids = [m['id'].split('/')[-1] for m in json.loads(r.read()).get('data', [])]
+    import re
+    good = [i for i in ids if 'flash' in i and not re.search(r'lite|image|tts|live|audio|thinking|exp|preview|embed|8b', i)]
+    good = good or [i for i in ids if 'flash' in i and not re.search(r'image|tts|live|audio|embed', i)]
+    def ver(i):
+        m = re.search(r'(\d+(?:\.\d+)?)', i)
+        return (float(m.group(1)) if m else 0, 'latest' in i)
+    MODEL = max(good, key=ver) if good else ids[0]
+    print('models:', ', '.join(sorted(ids))[:1500], flush=True)
+    print('teacher model:', MODEL, flush=True)
+
+
 class TeacherDown(Exception):
     """The API keeps failing (bad key, wrong model, daily quota used up)."""
 
@@ -88,7 +107,7 @@ def call(system, user, temperature=0.4, json_mode=False):
             _failures = 0
             return out.strip()
         except urllib.error.HTTPError as e:
-            detail = e.read().decode('utf-8', 'replace')[:300]
+            detail = ' '.join(e.read().decode('utf-8', 'replace').split())[:400]
             print('  HTTP %d: %s' % (e.code, detail), flush=True)
             if e.code in (400, 401, 403, 404):
                 raise TeacherDown('HTTP %d: %s' % (e.code, detail))
@@ -297,6 +316,7 @@ def lessons(per_topic, max_topics):
 
 
 def main():
+    pick_model()
     if len(sys.argv) >= 2 and sys.argv[1] == 'explain':
         explain(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
     elif len(sys.argv) >= 2 and sys.argv[1] == 'grade':

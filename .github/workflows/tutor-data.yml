@@ -56,7 +56,7 @@ jobs:
       - name: Teacher answers
         env:
           TEACHER_URL: https://generativelanguage.googleapis.com/v1beta/openai
-          TEACHER_MODEL: gemini-2.5-flash
+          TEACHER_MODEL: auto
           TEACHER_KEY: ${{ secrets.GEMINI_TEACHER_KEY }}
           TEACHER_DELAY: '7'
           PYTHONUNBUFFERED: '1'
@@ -90,5 +90,5 @@ jobs:
           cp /tmp/keep/* tools/tutor/data/
           [ -f /tmp/keep-generated.jsonl ] && cp /tmp/keep-generated.jsonl tools/grammar/generated.jsonl && git add -f tools/grammar/generated.jsonl || true
           git add -f tools/tutor/data/teacher*.jsonl tools/tutor/data/train.jsonl tools/tutor/data/eval.jsonl
-          git commit -qm "Tutor training data: $(wc -l < tools/tutor/data/teacher.jsonl) explanations, $(wc -l < tools/tutor/data/teacher_chat.jsonl 2>/dev/null || echo 0) conversations" || echo "nothing new"
+          git commit -qm "Tutor training data: $(wc -l < tools/tutor/data/teacher.jsonl) explanations, $(cat tools/tutor/data/teacher_chat.jsonl 2>/dev/null | wc -l) conversations" || echo "nothing new"
           git push -q origin tutor-data
