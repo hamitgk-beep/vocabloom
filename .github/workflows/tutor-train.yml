@@ -42,28 +42,36 @@ jobs:
           python3 - <<'PY'
           import json, os
           nb = json.load(open('tools/tutor/train_tutor.ipynb'))
-          import base64
           for c in nb['cells']:
               src = ''.join(c['source'])
               if c['cell_type'] == 'code' and 'PACKAGE =' in src:
                   c['source'] = "PACKAGE = %r\nHF_REPO = ''\nEPOCHS = %s\n" % (os.environ['PKG'], '${{ github.event.inputs.epochs }}')
               elif c['cell_type'] == 'code' and 'git clone' in src:
-                  # The repository may be private: the training data travels inside the notebook.
-                  files = {n: base64.b64encode(open('data/' + n, 'rb').read()).decode() for n in ('train.jsonl', 'eval.jsonl')}
-                  c['source'] = ("%%%%capture\n!pip install -q unsloth\nimport base64, os\n"
+                  # The repository may be private: the training data comes as a private Kaggle dataset.
+                  c['source'] = ("%%capture\n!pip install -q unsloth\nimport glob, os, shutil\n"
                                  "os.makedirs('vocabloom/tools/tutor/data', exist_ok=True)\n"
-                                 "for n, b in %r.items():\n"
-                                 "    open('vocabloom/tools/tutor/data/' + n, 'wb').write(base64.b64decode(b))\n" % files)
+                                 "for n in ('train.jsonl', 'eval.jsonl'):\n"
+                                 "    shutil.copy(glob.glob('/kaggle/input/**/' + n, recursive=True)[0], 'vocabloom/tools/tutor/data/' + n)\n")
           json.dump(nb, open('kernel/train_tutor.ipynb', 'w'))
           json.dump({
               'id': '%s/vocabloom-tutor-%s' % (os.environ['KAGGLE_USERNAME'], os.environ['PKG']),
               'title': 'vocabloom-tutor-%s' % os.environ['PKG'],
               'code_file': 'train_tutor.ipynb', 'language': 'python', 'kernel_type': 'notebook',
               'is_private': True, 'enable_gpu': True, 'enable_internet': True,
+              'dataset_sources': ['%s/vocabloom-tutor-data' % os.environ['KAGGLE_USERNAME']],
           }, open('kernel/kernel-metadata.json', 'w'))
+          json.dump({'id': '%s/vocabloom-tutor-data' % os.environ['KAGGLE_USERNAME'], 'title': 'vocabloom-tutor-data',
+                     'licenses': [{'name': 'other'}]}, open('data/dataset-metadata.json', 'w'))
           PY
       - name: Run on Kaggle
         run: |
+          ds="$KAGGLE_USERNAME/vocabloom-tutor-data"
+          if kaggle datasets status "$ds" >/dev/null 2>&1; then
+            kaggle datasets version -p data -m "training data $(date +%F)" -q
+          else
+            kaggle datasets create -p data -q
+          fi
+          for i in $(seq 1 30); do s=$(kaggle datasets status "$ds" 2>&1 || true); echo "dataset: $s"; case "$s" in *ready*) break ;; esac; sleep 10; done
           kaggle kernels push -p kernel
           ref="$KAGGLE_USERNAME/vocabloom-tutor-$PKG"
           for i in $(seq 1 330); do
