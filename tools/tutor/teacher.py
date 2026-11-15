@@ -20,9 +20,11 @@ the app's dictionary facts, and must keep the exact answer format of the app.
 """
 import json
 import os
+import re
 import random
 import sys
 import time
+import urllib.error
 import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -62,7 +64,52 @@ TOPICS = [
 ]
 
 
+FALLBACK = []
+
+
+def next_model(reason):
+    """Moves on to the next model in TEACHER_MODELS; False when none is left."""
+    global MODEL, _failures
+    if not FALLBACK:
+        return False
+    print('model %s stopped (%s), switching to %s' % (MODEL, reason[:120], FALLBACK[0]), flush=True)
+    MODEL = FALLBACK.pop(0)
+    _failures = 0
+    return True
+
+
+def pick_model():
+    """With TEACHER_MODEL=auto: the models in TEACHER_MODELS that the key can
+    use, in that order, else the newest general "flash" model."""
+    global MODEL
+    if MODEL != 'auto':
+        return
+    req = urllib.request.Request(URL + '/models', headers={**({'Authorization': 'Bearer ' + KEY} if KEY else {})})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        ids = [m['id'].split('/')[-1] for m in json.loads(r.read()).get('data', [])]
+    good = [i for i in ids if 'flash' in i and not re.search(r'lite|image|tts|live|audio|thinking|exp|preview|embed|8b', i)]
+    good = good or [i for i in ids if 'flash' in i and not re.search(r'image|tts|live|audio|embed', i)]
+    def ver(i):
+        m = re.search(r'(\d+(?:\.\d+)?)', i)
+        return (float(m.group(1)) if m else 0, 'latest' in i)
+    MODEL = max(good, key=ver) if good else ids[0]
+    wanted = [m for m in os.environ.get('TEACHER_MODELS', '').split(',') if m.strip() in ids]
+    if wanted:
+        MODEL = wanted[0]
+        FALLBACK.extend(wanted[1:])
+    print('models:', ', '.join(sorted(ids))[:1500], flush=True)
+    print('teacher model:', MODEL, flush=True)
+
+
+class TeacherDown(Exception):
+    """The API keeps failing (bad key, wrong model, daily quota used up)."""
+
+
+_failures = 0
+
+
 def call(system, user, temperature=0.4, json_mode=False):
+    global _failures
     body = {'model': MODEL, 'temperature': temperature,
             'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': user}]}
     if json_mode:
@@ -70,17 +117,43 @@ def call(system, user, temperature=0.4, json_mode=False):
     req = urllib.request.Request(URL + '/chat/completions', data=json.dumps(body).encode(),
                                  headers={'Content-Type': 'application/json',
                                           **({'Authorization': 'Bearer ' + KEY} if KEY else {})})
-    for attempt in range(5):
+    for attempt in range(8):
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
-                out = json.loads(r.read())['choices'][0]['message']['content']
+            with urllib.request.urlopen(req, timeout=120) as r:
+                out = json.loads(r.read())['choices'][0]['message']['content'] or ''
             if '</think>' in out:
                 out = out.split('</think>', 1)[1]
+            _failures = 0
             return out.strip()
-        except Exception as e:  # rate limits, timeouts
-            wait = 20 * (attempt + 1)
-            print('  retry in %ds: %s' % (wait, e))
-            time.sleep(wait)
+        except urllib.error.HTTPError as e:
+            full = ' '.join(e.read().decode('utf-8', 'replace').split())
+            detail = full[:400]
+            quota_ids = sorted(set(re.findall(r'"quotaId": "([^"]+)"', full)))
+            print('  HTTP %d: %s %s' % (e.code, detail[:160], ' '.join(quota_ids)), flush=True)
+            per_day = any('PerDay' in q for q in quota_ids) or 'per day' in full.lower()
+            if e.code == 429 and not per_day:
+                # Requests-per-minute limit: wait for the next minute.
+                wait = 65
+                m = re.search(r'retry in ([0-9.]+)s', full, re.I) or re.search(r'"retryDelay": "([0-9.]+)s"', full)
+                if m:
+                    wait = min(120, float(m.group(1)) + 3)
+                time.sleep(wait)
+                continue
+            if e.code in (400, 401, 403, 404) or e.code == 429:
+                if next_model('HTTP %d' % e.code):
+                    body['model'] = MODEL
+                    req.data = json.dumps(body).encode()
+                    continue
+                raise TeacherDown('HTTP %d: %s' % (e.code, detail))
+            time.sleep(min(120, 30 * (attempt + 1)))
+        except Exception as e:  # timeouts, network
+            print('  retry: %s' % e, flush=True)
+            time.sleep(min(90, 20 * (attempt + 1)))
+    _failures += 1
+    if _failures >= 5:
+        if next_model('5 requests in a row failed'):
+            return None
+        raise TeacherDown('5 requests in a row failed')
     return None
 
 
@@ -99,14 +172,15 @@ def explain(limit):
             human[en] = tr
     out_path = os.path.join(DATA, 'teacher.jsonl')
     done = done_ids(out_path)
-    n = 0
+    n = tried = 0
     with open(os.path.join(DATA, 'prompts.jsonl'), encoding='utf-8') as f, open(out_path, 'a', encoding='utf-8') as out:
         for line in f:
             p = json.loads(line)
             if p['task'] != 'explain' or p['id'] in done:
                 continue
-            if n >= limit:
+            if n >= limit or tried >= 2 * limit:
                 break
+            tried += 1
             en = p['user'].split('Cümle: "', 1)[1].split('"\n', 1)[0]
             user = p['user'] + ('\n\nİnsan çevirisi: ' + human[en] if human.get(en) else '')
             ans = call(p['system'] + '\n' + QUALITY, user, temperature=0.3)
@@ -275,7 +349,8 @@ def lessons(per_topic, max_topics):
             time.sleep(DELAY)
 
 
-if __name__ == '__main__':
+def main():
+    pick_model()
     if len(sys.argv) >= 2 and sys.argv[1] == 'explain':
         explain(int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 9)
     elif len(sys.argv) >= 2 and sys.argv[1] == 'grade':
@@ -286,3 +361,11 @@ if __name__ == '__main__':
         chat(int(sys.argv[2]) if len(sys.argv) > 2 else 600)
     else:
         print(__doc__)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except TeacherDown as e:
+        print('Teacher API stopped:', e, flush=True)
+        sys.exit(3)
