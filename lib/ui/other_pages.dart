@@ -133,7 +133,7 @@ class _WordList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(14, 12, 4, 12),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(w.lemma, style: enStyle(theme, theme.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w700)),
+                      Text(displayPhrase(w.lemma), style: enStyle(theme, theme.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w700)),
                       if (meaning != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 2),
@@ -294,7 +294,7 @@ class _CategoryListState extends State<_CategoryList> {
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
-    final list = q.isEmpty ? all : all.where((e) => e.phrase.contains(q) || (e.trShown?.toLowerCase().contains(q) ?? false)).toList();
+    final list = q.isEmpty ? all : all.where((e) => e.phrase.contains(q) || displayPhrase(e.phrase).contains(q) || (e.trShown?.toLowerCase().contains(q) ?? false)).toList();
     return Scaffold(
       appBar: AppBar(title: Text(uiEnglish ? widget.cat.name : '${widget.cat.tr} · ${widget.cat.name}')),
       body: Column(children: [
@@ -314,7 +314,7 @@ class _CategoryListState extends State<_CategoryList> {
               final e = list[i];
               final st = app.user.statuses[e.phrase];
               return ListTile(
-                title: Text(e.phrase, style: TextStyle(fontWeight: FontWeight.w600, color: widget.cat.color)),
+                title: Text(displayPhrase(e.phrase), style: TextStyle(fontWeight: FontWeight.w600, color: widget.cat.color)),
                 subtitle: Text([if (app.showTr && e.trShown != null) e.trShown!, if ((app.showEn || e.trShown == null) && e.en != null) e.en!].join('\n'), maxLines: 3),
                 trailing: st == null ? null : Icon(Icons.circle, size: 12, color: st == WordStatus.learning ? learningColor : learnedColor),
                 onTap: () async {
