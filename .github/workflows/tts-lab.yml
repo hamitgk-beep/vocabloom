@@ -18,8 +18,8 @@ jobs:
         run: |
           mkdir -p m && cd m
           R=https://github.com/k2-fsa/sherpa-onnx/releases/download
-          for t in tts-models/sherpa-onnx-supertonic-tts-int8-2026-03-06 tts-models/kokoro-int8-multi-lang-v1_0 asr-models/sherpa-onnx-whisper-base; do
-            curl -sSL "$R/$t.tar.bz2" | tar xj
+          for t in tts-models/sherpa-onnx-supertonic-tts-int8-2026-03-06 tts-models/kokoro-int8-multi-lang-v1_0 tts-models/kokoro-multi-lang-v1_0 tts-models/kokoro-en-v0_19 tts-models/kitten-nano-en-v0_2-fp16 tts-models/kitten-mini-en-v0_1-fp16 asr-models/sherpa-onnx-whisper-base; do
+            curl -sSL "$R/$t.tar.bz2" | tar xj || echo "no $t"
           done
           mv sherpa-onnx-whisper-base sherpa-onnx-whisper-base 2>/dev/null || true
           mkdir -p supertonic-fp32
@@ -27,7 +27,14 @@ jobs:
             curl -sSfL -o supertonic-fp32/$n.onnx "https://huggingface.co/Supertone/supertonic-2/resolve/main/onnx/$n.onnx" || echo "no $n"
           done
           ls -la * | head -60
-      - name: Lab (1 thread)
+      - name: Other models (1 thread)
         env: { MODELS: '${{ github.workspace }}/m', TH: '1' }
-        run: cd tools/tts_lab && python lab.py 2>/dev/null | tee ../../lab.txt
-      - run: cat lab.txt >> "$GITHUB_STEP_SUMMARY"
+        run: cd tools/tts_lab && python lab2.py 2>/dev/null | tee ../../lab.txt
+      - name: Other models (4 threads)
+        env: { MODELS: '${{ github.workspace }}/m', TH: '4' }
+        run: cd tools/tts_lab && python lab2.py 2>/dev/null | grep WER | tee -a ../../lab.txt
+      - name: Supertonic variants (1 thread)
+        env: { MODELS: '${{ github.workspace }}/m', TH: '1' }
+        run: cd tools/tts_lab && python lab.py 2>/dev/null | tee -a ../../lab.txt
+      - if: always()
+        run: cat lab.txt >> "$GITHUB_STEP_SUMMARY"
