@@ -11,11 +11,32 @@ void main() {
 
   test('every topic in the learner list is there', () {
     const asked = [
-      'adverb clause', 'adverbs of frequency', 'articles', 'causative verbs', 'comparative-superlative', 'conditionals',
-      'conjunctions', 'countable-uncountable', 'demonstratives', 'gerund-infinitives', 'mixed', 'modals',
-      'neither-either-so-too', 'noun clause', 'possessive adjectives-pronouns', 'preposition', 'quantifiers',
-      'question tag', 'relative (adjective) clause', 'reported speech', 'tenses', 'there is-there are',
-      'time clauses', 'too-enough', 'transition words', 'verb list',
+      'adverb clause',
+      'adverbs of frequency',
+      'articles',
+      'causative verbs',
+      'comparative-superlative',
+      'conditionals',
+      'conjunctions',
+      'countable-uncountable',
+      'demonstratives',
+      'gerund-infinitives',
+      'mixed',
+      'modals',
+      'neither-either-so-too',
+      'noun clause',
+      'possessive adjectives-pronouns',
+      'preposition',
+      'quantifiers',
+      'question tag',
+      'relative (adjective) clause',
+      'reported speech',
+      'tenses',
+      'there is-there are',
+      'time clauses',
+      'too-enough',
+      'transition words',
+      'verb list',
     ];
     for (final a in asked) {
       final i = p('$a anlat');
@@ -47,8 +68,13 @@ void main() {
 
   test('ordinary chat is not taken for a request', () {
     for (final s in [
-      'I will study tonight.', 'Sorry, I must go now.', 'What are you going to do this weekend?',
-      'I used to play football.', 'I have a test tomorrow.', 'I practice the piano every day.', 'Merhaba, nasılsın?',
+      'I will study tonight.',
+      'Sorry, I must go now.',
+      'What are you going to do this weekend?',
+      'I used to play football.',
+      'I have a test tomorrow.',
+      'I practice the piano every day.',
+      'Merhaba, nasılsın?',
     ]) {
       expect(p(s), isNull, reason: s);
     }
@@ -57,10 +83,17 @@ void main() {
   test('a drill asks every sentence once, new ones first', () {
     final i = p('modals cümle sor')!;
     final first = topics.firstWhere((t) => t.id == 'obligation').exercises.first.id;
-    final d = startDrill(i, topics, done: {first}, count: 50, random: Random(1));
+    final d = startDrill(i, topics, done: {first}, count: 1000, random: Random(1));
     expect(d.items.map((x) => x.$2.id).toSet(), hasLength(d.items.length));
     expect(d.items.every((x) => x.$1.category == 'modals'), isTrue);
     expect(d.items.last.$2.id, first);
+    // Gap sentences are for the practice page; the chat asks translations.
+    expect(d.items.any((x) => x.$2.isGap), isFalse);
+    // A sentence answered wrong before comes first, and a drill is ten long.
+    final wrong = topics.firstWhere((t) => t.id == 'deduction').exercises.first.id;
+    final d2 = startDrill(i, topics, done: {first, wrong}, wrong: {wrong}, random: Random(2));
+    expect(d2.items.first.$2.id, wrong);
+    expect(d2.items, hasLength(10));
     expect(drillQuestion(d), contains(d.items.first.$2.tr));
     expect(isDrillStop('bitir'), isTrue);
     expect(isDrillSkip('geç'), isTrue);

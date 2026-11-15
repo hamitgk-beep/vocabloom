@@ -185,12 +185,15 @@ bool isDrillSkip(String text) {
   return f.trim().split(' ').length <= 5 && _any(f, _skipWords);
 }
 
-/// Up to [count] sentences for [intent], those not done yet first.
-GrammarDrill startDrill(GrammarIntent intent, List<GrammarTopic> topics, {Set<String> done = const {}, int count = 8, Random? random}) {
+/// Up to [count] translation sentences for [intent]: those answered [wrong]
+/// before first, then those not done yet, then the rest.
+GrammarDrill startDrill(GrammarIntent intent, List<GrammarTopic> topics,
+    {Set<String> done = const {}, Set<String> wrong = const {}, int count = grammarRoundSize, Random? random}) {
   final rnd = random ?? Random();
   final pool = intent.topic != null ? [intent.topic!] : topics.where((t) => t.category == intent.category).toList();
-  final items = [for (final t in pool) for (final e in t.exercises) (t, e)]..shuffle(rnd);
-  items.sort((a, b) => (done.contains(a.$2.id) ? 1 : 0).compareTo(done.contains(b.$2.id) ? 1 : 0));
+  final items = [for (final t in pool) for (final e in t.exercises) if (!e.isGap) (t, e)]..shuffle(rnd);
+  int rank(DrillItem x) => wrong.contains(x.$2.id) ? 0 : (done.contains(x.$2.id) ? 2 : 1);
+  items.sort((a, b) => rank(a).compareTo(rank(b)));
   return GrammarDrill(intentTitle(intent), items.take(count).toList());
 }
 

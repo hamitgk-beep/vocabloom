@@ -338,7 +338,8 @@ class Tutor {
         return;
       }
       if (isDrillSkip(text)) {
-        final (_, e) = drill.current;
+        final (st, e) = drill.current;
+        GrammarProgress(app.user).record(st.id, e.id, right: false);
         drill.index++;
         yield '${L('**Doğru cevap:**', '**Answer:**')} "${e.answers.first}"\n${e.note}\n\n${_nextOrEnd(session, drill)}';
         return;
@@ -359,12 +360,21 @@ class Tutor {
             '${L('İpucu:', 'Hint:')} ${e.note}\n$drillHelp';
         return;
       }
-      final right = isCorrectTranslation(e, text);
-      yield* checkTranslation(t, e, text);
-      if (right) {
-        drill.right++;
-        GrammarProgress(app.user).markDone(t.id, e.id);
+      var right = isCorrectTranslation(e, text);
+      final reply = StringBuffer();
+      try {
+        await for (final c in checkTranslation(t, e, text)) {
+          reply.write(c);
+          yield c;
+        }
+      } catch (_) {
+        GrammarProgress(app.user).record(t.id, e.id, right: false);
+        rethrow;
       }
+      // The model may accept a different but correct sentence.
+      if (!right && reply.isNotEmpty && !feedbackHasCorrections(reply.toString())) right = true;
+      if (right) drill.right++;
+      GrammarProgress(app.user).record(t.id, e.id, right: right);
       drill.index++;
       yield '\n\n${_nextOrEnd(session, drill)}';
       return;
@@ -391,11 +401,10 @@ class Tutor {
           '${L('Bu konuda çeviri alıştırması yapmak istersen **"cümle sor"** yaz.', 'To practise this topic with translation sentences, write **"quiz me"**.')}';
       return;
     }
-    final done = <String>{
-      for (final x in topics.where((x) => t != null ? x.id == t.id : x.category == intent.category))
-        ...GrammarProgress(app.user).done(x.id)
-    };
-    final drill = session.drill = startDrill(intent, topics, done: done);
+    final mine = topics.where((x) => t != null ? x.id == t.id : x.category == intent.category);
+    final p = GrammarProgress(app.user);
+    final drill = session.drill = startDrill(intent, topics,
+        done: {for (final x in mine) ...p.done(x.id)}, wrong: {for (final x in mine) ...p.wrong(x.id)});
     final intro = intent.mode == GrammarMode.study
         ? '${t != null ? topicExplanation(t, short: true) : categoryOverview(intent.category!, topics).split('\n\nBirini').first}\n\n'
             '${L('Şimdi pratik yapalım. Türkçe cümleleri İngilizceye çevir, ben de kontrol edeyim.', 'Now let\'s practise. Translate the Turkish sentences into English and I\'ll check them.')} $drillHelp\n\n'
