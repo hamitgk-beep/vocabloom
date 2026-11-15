@@ -4,7 +4,26 @@ on:
   push:
     branches-ignore: [main]
     paths: [tools/tts_lab/**, .github/workflows/tts-lab.yml]
+permissions:
+  contents: write
 jobs:
+  export:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch ema-lightning onnx onnxruntime huggingface_hub
+      - run: python -u tools/tts_lab/ema_export.py ema-onnx
+      - name: Publish to the 'voice-lab' release (scratch, not used by the app)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cd ema-onnx && zip -q ../ema-onnx.zip * && cd ..
+          gh release view voice-lab >/dev/null 2>&1 || gh release create voice-lab --prerelease --title "voice lab (scratch)" --notes "Temporary files for voice experiments."
+          gh release upload voice-lab ema-onnx.zip --clobber
   lab:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 90
