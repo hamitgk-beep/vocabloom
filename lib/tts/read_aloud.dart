@@ -7,7 +7,7 @@ import '../data/user_db.dart';
 import '../nlp/text.dart';
 import 'speech.dart';
 
-/// One sentence of the chapter: paragraph index and [start, end) in its text.
+/// One spoken piece of the chapter (a sentence, or a clause of a long one): paragraph index and [start, end) in its text.
 typedef SpokenSentence = ({int para, int start, int end});
 
 /// Reads the open chapter aloud sentence by sentence. The next sentences are
@@ -44,7 +44,8 @@ class ReadAloud extends ChangeNotifier {
     return [
       for (var i = fromPara; i < ps.length; i++)
         for (final r in sentenceRanges(ps[i].text))
-          if (RegExp(r'[A-Za-z0-9]').hasMatch(ps[i].text.substring(r.$1, r.$2))) (para: i, start: r.$1, end: r.$2),
+          if (RegExp(r'[A-Za-z0-9]').hasMatch(ps[i].text.substring(r.$1, r.$2)))
+            for (final c in speechChunks(ps[i].text, r.$1, r.$2)) (para: i, start: c.$1, end: c.$2),
     ];
   }
 
@@ -84,8 +85,9 @@ class ReadAloud extends ChangeNotifier {
     } catch (_) {}
   }
 
-  Future<String> _future(int i) => _pending.putIfAbsent(i, () {
-    final f = speech.synth(_text(_items[i]));
+  /// [quick]: the listener waits for this piece now, so make it faster.
+  Future<String> _future(int i, {bool quick = false}) => _pending.putIfAbsent(i, () {
+    final f = speech.synth(_text(_items[i]), quick: quick);
     f.ignore();
     return f;
   });
@@ -109,7 +111,7 @@ class ReadAloud extends ChangeNotifier {
         notifyListeners();
         continue;
       }
-      final f = _future(_idx);
+      final f = _future(_idx, quick: !_pending.containsKey(_idx));
       for (var k = 1; k <= 2 && _idx + k < _items.length; k++) {
         _future(_idx + k);
       }
@@ -181,4 +183,23 @@ class ReadAloud extends ChangeNotifier {
     stop();
     super.dispose();
   }
+}
+
+/// Splits a long sentence [start, end) of [text] at commas, semicolons and
+/// colons into clauses of at least a few words, so speech starts sooner and
+/// each piece is short enough to repeat (shadowing).
+List<(int, int)> speechChunks(String text, int start, int end, {int maxWords = 12, int minWords = 4}) {
+  int words(int a, int b) => RegExp(r"[A-Za-z0-9']+").allMatches(text.substring(a, b)).length;
+  if (words(start, end) <= maxWords) return [(start, end)];
+  final out = <(int, int)>[];
+  var from = start;
+  for (final m in RegExp(r'[,;:\u2014]\s').allMatches(text.substring(start, end))) {
+    final cut = start + m.end;
+    if (words(from, cut) >= minWords && words(cut, end) >= minWords) {
+      out.add((from, cut));
+      from = cut;
+    }
+  }
+  out.add((from, end));
+  return out;
 }

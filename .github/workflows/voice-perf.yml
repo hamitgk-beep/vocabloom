@@ -1,0 +1,34 @@
+name: voice-perf
+# Speed and cleanliness gate for the offline voices, on an ARM CPU limited to
+# one thread (like a weak phone), with the voice packs users download.
+# build.yml runs it before every release; it also runs when voice code changes.
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+    paths: [lib/tts/**, test/voice_perf_test.dart, .github/workflows/voice-perf.yml]
+
+jobs:
+  voice:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+      # No prebuilt Flutter for Linux ARM: the git checkout fetches the ARM Dart SDK itself.
+      - name: Flutter 3.50.0 (ARM)
+        run: |
+          git clone --depth 1 --branch 3.50.0 https://github.com/flutter/flutter.git "$RUNNER_TEMP/flutter"
+          echo "$RUNNER_TEMP/flutter/bin" >> "$GITHUB_PATH"
+      - run: flutter --version && flutter pub get
+      - name: Voice speed and stutter test (1 thread, scaled to a low-end phone)
+        run: |
+          lib=$(find ~/.pub-cache/hosted/pub.dev -path '*sherpa_onnx_linux-*/linux/aarch64' -type d | head -1)
+          echo "native library: $lib"
+          SHERPA_ONNX_LIB_DIR=$lib LD_LIBRARY_PATH=$lib VOCABLOOM_TTS_THREADS=1 \
+          VOCABLOOM_VOICE_BASE=https://github.com/${{ github.repository }}/releases/download/voice-models \
+          flutter test test/voice_perf_test.dart
+      - name: Report
+        if: always()
+        run: |
+          [ -f voice-perf-report.txt ] && cat voice-perf-report.txt >> "$GITHUB_STEP_SUMMARY" || true
+          [ -f voice-perf-report.txt ] && cat voice-perf-report.txt || true

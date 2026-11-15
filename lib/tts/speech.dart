@@ -16,7 +16,7 @@ import 'voices.dart';
 
 enum PackState { missing, downloading, extracting, ready, failed }
 
-/// Natural offline speech. The voice models (Kokoro for English, Piper for
+/// Natural offline speech. The voice models (Supertonic for English, Piper for
 /// Turkish) run on the device through sherpa-onnx in a background isolate;
 /// audio is played with audioplayers. Each voice pack is downloaded once
 /// (Settings > Read aloud) and then works without internet.
@@ -42,6 +42,17 @@ class Speech extends ChangeNotifier {
     for (final pk in voicePacks) {
       _state[pk.id] = _readyMark(pk).existsSync() ? PackState.ready : PackState.missing;
     }
+    _steps = int.tryParse(user.getSetting('tts_steps') ?? '') ?? 5;
+    // The first test build used a slower English model; free its space.
+    try {
+      final old = Directory(p.join(_root.path, 'voice', 'kokoro-en-v1'));
+      if (old.existsSync()) old.deleteSync(recursive: true);
+    } catch (_) {}
+    // Keep the cache of spoken words from growing without end.
+    try {
+      final cache = Directory(p.join(_root.path, 'voice', 'cache'));
+      if (cache.existsSync() && cache.listSync().length > 4000) cache.deleteSync(recursive: true);
+    } catch (_) {}
   }
 
   PackState stateOf(VoicePack pk) => _state[pk.id] ?? PackState.missing;
@@ -50,7 +61,33 @@ class Speech extends ChangeNotifier {
   bool isReady(VoicePack pk) => stateOf(pk) == PackState.ready;
 
   /// The English voice pack is installed.
-  bool get ready => isReady(kokoroPack);
+  bool get ready => isReady(englishPack);
+
+  /// Quality steps of the English model, chosen from the measured speed of
+  /// this device (more steps = smoother voice, slower).
+  int _steps = 5;
+
+  /// Steps for a sentence that must start now (reading starts, a tapped sentence).
+  static const _quickSteps = int.fromEnvironment('VOCABLOOM_QUICK_STEPS', defaultValue: 4);
+  int get qualitySteps => _steps;
+  final _jobSteps = <int, int>{};
+  double? _perStep;
+
+  /// Target: speech is made at least ~3x faster than it plays, so reading
+  /// flows and a tapped word answers quickly, on slow and fast phones alike.
+  static const _targetRtf = 0.3;
+  static const _wordSteps = int.fromEnvironment('VOCABLOOM_WORD_STEPS', defaultValue: 2);
+
+  void _learnSpeed(double rtf, double secs, int steps) {
+    if (secs < 1.5 || rtf <= 0) return; // short clips are mostly overhead
+    final ps = rtf / steps;
+    _perStep = _perStep == null ? ps : _perStep! * 0.6 + ps * 0.4;
+    final next = (_targetRtf / _perStep!).floor().clamp(2, 10);
+    if (next != _steps) {
+      _steps = next;
+      _user?.setSetting('tts_steps', '$_steps');
+    }
+  }
 
   // ---------------------------------------------------------------- settings
 
@@ -138,6 +175,7 @@ class Speech extends ChangeNotifier {
       if (!File(p.join(dir.path, 'tokens.txt')).existsSync()) throw const FileSystemException('voice pack is incomplete');
       await _readyMark(pk).writeAsString('1');
       _state[pk.id] = PackState.ready;
+      unawaited(warmUp());
     } catch (e) {
       debugPrint('voice pack ${pk.id}: $e');
       _error[pk.id] = '$e';
@@ -186,7 +224,9 @@ class Speech extends ChangeNotifier {
         c.complete(m);
       } else if (m is List) {
         final done = _waiting.remove(m[0] as int);
+        final steps = _jobSteps.remove(m[0] as int);
         if (m[1] == null) {
+          if (steps != null) _learnSpeed(m[3] as double, m[4] as double, steps);
           done?.complete(m[2] as String);
         } else {
           done?.completeError(Exception(m[1]));
@@ -195,7 +235,8 @@ class Speech extends ChangeNotifier {
         _pump();
       }
     });
-    final threads = max(1, min(4, Platform.numberOfProcessors - 1));
+    // VOCABLOOM_TTS_THREADS lets tests act like a phone with few fast cores.
+    final threads = int.tryParse(Platform.environment['VOCABLOOM_TTS_THREADS'] ?? '') ?? max(1, min(4, Platform.numberOfProcessors - 1));
     _isolate = await Isolate.spawn(_workerMain, [inbox.sendPort, threads]);
     final port = await c.future;
     _starting = null;
@@ -217,8 +258,9 @@ class Speech extends ChangeNotifier {
   }
 
   /// Synthesizes [text] into a WAV file and returns its path.
-  /// [urgent] jobs (a tapped word) go before queued sentences.
-  Future<String> synth(String text, {Voice? v, bool urgent = false, double? speed}) async {
+  /// [urgent] jobs (a tapped word) go before queued sentences. [quick] uses
+  /// fewer quality steps, for a piece the listener is already waiting for.
+  Future<String> synth(String text, {Voice? v, bool urgent = false, bool quick = false, double? speed}) async {
     final vo = v ?? voice;
     if (!isReady(vo.pack)) throw StateError('voice pack ${vo.pack.id} not downloaded');
     final id = _nextId++;
@@ -226,12 +268,26 @@ class Speech extends ChangeNotifier {
     final c = Completer<String>();
     _waiting[id] = c;
     final dir = packDir(vo.pack).path;
-    final engine = vo.kokoro ? ['kokoro', vo.engineKey, dir, vo.british ? 'lexicon-gb-en.txt' : 'lexicon-us-en.txt'] : ['vits', vo.engineKey, dir, ''];
-    final job = _Job(id, text, vo.sid, speed ?? this.speed, out, engine);
+    // A lone word needs few quality steps to sound right, and must answer fast.
+    final steps = !text.trim().contains(' ') ? min(_steps, _wordSteps) : (quick ? min(_steps, _quickSteps) : _steps);
+    final engine = [vo.engine, vo.pack.id, dir, '$steps'];
+    if (vo.engine == 'supertonic') _jobSteps[id] = steps;
+    final job = _Job(id, _forSpeech(text), vo.sid, speed ?? this.speed, out, engine);
     urgent ? _queue.addFirst(job) : _queue.add(job);
     await _ensureWorker();
     _pump();
     return c.future;
+  }
+
+  /// A lone word is said most cleanly as a capitalized one-word sentence
+  /// ("And." rather than "and"); other text gets a final full stop if it has none.
+  static String _forSpeech(String text) {
+    final t = text.trim();
+    if (t.isNotEmpty && !t.contains(' ')) {
+      final w = t.replaceAll(RegExp(r'[.!?…,;:"]+$'), '');
+      return '${w[0].toUpperCase()}${w.substring(1)}.';
+    }
+    return RegExp(r'[.!?…,;:]$').hasMatch(t) ? t : '$t.';
   }
 
   void _pump() {
@@ -258,7 +314,7 @@ class Speech extends ChangeNotifier {
   AudioPlayer get player => _player ??= AudioPlayer()..setReleaseMode(ReleaseMode.stop);
 
   /// Plays a WAV file and completes when it has finished (or was stopped).
-  Future<void> playFile(String path) async {
+  Future<void> playFile(String path, {bool keep = false}) async {
     await _finishCurrent();
     final c = _playing = Completer<void>();
     _doneSub = player.onPlayerComplete.listen((_) {
@@ -272,9 +328,11 @@ class Speech extends ChangeNotifier {
         await _doneSub?.cancel();
         _doneSub = null;
       }
-      try {
-        File(path).deleteSync();
-      } catch (_) {}
+      if (!keep) {
+        try {
+          File(path).deleteSync();
+        } catch (_) {}
+      }
     }
   }
 
@@ -303,14 +361,93 @@ class Speech extends ChangeNotifier {
   Future<void> say(String text, {Voice? v, double? speed}) async {
     onSay?.call();
     final token = ++_sayToken;
-    final path = await synth(text, v: v, urgent: true, speed: speed);
+    final vo = v ?? voice;
+    final sp = speed ?? this.speed;
+    String? cached;
+    try {
+      cached = await _cached(text, vo, sp);
+    } catch (_) {
+      // a prefetch of it was cancelled (e.g. reading stopped): make it now
+      cached = await _cached(text, vo, sp);
+    }
+    if (cached != null) {
+      if (token == _sayToken) await playFile(cached, keep: true);
+      return;
+    }
+    // Long text: not kept.
+    final path = await synth(text, v: vo, urgent: true, quick: true, speed: sp);
     if (token != _sayToken) {
-      try {
-        File(path).deleteSync();
-      } catch (_) {}
+      _deleteQuietly(path);
       return;
     }
     await playFile(path);
+  }
+
+  final _making = <String, Future<String?>>{};
+
+  /// Audio file of a word or short text, made once and kept, so a second tap
+  /// plays at once. Null for long text (not kept).
+  Future<String?> _cached(String text, Voice v, double speed, {bool urgent = true}) {
+    if (text.length > 120 || !isReady(v.pack)) return Future.value(null);
+    final f = _cacheFile(text, v, speed);
+    if (f.existsSync()) return Future.value(f.path);
+    return _making.putIfAbsent(f.path, () async {
+      try {
+        final tmp = await synth(text, v: v, urgent: urgent, speed: speed);
+        f.parent.createSync(recursive: true);
+        try {
+          File(tmp).renameSync(f.path);
+        } catch (_) {
+          File(tmp).copySync(f.path);
+          _deleteQuietly(tmp);
+        }
+        return f.path;
+      } finally {
+        _making.remove(f.path);
+      }
+    });
+  }
+
+  /// Makes the audio of [text] ahead of time (e.g. when a word's panel opens),
+  /// so the speaker button answers at once.
+  void prefetch(String text, {String lang = 'en'}) {
+    final v = voiceFor(lang);
+    if (!isReady(v.pack)) return;
+    _cached(text, v, speed, urgent: false).ignore();
+  }
+
+  static void _deleteQuietly(String path) {
+    try {
+      File(path).deleteSync();
+    } catch (_) {}
+  }
+
+  File _cacheFile(String text, Voice v, double speed) {
+    final key = '${v.id}|${speed.toStringAsFixed(2)}|${v.pack.id}|$text';
+    final h = _fnv(key);
+    return File(p.join(_root.path, 'voice', 'cache', '${v.id}_$h.wav'));
+  }
+
+  static String _fnv(String s) {
+    var h = 0xcbf29ce484222325;
+    for (final c in s.codeUnits) {
+      h ^= c;
+      h = (h * 0x100000001b3) & 0x7fffffffffffffff;
+    }
+    return h.toRadixString(36);
+  }
+
+  /// Loads the voice model in the background (and runs it once) so the first
+  /// tap does not wait for it.
+  Future<void> warmUp() async {
+    for (final lang in const ['en', 'tr']) {
+      final v = voiceFor(lang);
+      if (!isReady(v.pack)) continue;
+      try {
+        // A full sentence, so the English model also measures this phone's speed.
+        _deleteQuietly(await synth(lang == 'en' ? 'Reading a little every day is the fastest way to learn new words.' : 'Merhaba.', v: v));
+      } catch (_) {}
+    }
   }
 }
 
@@ -326,16 +463,19 @@ class _Job {
 
 so.OfflineTts _createEngine(List<String> e, int threads) {
   final kind = e[0], dir = e[2];
-  final model = kind == 'kokoro'
+  final model = kind == 'supertonic'
       ? so.OfflineTtsModelConfig(
-          kokoro: so.OfflineTtsKokoroModelConfig(
-            model: '$dir/model.int8.onnx',
-            voices: '$dir/voices.bin',
-            tokens: '$dir/tokens.txt',
-            dataDir: '$dir/espeak-ng-data',
-            lexicon: '$dir/${e[3]}',
+          supertonic: so.OfflineTtsSupertonicModelConfig(
+            durationPredictor: '$dir/duration_predictor.int8.onnx',
+            textEncoder: '$dir/text_encoder.int8.onnx',
+            vectorEstimator: '$dir/vector_estimator.int8.onnx',
+            vocoder: '$dir/vocoder.int8.onnx',
+            ttsJson: '$dir/tts.json',
+            unicodeIndexer: '$dir/unicode_indexer.bin',
+            voiceStyle: '$dir/voice.bin',
           ),
           numThreads: threads,
+          debug: false,
         )
       : so.OfflineTtsModelConfig(
           vits: so.OfflineTtsVitsModelConfig(
@@ -344,8 +484,48 @@ so.OfflineTts _createEngine(List<String> e, int threads) {
             dataDir: '$dir/espeak-ng-data',
           ),
           numThreads: threads,
+          debug: false,
         );
   return so.OfflineTts(so.OfflineTtsConfig(model: model));
+}
+
+/// Extra takes allowed for a lone word that came out with a stray sound.
+const _wordRetakes = int.fromEnvironment('VOCABLOOM_WORD_RETAKES', defaultValue: 2);
+
+/// Number of separate loud stretches in a clip (a clean short word has one).
+int _bursts(Float32List x, int sr) {
+  if (sr == 0 || x.isEmpty) return 0;
+  final h = (sr * 0.03).round();
+  final e = <double>[];
+  for (var i = 0; i + h < x.length; i += h) {
+    var s = 0.0;
+    for (var j = i; j < i + h; j++) {
+      s += x[j] * x[j];
+    }
+    e.add(sqrt(s / h));
+  }
+  if (e.isEmpty) return 0;
+  final th = 0.15 * e.reduce(max);
+  // Count stretches above 15% of the peak, separated by >= 120 ms of quiet,
+  // that reach half the peak: a repeated start ("aand", "gggrow") or a stray
+  // second sound. A soft release after a final consonant is not counted.
+  final peak = e.reduce(max);
+  var n = 0, gap = 99;
+  var top = 0.0;
+  for (final v in e) {
+    if (v > th) {
+      if (gap >= 4) {
+        if (top >= 0.5 * peak) n++;
+        top = 0;
+      }
+      top = max(top, v);
+      gap = 0;
+    } else {
+      gap++;
+    }
+  }
+  if (top >= 0.5 * peak) n++;
+  return n;
 }
 
 /// Background isolate: keeps up to one English and one Turkish model loaded
@@ -363,7 +543,7 @@ void _workerMain(List args) {
     initError = e;
   }
   final engines = <String, so.OfflineTts>{};
-  String family(String key) => key.split('-').first; // 'kokoro' / 'piper'
+  String family(String key) => key.split('-').first; // 'supertonic' / 'piper'
   inbox.listen((m) {
     final l = m as List;
     final id = l[0] as int;
@@ -378,12 +558,33 @@ void _workerMain(List args) {
         }
         tts = engines[e[1]] = _createEngine(e, threads);
       }
-      final a = tts.generate(text: text, sid: sid, speed: speed);
+      final sw = Stopwatch()..start();
+      final cfg = so.OfflineTtsGenerationConfig(sid: sid, speed: speed, numSteps: int.parse(e[3]));
+      var a = tts.generateWithConfig(text: text, config: cfg);
+      if (e[0] == 'supertonic' && !text.contains(' ')) {
+        // A single word now and then comes out with a stray extra sound; the
+        // model varies each run, so up to two more takes are made and the cleanest kept.
+        var best = _bursts(a.samples, a.sampleRate);
+        for (var k = 0; k < _wordRetakes && best > 1; k++) {
+          final b = tts.generateWithConfig(text: text, config: cfg);
+          final n = _bursts(b.samples, b.sampleRate);
+          if (n < best) {
+            best = n;
+            a = b;
+          }
+        }
+      }
+      final secs = a.sampleRate == 0 ? 0.0 : a.samples.length / a.sampleRate;
+      final rtf = secs == 0 ? 0.0 : sw.elapsedMilliseconds / 1000 / secs;
       if (a.samples.isEmpty) throw Exception('no audio');
-      so.writeWave(filename: out, samples: a.samples, sampleRate: a.sampleRate);
-      reply.send([id, null, out]);
+      // A little silence first: some phones clip or repeat the first
+      // milliseconds while the audio output starts ("aand", "gggrow").
+      final lead = (a.sampleRate * 0.12).round(), tail = (a.sampleRate * 0.08).round();
+      final padded = Float32List(lead + a.samples.length + tail)..setRange(lead, lead + a.samples.length, a.samples);
+      so.writeWave(filename: out, samples: padded, sampleRate: a.sampleRate);
+      reply.send([id, null, out, rtf, secs]);
     } catch (e) {
-      reply.send([id, '$e', null]);
+      reply.send([id, '$e', null, 0.0, 0.0]);
     }
   });
 }

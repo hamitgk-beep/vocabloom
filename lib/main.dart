@@ -58,6 +58,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final a = AppState(dict, user);
       a.localAi = LlamaLocalAi(user, dir);
       Speech.instance.init(dir, user);
+      // Load the voice model early so the first tap on a speaker is quick.
+      Future.delayed(const Duration(seconds: 3), Speech.instance.warmUp);
       try {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {
