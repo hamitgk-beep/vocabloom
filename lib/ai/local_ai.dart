@@ -159,6 +159,9 @@ abstract class LocalAi extends ChangeNotifier {
   /// Whether a model is loaded in memory right now.
   bool get loaded;
 
+  /// Whether the model is being loaded into memory right now.
+  bool get loading => false;
+
   /// Streams the reply of the active package. `messages` are (role, text)
   /// with role 'user' or 'assistant'. Cancel the subscription to stop.
   Stream<String> generate(String system, List<(String, String)> messages,

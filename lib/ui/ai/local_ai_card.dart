@@ -99,8 +99,7 @@ class _LocalAiCardState extends State<LocalAiCard> {
         ]),
         const SizedBox(height: 8),
         if (text.isEmpty && running)
-          Text(L('Yapay zekâ düşünüyor… (cihazında çalışır, ilk seferde biraz sürebilir)', 'The AI is thinking… (it runs on your device; the first answer can take a while)'),
-              style: theme.textTheme.bodySmall),
+          AiWaiting(ai: widget.app.localAi),
         if (text.isNotEmpty) aiRichText(text, theme.textTheme.bodyLarge?.copyWith(height: 1.5)),
         if (error != null) Text(error!, style: TextStyle(color: cs.error)),
         if (!running && (text.isNotEmpty || error != null))
