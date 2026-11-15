@@ -59,7 +59,7 @@ jobs:
           TEACHER_MODEL: auto
           # Free-tier limits are per model and per day; when one model's day is
           # used up the script moves on to the next.
-          TEACHER_MODELS: gemini-2.5-flash,gemini-flash-latest,gemini-3-flash-preview,gemini-2.5-flash-lite
+          TEACHER_MODELS: gemini-3-flash-preview,gemini-flash-latest,gemini-2.5-flash-lite
           TEACHER_KEY: ${{ secrets.GEMINI_TEACHER_KEY }}
           TEACHER_DELAY: '7'
           PYTHONUNBUFFERED: '1'
