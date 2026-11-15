@@ -1,0 +1,43 @@
+name: tutor-inspect
+# Prints what is needed to debug a trained tutor model: the GGUF metadata
+# (chat template, special tokens) of the tuned and the base model, and the
+# important parts of the last Kaggle training log (a training example as the
+# model saw it, the losses and the sample answers).
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package id'
+        default: 'pro'
+      tuned:
+        description: 'Tuned GGUF URL'
+        default: 'https://huggingface.co/Hamit06/vocabloom-tutor/resolve/main/vocabloom-tutor-pro-q5_k_m.gguf'
+      base:
+        description: 'Base GGUF URL'
+        default: 'https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-Q5_K_M.gguf'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: GGUF metadata
+        run: |
+          for m in tuned base; do
+            url=$([ $m = tuned ] && echo "${{ github.event.inputs.tuned }}" || echo "${{ github.event.inputs.base }}")
+            curl -sSL -r 0-80000000 -o $m.gguf "$url"
+            echo "================ $m"
+            python3 tools/tutor/gguf_meta.py $m.gguf
+          done
+      - name: Last Kaggle training log
+        if: env.KAGGLE_USERNAME != ''
+        run: |
+          pip install -q "kaggle>=1.7"
+          kaggle kernels output "$KAGGLE_USERNAME/vocabloom-tutor-${{ github.event.inputs.package }}" -p out --file-pattern '.*\.log$' || \
+            kaggle kernels output "$KAGGLE_USERNAME/vocabloom-tutor-${{ github.event.inputs.package }}" -p out
+          python3 tools/tutor/kaggle_log.py out/*.log
