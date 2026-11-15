@@ -84,13 +84,34 @@ for v in sys.argv[1:] or ['fahrettin', 'fettah', 'dfki']:
         return g
     piper['piper-' + v] = mk
 try:
-    from ema_lightning import EMA
-    ema = EMA(device='cpu')
-    def ema_g(th):
-        def g(s):
-            sp = ema.say(s, seed=1, sample_rate=24000); return np.asarray(sp.audio, dtype=np.float32), sp.sample_rate
-        return g
-    engines['ema'] = ema_g
+    # EMA Lightning run stage by stage (the path an app would export), batch 1, no worker threads.
+    from huggingface_hub import hf_hub_download
+    from ema_lightning.model import load_acoustic
+    from ema_lightning.decoder import load_decoder
+    from ema_lightning.frontend import Frontend
+    from itertools import pairwise
+    R = 'canberkkkkkk/ema-lightning'
+    am = load_acoustic(hf_hub_download(R, 'ema.pt'), 'cpu'); dec = load_decoder(hf_hub_download(R, 'decoder.pt'), 'cpu')
+    fe = Frontend(am.vocab)
+    print('ema vocab', len(am.vocab), 'times', am.times, 'hop', dec.hop, flush=True)
+    @torch.no_grad()
+    def ema_say(text, seed=1, speed=1.0):
+        t = fe(text)
+        ids = torch.tensor([[am.stoi.get(c, 1) for c in t]])
+        starts = [i for i, ch in enumerate(t) if ch != ' ' and (i == 0 or t[i - 1] == ' ')] or [0]
+        bounds = [0] + starts[1:] + [len(t)]; cw, ws = [], []
+        for w, (a, b) in enumerate(pairwise(bounds)): cw += [w] * (b - a); ws += [a] * (b - a)
+        cw = torch.tensor([cw]); ws = torch.tensor([ws]); mask = ids != 0
+        h, dur = am.text_stage(ids, mask); dur = dur / speed
+        n = torch.zeros_like(dur).scatter_add_(1, cw, dur).round().clamp(1, 250).long()[0, :int(cw[0, -1]) + 1]
+        fw = torch.repeat_interleave(torch.arange(n.numel()), n)
+        fp = ((torch.arange(fw.numel()) - (n.cumsum(0) - n)[fw]).double() / n[fw].double()).float()
+        g = torch.Generator().manual_seed(seed)
+        noise = torch.randn((1, len(am.times), fw.numel(), am.latent_dim), generator=g)
+        z = am.sound_stage(h, dur, mask, cw, ws, fw[None], fp[None], torch.ones(1, fw.numel(), dtype=torch.bool), noise)
+        a = dec(z.transpose(1, 2), None)[0].numpy()
+        return a, 48000
+    engines['ema'] = lambda th: ema_say
 except Exception:
     traceback.print_exc()
 try:

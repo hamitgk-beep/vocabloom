@@ -23,7 +23,7 @@ jobs:
           find ahenk -maxdepth 4 -name "trnorm*" | head
           d=$(dirname "$(find ahenk -maxdepth 4 -type d -name trnorm | head -1)")
           echo "PYTHONPATH=$PWD/$d" >> "$GITHUB_ENV"
-      - run: mkdir -p out && OUT=out python -u tools/tts_lab/tr_lab.py 2>&1 | grep -v -E "Warning|warn\(" | tee out/log.txt
+      - run: mkdir -p out && ulimit -v 12000000 && OUT=out python -u tools/tts_lab/tr_lab.py 2>&1 | grep -v -E "Warning|warn\(" | tee out/log.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: tr-samples, path: out}
