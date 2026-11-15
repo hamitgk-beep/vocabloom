@@ -3,10 +3,11 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:sherpa_onnx/sherpa_onnx.dart' as so;
@@ -21,7 +22,7 @@ enum PackState { missing, downloading, extracting, ready, failed }
 /// Turkish) run on the device through sherpa-onnx in a background isolate;
 /// audio is played with audioplayers. Each voice pack is downloaded once
 /// (Settings > Read aloud) and then works without internet.
-class Speech extends ChangeNotifier {
+class Speech extends ChangeNotifier with WidgetsBindingObserver {
   Speech._();
   static final instance = Speech._();
 
@@ -40,6 +41,10 @@ class Speech extends ChangeNotifier {
   void init(Directory dataDir, UserDb user) {
     _root = dataDir;
     _user = user;
+    try {
+      WidgetsBinding.instance.removeObserver(this);
+      WidgetsBinding.instance.addObserver(this);
+    } catch (_) {}
     for (final pk in voicePacks) {
       _state[pk.id] = _readyMark(pk).existsSync() ? PackState.ready : PackState.missing;
     }
@@ -54,6 +59,18 @@ class Speech extends ChangeNotifier {
       final cache = Directory(p.join(_root.path, 'voice', 'cache'));
       if (cache.existsSync() && cache.listSync().length > 4000) cache.deleteSync(recursive: true);
     } catch (_) {}
+  }
+
+  /// Called when the app goes to the background (screen locked, another app
+  /// opened). Book reading sets it to pause itself; otherwise sound stops.
+  VoidCallback? onBackground;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden) {
+      final f = onBackground;
+      f != null ? f() : unawaited(stopPlayback());
+    }
   }
 
   PackState stateOf(VoicePack pk) => _state[pk.id] ?? PackState.missing;
@@ -270,7 +287,7 @@ class Speech extends ChangeNotifier {
   /// Synthesizes [text] into a WAV file and returns its path.
   /// [urgent] jobs (a tapped word) go before queued sentences. [quick] uses
   /// fewer quality steps, for a piece the listener is already waiting for.
-  Future<String> synth(String text, {Voice? v, bool urgent = false, bool quick = false, double? speed}) async {
+  Future<String> synth(String text, {Voice? v, bool urgent = false, bool quick = false, double? speed, String? tag}) async {
     final vo = v ?? voice;
     if (!isReady(vo.pack)) throw StateError('voice pack ${vo.pack.id} not downloaded');
     final id = _nextId++;
@@ -282,7 +299,7 @@ class Speech extends ChangeNotifier {
     final steps = !text.trim().contains(' ') ? min(_steps, _wordSteps) : (quick ? min(_steps, _quickSteps) : _steps);
     final engine = [vo.engine, vo.pack.id, dir, '$steps'];
     if (vo.engine == 'supertonic') _jobSteps[id] = steps;
-    final job = _Job(id, _forSpeech(text), vo.sid, speed ?? this.speed, out, engine);
+    final job = _Job(id, _forSpeech(text), vo.sid, speed ?? this.speed, out, engine, tag);
     urgent ? _queue.addFirst(job) : _queue.add(job);
     await _ensureWorker();
     _pump();
@@ -305,6 +322,14 @@ class Speech extends ChangeNotifier {
     _busy = true;
     final j = _queue.removeFirst();
     _worker!.send([j.id, j.text, j.sid, j.speed, j.out, j.engine]);
+  }
+
+  /// Moves a queued job (by [tag]) to the front: someone is waiting for it now.
+  void _promote(String tag) {
+    final j = _queue.where((j) => j.tag == tag).firstOrNull;
+    if (j == null) return;
+    _queue.remove(j);
+    _queue.addFirst(j);
   }
 
   /// Drops queued (not yet started) jobs, e.g. when reading stops.
@@ -358,6 +383,13 @@ class Speech extends ChangeNotifier {
 
   Future<void> stop() async {
     clearQueue();
+    await stopPlayback();
+  }
+
+  /// Stops what is playing now (and a word or sample still being made will
+  /// not start), but keeps the audio being prepared in the background.
+  Future<void> stopPlayback() async {
+    _sayToken++;
     if (_player != null) await _player!.stop();
     await _finishCurrent();
   }
@@ -370,6 +402,8 @@ class Speech extends ChangeNotifier {
   /// Says a word or short text right away (interrupting what is playing).
   Future<void> say(String text, {Voice? v, double? speed}) async {
     onSay?.call();
+    // The previous word or sample stops at once.
+    await stopPlayback();
     final token = ++_sayToken;
     final vo = v ?? voice;
     final sp = speed ?? this.speed;
@@ -401,9 +435,14 @@ class Speech extends ChangeNotifier {
     if (text.length > 120 || !isReady(v.pack)) return Future.value(null);
     final f = _cacheFile(text, v, speed);
     if (f.existsSync()) return Future.value(f.path);
-    return _making.putIfAbsent(f.path, () async {
+    final making = _making[f.path];
+    if (making != null) {
+      if (urgent) _promote(f.path);
+      return making;
+    }
+    return _making[f.path] = () async {
       try {
-        final tmp = await synth(text, v: v, urgent: urgent, speed: speed);
+        final tmp = await synth(text, v: v, urgent: urgent, speed: speed, tag: f.path);
         f.parent.createSync(recursive: true);
         try {
           File(tmp).renameSync(f.path);
@@ -415,13 +454,13 @@ class Speech extends ChangeNotifier {
       } finally {
         _making.remove(f.path);
       }
-    });
+    }();
   }
 
   /// Makes the audio of [text] ahead of time (e.g. when a word's panel opens),
   /// so the speaker button answers at once.
-  void prefetch(String text, {String lang = 'en'}) {
-    final v = voiceFor(lang);
+  void prefetch(String text, {String lang = 'en', Voice? voice}) {
+    final v = voice ?? voiceFor(lang);
     if (!isReady(v.pack)) return;
     _cached(text, v, speed, urgent: false).ignore();
   }
@@ -468,7 +507,8 @@ class _Job {
   final double speed;
   final String out;
   final List<String> engine;
-  _Job(this.id, this.text, this.sid, this.speed, this.out, this.engine);
+  final String? tag;
+  _Job(this.id, this.text, this.sid, this.speed, this.out, this.engine, this.tag);
 }
 
 so.OfflineTts _createEngine(List<String> e, int threads) {

@@ -31,6 +31,15 @@ class ReadAloud extends ChangeNotifier {
   int _gen = 0;
   final _pending = <int, Future<String>>{};
 
+  /// Completes when playback may go on (set while paused between pieces).
+  Completer<void>? _held;
+
+  void _release() {
+    final h = _held;
+    _held = null;
+    if (h != null && !h.isCompleted) h.complete();
+  }
+
   SpokenSentence? get current => active && _idx < _items.length ? _items[_idx] : null;
 
   /// Sentence currently read in paragraph [para], if any.
@@ -59,7 +68,13 @@ class ReadAloud extends ChangeNotifier {
     paused = false;
     _interrupted = false;
     speech.onSay = _onWordSaid;
+    speech.onBackground = _onBackground;
     _restart();
+  }
+
+  /// Screen locked or app left: pause, and go on from here on return.
+  void _onBackground() {
+    if (active && !paused) unawaited(toggle());
   }
 
   void _onWordSaid() {
@@ -94,6 +109,7 @@ class ReadAloud extends ChangeNotifier {
 
   void _restart() {
     final gen = ++_gen;
+    _release();
     notifyListeners();
     unawaited(_loop(gen));
   }
@@ -130,6 +146,14 @@ class ReadAloud extends ChangeNotifier {
         return;
       }
       _pending.remove(_idx);
+      if (paused) {
+        // Paused while this piece was being made: wait to play it.
+        await (_held ??= Completer<void>()).future;
+        if (gen != _gen) {
+          _deleteQuietly(path);
+          return;
+        }
+      }
       await speech.playFile(path);
       if (gen != _gen) return;
       _idx++;
@@ -144,6 +168,9 @@ class ReadAloud extends ChangeNotifier {
       if (_interrupted) {
         _interrupted = false;
         _restart();
+      } else if (_held != null) {
+        _release();
+        notifyListeners();
       } else {
         await speech.resume();
         notifyListeners();
@@ -172,8 +199,10 @@ class ReadAloud extends ChangeNotifier {
     active = false;
     paused = false;
     _gen++;
+    _release();
     _discard();
     if (speech.onSay == _onWordSaid) speech.onSay = null;
+    if (speech.onBackground == _onBackground) speech.onBackground = null;
     unawaited(speech.stop());
     notifyListeners();
   }

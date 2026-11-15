@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n.dart';
@@ -154,11 +156,41 @@ class _SpeakButtonState extends State<SpeakButton> {
 }
 
 /// Settings section: voice packs, voice lists with samples, speed.
-class VoiceSettings extends StatelessWidget {
+class VoiceSettings extends StatefulWidget {
   const VoiceSettings({super.key});
 
-  static const sample = 'Reading in English every day is the fastest way to learn new words. Though it can be hard at first, it gets easier.';
-  static const sampleTr = 'Her gün biraz İngilizce okumak, yeni kelimeleri öğrenmenin en hızlı yoludur.';
+  static const sample = 'Reading in English every day is the fastest way to learn new words.';
+  static const sampleTr = 'Her gün biraz okumak, yeni kelimeler öğrenmenin en hızlı yoludur.';
+
+  @override
+  State<VoiceSettings> createState() => _VoiceSettingsState();
+}
+
+class _VoiceSettingsState extends State<VoiceSettings> {
+  static const sample = VoiceSettings.sample, sampleTr = VoiceSettings.sampleTr;
+
+  @override
+  void initState() {
+    super.initState();
+    // Make every voice's sample in the background (chosen voices first), so a
+    // tap plays at once. Samples are kept, so this happens only once.
+    final s = Speech.instance;
+    s.prefetch(sample, voice: s.voice);
+    s.prefetch(sampleTr, voice: s.trVoice);
+    for (final v in voices) {
+      s.prefetch(sample, voice: v);
+    }
+    for (final v in trVoices) {
+      s.prefetch(sampleTr, voice: v);
+    }
+  }
+
+  @override
+  void dispose() {
+    // Leaving the page stops a sample that is still playing.
+    unawaited(Speech.instance.stopPlayback());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
