@@ -120,7 +120,7 @@ class _AiAskBoxState extends State<AiAskBox> {
               child: role == 'user'
                   ? Text(text, style: TextStyle(color: cs.onPrimary))
                   : text.isEmpty
-                      ? Text(L('Düşünüyor…', 'Thinking…'), style: theme.textTheme.bodySmall)
+                      ? AiWaiting(ai: widget.app.localAi)
                       : aiRichText(text, theme.textTheme.bodyMedium?.copyWith(height: 1.45)),
             ),
           ),

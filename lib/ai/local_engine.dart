@@ -223,7 +223,9 @@ class LlamaLocalAi extends LocalAi {
     if (_loading != null) return _loading!;
     _loading = () async {
       await unload();
-      final threads = (Platform.numberOfProcessors - 2).clamp(2, 6);
+      // Phones have 4 fast cores at most; more threads land on the slow
+      // ones and make every word slower.
+      final threads = (Platform.numberOfProcessors - 2).clamp(2, Platform.isAndroid || Platform.isIOS ? 4 : 6);
       final e = await LlamaEngine.load(
         LlamaModel(ModelSource.path(_file(id).path)),
         params: ModelParams(
@@ -246,10 +248,46 @@ class LlamaLocalAi extends LocalAi {
     }
   }
 
+  /// How long loading the model may take (2.9 GB from storage into memory).
+  static const loadTimeout = Duration(minutes: 3);
+
+  /// How long the model may stay silent: reading the question before the
+  /// first word, and between two words.
+  static const silenceTimeout = Duration(seconds: 90);
+
+  @override
+  bool get loading => _loading != null;
+
   @override
   Stream<String> generate(String system, List<(String, String)> messages,
       {int maxTokens = 512, double temperature = 0.3}) async* {
-    final e = await _ensure();
+    // A phone short of memory or a stuck model must not leave the learner
+    // waiting forever: give up with a clear message instead.
+    final e = await _ensure().timeout(loadTimeout,
+        onTimeout: () => throw const AiException(
+            'Yapay zekâ modeli yüklenemedi (çok uzun sürdü). Telefonu yeniden başlatıp tekrar dene.',
+            'The AI model could not be loaded (it took too long). Restart your phone and try again.'));
+    var any = false;
+    await for (final s in _generate(e, system, messages, maxTokens: maxTokens, temperature: temperature).timeout(
+      silenceTimeout,
+      onTimeout: (sink) {
+        stop();
+        sink.addError(const AiException(
+            'Yapay zekâ çok uzun süre yanıt vermedi. Telefonun belleği yetmiyor olabilir: diğer uygulamaları kapatıp tekrar dene.',
+            'The AI did not answer for too long. Your phone may be short of memory: close other apps and try again.'));
+        sink.close();
+      },
+    )) {
+      any = true;
+      yield s;
+    }
+    if (!any) {
+      throw const AiException('Yapay zekâ bu kez boş bir yanıt verdi. Tekrar dene.', 'The AI gave an empty answer this time. Try again.');
+    }
+  }
+
+  Stream<String> _generate(LlamaEngine e, String system, List<(String, String)> messages,
+      {int maxTokens = 512, double temperature = 0.3}) async* {
     final pk = _pkg(_loadedId!);
     final msgs = [
       LlamaChatMessage.fromText(role: LlamaChatRole.system, text: system),
