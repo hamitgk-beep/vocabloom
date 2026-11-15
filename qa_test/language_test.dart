@@ -332,10 +332,9 @@ Future<void> allScreens(WidgetTester tester) async {
   app.user.setSetting('ai_tab', '1');
   await tester.pumpWidget(shell(HomePage(app: app)));
   await capture(tester, 'tab_library');
-  final dests = find.byType(NavigationDestination);
   final names = ['library', 'my_words', 'dictionary', 'grammar', 'ai', 'settings'];
-  for (var i = 1; i < dests.evaluate().length && i < names.length; i++) {
-    await tester.tap(find.byType(NavigationDestination).at(i));
+  for (var i = 1; i < names.length && find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty; i++) {
+    await tester.tap(find.byKey(ValueKey('nav_$i')));
     await capture(tester, 'tab_${names[i]}');
   }
 
