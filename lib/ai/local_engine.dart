@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:llamadart/llamadart.dart';
@@ -229,7 +230,9 @@ class LlamaLocalAi extends LocalAi {
       final e = await LlamaEngine.load(
         LlamaModel(ModelSource.path(_file(id).path)),
         params: ModelParams(
-          contextSize: pk.contextSize,
+          // Phones: a smaller context keeps the memory for the model itself
+          // (each 1000 tokens costs about 150 MB with the 4B model).
+          contextSize: Platform.isAndroid || Platform.isIOS ? min(pk.contextSize, 4096) : pk.contextSize,
           // Android GPU support in llama.cpp is still experimental: CPU there.
           device: Platform.isAndroid ? ComputeDevice.cpu : ComputeDevice.auto,
           numberOfThreads: threads,
