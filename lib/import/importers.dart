@@ -353,37 +353,127 @@ ImportedBook _importFb2(String xml, String fallbackTitle) {
       : _clean([first(authorEl, 'first-name')?.innerText, first(authorEl, 'last-name')?.innerText].whereType<String>().join(' '));
   final chapters = <ImportedChapter>[];
   final body = first(doc, 'body');
+  // Sections can hold sections (parts with chapters): every section with its own
+  // text becomes a chapter; the titles of the parts above it go first.
+  final pending = <(String, String)>[];
+  bool isSection(XmlElement e) => e.name.local == 'section';
+  void visit(XmlElement s) {
+    final t = s.childElements.where((e) => e.name.local == 'title').firstOrNull;
+    final title = t == null ? '' : _clean(t.innerText);
+    final paras = <(String, String)>[...pending];
+    pending.clear();
+    if (title.isNotEmpty) paras.add(('h', title));
+    final subs = s.childElements.where(isSection).toList();
+    for (final e in s.descendants.whereType<XmlElement>().where((e) => e.name.local == 'p' || e.name.local == 'v' || e.name.local == 'subtitle')) {
+      final up = e.ancestors.whereType<XmlElement>().takeWhile((a) => a != s);
+      if (up.any((a) => a.name.local == 'title' || isSection(a))) continue;
+      final x = _clean(e.innerText);
+      if (x.isNotEmpty) paras.add((e.name.local == 'subtitle' ? 'h' : 'p', x));
+    }
+    if (paras.any((p) => p.$1 == 'p') || subs.isEmpty) {
+      if (paras.isNotEmpty) chapters.add(ImportedChapter(title, paras));
+    } else {
+      pending.addAll(paras);
+    }
+    subs.forEach(visit);
+  }
+
   if (body != null) {
-    final sections = body.childElements.where((e) => e.name.local == 'section').toList();
-    for (final s in sections.isEmpty ? [body] : sections) {
-      final t = s.childElements.where((e) => e.name.local == 'title').firstOrNull;
-      final paras = <(String, String)>[];
-      if (t != null) paras.add(('h', _clean(t.innerText)));
-      for (final e in s.descendants.whereType<XmlElement>().where((e) => e.name.local == 'p' || e.name.local == 'v')) {
-        if (e.ancestors.whereType<XmlElement>().any((a) => a.name.local == 'title')) continue;
-        final x = _clean(e.innerText);
-        if (x.isNotEmpty) paras.add(('p', x));
-      }
-      chapters.add(ImportedChapter(t == null ? '' : _clean(t.innerText), paras));
+    final sections = body.childElements.where(isSection).toList();
+    if (sections.isEmpty) {
+      visit(body);
+    } else {
+      sections.forEach(visit);
     }
   }
   return _chunk(ImportedBook(title?.isNotEmpty == true ? title! : fallbackTitle, author, 'fb2', chapters));
 }
 
+/// Plain text of an RTF document: paragraphs separated by blank lines, the
+/// font, colour and style tables, pictures, headers, footers and other
+/// hidden groups left out.
 String _rtfToText(String rtf) {
-  var s = rtf;
-  // drop destination groups like {\*\generator ...}, font and color tables
-  s = s.replaceAll(RegExp(r'\{\\\*[^{}]*\}'), '');
-  s = s.replaceAll(RegExp(r'\{\\(fonttbl|colortbl|stylesheet|info)[\s\S]*?\}\s*\}'), '');
-  s = s.replaceAllMapped(RegExp(r"\\'([0-9a-fA-F]{2})"), (m) => String.fromCharCode(int.parse(m.group(1)!, radix: 16)));
-  s = s.replaceAllMapped(RegExp(r'\\u(-?\d+)\??'), (m) {
-    var c = int.parse(m.group(1)!);
-    if (c < 0) c += 65536;
-    return String.fromCharCode(c);
-  });
-  s = s.replaceAll(RegExp(r'\\(par|line)\b ?'), '\n\n');
-  s = s.replaceAll(RegExp(r'\\[a-zA-Z]+-?\d* ?'), '');
-  s = s.replaceAll(RegExp(r'[{}]'), '');
-  return s;
+  const hidden = {
+    'fonttbl', 'colortbl', 'stylesheet', 'info', 'pict', 'header', 'headerl', 'headerr', 'headerf', 'footer',
+    'footerl', 'footerr', 'footerf', 'listtable', 'listoverridetable', 'rsidtbl', 'generator', 'xmlnstbl',
+    'themedata', 'colorschememapping', 'latentstyles', 'datastore', 'object', 'fldinst', 'filetbl', 'revtbl',
+  };
+  final out = StringBuffer();
+  // For every open group: whether its text is hidden.
+  final stack = <bool>[false];
+  var i = 0;
+  var uc = 1; // characters to skip after \uN
+  var skip = 0;
+  while (i < rtf.length) {
+    final c = rtf[i];
+    if (c == '{') {
+      stack.add(stack.last);
+      i++;
+      // {\*\dest ...} and known destinations are hidden.
+      final m = RegExp(r'\\(\*\\)?([a-zA-Z]+)').matchAsPrefix(rtf, i);
+      if (m != null && (m.group(1) != null || hidden.contains(m.group(2)))) stack[stack.length - 1] = true;
+      continue;
+    }
+    if (c == '}') {
+      if (stack.length > 1) stack.removeLast();
+      i++;
+      continue;
+    }
+    if (c == '\\') {
+      final m = RegExp(r"\\([a-zA-Z]+)(-?\d+)? ?|\\'([0-9a-fA-F]{2})|\\([^a-zA-Z])").matchAsPrefix(rtf, i);
+      if (m == null) {
+        i++;
+        continue;
+      }
+      i = m.end;
+      String? emit;
+      if (m.group(3) != null) {
+        emit = String.fromCharCode(int.parse(m.group(3)!, radix: 16));
+      } else if (m.group(4) != null) {
+        final sym = m.group(4)!;
+        emit = sym == '~' ? ' ' : (sym == '\\' || sym == '{' || sym == '}') ? sym : sym == '\n' || sym == '\r' ? '\n\n' : null;
+      } else {
+        final word = m.group(1)!;
+        final arg = m.group(2) == null ? null : int.parse(m.group(2)!);
+        switch (word) {
+          case 'par' || 'sect' || 'page':
+            emit = '\n\n';
+          case 'line' || 'tab':
+            emit = ' ';
+          case 'uc':
+            uc = arg ?? 1;
+          case 'u':
+            var code = arg ?? 0;
+            if (code < 0) code += 65536;
+            emit = String.fromCharCode(code);
+            skip = uc;
+          case 'emdash':
+            emit = '—';
+          case 'endash':
+            emit = '–';
+          case 'lquote':
+            emit = '‘';
+          case 'rquote':
+            emit = '’';
+          case 'ldblquote':
+            emit = '“';
+          case 'rdblquote':
+            emit = '”';
+          case 'bullet':
+            emit = '•';
+        }
+      }
+      if (emit != null && !stack.last) out.write(emit);
+      continue;
+    }
+    i++;
+    if (c == '\n' || c == '\r') continue;
+    if (skip > 0) {
+      skip--;
+      continue;
+    }
+    if (!stack.last) out.write(c);
+  }
+  return out.toString();
 }
 

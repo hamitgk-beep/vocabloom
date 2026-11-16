@@ -99,10 +99,14 @@ class _ParagraphViewState extends State<ParagraphView> {
     final a = analyze(app, text);
     final theme = Theme.of(context);
     final heading = widget.para.kind == 'h';
+    // A picture caption from a PDF: shown apart from the story text.
+    final caption = widget.para.kind == 'c';
     final base = theme.textTheme.bodyLarge!.copyWith(
-      fontSize: heading ? app.fontSize * 1.3 : app.fontSize,
+      fontSize: heading ? app.fontSize * 1.3 : caption ? app.fontSize * 0.88 : app.fontSize,
       height: app.lineHeight,
       fontWeight: heading ? FontWeight.w700 : FontWeight.w400,
+      fontStyle: caption ? FontStyle.italic : null,
+      color: caption ? theme.colorScheme.onSurfaceVariant : null,
       fontFamily: readingFont,
     );
 
