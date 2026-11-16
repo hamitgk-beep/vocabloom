@@ -48,7 +48,7 @@ void main() {
     final app = Directory(p.join(root.path, 'Kitaplar Gök'))..createSync();
     File(p.join(app.path, 'old.txt')).writeAsStringSync('old');
     File(p.join(app.path, 'keep.txt')).writeAsStringSync('keep');
-    final work = Directory(p.join(root.path, 'work'))..createSync();
+    final work = Directory(p.join(root.path, 'İndirilen ğüş'))..createSync();
     final fresh = Directory(p.join(work.path, 'new'))..createSync();
     Directory(p.join(fresh.path, 'data')).createSync();
     File(p.join(fresh.path, 'old.txt')).writeAsStringSync('new');
@@ -58,12 +58,14 @@ void main() {
     File(p.join(fresh.path, 'run.cmd')).writeAsStringSync('@echo started> "$marker"\r\n@exit\r\n');
     // Stands in for the running app: lives about 3 seconds.
     final fake = await Process.start('ping', ['-n', '4', '127.0.0.1']);
-    final script = File(p.join(work.path, 'install.cmd'))
-      ..writeAsStringSync(WindowsUpdater.installScript(newFiles: fresh.path, appDir: app.path, exe: exe, pid: fake.pid, cleanup: work.path));
-    // Started detached, as the app does: the restarted program keeps the
-    // console, so waiting on the script's output pipes would never end.
+    final script = File(p.join(work.path, 'install.cmd'))..writeAsStringSync(WindowsUpdater.installScript(fake.pid));
     final sw = Stopwatch()..start();
-    await Process.start('cmd', ['/c', script.path], mode: ProcessStartMode.detached);
+    await Process.start(
+      'cmd',
+      ['/c', script.path],
+      mode: ProcessStartMode.detached,
+      environment: WindowsUpdater.installEnv(newFiles: fresh.path, appDir: app.path, exe: exe, cleanup: work.path),
+    );
     for (var i = 0; i < 120 && (!File(marker).existsSync() || work.existsSync()); i++) {
       await Future<void>.delayed(const Duration(milliseconds: 250));
     }

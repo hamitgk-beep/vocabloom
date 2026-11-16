@@ -41,26 +41,40 @@ class WindowsUpdater {
     final appDir = File(Platform.resolvedExecutable).parent.path;
     final exe = p.join(appDir, p.basename(Platform.resolvedExecutable));
     final script = File(p.join(newFiles.parent.path, 'install.cmd'));
-    await script.writeAsString(installScript(newFiles: newFiles.path, appDir: appDir, exe: exe, pid: pid, cleanup: newFiles.parent.path));
-    await Process.start('cmd', ['/c', script.path], mode: ProcessStartMode.detached, runInShell: false);
+    await script.writeAsString(installScript(pid));
+    await Process.start(
+      'cmd',
+      ['/c', script.path],
+      mode: ProcessStartMode.detached,
+      environment: installEnv(newFiles: newFiles.path, appDir: appDir, exe: exe, cleanup: newFiles.parent.path),
+    );
     exit(0);
   }
 
-  /// The batch file that waits for process [pid] to end, copies [newFiles]
-  /// over [appDir], starts [exe] and removes [cleanup].
-  static String installScript({required String newFiles, required String appDir, required String exe, required int pid, required String cleanup}) => [
-        '@echo off',
-        'chcp 65001 >nul',
-        'set LOG="%TEMP%\\vocabloom-update.log"',
-        'echo %DATE% %TIME% waiting for $pid > %LOG%',
-        // Wait until the app has exited so its files can be replaced.
-        // (tasklist and timeout.exe hang or refuse to run without a console.)
-        'powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "Wait-Process -Id $pid -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 700" >> %LOG% 2>&1',
-        'echo %TIME% copying>> %LOG%',
-        'robocopy "$newFiles" "$appDir" /E /IS /IT /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
-        'echo %TIME% robocopy %ERRORLEVEL%, starting>> %LOG%',
-        'start "" "$exe"',
-        'rmdir /S /Q "$cleanup" >nul 2>&1',
-        '',
-      ].join('\r\n');
+  /// Paths go to the script as environment variables, which keep every
+  /// character: written into the batch file, a folder like "Hamit Gök" was
+  /// read in the console code page and the files went to a wrong folder.
+  static Map<String, String> installEnv({required String newFiles, required String appDir, required String exe, required String cleanup}) => {
+    'VB_NEW': newFiles,
+    'VB_APP': appDir,
+    'VB_EXE': exe,
+    'VB_CLEAN': cleanup,
+  };
+
+  /// The batch file (ASCII only) that waits for process [pid] to end, copies
+  /// %VB_NEW% over %VB_APP%, starts %VB_EXE% and removes %VB_CLEAN%.
+  static String installScript(int pid) => [
+    '@echo off',
+    'set LOG="%TEMP%\\vocabloom-update.log"',
+    'echo %DATE% %TIME% waiting for $pid > %LOG%',
+    // Wait until the app has exited so its files can be replaced.
+    // (tasklist and timeout.exe hang or refuse to run without a console.)
+    'powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "Wait-Process -Id $pid -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 700" >> %LOG% 2>&1',
+    'echo %TIME% copying>> %LOG%',
+    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
+    'echo %TIME% robocopy %ERRORLEVEL%, starting>> %LOG%',
+    'start "" "%VB_EXE%"',
+    'rmdir /S /Q "%VB_CLEAN%" >nul 2>&1',
+    '',
+  ].join('\r\n');
 }
