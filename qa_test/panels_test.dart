@@ -24,6 +24,7 @@ import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
+import 'package:kelime_okur/ui/dictionary_page.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
 import 'package:kelime_okur/ui/other_pages.dart';
 import 'package:kelime_okur/ui/settings_page.dart';
@@ -426,7 +427,7 @@ void main() {
         final dev = size == phone ? 'phone' : 'desktop';
         await setSize(tester, size);
         final pages = <String, Widget>{
-          'dictionary': CategoriesPage(app: app),
+          'dictionary': DictionaryPage(app: app),
           'my_words': WordsPage(app: app),
           'settings': SettingsPage(app: app),
           'settings_voice': const VoiceSettingsPage(),

@@ -6155,6 +6155,336 @@
    ]
   },
   {
+   "id": "conjunction_types",
+   "category": "conjunctions",
+   "level": "A2",
+   "title_tr": "Bağlaç türleri: and, but, or, so ve ikili bağlaçlar",
+   "title_en": "Conjunctions: Types and Pairs",
+   "explanation": "**Bağlaç nedir?** Kelimeleri, öbekleri ya da cümleleri birbirine bağlayan sözcüklerdir. Üç türü vardır.\n- **Eşit bağlayanlar (coordinating):** and (ve), but (ama), or (veya), so (bu yüzden), yet (yine de), nor (ne de). İki eşit parçayı bağlar: I was tired, **so** I went to bed. İki tam cümleyi bağlarken önüne genellikle virgül konur.\n- **Yan cümle bağlaçları (subordinating):** because, although, when, while, if, unless, until, before, after, since, as soon as. Bir yan cümleyi ana cümleye bağlar; yan cümle başta gelirse arkasına virgül konur: **Although** it was late, we kept working. Bunların Gramer'de ayrı konuları var: because / so, although / despite, unless, when / while, zaman bağlaçları.\n- **İkili bağlaçlar (correlative):** both … and (hem … hem de), either … or (ya … ya da), neither … nor (ne … ne de), not only … but also (yalnızca … değil, aynı zamanda), whether … or (… olsun ya da olmasın).\n- **neither … nor** zaten olumsuzdur, yanına not gelmez: I like **neither** tea **nor** coffee (I don't like neither değil).\n- **either … or / neither … nor** ile fiil yakındaki özneye uyar: Either my brothers or my **sister is** coming.\n- Okurken Filtreler'den **Conjunctions**'ı açarsan kitaptaki bütün bağlaçlar renkli altı çizili görünür.",
+   "structure": [
+    "Cümle, + and / but / or / so + cümle",
+    "both A and B · either A or B · neither A nor B",
+    "not only A but also B"
+   ],
+   "examples": [
+    [
+     "I wanted to go out, but it was raining.",
+     "Dışarı çıkmak istedim ama yağmur yağıyordu."
+    ],
+    [
+     "She speaks both English and French.",
+     "Hem İngilizce hem Fransızca konuşuyor."
+    ],
+    [
+     "We can either take the bus or walk.",
+     "Ya otobüse bineriz ya da yürürüz."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "conjunction_types-1",
+     "tr": "Yorgundum, bu yüzden erken yattım.",
+     "answers": [
+      "I was tired, so I went to bed early.",
+      "I was tired so I went to bed early."
+     ],
+     "note": "so: bu yüzden (sonuç)."
+    },
+    {
+     "id": "conjunction_types-2",
+     "tr": "Gelmek istedim ama vaktim yoktu.",
+     "answers": [
+      "I wanted to come, but I didn't have time.",
+      "I wanted to come but I didn't have time.",
+      "I wanted to come, but I had no time.",
+      "I wanted to come but I had no time."
+     ],
+     "note": "but: ama (karşıtlık)."
+    },
+    {
+     "id": "conjunction_types-3",
+     "tr": "Çay mı kahve mi istersin?",
+     "answers": [
+      "Would you like tea or coffee?",
+      "Do you want tea or coffee?"
+     ],
+     "note": "or: seçenek."
+    },
+    {
+     "id": "conjunction_types-4",
+     "tr": "Hem İngilizce hem Almanca konuşuyor.",
+     "answers": [
+      "She speaks both English and German.",
+      "He speaks both English and German."
+     ],
+     "note": "both … and: hem … hem de."
+    },
+    {
+     "id": "conjunction_types-5",
+     "tr": "Ya bugün ya da yarın arayacağım.",
+     "answers": [
+      "I will call either today or tomorrow.",
+      "I'll call either today or tomorrow.",
+      "I will call you either today or tomorrow.",
+      "I'll call you either today or tomorrow.",
+      "I will phone either today or tomorrow.",
+      "I'll phone either today or tomorrow."
+     ],
+     "note": "either … or: ya … ya da."
+    },
+    {
+     "id": "conjunction_types-6",
+     "tr": "Ne çay ne kahve içerim.",
+     "answers": [
+      "I drink neither tea nor coffee."
+     ],
+     "note": "neither … nor zaten olumsuzdur, not eklenmez."
+    },
+    {
+     "id": "conjunction_types-7",
+     "tr": "O yalnızca zeki değil, aynı zamanda çok çalışkan.",
+     "answers": [
+      "She is not only clever but also very hardworking.",
+      "He is not only clever but also very hardworking.",
+      "She's not only clever but also very hardworking.",
+      "He's not only clever but also very hardworking.",
+      "She is not only smart but also very hardworking.",
+      "He is not only smart but also very hardworking.",
+      "She is not only intelligent but also very hardworking.",
+      "He is not only intelligent but also very hardworking."
+     ],
+     "note": "not only … but also: yalnızca … değil, aynı zamanda."
+    },
+    {
+     "id": "conjunction_types-8",
+     "tr": "Ne annem ne babam evdeydi.",
+     "answers": [
+      "Neither my mother nor my father was at home.",
+      "Neither my mother nor my father was home.",
+      "Neither my mum nor my dad was at home.",
+      "Neither my mom nor my dad was at home."
+     ],
+     "note": "neither … nor: fiil yakındaki özneye uyar (father → was)."
+    },
+    {
+     "id": "conjunction_types-9",
+     "tr": "Ya şimdi gidersin ya da burada kalırsın.",
+     "answers": [
+      "Either you go now or you stay here.",
+      "You either go now or stay here.",
+      "You can either go now or stay here.",
+      "Either you leave now or you stay here."
+     ],
+     "note": "either … or iki cümleyi de bağlayabilir."
+    },
+    {
+     "id": "conjunction_types-10",
+     "tr": "Çok çalıştı, yine de sınavı geçemedi.",
+     "answers": [
+      "He studied hard, yet he didn't pass the exam.",
+      "She studied hard, yet she didn't pass the exam.",
+      "He studied hard, but he didn't pass the exam.",
+      "She studied hard, but she didn't pass the exam.",
+      "He studied hard, yet he failed the exam.",
+      "She studied hard, yet she failed the exam."
+     ],
+     "note": "yet: yine de (but gibi, biraz daha güçlü)."
+    },
+    {
+     "id": "conjunction_types-11",
+     "tr": "Hem kardeşim hem ben futbolu severiz.",
+     "answers": [
+      "Both my brother and I like football.",
+      "Both my sister and I like football.",
+      "Both my brother and I love football.",
+      "Both my sister and I love football."
+     ],
+     "note": "both A and B özne olunca fiil çoğuldur."
+    },
+    {
+     "id": "conjunction_types-12",
+     "tr": "Sıcaktı, bu yüzden pencereyi açtık.",
+     "answers": [
+      "It was hot, so we opened the window.",
+      "It was hot so we opened the window."
+     ],
+     "note": "so: bu yüzden."
+    },
+    {
+     "id": "conjunction_types-13",
+     "tr": "Ne aradı ne de mesaj attı.",
+     "answers": [
+      "He neither called nor texted.",
+      "She neither called nor texted.",
+      "He neither called nor sent a message.",
+      "She neither called nor sent a message.",
+      "He neither phoned nor texted.",
+      "She neither phoned nor texted."
+     ],
+     "note": "neither … nor iki fiili de bağlayabilir."
+    },
+    {
+     "id": "conjunction_types-14",
+     "tr": "Ekmek, peynir ve süt aldım.",
+     "answers": [
+      "I bought bread, cheese and milk.",
+      "I bought bread, cheese, and milk."
+     ],
+     "note": "Listede and yalnızca son öğeden önce gelir."
+    },
+    {
+     "id": "conjunction_types-15",
+     "tr": "Kitabı yalnızca okumadı, filmini de izledi.",
+     "answers": [
+      "She not only read the book but also watched the film.",
+      "He not only read the book but also watched the film.",
+      "She not only read the book but also watched the movie.",
+      "He not only read the book but also watched the movie.",
+      "Not only did she read the book, but she also watched the film.",
+      "Not only did he read the book, but he also watched the film."
+     ],
+     "note": "Not only cümle başına gelirse devrik yapı kullanılır: Not only did she …"
+    },
+    {
+     "id": "conjunction_types-16",
+     "tr": "Gelip gelmeyeceğini bilmiyorum.",
+     "answers": [
+      "I don't know whether he will come or not.",
+      "I don't know whether she will come or not.",
+      "I don't know if he will come or not.",
+      "I don't know if she will come or not.",
+      "I don't know whether he'll come or not.",
+      "I don't know whether she'll come or not.",
+      "I don't know whether he will come.",
+      "I don't know whether she will come."
+     ],
+     "note": "whether … or not: … olup olmadığını."
+    },
+    {
+     "id": "conjunction_types-b1",
+     "gap": "I like apples ___ oranges.",
+     "tr": "Elmayı ve portakalı severim.",
+     "answers": [
+      "and"
+     ],
+     "note": "and: ve."
+    },
+    {
+     "id": "conjunction_types-b2",
+     "gap": "It was cold, ___ I wore a coat.",
+     "tr": "Soğuktu, bu yüzden mont giydim.",
+     "answers": [
+      "so"
+     ],
+     "note": "so: bu yüzden."
+    },
+    {
+     "id": "conjunction_types-b3",
+     "gap": "She is rich, ___ she isn't happy.",
+     "tr": "Zengin ama mutlu değil.",
+     "answers": [
+      "but",
+      "yet"
+     ],
+     "note": "but / yet: karşıtlık."
+    },
+    {
+     "id": "conjunction_types-b4",
+     "gap": "Do you want to stay ___ go?",
+     "tr": "Kalmak mı istersin gitmek mi?",
+     "answers": [
+      "or"
+     ],
+     "note": "or: seçenek."
+    },
+    {
+     "id": "conjunction_types-b5",
+     "gap": "___ my sister and my brother are doctors.",
+     "tr": "Hem kız kardeşim hem erkek kardeşim doktor.",
+     "answers": [
+      "Both"
+     ],
+     "note": "both … and."
+    },
+    {
+     "id": "conjunction_types-b6",
+     "gap": "We can ___ walk or take a taxi.",
+     "tr": "Ya yürürüz ya da taksiye bineriz.",
+     "answers": [
+      "either"
+     ],
+     "note": "either … or."
+    },
+    {
+     "id": "conjunction_types-b7",
+     "gap": "He speaks neither French ___ Spanish.",
+     "tr": "Ne Fransızca ne İspanyolca konuşuyor.",
+     "answers": [
+      "nor"
+     ],
+     "note": "neither … nor (or değil)."
+    },
+    {
+     "id": "conjunction_types-b8",
+     "gap": "She is not only a singer ___ also an actress.",
+     "tr": "Yalnızca şarkıcı değil, aynı zamanda oyuncu.",
+     "answers": [
+      "but"
+     ],
+     "note": "not only … but also."
+    },
+    {
+     "id": "conjunction_types-b9",
+     "gap": "___ Tom nor Anna came to the party.",
+     "tr": "Partiye ne Tom geldi ne Anna.",
+     "answers": [
+      "Neither"
+     ],
+     "note": "neither … nor."
+    },
+    {
+     "id": "conjunction_types-b10",
+     "gap": "You can have either tea ___ coffee.",
+     "tr": "Ya çay ya kahve alabilirsin.",
+     "answers": [
+      "or"
+     ],
+     "note": "either … or."
+    },
+    {
+     "id": "conjunction_types-b11",
+     "gap": "He was hungry, ___ he made a sandwich.",
+     "tr": "Acıkmıştı, bu yüzden bir sandviç yaptı.",
+     "answers": [
+      "so"
+     ],
+     "note": "so: sonuç."
+    },
+    {
+     "id": "conjunction_types-b12",
+     "gap": "I don't know ___ he will come or not.",
+     "tr": "Gelip gelmeyeceğini bilmiyorum.",
+     "answers": [
+      "whether",
+      "if"
+     ],
+     "note": "whether … or not."
+    }
+   ],
+   "aliases": [
+    "conjunction types",
+    "coordinating conjunctions",
+    "correlative conjunctions",
+    "bağlaç türleri",
+    "ikili bağlaçlar",
+    "both and",
+    "either or",
+    "neither nor",
+    "not only but also"
+   ],
+   "dict_category": "conjunctions"
+  },
+  {
    "id": "because_so",
    "category": "conjunctions",
    "level": "A2",
@@ -7668,6 +7998,344 @@
     "geçiş kelimeleri",
     "bağlayıcılar"
    ]
+  },
+  {
+   "id": "discourse_markers",
+   "category": "conjunctions",
+   "level": "B1",
+   "title_tr": "Söylem belirleyiciler ve dolgu sözcükleri (well, anyway, by the way)",
+   "title_en": "Discourse Markers and Fillers",
+   "explanation": "**Söylem belirleyici nedir?** Cümlenin anlamına bir şey eklemeyen ama konuşmayı ve metni yönlendiren sözcüklerdir: konu değiştirir, düşünmek için zaman kazandırır, düzeltir ya da karşı fikir getirir. Türkçedeki \"yani\", \"neyse\", \"bu arada\", \"aslında\" gibi.\n- **Konu değiştirme:** by the way (bu arada), anyway (neyse, her neyse), speaking of … (… demişken).\n- **Düşünme ve yumuşatma (dolgu):** well (şey, eee), you know (bilirsin işte), I mean (yani, demek istediğim), let me see (bir bakayım), kind of / sort of (biraz, bir bakıma).\n- **Düzeltme ve açıklama:** actually (aslında), in other words (başka bir deyişle), I mean (yani).\n- **Ekleme ve karşıtlık:** besides (üstelik), what's more (dahası), on the other hand (öte yandan).\n- **Sıralama ve sonuç:** first of all (her şeyden önce), then (sonra), finally (son olarak), after all (ne de olsa).\n- **Görüş:** to be honest (açıkçası), in my opinion (bence).\n- Genellikle cümle başında gelir ve arkasından virgül konur: **By the way**, did you call Mum? **Well**, I'm not sure.\n- Konuşmada well, you know, I mean çok sık geçer; yazıda however, in addition, therefore gibi daha resmî olanlar tercih edilir (Gramer'deki **Geçiş sözcükleri** konusuna bak).\n- Okurken Filtreler'den **Discourse Markers / Fillers**'ı açarsan kitapta bunlar renkli altı çizili görünür.",
+   "structure": [
+    "Belirleyici + virgül + cümle: By the way, …",
+    "Cümle. + Belirleyici, cümle: It was expensive. Anyway, …"
+   ],
+   "examples": [
+    [
+     "By the way, have you seen my keys?",
+     "Bu arada, anahtarlarımı gördün mü?"
+    ],
+    [
+     "Well, I'm not really sure.",
+     "Şey, pek emin değilim."
+    ],
+    [
+     "It was a long day. Anyway, I'm home now.",
+     "Uzun bir gündü. Neyse, artık evdeyim."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "discourse_markers-1",
+     "tr": "Bu arada, yarın toplantı var.",
+     "answers": [
+      "By the way, there is a meeting tomorrow.",
+      "By the way, there's a meeting tomorrow.",
+      "By the way there is a meeting tomorrow.",
+      "By the way there's a meeting tomorrow."
+     ],
+     "note": "by the way: bu arada (konu değiştirir)."
+    },
+    {
+     "id": "discourse_markers-2",
+     "tr": "Neyse, artık gitmem lazım.",
+     "answers": [
+      "Anyway, I have to go now.",
+      "Anyway, I need to go now.",
+      "Anyway, I must go now.",
+      "Anyway, I've got to go now."
+     ],
+     "note": "anyway: neyse (konuyu kapatır)."
+    },
+    {
+     "id": "discourse_markers-3",
+     "tr": "Şey, pek emin değilim.",
+     "answers": [
+      "Well, I'm not really sure.",
+      "Well, I am not really sure.",
+      "Well, I'm not very sure.",
+      "Well, I'm not quite sure.",
+      "Well, I'm not sure.",
+      "Well, I am not sure."
+     ],
+     "note": "well: düşünürken ya da tereddüt ederken."
+    },
+    {
+     "id": "discourse_markers-4",
+     "tr": "Aslında ben de gelmek istemiyorum.",
+     "answers": [
+      "Actually, I don't want to come either.",
+      "Actually, I do not want to come either.",
+      "Actually I don't want to come either.",
+      "Actually, I don't want to go either."
+     ],
+     "note": "actually: aslında. Olumsuzda \"de\" = either."
+    },
+    {
+     "id": "discourse_markers-5",
+     "tr": "Film güzeldi… yani, fena değildi.",
+     "answers": [
+      "The film was good... I mean, it wasn't bad.",
+      "The film was good, I mean, it wasn't bad.",
+      "The movie was good... I mean, it wasn't bad.",
+      "The movie was good, I mean, it wasn't bad.",
+      "The film was good... I mean, it was not bad.",
+      "The movie was good... I mean, it was not bad."
+     ],
+     "note": "I mean: yani (kendini düzeltir)."
+    },
+    {
+     "id": "discourse_markers-6",
+     "tr": "Öte yandan bu iş çok iyi para veriyor.",
+     "answers": [
+      "On the other hand, this job pays very well.",
+      "On the other hand this job pays very well.",
+      "On the other hand, this job pays really well."
+     ],
+     "note": "on the other hand: öte yandan."
+    },
+    {
+     "id": "discourse_markers-7",
+     "tr": "Her şeyden önce, geldiğiniz için teşekkürler.",
+     "answers": [
+      "First of all, thank you for coming.",
+      "First of all, thanks for coming.",
+      "First of all thank you for coming.",
+      "First of all thanks for coming."
+     ],
+     "note": "first of all: her şeyden önce."
+    },
+    {
+     "id": "discourse_markers-8",
+     "tr": "Açıkçası bu fikri sevmedim.",
+     "answers": [
+      "To be honest, I don't like this idea.",
+      "To be honest, I didn't like this idea.",
+      "To be honest, I don't like the idea.",
+      "To be honest, I didn't like the idea.",
+      "Honestly, I don't like this idea.",
+      "Honestly, I didn't like this idea."
+     ],
+     "note": "to be honest: açıkçası."
+    },
+    {
+     "id": "discourse_markers-9",
+     "tr": "Bence haklısın.",
+     "answers": [
+      "In my opinion, you are right.",
+      "In my opinion, you're right.",
+      "In my opinion you are right.",
+      "In my opinion you're right.",
+      "I think you are right.",
+      "I think you're right."
+     ],
+     "note": "in my opinion: bence."
+    },
+    {
+     "id": "discourse_markers-10",
+     "tr": "Ona kızma; ne de olsa o daha çocuk.",
+     "answers": [
+      "Don't be angry with him; after all, he's only a child.",
+      "Don't be angry with him; after all, he is only a child.",
+      "Don't be angry with him. After all, he's only a child.",
+      "Don't be angry with her; after all, she's only a child.",
+      "Don't be angry with her. After all, she's only a child.",
+      "Don't be angry with him; after all, he's just a child.",
+      "Don't get angry with him; after all, he's just a child."
+     ],
+     "note": "after all: ne de olsa (bir gerekçe hatırlatır)."
+    },
+    {
+     "id": "discourse_markers-11",
+     "tr": "Bu araba çok pahalı. Üstelik çok yakıt yakıyor.",
+     "answers": [
+      "This car is very expensive. Besides, it uses a lot of fuel.",
+      "This car is very expensive. Besides, it uses a lot of petrol.",
+      "This car is very expensive. Besides, it uses a lot of gas.",
+      "This car is very expensive. What's more, it uses a lot of fuel.",
+      "This car is very expensive. Besides, it consumes a lot of fuel."
+     ],
+     "note": "besides / what's more: üstelik, dahası."
+    },
+    {
+     "id": "discourse_markers-12",
+     "tr": "Başka bir deyişle işi kaybettin.",
+     "answers": [
+      "In other words, you lost the job.",
+      "In other words, you have lost the job.",
+      "In other words, you've lost the job.",
+      "In other words you lost the job."
+     ],
+     "note": "in other words: başka bir deyişle."
+    },
+    {
+     "id": "discourse_markers-13",
+     "tr": "Bilirsin işte, biraz utangaçtır.",
+     "answers": [
+      "You know, he's a bit shy.",
+      "You know, he is a bit shy.",
+      "You know, she's a bit shy.",
+      "You know, she is a bit shy."
+     ],
+     "note": "you know: bilirsin işte (dolgu)."
+    },
+    {
+     "id": "discourse_markers-14",
+     "tr": "Bir bakayım… evet, saat beşte boşum.",
+     "answers": [
+      "Let me see... yes, I'm free at five.",
+      "Let me see... yes, I am free at five.",
+      "Let me see, yes, I'm free at five.",
+      "Let me see... yes, I'm free at 5.",
+      "Let me see... yes, I'm free at five o'clock."
+     ],
+     "note": "let me see: bir bakayım (düşünürken)."
+    },
+    {
+     "id": "discourse_markers-15",
+     "tr": "Tatil demişken, nereye gidiyorsunuz?",
+     "answers": [
+      "Speaking of holidays, where are you going?",
+      "Speaking of holidays, where are you going to go?",
+      "Speaking of vacations, where are you going?",
+      "Talking of holidays, where are you going?",
+      "Speaking of the holiday, where are you going?"
+     ],
+     "note": "speaking of …: … demişken."
+    },
+    {
+     "id": "discourse_markers-16",
+     "tr": "Son olarak, ödevlerinizi cumaya kadar teslim edin.",
+     "answers": [
+      "Finally, hand in your homework by Friday.",
+      "Finally, hand your homework in by Friday.",
+      "Finally, submit your homework by Friday.",
+      "Lastly, hand in your homework by Friday.",
+      "Finally, give in your homework by Friday."
+     ],
+     "note": "finally: son olarak (sıralamanın sonu)."
+    },
+    {
+     "id": "discourse_markers-b1",
+     "gap": "By the ___, did you call your mother?",
+     "tr": "Bu arada, anneni aradın mı?",
+     "answers": [
+      "way"
+     ],
+     "note": "by the way."
+    },
+    {
+     "id": "discourse_markers-b2",
+     "gap": "It was a long trip. ___, we're home now.",
+     "tr": "Uzun bir yolculuktu. Neyse, artık evdeyiz.",
+     "answers": [
+      "Anyway"
+     ],
+     "note": "anyway: neyse."
+    },
+    {
+     "id": "discourse_markers-b3",
+     "gap": "___, let me think about it.",
+     "tr": "Şey, bir düşüneyim.",
+     "answers": [
+      "Well"
+     ],
+     "note": "well: şey."
+    },
+    {
+     "id": "discourse_markers-b4",
+     "gap": "She isn't Spanish. ___, she's from Mexico.",
+     "tr": "İspanyol değil. Aslında Meksikalı.",
+     "answers": [
+      "Actually",
+      "In fact"
+     ],
+     "note": "actually: aslında."
+    },
+    {
+     "id": "discourse_markers-b5",
+     "gap": "On the other ___, the flat is very small.",
+     "tr": "Öte yandan daire çok küçük.",
+     "answers": [
+      "hand"
+     ],
+     "note": "on the other hand."
+    },
+    {
+     "id": "discourse_markers-b6",
+     "gap": "First of ___, let's look at the numbers.",
+     "tr": "Her şeyden önce rakamlara bakalım.",
+     "answers": [
+      "all"
+     ],
+     "note": "first of all."
+    },
+    {
+     "id": "discourse_markers-b7",
+     "gap": "To be ___, I forgot.",
+     "tr": "Açıkçası unuttum.",
+     "answers": [
+      "honest"
+     ],
+     "note": "to be honest."
+    },
+    {
+     "id": "discourse_markers-b8",
+     "gap": "In my ___, the book is better than the film.",
+     "tr": "Bence kitap filmden daha iyi.",
+     "answers": [
+      "opinion"
+     ],
+     "note": "in my opinion."
+    },
+    {
+     "id": "discourse_markers-b9",
+     "gap": "Let him decide. After ___, it's his money.",
+     "tr": "Bırak o karar versin. Ne de olsa onun parası.",
+     "answers": [
+      "all"
+     ],
+     "note": "after all: ne de olsa."
+    },
+    {
+     "id": "discourse_markers-b10",
+     "gap": "In other ___, we have no time left.",
+     "tr": "Başka bir deyişle hiç vaktimiz kalmadı.",
+     "answers": [
+      "words"
+     ],
+     "note": "in other words."
+    },
+    {
+     "id": "discourse_markers-b11",
+     "gap": "It's late, and ___, I'm tired.",
+     "tr": "Geç oldu, üstelik yorgunum.",
+     "answers": [
+      "besides"
+     ],
+     "note": "besides: üstelik."
+    },
+    {
+     "id": "discourse_markers-b12",
+     "gap": "I didn't like the party... I ___, the music was terrible.",
+     "tr": "Partiyi sevmedim… yani, müzik berbattı.",
+     "answers": [
+      "mean"
+     ],
+     "note": "I mean: yani."
+    }
+   ],
+   "aliases": [
+    "discourse marker",
+    "discourse markers",
+    "fillers",
+    "filler words",
+    "söylem belirleyici",
+    "söylem belirleyiciler",
+    "dolgu sözcükleri",
+    "dolgu kelimeleri"
+   ],
+   "dict_category": "discourse_markers"
   },
   {
    "id": "zero_conditional",
@@ -9722,6 +10390,331 @@
     "should you",
     "devrik koşul"
    ]
+  },
+  {
+   "id": "modals_overview",
+   "category": "modals",
+   "level": "A2",
+   "title_tr": "Kip fiillerine genel bakış (can, must, should, may …)",
+   "title_en": "Modal Verbs: Overview",
+   "explanation": "**Kip fiili (modal verb) nedir?** Ana fiilin önüne gelip ona yetenek, izin, olasılık, zorunluluk ya da tavsiye anlamı katan yardımcı fiillerdir: can, could, may, might, must, shall, should, will, would. Benzer görevdekiler: have to, need to, ought to, be able to.\n- **Arkalarından yalın fiil (V1) gelir,** to almaz: I can swim (can to swim değil). İstisna: ought to, have to.\n- He / she / it ile **-s almazlar**: She can drive (she cans değil). Ana fiil de -s almaz: she can **speak** (speaks değil).\n- Olumsuz ve soruda do / does kullanılmaz: I **can't** swim. **Can** you swim? (Do you can değil.)\n- **Anlamlarına göre:** yetenek: can, could (geçmiş) · izin: can, could, may · rica: could, would · teklif: shall I …? · tavsiye: should, ought to · zorunluluk: must, have to · yasak: mustn't · gereksizlik: don't have to · olasılık: may, might, could · kesin çıkarım: must (olmalı), can't (olamaz) · gelecek, söz: will.\n- **Dikkat:** mustn't = yapmamalısın (yasak); don't have to = yapmak zorunda değilsin (gerek yok).\n- Her anlamın Gramer'de ayrı bir konusu var: yetenek, zorunluluk, rica ve izin, olasılık ve tahmin, geçmişe yönelik kipler.\n- Okurken Filtreler'den **Modal Verbs**'ü açarsan kitaptaki kip fiilleri renkli altı çizili görünür.",
+   "structure": [
+    "Özne + modal + V1: She can swim.",
+    "Özne + modal + not + V1: You shouldn't worry.",
+    "Modal + özne + V1?: May I come in?"
+   ],
+   "examples": [
+    [
+     "You should drink more water.",
+     "Daha çok su içmelisin."
+    ],
+    [
+     "May I sit here?",
+     "Buraya oturabilir miyim?"
+    ],
+    [
+     "You mustn't park here.",
+     "Buraya park etmemelisin (yasak)."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "modals_overview-1",
+     "tr": "Kız kardeşim üç dil konuşabiliyor.",
+     "answers": [
+      "My sister can speak three languages.",
+      "My sister speaks three languages."
+     ],
+     "note": "can + V1: yetenek. speak -s almaz."
+    },
+    {
+     "id": "modals_overview-2",
+     "tr": "Daha çok sebze yemelisin.",
+     "answers": [
+      "You should eat more vegetables.",
+      "You ought to eat more vegetables."
+     ],
+     "note": "should / ought to: tavsiye."
+    },
+    {
+     "id": "modals_overview-3",
+     "tr": "İçeri girebilir miyim?",
+     "answers": [
+      "May I come in?",
+      "Can I come in?",
+      "Could I come in?"
+     ],
+     "note": "may / can / could I …?: izin isteme."
+    },
+    {
+     "id": "modals_overview-4",
+     "tr": "Burada sigara içmemelisiniz; yasak.",
+     "answers": [
+      "You mustn't smoke here; it's forbidden.",
+      "You must not smoke here; it is forbidden.",
+      "You mustn't smoke here, it's forbidden.",
+      "You mustn't smoke here; it's not allowed.",
+      "You mustn't smoke here. It's forbidden.",
+      "You must not smoke here. It is forbidden."
+     ],
+     "note": "mustn't: yasak."
+    },
+    {
+     "id": "modals_overview-5",
+     "tr": "Yarın erken kalkmak zorunda değilsin.",
+     "answers": [
+      "You don't have to get up early tomorrow.",
+      "You do not have to get up early tomorrow.",
+      "You don't need to get up early tomorrow."
+     ],
+     "note": "don't have to: gerek yok (yasak değil)."
+    },
+    {
+     "id": "modals_overview-6",
+     "tr": "Yarın yağmur yağabilir.",
+     "answers": [
+      "It may rain tomorrow.",
+      "It might rain tomorrow.",
+      "It could rain tomorrow."
+     ],
+     "note": "may / might / could: olasılık."
+    },
+    {
+     "id": "modals_overview-7",
+     "tr": "Çocukken çok hızlı koşabiliyordum.",
+     "answers": [
+      "When I was a child, I could run very fast.",
+      "I could run very fast when I was a child.",
+      "When I was a kid, I could run very fast.",
+      "I could run very fast when I was a kid.",
+      "When I was a child I could run very fast."
+     ],
+     "note": "could: geçmişteki yetenek."
+    },
+    {
+     "id": "modals_overview-8",
+     "tr": "Pencereyi açayım mı?",
+     "answers": [
+      "Shall I open the window?"
+     ],
+     "note": "Shall I …?: teklif."
+    },
+    {
+     "id": "modals_overview-9",
+     "tr": "Bana yardım eder misiniz lütfen?",
+     "answers": [
+      "Could you help me, please?",
+      "Would you help me, please?",
+      "Can you help me, please?",
+      "Could you please help me?",
+      "Would you please help me?",
+      "Can you please help me?"
+     ],
+     "note": "could / would you …?: kibar rica."
+    },
+    {
+     "id": "modals_overview-10",
+     "tr": "O çok yorgun olmalı; bütün gün çalıştı.",
+     "answers": [
+      "She must be very tired; she worked all day.",
+      "He must be very tired; he worked all day.",
+      "She must be very tired, she worked all day.",
+      "He must be very tired, he worked all day.",
+      "She must be very tired; she has worked all day.",
+      "He must be very tired; he has worked all day.",
+      "She must be very tired. She worked all day.",
+      "He must be very tired. He worked all day."
+     ],
+     "note": "must be: kesin çıkarım (olmalı)."
+    },
+    {
+     "id": "modals_overview-11",
+     "tr": "Bu doğru olamaz.",
+     "answers": [
+      "This can't be true.",
+      "That can't be true.",
+      "This cannot be true.",
+      "That cannot be true.",
+      "It can't be true.",
+      "It cannot be true."
+     ],
+     "note": "can't be: olamaz (çıkarım)."
+    },
+    {
+     "id": "modals_overview-12",
+     "tr": "Her gün üniforma giymek zorundayız.",
+     "answers": [
+      "We have to wear a uniform every day.",
+      "We must wear a uniform every day.",
+      "We have to wear uniforms every day.",
+      "We must wear uniforms every day."
+     ],
+     "note": "have to / must: zorunluluk."
+    },
+    {
+     "id": "modals_overview-13",
+     "tr": "Sana yarın yardım ederim.",
+     "answers": [
+      "I will help you tomorrow.",
+      "I'll help you tomorrow."
+     ],
+     "note": "will: söz, gelecek."
+    },
+    {
+     "id": "modals_overview-14",
+     "tr": "Doktora gitmen gerek.",
+     "answers": [
+      "You need to see a doctor.",
+      "You need to go to the doctor.",
+      "You should see a doctor.",
+      "You have to see a doctor.",
+      "You must see a doctor.",
+      "You should go to the doctor."
+     ],
+     "note": "need to: gerekmek."
+    },
+    {
+     "id": "modals_overview-15",
+     "tr": "Yüzemiyorum.",
+     "answers": [
+      "I can't swim.",
+      "I cannot swim."
+     ],
+     "note": "can't: yapamamak. cannot bitişik yazılır."
+    },
+    {
+     "id": "modals_overview-16",
+     "tr": "Biraz daha çay ister misiniz?",
+     "answers": [
+      "Would you like some more tea?",
+      "Would you like more tea?"
+     ],
+     "note": "Would you like …?: kibar teklif."
+    },
+    {
+     "id": "modals_overview-b1",
+     "gap": "She ___ play the piano very well.",
+     "tr": "Piyanoyu çok iyi çalabiliyor.",
+     "answers": [
+      "can"
+     ],
+     "note": "can: yetenek."
+    },
+    {
+     "id": "modals_overview-b2",
+     "gap": "You ___ see a dentist about that tooth.",
+     "tr": "O diş için bir dişçiye görünmelisin.",
+     "answers": [
+      "should"
+     ],
+     "note": "should: tavsiye."
+    },
+    {
+     "id": "modals_overview-b3",
+     "gap": "___ I use your phone, please?",
+     "tr": "Telefonunu kullanabilir miyim lütfen?",
+     "answers": [
+      "May",
+      "Can",
+      "Could"
+     ],
+     "note": "May / Can / Could I …?: izin."
+    },
+    {
+     "id": "modals_overview-b4",
+     "gap": "You ___ touch that wire. It's dangerous!",
+     "tr": "O kabloya dokunmamalısın. Tehlikeli!",
+     "answers": [
+      "mustn't",
+      "must not"
+     ],
+     "note": "mustn't: yasak."
+    },
+    {
+     "id": "modals_overview-b5",
+     "gap": "It's Sunday, so I don't ___ to work.",
+     "tr": "Bugün pazar, bu yüzden çalışmak zorunda değilim.",
+     "answers": [
+      "have"
+     ],
+     "note": "don't have to: gerek yok."
+    },
+    {
+     "id": "modals_overview-b6",
+     "gap": "Take an umbrella. It ___ rain later.",
+     "tr": "Şemsiye al. Sonra yağmur yağabilir.",
+     "answers": [
+      "might",
+      "may",
+      "could"
+     ],
+     "note": "might / may: olasılık."
+    },
+    {
+     "id": "modals_overview-b7",
+     "gap": "When I was five, I ___ read.",
+     "tr": "Beş yaşındayken okuyabiliyordum.",
+     "answers": [
+      "could"
+     ],
+     "note": "could: geçmişteki yetenek."
+    },
+    {
+     "id": "modals_overview-b8",
+     "gap": "___ I carry your bag for you?",
+     "tr": "Çantanı taşıyayım mı?",
+     "answers": [
+      "Shall"
+     ],
+     "note": "Shall I …?: teklif."
+    },
+    {
+     "id": "modals_overview-b9",
+     "gap": "He has three cars. He ___ be rich.",
+     "tr": "Üç arabası var. Zengin olmalı.",
+     "answers": [
+      "must"
+     ],
+     "note": "must be: kesin çıkarım."
+    },
+    {
+     "id": "modals_overview-b10",
+     "gap": "She ___ be at work; I just saw her at the gym.",
+     "tr": "İşte olamaz; onu az önce spor salonunda gördüm.",
+     "answers": [
+      "can't",
+      "cannot"
+     ],
+     "note": "can't be: olamaz."
+    },
+    {
+     "id": "modals_overview-b11",
+     "gap": "___ you like a cup of coffee?",
+     "tr": "Bir fincan kahve ister misiniz?",
+     "answers": [
+      "Would"
+     ],
+     "note": "Would you like …?"
+    },
+    {
+     "id": "modals_overview-b12",
+     "gap": "She can ___ three languages.",
+     "tr": "Üç dil konuşabiliyor.",
+     "answers": [
+      "speak"
+     ],
+     "note": "can + V1 (speaks değil)."
+    }
+   ],
+   "aliases": [
+    "modal verbs overview",
+    "modals overview",
+    "modal overview",
+    "kip fiillerine genel bakış",
+    "modal fiiller",
+    "modal fiil"
+   ],
+   "dict_category": "modal_verbs"
   },
   {
    "id": "ability",
@@ -14452,7 +15445,8 @@
     "düzensiz fiiller",
     "fiil listesi",
     "v1 v2 v3"
-   ]
+   ],
+   "dict_category": "irregular_verbs"
   },
   {
    "id": "gerund_infinitive",
@@ -15618,6 +16612,2546 @@
     "karşılaştırma",
     "üstünlük"
    ]
+  },
+  {
+   "id": "phrasal_verbs",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Phrasal verb'ler (öbek fiiller: give up, look after)",
+   "title_en": "Phrasal Verbs",
+   "explanation": "**Phrasal verb nedir?** Bir fiilin bir ya da iki küçük kelimeyle (up, out, off, on, down, away, back …) birleşip çoğu zaman yeni bir anlam kazandığı fiillerdir: give (vermek) + up = **give up** (vazgeçmek, bırakmak).\n- Anlamı parçalardan tahmin edilemeyebilir, bu yüzden tek bir kelime gibi öğrenilir: look after (bakmak, ilgilenmek), run out of (tükenmek), put off (ertelemek).\n- **Ayrılabilenler:** nesne araya girebilir: turn off the light = turn the light off. Nesne bir zamirse (it, them, him) mutlaka araya girer: turn **it** off (turn off it değil).\n- **Ayrılmayanlar:** nesne hep sonda kalır: look after **the baby**, get over **it**.\n- **Nesnesizler:** The plane took off. (Uçak kalktı.) The car broke down. (Araba bozuldu.)\n- **Üç parçalılar:** look forward to, run out of, get along with, come up with.\n- Zaman ve kişi eki fiile gelir, parçacık değişmez: gave up, has given up, she gives up.\n- Okurken Filtreler'den **Phrasal Verbs**'ü açarsan kitaptaki bütün phrasal verb'ler renkli altı çizili görünür.",
+   "structure": [
+    "Fiil + parçacık: give up, take off",
+    "Fiil + nesne + parçacık: turn the TV off / turn it off",
+    "Fiil + parçacık + edat + nesne: look forward to the weekend"
+   ],
+   "examples": [
+    [
+     "She gave up smoking last year.",
+     "Geçen yıl sigarayı bıraktı."
+    ],
+    [
+     "Could you turn the music down, please?",
+     "Müziğin sesini kısar mısın lütfen?"
+    ],
+    [
+     "We ran out of milk.",
+     "Sütümüz bitti."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "phrasal_verbs-1",
+     "tr": "Sigarayı bırakmaya karar verdim.",
+     "answers": [
+      "I decided to give up smoking.",
+      "I have decided to give up smoking.",
+      "I've decided to give up smoking."
+     ],
+     "note": "give up + -ing: bırakmak, vazgeçmek."
+    },
+    {
+     "id": "phrasal_verbs-2",
+     "tr": "Lütfen ışığı kapat.",
+     "answers": [
+      "Please turn off the light.",
+      "Please turn the light off.",
+      "Please switch off the light.",
+      "Please switch the light off.",
+      "Turn off the light, please.",
+      "Turn the light off, please."
+     ],
+     "note": "turn off / switch off: kapatmak. Nesne araya da girebilir."
+    },
+    {
+     "id": "phrasal_verbs-3",
+     "tr": "Bu formu doldurup bana geri verir misin?",
+     "answers": [
+      "Can you fill in this form and give it back to me?",
+      "Could you fill in this form and give it back to me?",
+      "Can you fill out this form and give it back to me?",
+      "Could you fill out this form and give it back to me?"
+     ],
+     "note": "fill in / fill out: doldurmak. Zamir araya girer: give it back."
+    },
+    {
+     "id": "phrasal_verbs-4",
+     "tr": "Kardeşime bakmam gerekiyor.",
+     "answers": [
+      "I have to look after my brother.",
+      "I need to look after my brother.",
+      "I have to look after my sister.",
+      "I need to look after my sister.",
+      "I have to take care of my brother.",
+      "I have to take care of my sister."
+     ],
+     "note": "look after: bakmak, ilgilenmek. Ayrılmaz, nesne sonda kalır."
+    },
+    {
+     "id": "phrasal_verbs-5",
+     "tr": "Toplantıyı gelecek haftaya erteledik.",
+     "answers": [
+      "We put off the meeting until next week.",
+      "We put the meeting off until next week.",
+      "We put off the meeting to next week.",
+      "We put the meeting off to next week.",
+      "We postponed the meeting until next week."
+     ],
+     "note": "put off: ertelemek."
+    },
+    {
+     "id": "phrasal_verbs-6",
+     "tr": "Arabamız otoyolda bozuldu.",
+     "answers": [
+      "Our car broke down on the motorway.",
+      "Our car broke down on the highway.",
+      "Our car broke down on the freeway."
+     ],
+     "note": "break down: bozulmak. Nesne almaz."
+    },
+    {
+     "id": "phrasal_verbs-7",
+     "tr": "Uçak tam zamanında kalktı.",
+     "answers": [
+      "The plane took off on time.",
+      "The plane took off right on time.",
+      "The plane took off exactly on time."
+     ],
+     "note": "take off: (uçak) kalkmak. take → took."
+    },
+    {
+     "id": "phrasal_verbs-8",
+     "tr": "Ayakkabılarını çıkar lütfen.",
+     "answers": [
+      "Take off your shoes, please.",
+      "Please take off your shoes.",
+      "Take your shoes off, please.",
+      "Please take your shoes off."
+     ],
+     "note": "take off: (giysi) çıkarmak. Aynı phrasal verb'ün ikinci anlamı."
+    },
+    {
+     "id": "phrasal_verbs-9",
+     "tr": "Kahvemiz bitti.",
+     "answers": [
+      "We have run out of coffee.",
+      "We've run out of coffee.",
+      "We ran out of coffee."
+     ],
+     "note": "run out of: tükenmek, bitmek. Üç parçalıdır."
+    },
+    {
+     "id": "phrasal_verbs-10",
+     "tr": "Tatili dört gözle bekliyorum.",
+     "answers": [
+      "I am looking forward to the holiday.",
+      "I'm looking forward to the holiday.",
+      "I am looking forward to the vacation.",
+      "I'm looking forward to the vacation."
+     ],
+     "note": "look forward to + isim: dört gözle beklemek."
+    },
+    {
+     "id": "phrasal_verbs-11",
+     "tr": "Seni görmeyi dört gözle bekliyorum.",
+     "answers": [
+      "I am looking forward to seeing you.",
+      "I'm looking forward to seeing you.",
+      "I look forward to seeing you."
+     ],
+     "note": "look forward to + -ing: buradaki to edattır, arkasından fiil -ing alır."
+    },
+    {
+     "id": "phrasal_verbs-12",
+     "tr": "Bu kelimeye sözlükte bak.",
+     "answers": [
+      "Look up this word in the dictionary.",
+      "Look this word up in the dictionary."
+     ],
+     "note": "look up: (sözlükte, listede) aramak."
+    },
+    {
+     "id": "phrasal_verbs-13",
+     "tr": "Komşularımızla iyi geçiniyoruz.",
+     "answers": [
+      "We get along well with our neighbours.",
+      "We get on well with our neighbours.",
+      "We get along well with our neighbors.",
+      "We get on well with our neighbors.",
+      "We get along with our neighbours.",
+      "We get along with our neighbors."
+     ],
+     "note": "get along with / get on with: biriyle iyi geçinmek."
+    },
+    {
+     "id": "phrasal_verbs-14",
+     "tr": "Harika bir fikir buldu.",
+     "answers": [
+      "He came up with a great idea.",
+      "She came up with a great idea.",
+      "He came up with a brilliant idea.",
+      "She came up with a brilliant idea."
+     ],
+     "note": "come up with: (fikir, çözüm) bulmak, ortaya atmak."
+    },
+    {
+     "id": "phrasal_verbs-15",
+     "tr": "Her sabah altıda kalkarım.",
+     "answers": [
+      "I get up at six every morning.",
+      "I get up at 6 every morning.",
+      "Every morning I get up at six."
+     ],
+     "note": "get up: yataktan kalkmak. wake up ise uyanmak demektir."
+    },
+    {
+     "id": "phrasal_verbs-16",
+     "tr": "Çocuklar büyüdü ve evden ayrıldı.",
+     "answers": [
+      "The children grew up and left home.",
+      "The kids grew up and left home.",
+      "The children have grown up and left home.",
+      "The kids have grown up and left home."
+     ],
+     "note": "grow up: büyümek (çocukluktan çıkmak). grow → grew."
+    },
+    {
+     "id": "phrasal_verbs-b1",
+     "gap": "Don't give ___! You can do it.",
+     "tr": "Pes etme! Yapabilirsin.",
+     "answers": [
+      "up"
+     ],
+     "note": "give up: pes etmek."
+    },
+    {
+     "id": "phrasal_verbs-b2",
+     "gap": "Can you turn the radio ___? It's too loud.",
+     "tr": "Radyonun sesini kısar mısın? Çok yüksek.",
+     "answers": [
+      "down"
+     ],
+     "note": "turn down: sesini kısmak. Tersi turn up."
+    },
+    {
+     "id": "phrasal_verbs-b3",
+     "gap": "My grandmother looks ___ my little sister when my parents are at work.",
+     "tr": "Annemle babam işteyken büyükannem küçük kız kardeşime bakıyor.",
+     "answers": [
+      "after"
+     ],
+     "note": "look after: bakmak, ilgilenmek."
+    },
+    {
+     "id": "phrasal_verbs-b4",
+     "gap": "The plane took ___ at nine o'clock.",
+     "tr": "Uçak saat dokuzda kalktı.",
+     "answers": [
+      "off"
+     ],
+     "note": "take off: (uçak) kalkmak."
+    },
+    {
+     "id": "phrasal_verbs-b5",
+     "gap": "We have run out ___ sugar.",
+     "tr": "Şekerimiz bitti.",
+     "answers": [
+      "of"
+     ],
+     "note": "run out of: üç parçalı phrasal verb."
+    },
+    {
+     "id": "phrasal_verbs-b6",
+     "gap": "I'm looking forward ___ meeting you.",
+     "tr": "Seninle tanışmayı dört gözle bekliyorum.",
+     "answers": [
+      "to"
+     ],
+     "note": "look forward to + -ing."
+    },
+    {
+     "id": "phrasal_verbs-b7",
+     "gap": "If you don't know the word, look it ___.",
+     "tr": "Kelimeyi bilmiyorsan sözlükten bak.",
+     "answers": [
+      "up"
+     ],
+     "note": "look up; zamir araya girer: look it up."
+    },
+    {
+     "id": "phrasal_verbs-b8",
+     "gap": "Please fill ___ this form.",
+     "tr": "Lütfen bu formu doldurun.",
+     "answers": [
+      "in",
+      "out"
+     ],
+     "note": "fill in / fill out: doldurmak."
+    },
+    {
+     "id": "phrasal_verbs-b9",
+     "gap": "She ___ up with a clever solution.",
+     "tr": "Akıllıca bir çözüm buldu.",
+     "answers": [
+      "came"
+     ],
+     "note": "come up with; geçmiş zamanda come → came."
+    },
+    {
+     "id": "phrasal_verbs-b10",
+     "gap": "Our car broke ___ on the way to the airport.",
+     "tr": "Arabamız havalimanına giderken bozuldu.",
+     "answers": [
+      "down"
+     ],
+     "note": "break down: bozulmak."
+    },
+    {
+     "id": "phrasal_verbs-b11",
+     "gap": "I ___ up at seven every day.",
+     "tr": "Her gün yedide kalkarım.",
+     "answers": [
+      "get"
+     ],
+     "note": "get up: yataktan kalkmak."
+    },
+    {
+     "id": "phrasal_verbs-b12",
+     "gap": "Can you pick me ___ from the station?",
+     "tr": "Beni istasyondan alabilir misin?",
+     "answers": [
+      "up"
+     ],
+     "note": "pick up: (arabayla) birini almak."
+    }
+   ],
+   "aliases": [
+    "phrasal verb",
+    "phrasal verbs",
+    "phrasal",
+    "pharsal verb",
+    "pharshal verb",
+    "öbek fiil",
+    "öbek fiiller",
+    "deyimsel fiil"
+   ],
+   "dict_category": "phrasal_verbs"
+  },
+  {
+   "id": "collocations",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Eşdizimler (make a decision, heavy rain)",
+   "title_en": "Collocations",
+   "explanation": "**Eşdizim (collocation) nedir?** Anadili İngilizce olanların hep birlikte kullandığı kelime çiftleridir. Bir kural değil, alışkanlıktır; ama yanlış seçilen kelime cümleyi hemen yabancı gösterir.\n- **make / do:** make a decision, make a mistake, make money, make friends, make a mess · do homework, do the shopping, do a favour, do your best, do business.\n- **have / take:** have breakfast, have a shower, have a good time · take a photo, take a break, take a risk, take an exam.\n- **Sıfat + isim:** heavy rain (yoğun yağmur, strong rain değil), heavy traffic, strong coffee, high price, deep sleep.\n- **Zarf + sıfat / fiil:** highly recommended (şiddetle tavsiye edilen), deeply sorry (çok üzgün), fully aware (tamamen farkında), sleep soundly (deliksiz uyumak).\n- Türkçeden kelime kelime çevirmek çoğu zaman yanlış eşdizim üretir: \"fotoğraf çekmek\" = take a photo (pull değil), \"hata yapmak\" = make a mistake (do değil), \"para kazanmak\" = make / earn money (win değil).\n- Yeni bir isim öğrenirken hangi fiil ve sıfatla kullanıldığını da birlikte öğren.\n- Okurken Filtreler'den **Collocations**'ı açarsan kitaptaki eşdizimler renkli altı çizili görünür.",
+   "structure": [
+    "Fiil + isim: make a decision, take a photo",
+    "Sıfat + isim: heavy rain, strong coffee",
+    "Zarf + sıfat: highly recommended, deeply sorry"
+   ],
+   "examples": [
+    [
+     "I made a mistake in the exam.",
+     "Sınavda bir hata yaptım."
+    ],
+    [
+     "We had a great time at the party.",
+     "Partide çok iyi vakit geçirdik."
+    ],
+    [
+     "There was heavy rain all night.",
+     "Bütün gece yoğun yağmur vardı."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "collocations-1",
+     "tr": "Önemli bir karar verdim.",
+     "answers": [
+      "I made an important decision.",
+      "I have made an important decision.",
+      "I've made an important decision."
+     ],
+     "note": "karar vermek = make a decision."
+    },
+    {
+     "id": "collocations-2",
+     "tr": "Ödevimi henüz yapmadım.",
+     "answers": [
+      "I haven't done my homework yet.",
+      "I have not done my homework yet."
+     ],
+     "note": "ödev yapmak = do homework (make değil)."
+    },
+    {
+     "id": "collocations-3",
+     "tr": "Sınavda iki hata yaptım.",
+     "answers": [
+      "I made two mistakes in the exam.",
+      "I made two mistakes on the exam.",
+      "I made two mistakes in the test.",
+      "I made two mistakes on the test."
+     ],
+     "note": "hata yapmak = make a mistake (do değil)."
+    },
+    {
+     "id": "collocations-4",
+     "tr": "Bir fotoğrafımızı çeker misiniz?",
+     "answers": [
+      "Could you take a photo of us?",
+      "Can you take a photo of us?",
+      "Could you take a picture of us?",
+      "Can you take a picture of us?",
+      "Would you take a photo of us?"
+     ],
+     "note": "fotoğraf çekmek = take a photo."
+    },
+    {
+     "id": "collocations-5",
+     "tr": "Mola verelim.",
+     "answers": [
+      "Let's take a break.",
+      "Let us take a break.",
+      "Let's have a break."
+     ],
+     "note": "mola vermek = take / have a break."
+    },
+    {
+     "id": "collocations-6",
+     "tr": "Tatilde harika vakit geçirdik.",
+     "answers": [
+      "We had a great time on holiday.",
+      "We had a great time on vacation.",
+      "We had a wonderful time on holiday.",
+      "We had a wonderful time on vacation."
+     ],
+     "note": "iyi vakit geçirmek = have a good / great time."
+    },
+    {
+     "id": "collocations-7",
+     "tr": "Her sabah duş alırım.",
+     "answers": [
+      "I have a shower every morning.",
+      "I take a shower every morning.",
+      "Every morning I have a shower.",
+      "Every morning I take a shower."
+     ],
+     "note": "duş almak = have / take a shower."
+    },
+    {
+     "id": "collocations-8",
+     "tr": "Bana bir iyilik yapar mısın?",
+     "answers": [
+      "Can you do me a favour?",
+      "Could you do me a favour?",
+      "Can you do me a favor?",
+      "Could you do me a favor?",
+      "Will you do me a favour?",
+      "Will you do me a favor?"
+     ],
+     "note": "iyilik yapmak = do someone a favour."
+    },
+    {
+     "id": "collocations-9",
+     "tr": "Dün gece yoğun yağmur yağdı.",
+     "answers": [
+      "There was heavy rain last night.",
+      "It rained heavily last night.",
+      "We had heavy rain last night."
+     ],
+     "note": "yoğun yağmur = heavy rain (strong rain değil)."
+    },
+    {
+     "id": "collocations-10",
+     "tr": "Sert kahveyi severim.",
+     "answers": [
+      "I like strong coffee.",
+      "I love strong coffee."
+     ],
+     "note": "sert kahve = strong coffee (hard coffee değil)."
+    },
+    {
+     "id": "collocations-11",
+     "tr": "Bu restoranı şiddetle tavsiye ederim.",
+     "answers": [
+      "I highly recommend this restaurant.",
+      "I would highly recommend this restaurant.",
+      "I'd highly recommend this restaurant.",
+      "I strongly recommend this restaurant."
+     ],
+     "note": "şiddetle tavsiye etmek = highly recommend."
+    },
+    {
+     "id": "collocations-12",
+     "tr": "Geç kaldığım için çok üzgünüm.",
+     "answers": [
+      "I am deeply sorry for being late.",
+      "I'm deeply sorry for being late.",
+      "I'm very sorry for being late.",
+      "I'm really sorry for being late.",
+      "I'm so sorry for being late.",
+      "I'm very sorry I'm late.",
+      "I'm sorry for being late."
+     ],
+     "note": "deeply sorry: çok üzgün. very / really sorry da doğaldır."
+    },
+    {
+     "id": "collocations-13",
+     "tr": "Yeni okulunda arkadaş edindi mi?",
+     "answers": [
+      "Has he made friends at his new school?",
+      "Has she made friends at her new school?",
+      "Did he make friends at his new school?",
+      "Did she make friends at her new school?"
+     ],
+     "note": "arkadaş edinmek = make friends."
+    },
+    {
+     "id": "collocations-14",
+     "tr": "Elimden geleni yapacağım.",
+     "answers": [
+      "I will do my best.",
+      "I'll do my best."
+     ],
+     "note": "elinden geleni yapmak = do your best."
+    },
+    {
+     "id": "collocations-15",
+     "tr": "Bu işte çok para kazanıyor.",
+     "answers": [
+      "She makes a lot of money in this job.",
+      "He makes a lot of money in this job.",
+      "She earns a lot of money in this job.",
+      "He earns a lot of money in this job."
+     ],
+     "note": "para kazanmak = make / earn money (win değil)."
+    },
+    {
+     "id": "collocations-16",
+     "tr": "Gelecek hafta bir sınava gireceğim.",
+     "answers": [
+      "I am going to take an exam next week.",
+      "I'm going to take an exam next week.",
+      "I will take an exam next week.",
+      "I'll take an exam next week.",
+      "I'm taking an exam next week.",
+      "I am taking an exam next week."
+     ],
+     "note": "sınava girmek = take an exam (enter değil)."
+    },
+    {
+     "id": "collocations-b1",
+     "gap": "Don't worry, everybody ___ mistakes.",
+     "tr": "Merak etme, herkes hata yapar.",
+     "answers": [
+      "makes"
+     ],
+     "note": "make a mistake; everybody tekil sayılır: makes."
+    },
+    {
+     "id": "collocations-b2",
+     "gap": "Have you ___ your homework?",
+     "tr": "Ödevini yaptın mı?",
+     "answers": [
+      "done"
+     ],
+     "note": "do homework; have + V3: done."
+    },
+    {
+     "id": "collocations-b3",
+     "gap": "Can I ___ a photo of you?",
+     "tr": "Fotoğrafını çekebilir miyim?",
+     "answers": [
+      "take"
+     ],
+     "note": "take a photo."
+    },
+    {
+     "id": "collocations-b4",
+     "gap": "We ___ a great time at the concert.",
+     "tr": "Konserde harika vakit geçirdik.",
+     "answers": [
+      "had"
+     ],
+     "note": "have a great time; geçmişte had."
+    },
+    {
+     "id": "collocations-b5",
+     "gap": "There was ___ traffic on the way home.",
+     "tr": "Eve dönerken yoğun trafik vardı.",
+     "answers": [
+      "heavy"
+     ],
+     "note": "heavy traffic: yoğun trafik."
+    },
+    {
+     "id": "collocations-b6",
+     "gap": "I need to ___ a decision today.",
+     "tr": "Bugün bir karar vermem gerekiyor.",
+     "answers": [
+      "make"
+     ],
+     "note": "make a decision."
+    },
+    {
+     "id": "collocations-b7",
+     "gap": "This hotel is ___ recommended.",
+     "tr": "Bu otel şiddetle tavsiye ediliyor.",
+     "answers": [
+      "highly"
+     ],
+     "note": "highly recommended."
+    },
+    {
+     "id": "collocations-b8",
+     "gap": "Could you ___ me a favour?",
+     "tr": "Bana bir iyilik yapar mısın?",
+     "answers": [
+      "do"
+     ],
+     "note": "do someone a favour."
+    },
+    {
+     "id": "collocations-b9",
+     "gap": "I always drink ___ coffee in the morning.",
+     "tr": "Sabahları hep sert kahve içerim.",
+     "answers": [
+      "strong"
+     ],
+     "note": "strong coffee."
+    },
+    {
+     "id": "collocations-b10",
+     "gap": "Let's ___ a short break.",
+     "tr": "Kısa bir mola verelim.",
+     "answers": [
+      "take",
+      "have"
+     ],
+     "note": "take / have a break."
+    },
+    {
+     "id": "collocations-b11",
+     "gap": "She ___ friends very easily.",
+     "tr": "Çok kolay arkadaş edinir.",
+     "answers": [
+      "makes"
+     ],
+     "note": "make friends; she → makes."
+    },
+    {
+     "id": "collocations-b12",
+     "gap": "I'll ___ my best to help you.",
+     "tr": "Sana yardım etmek için elimden geleni yapacağım.",
+     "answers": [
+      "do"
+     ],
+     "note": "do your best."
+    }
+   ],
+   "aliases": [
+    "collocation",
+    "collocations",
+    "eşdizim",
+    "eşdizimler",
+    "make or do",
+    "make do"
+   ],
+   "dict_category": "collocations"
+  },
+  {
+   "id": "prepositional_phrases",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Edatlı öbekler (on time, by mistake, at last)",
+   "title_en": "Prepositional Phrases",
+   "explanation": "**Edatlı öbek nedir?** Bir edatla (at, in, on, by, out of, under …) başlayan ve bir bütün olarak kullanılan kalıplardır. Edatın anlamından tahmin edilemedikleri için hazır öğrenilir.\n- **in:** in time (geç kalmadan, yetişerek), in fact (aslında), in a hurry (acele içinde), in charge of (-den sorumlu), in danger (tehlikede).\n- **on:** on time (tam zamanında), on purpose (bilerek, kasten), on foot (yürüyerek), on holiday (tatilde), on fire (yanıyor).\n- **at:** at last (sonunda), at least (en azından), at first (ilk başta), at once (hemen), at the moment (şu anda).\n- **by:** by mistake (yanlışlıkla), by chance (tesadüfen), by heart (ezbere), by car / by bus (arabayla, otobüsle).\n- **out of / under / for:** out of order (bozuk), out of date (eskimiş), under pressure (baskı altında), for sure (kesinlikle), for a while (bir süre).\n- **Dikkat:** on time = tam saatinde, in time = yetişerek, geç kalmadan. by car ama **on foot**.\n- Okurken Filtreler'den **Prepositional Phrases**'i açarsan kitaptaki bu kalıplar renkli altı çizili görünür.",
+   "structure": [
+    "Edat + isim: on time, by mistake, at last",
+    "Edat + isim + edat: in charge of, in front of"
+   ],
+   "examples": [
+    [
+     "The train arrived on time.",
+     "Tren tam zamanında geldi."
+    ],
+    [
+     "I deleted the file by mistake.",
+     "Dosyayı yanlışlıkla sildim."
+    ],
+    [
+     "At last, the holidays have started!",
+     "Sonunda tatil başladı!"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "prepositional_phrases-1",
+     "tr": "Tren tam zamanında geldi.",
+     "answers": [
+      "The train arrived on time.",
+      "The train came on time."
+     ],
+     "note": "on time: tam zamanında, planlanan saatte."
+    },
+    {
+     "id": "prepositional_phrases-2",
+     "tr": "Filme yetiştik.",
+     "answers": [
+      "We got there in time for the film.",
+      "We arrived in time for the film.",
+      "We got there in time for the movie.",
+      "We arrived in time for the movie.",
+      "We were in time for the film.",
+      "We were in time for the movie."
+     ],
+     "note": "in time (for): geç kalmadan, yetişerek."
+    },
+    {
+     "id": "prepositional_phrases-3",
+     "tr": "Bunu bilerek yapmadım.",
+     "answers": [
+      "I didn't do it on purpose.",
+      "I did not do it on purpose.",
+      "I didn't do that on purpose.",
+      "I did not do that on purpose."
+     ],
+     "note": "on purpose: bilerek, kasten."
+    },
+    {
+     "id": "prepositional_phrases-4",
+     "tr": "Yanlışlıkla senin şemsiyeni aldım.",
+     "answers": [
+      "I took your umbrella by mistake.",
+      "I took your umbrella by accident.",
+      "I accidentally took your umbrella."
+     ],
+     "note": "by mistake: yanlışlıkla."
+    },
+    {
+     "id": "prepositional_phrases-5",
+     "tr": "Okula yürüyerek giderim.",
+     "answers": [
+      "I go to school on foot.",
+      "I walk to school."
+     ],
+     "note": "on foot: yürüyerek (by foot değil)."
+    },
+    {
+     "id": "prepositional_phrases-6",
+     "tr": "Genellikle işe otobüsle giderim.",
+     "answers": [
+      "I usually go to work by bus.",
+      "I usually travel to work by bus.",
+      "I usually get to work by bus."
+     ],
+     "note": "by bus / by car / by train: ulaşım aracıyla."
+    },
+    {
+     "id": "prepositional_phrases-7",
+     "tr": "Sonunda evdeyiz!",
+     "answers": [
+      "At last we are home!",
+      "At last, we are home!",
+      "At last we're home!",
+      "At last, we're home!",
+      "We're home at last!",
+      "We are home at last!"
+     ],
+     "note": "at last: sonunda (uzun bir beklemeden sonra)."
+    },
+    {
+     "id": "prepositional_phrases-8",
+     "tr": "En azından denedin.",
+     "answers": [
+      "At least you tried.",
+      "At least, you tried."
+     ],
+     "note": "at least: en azından."
+    },
+    {
+     "id": "prepositional_phrases-9",
+     "tr": "Şu anda çok meşgulüm.",
+     "answers": [
+      "I am very busy at the moment.",
+      "I'm very busy at the moment.",
+      "At the moment I'm very busy.",
+      "At the moment, I'm very busy.",
+      "I'm very busy right now.",
+      "I am very busy right now."
+     ],
+     "note": "at the moment: şu anda."
+    },
+    {
+     "id": "prepositional_phrases-10",
+     "tr": "Asansör bozuk.",
+     "answers": [
+      "The lift is out of order.",
+      "The elevator is out of order."
+     ],
+     "note": "out of order: bozuk, çalışmıyor."
+    },
+    {
+     "id": "prepositional_phrases-11",
+     "tr": "Bu şiiri ezbere biliyor.",
+     "answers": [
+      "She knows this poem by heart.",
+      "He knows this poem by heart."
+     ],
+     "note": "by heart: ezbere."
+    },
+    {
+     "id": "prepositional_phrases-12",
+     "tr": "Eski bir arkadaşla tesadüfen karşılaştım.",
+     "answers": [
+      "I met an old friend by chance.",
+      "I ran into an old friend by chance.",
+      "I bumped into an old friend by chance.",
+      "By chance, I met an old friend."
+     ],
+     "note": "by chance: tesadüfen."
+    },
+    {
+     "id": "prepositional_phrases-13",
+     "tr": "Bu projeden kim sorumlu?",
+     "answers": [
+      "Who is in charge of this project?",
+      "Who's in charge of this project?"
+     ],
+     "note": "in charge of: -den sorumlu."
+    },
+    {
+     "id": "prepositional_phrases-14",
+     "tr": "Aslında onu hiç sevmedim.",
+     "answers": [
+      "In fact, I never liked him.",
+      "In fact I never liked him.",
+      "In fact, I never liked her.",
+      "In fact I never liked her.",
+      "In fact, I never liked it.",
+      "Actually, I never liked him.",
+      "Actually, I never liked her.",
+      "Actually, I never liked it."
+     ],
+     "note": "in fact: aslında, gerçekte."
+    },
+    {
+     "id": "prepositional_phrases-15",
+     "tr": "Çok baskı altında çalışıyor.",
+     "answers": [
+      "She works under a lot of pressure.",
+      "He works under a lot of pressure.",
+      "She is working under a lot of pressure.",
+      "He is working under a lot of pressure.",
+      "She works under great pressure.",
+      "He works under great pressure."
+     ],
+     "note": "under pressure: baskı altında."
+    },
+    {
+     "id": "prepositional_phrases-16",
+     "tr": "Ailemle tatildeyim.",
+     "answers": [
+      "I am on holiday with my family.",
+      "I'm on holiday with my family.",
+      "I am on vacation with my family.",
+      "I'm on vacation with my family."
+     ],
+     "note": "on holiday: tatilde."
+    },
+    {
+     "id": "prepositional_phrases-b1",
+     "gap": "The bus was late, but we arrived ___ time for the start of the show.",
+     "tr": "Otobüs gecikti ama gösterinin başına yetiştik.",
+     "answers": [
+      "in"
+     ],
+     "note": "in time: geç kalmadan, yetişerek."
+    },
+    {
+     "id": "prepositional_phrases-b2",
+     "gap": "Our flight left exactly ___ time.",
+     "tr": "Uçağımız tam zamanında kalktı.",
+     "answers": [
+      "on"
+     ],
+     "note": "on time: planlanan saatte."
+    },
+    {
+     "id": "prepositional_phrases-b3",
+     "gap": "Sorry, I sent the email to you ___ mistake.",
+     "tr": "Özür dilerim, e-postayı yanlışlıkla sana gönderdim.",
+     "answers": [
+      "by"
+     ],
+     "note": "by mistake: yanlışlıkla."
+    },
+    {
+     "id": "prepositional_phrases-b4",
+     "gap": "He broke the window ___ purpose.",
+     "tr": "Camı bilerek kırdı.",
+     "answers": [
+      "on"
+     ],
+     "note": "on purpose: bilerek."
+    },
+    {
+     "id": "prepositional_phrases-b5",
+     "gap": "We walked there ___ foot.",
+     "tr": "Oraya yürüyerek gittik.",
+     "answers": [
+      "on"
+     ],
+     "note": "on foot (by foot değil)."
+    },
+    {
+     "id": "prepositional_phrases-b6",
+     "gap": "___ last, the rain has stopped.",
+     "tr": "Sonunda yağmur durdu.",
+     "answers": [
+      "At"
+     ],
+     "note": "at last: sonunda."
+    },
+    {
+     "id": "prepositional_phrases-b7",
+     "gap": "You should sleep ___ least eight hours a night.",
+     "tr": "Gecede en az sekiz saat uyumalısın.",
+     "answers": [
+      "at"
+     ],
+     "note": "at least: en az, en azından."
+    },
+    {
+     "id": "prepositional_phrases-b8",
+     "gap": "Sorry, this machine is out ___ order.",
+     "tr": "Üzgünüm, bu makine bozuk.",
+     "answers": [
+      "of"
+     ],
+     "note": "out of order: bozuk."
+    },
+    {
+     "id": "prepositional_phrases-b9",
+     "gap": "I learned the song ___ heart.",
+     "tr": "Şarkıyı ezberledim.",
+     "answers": [
+      "by"
+     ],
+     "note": "by heart: ezbere."
+    },
+    {
+     "id": "prepositional_phrases-b10",
+     "gap": "Ms Green is ___ charge of the sales team.",
+     "tr": "Satış ekibinden Bayan Green sorumlu.",
+     "answers": [
+      "in"
+     ],
+     "note": "in charge of: -den sorumlu."
+    },
+    {
+     "id": "prepositional_phrases-b11",
+     "gap": "She is always ___ a hurry.",
+     "tr": "Hep acele içinde.",
+     "answers": [
+      "in"
+     ],
+     "note": "in a hurry: acele içinde."
+    },
+    {
+     "id": "prepositional_phrases-b12",
+     "gap": "I'm sorry, he isn't here ___ the moment.",
+     "tr": "Üzgünüm, kendisi şu anda burada değil.",
+     "answers": [
+      "at"
+     ],
+     "note": "at the moment: şu anda."
+    }
+   ],
+   "aliases": [
+    "prepositional phrase",
+    "prepositional phrases",
+    "edatlı öbek",
+    "edatlı öbekler",
+    "edatlı ifadeler"
+   ],
+   "dict_category": "prepositional_phrases"
+  },
+  {
+   "id": "idioms",
+   "category": "phrases",
+   "level": "B2",
+   "title_tr": "Deyimler (break the ice, a piece of cake)",
+   "title_en": "Idioms",
+   "explanation": "**Deyim (idiom) nedir?** Kelimelerin tek tek anlamından çıkarılamayan, mecazi anlamlı kalıplardır. \"It's raining cats and dogs\" kedi köpek yağdığını değil, **bardaktan boşanırcasına yağdığını** anlatır.\n- Kelime kelime çevrilmez; Türkçede aynı anlamı veren deyim aranır: break the ice = buzları eritmek, a piece of cake = çocuk oyuncağı, cost an arm and a leg = dudak uçuklatacak kadar pahalı olmak.\n- **Kalıp sabittir:** kelimelerin seçimi ve sırası değişmez (break the ice, break the snow değil). Ama fiil zamana göre çekimlenir: She **broke** the ice. It **cost** an arm and a leg.\n- İçindeki iyelik sözcükleri özneye uyar: make up **my** mind, make up **her** mind.\n- Çoğu günlük konuşmada kullanılır, resmî yazıda daha az geçer.\n- Sık kullanılanlar: under the weather (keyifsiz, hafif hasta), hit the books (ders çalışmaya oturmak), call it a day (bugünlük paydos etmek), once in a blue moon (kırk yılda bir), let the cat out of the bag (sırrı ağzından kaçırmak), keep an eye on (göz kulak olmak), get cold feet (son anda cesaretini kaybetmek), on cloud nine (havalara uçmak), make ends meet (iki yakasını bir araya getirmek).\n- Okurken Filtreler'den **Idioms**'u açarsan kitaptaki deyimler renkli altı çizili görünür.",
+   "structure": [
+    "Sabit kalıp; fiil zamana göre çekimlenir: break the ice → broke the ice",
+    "İyelik özneye uyar: make up my / your / her mind"
+   ],
+   "examples": [
+    [
+     "The exam was a piece of cake.",
+     "Sınav çocuk oyuncağıydı."
+    ],
+    [
+     "I'm feeling a bit under the weather today.",
+     "Bugün biraz keyifsizim."
+    ],
+    [
+     "We only eat out once in a blue moon.",
+     "Kırk yılda bir dışarıda yemek yeriz."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "idioms-1",
+     "tr": "Sınav çocuk oyuncağıydı.",
+     "answers": [
+      "The exam was a piece of cake.",
+      "The test was a piece of cake."
+     ],
+     "note": "a piece of cake: çok kolay, çocuk oyuncağı."
+    },
+    {
+     "id": "idioms-2",
+     "tr": "Bardaktan boşanırcasına yağmur yağıyor.",
+     "answers": [
+      "It is raining cats and dogs.",
+      "It's raining cats and dogs."
+     ],
+     "note": "rain cats and dogs: çok şiddetli yağmak."
+    },
+    {
+     "id": "idioms-3",
+     "tr": "Bugün biraz keyifsizim.",
+     "answers": [
+      "I'm feeling a bit under the weather today.",
+      "I am feeling a bit under the weather today.",
+      "I'm a bit under the weather today.",
+      "I am a bit under the weather today.",
+      "I feel a bit under the weather today."
+     ],
+     "note": "under the weather: keyifsiz, hafif hasta."
+    },
+    {
+     "id": "idioms-4",
+     "tr": "Bu araba dudak uçuklatacak kadar pahalıydı.",
+     "answers": [
+      "This car cost an arm and a leg.",
+      "The car cost an arm and a leg."
+     ],
+     "note": "cost an arm and a leg: çok pahalı olmak. cost → cost."
+    },
+    {
+     "id": "idioms-5",
+     "tr": "Buzları eritmek için bir şaka yaptı.",
+     "answers": [
+      "He told a joke to break the ice.",
+      "She told a joke to break the ice.",
+      "He made a joke to break the ice.",
+      "She made a joke to break the ice."
+     ],
+     "note": "break the ice: buzları eritmek, ortamı yumuşatmak."
+    },
+    {
+     "id": "idioms-6",
+     "tr": "Bugünlük paydos edelim.",
+     "answers": [
+      "Let's call it a day.",
+      "Let us call it a day."
+     ],
+     "note": "call it a day: o günlük işi bırakmak."
+    },
+    {
+     "id": "idioms-7",
+     "tr": "Sınavdan önce ders çalışmaya oturmam lazım.",
+     "answers": [
+      "I need to hit the books before the exam.",
+      "I have to hit the books before the exam.",
+      "I must hit the books before the exam."
+     ],
+     "note": "hit the books: sıkı ders çalışmak."
+    },
+    {
+     "id": "idioms-8",
+     "tr": "Kırk yılda bir sinemaya gideriz.",
+     "answers": [
+      "We go to the cinema once in a blue moon.",
+      "We go to the movies once in a blue moon.",
+      "We only go to the cinema once in a blue moon.",
+      "We only go to the movies once in a blue moon."
+     ],
+     "note": "once in a blue moon: çok nadiren, kırk yılda bir."
+    },
+    {
+     "id": "idioms-9",
+     "tr": "Sırrı ağzından kaçırdı.",
+     "answers": [
+      "He let the cat out of the bag.",
+      "She let the cat out of the bag."
+     ],
+     "note": "let the cat out of the bag: sırrı ağzından kaçırmak."
+    },
+    {
+     "id": "idioms-10",
+     "tr": "Ben yokken çantama göz kulak olur musun?",
+     "answers": [
+      "Can you keep an eye on my bag while I'm away?",
+      "Could you keep an eye on my bag while I'm away?",
+      "Can you keep an eye on my bag while I am away?",
+      "Could you keep an eye on my bag while I am away?",
+      "Will you keep an eye on my bag while I'm away?",
+      "Can you keep an eye on my bag while I'm gone?",
+      "Could you keep an eye on my bag while I'm gone?"
+     ],
+     "note": "keep an eye on: göz kulak olmak."
+    },
+    {
+     "id": "idioms-11",
+     "tr": "Düğünden önce son anda cesaretini kaybetti.",
+     "answers": [
+      "He got cold feet before the wedding.",
+      "She got cold feet before the wedding."
+     ],
+     "note": "get cold feet: son anda korkup vazgeçmek."
+    },
+    {
+     "id": "idioms-12",
+     "tr": "İşi alınca havalara uçtu.",
+     "answers": [
+      "When she got the job, she was on cloud nine.",
+      "When he got the job, he was on cloud nine.",
+      "She was on cloud nine when she got the job.",
+      "He was on cloud nine when he got the job."
+     ],
+     "note": "on cloud nine: havalara uçmak, çok mutlu olmak."
+    },
+    {
+     "id": "idioms-13",
+     "tr": "Henüz karar vermedim.",
+     "answers": [
+      "I haven't made up my mind yet.",
+      "I have not made up my mind yet.",
+      "I haven't made my mind up yet."
+     ],
+     "note": "make up your mind: karar vermek. İyelik özneye uyar: my mind."
+    },
+    {
+     "id": "idioms-14",
+     "tr": "Tam üstüne bastın.",
+     "answers": [
+      "You hit the nail on the head.",
+      "You've hit the nail on the head.",
+      "You have hit the nail on the head."
+     ],
+     "note": "hit the nail on the head: tam isabet, tam doğrusunu söylemek."
+    },
+    {
+     "id": "idioms-15",
+     "tr": "İki yakalarını bir araya getirmekte zorlanıyorlar.",
+     "answers": [
+      "They are struggling to make ends meet.",
+      "They're struggling to make ends meet.",
+      "They find it hard to make ends meet.",
+      "They have trouble making ends meet.",
+      "They find it difficult to make ends meet."
+     ],
+     "note": "make ends meet: geçinebilmek, iki yakasını bir araya getirmek."
+    },
+    {
+     "id": "idioms-16",
+     "tr": "Bol şans! Sahnede harika olacaksın.",
+     "answers": [
+      "Break a leg! You'll be great on stage.",
+      "Break a leg! You will be great on stage.",
+      "Break a leg, you'll be great on stage.",
+      "Break a leg, you will be great on stage."
+     ],
+     "note": "break a leg: bol şans (özellikle sahneye çıkacak birine)."
+    },
+    {
+     "id": "idioms-b1",
+     "gap": "Don't worry, the test will be a piece of ___.",
+     "tr": "Merak etme, sınav çocuk oyuncağı olacak.",
+     "answers": [
+      "cake"
+     ],
+     "note": "a piece of cake: çok kolay."
+    },
+    {
+     "id": "idioms-b2",
+     "gap": "Take an umbrella; it's raining cats and ___.",
+     "tr": "Şemsiye al, bardaktan boşanırcasına yağıyor.",
+     "answers": [
+      "dogs"
+     ],
+     "note": "rain cats and dogs."
+    },
+    {
+     "id": "idioms-b3",
+     "gap": "I'm not coming to work today; I'm a bit under the ___.",
+     "tr": "Bugün işe gelmiyorum, biraz rahatsızım.",
+     "answers": [
+      "weather"
+     ],
+     "note": "under the weather: hafif hasta."
+    },
+    {
+     "id": "idioms-b4",
+     "gap": "That new phone cost an arm and a ___.",
+     "tr": "O yeni telefon dudak uçuklatacak kadar pahalıydı.",
+     "answers": [
+      "leg"
+     ],
+     "note": "cost an arm and a leg."
+    },
+    {
+     "id": "idioms-b5",
+     "gap": "She told a funny story to break the ___.",
+     "tr": "Buzları eritmek için komik bir hikâye anlattı.",
+     "answers": [
+      "ice"
+     ],
+     "note": "break the ice."
+    },
+    {
+     "id": "idioms-b6",
+     "gap": "It's late. Let's ___ it a day.",
+     "tr": "Geç oldu. Bugünlük paydos edelim.",
+     "answers": [
+      "call"
+     ],
+     "note": "call it a day."
+    },
+    {
+     "id": "idioms-b7",
+     "gap": "We see our cousins once in a blue ___.",
+     "tr": "Kuzenlerimizi kırk yılda bir görürüz.",
+     "answers": [
+      "moon"
+     ],
+     "note": "once in a blue moon."
+    },
+    {
+     "id": "idioms-b8",
+     "gap": "Who let the ___ out of the bag about the party?",
+     "tr": "Partiyi ağzından kim kaçırdı?",
+     "answers": [
+      "cat"
+     ],
+     "note": "let the cat out of the bag."
+    },
+    {
+     "id": "idioms-b9",
+     "gap": "Please keep an ___ on the children.",
+     "tr": "Lütfen çocuklara göz kulak ol.",
+     "answers": [
+      "eye"
+     ],
+     "note": "keep an eye on."
+    },
+    {
+     "id": "idioms-b10",
+     "gap": "He was going to ask her out, but he got cold ___.",
+     "tr": "Ona çıkma teklif edecekti ama son anda cesaretini kaybetti.",
+     "answers": [
+      "feet"
+     ],
+     "note": "get cold feet."
+    },
+    {
+     "id": "idioms-b11",
+     "gap": "I can't make up my ___: the red one or the blue one?",
+     "tr": "Karar veremiyorum: kırmızı mı mavi mi?",
+     "answers": [
+      "mind"
+     ],
+     "note": "make up your mind: karar vermek."
+    },
+    {
+     "id": "idioms-b12",
+     "gap": "You hit the ___ on the head!",
+     "tr": "Tam üstüne bastın!",
+     "answers": [
+      "nail"
+     ],
+     "note": "hit the nail on the head."
+    }
+   ],
+   "aliases": [
+    "idiom",
+    "idioms",
+    "idoms",
+    "deyim",
+    "deyimler"
+   ],
+   "dict_category": "idioms"
+  },
+  {
+   "id": "proverbs",
+   "category": "phrases",
+   "level": "B2",
+   "title_tr": "Atasözleri ve deyişler (Practice makes perfect)",
+   "title_en": "Proverbs and Sayings",
+   "explanation": "**Atasözü (proverb) nedir?** Kuşaktan kuşağa aktarılan, bir öğüt ya da genel bir doğru anlatan kısa sözlerdir. Deyimden farkı: deyim cümlenin bir parçasıdır (break the ice), atasözü ise kendi başına tam bir cümledir (Practice makes perfect.).\n- Kelime kelime çevrilmez; Türkçede aynı öğüdü veren atasözü aranır: Better late than never = Geç olsun, güç olmasın. Every cloud has a silver lining = Her işte bir hayır vardır. Don't count your chickens before they hatch = Dereyi görmeden paçaları sıvama.\n- Çoğunlukla **geniş zamanla** (Simple Present) ya da **emir kipiyle** söylenir ve kelimeleri değiştirilmez.\n- Konuşmada çoğu zaman yalnızca ilk yarısı söylenir: \"Well, when in Rome …\" (Roma'dayken Romalılar gibi davran).\n- Sık kullanılanlar: Actions speak louder than words (Söz değil, iş önemli), Practice makes perfect (İşleye işleye demir ışıldar), No pain, no gain (Emek olmadan yemek olmaz), Where there's a will, there's a way (İsteyen dağları deler), Two heads are better than one (Akıl akıldan üstündür), Don't judge a book by its cover (Görünüşe aldanma), There's no smoke without fire (Ateş olmayan yerden duman çıkmaz).\n- Okurken Filtreler'den **Proverbs & Sayings**'i açarsan kitaptaki atasözleri renkli altı çizili görünür.",
+   "structure": [
+    "Kendi başına tam cümle, çoğunlukla geniş zaman: Practice makes perfect.",
+    "Emir kipiyle öğüt: Don't judge a book by its cover."
+   ],
+   "examples": [
+    [
+     "Practice makes perfect, so keep reading every day.",
+     "İşleye işleye demir ışıldar, o yüzden her gün okumaya devam et."
+    ],
+    [
+     "You finally came! Better late than never.",
+     "Sonunda geldin! Geç olsun, güç olmasın."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "proverbs-1",
+     "tr": "Geç olsun, güç olmasın.",
+     "answers": [
+      "Better late than never."
+     ],
+     "note": "Better late than never: geç kalmak hiç yapmamaktan iyidir."
+    },
+    {
+     "id": "proverbs-2",
+     "tr": "İşleye işleye demir ışıldar.",
+     "answers": [
+      "Practice makes perfect."
+     ],
+     "note": "Practice makes perfect: pratik yaptıkça ustalaşırsın."
+    },
+    {
+     "id": "proverbs-3",
+     "tr": "Emek olmadan yemek olmaz.",
+     "answers": [
+      "No pain, no gain."
+     ],
+     "note": "No pain, no gain: zahmetsiz kazanç olmaz."
+    },
+    {
+     "id": "proverbs-4",
+     "tr": "İsteyen dağları deler.",
+     "answers": [
+      "Where there's a will, there's a way.",
+      "Where there is a will, there is a way."
+     ],
+     "note": "Where there's a will, there's a way: gerçekten isteyen yolunu bulur."
+    },
+    {
+     "id": "proverbs-5",
+     "tr": "Söz değil, iş önemlidir.",
+     "answers": [
+      "Actions speak louder than words."
+     ],
+     "note": "Actions speak louder than words: davranışlar sözlerden çok şey anlatır."
+    },
+    {
+     "id": "proverbs-6",
+     "tr": "Görünüşe aldanma.",
+     "answers": [
+      "Don't judge a book by its cover.",
+      "Do not judge a book by its cover."
+     ],
+     "note": "Emir kipiyle bir öğüt: kitabı kapağına göre yargılama."
+    },
+    {
+     "id": "proverbs-7",
+     "tr": "Dereyi görmeden paçaları sıvama.",
+     "answers": [
+      "Don't count your chickens before they hatch.",
+      "Do not count your chickens before they hatch.",
+      "Don't count your chickens before they've hatched."
+     ],
+     "note": "Kelimesi kelimesine: civcivleri yumurtadan çıkmadan sayma."
+    },
+    {
+     "id": "proverbs-8",
+     "tr": "Her işte bir hayır vardır.",
+     "answers": [
+      "Every cloud has a silver lining."
+     ],
+     "note": "Kelimesi kelimesine: her bulutun gümüş bir kenarı vardır."
+    },
+    {
+     "id": "proverbs-9",
+     "tr": "Akıl akıldan üstündür.",
+     "answers": [
+      "Two heads are better than one."
+     ],
+     "note": "Two heads are better than one: iki kafa birden iyidir."
+    },
+    {
+     "id": "proverbs-10",
+     "tr": "Damlaya damlaya göl olur.",
+     "answers": [
+      "Every little helps.",
+      "Little by little, the bird builds its nest.",
+      "Many a little makes a mickle.",
+      "Little strokes fell great oaks."
+     ],
+     "note": "En yaygın karşılığı: Every little helps."
+    },
+    {
+     "id": "proverbs-11",
+     "tr": "Sakla samanı, gelir zamanı.",
+     "answers": [
+      "Waste not, want not."
+     ],
+     "note": "Waste not, want not: israf etmeyen muhtaç kalmaz."
+    },
+    {
+     "id": "proverbs-12",
+     "tr": "Ne ekersen onu biçersin.",
+     "answers": [
+      "You reap what you sow.",
+      "As you sow, so shall you reap.",
+      "You reap what you sow!"
+     ],
+     "note": "reap: biçmek, sow: ekmek."
+    },
+    {
+     "id": "proverbs-13",
+     "tr": "Ateş olmayan yerden duman çıkmaz.",
+     "answers": [
+      "There's no smoke without fire.",
+      "There is no smoke without fire.",
+      "Where there's smoke, there's fire.",
+      "Where there is smoke, there is fire."
+     ],
+     "note": "Bir söylentinin mutlaka bir nedeni vardır."
+    },
+    {
+     "id": "proverbs-14",
+     "tr": "Bugünün işini yarına bırakma.",
+     "answers": [
+      "Don't put off until tomorrow what you can do today.",
+      "Don't put off till tomorrow what you can do today.",
+      "Never put off until tomorrow what you can do today.",
+      "Never put off till tomorrow what you can do today."
+     ],
+     "note": "put off: ertelemek."
+    },
+    {
+     "id": "proverbs-15",
+     "tr": "Üzüm üzüme baka baka kararır.",
+     "answers": [
+      "Birds of a feather flock together."
+     ],
+     "note": "Benzer insanlar bir araya gelir."
+    },
+    {
+     "id": "proverbs-16",
+     "tr": "Bulunduğun yerin âdetlerine uy.",
+     "answers": [
+      "When in Rome, do as the Romans do."
+     ],
+     "note": "Kelimesi kelimesine: Roma'dayken Romalılar gibi davran."
+    },
+    {
+     "id": "proverbs-b1",
+     "gap": "Practice makes ___.",
+     "tr": "İşleye işleye demir ışıldar.",
+     "answers": [
+      "perfect"
+     ],
+     "note": "Practice makes perfect."
+    },
+    {
+     "id": "proverbs-b2",
+     "gap": "Better late than ___.",
+     "tr": "Geç olsun, güç olmasın.",
+     "answers": [
+      "never"
+     ],
+     "note": "Better late than never."
+    },
+    {
+     "id": "proverbs-b3",
+     "gap": "No pain, no ___.",
+     "tr": "Emek olmadan yemek olmaz.",
+     "answers": [
+      "gain"
+     ],
+     "note": "gain: kazanç."
+    },
+    {
+     "id": "proverbs-b4",
+     "gap": "Actions speak louder than ___.",
+     "tr": "Söz değil, iş önemlidir.",
+     "answers": [
+      "words"
+     ],
+     "note": "Actions speak louder than words."
+    },
+    {
+     "id": "proverbs-b5",
+     "gap": "Don't judge a book by its ___.",
+     "tr": "Görünüşe aldanma.",
+     "answers": [
+      "cover"
+     ],
+     "note": "cover: kapak."
+    },
+    {
+     "id": "proverbs-b6",
+     "gap": "Where there's a will, there's a ___.",
+     "tr": "İsteyen dağları deler.",
+     "answers": [
+      "way"
+     ],
+     "note": "will: irade, istek; way: yol."
+    },
+    {
+     "id": "proverbs-b7",
+     "gap": "Every cloud has a silver ___.",
+     "tr": "Her işte bir hayır vardır.",
+     "answers": [
+      "lining"
+     ],
+     "note": "silver lining: gümüş kenar, umut ışığı."
+    },
+    {
+     "id": "proverbs-b8",
+     "gap": "Two heads are better than ___.",
+     "tr": "Akıl akıldan üstündür.",
+     "answers": [
+      "one"
+     ],
+     "note": "Two heads are better than one."
+    },
+    {
+     "id": "proverbs-b9",
+     "gap": "Don't count your ___ before they hatch.",
+     "tr": "Dereyi görmeden paçaları sıvama.",
+     "answers": [
+      "chickens"
+     ],
+     "note": "chickens: tavuklar, civcivler."
+    },
+    {
+     "id": "proverbs-b10",
+     "gap": "There's no smoke without ___.",
+     "tr": "Ateş olmayan yerden duman çıkmaz.",
+     "answers": [
+      "fire"
+     ],
+     "note": "There's no smoke without fire."
+    },
+    {
+     "id": "proverbs-b11",
+     "gap": "Birds of a feather flock ___.",
+     "tr": "Üzüm üzüme baka baka kararır.",
+     "answers": [
+      "together"
+     ],
+     "note": "flock together: sürü hâlinde bir araya gelmek."
+    },
+    {
+     "id": "proverbs-b12",
+     "gap": "When in ___, do as the Romans do.",
+     "tr": "Bulunduğun yerin âdetlerine uy.",
+     "answers": [
+      "Rome"
+     ],
+     "note": "When in Rome, do as the Romans do."
+    }
+   ],
+   "aliases": [
+    "proverb",
+    "proverbs",
+    "sayings",
+    "proverbs and sayings",
+    "atasözü",
+    "atasözleri",
+    "deyişler"
+   ],
+   "dict_category": "proverbs"
+  },
+  {
+   "id": "chunks",
+   "category": "phrases",
+   "level": "A2",
+   "title_tr": "Kalıp ifadeler (It depends, Never mind)",
+   "title_en": "Chunks (Ready-made Expressions)",
+   "explanation": "**Chunk (kalıp ifade) nedir?** Günlük konuşmada bütün olarak, hazır bir paket gibi kullanılan ifadelerdir. Dil bilgisini düşünmeden ağızdan çıkarlar; akıcı konuşmanın sırrı büyük ölçüde budur.\n- **Cevap ve tepki:** It depends. (Duruma göre değişir.) Never mind. (Boş ver, önemli değil.) It's up to you. (Sen bilirsin.) I'm afraid not. (Maalesef hayır.) No wonder! (Şaşmamalı!) Fair enough. (Makul, haklısın.)\n- **Rica ve teklif:** Would you mind …ing? (… sakıncası var mı?) How about …? (… ne dersin?) Do you fancy …? (Canın … ister mi?) Let me know. (Bana haber ver.)\n- **Fikir bildirme:** As far as I know (bildiğim kadarıyla), If I were you (yerinde olsam), To be honest (açıkçası), It's not worth it (değmez).\n- **Cümle başları:** I was wondering if … (Acaba … diye düşünüyordum), The thing is … (Mesele şu ki …).\n- İçlerindeki dil bilgisi açıklanabilir (If I **were** you, Would you mind **opening**), ama en kolayı onları bütün olarak ezberleyip sık kullanmaktır.\n- Okurken Filtreler'den **Chunks**'ı açarsan kitaptaki kalıp ifadeler renkli altı çizili görünür.",
+   "structure": [
+    "Hazır cevap: It depends. / Never mind. / It's up to you.",
+    "Would you mind + V-ing?",
+    "How about + V-ing / isim?",
+    "If I were you, I would + V1"
+   ],
+   "examples": [
+    [
+     "\"Are you coming?\" \"It depends on the weather.\"",
+     "\"Geliyor musun?\" \"Havaya bağlı.\""
+    ],
+    [
+     "Would you mind closing the window?",
+     "Pencereyi kapatır mısınız?"
+    ],
+    [
+     "If I were you, I'd take the job.",
+     "Yerinde olsam o işi kabul ederdim."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "chunks-1",
+     "tr": "Duruma göre değişir.",
+     "answers": [
+      "It depends."
+     ],
+     "note": "It depends: duruma bağlı."
+    },
+    {
+     "id": "chunks-2",
+     "tr": "Boş ver, önemli değil.",
+     "answers": [
+      "Never mind, it's not important.",
+      "Never mind, it isn't important.",
+      "Never mind, it is not important.",
+      "Never mind, it doesn't matter.",
+      "Never mind, it does not matter."
+     ],
+     "note": "Never mind: boş ver."
+    },
+    {
+     "id": "chunks-3",
+     "tr": "Sen bilirsin.",
+     "answers": [
+      "It's up to you.",
+      "It is up to you."
+     ],
+     "note": "It's up to you: karar senin."
+    },
+    {
+     "id": "chunks-4",
+     "tr": "Pencereyi açmamın sakıncası var mı?",
+     "answers": [
+      "Would you mind if I opened the window?",
+      "Do you mind if I open the window?",
+      "Would you mind if I open the window?"
+     ],
+     "note": "Do you mind if I …? / Would you mind if I …?: izin isteme."
+    },
+    {
+     "id": "chunks-5",
+     "tr": "Kapıyı kapatır mısınız?",
+     "answers": [
+      "Would you mind closing the door?",
+      "Could you close the door?",
+      "Would you close the door?",
+      "Can you close the door?",
+      "Could you shut the door?",
+      "Would you mind shutting the door?"
+     ],
+     "note": "Would you mind + -ing: kibar rica."
+    },
+    {
+     "id": "chunks-6",
+     "tr": "Yerinde olsam ona söylerdim.",
+     "answers": [
+      "If I were you, I would tell her.",
+      "If I were you, I'd tell her.",
+      "If I were you, I would tell him.",
+      "If I were you, I'd tell him.",
+      "If I were you I would tell her.",
+      "If I were you I'd tell her.",
+      "If I were you I would tell him.",
+      "If I were you I'd tell him."
+     ],
+     "note": "If I were you: yerinde olsam (was değil were)."
+    },
+    {
+     "id": "chunks-7",
+     "tr": "Bildiğim kadarıyla dükkân pazartesileri kapalı.",
+     "answers": [
+      "As far as I know, the shop is closed on Mondays.",
+      "As far as I know the shop is closed on Mondays.",
+      "As far as I know, the store is closed on Mondays.",
+      "As far as I know the store is closed on Mondays."
+     ],
+     "note": "As far as I know: bildiğim kadarıyla."
+    },
+    {
+     "id": "chunks-8",
+     "tr": "Açıkçası filmi beğenmedim.",
+     "answers": [
+      "To be honest, I didn't like the film.",
+      "To be honest, I didn't like the movie.",
+      "To be honest I didn't like the film.",
+      "To be honest I didn't like the movie.",
+      "Honestly, I didn't like the film.",
+      "Honestly, I didn't like the movie."
+     ],
+     "note": "To be honest: açıkçası."
+    },
+    {
+     "id": "chunks-9",
+     "tr": "Pizza yemeye ne dersin?",
+     "answers": [
+      "How about eating pizza?",
+      "How about having pizza?",
+      "How about some pizza?",
+      "How about pizza?",
+      "What about having pizza?",
+      "What about pizza?"
+     ],
+     "note": "How about + -ing / isim: öneri."
+    },
+    {
+     "id": "chunks-10",
+     "tr": "Karar verince bana haber ver.",
+     "answers": [
+      "Let me know when you decide.",
+      "Let me know when you make a decision.",
+      "Let me know when you have decided.",
+      "Let me know when you've decided."
+     ],
+     "note": "Let me know: bana haber ver."
+    },
+    {
+     "id": "chunks-11",
+     "tr": "Değmez.",
+     "answers": [
+      "It's not worth it.",
+      "It isn't worth it.",
+      "It is not worth it."
+     ],
+     "note": "It's not worth it: değmez."
+    },
+    {
+     "id": "chunks-12",
+     "tr": "Yorgun olmana şaşmamalı, bütün gece çalıştın.",
+     "answers": [
+      "No wonder you're tired; you worked all night.",
+      "No wonder you are tired; you worked all night.",
+      "No wonder you're tired, you worked all night.",
+      "No wonder you are tired, you worked all night.",
+      "No wonder you're tired. You worked all night."
+     ],
+     "note": "No wonder: şaşmamalı, belli."
+    },
+    {
+     "id": "chunks-13",
+     "tr": "Maalesef hayır.",
+     "answers": [
+      "I'm afraid not.",
+      "I am afraid not."
+     ],
+     "note": "I'm afraid not: kibar bir \"hayır\"."
+    },
+    {
+     "id": "chunks-14",
+     "tr": "Acaba bana yardım edebilir misin diye düşünüyordum.",
+     "answers": [
+      "I was wondering if you could help me.",
+      "I was wondering whether you could help me."
+     ],
+     "note": "I was wondering if …: çok kibar rica."
+    },
+    {
+     "id": "chunks-15",
+     "tr": "Mesele şu ki hiç param yok.",
+     "answers": [
+      "The thing is, I have no money.",
+      "The thing is, I don't have any money.",
+      "The thing is, I haven't got any money.",
+      "The thing is I have no money.",
+      "The thing is I don't have any money."
+     ],
+     "note": "The thing is: mesele şu ki."
+    },
+    {
+     "id": "chunks-16",
+     "tr": "Canın sinemaya gitmek ister mi?",
+     "answers": [
+      "Do you fancy going to the cinema?",
+      "Do you fancy going to the movies?",
+      "Would you like to go to the cinema?",
+      "Would you like to go to the movies?",
+      "Do you want to go to the cinema?",
+      "Do you want to go to the movies?"
+     ],
+     "note": "Do you fancy + -ing: canın ister mi."
+    },
+    {
+     "id": "chunks-b1",
+     "gap": "\"Will you come?\" \"It ___ on my work.\"",
+     "tr": "\"Gelecek misin?\" \"İşime bağlı.\"",
+     "answers": [
+      "depends"
+     ],
+     "note": "It depends on …: -e bağlı."
+    },
+    {
+     "id": "chunks-b2",
+     "gap": "Never ___, I'll do it myself.",
+     "tr": "Boş ver, kendim yaparım.",
+     "answers": [
+      "mind"
+     ],
+     "note": "Never mind."
+    },
+    {
+     "id": "chunks-b3",
+     "gap": "It's up ___ you. You choose.",
+     "tr": "Sen bilirsin. Sen seç.",
+     "answers": [
+      "to"
+     ],
+     "note": "It's up to you."
+    },
+    {
+     "id": "chunks-b4",
+     "gap": "Would you mind ___ the music down?",
+     "tr": "Müziğin sesini kısar mısın?",
+     "answers": [
+      "turning"
+     ],
+     "note": "mind + -ing."
+    },
+    {
+     "id": "chunks-b5",
+     "gap": "If I ___ you, I'd see a doctor.",
+     "tr": "Yerinde olsam doktora giderdim.",
+     "answers": [
+      "were"
+     ],
+     "note": "If I were you (was değil)."
+    },
+    {
+     "id": "chunks-b6",
+     "gap": "As far as I ___, she lives in London.",
+     "tr": "Bildiğim kadarıyla Londra'da yaşıyor.",
+     "answers": [
+      "know"
+     ],
+     "note": "As far as I know."
+    },
+    {
+     "id": "chunks-b7",
+     "gap": "To be ___, I don't like coffee.",
+     "tr": "Açıkçası kahveyi sevmem.",
+     "answers": [
+      "honest"
+     ],
+     "note": "To be honest."
+    },
+    {
+     "id": "chunks-b8",
+     "gap": "How about ___ a walk?",
+     "tr": "Yürüyüşe çıkmaya ne dersin?",
+     "answers": [
+      "taking",
+      "going for"
+     ],
+     "note": "How about + -ing."
+    },
+    {
+     "id": "chunks-b9",
+     "gap": "Let me ___ if you need anything.",
+     "tr": "Bir şeye ihtiyacın olursa bana haber ver.",
+     "answers": [
+      "know"
+     ],
+     "note": "Let me know."
+    },
+    {
+     "id": "chunks-b10",
+     "gap": "Don't buy it. It's not ___ it.",
+     "tr": "Alma onu. Değmez.",
+     "answers": [
+      "worth"
+     ],
+     "note": "It's not worth it."
+    },
+    {
+     "id": "chunks-b11",
+     "gap": "No ___ he's hungry; he hasn't eaten all day.",
+     "tr": "Aç olmasına şaşmamalı, bütün gün bir şey yemedi.",
+     "answers": [
+      "wonder"
+     ],
+     "note": "No wonder."
+    },
+    {
+     "id": "chunks-b12",
+     "gap": "I was ___ if you could lend me your car.",
+     "tr": "Acaba arabanı bana ödünç verebilir misin diye düşünüyordum.",
+     "answers": [
+      "wondering"
+     ],
+     "note": "I was wondering if …"
+    }
+   ],
+   "aliases": [
+    "chunk",
+    "chunks",
+    "kalıp ifade",
+    "kalıp ifadeler",
+    "hazır ifadeler",
+    "günlük ifadeler"
+   ],
+   "dict_category": "chunks"
+  },
+  {
+   "id": "binomials",
+   "category": "phrases",
+   "level": "B2",
+   "title_tr": "İkili kalıplar (safe and sound, sooner or later)",
+   "title_en": "Binomials",
+   "explanation": "**İkili kalıp (binomial) nedir?** Genellikle and, or ya da but ile bağlanan ve **sırası hiç değişmeyen** kelime çiftleridir. Türkçedeki \"er geç\", \"aşağı yukarı\", \"az çok\" gibi.\n- **Sıra sabittir:** salt and pepper (pepper and salt değil), black and white, ladies and gentlemen. Ters sırada söylemek kulağa yanlış gelir. Türkçede sıra farklı olabilir: knife and fork = çatal bıçak.\n- Bazıları gerçek anlamlıdır: salt and pepper (tuz ve biber), bread and butter (tereyağlı ekmek).\n- Bazıları mecazi anlam taşır: safe and sound (sağ salim), sick and tired (bıkmış usanmış), sooner or later (er ya da geç), more or less (aşağı yukarı), now and then (ara sıra), pros and cons (artılar ve eksiler), ups and downs (iniş çıkışlar), peace and quiet (huzur ve sükûnet), by and large (genel olarak), first and foremost (her şeyden önce).\n- Aynı kelimenin tekrarıyla yapılanlar: step by step (adım adım), little by little (azar azar), side by side (yan yana), face to face (yüz yüze).\n- Okurken Filtreler'den **Binomials**'ı açarsan kitaptaki ikili kalıplar renkli altı çizili görünür.",
+   "structure": [
+    "Kelime + and/or/but + kelime, sıra sabit: safe and sound, sooner or later",
+    "Tekrar: step by step, face to face"
+   ],
+   "examples": [
+    [
+     "The children came home safe and sound.",
+     "Çocuklar eve sağ salim döndü."
+    ],
+    [
+     "Sooner or later, you will have to tell him.",
+     "Er ya da geç ona söylemek zorunda kalacaksın."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "binomials-1",
+     "tr": "Çocuklar eve sağ salim döndü.",
+     "answers": [
+      "The children came home safe and sound.",
+      "The children got home safe and sound.",
+      "The kids came home safe and sound.",
+      "The kids got home safe and sound.",
+      "The children returned home safe and sound."
+     ],
+     "note": "safe and sound: sağ salim."
+    },
+    {
+     "id": "binomials-2",
+     "tr": "Er ya da geç gerçeği öğrenecek.",
+     "answers": [
+      "Sooner or later he will learn the truth.",
+      "Sooner or later, he will learn the truth.",
+      "Sooner or later she will learn the truth.",
+      "Sooner or later, she will learn the truth.",
+      "Sooner or later he'll find out the truth.",
+      "Sooner or later, he'll find out the truth.",
+      "Sooner or later she'll find out the truth.",
+      "Sooner or later, she'll find out the truth."
+     ],
+     "note": "sooner or later: er ya da geç (later or sooner değil)."
+    },
+    {
+     "id": "binomials-3",
+     "tr": "Bu işten bıktım usandım.",
+     "answers": [
+      "I am sick and tired of this job.",
+      "I'm sick and tired of this job."
+     ],
+     "note": "sick and tired of: -den bıkmış usanmış."
+    },
+    {
+     "id": "binomials-4",
+     "tr": "Proje aşağı yukarı bitti.",
+     "answers": [
+      "The project is more or less finished.",
+      "The project is more or less done.",
+      "The project is more or less complete."
+     ],
+     "note": "more or less: aşağı yukarı, hemen hemen."
+    },
+    {
+     "id": "binomials-5",
+     "tr": "Ara sıra onu ararım.",
+     "answers": [
+      "I call him now and then.",
+      "I call her now and then.",
+      "I phone him now and then.",
+      "I phone her now and then.",
+      "Now and then I call him.",
+      "Now and then I call her.",
+      "I call him every now and then.",
+      "I call her every now and then."
+     ],
+     "note": "now and then: ara sıra."
+    },
+    {
+     "id": "binomials-6",
+     "tr": "Bu planın artılarını ve eksilerini konuşalım.",
+     "answers": [
+      "Let's discuss the pros and cons of this plan.",
+      "Let's talk about the pros and cons of this plan.",
+      "Let us discuss the pros and cons of this plan."
+     ],
+     "note": "pros and cons: artılar ve eksiler."
+    },
+    {
+     "id": "binomials-7",
+     "tr": "Her ilişkinin iniş çıkışları vardır.",
+     "answers": [
+      "Every relationship has its ups and downs.",
+      "Every relationship has ups and downs."
+     ],
+     "note": "ups and downs: iniş çıkışlar."
+    },
+    {
+     "id": "binomials-8",
+     "tr": "Biraz huzur ve sükûnet istiyorum.",
+     "answers": [
+      "I want some peace and quiet.",
+      "I need some peace and quiet.",
+      "I'd like some peace and quiet.",
+      "I would like some peace and quiet."
+     ],
+     "note": "peace and quiet: huzur ve sükûnet."
+    },
+    {
+     "id": "binomials-9",
+     "tr": "Hanımefendiler, beyefendiler, hoş geldiniz!",
+     "answers": [
+      "Ladies and gentlemen, welcome!",
+      "Welcome, ladies and gentlemen!"
+     ],
+     "note": "ladies and gentlemen: sıra hep böyledir."
+    },
+    {
+     "id": "binomials-10",
+     "tr": "Tuzu ve biberi uzatır mısın?",
+     "answers": [
+      "Can you pass the salt and pepper?",
+      "Could you pass the salt and pepper?",
+      "Can you pass me the salt and pepper?",
+      "Could you pass me the salt and pepper?",
+      "Would you pass the salt and pepper?"
+     ],
+     "note": "salt and pepper (pepper and salt değil)."
+    },
+    {
+     "id": "binomials-11",
+     "tr": "Adım adım öğreneceğiz.",
+     "answers": [
+      "We will learn step by step.",
+      "We'll learn step by step.",
+      "We will learn it step by step.",
+      "We'll learn it step by step."
+     ],
+     "note": "step by step: adım adım."
+    },
+    {
+     "id": "binomials-12",
+     "tr": "İngilizcem azar azar gelişiyor.",
+     "answers": [
+      "Little by little, my English is improving.",
+      "Little by little my English is improving.",
+      "My English is improving little by little.",
+      "My English is getting better little by little.",
+      "Little by little, my English is getting better."
+     ],
+     "note": "little by little: azar azar, yavaş yavaş."
+    },
+    {
+     "id": "binomials-13",
+     "tr": "Yan yana oturduk.",
+     "answers": [
+      "We sat side by side.",
+      "We were sitting side by side."
+     ],
+     "note": "side by side: yan yana."
+    },
+    {
+     "id": "binomials-14",
+     "tr": "Bunu yüz yüze konuşmalıyız.",
+     "answers": [
+      "We should talk about this face to face.",
+      "We need to talk about this face to face.",
+      "We should discuss this face to face.",
+      "We must talk about this face to face."
+     ],
+     "note": "face to face: yüz yüze (by değil to)."
+    },
+    {
+     "id": "binomials-15",
+     "tr": "Her şeyden önce hepinize teşekkür etmek istiyorum.",
+     "answers": [
+      "First and foremost, I want to thank you all.",
+      "First and foremost, I would like to thank you all.",
+      "First and foremost, I'd like to thank you all.",
+      "First and foremost, I want to thank all of you.",
+      "First and foremost, I'd like to thank all of you.",
+      "First and foremost, I would like to thank all of you."
+     ],
+     "note": "first and foremost: her şeyden önce."
+    },
+    {
+     "id": "binomials-16",
+     "tr": "Genel olarak toplantı iyi geçti.",
+     "answers": [
+      "By and large, the meeting went well.",
+      "By and large the meeting went well."
+     ],
+     "note": "by and large: genel olarak."
+    },
+    {
+     "id": "binomials-b1",
+     "gap": "They arrived safe and ___.",
+     "tr": "Sağ salim vardılar.",
+     "answers": [
+      "sound"
+     ],
+     "note": "safe and sound."
+    },
+    {
+     "id": "binomials-b2",
+     "gap": "Sooner or ___ you'll have to decide.",
+     "tr": "Er ya da geç karar vermek zorunda kalacaksın.",
+     "answers": [
+      "later"
+     ],
+     "note": "sooner or later."
+    },
+    {
+     "id": "binomials-b3",
+     "gap": "I'm sick and ___ of waiting.",
+     "tr": "Beklemekten bıktım usandım.",
+     "answers": [
+      "tired"
+     ],
+     "note": "sick and tired of."
+    },
+    {
+     "id": "binomials-b4",
+     "gap": "The work is more or ___ done.",
+     "tr": "İş aşağı yukarı bitti.",
+     "answers": [
+      "less"
+     ],
+     "note": "more or less."
+    },
+    {
+     "id": "binomials-b5",
+     "gap": "We meet every now and ___.",
+     "tr": "Ara sıra buluşuruz.",
+     "answers": [
+      "then"
+     ],
+     "note": "(every) now and then."
+    },
+    {
+     "id": "binomials-b6",
+     "gap": "What are the pros and ___ of living in a big city?",
+     "tr": "Büyük şehirde yaşamanın artıları ve eksileri neler?",
+     "answers": [
+      "cons"
+     ],
+     "note": "pros and cons."
+    },
+    {
+     "id": "binomials-b7",
+     "gap": "Life is full of ups and ___.",
+     "tr": "Hayat iniş çıkışlarla dolu.",
+     "answers": [
+      "downs"
+     ],
+     "note": "ups and downs."
+    },
+    {
+     "id": "binomials-b8",
+     "gap": "Ladies and ___, please take your seats.",
+     "tr": "Hanımefendiler, beyefendiler, lütfen yerlerinize oturun.",
+     "answers": [
+      "gentlemen"
+     ],
+     "note": "ladies and gentlemen."
+    },
+    {
+     "id": "binomials-b9",
+     "gap": "Could you pass the salt and ___?",
+     "tr": "Tuzu ve biberi uzatır mısın?",
+     "answers": [
+      "pepper"
+     ],
+     "note": "salt and pepper."
+    },
+    {
+     "id": "binomials-b10",
+     "gap": "Let's do it step by ___.",
+     "tr": "Adım adım yapalım.",
+     "answers": [
+      "step"
+     ],
+     "note": "step by step."
+    },
+    {
+     "id": "binomials-b11",
+     "gap": "I just want some peace and ___.",
+     "tr": "Sadece biraz huzur ve sükûnet istiyorum.",
+     "answers": [
+      "quiet"
+     ],
+     "note": "peace and quiet."
+    },
+    {
+     "id": "binomials-b12",
+     "gap": "We need to meet face to ___.",
+     "tr": "Yüz yüze görüşmemiz gerekiyor.",
+     "answers": [
+      "face"
+     ],
+     "note": "face to face."
+    }
+   ],
+   "aliases": [
+    "binomial",
+    "binomials",
+    "ikili kalıp",
+    "ikili kalıplar",
+    "kelime çiftleri"
+   ],
+   "dict_category": "binomials"
+  },
+  {
+   "id": "false_friends",
+   "category": "phrases",
+   "level": "A2",
+   "title_tr": "Yalancı eşdeğerler (sympathetic ≠ sempatik)",
+   "title_en": "False Friends",
+   "explanation": "**Yalancı eşdeğer (false friend) nedir?** Türkçedeki bir kelimeye benzediği için aynı anlama geldiği sanılan ama başka bir şey anlatan İngilizce kelimelerdir. Çoğu Fransızcadan iki dile de geçip farklı anlamlar kazanmıştır.\n- **sympathetic** = anlayışlı, halden anlayan. Sempatik = **nice, likeable**.\n- **actual** = gerçek, asıl. Aktüel, güncel = **current**. **actually** = aslında.\n- **sensible** = mantıklı, akıllıca. Hassas = **sensitive**.\n- **eventually** = sonunda, en sonunda. Muhtemelen = **possibly, probably**.\n- **fabric** = kumaş. Fabrika = **factory**.\n- **novel** = roman. **library** = kütüphane (kitapçı = **bookshop**). **lecture** = ders, konferans.\n- **agenda** = gündem. Ajanda = **diary, planner**.\n- **chef** = şef aşçı. İş yerindeki şef = **boss, manager**.\n- Okurken Filtreler'den **False Friends**'i açarsan kitapta bu kelimeler renkli altı çizili görünür.",
+   "structure": [
+    "Benzer görünen kelime ≠ aynı anlam: sympathetic = anlayışlı",
+    "Türkçedeki anlam için başka kelime: sempatik = nice"
+   ],
+   "examples": [
+    [
+     "My boss was very sympathetic when I was ill.",
+     "Hastayken patronum çok anlayışlı davrandı."
+    ],
+    [
+     "Eventually, we found the hotel.",
+     "Sonunda oteli bulduk."
+    ],
+    [
+     "She is a very nice girl.",
+     "Çok sempatik bir kız."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "false_friends-1",
+     "tr": "Çok sempatik bir adam.",
+     "answers": [
+      "He is a very nice man.",
+      "He's a very nice man.",
+      "He is a very likeable man.",
+      "He's a very likeable man.",
+      "He is a very pleasant man.",
+      "He's a very pleasant man."
+     ],
+     "note": "sempatik = nice / likeable (sympathetic değil)."
+    },
+    {
+     "id": "false_friends-2",
+     "tr": "Hastayken öğretmenim çok anlayışlıydı.",
+     "answers": [
+      "My teacher was very sympathetic when I was ill.",
+      "My teacher was very sympathetic when I was sick.",
+      "When I was ill, my teacher was very sympathetic.",
+      "When I was sick, my teacher was very sympathetic.",
+      "My teacher was very understanding when I was ill.",
+      "My teacher was very understanding when I was sick."
+     ],
+     "note": "anlayışlı = sympathetic / understanding."
+    },
+    {
+     "id": "false_friends-3",
+     "tr": "Aslında ben öğretmen değilim.",
+     "answers": [
+      "Actually, I'm not a teacher.",
+      "Actually, I am not a teacher.",
+      "Actually I'm not a teacher.",
+      "Actually I am not a teacher.",
+      "In fact, I'm not a teacher."
+     ],
+     "note": "actually = aslında (güncel değil)."
+    },
+    {
+     "id": "false_friends-4",
+     "tr": "Bu mantıklı bir karar.",
+     "answers": [
+      "This is a sensible decision.",
+      "It's a sensible decision.",
+      "It is a sensible decision.",
+      "That's a sensible decision.",
+      "That is a sensible decision."
+     ],
+     "note": "mantıklı = sensible."
+    },
+    {
+     "id": "false_friends-5",
+     "tr": "O çok hassas bir çocuk.",
+     "answers": [
+      "He is a very sensitive child.",
+      "She is a very sensitive child.",
+      "He's a very sensitive child.",
+      "She's a very sensitive child.",
+      "He is a very sensitive kid.",
+      "She is a very sensitive kid."
+     ],
+     "note": "hassas = sensitive (sensible değil)."
+    },
+    {
+     "id": "false_friends-6",
+     "tr": "Sonunda evi bulduk.",
+     "answers": [
+      "Eventually, we found the house.",
+      "Eventually we found the house.",
+      "We eventually found the house.",
+      "Finally, we found the house.",
+      "We finally found the house.",
+      "In the end, we found the house."
+     ],
+     "note": "eventually = sonunda."
+    },
+    {
+     "id": "false_friends-7",
+     "tr": "Babam bir fabrikada çalışıyor.",
+     "answers": [
+      "My father works in a factory.",
+      "My father works at a factory.",
+      "My dad works in a factory.",
+      "My dad works at a factory."
+     ],
+     "note": "fabrika = factory (fabric değil)."
+    },
+    {
+     "id": "false_friends-8",
+     "tr": "Bu kumaş çok yumuşak.",
+     "answers": [
+      "This fabric is very soft.",
+      "This material is very soft.",
+      "This cloth is very soft."
+     ],
+     "note": "kumaş = fabric."
+    },
+    {
+     "id": "false_friends-9",
+     "tr": "Yeni bir roman okuyorum.",
+     "answers": [
+      "I am reading a new novel.",
+      "I'm reading a new novel."
+     ],
+     "note": "roman = novel."
+    },
+    {
+     "id": "false_friends-10",
+     "tr": "Bugün kütüphaneye gideceğim.",
+     "answers": [
+      "I am going to the library today.",
+      "I'm going to the library today.",
+      "I will go to the library today.",
+      "I'll go to the library today.",
+      "I'm going to go to the library today."
+     ],
+     "note": "kütüphane = library (kitapçı = bookshop)."
+    },
+    {
+     "id": "false_friends-11",
+     "tr": "Profesörün dersi çok ilginçti.",
+     "answers": [
+      "The professor's lecture was very interesting.",
+      "The lecture by the professor was very interesting."
+     ],
+     "note": "lecture = ders, konferans (okuma değil)."
+    },
+    {
+     "id": "false_friends-12",
+     "tr": "Toplantının gündeminde ne var?",
+     "answers": [
+      "What is on the agenda for the meeting?",
+      "What's on the agenda for the meeting?",
+      "What is on the meeting's agenda?",
+      "What's on the meeting's agenda?",
+      "What is on the agenda of the meeting?",
+      "What's on the agenda of the meeting?"
+     ],
+     "note": "gündem = agenda."
+    },
+    {
+     "id": "false_friends-13",
+     "tr": "Ajandama not aldım.",
+     "answers": [
+      "I wrote it in my diary.",
+      "I made a note in my diary.",
+      "I wrote it in my planner.",
+      "I made a note in my planner.",
+      "I noted it in my diary.",
+      "I noted it in my planner."
+     ],
+     "note": "ajanda = diary / planner (agenda değil)."
+    },
+    {
+     "id": "false_friends-14",
+     "tr": "Gerçek fiyat çok daha yüksek.",
+     "answers": [
+      "The actual price is much higher.",
+      "The real price is much higher."
+     ],
+     "note": "actual = gerçek (aktüel değil)."
+    },
+    {
+     "id": "false_friends-15",
+     "tr": "Bu restoranın şefi İtalyan.",
+     "answers": [
+      "The chef of this restaurant is Italian.",
+      "This restaurant's chef is Italian.",
+      "The chef at this restaurant is Italian."
+     ],
+     "note": "chef = şef aşçı."
+    },
+    {
+     "id": "false_friends-16",
+     "tr": "Patronum bugün ofiste değil.",
+     "answers": [
+      "My boss is not in the office today.",
+      "My boss isn't in the office today.",
+      "My boss is not at the office today.",
+      "My boss isn't at the office today."
+     ],
+     "note": "iş yerindeki şef = boss (chef değil)."
+    },
+    {
+     "id": "false_friends-b1",
+     "gap": "She is a very ___ person; everybody likes her.",
+     "tr": "Çok sempatik biri, herkes onu sever.",
+     "answers": [
+      "nice",
+      "likeable",
+      "pleasant"
+     ],
+     "note": "sempatik = nice."
+    },
+    {
+     "id": "false_friends-b2",
+     "gap": "Thank you for being so ___ when my father died.",
+     "tr": "Babam öldüğünde bu kadar anlayışlı olduğun için teşekkür ederim.",
+     "answers": [
+      "sympathetic",
+      "understanding"
+     ],
+     "note": "anlayışlı = sympathetic."
+    },
+    {
+     "id": "false_friends-b3",
+     "gap": "It's a ___ idea to take an umbrella.",
+     "tr": "Şemsiye almak mantıklı bir fikir.",
+     "answers": [
+      "sensible",
+      "good"
+     ],
+     "note": "mantıklı = sensible."
+    },
+    {
+     "id": "false_friends-b4",
+     "gap": "My skin is very ___ to the sun.",
+     "tr": "Cildim güneşe karşı çok hassas.",
+     "answers": [
+      "sensitive"
+     ],
+     "note": "hassas = sensitive."
+    },
+    {
+     "id": "false_friends-b5",
+     "gap": "After hours of waiting, the bus ___ arrived.",
+     "tr": "Saatlerce bekledikten sonra otobüs sonunda geldi.",
+     "answers": [
+      "eventually",
+      "finally"
+     ],
+     "note": "eventually = sonunda."
+    },
+    {
+     "id": "false_friends-b6",
+     "gap": "___, I've never been to London.",
+     "tr": "Aslında hiç Londra'ya gitmedim.",
+     "answers": [
+      "Actually",
+      "In fact"
+     ],
+     "note": "actually = aslında."
+    },
+    {
+     "id": "false_friends-b7",
+     "gap": "They make cars in that ___.",
+     "tr": "O fabrikada araba üretiyorlar.",
+     "answers": [
+      "factory"
+     ],
+     "note": "fabrika = factory."
+    },
+    {
+     "id": "false_friends-b8",
+     "gap": "This dress is made of a light ___.",
+     "tr": "Bu elbise hafif bir kumaştan yapılmış.",
+     "answers": [
+      "fabric",
+      "material"
+     ],
+     "note": "kumaş = fabric."
+    },
+    {
+     "id": "false_friends-b9",
+     "gap": "Have you read his latest ___?",
+     "tr": "Onun son romanını okudun mu?",
+     "answers": [
+      "novel",
+      "book"
+     ],
+     "note": "roman = novel."
+    },
+    {
+     "id": "false_friends-b10",
+     "gap": "You can borrow books from the ___.",
+     "tr": "Kütüphaneden kitap ödünç alabilirsin.",
+     "answers": [
+      "library"
+     ],
+     "note": "kütüphane = library."
+    },
+    {
+     "id": "false_friends-b11",
+     "gap": "The first item on the ___ is the budget.",
+     "tr": "Gündemin ilk maddesi bütçe.",
+     "answers": [
+      "agenda"
+     ],
+     "note": "gündem = agenda."
+    },
+    {
+     "id": "false_friends-b12",
+     "gap": "My ___ gave me a day off.",
+     "tr": "Patronum bana bir gün izin verdi.",
+     "answers": [
+      "boss",
+      "manager"
+     ],
+     "note": "patron, şef = boss."
+    }
+   ],
+   "aliases": [
+    "false friend",
+    "false friends",
+    "yalancı eşdeğer",
+    "yalancı eşdeğerler",
+    "yalancı arkadaşlar"
+   ],
+   "dict_category": "false_friends"
   },
   {
    "id": "inversion",

@@ -31,7 +31,9 @@ import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
 import 'package:kelime_okur/nlp/text.dart' show displayPhrase;
 import 'package:kelime_okur/online/ai_service.dart';
+import 'package:kelime_okur/ui/dictionary_page.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
+import 'package:kelime_okur/ui/expression_list.dart';
 import 'package:kelime_okur/ui/grammar/grammar_page.dart';
 import 'package:kelime_okur/ui/key_guide.dart';
 import 'package:kelime_okur/ui/library_page.dart';
@@ -356,17 +358,14 @@ Future<void> allScreens(WidgetTester tester) async {
   await tester.pumpWidget(shell(WordsPage(app: app)));
   await capture(tester, 'my_words');
 
-  // Dictionary categories and one list.
-  await tester.pumpWidget(shell(CategoriesPage(app: app)));
+  // Word dictionary, a search, and one expression list (opened from Grammar).
+  app.user.setSetting('dictionary_recent', '["though", "work", "differ"]');
+  await tester.pumpWidget(shell(DictionaryPage(app: app)));
   await capture(tester, 'dictionary');
-  final tiles = find.byType(InkWell);
-  if (tiles.evaluate().length > 3) {
-    final firstCat = find.text(uiEnglish ? categories.first.name : categories.first.tr);
-    if (firstCat.evaluate().isNotEmpty) {
-      await tester.tap(firstCat.first);
-      await capture(tester, 'dictionary_category');
-    }
-  }
+  await tester.enterText(find.byType(TextField).first, 'wor');
+  await capture(tester, 'dictionary_search');
+  await tester.pumpWidget(shell(ExpressionListPage(app: app, cat: categories.first)));
+  await capture(tester, 'dictionary_category');
 
   // Reader with its menus, opened from its own buttons.
   final book = app.user.books().firstWhere((b) => b.id == bookId);
@@ -429,6 +428,9 @@ Future<void> allScreens(WidgetTester tester) async {
   final topic = lessons.firstWhere((t) => t.id == 'although_despite', orElse: () => lessons.first);
   await tester.pumpWidget(shell(GrammarTopicPage(app: app, topic: topic)));
   await capture(tester, 'grammar_topic');
+  final phrases = lessons.firstWhere((t) => t.id == 'phrasal_verbs', orElse: () => lessons.first);
+  await tester.pumpWidget(shell(GrammarTopicPage(app: app, topic: phrases)));
+  await capture(tester, 'grammar_topic_phrasal_verbs');
   fakeAi.fail = true;
   final tx = topic.exercises.firstWhere((e) => !e.isGap), gx = topic.exercises.firstWhere((e) => e.isGap);
   // Tall enough that the whole practice page (answer card, buttons) is built.
@@ -560,8 +562,8 @@ void main() {
       content.addAll([e.phrase, displayPhrase(e.phrase)]);
       if (e.en != null) content.addAll(e.en!.split('\n').map((x) => x.trim()));
     }
-    // Meanings shown in the word lists and the quiz.
-    for (final w in [...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
+    // Meanings shown in the word lists, the dictionary tab and the quiz.
+    for (final w in [...d.searchWords('wor', limit: 60), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
       final m = app.shortMeaning(w);
       if (m != null) content.addAll([m, ...m.split(', ')]);
       final info = d.lookup(w);
