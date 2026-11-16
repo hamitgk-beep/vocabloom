@@ -9,10 +9,19 @@ import '../../app_state.dart';
 import '../../l10n.dart';
 import '../ai/ai_page.dart';
 import '../ai/ai_tools.dart';
+import '../panel.dart';
 import '../tap_text.dart';
 import '../theme.dart';
 
 const _green = Color(0xFF16A34A);
+
+/// The English title under the Turkish one, unless it says the same thing.
+String? _subtitle(GrammarTopic t) {
+  final s = t.subtitle;
+  if (s == null) return null;
+  String norm(String x) => x.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), '');
+  return norm(s) == norm(t.title) || t.title.toLowerCase().startsWith(s.toLowerCase()) ? null : s;
+}
 
 Color _levelColor(String level) => switch (level) {
   'A1' || 'A2' => const Color(0xFF0E9F6E),
@@ -275,7 +284,7 @@ class _NextTopicCard extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         [
-                          ?topic.subtitle,
+                          ?_subtitle(topic),
                           done == 0 ? L('$n cümle', '$n sentences') : L('$done/$n tamamlandı', '$done of $n done'),
                         ].join(' · '),
                         style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant),
@@ -324,7 +333,7 @@ class _TopicTile extends StatelessWidget {
                       _LevelChip(topic.level),
                     ],
                   ),
-                  if (topic.subtitle case final sub?) ...[const SizedBox(height: 2), Text(sub, style: theme.textTheme.bodySmall)],
+                  if (_subtitle(topic) case final sub?) ...[const SizedBox(height: 2), Text(sub, style: theme.textTheme.bodySmall)],
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -407,7 +416,7 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
                 children: [
                   _LevelChip(t.level),
                   const SizedBox(width: 8),
-                  if (t.subtitle case final sub?)
+                  if (_subtitle(t) case final sub?)
                     Flexible(
                       child: Text(sub, style: theme.textTheme.titleSmall?.copyWith(color: cs.onSurfaceVariant)),
                     ),
@@ -439,14 +448,7 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
                   children: [
                     for (final (i, e) in t.examples.indexed) ...[
                       if (i > 0) const SizedBox(height: 12),
-                      TapText(
-                        e.$1,
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: cs.primary,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
+                      TapText(e.$1, style: enStyle(theme, theme.textTheme.bodyLarge)),
                       const SizedBox(height: 2),
                       Text(e.$2, style: theme.textTheme.bodyMedium),
                     ],
@@ -804,7 +806,7 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                           padding: const EdgeInsets.only(bottom: 4),
                           child: Text(
                             '"${e.gapSolved}"',
-                            style: theme.textTheme.bodyLarge?.copyWith(color: cs.primary, fontWeight: FontWeight.w600),
+                            style: enStyle(theme, theme.textTheme.bodyLarge),
                           ),
                         ),
                       if (e.isGap && e.answers.length > 1)
@@ -818,7 +820,7 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                             padding: const EdgeInsets.only(bottom: 4),
                             child: Text(
                               '•  $a',
-                              style: theme.textTheme.bodyLarge?.copyWith(color: cs.primary, fontWeight: FontWeight.w600),
+                              style: enStyle(theme, theme.textTheme.bodyLarge),
                             ),
                           ),
                       if (e.note.isNotEmpty) ...[
@@ -900,8 +902,17 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                 TextSpan(text: p),
                 if (i < parts.length - 1)
                   TextSpan(
-                    text: state == _State.asking || state == _State.checking ? '  ______  ' : ' ${input.text.trim()} ',
-                    style: TextStyle(color: cs.primary, backgroundColor: cs.primaryContainer.withValues(alpha: 0.5)),
+                    text: state == _State.asking || state == _State.checking || input.text.trim().isEmpty ? '  ______  ' : ' ${input.text.trim()} ',
+                    style: state == _State.asking || state == _State.checking || input.text.trim().isEmpty
+                        ? TextStyle(color: cs.primary, backgroundColor: cs.primaryContainer.withValues(alpha: 0.5))
+                        : state == _State.right
+                            ? TextStyle(color: _green, backgroundColor: _green.withValues(alpha: 0.12))
+                            : TextStyle(
+                                color: const Color(0xFFD97706),
+                                backgroundColor: const Color(0xFFD97706).withValues(alpha: 0.12),
+                                decoration: TextDecoration.lineThrough,
+                                decorationColor: const Color(0xFFD97706),
+                              ),
                   ),
               ],
             ],
