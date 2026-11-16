@@ -425,7 +425,9 @@ class _AiServicePageState extends State<AiServicePage> {
     final u = widget.app.user;
     u.setSetting('ai_provider', providerId);
     u.setSetting('ai_key_$providerId', key.text.trim().isEmpty ? null : key.text.trim());
-    u.setSetting('ai_model_$providerId', model.text.trim().isEmpty ? null : model.text.trim());
+    final m = model.text.trim();
+    // The default is not saved, so a later version's better default applies.
+    u.setSetting('ai_model_$providerId', m.isEmpty || m == providerById[providerId]!.defaultModel ? null : m);
     u.setSetting('ai_url_$providerId', url.text.trim().isEmpty ? null : url.text.trim());
   }
 

@@ -59,6 +59,11 @@ const providers = <ProviderInfo>[
 
 final providerById = {for (final p in providers) p.id: p};
 
+/// Models earlier versions used as their default, per provider.
+const legacyDefaults = {
+  'gemini': {'gemini-flash-latest', 'gemini-2.5-flash'},
+};
+
 class AiConfig {
   final ProviderInfo provider;
   final String key;
@@ -76,7 +81,10 @@ class AiSettings {
     final p = id == null ? null : providerById[id];
     if (p == null) return null;
     final key = db.getSetting('ai_key_$id') ?? (id == 'anthropic' ? db.getSetting('api_key') : null) ?? '';
-    final model = db.getSetting('ai_model_$id') ?? p.defaultModel;
+    var model = db.getSetting('ai_model_$id') ?? p.defaultModel;
+    // Earlier versions saved their default model with the key; the old Gemini
+    // default (a slow "thinking" model) is replaced by the current one.
+    if (legacyDefaults[id]?.contains(model.trim()) ?? false) model = p.defaultModel;
     final base = db.getSetting('ai_url_$id') ?? p.baseUrl;
     if (p.needsKey && key.trim().isEmpty) return null;
     if (model.trim().isEmpty || (p.kind != ApiKind.anthropic && p.kind != ApiKind.gemini && base.trim().isEmpty)) return null;
@@ -143,8 +151,8 @@ class AiService {
   Future<String> chat(String system, List<(String, String)> history, {int maxTokens = 1500}) =>
       _send('', null, maxTokens: maxTokens, system: system, history: history);
 
-  Future<String> _send(String prompt, Map<String, dynamic>? schema,
-      {Uint8List? png, int maxTokens = 16000, String? system, List<(String, String)>? history}) async {
+  ({Uri url, Map<String, String> headers, Map<String, dynamic> body}) _request(String prompt, Map<String, dynamic>? schema,
+      {Uint8List? png, int maxTokens = 16000, String? system, List<(String, String)>? history, bool stream = false, bool think = true}) {
     final kind = cfg.provider.kind;
     final sys = system ?? _system;
     final turns = history ?? [('user', prompt)];
@@ -182,7 +190,7 @@ class AiService {
           headers['anthropic-beta'] = 'server-side-fallback-2026-07-01';
         }
       case ApiKind.gemini:
-        url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/${cfg.model}:generateContent');
+        url = Uri.parse('https://generativelanguage.googleapis.com/v1beta/models/${cfg.model}:${stream ? 'streamGenerateContent?alt=sse' : 'generateContent'}');
         headers['x-goog-api-key'] = cfg.key;
         body = {
           'systemInstruction': {
@@ -200,7 +208,13 @@ class AiService {
                 ],
               }
           ],
-          'generationConfig': {if (schema != null) 'responseMimeType': 'application/json', 'maxOutputTokens': maxTokens},
+          'generationConfig': {
+            if (schema != null) 'responseMimeType': 'application/json',
+            'maxOutputTokens': maxTokens,
+            // A chat answer needs no long hidden reasoning: it is what made
+            // answers take most of a minute on the "thinking" Flash models.
+            if (!think) 'thinkingConfig': geminiQuickThinking(cfg.model),
+          },
         };
       case ApiKind.openai:
       case ApiKind.azure:
@@ -232,8 +246,18 @@ class AiService {
           ],
           if (schema != null) 'response_format': {'type': 'json_object'},
           'max_tokens': maxTokens,
+          if (stream) 'stream': true,
         };
     }
+    if (stream && kind == ApiKind.anthropic) body['stream'] = true;
+    return (url: url, headers: headers, body: body);
+  }
+
+  Future<String> _send(String prompt, Map<String, dynamic>? schema,
+      {Uint8List? png, int maxTokens = 16000, String? system, List<(String, String)>? history}) async {
+    final kind = cfg.provider.kind;
+    final (:url, :headers, :body) = _request(prompt, schema, png: png, maxTokens: maxTokens, system: system, history: history);
+
     // Busy (503/529) or rate-limited (429): wait a little and try again.
     // A chat answer is short: do not let one request hang the learner.
     final limit = history != null ? const Duration(seconds: 60) : const Duration(minutes: 5);
@@ -250,19 +274,7 @@ class AiService {
     try {
       data = jsonDecode(raw) as Map<String, dynamic>;
     } catch (_) {}
-    if (res.statusCode != 200 || data == null) {
-      final err = data?['error'];
-      final msg = err is Map ? err['message'] : (err ?? raw);
-      final hint = switch (res.statusCode) {
-        400 when '$msg'.toLowerCase().contains('api key') => L(' (Anahtar geçersiz görünüyor; kopyalarken eksik/boşluk kalmış olabilir.)', ' (The key looks invalid; part of it may be missing or have extra spaces from copying.)'),
-        401 || 403 => L(' (Anahtar geçersiz ya da bu servise yetkisi yok.)', ' (The key is invalid or has no access to this service.)'),
-        404 => L(' (Model adı bulunamadı; model kutusunu değiştirip tekrar deneyin.)', ' (Model name not found; change the model box and try again.)'),
-        429 => L(' (Kullanım sınırına takıldı; ücretsiz planda biraz bekleyip tekrar deneyin.)', ' (Usage limit reached; on the free plan, wait a bit and try again.)'),
-        503 || 529 => L(' (Anahtarın çalışıyor, ama model şu an çok yoğun. Biraz sonra tekrar deneyin ya da model adını değiştirin, ör. gemini-flash-lite-latest.)', ' (Your key works, but the model is very busy right now. Try again a bit later or change the model name, e.g. gemini-flash-lite-latest.)'),
-        _ => '',
-      };
-      throw Exception(L('${cfg.provider.name} hatası (${res.statusCode}): $msg$hint', '${cfg.provider.name} error (${res.statusCode}): $msg$hint'));
-    }
+    if (res.statusCode != 200 || data == null) throw _error(res.statusCode, raw, data);
     switch (kind) {
       case ApiKind.anthropic:
         if (data['stop_reason'] == 'refusal') throw Exception(L('İstek model tarafından reddedildi.', 'The request was refused by the model.'));
@@ -277,6 +289,92 @@ class AiService {
         final ch = (data['choices'] as List).first as Map;
         if (ch['finish_reason'] == 'length') throw Exception(L('Yanıt çok uzun olduğu için kesildi.', 'The answer was cut off because it was too long.'));
         return ((ch['message'] as Map)['content'] ?? '') as String;
+    }
+  }
+
+  Exception _error(int status, String raw, Map<String, dynamic>? data) {
+    final err = data?['error'];
+    final msg = err is Map ? err['message'] : (err ?? raw);
+    final hint = switch (status) {
+      400 when '$msg'.toLowerCase().contains('api key') => L(' (Anahtar geçersiz görünüyor; kopyalarken eksik/boşluk kalmış olabilir.)', ' (The key looks invalid; part of it may be missing or have extra spaces from copying.)'),
+      401 || 403 => L(' (Anahtar geçersiz ya da bu servise yetkisi yok.)', ' (The key is invalid or has no access to this service.)'),
+      404 => L(' (Model adı bulunamadı; model kutusunu değiştirip tekrar deneyin.)', ' (Model name not found; change the model box and try again.)'),
+      429 => L(' (Kullanım sınırına takıldı; ücretsiz planda biraz bekleyip tekrar deneyin.)', ' (Usage limit reached; on the free plan, wait a bit and try again.)'),
+      503 || 529 => L(' (Anahtarın çalışıyor, ama model şu an çok yoğun. Biraz sonra tekrar deneyin ya da model adını değiştirin, ör. gemini-flash-lite-latest.)', ' (Your key works, but the model is very busy right now. Try again a bit later or change the model name, e.g. gemini-flash-lite-latest.)'),
+      _ => '',
+    };
+    return Exception(L('${cfg.provider.name} hatası ($status): $msg$hint', '${cfg.provider.name} error ($status): $msg$hint'));
+  }
+
+  /// A chat answer as it is written, piece by piece, so the first words show
+  /// within a second or two instead of after the whole answer. [history] is
+  /// as in [chat]. Hidden reasoning ("thinking") is kept short or off.
+  Stream<String> chatStream(String system, List<(String, String)> history, {int maxTokens = 1500}) async* {
+    final kind = cfg.provider.kind;
+    var think = kind != ApiKind.gemini;
+    var tries = 0;
+    while (true) {
+      final (:url, :headers, :body) = _request('', null, maxTokens: maxTokens, system: system, history: history, stream: true, think: think);
+      final client = http.Client();
+      try {
+        final req = http.Request('POST', url)
+          ..headers.addAll(headers)
+          ..body = jsonEncode(body);
+        final res = await client.send(req).timeout(const Duration(seconds: 30));
+        if (res.statusCode != 200) {
+          final raw = await res.stream.bytesToString();
+          Map<String, dynamic>? data;
+          try {
+            final j = jsonDecode(raw);
+            data = j is List ? (j.firstOrNull as Map<String, dynamic>?) : j as Map<String, dynamic>;
+          } catch (_) {}
+          // A model that cannot switch its thinking off: ask again without the setting.
+          if (!think && res.statusCode == 400 && raw.toLowerCase().contains('think')) {
+            think = true;
+            continue;
+          }
+          // Busy or rate-limited: one quick retry.
+          if ((res.statusCode == 503 || res.statusCode == 529 || res.statusCode == 429) && tries++ == 0) {
+            await Future<void>.delayed(const Duration(seconds: 2));
+            continue;
+          }
+          throw _error(res.statusCode, raw, data);
+        }
+        var cut = false;
+        await for (final line in res.stream.transform(utf8.decoder).transform(const LineSplitter())) {
+          if (!line.startsWith('data:')) continue;
+          final payload = line.substring(5).trim();
+          if (payload.isEmpty || payload == '[DONE]') continue;
+          final Map<String, dynamic> d;
+          try {
+            d = jsonDecode(payload) as Map<String, dynamic>;
+          } catch (_) {
+            continue;
+          }
+          if (d['error'] != null) throw _error(500, payload, d);
+          switch (kind) {
+            case ApiKind.anthropic:
+              final delta = d['delta'];
+              if (d['type'] == 'content_block_delta' && delta is Map && delta['type'] == 'text_delta') yield '${delta['text'] ?? ''}';
+              if (d['type'] == 'message_delta' && delta is Map && delta['stop_reason'] == 'max_tokens') cut = true;
+            case ApiKind.gemini:
+              final c = (d['candidates'] as List?)?.firstOrNull as Map?;
+              for (final p in ((c?['content'] as Map?)?['parts'] as List?) ?? const []) {
+                if (p is Map && p['thought'] != true && p['text'] is String) yield p['text'] as String;
+              }
+            case ApiKind.openai:
+            case ApiKind.azure:
+              final ch = (d['choices'] as List?)?.firstOrNull as Map?;
+              final t = (ch?['delta'] as Map?)?['content'];
+              if (t is String) yield t;
+              if (ch?['finish_reason'] == 'length') cut = true;
+          }
+        }
+        if (cut) yield '…';
+        return;
+      } finally {
+        client.close();
+      }
     }
   }
 
@@ -571,4 +669,12 @@ Future<void> analyzeBook(AiService svc, UserDb db, int bookId,
     if (summaries.isNotEmpty) db.setChapterSummary(bookId, ch.idx, summaries.join(' '));
   }
   db.db.execute('UPDATE books SET analyzed=1 WHERE id=?', [bookId]);
+}
+
+/// Gemini's setting for "think as little as this model allows": the 2.5
+/// models take a token budget (0 = off, except Pro), the newer ones a level.
+Map<String, dynamic> geminiQuickThinking(String model) {
+  final m = model.toLowerCase();
+  if (m.contains('2.5') || m.contains('2.0')) return {'thinkingBudget': m.contains('pro') ? 128 : 0};
+  return {'thinkingLevel': m.contains('pro') ? 'low' : 'minimal'};
 }
