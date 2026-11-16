@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: ['claude/**']
-    paths: ['lib/tts/**', 'test/speech_test.dart', '.github/workflows/voice-windows.yml']
+    paths: ['lib/tts/**', 'test/speech_test.dart', 'test/os_download_test.dart', '.github/workflows/voice-windows.yml']
 jobs:
   voice:
     runs-on: windows-latest
@@ -26,3 +26,8 @@ jobs:
           export SHERPA_ONNX_LIB_DIR="$(cygpath -w "$lib")" PATH="$lib:$PATH"
           export VOCABLOOM_VOICE_BASE=https://github.com/${{ github.repository }}/releases/download/voice-models
           flutter test test/speech_test.dart --reporter expanded
+      - name: Windows' own downloaders (for PCs where Dart's client is blocked)
+        shell: bash
+        run: |
+          VOCABLOOM_OS_DOWNLOAD=curl flutter test test/os_download_test.dart --reporter expanded
+          VOCABLOOM_OS_DOWNLOAD=powershell flutter test test/os_download_test.dart --reporter expanded

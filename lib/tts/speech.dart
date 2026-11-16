@@ -188,6 +188,7 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     final st = stateOf(pk);
     if (st == PackState.downloading || st == PackState.extracting || st == PackState.ready) return;
     _user?.setSetting('tts_removed_${pk.id}', null);
+    _cancelled.remove(pk.id);
     _state[pk.id] = PackState.downloading;
     _progress[pk.id] = 0;
     _error.remove(pk.id);
@@ -196,28 +197,19 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     final zip = File(p.join(voiceDir.path, '${pk.id}.zip.part'));
     try {
       await voiceDir.create(recursive: true);
-      final client = _clients[pk.id] = http.Client();
-      final res = await client.send(http.Request('GET', Uri.parse(url ?? pk.url)));
-      if (res.statusCode != 200) throw HttpException('HTTP ${res.statusCode}');
-      final total = res.contentLength;
-      final sink = zip.openWrite();
-      var got = 0;
-      var lastNotify = DateTime(0);
+      final src = url ?? pk.url;
+      final forced = Platform.environment['VOCABLOOM_OS_DOWNLOAD'];
       try {
-        await for (final chunk in res.stream) {
-          sink.add(chunk);
-          got += chunk.length;
-          final now = DateTime.now();
-          if (now.difference(lastNotify).inMilliseconds > 200) {
-            lastNotify = now;
-            _progress[pk.id] = min(1, got / (total ?? pk.mb * 1024 * 1024));
-            notifyListeners();
-          }
-        }
-      } finally {
-        await sink.close();
+        if (forced != null) throw const SocketException('forced OS download');
+        await _fetchDart(pk, src, zip);
+      } catch (e) {
+        // Dart's own HTTP client ignores Windows' proxy settings and some
+        // antivirus certificates. Windows' own tools use both, so they are
+        // tried before giving up.
+        if (!Platform.isWindows || _cancelled.remove(pk.id) || !_isNetworkError(e)) rethrow;
+        _log('${pk.id}: built-in download failed ($e), trying Windows');
+        await _fetchWindows(pk, src, zip, e, only: forced);
       }
-      if (total != null && got < total) throw const HttpException('download interrupted');
       _state[pk.id] = PackState.extracting;
       notifyListeners();
       final dir = packDir(pk);
@@ -238,16 +230,110 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
       _state[pk.id] = PackState.ready;
       unawaited(warmUp());
     } catch (e) {
-      debugPrint('voice pack ${pk.id}: $e');
-      _error[pk.id] = _downloadError(e);
+      _log('${pk.id}: failed: $e');
+      final detail = '$e'.replaceAll(RegExp(r'\s+'), ' ');
+      _error[pk.id] = '${_downloadError(e)}\n${L('Ayrıntı', 'Details')}: ${detail.length > 300 ? '${detail.substring(0, 300)}…' : detail}';
       _state[pk.id] = PackState.failed;
       try {
         if (zip.existsSync()) zip.deleteSync();
       } catch (_) {}
     } finally {
-      _clients.remove(pk.id)?.close();
       notifyListeners();
     }
+  }
+
+  final _procs = <String, Process>{};
+  final _cancelled = <String>{};
+
+  Future<void> _fetchDart(VoicePack pk, String url, File zip) async {
+    final client = _clients[pk.id] = http.Client();
+    try {
+      final res = await client.send(http.Request('GET', Uri.parse(url)));
+      if (res.statusCode != 200) throw HttpException('HTTP ${res.statusCode}');
+      final total = res.contentLength;
+      final sink = zip.openWrite();
+      var got = 0;
+      var lastNotify = DateTime(0);
+      try {
+        await for (final chunk in res.stream) {
+          sink.add(chunk);
+          got += chunk.length;
+          final now = DateTime.now();
+          if (now.difference(lastNotify).inMilliseconds > 200) {
+            lastNotify = now;
+            _progress[pk.id] = min(1, got / (total ?? pk.mb * 1024 * 1024));
+            notifyListeners();
+          }
+        }
+      } finally {
+        await sink.close();
+      }
+      if (total != null && got < total) throw const HttpException('download interrupted');
+    } finally {
+      _clients.remove(pk.id)?.close();
+    }
+  }
+
+  static bool _isNetworkError(Object e) =>
+      e is SocketException || e is TlsException || e is http.ClientException || e is HandshakeException || e is OSError;
+
+  /// Downloads with curl.exe (Windows 10 and later), then PowerShell, which
+  /// follow Windows' own proxy and certificate settings.
+  Future<void> _fetchWindows(VoicePack pk, String url, File zip, Object first, {String? only}) async {
+    String q(String x) => "'${x.replaceAll("'", "''")}'";
+    final tries = <(String, List<String>)>[
+      if (only == null || only == 'curl')
+        ('curl.exe', ['-L', '-f', '-sS', '--retry', '2', '--ssl-revoke-best-effort', '-o', zip.path, url]),
+      if (only == null || only == 'powershell')
+        ('powershell.exe', [
+          '-NoProfile', '-NonInteractive', '-Command',
+          "\$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; "
+              "[Net.WebRequest]::DefaultWebProxy.Credentials=[Net.CredentialCache]::DefaultCredentials; "
+              "Invoke-WebRequest -UseBasicParsing -Uri ${q(url)} -OutFile ${q(zip.path)}",
+        ]),
+    ];
+    final errors = ['$first'];
+    for (final (exe, args) in tries) {
+      try {
+        if (zip.existsSync()) zip.deleteSync();
+        final proc = _procs[pk.id] = await Process.start(exe, args, runInShell: false);
+        final err = StringBuffer();
+        proc.stderr.transform(const SystemEncoding().decoder).listen(err.write);
+        proc.stdout.drain<void>();
+        final timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
+          try {
+            final got = zip.existsSync() ? zip.lengthSync() : 0;
+            _progress[pk.id] = min(0.99, got / (pk.mb * 1024 * 1024));
+            notifyListeners();
+          } catch (_) {}
+        });
+        final code = await proc.exitCode;
+        timer.cancel();
+        _procs.remove(pk.id);
+        if (_cancelled.remove(pk.id)) throw const HttpException('download interrupted');
+        if (code == 0 && zip.existsSync() && zip.lengthSync() > 1024 * 1024) {
+          _log('${pk.id}: downloaded with $exe');
+          return;
+        }
+        errors.add('$exe: exit $code ${err.toString().trim()}');
+      } on HttpException {
+        rethrow;
+      } catch (e) {
+        errors.add('$exe: $e');
+      }
+    }
+    throw SocketException(errors.join(' | '));
+  }
+
+  /// Appends a line to voice/log.txt, kept small, to find out later why a
+  /// download failed on someone's computer.
+  void _log(String line) {
+    debugPrint(line);
+    try {
+      final f = File(p.join(_root.path, 'voice', 'log.txt'));
+      if (f.existsSync() && f.lengthSync() > 200000) f.deleteSync();
+      f.writeAsStringSync('${DateTime.now().toIso8601String()} $line\n', mode: FileMode.append);
+    } catch (_) {}
   }
 
   /// Downloads both English packs, the small light one first so speech
@@ -270,7 +356,13 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     }
   }
 
-  void cancelDownload(VoicePack pk) => _clients[pk.id]?.close();
+  void cancelDownload(VoicePack pk) {
+    final c = _clients[pk.id], pr = _procs[pk.id];
+    if (c == null && pr == null) return;
+    _cancelled.add(pk.id);
+    c?.close();
+    pr?.kill();
+  }
 
   Future<void> deletePack(VoicePack pk) async {
     _user?.setSetting('tts_removed_${pk.id}', '1');
