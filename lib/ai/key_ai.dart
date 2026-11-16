@@ -11,9 +11,6 @@ class KeyAi extends LocalAi {
   final UserDb db;
   KeyAi(this.db);
 
-  /// How long one answer may take.
-  static const answerTimeout = Duration(seconds: 120);
-
   AiService? get service => AiService.fromSettings(db);
 
   /// The Gemini model that answers quickly on the free plan.
@@ -52,30 +49,75 @@ class KeyAi extends LocalAi {
       throw const AiException('Yapay zekâ için Ayarlar > Yapay zekâ servisi bölümünden kendi API anahtarını ekle.',
           'To use the AI, add your own API key in Settings > AI service.');
     }
-    late final String text;
+    final turns = alternateTurns(messages);
+    // Online models write longer than the old offline one: give them room
+    // so an answer is not cut off.
+    final budget = maxTokens < 1200 ? 1200 : maxTokens;
+    final c = svc.cfg;
+    final canFallBack = c.provider.kind == ApiKind.gemini && c.model != fastGemini;
+    var got = false;
     try {
-      // Online models think more and write longer than the old offline one:
-      // give them room so an answer is not cut off.
-      final turns = alternateTurns(messages);
-      final budget = maxTokens < 1200 ? 1200 : maxTokens;
-      try {
-        text = await svc.chat(system, turns, maxTokens: budget).timeout(answerTimeout);
-      } on TimeoutException {
-        // Gemini's thinking models can stall on the free plan (seen with
-        // gemini-flash-latest): try the quick lite model once.
-        final c = svc.cfg;
-        if (c.provider.kind != ApiKind.gemini || c.model == fastGemini) rethrow;
-        text = await AiService(AiConfig(c.provider, c.key, fastGemini, c.baseUrl)).chat(system, turns, maxTokens: budget).timeout(answerTimeout);
+      await for (final piece in _answer(svc, system, turns, budget, firstWait: canFallBack ? fallbackAfter : waitLimit)) {
+        got = true;
+        yield piece;
       }
     } on TimeoutException {
-      throw const AiException('Yapay zekâ servisi çok uzun süre yanıt vermedi. İnternet bağlantını kontrol edip tekrar dene.',
-          'The AI service did not answer for too long. Check your internet connection and try again.');
+      if (got || !canFallBack) throw _tooLong;
+      // A slow or busy Gemini model: the quick lite one answers in about a second.
+      try {
+        yield* _answer(AiService(AiConfig(c.provider, c.key, fastGemini, c.baseUrl)), system, turns, budget, firstWait: waitLimit);
+      } on TimeoutException {
+        throw _tooLong;
+      }
+      return;
     }
-    final answer = stripThinking(text).trim();
-    if (answer.isEmpty) {
+    if (!got) {
       throw const AiException('Yapay zekâ bu kez boş bir yanıt verdi. Tekrar dene.', 'The AI gave an empty answer this time. Try again.');
     }
-    yield answer;
+  }
+
+  static const _tooLong = AiException('Yapay zekâ servisi çok uzun süre yanıt vermedi. İnternet bağlantını kontrol edip tekrar dene.',
+      'The AI service did not answer for too long. Check your internet connection and try again.');
+
+  /// No first words after this long: switch to the quick Gemini model.
+  static const fallbackAfter = Duration(seconds: 12);
+
+  /// The longest wait for the first or the next words.
+  static const waitLimit = Duration(seconds: 45);
+
+  /// The answer's pieces without any `<think>…</think>` block in front;
+  /// a [TimeoutException] when the service goes quiet.
+  Stream<String> _answer(AiService svc, String system, List<(String, String)> turns, int budget, {required Duration firstWait}) async* {
+    final it = StreamIterator(svc.chatStream(system, turns, maxTokens: budget));
+    var head = '';
+    var inHead = true;
+    var first = true;
+    try {
+      while (await it.moveNext().timeout(first ? firstWait : waitLimit)) {
+        first = false;
+        var piece = it.current;
+        if (inHead) {
+          // Hold back the start until it is clear whether it is reasoning.
+          head += piece;
+          final t = head.trimLeft();
+          if (t.startsWith('<think>')) {
+            final end = t.indexOf('</think>');
+            if (end < 0) continue;
+            piece = t.substring(end + 8).trimLeft();
+          } else if ('<think>'.startsWith(t)) {
+            continue;
+          } else {
+            piece = t;
+          }
+          inHead = false;
+          if (piece.isEmpty) continue;
+        }
+        yield piece;
+      }
+      if (inHead && head.trim().isNotEmpty && !head.trimLeft().startsWith('<think>')) yield head.trimLeft();
+    } finally {
+      await it.cancel();
+    }
   }
 
   @override

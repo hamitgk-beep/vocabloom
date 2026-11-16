@@ -26,18 +26,24 @@ void main() {
     u.setSetting('ai_key_$provider', key);
     final app = AppState(d, u)..localAi = KeyAi(u);
     // The service itself first, with its own error text and timing, on a
-    // few models: the first one that answers is used for the rest.
+    // few models: time to the first words (streaming) and to the end.
     String? works;
-    for (final m in [null, 'gemini-flash-latest']) {
+    for (final m in [null, 'gemini-flash-latest', 'gemini-2.5-flash']) {
       // null: the app's default model.
       u.setSetting('ai_model_$provider', m);
+      final svc = AiService(AiConfig(providerById[provider]!, key!, m ?? providerById[provider]!.defaultModel, ''));
       final sw = Stopwatch()..start();
+      int? firstMs;
       try {
-        final r = await AiService.fromSettings(u)!.chat('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek?')], maxTokens: 1200);
-        print('RAW $m in ${sw.elapsed.inMilliseconds} ms: $r');
-        works ??= m ?? 'default';
+        final buf = StringBuffer();
+        await for (final p in svc.chatStream('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek? Bir örnek cümle ver.')], maxTokens: 1200)) {
+          firstMs ??= sw.elapsedMilliseconds;
+          buf.write(p);
+        }
+        print('STREAM $m first words ${firstMs}ms, done ${sw.elapsedMilliseconds}ms: $buf');
+        if (buf.toString().trim().isNotEmpty) works ??= m ?? 'default';
       } catch (e) {
-        print('RAW $m ERROR after ${sw.elapsed.inMilliseconds} ms: $e');
+        print('STREAM $m ERROR after ${sw.elapsed.inMilliseconds} ms: $e');
       }
     }
     expect(works, 'default', reason: 'the default model must answer');
@@ -55,6 +61,19 @@ void main() {
     final a2 = await tutor.discuss(about, history).join();
     print('ANSWER 2:\n$a2\n-----');
     expect(a2.trim(), isNotEmpty);
+    for (final m in [null, 'gemini-flash-latest']) {
+      u.setSetting('ai_model_$provider', m);
+      final sw = Stopwatch()..start();
+      int? firstMs;
+      final buf = StringBuffer();
+      await for (final p in tutor.discuss('Kelime: "pedicab"\nCümle: "We took a pedicab to the market."', [('user', 'Bu kelimeyi detaylı anlat')])) {
+        firstMs ??= sw.elapsedMilliseconds;
+        buf.write(p);
+      }
+      print('ASK $m first words ${firstMs}ms, done ${sw.elapsedMilliseconds}ms:\n$buf\n-----');
+      expect(firstMs, lessThan(15000), reason: 'the first words must show quickly');
+    }
+    u.setSetting('ai_model_$provider', null);
     final w = await tutor.wordMeaning('pedicab', sentence: 'We took a pedicab to the market.').join();
     print('WORD:\n$w\n-----');
     expect(w.trim(), isNotEmpty);
