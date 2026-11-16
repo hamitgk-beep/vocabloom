@@ -7,8 +7,11 @@ import '../../ai/tutor.dart';
 import '../ai/ai_ask_box.dart';
 import '../../app_state.dart';
 import '../../l10n.dart';
+import '../../nlp/text.dart';
 import '../ai/ai_key_help.dart';
 import '../ai/ai_tools.dart';
+import '../expr_sheet.dart';
+import '../expression_list.dart';
 import '../panel.dart';
 import '../tap_text.dart';
 import '../theme.dart';
@@ -455,6 +458,7 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
                   ],
                 ),
               ],
+              if (categoryById[t.dictCategory] case final cat?) _ExpressionsCard(app: widget.app, cat: cat),
             ],
           ),
         ),
@@ -480,6 +484,52 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
                 ),
               ),
             ),
+    );
+  }
+}
+
+/// On a lesson that explains an expression group (phrasal verbs, idioms …):
+/// how many the dictionary has, a few common ones to tap, and the full list.
+class _ExpressionsCard extends StatelessWidget {
+  final AppState app;
+  final CategoryInfo cat;
+  const _ExpressionsCard({required this.app, required this.cat});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final all = app.dict.byCategory(cat.id);
+    if (all.isEmpty) return const SizedBox.shrink();
+    final color = theme.brightness == Brightness.dark ? Color.lerp(cat.color, Colors.white, 0.3)! : cat.color;
+    final samples = app.dict.commonExprs(cat.id, limit: 8);
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SectionLabel(L('Sözlükteki ${cat.tr.toLowerCase()} · ${all.length} ifade', '${cat.name} in the dictionary · ${all.length} entries')),
+        Panel(children: [
+          Text(
+            L('Okurken bir ifadeye dokunduğunda anlamı ve örnekleri açılır. Sık geçen birkaçı:', 'Tap an expression while reading to see its meanings and examples. A few common ones:'),
+            style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant, height: 1.4),
+          ),
+          const SizedBox(height: 10),
+          Wrap(spacing: 8, runSpacing: 8, children: [
+            for (final e in samples)
+              ActionChip(
+                label: Text(displayPhrase(e.phrase), style: TextStyle(color: color, fontWeight: FontWeight.w600)),
+                side: BorderSide(color: cat.color.withValues(alpha: 0.35)),
+                backgroundColor: cat.color.withValues(alpha: 0.08),
+                onPressed: () => showExprSheet(context, app, e, null),
+              ),
+          ]),
+          const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => ExpressionListPage(app: app, cat: cat))),
+            icon: const Icon(Icons.list_alt_rounded),
+            label: Text(L('Tüm listeyi aç · ${all.length}', 'Open the full list · ${all.length}')),
+          ),
+        ]),
+      ]),
     );
   }
 }

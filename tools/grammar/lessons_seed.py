@@ -1193,3 +1193,8 @@ with open(en_path, 'w', encoding='utf-8') as f:
     f.write('\n')
 print('topics', len(T), 'exercises', sum(len(t['exercises']) for t in T),
       'gaps', sum(1 for t in T for e in t['exercises'] if 'gap' in e))
+
+# Lessons for the expression groups (phrasal verbs, idioms …), kept in
+# tools/grammar/phrases/ and added on top of the lessons above.
+import add_phrase_lessons  # noqa: E402
+add_phrase_lessons.main()

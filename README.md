@@ -28,6 +28,12 @@ Geliştiren: Hamit Gök
   Reported speech. Renkli kelimeye dokununca yapının adı, bu cümledeki hali, kuralı ve ilgili Gramer konusuna bağlantı
   çıkar. Tespit çevrimdışı ve kurallarla yapılır (`lib/nlp/grammar_marks.dart`); emin olunmayan yer işaretlenmez
   (ör. "was tired" edilgen sayılmaz, "asked if" koşul sayılmaz). `test/grammar_marks_test.dart` doğru ve yanlış örnekleri denetler.
+- **Sözlük sekmesi:** yalnızca kelimeler. Yazdıkça eşleşen kelimeler Türkçe anlamlarıyla listelenir, dokununca
+  okuyucudaki kelime paneli açılır; son bakılan kelimeler saklanır.
+- **Gramer:** 68 konu, A1–C2. Filtrelerdeki 12 ifade türünün (phrasal verb, deyim, eşdizim, bağlaç …) her biri
+  bir gramer konusudur: anlatım, yapı, örnekler, 28 alıştırma, sık geçen ifadeler ve sözlükteki tam liste.
+  Bu konular `tools/grammar/phrases/` altında yazılır, `python3 tools/grammar/add_phrase_lessons.py` ile
+  `assets/grammar/lessons*.json`'a eklenir.
 - **Doğal sesli okuma (çevrimdışı):** kelimenin telaffuzu (hoparlör düğmesi), cümleyi normal veya yavaş dinleme,
   kitabı baştan sona sesli okuma (okunan cümle/parça vurgulanır, sayfa kendiliğinden kayar). İngilizce: Kokoro-82M
   (12 doğal ses, kadın/erkek, ABD/İngiliz aksanı) ve yavaş telefonlar için hafif Piper LibriTTS-R sesi; uygulama
