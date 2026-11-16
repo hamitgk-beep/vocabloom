@@ -410,10 +410,16 @@ Future<void> allScreens(WidgetTester tester) async {
 
   // Review.
   await tester.pumpWidget(shell(ReviewPage(app: app, cards: app.review.due(now: DateTime.now().add(const Duration(days: 1)), limit: 5))));
+  // The four answer choices are Turkish meanings (dictionary content).
+  final options = find.byWidgetPredicate((w) => w.key is ValueKey && '${(w.key as ValueKey).value}'.startsWith('review-option-'));
+  for (final t in tester.widgetList<Text>(find.descendant(of: options, matching: find.byType(Text)))) {
+    if (t.data != null) content.add(t.data!);
+  }
   await capture(tester, 'review_question');
-  final show = find.byType(FilledButton);
-  if (show.evaluate().isNotEmpty) {
-    await tester.tap(show.first);
+  // Pick a wrong meaning so the right one and "Continue" show up.
+  final opt = find.byKey(const ValueKey('review-dont-know'));
+  if (opt.evaluate().isNotEmpty) {
+    await tester.tap(opt);
     await capture(tester, 'review_answer');
   }
 
