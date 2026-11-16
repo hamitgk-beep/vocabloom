@@ -10,7 +10,7 @@ import 'package:kelime_okur/tts/voices.dart';
 void main() {
   final mode = Platform.environment['VOCABLOOM_OS_DOWNLOAD'];
   test('voice pack through Windows\' own downloader ($mode)', () async {
-    final dir = Directory.systemTemp.createTempSync('osdl');
+    final dir = Directory.systemTemp.createTempSync('osdl Gök ');
     final s = Speech.instance..init(dir, UserDb.open(dir));
     await s.download(fahrettinPack);
     expect(s.stateOf(fahrettinPack), PackState.ready, reason: s.errorOf(fahrettinPack));
