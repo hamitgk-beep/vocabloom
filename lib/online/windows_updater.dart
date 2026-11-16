@@ -57,7 +57,7 @@ class WindowsUpdater {
         // (tasklist and timeout.exe hang or refuse to run without a console.)
         'powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "Wait-Process -Id $pid -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 700" >> %LOG% 2>&1',
         'echo %TIME% copying>> %LOG%',
-        'robocopy "$newFiles" "$appDir" /E /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
+        'robocopy "$newFiles" "$appDir" /E /IS /IT /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
         'echo %TIME% robocopy %ERRORLEVEL%, starting>> %LOG%',
         'start "" "$exe"',
         'rmdir /S /Q "$cleanup" >nul 2>&1',

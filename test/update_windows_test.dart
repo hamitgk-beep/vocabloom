@@ -70,7 +70,7 @@ void main() {
     final log = File(p.join(Platform.environment['TEMP']!, 'vocabloom-update.log'));
     expect(File(marker).existsSync(), isTrue, reason: 'app was not started again. Log: ${log.existsSync() ? log.readAsStringSync() : '-'}');
     expect(sw.elapsed.inMilliseconds, greaterThan(1500), reason: 'did not wait for the app to exit');
-    expect(File(p.join(app.path, 'old.txt')).readAsStringSync(), 'new');
+    expect(File(p.join(app.path, 'old.txt')).readAsStringSync(), 'new', reason: log.readAsStringSync());
     expect(File(p.join(app.path, 'keep.txt')).readAsStringSync(), 'keep');
     expect(File(p.join(app.path, 'data', 'x.bin')).existsSync(), isTrue);
     expect(work.existsSync(), isFalse);
