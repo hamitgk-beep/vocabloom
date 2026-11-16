@@ -11,6 +11,7 @@ import 'panel.dart';
 import 'tap_text.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
+import 'ai/ai_ask_box.dart';
 
 /// Opens the whole expression (phrasal verb, idiom, collocation ...) that the
 /// tapped word belongs to.
@@ -282,6 +283,19 @@ class _ExprPanelState extends State<ExprPanel> {
         ));
       }
     }
+
+    // "Yapay zekâya sor" with the learner's own key.
+    children.add(AiAskBox(
+      key: ValueKey('ai-ask-e-${expr.phrase}'),
+      app: app,
+      title: L('Yapay zekâya sor', 'Ask the AI'),
+      suggestions: [
+        L('Bu kalıbı detaylı anlat', 'Explain this expression in detail'),
+        L('Başka örnek cümle ver', 'Give more example sentences'),
+      ],
+      about: 'Kalıp: ${expr.phrase}${expr.trShown == null ? '' : '\nTürkçesi: ${expr.trShown}'}'
+          '${widget.ctx == null ? '' : '\nOkuduğu cümle: "${widget.ctx!.sentence}"'}',
+    ));
 
     // The single words of the expression.
     children.add(section(L('Kalıptaki kelimeler', 'Words in the expression')));

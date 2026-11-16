@@ -102,14 +102,6 @@ class AppState extends ChangeNotifier {
 
   bool get englishUi => uiEnglish;
 
-  /// The AI tutor tab: on unless the learner turned it off in Settings. The
-  /// app and its model are free for everyone.
-  bool get aiTab => user.getSetting('ai_tab') != '0';
-  void setAiTab(bool v) {
-    user.setSetting('ai_tab', v ? null : '0');
-    notifyListeners();
-  }
-
   void setUiEnglish(bool v) {
     uiEnglish = v;
     _save();

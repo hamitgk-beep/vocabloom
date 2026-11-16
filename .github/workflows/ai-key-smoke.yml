@@ -1,0 +1,22 @@
+name: ai-key-smoke
+# Checks "Yapay zekâya sor" against a real AI service with the app's own code
+# (the teacher key's free Gemini plan). The answers are in the log.
+on:
+  pull_request:
+    paths: ['lib/ai/**', 'lib/online/**', 'test/ai_key_smoke_test.dart', '.github/workflows/ai-key-smoke.yml']
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter pub get
+      - name: Ask the AI
+        env:
+          AI_TEST_PROVIDER: gemini
+          AI_TEST_KEY: ${{ secrets.GEMINI_TEACHER_KEY }}
+        run: flutter test test/ai_key_smoke_test.dart --reporter expanded

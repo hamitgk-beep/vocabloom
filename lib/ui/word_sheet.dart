@@ -212,8 +212,9 @@ class _WordPanelState extends State<WordPanel> {
       return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
     }
 
-    // ---------------- on-device AI: Turkish meaning for words the dictionary
-    // has no Turkish for ("pedicab"), on a tap for the rest.
+    // ---------------- AI (the learner's own key): Turkish meaning for words
+    // the dictionary has no Turkish for ("pedicab"), and "Yapay zekâya sor"
+    // on every word, in the reader and the dictionary alike.
     if (LocalAiCard.available(app)) {
       children.add(LocalAiCard(
         key: ValueKey('ai-word-$lemma'),
@@ -225,29 +226,30 @@ class _WordPanelState extends State<WordPanel> {
         run: () => Tutor.of(app).wordMeaning(lemma,
             sentence: ctx?.sentence, gloss: best?.gloss ?? info.senses.firstOrNull?.gloss, turkish: _trMain),
       ));
-      children.add(AiAskBox(
-        key: ValueKey('ai-ask-$lemma'),
-        app: app,
-        title: L('Bu kelimeyi yapay zekâya sor', 'Ask the AI about this word'),
-        suggestions: [
-          L('Başka örnek cümle ver', 'Give more example sentences'),
-          L('Benzer kelimelerden farkı ne?', 'How is it different from similar words?'),
-          L('Nasıl telaffuz edilir?', 'How is it pronounced?'),
-        ],
-        about: 'Kelime: $lemma\n'
-            '${(best?.gloss ?? info.senses.firstOrNull?.gloss) == null ? '' : 'İngilizce tanımı: ${best?.gloss ?? info.senses.first.gloss}\n'}'
-            '${_trMain == null ? '' : 'Türkçe karşılıkları: $_trMain\n'}'
-            '${ctx == null ? '' : 'Okuduğu cümle: "${ctx.sentence}"'}',
-      ));
     } else if (tr && _trMain == null) {
       children.add(Padding(
         padding: const EdgeInsets.only(top: 12),
         child: Text(
-            L('Bu kelimenin sözlükte Türkçesi yok. Yapay Zekâ sekmesinden cihaz içi modeli indirirsen Türkçe anlamını burada otomatik yazar.',
-                'The dictionary has no Turkish for this word. Download the on-device model in the AI tab and its Turkish meaning appears here automatically.'),
+            L('Bu kelimenin sözlükte Türkçesi yok. Aşağıdaki "Yapay zekâya sor" ile öğrenebilirsin.',
+                'The dictionary has no Turkish for this word. Use "Ask the AI" below.'),
             style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
       ));
     }
+    children.add(AiAskBox(
+      key: ValueKey('ai-ask-$lemma'),
+      app: app,
+      title: L('Yapay zekâya sor', 'Ask the AI'),
+      suggestions: [
+        L('Bu kelimeyi detaylı anlat', 'Explain this word in detail'),
+        if (ctx != null) L('Bu cümlede ne anlama geliyor?', 'What does it mean in this sentence?'),
+        L('Başka örnek cümle ver', 'Give more example sentences'),
+        L('Benzer kelimelerden farkı ne?', 'How is it different from similar words?'),
+      ],
+      about: 'Kelime: $lemma\n'
+          '${(best?.gloss ?? info.senses.firstOrNull?.gloss) == null ? '' : 'İngilizce tanımı: ${best?.gloss ?? info.senses.first.gloss}\n'}'
+          '${_trMain == null ? '' : 'Türkçe karşılıkları: $_trMain\n'}'
+          '${ctx == null ? '' : 'Okuduğu cümle: "${ctx.sentence}"'}',
+    ));
 
     // ---------------- in this sentence
     if (ctx != null) {

@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import '../../app_state.dart';
 import '../../ai/tutor.dart';
 import '../../l10n.dart';
+import 'ai_key_help.dart';
 import 'ai_tools.dart';
 import 'local_ai_card.dart';
 
-/// "Yapay zekâya sor": a small chat with the on-device model about what is on
-/// the screen (a grammar exercise just answered, a tapped word). Shown only
-/// when a model is downloaded. [about] gives the model the facts.
+/// "Yapay zekâya sor": a small chat with the learner's AI service about what
+/// is on the screen (a grammar exercise just answered, a tapped word). Without
+/// a key the button explains how to add one. [about] gives the AI the facts.
 class AiAskBox extends StatefulWidget {
   final AppState app;
   final String about;
@@ -74,7 +75,6 @@ class _AiAskBoxState extends State<AiAskBox> {
 
   @override
   Widget build(BuildContext context) {
-    if (!LocalAiCard.available(widget.app)) return const SizedBox.shrink();
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     if (!open) {
@@ -84,7 +84,11 @@ class _AiAskBoxState extends State<AiAskBox> {
           alignment: Alignment.centerLeft,
           child: OutlinedButton.icon(
             key: const ValueKey('ai-ask'),
-            onPressed: () => setState(() => open = true),
+            onPressed: () async {
+              // Without a key, explain how to add one first.
+              if (!LocalAiCard.available(widget.app) && !await showAiKeyHelp(context, widget.app)) return;
+              if (mounted) setState(() => open = true);
+            },
             icon: const Icon(Icons.forum_rounded, size: 18),
             label: Text(widget.title),
           ),

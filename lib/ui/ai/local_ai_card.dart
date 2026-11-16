@@ -6,8 +6,8 @@ import '../../app_state.dart';
 import '../../l10n.dart';
 import 'ai_tools.dart';
 
-/// An answer from the on-device AI model inside the reading panels (word,
-/// sentence). Shown only when a model is downloaded. It starts by itself when
+/// An answer from the learner's AI service inside the reading panels. Shown
+/// only when a service is connected with the learner's own key. It starts by itself when
 /// [auto] (the dictionary has nothing in Turkish), otherwise on a tap; the
 /// answer is kept, so the panel opens with it next time.
 class LocalAiCard extends StatefulWidget {
@@ -21,7 +21,7 @@ class LocalAiCard extends StatefulWidget {
   final Stream<String> Function() run;
   const LocalAiCard({super.key, required this.app, required this.cacheKey, required this.title, required this.button, required this.run, this.auto = false});
 
-  /// Whether a model is downloaded and chosen.
+  /// Whether an AI service is connected.
   static bool available(AppState app) => app.localAi.activeId != null;
 
   @override

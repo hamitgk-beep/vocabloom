@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
-import '../ai/tutor.dart';
+import 'ai/ai_ask_box.dart';
 import '../online/ai_service.dart';
 import 'ai/device_translation.dart';
-import 'ai/local_ai_card.dart';
 import 'panel.dart';
 import 'paragraph_view.dart';
 import '../l10n.dart';
@@ -145,20 +144,11 @@ class _SentencePanelState extends State<SentencePanel> {
         ),
       const SizedBox(height: 10),
       LangToggles(app: app, onChanged: () => setState(() {})),
-      if (LocalAiCard.available(app) && AiService.fromSettings(app.user) == null)
-        LocalAiCard(
-          app: app,
-          cacheKey: 'sentence:${ctx.sentence}',
-          title: L('Yapay zekâ: çeviri ve açıklama', 'AI: translation and explanation'),
-          button: L('Yapay zekâ ile çevir ve açıkla', 'Translate and explain with AI'),
-          auto: tr == null,
-          run: () => Tutor.of(app).explainSentence(ctx.sentence, paragraph: widget.para.text, bookTitle: ctx.bookTitle),
-        ),
-      if (tr == null && !loading && AiService.fromSettings(app.user) == null && !LocalAiCard.available(app))
+      if (tr == null && !loading && AiService.fromSettings(app.user) == null)
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
-              L('Tam cümle çevirisi için Yapay Zekâ sekmesinden cihaz içi modeli indir (internetsiz çalışır). Aşağıdaki parça parça analiz de internetsiz çalışır.', 'For a full sentence translation, download the on-device model in the AI tab (works offline). The step-by-step analysis below works offline too.'),
+              L('Tam cümle çevirisi ve açıklama için Ayarlar\'dan kendi yapay zekâ anahtarını ekle (Gemini ücretsiz). Aşağıdaki parça parça analiz internetsiz çalışır.', 'For a full translation and explanation, add your own AI key in Settings (Gemini is free). The step-by-step analysis below works offline.'),
               style: TextStyle(color: theme.hintColor, fontSize: 13)),
         ),
       if (error != null) ...[
@@ -182,6 +172,17 @@ class _SentencePanelState extends State<SentencePanel> {
             child: FilledButton.tonalIcon(onPressed: _explain, icon: const Icon(Icons.auto_awesome), label: Text(L('Ayrıntılı açıkla', 'Explain in detail'))),
           ),
         ),
+      AiAskBox(
+        key: ValueKey('ai-ask-s-${ctx.sentence}'),
+        app: app,
+        title: L('Bu cümleyi yapay zekâya sor', 'Ask the AI about this sentence'),
+        suggestions: [
+          L('Cümleyi Türkçeye çevir ve açıkla', 'Translate and explain the sentence'),
+          L('Gramer yapısını anlat', 'Explain its grammar'),
+          L('Benzer bir örnek ver', 'Give a similar example'),
+        ],
+        about: 'Cümle: "${ctx.sentence}"${tr == null ? '' : '\nTürkçesi: $tr'}${ctx.bookTitle == null ? '' : '\nKitap: ${ctx.bookTitle}'}',
+      ),
       section(L('Zaman ve yapı', 'Tense and structure')),
       if (tenses.isEmpty) Text(L('Belirgin bir fiil yapısı bulunamadı.', 'No clear verb structure was found.'), style: TextStyle(color: theme.hintColor)),
       for (final h in tenses)

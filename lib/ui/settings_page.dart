@@ -77,19 +77,11 @@ class SettingsPage extends StatelessWidget {
                   );
                 },
               ),
-              SettingsSwitchTile(
-                icon: Icons.psychology_rounded,
-                color: const Color(0xFF6D28D9),
-                title: L('Cihazda yapay zekâ', 'On-device AI'),
-                subtitle: L('Ana menüde Yapay Zekâ sekmesini gösterir (ücretsiz)', 'Shows the AI tab in the main menu (free)'),
-                value: app.aiTab,
-                onChanged: app.setAiTab,
-              ),
               SettingsNavTile(
                 icon: Icons.auto_awesome_rounded,
                 color: const Color(0xFF0891B2),
-                title: L('Çeviri ve özet servisi', 'Translation and summary service'),
-                subtitle: provider == null ? L('Bağlı değil · isteğe bağlı', 'Not connected · optional') : L('${provider.name} bağlı', '${provider.name} connected'),
+                title: L('Yapay zekâ servisi (kendi anahtarın)', 'AI service (your own key)'),
+                subtitle: provider == null ? L('Bağlı değil · "Yapay zekâya sor" için gerekli', 'Not connected · needed for "Ask the AI"') : L('${provider.name} bağlı', '${provider.name} connected'),
                 onTap: () => _push(context, AiServicePage(app: app)),
               ),
             ]),
@@ -467,11 +459,11 @@ class _AiServicePageState extends State<AiServicePage> {
     final p = providerById[providerId]!;
     final showUrl = p.kind == ApiKind.azure || p.id == 'custom' || p.id == 'ollama' || p.id == 'openrouter';
     final small = theme.textTheme.bodySmall?.copyWith(height: 1.45);
-    return _SubPage(title: L('Çeviri ve özet servisi', 'Translation and summary service'), children: [
+    return _SubPage(title: L('Yapay zekâ servisi', 'AI service'), children: [
       Panel(children: [
         Text(
-          L('İsteğe bağlıdır; uygulama bu servis olmadan da tamamen çalışır. Bağladığın servis, internet olduğunda henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Kullanım ücreti varsa kendi hesabından düşer.',
-              'Optional: the app works fully without it. When you are online, the service you connect scans books that have not been scanned yet: a Turkish translation of every sentence and chapter summaries are saved on your device and never scanned again. Any usage fee is billed to your own account.'),
+          L('Kendi API anahtarınla bağladığın servis "Yapay zekâya sor" düğmelerini (kelime, cümle, gramer, sözlük) çalıştırır; Google Gemini\'nin ücretsiz planı yeterlidir. Uygulamanın geri kalanı bu servis olmadan da tamamen çalışır. Ayrıca bu servis, internet olduğunda henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Kullanım ücreti varsa kendi hesabından düşer.',
+              'The service you connect with your own API key powers the "Ask the AI" buttons (word, sentence, grammar, dictionary); Google Gemini\'s free plan is enough. The rest of the app works fully without it. When you are online, the service also scans books that have not been scanned yet: a Turkish translation of every sentence and chapter summaries are saved on your device and never scanned again. Any usage fee is billed to your own account.'),
           style: small,
         ),
         const SizedBox(height: 8),

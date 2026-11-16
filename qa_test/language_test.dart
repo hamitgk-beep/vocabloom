@@ -24,8 +24,6 @@ import 'package:sqlite3/sqlite3.dart';
 
 import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
-import 'package:kelime_okur/ai/packages.dart';
-import 'package:kelime_okur/ai/tutor.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
@@ -33,8 +31,6 @@ import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
 import 'package:kelime_okur/nlp/text.dart' show displayPhrase;
 import 'package:kelime_okur/online/ai_service.dart';
-import 'package:kelime_okur/ui/ai/ai_page.dart';
-import 'package:kelime_okur/ui/ai/ai_tools.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
 import 'package:kelime_okur/ui/grammar/grammar_page.dart';
 import 'package:kelime_okur/ui/key_guide.dart';
@@ -59,9 +55,9 @@ const phone = Size(390, 844);
 class _FakeAi extends LocalAi {
   bool fail = false;
   @override
-  List<AiPackage> get packages => aiPackages;
+  List<AiPackage> get packages => const [];
   @override
-  Future<Set<String>> installed() async => fail ? {} : {aiPackages.first.id};
+  Future<Set<String>> installed() async => const {};
   @override
   Map<String, AiDownload> get downloads => {};
   @override
@@ -71,7 +67,7 @@ class _FakeAi extends LocalAi {
   @override
   Future<void> delete(String id) async {}
   @override
-  String? get activeId => fail ? null : aiPackages.first.id;
+  String? get activeId => fail ? null : 'key';
   @override
   Future<void> setActive(String id) async {}
   @override
@@ -449,17 +445,6 @@ Future<void> allScreens(WidgetTester tester) async {
   await capture(tester, 'grammar_score');
   await tester.binding.setSurfaceSize(null);
 
-  // AI: without a model, with a model and each tool.
-  fakeAi.fail = true;
-  await tester.pumpWidget(shell(AiPage(ai: fakeAi, tutor: Tutor(app, fakeAi))));
-  await capture(tester, 'ai_no_model');
-  fakeAi.fail = false;
-  await tester.pumpWidget(shell(AiPage(ai: fakeAi, tutor: Tutor(app, fakeAi))));
-  await capture(tester, 'ai');
-  for (final tool in AiTool.values) {
-    await tester.pumpWidget(shell(AiToolPage(tool: tool, ai: fakeAi, tutor: Tutor(app, fakeAi), quizWords: quizWords)));
-    await capture(tester, 'ai_tool_${tool.name}');
-  }
 
   // Settings and the API key guides.
   await tester.pumpWidget(shell(SettingsPage(app: app)));
