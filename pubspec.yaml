@@ -51,6 +51,7 @@ dependencies:
   llamadart: ^0.19.10
   crypto: ^3.0.6
   sherpa_onnx: 1.13.8
+  ffi: ^2.1.0
   audioplayers: ^6.8.1
   google_mlkit_translation: ^1.0.3
 
@@ -66,6 +67,8 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.4
   flutter_native_splash: ^2.4.8
+  integration_test:
+    sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -14,6 +14,7 @@ import 'package:sherpa_onnx/sherpa_onnx.dart' as so;
 
 import '../data/user_db.dart';
 import '../l10n.dart';
+import 'ema.dart';
 import 'voices.dart';
 
 enum PackState { missing, downloading, extracting, ready, failed }
@@ -51,7 +52,7 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     }
     _rtf = double.tryParse(user.getSetting('tts_rtf_kokoro') ?? '');
     // Earlier test builds used other English models; free their space.
-    for (final old in const ['kokoro-en-v1', 'supertonic-en-v2']) {
+    for (final old in const ['kokoro-en-v1', 'supertonic-en-v2', 'piper-tr-fettah']) {
       try {
         final d = Directory(p.join(_root.path, 'voice', old));
         if (d.existsSync()) d.deleteSync(recursive: true);
@@ -230,7 +231,8 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
         }
       });
       await zip.delete();
-      if (!File(p.join(dir.path, 'tokens.txt')).existsSync()) throw const FileSystemException('voice pack is incomplete');
+      final mark = pk.engine == 'ema' ? 'decoder.onnx' : 'tokens.txt';
+      if (!File(p.join(dir.path, mark)).existsSync()) throw const FileSystemException('voice pack is incomplete');
       await _readyMark(pk).writeAsString('1');
       _state[pk.id] = PackState.ready;
       unawaited(warmUp());
@@ -589,8 +591,48 @@ class _Job {
   _Job(this.id, this.text, this.sid, this.speed, this.out, this.engine, this.tag);
 }
 
-so.OfflineTts _createEngine(List<String> e, int threads) {
+/// A loaded voice model in the worker: text in, samples out.
+abstract class _Engine {
+  (Float32List, int) generate(String text, int sid, double speed);
+  void free();
+}
+
+class _SherpaEngine implements _Engine {
+  final so.OfflineTts tts;
+  _SherpaEngine(this.tts);
+  @override
+  (Float32List, int) generate(String text, int sid, double speed) {
+    final a = tts.generateWithConfig(text: text, config: so.OfflineTtsGenerationConfig(sid: sid, speed: speed));
+    return (a.samples, a.sampleRate);
+  }
+
+  @override
+  void free() => tts.free();
+}
+
+class _EmaEngine implements _Engine {
+  final EmaVoice v;
+  _EmaEngine(this.v);
+  @override
+  (Float32List, int) generate(String text, int sid, double speed) {
+    // EMA was trained on pieces that end a sentence.
+    final t = text.trim();
+    final ended = RegExp(r'''[.!?]["')]*$''').hasMatch(t) ? t : '${t.replaceAll(RegExp(r'[,;:\- ]+$'), '')}.';
+    // A word on its own comes out hurried (the model learnt from sentences);
+    // a little slower it is clearer, which also suits a learner.
+    final sp = t.contains(' ') ? speed : speed * 0.85;
+    return (v.generate(ended, speed: sp, seed: 7), v.sampleRate);
+  }
+
+  @override
+  void free() => v.close();
+}
+
+_Engine _createEngine(List<String> e, int threads) {
   final kind = e[0], dir = e[2], accent = e[3];
+  if (kind == 'ema') {
+    return _EmaEngine(EmaVoice.load(dir, threads: threads, libDir: Platform.environment['SHERPA_ONNX_LIB_DIR']));
+  }
   final model = switch (kind) {
     'kokoro' => so.OfflineTtsModelConfig(
         kokoro: so.OfflineTtsKokoroModelConfig(
@@ -618,7 +660,7 @@ so.OfflineTts _createEngine(List<String> e, int threads) {
         debug: false,
       ),
   };
-  return so.OfflineTts(so.OfflineTtsConfig(model: model));
+  return _SherpaEngine(so.OfflineTts(so.OfflineTtsConfig(model: model)));
 }
 
 /// Background isolate: keeps up to one model of each kind loaded and writes
@@ -635,7 +677,7 @@ void _workerMain(List args) {
   } catch (e) {
     initError = e;
   }
-  final engines = <String, so.OfflineTts>{};
+  final engines = <String, _Engine>{};
   final familyOf = <String, String>{}; // engine key -> 'en-natural' / 'en-light' / 'tr'
   inbox.listen((m) {
     final l = m as List;
@@ -654,16 +696,16 @@ void _workerMain(List args) {
         familyOf[e[1]] = e[4];
       }
       final sw = Stopwatch()..start();
-      final a = tts.generateWithConfig(text: text, config: so.OfflineTtsGenerationConfig(sid: sid, speed: speed));
-      final secs = a.sampleRate == 0 ? 0.0 : a.samples.length / a.sampleRate;
+      final (samples, sampleRate) = tts.generate(text, sid, speed);
+      final secs = sampleRate == 0 ? 0.0 : samples.length / sampleRate;
       final rtf = secs == 0 ? 0.0 : sw.elapsedMilliseconds / 1000 / secs;
-      if (a.samples.isEmpty) throw Exception('no audio');
+      if (samples.isEmpty) throw Exception('no audio');
       // Silence first: many phones (and Bluetooth headphones) swallow the
       // first moments of sound while the audio output wakes up.
       final word = !text.contains(' ');
-      final lead = (a.sampleRate * (word ? 0.25 : 0.15)).round(), tail = (a.sampleRate * 0.1).round();
-      final padded = Float32List(lead + a.samples.length + tail)..setRange(lead, lead + a.samples.length, a.samples);
-      so.writeWave(filename: out, samples: padded, sampleRate: a.sampleRate);
+      final lead = (sampleRate * (word ? 0.25 : 0.15)).round(), tail = (sampleRate * 0.1).round();
+      final padded = Float32List(lead + samples.length + tail)..setRange(lead, lead + samples.length, samples);
+      so.writeWave(filename: out, samples: padded, sampleRate: sampleRate);
       reply.send([id, null, out, rtf, secs]);
     } catch (e) {
       reply.send([id, '$e', null, 0.0, 0.0]);

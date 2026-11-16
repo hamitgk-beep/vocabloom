@@ -380,7 +380,7 @@ class LicensesPage extends StatelessWidget {
       SectionLabel(L('Yazı tipleri ve sesler', 'Fonts and voices')),
       Panel(children: [
         item(L('Yazı tipleri: Inter ve Literata (SIL Open Font License 1.1)', 'Fonts: Inter and Literata (SIL Open Font License 1.1)')),
-        item(L('Sesler: Kokoro-82M (Apache 2.0), Piper LibriTTS-R (CC BY 4.0), Piper Türkçe sesler (CC0 kayıtlar), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)', 'Voices: Kokoro-82M (Apache 2.0), Piper LibriTTS-R (CC BY 4.0), Piper Turkish voices (CC0 recordings), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)')),
+        item(L('Sesler: Kokoro-82M (Apache 2.0), Piper LibriTTS-R (CC BY 4.0), EMA Lightning Türkçe (Apache 2.0), Piper Fahrettin (CC0 kayıtlar), ONNX Runtime (MIT), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)', 'Voices: Kokoro-82M (Apache 2.0), Piper LibriTTS-R (CC BY 4.0), EMA Lightning Turkish (Apache 2.0), Piper Fahrettin (CC0 recordings), ONNX Runtime (MIT), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)')),
       ]),
     ]);
   }

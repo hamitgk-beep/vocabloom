@@ -63,7 +63,7 @@ class _AiAskBoxState extends State<AiAskBox> {
         setState(() {
           running = false;
           if (answer.isEmpty) history.removeLast();
-          error = L('Yapay zekâ şu an yanıt veremedi. Tekrar dene.', 'The AI could not answer right now. Try again.');
+          error = aiError(e);
         });
       },
       onDone: () {

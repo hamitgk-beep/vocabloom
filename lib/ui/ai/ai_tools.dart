@@ -70,7 +70,14 @@ Widget aiRichText(String text, TextStyle? style, {Color? hintColor}) {
   ]);
 }
 
-String aiError(Object e) => e is AiException ? e.message : L('Yanıt üretilemedi. Tekrar dene.', 'Could not produce an answer. Try again.');
+String aiError(Object e) {
+  if (e is AiException) return e.message;
+  // Keep the technical reason visible: it is what tells us what went wrong
+  // on a learner's phone.
+  var why = e.toString().replaceAll(RegExp(r'\s+'), ' ').trim();
+  if (why.length > 180) why = '${why.substring(0, 177)}…';
+  return '${L('Yanıt üretilemedi. Tekrar dene.', 'Could not produce an answer. Try again.')}\n($why)';
+}
 
 class AiDisclaimer extends StatelessWidget {
   const AiDisclaimer({super.key});
