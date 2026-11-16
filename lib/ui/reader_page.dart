@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_state.dart';
 import '../data/user_db.dart';
@@ -114,6 +115,14 @@ class _ReaderPageState extends State<ReaderPage> {
     return best < 0 ? 0 : best;
   }
 
+  /// The chapter's text on the clipboard, to paste anywhere (the reader's own
+  /// text answers taps with word cards, so it cannot be selected).
+  Future<void> _copyChapter() async {
+    await Clipboard.setData(ClipboardData(text: '${chapters[chapter].title}\n\n${app.user.chapterText(widget.book.id, chapter)}'));
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L('Bölümün metni panoya kopyalandı.', 'The chapter text was copied to the clipboard.'))));
+  }
+
   Future<void> _toggleReadAloud() async {
     if (reader.active) {
       reader.stop();
@@ -224,6 +233,11 @@ class _ReaderPageState extends State<ReaderPage> {
             tooltip: L('Okuma görünümü', 'Reading view'),
             icon: const Icon(Icons.text_fields_rounded),
             onPressed: () => showReadingSheet(context, app),
+          ),
+          IconButton(
+            tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'),
+            icon: const Icon(Icons.copy_all_rounded),
+            onPressed: _copyChapter,
           ),
           IconButton(
             tooltip: L('Bölümler', 'Chapters'),

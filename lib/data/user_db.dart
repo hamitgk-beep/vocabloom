@@ -262,6 +262,37 @@ class UserDb {
           Chapter(r['idx'] as int, r['title'] as String, r['summary'] as String?)
       ];
 
+  /// The whole book as plain text, the way the reader shows it: chapter titles,
+  /// headings and paragraphs separated by blank lines, picture captions in brackets.
+  String bookText(int bookId) {
+    final b = db.select('SELECT title, author FROM books WHERE id=?', [bookId]);
+    final out = StringBuffer();
+    if (b.isNotEmpty) {
+      out.writeln(b.first['title']);
+      if (b.first['author'] != null) out.writeln(b.first['author']);
+      out.writeln();
+    }
+    for (final c in chapters(bookId)) {
+      out
+        ..writeln()
+        ..writeln('## ${c.title}')
+        ..writeln();
+      out.write(chapterText(bookId, c.idx));
+    }
+    return out.toString();
+  }
+
+  /// One chapter as plain text.
+  String chapterText(int bookId, int chapter) {
+    final out = StringBuffer();
+    for (final p in paras(bookId, chapter)) {
+      out
+        ..writeln(p.kind == 'c' ? '[${p.text}]' : p.text)
+        ..writeln();
+    }
+    return out.toString();
+  }
+
   List<Para> paras(int bookId, int chapter) => [
         for (final r in db.select(
             'SELECT id, idx, kind, text FROM paras WHERE book_id=? AND chapter=? ORDER BY idx', [bookId, chapter]))

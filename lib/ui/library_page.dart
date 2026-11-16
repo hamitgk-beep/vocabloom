@@ -1,6 +1,10 @@
 
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_state.dart';
 import '../data/user_db.dart';
@@ -92,6 +96,30 @@ class _LibraryPageState extends State<LibraryPage> {
         m.showSnackBar(SnackBar(content: Text(L('İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.', 'No internet. The analysis starts by itself when you are back online.'))));
       } else {
         widget.app.analyzer.tick(force: true, onlyBook: b.id);
+      }
+    } else if (v == 'export') {
+      final m = ScaffoldMessenger.of(context);
+      final text = widget.app.user.bookText(b.id);
+      final name = '${b.title.replaceAll(RegExp(r'[\\/:*?"<>|]+'), ' ').trim()}.txt';
+      try {
+        final saved = await FilePicker.saveFile(
+          dialogTitle: L('Kitabın metnini kaydet', 'Save the book text'),
+          fileName: name,
+          bytes: Uint8List.fromList(utf8.encode(text)),
+          mimeType: 'text/plain',
+        );
+        if (saved != null) {
+          m.showSnackBar(SnackBar(content: Text(L('Metin kaydedildi: $name', 'Text saved: $name'))));
+        }
+      } catch (e) {
+        // No save dialog on this device: the text goes to the clipboard instead.
+        await Clipboard.setData(ClipboardData(text: text));
+        m.showSnackBar(SnackBar(content: Text(L('Dosya kaydedilemedi; metin panoya kopyalandı.', 'Could not save a file; the text was copied to the clipboard.'))));
+      }
+    } else if (v == 'copy') {
+      await Clipboard.setData(ClipboardData(text: widget.app.user.bookText(b.id)));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L('Kitabın tüm metni panoya kopyalandı.', 'The whole book text was copied to the clipboard.'))));
       }
     } else if (v == 'delete') {
       final ok = await showDialog<bool>(
@@ -362,6 +390,23 @@ class _BookCard extends StatelessWidget {
                     leading: const Icon(Icons.auto_awesome_outlined),
                     title: Text(L('Çevrimiçi analiz et', 'Analyze online')),
                     subtitle: Text(L('Çeviri + bölüm özetleri', 'Translation + chapter summaries')),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'export',
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.save_alt_rounded),
+                    title: Text(L('Metni kaydet (.txt)', 'Save text (.txt)')),
+                    subtitle: Text(L('Kitabın uygulamadaki hali', 'The book as the app shows it')),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'copy',
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.copy_all_rounded),
+                    title: Text(L('Metni kopyala', 'Copy text')),
                   ),
                 ),
                 PopupMenuItem(

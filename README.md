@@ -8,7 +8,11 @@ Geliştiren: Hamit Gök
 ## Neler yapar
 
 - **Kitap ekleme:** EPUB, PDF (metinli), TXT, Markdown, HTML, DOCX, ODT, FB2, RTF. Kitap uygulamanın kendi
-  formatına (bölüm → paragraf) dönüştürülüp cihazdaki SQLite veritabanına kaydedilir.
+  formatına (bölüm → paragraf) dönüştürülüp cihazdaki SQLite veritabanına kaydedilir. PDF'lerde sayfa üst/alt
+  bilgileri ve sayfa numaraları atılır, resim altı yazıları paragrafı bölmeden ayrı (italik) gösterilir, bölümler
+  içindekiler sayfasından bulunur. `test/import_completeness_test.dart` her biçimde metnin eksiksiz ve sırasıyla
+  geldiğini denetler. Kitaplık menüsündeki "Metni kaydet (.txt)" / "Metni kopyala" ve okuyucudaki kopyala düğmesi
+  kitabın uygulamadaki halini dışarı verir.
 - **Kelimeye dokun:** Türkçe karşılıklar, İngilizce tanımlar (WordNet), eş anlamlılar, örnek cümleler,
   kitabın başka yerlerinden örnekler ve "bu cümlede büyük olasılıkla şu anlamda" tahmini. Kelime bir kalıbın
   parçasıysa (give up, break the ice …) kalıp en üstte gösterilir. Türkçe/English düğmeleriyle tek dile geçilebilir.
@@ -43,6 +47,8 @@ Gramer konularının İngilizce açıklamaları `assets/grammar/lessons_en.json`
 ```bash
 python3 tools/build_dict.py <ham_veri_klasörü> assets/dict.db   # sözlüğü yeniden üret
 flutter test                              # birim testleri + kaynakta sabit metin denetimi (test/l10n_test.dart)
+                                          # PDF testleri için PDFIUM_PATH=/yol/libpdfium.so gerekir
+python3 tools/make_import_fixtures.py     # içe aktarma test kitaplarını (test/fixtures/import) yeniden üret
 flutter test qa_test/language_test.dart   # her ekranı Türkçe ve İngilizce açar, yanlış dilde metin arar, ekran görüntüsü alır
 flutter run -d windows   # veya linux, macos, android cihaz
 ```
