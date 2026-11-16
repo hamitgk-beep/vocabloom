@@ -36,7 +36,7 @@ const providers = <ProviderInfo>[
       keyHelp: 'console.anthropic.com → API Keys'),
   ProviderInfo('openai', 'OpenAI ChatGPT', ApiKind.openai, 'https://api.openai.com/v1', 'gpt-4o-mini',
       keyHelp: 'platform.openai.com → API keys'),
-  ProviderInfo('gemini', 'Google Gemini', ApiKind.gemini, 'https://generativelanguage.googleapis.com', 'gemini-flash-latest',
+  ProviderInfo('gemini', 'Google Gemini', ApiKind.gemini, 'https://generativelanguage.googleapis.com', 'gemini-flash-lite-latest',
       keyHelp: 'aistudio.google.com → Get API key'),
   ProviderInfo('azure', 'Microsoft Copilot / Azure OpenAI', ApiKind.azure, '', 'gpt-4o-mini',
       keyHelp: 'Azure AI Foundry: uç nokta adresi + anahtar. Copilot uygulamasının kendisi geliştiricilere API sunmuyor; '

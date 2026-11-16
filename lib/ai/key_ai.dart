@@ -16,6 +16,9 @@ class KeyAi extends LocalAi {
 
   AiService? get service => AiService.fromSettings(db);
 
+  /// The Gemini model that answers quickly on the free plan.
+  static const fastGemini = 'gemini-flash-lite-latest';
+
   @override
   List<AiPackage> get packages => const [];
   @override
@@ -49,11 +52,21 @@ class KeyAi extends LocalAi {
       throw const AiException('Yapay zekâ için Ayarlar > Yapay zekâ servisi bölümünden kendi API anahtarını ekle.',
           'To use the AI, add your own API key in Settings > AI service.');
     }
-    final String text;
+    late final String text;
     try {
       // Online models think more and write longer than the old offline one:
       // give them room so an answer is not cut off.
-      text = await svc.chat(system, alternateTurns(messages), maxTokens: maxTokens < 1200 ? 1200 : maxTokens).timeout(answerTimeout);
+      final turns = alternateTurns(messages);
+      final budget = maxTokens < 1200 ? 1200 : maxTokens;
+      try {
+        text = await svc.chat(system, turns, maxTokens: budget).timeout(answerTimeout);
+      } on TimeoutException {
+        // Gemini's thinking models can stall on the free plan (seen with
+        // gemini-flash-latest): try the quick lite model once.
+        final c = svc.cfg;
+        if (c.provider.kind != ApiKind.gemini || c.model == fastGemini) rethrow;
+        text = await AiService(AiConfig(c.provider, c.key, fastGemini, c.baseUrl)).chat(system, turns, maxTokens: budget).timeout(answerTimeout);
+      }
     } on TimeoutException {
       throw const AiException('Yapay zekâ servisi çok uzun süre yanıt vermedi. İnternet bağlantını kontrol edip tekrar dene.',
           'The AI service did not answer for too long. Check your internet connection and try again.');

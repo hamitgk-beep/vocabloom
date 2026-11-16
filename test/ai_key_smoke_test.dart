@@ -28,19 +28,20 @@ void main() {
     // The service itself first, with its own error text and timing, on a
     // few models: the first one that answers is used for the rest.
     String? works;
-    for (final m in ['gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-2.5-flash']) {
+    for (final m in [null, 'gemini-flash-latest']) {
+      // null: the app's default model.
       u.setSetting('ai_model_$provider', m);
       final sw = Stopwatch()..start();
       try {
         final r = await AiService.fromSettings(u)!.chat('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek?')], maxTokens: 1200);
         print('RAW $m in ${sw.elapsed.inMilliseconds} ms: $r');
-        works ??= m;
+        works ??= m ?? 'default';
       } catch (e) {
         print('RAW $m ERROR after ${sw.elapsed.inMilliseconds} ms: $e');
       }
     }
-    expect(works, isNotNull);
-    u.setSetting('ai_model_$provider', works);
+    expect(works, 'default', reason: 'the default model must answer');
+    u.setSetting('ai_model_$provider', null);
     final tutor = Tutor.of(app);
     final about = 'Boşluk doldurma: "We ___ (not / like) horror films."\nDoğru cevaplar:\n- "don\'t like"\n- "do not like"\n'
         'Öğrencinin cevabı: "dont like"\nSonuç: yanlış';
