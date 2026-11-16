@@ -187,6 +187,7 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> download(VoicePack pk, {String? url}) async {
     final st = stateOf(pk);
     if (st == PackState.downloading || st == PackState.extracting || st == PackState.ready) return;
+    _user?.setSetting('tts_removed_${pk.id}', null);
     _state[pk.id] = PackState.downloading;
     _progress[pk.id] = 0;
     _error.remove(pk.id);
@@ -258,9 +259,21 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     }
   }
 
+  /// Downloads every voice pack that is not on the phone yet, one after the
+  /// other, so all voices come with the app without asking. The light English
+  /// voice and the Turkish voices come first because they are small. A pack
+  /// the user deleted is left alone; a failed one is tried again next start.
+  Future<void> downloadAll({String Function(VoicePack)? url}) async {
+    for (final pk in [lightPack, emaPack, fahrettinPack, kokoroPack]) {
+      if (_user?.getSetting('tts_removed_${pk.id}') == '1') continue;
+      await download(pk, url: url?.call(pk));
+    }
+  }
+
   void cancelDownload(VoicePack pk) => _clients[pk.id]?.close();
 
   Future<void> deletePack(VoicePack pk) async {
+    _user?.setSetting('tts_removed_${pk.id}', '1');
     await stop();
     await _shutdownWorker();
     try {

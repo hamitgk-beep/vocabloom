@@ -23,8 +23,9 @@ Geliştiren: Hamit Gök
   kitabı baştan sona sesli okuma (okunan cümle/parça vurgulanır, sayfa kendiliğinden kayar). İngilizce: Kokoro-82M
   (12 doğal ses, kadın/erkek, ABD/İngiliz aksanı) ve yavaş telefonlar için hafif Piper LibriTTS-R sesi; uygulama
   telefonun hızını ölçüp hangisini kullanacağını kendisi seçer, dinlenen kelimeleri saklar).
-  Türkçe anlam ve çeviriler: EMA Lightning (doğal kadın sesi), isteyene Piper Fahrettin (erkek). Ses paketleri ilk kullanımda bir kez indirilir
-  (İngilizce ~400 MB: önce 70 MB'lık hafif ses, sonra doğal ses; Türkçe doğal ses ~75 MB), sonra internetsiz çalışır.
+  Türkçe anlam ve çeviriler: EMA Lightning (doğal kadın sesi), isteyene Piper Fahrettin (erkek). Tüm ses paketleri uygulama kurulunca
+  veya güncellenince kendiliğinden bir kez indirilir (toplam ~530 MB: önce hafif İngilizce ve Türkçe sesler, en son doğal
+  İngilizce ses), sonra internetsiz çalışır. Ayarlar'dan silinen paket bir daha kendiliğinden inmez.
   Paketler `tools/build_voice_packs.sh` ile hazırlanır ve "voice-models" iş akışı ile yayınlanır.
 - **İsteğe bağlı çevrimiçi analiz:** Ayarlar'a bir yapay zekâ servisinin (Anthropic, OpenAI, Gemini vb.) API anahtarı girilirse kitap eklenirken (internet varsa)
   her cümlenin Türkçe çevirisi ve her bölümün özeti çıkarılıp cihaza kaydedilir; sonra internetsiz görünür.
