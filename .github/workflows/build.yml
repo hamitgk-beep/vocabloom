@@ -137,6 +137,27 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with: { path: dist }
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, path: src }
+      # "What's new" for the app's update banner: the hand-written entries in
+      # release_notes.json plus the nightly dictionary commits since the
+      # previous release (tools/release/release_notes.py).
+      - name: Release notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view latest --json body --jq .body > prev-body.md || true
+          prev=$(gh release view latest --json targetCommitish --jq .targetCommitish || true)
+          if [ -n "$prev" ] && git -C src cat-file -e "$prev^{commit}" 2>/dev/null; then
+            git -C src log --format=%s "$prev..$GITHUB_SHA" > commits.txt
+          else
+            : > commits.txt
+          fi
+          python3 -I src/tools/release/release_notes.py --version "${{ needs.test.outputs.version }}" \
+            --build "${{ github.run_number }}" --prev-body prev-body.md --commits commits.txt \
+            --notes src/release_notes.json > body.md
+          cat body.md
       - name: Package files
         run: |
           cd dist
@@ -152,5 +173,5 @@ jobs:
           gh release delete latest --yes --cleanup-tag || true
           gh release create latest --prerelease --target "$GITHUB_SHA" \
             --title "VocaBloom ${{ needs.test.outputs.version }}" \
-            --notes "Sürüm ${{ needs.test.outputs.version }} · Build: ${{ github.run_number }}. Windows: zip'i aç, VocaBloom.exe'yi çalıştır. Android: APK'yı kur. iOS: imzasız IPA, Sideloadly/AltStore ile yükle." \
+            --notes-file body.md \
             dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip

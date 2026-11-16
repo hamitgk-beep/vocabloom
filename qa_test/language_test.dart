@@ -31,6 +31,7 @@ import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
 import 'package:kelime_okur/nlp/text.dart' show displayPhrase;
 import 'package:kelime_okur/online/ai_service.dart';
+import 'package:kelime_okur/online/update_check.dart';
 import 'package:kelime_okur/ui/dictionary_page.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
 import 'package:kelime_okur/ui/expression_list.dart';
@@ -47,6 +48,7 @@ import 'package:kelime_okur/ui/review_page.dart';
 import 'package:kelime_okur/ui/sentence_sheet.dart';
 import 'package:kelime_okur/ui/tap_text.dart';
 import 'package:kelime_okur/ui/theme.dart';
+import 'package:kelime_okur/ui/update_prompt.dart';
 import 'package:kelime_okur/ui/word_sheet.dart';
 
 final outDir = Directory('${Platform.environment['QA_OUT'] ?? 'qa-report'}/lang');
@@ -471,6 +473,19 @@ Future<void> allScreens(WidgetTester tester) async {
   for (final MapEntry(key: name, value: page) in sub.entries) {
     await tester.pumpWidget(shell(page));
     await capture(tester, name);
+  }
+  // New-version banner with its "what's new" list.
+  const update = UpdateInfo(999, 'https://example.invalid/app', version: '9.9', notes: [
+    ReleaseNote('grammar', 'Phrasal verb\'ler ve deyimler artık Gramer\'de birer konu.', 'Phrasal verbs and idioms are now Grammar topics.', 999),
+    ReleaseNote('dictionary', 'Sözlüğe 1.424 yeni Türkçe anlam eklendi.', '1,424 new Turkish meanings in the dictionary.', 998),
+  ]);
+  final bctx = await blank(tester);
+  UpdatePrompt.showBanner(bctx, update, force: true);
+  await capture(tester, 'update_banner');
+  final whatsNew = find.text(L('Yenilikler', "What's new"));
+  if (whatsNew.evaluate().isNotEmpty) {
+    await tester.tap(whatsNew.first);
+    await capture(tester, 'update_whats_new');
   }
   for (final p in providers) {
     await tester.pumpWidget(shell(Scaffold(body: SingleChildScrollView(child: KeyGuideCard(providerId: p.id)))));
