@@ -6,6 +6,8 @@ import '../data/review.dart';
 import '../data/review_quiz.dart';
 import '../import/importers.dart' show looksGeneratedTitle;
 import '../online/ai_service.dart';
+import '../online/missing_report.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
 import '../nlp/text.dart';
@@ -63,8 +65,18 @@ class _ReviewPageState extends State<ReviewPage> {
   QuizChoice? _choiceFor(int i) {
     if (_choices.containsKey(i)) return _choices[i];
     final w = queue[i].word;
+    // A guessed meaning: the AI service (when set up) gives the exact one.
+    final ans = _quiz.answerFor(w);
+    if (!ans.sure && _askAi(w)) return null;
     final ch = _quiz.choiceFor(w);
     if (ch == null && _askAi(w)) return null; // ask again when the answer arrives
+    // The dictionary lacks the Turkish of this sense: remember it, so it can
+    // be reported and added in a later dictionary update.
+    if ((ch == null || !ans.sure) && !w.lemma.contains(' ')) {
+      try {
+        app.user.addMissing(w.lemma, ans.synId, ans.gloss);
+      } catch (_) {}
+    }
     return _choices[i] = ch;
   }
 
@@ -329,6 +341,27 @@ class _ReviewPageState extends State<ReviewPage> {
     );
   }
 
+  List<({String lemma, int syn, String? gloss})> get _missing {
+    try {
+      return app.user.missingToReport();
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Opens a ready-filled GitHub issue with the words whose Turkish is
+  /// missing; the dictionary job translates them in its next run.
+  Future<void> _reportMissing() async {
+    final items = _missing;
+    if (items.isEmpty) return;
+    final url = missingReportUrl(items);
+    final ok = await launchUrl(url, mode: LaunchMode.externalApplication);
+    if (ok) {
+      app.user.markMissingReported();
+      if (mounted) setState(() {});
+    }
+  }
+
   /// The forms of the asked word in its sentence ("ran" for "run").
   Set<String> _targetForms(SavedWord w) {
     final words = w.lemma.split(' ');
@@ -362,6 +395,23 @@ class _ReviewPageState extends State<ReviewPage> {
           _Stat(icon: Icons.verified_rounded, color: Brand.violet, value: '$graduated', label: L('öğrenildi', 'learned')),
         ]),
         const SizedBox(height: 32),
+        if (_missing.isNotEmpty) ...[
+          OutlinedButton.icon(
+            key: const ValueKey('review-report-missing'),
+            onPressed: _reportMissing,
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+            icon: const Icon(Icons.flag_outlined, size: 20),
+            label: Text(L('Eksik çevirileri bildir (${_missing.length})', 'Report missing translations (${_missing.length})')),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            L('Yalnızca kelime ve anlam numarası gönderilir; sonraki sözlük güncellemesinde eklenir.',
+                'Only the word and sense number are sent; they are added in a later dictionary update.'),
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 16),
+        ],
         FilledButton(
           onPressed: () => Navigator.pop(context),
           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),

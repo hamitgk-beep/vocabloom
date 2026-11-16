@@ -34,7 +34,7 @@ Map<String, String> get posNames => uiEnglish
 
 /// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
 class DictDb {
-  static const _version = '17';
+  static const _version = '18';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -261,8 +261,10 @@ class DictDb {
   /// Turkish meaning that is known to belong to that sense. [tr] is null when
   /// the dictionary has no Turkish for the sense used here; it never falls
   /// back to an unrelated meaning ("course" in "golf course" is not "akmak").
-  ({Sense? sense, String? tr, String? pos}) meaningIn(String lemma, String? sentence) {
-    final info = lookup(lemma);
+  ({Sense? sense, String? tr, String? pos, bool sure}) meaningIn(String lemma, String? sentence) {
+    final raw = lookup(lemma);
+    // Cross references ("bakınız: joust") are not meanings.
+    final info = WordInfo(raw.lemma, raw.trFreeDict.where((t) => !t.toLowerCase().contains('bakınız')).toList(), raw.senses);
     final toks = sentence == null ? const <Token>[] : tokenize(sentence);
     final i = indexOfLemma(toks, lemma);
     if (i < 0) {
@@ -271,7 +273,7 @@ class DictDb {
       final tr = info.trFreeDict.isNotEmpty
           ? shortTr(info.trFreeDict.first)
           : info.senses.where((s) => s.tr.isNotEmpty).map((s) => s.tr.take(3).join(', ')).firstOrNull;
-      return (sense: s, tr: tr, pos: s == null ? (tr != null && isTrVerb(tr) ? 'v' : null) : normPos(s.pos));
+      return (sense: s, tr: tr, pos: s == null ? (tr != null && isTrVerb(tr) ? 'v' : null) : normPos(s.pos), sure: true);
     }
     final comp = compoundAt(toks, i, lemma);
     final best = bestSense(info, toks, i);
@@ -279,23 +281,60 @@ class DictDb {
     if (comp != null) {
       final ctr = comp.senses.where((s) => s.tr.isNotEmpty).map((s) => s.tr.take(2).join(', ')).firstOrNull ??
           (comp.trFreeDict.isNotEmpty ? shortTr(comp.trFreeDict.first) : null);
-      if (ctr != null) return (sense: best, tr: ctr, pos: pos ?? 'n');
+      if (ctr != null) return (sense: best, tr: ctr, pos: pos ?? 'n', sure: true);
     }
     if (best == null) {
       final f = info.trFreeDict.isEmpty ? null : shortTr(info.trFreeDict.first);
-      return (sense: null, tr: f, pos: f != null && isTrVerb(f) ? 'v' : null);
+      return (sense: null, tr: f, pos: f != null && isTrVerb(f) ? 'v' : null, sure: true);
     }
-    if (best.tr.isNotEmpty) return (sense: best, tr: best.tr.take(3).join(', '), pos: pos);
-    // The sense has no Turkish of its own. FreeDict's meanings are not tied to
-    // senses, so they are only used when the sense is the word's main one for
-    // this part of speech, and only a meaning of that part of speech.
+    if (best.tr.isNotEmpty) return (sense: best, tr: best.tr.take(3).join(', '), pos: pos, sure: true);
+
+    // The sense has no Turkish of its own. FreeDict's meanings are not tied
+    // to senses, so one is matched to the sense through the Turkish of the
+    // sense's synonyms ("simply" = "merely, just" -> "ancak, sadece").
+    final samePos = info.trFreeDict.where((t) => isTrVerb(t) == (pos == 'v')).toList();
+    final synTr = <String>{};
+    final synFirst = <String>[];
+    for (final w in best.synonyms.take(6)) {
+      if (w.contains(' ') && w.split(' ').length > 3) continue;
+      final si = lookup(w.toLowerCase());
+      final mine = [
+        ...si.senses.where((x) => normPos(x.pos) == pos && x.tr.isNotEmpty).map((x) => x.tr.take(3).join(', ')),
+        ...si.trFreeDict.where((t) => isTrVerb(t) == (pos == 'v')),
+      ];
+      if (mine.isNotEmpty) synFirst.add(mine.first);
+      for (final t in mine.take(4)) {
+        synTr.addAll(_parts(t));
+      }
+    }
+    if (synTr.isNotEmpty) {
+      String? pick;
+      var bestHit = 0;
+      for (final t in samePos) {
+        final hit = _parts(t).where(synTr.contains).length;
+        if (hit > bestHit) {
+          bestHit = hit;
+          pick = t;
+        }
+      }
+      if (pick != null) return (sense: best, tr: shortTr(pick), pos: pos, sure: true);
+    }
+    // The word's main sense for this part of speech: FreeDict's first meaning
+    // of that part of speech is that sense.
     final first = info.senses.firstWhere((s) => normPos(s.pos) == pos);
-    if (identical(first, best) && info.senses.where((s) => s.tr.isNotEmpty && normPos(s.pos) == pos).isEmpty) {
-      final f = info.trFreeDict.where((t) => isTrVerb(t) == (pos == 'v')).firstOrNull;
-      if (f != null) return (sense: best, tr: shortTr(f), pos: pos);
+    if (identical(first, best) && samePos.isNotEmpty) {
+      return (sense: best, tr: shortTr(samePos.first), pos: pos, sure: true);
     }
-    return (sense: best, tr: null, pos: pos);
+    // A rarer sense: the Turkish of its synonym, otherwise the best guess
+    // (marked unsure, so the AI service is asked when there is one).
+    if (synFirst.isNotEmpty) return (sense: best, tr: shortTr(synFirst.first), pos: pos, sure: false);
+    final guess = info.senses.where((s) => normPos(s.pos) == pos && s.tr.isNotEmpty).map((s) => s.tr.take(3).join(', ')).firstOrNull ??
+        (samePos.isNotEmpty ? samePos.first : info.trFreeDict.firstOrNull);
+    return (sense: best, tr: guess == null ? null : shortTr(guess), pos: pos, sure: false);
   }
+
+  static Iterable<String> _parts(String t) =>
+      t.toLowerCase().split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.length > 1);
 
   static String normPos(String p) => p == 's' ? 'a' : p;
 

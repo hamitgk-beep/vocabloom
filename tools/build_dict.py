@@ -382,6 +382,9 @@ SERVICE_ORDER = ['gemini', 'mistral', 'github', 'nvidia', 'openrouter', 'cerebra
 def result_files(prefix):
     import glob
     files = glob.glob(os.path.join(RAW, f'{prefix}*.jsonl.gz'))
+    # Results kept in the repository (tools/data), e.g. sense Turkish written by hand
+    # or by Claude for the review questions; they come after the service results.
+    here = glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', f'{prefix}*.jsonl.gz'))
 
     def rank(f):
         name = os.path.basename(f)
@@ -389,7 +392,7 @@ def result_files(prefix):
             if s in name:
                 return i
         return -1  # the first combined file (exd.jsonl.gz)
-    return sorted(files, key=rank)
+    return sorted(files, key=rank) + sorted(f for f in here if os.path.basename(f) not in {os.path.basename(x) for x in files})
 
 
 def result_lines(paths):

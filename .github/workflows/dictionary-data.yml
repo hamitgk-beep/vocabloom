@@ -64,6 +64,7 @@ jobs:
     permissions:
       contents: write
       models: read
+      issues: read
     strategy:
       fail-fast: false
       matrix:
@@ -89,6 +90,10 @@ jobs:
           mkdir -p prev
           gh release download data-exd -D prev -p 'exd*' -p 'wfd*' -p 'syn*' -p 'wd-*' -p 'gl-*' -p 'rv-*' || true
           ls -la prev
+          # Senses the app reported as missing Turkish ("[eksik-çeviri]" issues): translated first.
+          gh issue list --state open --search '"[eksik-çeviri]" in:title' --limit 200 --json body --jq '.[].body' \
+            | grep -o 'syn:[0-9]\+' | cut -d: -f2 | sort -u > priority.txt || true
+          echo "reported senses: $(wc -l < priority.txt)"
       - name: Translate
         if: inputs.provider == '' || inputs.provider == 'all' || inputs.provider == matrix.service
         env:
@@ -110,7 +115,7 @@ jobs:
           cp prev/gl-$S.jsonl.gz . 2>/dev/null || true
           cp prev/rv-$S.jsonl.gz . 2>/dev/null || true
           python3 tools/pretranslate.py assets/dict.db exd-$S.jsonl.gz --provider $S --model "$MODEL" \
-            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --review rv-$S.jsonl.gz --gloss gl-$S.jsonl.gz --words wd-$S.jsonl.gz --senses syn-$S.jsonl.gz --shard ${{ matrix.shard }} \
+            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --review rv-$S.jsonl.gz --gloss gl-$S.jsonl.gz --words wd-$S.jsonl.gz --senses syn-$S.jsonl.gz --priority priority.txt --shard ${{ matrix.shard }} \
             --done prev/*.jsonl.gz
       - name: Save results
         if: always()
@@ -136,6 +141,7 @@ jobs:
     permissions:
       contents: write
       actions: write
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with: { ref: main }
@@ -215,3 +221,16 @@ jobs:
           git push origin HEAD:main
           # a push made with the workflow token does not start other workflows, so start the app build
           gh workflow run build.yml --ref main
+          # Close the missing-translation reports whose senses all have Turkish now.
+          gh issue list --state open --search '"[eksik-çeviri]" in:title' --limit 200 --json number,body > reports.json || echo '[]' > reports.json
+          python3 - <<'PY' > done.txt
+          import json, re, sqlite3
+          db = sqlite3.connect('assets/dict.db')
+          for it in json.load(open('reports.json')):
+              ids = [int(x) for x in re.findall(r'syn:(\d+)', it['body'] or '')]
+              if ids and all((db.execute('SELECT tr FROM syn WHERE id=?', (i,)).fetchone() or [None])[0] not in (None, '[]') for i in ids if i):
+                  print(it['number'])
+          PY
+          for n in $(cat done.txt); do
+            gh issue close "$n" --comment "Bu anlamların Türkçesi sözlüğe eklendi; bir sonraki sürümde gelecek." || true
+          done

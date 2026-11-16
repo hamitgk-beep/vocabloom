@@ -15,7 +15,14 @@ class QuizAnswer {
 
   /// English definition of that sense, when known.
   final String? gloss;
-  const QuizAnswer(this.tr, this.pos, this.gloss);
+
+  /// False when [tr] is the dictionary's best guess for a sense it has no
+  /// Turkish for (the AI service, when set up, is asked instead).
+  final bool sure;
+
+  /// WordNet sense used in the sentence, when known (for missing-word reports).
+  final int? synId;
+  const QuizAnswer(this.tr, this.pos, this.gloss, {this.sure = true, this.synId});
 }
 
 class QuizChoice {
@@ -57,7 +64,10 @@ class ReviewQuiz {
     }
     final ai = w.context == null ? null : user.contextAi(lemma, w.context!);
     final m = dict.meaningIn(lemma, w.context);
-    return QuizAnswer(ai ?? m.tr, m.pos, m.sense?.gloss);
+    // A one-word expression ("though", "however") has its own Turkish.
+    final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull?.trShown : null;
+    return QuizAnswer(ai ?? m.tr ?? (self == null ? null : DictDb.shortTr(self)), m.pos, m.sense?.gloss,
+        sure: ai != null || self != null || m.sure, synId: m.sense?.synId);
   }
 
   late final List<SavedWord> _saved = [

@@ -98,15 +98,15 @@ void main() {
     tester.view.physicalSize = phone * 2;
     tester.view.devicePixelRatio = 2;
 
-    // 1. Dictionary only: it has no Turkish for "a ground laid out for a
-    // sport", so the card is a flashcard instead of offering a wrong answer.
+    // 1. Dictionary only: the built-in Turkish of "a ground laid out for a
+    // sport" makes it a four-choice question with the right meaning.
     await open(tester);
     expect(find.textContaining('9bfdefed'), findsNothing);
     expect(find.text('Vietnam Opens Its Doors'), findsOneWidget);
     expect(find.textContaining('akmak'), findsNothing);
+    final st0 = tester.state(find.byType(ReviewPage)) as dynamic;
+    expect(st0.debugRight, 'golf sahası');
     await shot(tester, 'course_dictionary_only');
-    await tester.tap(find.text(L('Cevabı göster', 'Show answer')));
-    await shot(tester, 'course_dictionary_only_answer');
 
     // 2. With the meaning from the AI service: four choices, the right one is "saha".
     app.user.setContextAi('course', golf, 'saha, golf sahası');
