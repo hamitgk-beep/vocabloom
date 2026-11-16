@@ -226,7 +226,7 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
       await Isolate.run(() {
         final input = InputFileStream(zipPath);
         try {
-          extractArchiveToDiskSync(ZipDecoder().decodeStream(input), out);
+          unzipPack(ZipDecoder().decodeStream(input), out);
         } finally {
           input.closeSync();
         }
@@ -724,4 +724,30 @@ void _workerMain(List args) {
       reply.send([id, '$e', null, 0.0, 0.0]);
     }
   });
+}
+
+/// Writes the files of a voice pack zip under [out]. Done by hand because
+/// the archive package's own extractor wrote nothing on Windows (its checks
+/// for paths leaving the folder refused every entry there).
+void unzipPack(Archive archive, String out) {
+  for (final f in archive) {
+    final parts = f.name.replaceAll('\\', '/').split('/').where((s) => s.isNotEmpty && s != '.').toList();
+    if (parts.isEmpty) continue;
+    if (f.name.startsWith('/') || parts.any((s) => s == '..' || s.contains(':'))) {
+      throw FileSystemException('bad entry in voice pack', f.name);
+    }
+    final target = p.joinAll([out, ...parts]);
+    if (!f.isFile) {
+      Directory(target).createSync(recursive: true);
+      continue;
+    }
+    if (f.isSymbolicLink) continue;
+    File(target).parent.createSync(recursive: true);
+    final o = OutputFileStream(target);
+    try {
+      f.writeContent(o);
+    } finally {
+      o.closeSync();
+    }
+  }
 }
