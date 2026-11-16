@@ -5,6 +5,7 @@ import 'data/review.dart';
 import 'data/user_db.dart';
 import 'ai/local_ai.dart';
 import 'nlp/grammar.dart';
+import 'nlp/grammar_marks.dart';
 import 'online/auto_analyzer.dart';
 import 'nlp/text.dart';
 import 'l10n.dart';
@@ -37,7 +38,30 @@ const categories = <CategoryInfo>[
   CategoryInfo('irregular_verbs', 'Irregular Verbs', 'Düzensiz fiiller', Color(0xFFAA00FF), 'V2/V3 biçimleri kurala uymayan fiiller (go-went-gone).', 'Verbs whose V2/V3 forms do not follow the rule (go-went-gone).'),
 ];
 
-final categoryById = {for (final c in categories) c.id: c};
+/// Grammar highlights in the Filters menu (see nlp/grammar_marks.dart). They
+/// are found by rules on each sentence, not looked up in the dictionary.
+const grammarFilters = <CategoryInfo>[
+  CategoryInfo('g_tenses', 'Tenses', 'Zamanlar', Color(0xFF2E7D32), 'Her fiil zamanına göre renklenir: yeşil şimdiki/geniş, kahverengi geçmiş, mavi gelecek. Dokununca zamanın adı ve kuralı çıkar.',
+      'Each verb is coloured by its tense: green present, brown past, blue future. Tap it to see the name and the rule.'),
+  CategoryInfo('g_conditionals', 'Conditionals', 'Koşul cümleleri', Color(0xFFC2185B), '"if / unless" ile kurulan cümleler ve türleri (0, 1, 2, 3. tip, karışık).',
+      'Sentences with "if / unless" and their type (zero, first, second, third, mixed).'),
+  CategoryInfo('g_relative', 'Relative Clauses', 'Sıfat cümlecikleri', Color(0xFF5E35B1), 'who, which, that, whose, where ile başlayıp bir ismi niteleyen yan cümleler.',
+      'Clauses with who, which, that, whose or where that describe a noun.'),
+  CategoryInfo('g_gerund_inf', 'Gerund / Infinitive', 'V-ing / to V1', Color(0xFF0277BD), 'enjoy reading, want to read, before leaving: fiilden sonra -ing mi to mu geldiğini gösterir.',
+      'enjoy reading, want to read, before leaving: whether a verb is followed by -ing or to.'),
+  CategoryInfo('g_comparison', 'Comparative / Superlative', 'Karşılaştırma / üstünlük', Color(0xFFD84315), 'bigger than, more beautiful, the best, as tall as gibi karşılaştırma kalıpları.',
+      'Comparisons such as bigger than, more beautiful, the best, as tall as.'),
+  CategoryInfo('g_reported', 'Reported Speech', 'Dolaylı anlatım', Color(0xFF6A1B9A), 'he said that …, she asked if …, told him to …: tırnaksız aktarılan sözler ve sorular.',
+      'he said that …, she asked if …, told him to …: words and questions reported without quotation marks.'),
+];
+
+/// Colours of the tenses filter: present, past, future.
+const tenseToneColors = [Color(0xFF2E7D32), Color(0xFF9A5B13), Color(0xFF1565C0)];
+
+/// Every highlight type: expressions first, then grammar.
+const allCategories = [...categories, ...grammarFilters];
+
+final categoryById = {for (final c in allCategories) c.id: c};
 
 const learningColor = Color(0xFFFF9800);
 const learnedColor = Color(0xFF43A047);
@@ -47,6 +71,9 @@ class AppState extends ChangeNotifier {
   final DictDb dict;
   final UserDb user;
   late final TenseDetector tenses;
+
+  /// Grammar highlights in the reader (tenses, conditionals …).
+  late final GrammarMarker grammar;
   Set<String> enabledCats = {};
   bool showTr = true;
   bool showEn = true;
@@ -79,6 +106,14 @@ class AppState extends ChangeNotifier {
       }
     }
     tenses = TenseDetector(dict.lemmatizer, past, pp);
+    // Only the curated irregular verb list: WordNet's exception list also has
+    // rare forms such as "red" (rid) that would turn adjectives into verbs.
+    final gPast = <String>{}, gPP = <String>{};
+    for (final f in dict.irregular.values) {
+      gPast.addAll(f.sublist(1, f.length - 1));
+      gPP.add(f.last);
+    }
+    grammar = GrammarMarker(lemmas: dict.lemmatizer.lemmas, posOfLemma: dict.lemmaPos, pastForms: gPast, participles: gPP);
     final ai = user.exprAi();
     if (ai.isNotEmpty) {
       for (final e in dict.exprs) {
@@ -125,7 +160,7 @@ class AppState extends ChangeNotifier {
   }
 
   void setAllCats(bool on) {
-    enabledCats = on ? categories.map((c) => c.id).toSet() : {};
+    enabledCats = on ? allCategories.map((c) => c.id).toSet() : {};
     _save();
     notifyListeners();
   }

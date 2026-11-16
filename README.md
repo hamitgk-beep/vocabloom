@@ -23,6 +23,11 @@ Geliştiren: Hamit Gök
 - **Filtreler:** Conjunctions, Phrasal Verbs, Collocations, Prepositional Phrases, Proverbs & Sayings,
   Discourse Markers / Fillers, Idioms, Chunks, Binomials, False Friends, Modal Verbs, Irregular Verbs.
   Seçilen her tür kitapta kendi rengiyle altı çizili görünür.
+- **Gramer filtreleri:** Zamanlar (her fiil zamanına göre renklenir: yeşil şimdiki/geniş, kahverengi geçmiş, mavi gelecek),
+  Koşul cümleleri (0, 1, 2, 3. tip, karışık, devrik), Relative clauses, Gerund / Infinitive, Comparative / Superlative,
+  Reported speech. Renkli kelimeye dokununca yapının adı, bu cümledeki hali, kuralı ve ilgili Gramer konusuna bağlantı
+  çıkar. Tespit çevrimdışı ve kurallarla yapılır (`lib/nlp/grammar_marks.dart`); emin olunmayan yer işaretlenmez
+  (ör. "was tired" edilgen sayılmaz, "asked if" koşul sayılmaz). `test/grammar_marks_test.dart` doğru ve yanlış örnekleri denetler.
 - **Doğal sesli okuma (çevrimdışı):** kelimenin telaffuzu (hoparlör düğmesi), cümleyi normal veya yavaş dinleme,
   kitabı baştan sona sesli okuma (okunan cümle/parça vurgulanır, sayfa kendiliğinden kayar). İngilizce: Kokoro-82M
   (12 doğal ses, kadın/erkek, ABD/İngiliz aksanı) ve yavaş telefonlar için hafif Piper LibriTTS-R sesi; uygulama

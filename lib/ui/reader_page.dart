@@ -7,6 +7,7 @@ import '../tts/read_aloud.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 import 'expr_sheet.dart';
+import 'grammar_mark_sheet.dart';
 import 'paragraph_view.dart';
 import 'sentence_sheet.dart';
 import 'reading_sheet.dart';
@@ -173,6 +174,17 @@ class _ReaderPageState extends State<ReaderPage> {
   }
 
   void _onWord(Para p, ParaAnalysis a, int i) async {
+    // A word coloured by a grammar filter (a tense, a conditional …) opens the explanation.
+    if (a.shownAt(app, i).mark != null) {
+      await showGrammarMarkSheet(context, app, a, a.grammarAt(app, i), i, onWord: () => _openWord(p, a, i));
+      if (mounted) setState(() {});
+      return;
+    }
+    await _openWord(p, a, i);
+  }
+
+  Future<void> _openWord(Para p, ParaAnalysis a, int i) async {
+    if (!mounted) return;
     final ctx = buildContext(app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
     // A tap anywhere on an underlined multi-word expression opens the whole expression.
     final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()
@@ -386,18 +398,26 @@ class FilterPanel extends StatelessWidget {
         ]),
         Text(L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'), style: theme.textTheme.bodySmall),
         const SizedBox(height: 8),
-        for (final c in categories)
-          CheckboxListTile(
-            dense: true,
-            contentPadding: EdgeInsets.zero,
-            value: app.enabledCats.contains(c.id),
-            onChanged: (_) => app.toggleCat(c.id),
-            secondary: Container(width: 14, height: 14, decoration: BoxDecoration(color: c.color, shape: BoxShape.circle)),
-            title: Text(uiEnglish ? c.name : c.tr, style: TextStyle(color: theme.brightness == Brightness.dark ? Color.lerp(c.color, Colors.white, 0.35) : c.color, fontWeight: FontWeight.w600)),
-            // The English name of the type is worth learning, so the Turkish
-            // interface shows it after the description.
-            subtitle: Text(uiEnglish ? c.desc : '${c.desc} (${c.name})'),
-          ),
+        for (final c in categories) _tile(theme, c),
+        const Divider(),
+        Text(L('Gramer yapıları', 'Grammar structures'), style: theme.textTheme.titleSmall),
+        Text(L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'), style: theme.textTheme.bodySmall),
+        const SizedBox(height: 4),
+        for (final c in grammarFilters) ...[
+          _tile(theme, c),
+          if (c.id == 'g_tenses' && app.enabledCats.contains(c.id))
+            Padding(
+              padding: const EdgeInsets.only(left: 40, bottom: 6),
+              child: Wrap(spacing: 12, runSpacing: 4, children: [
+                for (final (i, t) in [L('şimdiki / geniş', 'present'), L('geçmiş', 'past'), L('gelecek', 'future')].indexed)
+                  Row(mainAxisSize: MainAxisSize.min, children: [
+                    Container(width: 10, height: 10, decoration: BoxDecoration(color: _shade(theme, tenseToneColors[i]), shape: BoxShape.circle)),
+                    const SizedBox(width: 4),
+                    Text(t, style: theme.textTheme.bodySmall?.copyWith(color: _shade(theme, tenseToneColors[i]), fontWeight: FontWeight.w600)),
+                  ]),
+              ]),
+            ),
+        ],
         const Divider(),
         Text(L('Kelime renkleri', 'Word colors'), style: theme.textTheme.titleSmall),
         const SizedBox(height: 6),
@@ -408,6 +428,21 @@ class FilterPanel extends StatelessWidget {
       ]),
     );
   }
+
+  Color _shade(ThemeData theme, Color c) => theme.brightness == Brightness.dark ? Color.lerp(c, Colors.white, 0.35)! : c;
+
+  Widget _tile(ThemeData theme, CategoryInfo c) => CheckboxListTile(
+        key: ValueKey('filter-${c.id}'),
+        dense: true,
+        contentPadding: EdgeInsets.zero,
+        value: app.enabledCats.contains(c.id),
+        onChanged: (_) => app.toggleCat(c.id),
+        secondary: Container(width: 14, height: 14, decoration: BoxDecoration(color: c.color, shape: BoxShape.circle)),
+        title: Text(uiEnglish ? c.name : c.tr, style: TextStyle(color: _shade(theme, c.color), fontWeight: FontWeight.w600)),
+        // The English name of the type is worth learning, so the Turkish
+        // interface shows it after the description.
+        subtitle: Text(uiEnglish ? c.desc : '${c.desc} (${c.name})'),
+      );
 
   Widget _legend(Color c, String t) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 3),

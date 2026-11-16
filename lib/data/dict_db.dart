@@ -181,6 +181,18 @@ class DictDb {
     return r.isEmpty ? null : r.first.columnAt(0) as String;
   }
 
+  final Map<String, Set<String>> _lemmaPosCache = {};
+
+  /// Parts of speech of a lemma itself ('n', 'v', 'a', 'r'), not of its other forms.
+  Set<String> lemmaPos(String lemma) => _lemmaPosCache.putIfAbsent(lemma, () {
+        final out = <String>{};
+        for (final r in db.select('SELECT DISTINCT pos FROM sense WHERE lemma=?', [lemma])) {
+          final p = r.columnAt(0) as String;
+          out.add(p == 's' ? 'a' : p);
+        }
+        return out;
+      });
+
   Set<String> posOf(String word) => _posCache.putIfAbsent(word, () {
         final out = <String>{};
         for (final l in lemmatizer.lemmas(word)) {
