@@ -9,6 +9,7 @@ import 'package:kelime_okur/ai/tutor.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
+import 'package:kelime_okur/online/ai_service.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 void main() {
@@ -26,6 +27,15 @@ void main() {
     final model = Platform.environment['AI_TEST_MODEL'];
     if (model != null && model.isNotEmpty) u.setSetting('ai_model_$provider', model);
     final app = AppState(d, u)..localAi = KeyAi(u);
+    // The service itself first, with its own error text and timing.
+    final sw = Stopwatch()..start();
+    try {
+      final r = await AiService.fromSettings(u)!.chat('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek?')], maxTokens: 1200);
+      print('RAW in ${sw.elapsed.inMilliseconds} ms: $r');
+    } catch (e) {
+      print('RAW ERROR after ${sw.elapsed.inMilliseconds} ms: $e');
+      rethrow;
+    }
     final tutor = Tutor.of(app);
     final about = 'Boşluk doldurma: "We ___ (not / like) horror films."\nDoğru cevaplar:\n- "don\'t like"\n- "do not like"\n'
         'Öğrencinin cevabı: "dont like"\nSonuç: yanlış';

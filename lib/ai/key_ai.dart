@@ -12,7 +12,7 @@ class KeyAi extends LocalAi {
   KeyAi(this.db);
 
   /// How long one answer may take.
-  static const answerTimeout = Duration(seconds: 90);
+  static const answerTimeout = Duration(seconds: 120);
 
   AiService? get service => AiService.fromSettings(db);
 
