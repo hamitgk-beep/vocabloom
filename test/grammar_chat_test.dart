@@ -64,6 +64,13 @@ void main() {
     expect((i.topic!.id, i.mode), ('relative_clauses', GrammarMode.study));
     expect(p('hangi gramer konuları var?')!.mode, GrammarMode.list);
     expect(p('cümle sor', last: i)!.topic!.id, 'relative_clauses');
+    i = p('phrasal verbleri anlat')!;
+    expect((i.topic!.id, i.mode), ('phrasal_verbs', GrammarMode.explain));
+    i = p('bugün deyimler çalışalım')!;
+    expect(i.topic!.id, 'idioms');
+    i = p('Quiz me on collocations')!;
+    expect((i.topic!.id, i.mode), ('collocations', GrammarMode.drill));
+    expect(p('neither nor anlat')!.topic!.id, 'conjunction_types');
   });
 
   test('ordinary chat is not taken for a request', () {

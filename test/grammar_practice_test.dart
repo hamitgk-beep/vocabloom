@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/ai/grammar_practice.dart';
+import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/user_db.dart';
 
 void main() {
@@ -25,6 +26,15 @@ void main() {
         expect(e.tr.trim(), isNotEmpty);
       }
     }
+  });
+
+  test('every expression group of the reader filters has a lesson', () {
+    final linked = {for (final t in topics) if (t.dictCategory != null) t.dictCategory!: t};
+    for (final c in categories) {
+      expect(linked[c.id], isNotNull, reason: c.id);
+    }
+    expect(linked.keys.toSet().difference(categoryById.keys.toSet()), isEmpty);
+    expect(linked['phrasal_verbs']!.category, 'phrases');
   });
 
   test('answers match regardless of case, punctuation and contractions', () {

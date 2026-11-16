@@ -10,6 +10,7 @@ import 'data/dict_db.dart';
 import 'data/user_db.dart';
 import 'import/importers.dart' show looksGeneratedTitle, titleFromContent;
 import 'import/word_gaps.dart';
+import 'ui/dictionary_page.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'ui/other_pages.dart';
@@ -159,7 +160,7 @@ class _HomePageState extends State<HomePage> {
     final pages = [
       LibraryPage(app: widget.app),
       WordsPage(app: widget.app),
-      CategoriesPage(app: widget.app),
+      DictionaryPage(app: widget.app),
       GrammarPage(app: widget.app),
       SettingsPage(app: widget.app),
     ];

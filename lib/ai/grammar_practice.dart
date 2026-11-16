@@ -75,6 +75,10 @@ class GrammarTopic {
   /// The explanation and patterns in English, for the English interface.
   final String explanationEn;
   final List<String> structureEn;
+
+  /// The dictionary expression group this lesson explains ("phrasal_verbs"),
+  /// whose full list the lesson page opens. Null for most lessons.
+  final String? dictCategory;
   const GrammarTopic({
     required this.id,
     required this.titleTr,
@@ -88,6 +92,7 @@ class GrammarTopic {
     this.aliases = const [],
     this.explanationEn = '',
     this.structureEn = const [],
+    this.dictCategory,
   });
 
   String get title => uiEnglish ? titleEn : titleTr;
@@ -116,6 +121,7 @@ class GrammarTopic {
       aliases: aliases,
       explanationEn: (en['explanation'] as String?) ?? '',
       structureEn: ((en['structure'] as List?) ?? const []).cast<String>(),
+      dictCategory: dictCategory,
     );
   }
 
@@ -130,6 +136,7 @@ class GrammarTopic {
     examples: [for (final e in j['examples'] as List) ((e as List)[0] as String, e[1] as String)],
     exercises: [for (final e in j['exercises'] as List) GrammarExercise.fromJson(e as Map<String, dynamic>)],
     aliases: ((j['aliases'] ?? const []) as List).cast<String>(),
+    dictCategory: j['dict_category'] as String?,
   );
 }
 
@@ -147,6 +154,7 @@ const grammarCategories = <String, (String, String)>{
   'clauses': ('Yan cümleler', 'Clauses'),
   'forms': ('Fiil biçimleri', 'Verb forms'),
   'comparison': ('Karşılaştırma', 'Comparison'),
+  'phrases': ('Kalıplar ve sözcük öbekleri', 'Phrases and word combinations'),
   'advanced': ('İleri yapılar', 'Advanced structures'),
   'mixed': ('Karışık tekrar', 'Mixed review'),
 };
@@ -191,6 +199,7 @@ const grammarCategoryAliases = <String, List<String>>{
   'clauses': ['clause', 'clauses', 'cümlecik', 'cümlecikler', 'yan cümle', 'yan cümleler'],
   'forms': ['verb forms', 'fiil biçimleri'],
   'comparison': ['comparison', 'comparisons'],
+  'phrases': ['expressions', 'word combinations', 'kalıplar', 'sözcük öbekleri', 'kelime öbekleri', 'kelime kalıpları'],
   'advanced': ['advanced structures', 'advanced grammar', 'ileri yapılar', 'ileri gramer'],
   'mixed': [],
 };

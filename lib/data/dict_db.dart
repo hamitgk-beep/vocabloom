@@ -402,6 +402,36 @@ class DictDb {
     return l.split(RegExp(r'[ ,;]+')).any(crude.contains) || l.contains('mastürbasyon');
   }
 
+  /// Single words starting with [prefix] (letters, ' and - only), the most
+  /// frequent first, for the dictionary search. An exact match comes first.
+  List<String> searchWords(String prefix, {int limit = 40}) {
+    final q = prefix.trim().toLowerCase().replaceAll(RegExp(r"[^a-z'\-]"), '');
+    if (q.isEmpty) return const [];
+    return [
+      for (final r in db.select(
+          'SELECT w FROM (SELECT word AS w FROM ft WHERE word GLOB ?1 '
+          'UNION SELECT word FROM wfreq WHERE word GLOB ?1 AND EXISTS (SELECT 1 FROM sense s WHERE s.lemma = word)) '
+          "LEFT JOIN wfreq f ON f.word = w WHERE w NOT GLOB '* *' "
+          'ORDER BY (w = ?2) DESC, IFNULL(f.n, 0) DESC, w LIMIT ?3',
+          ['$q*', q, limit]))
+        r.columnAt(0) as String
+    ];
+  }
+
+  /// The expressions of [cat] met most often in books, most frequent first
+  /// (alphabetical when the dictionary has no counts).
+  List<Expr> commonExprs(String cat, {int limit = 8}) {
+    final byPhrase = {for (final e in exprs) if (e.cat == cat) e.phrase: e};
+    final hasFreq = db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='exfreq'").isNotEmpty;
+    final out = <Expr>[
+      if (hasFreq)
+        for (final r in db.select('SELECT phrase FROM exfreq WHERE cat = ? ORDER BY n DESC LIMIT ?', [cat, limit * 2]))
+          ?byPhrase[r.columnAt(0) as String],
+    ];
+    if (out.length < limit) out.addAll(byCategory(cat).where((e) => !out.contains(e)).take(limit - out.length));
+    return out.take(limit).toList();
+  }
+
   List<Expr> byCategory(String cat) => exprs.where((e) => e.cat == cat).toList()
     ..sort((a, b) => a.phrase.compareTo(b.phrase));
 }
