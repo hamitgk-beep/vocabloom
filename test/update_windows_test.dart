@@ -67,7 +67,8 @@ void main() {
     for (var i = 0; i < 120 && (!File(marker).existsSync() || work.existsSync()); i++) {
       await Future<void>.delayed(const Duration(milliseconds: 250));
     }
-    expect(File(marker).existsSync(), isTrue, reason: 'app was not started again');
+    final log = File(p.join(Platform.environment['TEMP']!, 'vocabloom-update.log'));
+    expect(File(marker).existsSync(), isTrue, reason: 'app was not started again. Log: ${log.existsSync() ? log.readAsStringSync() : '-'}');
     expect(sw.elapsed.inMilliseconds, greaterThan(1500), reason: 'did not wait for the app to exit');
     expect(File(p.join(app.path, 'old.txt')).readAsStringSync(), 'new');
     expect(File(p.join(app.path, 'keep.txt')).readAsStringSync(), 'keep');

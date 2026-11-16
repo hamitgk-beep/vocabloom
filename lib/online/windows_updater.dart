@@ -51,11 +51,14 @@ class WindowsUpdater {
   static String installScript({required String newFiles, required String appDir, required String exe, required int pid, required String cleanup}) => [
         '@echo off',
         'chcp 65001 >nul',
-        // Wait until the app has exited so its files can be replaced. ping is
-        // the wait because timeout.exe refuses to run without a console.
-        ':wait',
-        'tasklist /FI "PID eq $pid" /NH | find " $pid " >nul && (ping -n 2 127.0.0.1 >nul & goto wait)',
-        'robocopy "$newFiles" "$appDir" /E /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >nul',
+        'set LOG="%TEMP%\\vocabloom-update.log"',
+        'echo %DATE% %TIME% waiting for $pid > %LOG%',
+        // Wait until the app has exited so its files can be replaced.
+        // (tasklist and timeout.exe hang or refuse to run without a console.)
+        'powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "Wait-Process -Id $pid -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 700" >> %LOG% 2>&1',
+        'echo %TIME% copying>> %LOG%',
+        'robocopy "$newFiles" "$appDir" /E /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
+        'echo %TIME% robocopy %ERRORLEVEL%, starting>> %LOG%',
         'start "" "$exe"',
         'rmdir /S /Q "$cleanup" >nul 2>&1',
         '',
