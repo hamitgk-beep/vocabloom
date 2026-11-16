@@ -52,6 +52,7 @@ const readerCases = <(String, String)>[
   ('The bird flew above the grass and landed on the fence.', 'above'),
   ('She usually takes the bus to school.', 'usually'),
   ('He gave up smoking last year.', 'gave'),
+  ('I found my keys under the bed.', 'found'),
 ];
 
 late AppState app;
