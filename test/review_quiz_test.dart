@@ -40,6 +40,15 @@ void main() {
     expect(ch2.options.toSet().length, 4);
   });
 
+  test('simply in "simply by reason of" is "ancak, sadece", with four choices', () {
+    final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
+    const s = 'How often does some crime come to light simply by reason of a bit of unmitigated bungling, '
+        'and each tune one asks oneself the question: If this hadn\'t been bungled, would anyone ever have known?';
+    final ch = ReviewQuiz(d, u, rnd: Random(2)).choiceFor(saved('simply', s))!;
+    expect(ch.right, 'ancak, sadece');
+    expect(ch.options.toSet().length, 4);
+  });
+
   test('a lesson course is still "ders, kurs"', () {
     final m = d.meaningIn('course', 'She took an evening course in English literature.');
     expect(m.tr, contains('ders'));
@@ -55,15 +64,35 @@ void main() {
     final rows = d.db.select(
         "SELECT substr(e.key, 3) AS w, e.en FROM exs e JOIN wfreq f ON f.word = substr(e.key, 3) "
         "WHERE e.key LIKE 'w:%' AND length(substr(e.key, 3)) > 3 GROUP BY e.key ORDER BY f.n DESC LIMIT 1500");
-    var asked = 0, flash = 0;
+    var asked = 0, flash = 0, unsure = 0, untranslatable = 0;
+    final seenLemma = <String>{};
+    final unsureList = <String>[];
     final bad = <String>[];
     for (final r in rows) {
-      final w = r['w'] as String, s = r['en'] as String;
+      // Words are saved under their dictionary form ("said" -> "say").
+      final ls = d.lemmatizer.lemmas(r['w'] as String);
+      int freq(String x) => (d.db.select('SELECT n FROM wfreq WHERE word=?', [x]).firstOrNull?['n'] as int?) ?? 0;
+      final known = [...ls.where((l) => !d.lookup(l).isEmpty)]..sort((a, b) => freq(b) - freq(a));
+      final irr = d.irregularOf[(r['w'] as String).toLowerCase()];
+      final w = irr != null ? irr.first : known.isEmpty ? ls.first : known.first;
+      final s = r['en'] as String;
+      // Names and words the dictionary has no Turkish for at all ("Esperanto").
+      final info = d.lookup(w);
+      if (info.trFreeDict.isEmpty && info.senses.every((x) => x.tr.isEmpty)) {
+        untranslatable++;
+        continue;
+      }
+      if (!seenLemma.add(w)) continue;
       final ch = q.choiceFor(saved(w, s));
       final a = q.answerFor(saved(w, s));
       if (ch == null) {
         flash++;
+        bad.add('$w: no four-choice question for "$s"');
         continue;
+      }
+      if (!a.sure) {
+        unsure++;
+        unsureList.add('$w\t${a.gloss}\t$s');
       }
       asked++;
       final own = d.trWordsOf(w);
@@ -79,9 +108,13 @@ void main() {
       if (a.pos == 'n' && DictDb.isTrVerb(ch.right) && !ch.right.contains(' ')) bad.add('$w: noun in "$s" answered with verb "${ch.right}"');
     }
     // ignore: avoid_print
-    print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards (no Turkish for the sense)');
+    print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards, $unsure answers guessed, $untranslatable words with no Turkish at all');
+    final dump = Platform.environment['AUDIT_UNSURE'];
+    if (dump != null) File(dump).writeAsStringSync(unsureList.join('\n'));
     expect(bad, isEmpty, reason: bad.take(30).join('\n'));
-    expect(asked, greaterThan(rows.length * 0.6));
+    expect(flash, 0);
+    expect(untranslatable, lessThan(rows.length * 0.02));
+    expect(unsure, lessThan(rows.length * 0.03));
   });
 
   test('machine-made book titles get a title from the text', () {

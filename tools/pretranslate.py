@@ -956,6 +956,8 @@ def main():
     ap.add_argument('--gloss', default='', help='short Turkish meanings of this service (gl-<service>.jsonl.gz)')
     ap.add_argument('--words', default='', help='word explanations of this service (wd-<service>.jsonl.gz)')
     ap.add_argument('--senses', default='', help='WordNet-sense results of this service (syn-<service>.jsonl.gz)')
+    ap.add_argument('--priority', default='', help='file of WordNet sense ids reported by the app (missing Turkish); '
+                    'translated first, before everything else')
     ap.add_argument('--shard', default='0/1', help='k/n: this service takes every n-th item first')
     ap.add_argument('--done', nargs='*', default=[], help='results of other services, to skip')
     a = ap.parse_args()
@@ -976,6 +978,17 @@ def main():
     if not svc.key:
         print(f'{a.provider}: no API key, nothing to do')
         return
+    # Senses the app reported as missing Turkish come first (all services take them).
+    if a.senses and a.priority and os.path.exists(a.priority) and svc.models:
+        want = {int(x) for x in open(a.priority).read().split() if x.isdigit()}
+        syn_files = [a.senses] + [f for f in a.done if os.path.basename(f).startswith('syn')]
+        pdone = read_done(syn_files, lambda j: int(j['id']))
+        ptodo = [r for r in load_syn_todo(a.dict_db, pdone, min_freq=0, max_rank=999) if r[0] in want]
+        print(f'reported senses: {len(want)} reported, {len(ptodo)} to translate')
+        if ptodo:
+            m = run(svc, ptodo, a.senses, deadline, a.limit, 'syn')
+            print(f'reported senses added {m}')
+
     # The three kinds share the run: expressions, word families and WordNet
     # senses each get a slice of the time, and time a kind does not use goes on
     # to the next one. A used-up quota stops them all.

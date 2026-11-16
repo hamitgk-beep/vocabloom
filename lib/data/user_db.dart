@@ -83,6 +83,8 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS sentence_ai(sentence TEXT PRIMARY KEY, tr TEXT, exp TEXT);
       CREATE TABLE IF NOT EXISTS wfam_ai(word TEXT PRIMARY KEY, json TEXT);
       CREATE TABLE IF NOT EXISTS expr_ai(phrase TEXT, cat TEXT, tr TEXT, exp TEXT, PRIMARY KEY(phrase, cat));
+      CREATE TABLE IF NOT EXISTS missing_tr(lemma TEXT, syn INTEGER, gloss TEXT, reported INTEGER DEFAULT 0,
+        PRIMARY KEY(lemma, syn));
       CREATE TABLE IF NOT EXISTS ctx_ai(lemma TEXT, sentence TEXT, tr TEXT, PRIMARY KEY(lemma, sentence));
     ''');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
@@ -110,6 +112,17 @@ class UserDb {
 
   void setContextAi(String lemma, String sentence, String tr) =>
       db.execute('INSERT OR REPLACE INTO ctx_ai(lemma, sentence, tr) VALUES (?,?,?)', [lemma, sentence, tr]);
+
+  // ---- words the dictionary has no exact Turkish for (reported to the developer)
+  void addMissing(String lemma, int? syn, String? gloss) => db.execute(
+      'INSERT OR IGNORE INTO missing_tr(lemma, syn, gloss) VALUES (?,?,?)', [lemma, syn ?? 0, gloss]);
+
+  List<({String lemma, int syn, String? gloss})> missingToReport() => [
+        for (final r in db.select('SELECT lemma, syn, gloss FROM missing_tr WHERE reported=0 ORDER BY rowid'))
+          (lemma: r['lemma'] as String, syn: r['syn'] as int, gloss: r['gloss'] as String?)
+      ];
+
+  void markMissingReported() => db.execute('UPDATE missing_tr SET reported=1 WHERE reported=0');
 
   // ---- AI expression details and sentence explanations
   String? exprDetail(String key) {
