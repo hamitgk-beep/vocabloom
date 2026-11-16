@@ -83,6 +83,7 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS sentence_ai(sentence TEXT PRIMARY KEY, tr TEXT, exp TEXT);
       CREATE TABLE IF NOT EXISTS wfam_ai(word TEXT PRIMARY KEY, json TEXT);
       CREATE TABLE IF NOT EXISTS expr_ai(phrase TEXT, cat TEXT, tr TEXT, exp TEXT, PRIMARY KEY(phrase, cat));
+      CREATE TABLE IF NOT EXISTS ctx_ai(lemma TEXT, sentence TEXT, tr TEXT, PRIMARY KEY(lemma, sentence));
     ''');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
@@ -100,6 +101,15 @@ class UserDb {
 
   void setExprAi(String phrase, String cat, String tr, String? exp) =>
       db.execute('INSERT OR REPLACE INTO expr_ai(phrase, cat, tr, exp) VALUES (?,?,?,?)', [phrase, cat, tr, exp]);
+
+  // ---- AI meaning of a saved word in its own sentence (review answers)
+  String? contextAi(String lemma, String sentence) {
+    final r = db.select('SELECT tr FROM ctx_ai WHERE lemma=? AND sentence=?', [lemma, sentence]);
+    return r.isEmpty ? null : r.first['tr'] as String;
+  }
+
+  void setContextAi(String lemma, String sentence, String tr) =>
+      db.execute('INSERT OR REPLACE INTO ctx_ai(lemma, sentence, tr) VALUES (?,?,?)', [lemma, sentence, tr]);
 
   // ---- AI expression details and sentence explanations
   String? exprDetail(String key) {
@@ -126,6 +136,26 @@ class UserDb {
 
   void setFamilyAi(String word, String json) =>
       db.execute('INSERT OR REPLACE INTO wfam_ai(word, json) VALUES (?,?)', [word, json]);
+
+  /// Gives books with a machine-made title (a UUID file name) a title from
+  /// their own text, and updates the saved words that name the old title.
+  void repairBookTitles(bool Function(String title) generated,
+      String Function(List<String> chapterTitles, List<(String, String)> firstParas) derive) {
+    for (final r in db.select('SELECT id, title FROM books')) {
+      final old = r['title'] as String? ?? '';
+      if (!generated(old)) continue;
+      final id = r['id'] as int;
+      final titles = [for (final c in db.select('SELECT title FROM chapters WHERE book_id=? ORDER BY idx', [id])) c['title'] as String? ?? ''];
+      final paras = [
+        for (final p in db.select('SELECT kind, text FROM paras WHERE book_id=? ORDER BY chapter, idx LIMIT 8', [id]))
+          (p['kind'] as String, p['text'] as String)
+      ];
+      final t = derive(titles, paras);
+      if (t.isEmpty || t == old) continue;
+      db.execute('UPDATE books SET title=? WHERE id=?', [t, id]);
+      db.execute('UPDATE words SET book=? WHERE book=?', [t, old]);
+    }
+  }
 
   /// Once per device: splits glued words ("witha" -> "with a") in books
   /// imported from PDFs and images before the import fixed them itself.

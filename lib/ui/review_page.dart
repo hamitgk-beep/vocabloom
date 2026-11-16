@@ -1,15 +1,17 @@
-import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../data/review.dart';
+import '../data/review_quiz.dart';
+import '../import/importers.dart' show looksGeneratedTitle;
+import '../online/ai_service.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
 import '../nlp/text.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
+import 'tap_text.dart' show panelApp;
 import 'theme.dart';
 import 'word_sheet.dart';
 
@@ -41,76 +43,71 @@ class _ReviewPageState extends State<ReviewPage> {
   bool shown = false;
   int done = 0, known = 0, graduated = 0;
 
-  /// Multiple-choice state for the current card: its options, the index of
-  /// the right one, and what the user tapped (null until they answer).
-  final _choices = <int, ({List<String> options, int correct})?>{};
+  /// Multiple-choice state per card position (null: a plain flashcard).
+  final _choices = <int, QuizChoice?>{};
   int? picked;
-  final _rnd = Random();
-  late final List<String> _pool = _distractorPool();
+  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user);
+
+  /// Cards whose meaning in their sentence is being asked from the AI service.
+  final _asking = <String>{};
 
   AppState get app => widget.app;
 
-  /// Keeps a meaning short enough for an answer button: its first two parts.
-  static String _shortTr(String s) {
-    final parts = s.split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
-    return parts.isEmpty ? s.trim() : parts.take(2).join(', ');
+  @override
+  void initState() {
+    super.initState();
+    // Other words of the example sentence open their meaning when tapped.
+    panelApp = widget.app;
   }
 
-  String? _meaningOf(SavedWord w) {
-    final m = w.meaning ?? app.shortMeaning(w.lemma);
-    return m == null || m.trim().isEmpty ? null : _shortTr(m);
+  QuizChoice? _choiceFor(int i) {
+    if (_choices.containsKey(i)) return _choices[i];
+    final w = queue[i].word;
+    final ch = _quiz.choiceFor(w);
+    if (ch == null && _askAi(w)) return null; // ask again when the answer arrives
+    return _choices[i] = ch;
   }
 
-  /// Wrong answers: Turkish meanings of the user's other saved words first
-  /// (they look like real answers), then random dictionary entries.
-  List<String> _distractorPool() {
-    final out = <String>[];
-    for (final st in [WordStatus.learning, WordStatus.learned]) {
-      for (final w in app.user.words(st)) {
-        final m = _meaningOf(w);
-        if (m != null) out.add(m);
+  /// The dictionary has no Turkish for the sense used in this sentence: asks
+  /// the AI service, when one is set up. True while the answer is on its way.
+  bool _askAi(SavedWord w) {
+    final ctx = w.context;
+    if (ctx == null || w.lemma.contains(' ')) return false;
+    final key = '${w.lemma}|$ctx';
+    if (_asking.contains(key)) return true;
+    if (_aiFailed.contains(key)) return false;
+    final svc = AiService.fromSettings(app.user);
+    if (svc == null) return false;
+    _asking.add(key);
+    svc.meaningInSentence(w.lemma, ctx).timeout(const Duration(seconds: 20)).then((tr) {
+      if (tr.isNotEmpty && tr.length < 60) {
+        app.user.setContextAi(w.lemma, ctx, tr);
+        _quiz.forget(w);
+      } else {
+        _aiFailed.add(key);
       }
-    }
-    try {
-      for (final r in app.dict.db.select('SELECT tr FROM ft ORDER BY random() LIMIT 300')) {
-        final list = jsonDecode(r.columnAt(0) as String) as List;
-        if (list.isNotEmpty) out.add(_shortTr(list.first as String));
-      }
-    } catch (_) {}
-    return out;
+    }, onError: (_) {
+      _aiFailed.add(key);
+    }).whenComplete(() {
+      _asking.remove(key);
+      if (mounted) setState(() {});
+    });
+    return true;
   }
 
-  ({List<String> options, int correct})? _choiceFor(int i) => _choices.putIfAbsent(i, () {
-        final right = _meaningOf(queue[i].word);
-        if (right == null) return null;
-        final rightWords = right.toLowerCase().split(RegExp(r'[ ,]+')).toSet();
-        final seen = {right.toLowerCase()};
-        final saved = _pool.where((m) => _isSavedMeaning(m)).toList()..shuffle(_rnd);
-        final rest = _pool.where((m) => !_isSavedMeaning(m)).toList()..shuffle(_rnd);
-        final wrong = <String>[];
-        for (final m in [...saved, ...rest]) {
-          if (wrong.length == 3) break;
-          final k = m.toLowerCase();
-          if (k.length > 40 || !seen.add(k)) continue;
-          if (k.split(RegExp(r'[ ,]+')).any((x) => x.length > 2 && rightWords.contains(x))) continue;
-          wrong.add(m);
-        }
-        if (wrong.length < 3) return null;
-        final options = [...wrong, right]..shuffle(_rnd);
-        return (options: options, correct: options.indexOf(right));
-      });
+  final _aiFailed = <String>{};
 
-  late final Set<String> _savedMeanings = {
-    for (final st in [WordStatus.learning, WordStatus.learned])
-      for (final w in app.user.words(st)) ?_meaningOf(w),
-  };
-  bool _isSavedMeaning(String m) => _savedMeanings.contains(m);
+  bool _waiting(int i) {
+    if (i >= queue.length || _choices.containsKey(i)) return false;
+    final w = queue[i].word;
+    return _asking.contains('${w.lemma}|${w.context}');
+  }
 
   /// The right option for the current card (for tests).
   @visibleForTesting
   String? get debugRight {
     final ch = pos < queue.length ? _choiceFor(pos) : null;
-    return ch?.options[ch.correct];
+    return ch?.right;
   }
 
   void _pick(int i) {
@@ -189,10 +186,12 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Widget _card(ThemeData theme, ReviewCard c) {
     final w = c.word;
-    final meaning = w.meaning ?? app.shortMeaning(w.lemma);
-    final info = w.lemma.contains(' ') ? null : app.dict.lookup(w.lemma);
-    final gloss = info != null && info.senses.isNotEmpty ? info.senses.first.gloss : null;
     final ch = _choiceFor(pos);
+    final waiting = ch == null && _waiting(pos);
+    final ans = _quiz.answerFor(w);
+    // What the word means in its own sentence (never an unrelated sense).
+    final meaning = ch?.right ?? ans.tr;
+    final gloss = ans.gloss;
     final answered = picked != null;
     final wrong = ch != null && answered && picked != ch.correct;
     final reveal = ch == null ? shown : wrong;
@@ -201,7 +200,7 @@ class _ReviewPageState extends State<ReviewPage> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
           child: GestureDetector(
-            onTap: ch != null || shown ? null : () => setState(() => shown = true),
+            onTap: ch != null || shown || waiting ? null : () => setState(() => shown = true),
             child: Container(
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
@@ -214,7 +213,7 @@ class _ReviewPageState extends State<ReviewPage> {
                 Row(children: [
                   _BoxDots(box: c.box),
                   const Spacer(),
-                  if (w.bookTitle != null)
+                  if (w.bookTitle != null && !looksGeneratedTitle(w.bookTitle!))
                     Flexible(
                       child: Text(w.bookTitle!, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                     ),
@@ -231,13 +230,16 @@ class _ReviewPageState extends State<ReviewPage> {
                     const SizedBox(height: 16),
                     DefaultTextStyle.merge(
                       style: TextStyle(fontFamily: readingFont, color: theme.colorScheme.onSurfaceVariant),
-                      child: SentenceText(w.context!, w.lemma.split(' ').first, highlight: {w.lemma.split(' ').first}),
+                      // The asked word is not tappable: its panel would give the answer away.
+                      child: SentenceText(w.context!, w.lemma.split(' ').first, highlight: _targetForms(w), lockHighlight: true),
                     ),
                   ],
                   const SizedBox(height: 24),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
-                    child: !reveal
+                    child: waiting
+                        ? const SizedBox(key: ValueKey(2), height: 24, width: 24, child: CircularProgressIndicator(strokeWidth: 2.5))
+                        : !reveal
                         ? Text(
                             ch != null
                                 ? L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.')
@@ -247,7 +249,8 @@ class _ReviewPageState extends State<ReviewPage> {
                             const Divider(height: 1),
                             const SizedBox(height: 20),
                             if (meaning != null && app.showTr) Text(meaning, style: trStyle(theme, theme.textTheme.titleLarge)),
-                            if (gloss != null && app.showEn) ...[
+                            // With no Turkish for this sense the English definition is the answer.
+                            if (gloss != null && (app.showEn || meaning == null)) ...[
                               const SizedBox(height: 8),
                               Text(gloss, style: enStyle(theme, theme.textTheme.bodyLarge, false)),
                             ],
@@ -306,7 +309,9 @@ class _ReviewPageState extends State<ReviewPage> {
                         child: Text(L('Bilmiyorum', "I don't know")),
                       ),
           ),
-        ] else if (!shown)
+        ] else if (waiting)
+          const SizedBox(height: 54)
+        else if (!shown)
           FilledButton(
             onPressed: () => setState(() => shown = true),
             style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),
@@ -322,6 +327,20 @@ class _ReviewPageState extends State<ReviewPage> {
           ]),
       ]),
     );
+  }
+
+  /// The forms of the asked word in its sentence ("ran" for "run").
+  Set<String> _targetForms(SavedWord w) {
+    final words = w.lemma.split(' ');
+    final out = {words.first};
+    if (w.context == null) return out;
+    for (final t in tokenize(w.context!)) {
+      final ls = app.dict.lemmatizer.lemmas(t.lower);
+      if (words.length == 1 ? (t.lower == w.lemma || ls.contains(w.lemma)) : words.any((x) => x.length > 2 && (t.lower == x || ls.contains(x)))) {
+        out.add(t.lower);
+      }
+    }
+    return out;
   }
 
   Widget _summary(ThemeData theme) {
