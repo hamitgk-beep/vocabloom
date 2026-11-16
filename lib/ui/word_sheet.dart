@@ -83,9 +83,14 @@ class _WordPanelState extends State<WordPanel> {
     final lower = widget.surface.toLowerCase().replaceAll('’', "'");
     final cands = app.dict.lemmatizer.lemmas(lower);
     lemma = widget.lemma ?? cands.first;
+    // A past form of an irregular verb belongs to that verb ("found" -> find,
+    // "fell" -> fall), unless it is a base form itself ("lay").
+    final irrBase = app.dict.irregularOf[lower];
+    final irr = widget.lemma == null && irrBase != null && !app.dict.irregular.containsKey(lower);
+    if (irr) lemma = irrBase.first;
     // A word that is itself common beats a rare base form the suffix rules
     // produce ("never" is not a form of "neve").
-    if (widget.lemma == null && lemma != lower && cands.contains(lower)) {
+    if (widget.lemma == null && !irr && lemma != lower && cands.contains(lower)) {
       int freq(String w) {
         final r = app.dict.db.select('SELECT n FROM wfreq WHERE word=?', [w]);
         return r.isEmpty ? 0 : r.first['n'] as int;
@@ -161,15 +166,21 @@ class _WordPanelState extends State<WordPanel> {
     final st = app.user.statuses[lemma] ?? WordStatus.none;
     final tr = app.showTr, en = app.showEn;
 
+    // Irregular verb: the header keeps the tapped form ("found") and the
+    // V1/V2/V3 row under it shows the whole verb with that form in bold.
+    final surface = widget.surface.toLowerCase().replaceAll('’', "'");
+    final verbForms = app.dict.irregular[lemma];
+    final head = verbForms != null && verbForms.contains(surface) ? surface : lemma;
+
     final children = <Widget>[
       Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        Flexible(child: Text(lemma, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700))),
+        Flexible(child: Text(head, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700))),
         if (Speech.supported)
           Padding(
             padding: const EdgeInsets.only(left: 2),
-            child: SpeakButton(lemma, key: ValueKey('say-$lemma'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), autoPlay: Speech.instance.autoWord, size: 28),
+            child: SpeakButton(head, key: ValueKey('say-$head'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), autoPlay: Speech.instance.autoWord, size: 28),
           ),
-        if (widget.surface.toLowerCase() != lemma)
+        if (surface != head)
           Padding(
             padding: const EdgeInsets.only(left: 8, bottom: 4),
             child: Text('(${widget.surface})', style: theme.textTheme.titleMedium?.copyWith(color: theme.hintColor)),
@@ -180,6 +191,7 @@ class _WordPanelState extends State<WordPanel> {
             child: Text(posNames[best!.pos] ?? '', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           ),
       ]),
+      if (verbForms != null) VerbFormsRow(forms: verbForms, tapped: surface),
       if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: TapText(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
       if (tr && _trMain == null) DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge),
       if (tr && _trMain != null)
@@ -781,4 +793,43 @@ class SentenceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       TapText(sentence, style: const TextStyle(fontSize: 16, height: 1.45), highlight: highlight ?? {word!.toLowerCase()});
+}
+
+/// "V1 find · V2 found · V3 found" under an irregular verb's header, with the
+/// form the learner tapped in bold. "be" has two V2 forms (was / were).
+class VerbFormsRow extends StatelessWidget {
+  final List<String> forms; // V1, V2..., V3
+  final String tapped;
+  const VerbFormsRow({super.key, required this.forms, required this.tapped});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final base = enStyle(theme, theme.textTheme.titleMedium);
+    final groups = [
+      ('V1', [forms.first]),
+      ('V2', forms.sublist(1, forms.length - 1)),
+      ('V3', [forms.last]),
+    ];
+    final spans = <InlineSpan>[];
+    for (final (label, words) in groups) {
+      if (spans.isNotEmpty) spans.add(const TextSpan(text: '    '));
+      spans.add(TextSpan(
+          text: '$label ',
+          style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w700)));
+      for (var i = 0; i < words.length; i++) {
+        if (i > 0) spans.add(TextSpan(text: ' / ', style: base.copyWith(color: theme.hintColor)));
+        final on = words[i] == tapped;
+        spans.add(TextSpan(
+            text: words[i],
+            style: on
+                ? base.copyWith(fontWeight: FontWeight.w800, color: theme.colorScheme.onSurface)
+                : base.copyWith(fontWeight: FontWeight.w400, color: theme.colorScheme.onSurfaceVariant)));
+      }
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 2, bottom: 2),
+      child: Text.rich(TextSpan(children: spans), key: const ValueKey('verb-forms')),
+    );
+  }
 }

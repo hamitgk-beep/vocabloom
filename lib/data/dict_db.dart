@@ -62,7 +62,15 @@ class DictDb {
     return d;
   }
 
+  /// Irregular verbs: base form -> [V1, V2..., V3] ("be" -> be, was, were, been).
+  final Map<String, List<String>> irregular = {};
+
+  /// V2/V3 form -> base forms of the irregular verbs it belongs to ("found" -> find).
+  final Map<String, List<String>> irregularOf = {};
+
   void load() {
+    irregular.clear();
+    irregularOf.clear();
     final known = <String>{};
     for (final r in db.select('SELECT DISTINCT lemma FROM sense')) {
       known.add(r.columnAt(0) as String);
@@ -88,6 +96,15 @@ class DictDb {
       exprById[e.id] = e;
       final f = r['forms'] as String?;
       if (f != null) forms[e.id] = (jsonDecode(f) as List).cast<String>();
+      if (f != null && e.cat == 'irregular_verbs') {
+        final vf = forms[e.id]!;
+        if (vf.length >= 3) {
+          irregular[e.phrase] = vf;
+          for (final x in vf.skip(1)) {
+            if (x != e.phrase) irregularOf.putIfAbsent(x, () => []).add(e.phrase);
+          }
+        }
+      }
     }
     matcher = PhraseMatcher(lemmatizer, exprs, forms);
   }
