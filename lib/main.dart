@@ -60,6 +60,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       Speech.instance.init(dir, user);
       // Load the voice model early so the first tap on a speaker is quick.
       Future.delayed(const Duration(seconds: 3), Speech.instance.warmUp);
+      // All voices come with the app: fetch the packs that are missing.
+      if (override == null) Future.delayed(const Duration(seconds: 2), Speech.instance.downloadAll);
       try {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {
@@ -143,7 +145,7 @@ class _HomePageState extends State<HomePage> {
           Platform.isAndroid
               ? L('VocaBloom\'un yeni sürümü var. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.', 'A new version of VocaBloom is available. Download and open it to install over the current app; your books and words are kept.')
               : Platform.isWindows
-                  ? L('VocaBloom\'un yeni sürümü var. Güncelle\'ye basınca indirilip kurulur ve uygulama yeniden açılır; kitapların ve kelimelerin korunur.', 'A new version of VocaBloom is available. Press Update to download and install it; the app restarts and your books and words are kept.')
+                  ? L('VocaBloom\'un yeni sürümü var. Güncelle\'ye basınca indirilip kurulur ve uygulama yeniden açılır; kitapların ve kelimelerin korunur, eksik ses paketleri de kendiliğinden iner.', 'A new version of VocaBloom is available. Press Update to download and install it; the app restarts, your books and words are kept, and any missing voice packs download by themselves.')
                   : L('VocaBloom\'un yeni sürümü var.', 'A new version of VocaBloom is available.'),
         ),
         actions: [
