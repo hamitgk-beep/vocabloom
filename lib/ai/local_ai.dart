@@ -1,8 +1,7 @@
-/// On-device, offline AI tutor: package catalog types and the engine
-/// interface the "Yapay Zekâ" screens program against.
-///
-/// The implementation lives in `local_engine.dart` (llama.cpp through
-/// llamadart); the task prompts live in `tutor.dart`.
+/// The AI interface the tutor programs against. The app uses [KeyAi]
+/// (key_ai.dart): the service the learner connected with their own API key.
+/// The offline model and its package types are gone; the package types stay
+/// for the interface only. The task prompts live in `tutor.dart`.
 library;
 
 import 'package:flutter/foundation.dart';

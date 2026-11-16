@@ -7,7 +7,7 @@ import '../../ai/tutor.dart';
 import '../ai/ai_ask_box.dart';
 import '../../app_state.dart';
 import '../../l10n.dart';
-import '../ai/ai_page.dart';
+import '../ai/ai_key_help.dart';
 import '../ai/ai_tools.dart';
 import '../tap_text.dart';
 import '../theme.dart';
@@ -510,6 +510,9 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
   int index = 0;
   _State state = _State.asking;
   String feedback = '';
+
+  /// Why the AI could not check the answer (with a key connected).
+  String? aiErr;
   StreamSubscription<String>? sub;
   List<String> hint = const [];
   int hintShown = 0;
@@ -582,6 +585,7 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
           },
           onError: (Object err) {
             _record(false);
+            aiErr = aiError(err);
             if (mounted) setState(() => state = _State.noModel);
           },
         );
@@ -625,13 +629,8 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
         '${feedback.trim().isEmpty ? '' : '\nUygulamanın geri bildirimi: ${feedback.trim()}'}';
   }
 
-  void _openAi() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => AiPage(ai: widget.app.localAi, tutor: tutor),
-      ),
-    );
-  }
+  void _openAi() => openAiKeySettings(context, widget.app);
+
 
   @override
   Widget build(BuildContext context) {
@@ -837,12 +836,16 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                         L('Bu cümle sonraki turlarda yeniden karşına çıkacak.', 'This sentence will come up again in a later round.'),
                         style: theme.textTheme.bodySmall?.copyWith(height: 1.4, color: cs.onSurfaceVariant),
                       ),
-                      if (state == _State.noModel) ...[
+                      if (state == _State.noModel && widget.app.localAi.activeId != null && aiErr != null) ...[
+                        const Divider(height: 24),
+                        Text(aiErr!, style: theme.textTheme.bodySmall?.copyWith(height: 1.4, color: cs.error)),
+                      ],
+                      if (state == _State.noModel && widget.app.localAi.activeId == null) ...[
                         const Divider(height: 24),
                         Text(
                           L(
-                            'Cevabındaki hataların tek tek açıklanması için yapay zekâ modeli gerekir.',
-                            'A detailed explanation of your mistakes needs the AI model.',
+                            'Cevabındaki hataların tek tek açıklanması için Ayarlar\'dan kendi yapay zekâ anahtarını ekle (Gemini ücretsiz).',
+                            'For a detailed explanation of your mistakes, add your own AI key in Settings (Gemini is free).',
                           ),
                           style: theme.textTheme.bodySmall?.copyWith(height: 1.4),
                         ),
@@ -850,7 +853,7 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                         TextButton.icon(
                           onPressed: _openAi,
                           icon: const Icon(Icons.auto_awesome_rounded, size: 18),
-                          label: Text(L('Yapay zekâ modelini indir', 'Download the AI model')),
+                          label: Text(L('Yapay zekâ anahtarı ekle', 'Add an AI key')),
                         ),
                       ],
                     ],

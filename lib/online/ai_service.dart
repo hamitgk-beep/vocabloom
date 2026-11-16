@@ -137,8 +137,17 @@ class AiService {
     return jsonDecode(t.substring(start, end + 1)) as Map<String, dynamic>;
   }
 
-  Future<String> _send(String prompt, Map<String, dynamic> schema, {Uint8List? png, int maxTokens = 16000}) async {
+  /// A conversation in plain text (no JSON): the tutor's answers in the
+  /// reading panels, the grammar practice and the chat. [history] is
+  /// (role, text) with role 'user' or 'assistant', the last one the user's.
+  Future<String> chat(String system, List<(String, String)> history, {int maxTokens = 1500}) =>
+      _send('', null, maxTokens: maxTokens, system: system, history: history);
+
+  Future<String> _send(String prompt, Map<String, dynamic>? schema,
+      {Uint8List? png, int maxTokens = 16000, String? system, List<(String, String)>? history}) async {
     final kind = cfg.provider.kind;
+    final sys = system ?? _system;
+    final turns = history ?? [('user', prompt)];
     late Uri url;
     final headers = <String, String>{'content-type': 'application/json'};
     late Map<String, dynamic> body;
@@ -152,19 +161,20 @@ class AiService {
         body = {
           'model': cfg.model,
           'max_tokens': maxTokens,
-          'system': _system,
+          'system': sys,
           'output_config': {
             'effort': 'low',
-            'format': {'type': 'json_schema', 'schema': schema},
+            if (schema != null) 'format': {'type': 'json_schema', 'schema': schema},
           },
           'messages': [
-            {
-              'role': 'user',
-              'content': [
-                if (img != null) {'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/png', 'data': img}},
-                {'type': 'text', 'text': prompt},
-              ],
-            }
+            for (final (role, text) in turns)
+              {
+                'role': role == 'assistant' ? 'assistant' : 'user',
+                'content': [
+                  if (img != null && history == null) {'type': 'image', 'source': {'type': 'base64', 'media_type': 'image/png', 'data': img}},
+                  {'type': 'text', 'text': text},
+                ],
+              }
           ],
         };
         if (!cfg.model.startsWith('claude-haiku')) {
@@ -177,19 +187,20 @@ class AiService {
         body = {
           'systemInstruction': {
             'parts': [
-              {'text': _system}
+              {'text': sys}
             ]
           },
           'contents': [
-            {
-              'role': 'user',
-              'parts': [
-                if (img != null) {'inline_data': {'mime_type': 'image/png', 'data': img}},
-                {'text': prompt},
-              ],
-            }
+            for (final (role, text) in turns)
+              {
+                'role': role == 'assistant' ? 'model' : 'user',
+                'parts': [
+                  if (img != null && history == null) {'inline_data': {'mime_type': 'image/png', 'data': img}},
+                  {'text': text},
+                ],
+              }
           ],
-          'generationConfig': {'responseMimeType': 'application/json', 'maxOutputTokens': maxTokens},
+          'generationConfig': {if (schema != null) 'responseMimeType': 'application/json', 'maxOutputTokens': maxTokens},
         };
       case ApiKind.openai:
       case ApiKind.azure:
@@ -205,18 +216,21 @@ class AiService {
         body = {
           if (kind == ApiKind.openai) 'model': cfg.model,
           'messages': [
-            {'role': 'system', 'content': _system},
-            {
-              'role': 'user',
-              'content': img == null
-                  ? prompt
-                  : [
-                      {'type': 'image_url', 'image_url': {'url': 'data:image/png;base64,$img'}},
-                      {'type': 'text', 'text': prompt},
-                    ],
-            },
+            {'role': 'system', 'content': sys},
+            if (history != null)
+              for (final (role, text) in history) {'role': role == 'assistant' ? 'assistant' : 'user', 'content': text}
+            else
+              {
+                'role': 'user',
+                'content': img == null
+                    ? prompt
+                    : [
+                        {'type': 'image_url', 'image_url': {'url': 'data:image/png;base64,$img'}},
+                        {'type': 'text', 'text': prompt},
+                      ],
+              },
           ],
-          'response_format': {'type': 'json_object'},
+          if (schema != null) 'response_format': {'type': 'json_object'},
           'max_tokens': maxTokens,
         };
     }

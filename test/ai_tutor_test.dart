@@ -5,8 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/ai/grammar_chat.dart';
 import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
-import 'package:kelime_okur/ai/local_engine.dart';
-import 'package:kelime_okur/ai/packages.dart';
+import 'package:kelime_okur/ai/key_ai.dart';
 import 'package:kelime_okur/ai/tutor.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
@@ -18,7 +17,7 @@ class _EchoAi extends LocalAi {
   String? lastSystem;
   List<(String, String)>? lastMessages;
   @override
-  List<AiPackage> get packages => aiPackages;
+  List<AiPackage> get packages => const [];
   @override
   Future<Set<String>> installed() async => {};
   @override
@@ -64,19 +63,16 @@ void main() {
   app.localAi = ai;
   final tutor = Tutor.of(app)..lessons = () async => parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync());
 
-  test('one free package, size as shown, commercial licence', () {
-    expect(aiPackages.map((p) => p.id), ['pro']);
-    expect(aiPackages.single.premium, isFalse);
-    expect(aiPackages.single.sizeBytes, lessThanOrEqualTo(3.1e9));
-    for (final p in aiPackages) {
-      expect(p.licenseName, 'Apache 2.0');
-      expect(p.urls.first, startsWith('https://'));
-      expect(p.ratings, hasLength(4));
-    }
-  });
-
-  test('the app is free: no package is locked', () {
-    expect(aiPackages.where((p) => p.premium), isEmpty);
+  test('without a key there is no AI, and asking says how to add one', () async {
+    final key = KeyAi(u);
+    expect(key.activeId, isNull);
+    expect(key.packages, isEmpty);
+    await expectLater(key.generate('x', [('user', 'y')]).join(), throwsA(isA<AiException>()));
+    u.setSetting('ai_provider', 'gemini');
+    u.setSetting('ai_key_gemini', 'test-key');
+    expect(key.activeId, 'key');
+    u.setSetting('ai_provider', null);
+    u.setSetting('ai_key_gemini', null);
   });
 
   test('grounding carries tenses, expressions and meanings', () {
@@ -113,16 +109,8 @@ void main() {
     }
   });
 
-  test('think blocks are removed from streamed text, also when split', () {
-    final f = ThinkFilter();
-    final out = StringBuffer()
-      ..write(f.add('<thi'))
-      ..write(f.add('nk>\nhmm</th'))
-      ..write(f.add('ink>\n\nMerhaba'))
-      ..write(f.add(' <'))
-      ..write(f.add('b>dünya'))
-      ..write(f.close());
-    expect(out.toString(), 'Merhaba <b>dünya');
+  test('think blocks are removed from answers', () {
+    expect(stripThinking('<think>\nhmm</think>\n\nMerhaba <b>dünya'), 'Merhaba <b>dünya');
   });
 
   test('chat turns alternate and start with the user', () {

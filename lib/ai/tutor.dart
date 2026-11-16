@@ -290,7 +290,7 @@ class Tutor {
   }
 
   static String _discussSystem() => '$_teacher\n\n'
-      'Görev: Öğrenci ekrandaki alıştırma ya da kelime hakkında sana soru soruyor ("neden yanlış?", "benim cevabım da '
+      'Görev: Öğrenci ekrandaki alıştırma, kelime ya da cümle hakkında sana soru soruyor ("neden yanlış?", "benim cevabım da '
       'doğru değil mi?", "bir örnek daha ver"). "Durum" bölümündeki bilgilere dayanarak kısa (en fazla 120 kelime), '
       'net ve Türkçe cevap ver. Öğrencinin cevabı da doğru ve doğal bir İngilizce cümleyse bunu açıkça kabul et; '
       'değilse hatayı kurala bağlayarak göster ve doğru hâlini yaz. Verilen doğru cevaplar kesin doğrudur; yine de '

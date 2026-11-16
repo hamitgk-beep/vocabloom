@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'ai/local_engine.dart';
+import 'ai/key_ai.dart';
 import 'app_state.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
@@ -14,9 +14,7 @@ import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
 import 'ui/settings_page.dart';
 import 'ui/onboarding.dart';
-import 'ui/ai/ai_page.dart';
 import 'ui/grammar/grammar_page.dart';
-import 'ai/tutor.dart';
 import 'ui/theme.dart';
 import 'tts/speech.dart';
 
@@ -56,7 +54,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
-      a.localAi = LlamaLocalAi(user, dir);
+      a.localAi = KeyAi(user);
       Speech.instance.init(dir, user);
       // Load the voice model early so the first tap on a speaker is quick.
       Future.delayed(const Duration(seconds: 3), Speech.instance.warmUp);
@@ -212,7 +210,6 @@ class _HomePageState extends State<HomePage> {
       WordsPage(app: widget.app),
       CategoriesPage(app: widget.app),
       GrammarPage(app: widget.app),
-      if (widget.app.aiTab) AiPage(ai: widget.app.localAi, tutor: Tutor.of(widget.app)),
       SettingsPage(app: widget.app),
     ];
     final dests = [
@@ -220,7 +217,6 @@ class _HomePageState extends State<HomePage> {
       (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimeler', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
-      if (widget.app.aiTab) (Icons.auto_awesome_outlined, Icons.auto_awesome_rounded, L('Yapay Zekâ', 'AI Tutor')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
     if (tab >= pages.length) tab = pages.length - 1;
