@@ -16,7 +16,11 @@ class TapText extends StatefulWidget {
 
   /// Words drawn bold and underlined (e.g. the expression in its sentence).
   final Set<String>? highlight;
-  const TapText(this.text, {super.key, this.style, this.highlight});
+
+  /// Highlighted words stay plain text: tapping them opens nothing (the
+  /// review card must not give away the word it is asking about).
+  final bool lockHighlight;
+  const TapText(this.text, {super.key, this.style, this.highlight, this.lockHighlight = false});
 
   @override
   State<TapText> createState() => _TapTextState();
@@ -52,15 +56,16 @@ class _TapTextState extends State<TapText> {
     for (final t in tokenize(s)) {
       if (t.start > pos) spans.add(TextSpan(text: s.substring(pos, t.start)));
       final word = RegExp(r'[A-Za-z]').hasMatch(t.text);
+      final hl = _hl(t);
       TapGestureRecognizer? r;
-      if (word && app != null) {
+      if (word && app != null && !(hl && widget.lockHighlight)) {
         r = TapGestureRecognizer()..onTap = () => showWordSheet(context, app, t.text);
         _recognizers.add(r);
       }
       spans.add(TextSpan(
         text: t.text,
         recognizer: r,
-        style: _hl(t) ? const TextStyle(fontWeight: FontWeight.w800, decoration: TextDecoration.underline) : null,
+        style: hl ? const TextStyle(fontWeight: FontWeight.w800, decoration: TextDecoration.underline) : null,
       ));
       pos = t.end;
     }

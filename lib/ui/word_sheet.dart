@@ -128,9 +128,15 @@ class _WordPanelState extends State<WordPanel> {
       // FreeDict lists the most common meaning first; skip "... kimse" style
       // noun readings when the sentence uses the word as an adjective.
       final list = info.trFreeDict;
+      // A noun or adjective in the sentence never gets a verb meaning
+      // ("a golf course" is not "akmak"), and a verb gets a verb meaning.
+      final fit = bestPos == null
+          ? list
+          : list.where((t) => DictDb.isTrVerb(t) == (bestPos == 'v')).toList();
+      final pool = fit.isEmpty ? list : fit;
       final pick = bestPos == 'a' || bestPos == 's'
-          ? list.firstWhere((t) => !t.contains('kimse') && !t.contains('kişi'), orElse: () => list.first)
-          : list.first;
+          ? pool.firstWhere((t) => !t.contains('kimse') && !t.contains('kişi'), orElse: () => pool.first)
+          : pool.first;
       return pick.split(RegExp(r'[,;]')).map((x) => x.trim()).where((x) => x.isNotEmpty).take(3).join(', ');
     }
     return _selfExprTr;
@@ -776,9 +782,10 @@ class SentenceText extends StatelessWidget {
   final String sentence;
   final String? word;
   final Set<String>? highlight;
-  const SentenceText(this.sentence, this.word, {this.highlight});
+  final bool lockHighlight;
+  const SentenceText(this.sentence, this.word, {this.highlight, this.lockHighlight = false});
 
   @override
   Widget build(BuildContext context) =>
-      TapText(sentence, style: const TextStyle(fontSize: 16, height: 1.45), highlight: highlight ?? {word!.toLowerCase()});
+      TapText(sentence, style: const TextStyle(fontSize: 16, height: 1.45), highlight: highlight ?? {word!.toLowerCase()}, lockHighlight: lockHighlight);
 }
