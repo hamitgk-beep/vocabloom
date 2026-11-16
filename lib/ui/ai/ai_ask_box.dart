@@ -132,7 +132,18 @@ class _AiAskBoxState extends State<AiAskBox> {
         if (history.isEmpty || !running) ...[
           const SizedBox(height: 8),
           Wrap(spacing: 6, runSpacing: 6, children: [
-            for (final s in widget.suggestions) ActionChip(label: Text(s), onPressed: running ? null : () => _ask(s)),
+            for (final s in widget.suggestions)
+              ActionChip(
+                label: Text(s),
+                onPressed: running ? null : () => _ask(s),
+                visualDensity: VisualDensity.compact,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                avatar: Icon(Icons.auto_awesome_rounded, size: 14, color: cs.primary),
+                labelStyle: theme.textTheme.labelLarge?.copyWith(color: cs.primary, fontWeight: FontWeight.w600),
+                backgroundColor: cs.surface,
+                side: BorderSide(color: cs.primary.withValues(alpha: 0.3)),
+                shape: const StadiumBorder(),
+              ),
           ]),
         ],
         const SizedBox(height: 8),
@@ -147,12 +158,20 @@ class _AiAskBoxState extends State<AiAskBox> {
               onSubmitted: _ask,
               decoration: InputDecoration(
                 isDense: true,
+                filled: true,
+                fillColor: cs.surface,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 hintText: L('Sorunu yaz…', 'Type your question…'),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(22)),
               ),
             ),
           ),
-          IconButton(onPressed: running ? null : () => _ask(input.text), icon: const Icon(Icons.send_rounded)),
+          const SizedBox(width: 8),
+          IconButton.filled(
+            tooltip: L('Gönder', 'Send'),
+            onPressed: running ? null : () => _ask(input.text),
+            icon: const Icon(Icons.arrow_upward_rounded),
+          ),
         ]),
         if (history.isNotEmpty && !running) const AiDisclaimer(),
       ]),
