@@ -558,6 +558,24 @@ class AiService {
     );
   }
 
+  /// Short Turkish meaning (1 to 4 words) of [word] as it is used in
+  /// [sentence] ("course" in "a new golf course" -> "saha, golf sahası").
+  Future<String> meaningInSentence(String word, String sentence) async {
+    final r = await _json(
+      'Sentence:\n$sentence\n\nWord: $word\n\n'
+      'Return JSON {"tr": "..."}: the Turkish meaning of the word exactly as it is used in this sentence, '
+      'in 1 to 4 words, the way a Turkish dictionary would put it (no explanation, no quotes).',
+      {
+        'type': 'object',
+        'properties': {'tr': {'type': 'string'}},
+        'required': ['tr'],
+        'additionalProperties': false,
+      },
+      maxTokens: 400,
+    );
+    return '${r['tr']}'.trim();
+  }
+
   /// Reads the text of a scanned page image (online OCR).
   Future<String> ocrPage(Uint8List png) async {
     if (!cfg.provider.vision) throw Exception(L('${cfg.provider.name} resimdeki metni okuyamıyor.', '${cfg.provider.name} cannot read text in images.'));

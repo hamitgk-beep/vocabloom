@@ -12,7 +12,7 @@ import 'theme.dart';
 // Settings: a short main list in groups. Items with a few fixed choices use a
 // drop-down on the row itself; bigger topics open their own page.
 
-String _versionLabel() => appBuild == 0 ? L('Geliştirme derlemesi', 'Development build') : L('Sürüm 1.0 ($appBuild)', 'Version 1.0 ($appBuild)');
+String _versionLabel() => appBuild == 0 ? L('Geliştirme derlemesi', 'Development build') : L('Sürüm ${appVersion.isEmpty ? '1.0' : appVersion}', 'Version ${appVersion.isEmpty ? '1.0' : appVersion}');
 
 class SettingsPage extends StatelessWidget {
   final AppState app;
@@ -78,10 +78,11 @@ class SettingsPage extends StatelessWidget {
                 },
               ),
               SettingsNavTile(
+                key: const ValueKey('settings-ai'),
                 icon: Icons.auto_awesome_rounded,
                 color: const Color(0xFF0891B2),
-                title: L('Yapay zekâ servisi (kendi anahtarın)', 'AI service (your own key)'),
-                subtitle: provider == null ? L('Bağlı değil · "Yapay zekâya sor" için gerekli', 'Not connected · needed for "Ask the AI"') : L('${provider.name} bağlı', '${provider.name} connected'),
+                title: L('Yapay zekâ servisi', 'AI service'),
+                subtitle: provider == null ? L('Bağlı değil · kendi anahtarınla çalışır', 'Not connected · works with your own key') : L('${provider.name} bağlı', '${provider.name} connected'),
                 onTap: () => _push(context, AiServicePage(app: app)),
               ),
             ]),
@@ -460,20 +461,33 @@ class _AiServicePageState extends State<AiServicePage> {
     final theme = Theme.of(context);
     final p = providerById[providerId]!;
     final showUrl = p.kind == ApiKind.azure || p.id == 'custom' || p.id == 'ollama' || p.id == 'openrouter';
-    final small = theme.textTheme.bodySmall?.copyWith(height: 1.45);
+    Widget point(IconData icon, String text) => Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Icon(icon, size: 18, color: theme.colorScheme.primary),
+            const SizedBox(width: 10),
+            Expanded(child: Text(text, style: theme.textTheme.bodyMedium?.copyWith(height: 1.4))),
+          ]),
+        );
     return _SubPage(title: L('Yapay zekâ servisi', 'AI service'), children: [
       Panel(children: [
-        Text(
-          L('Kendi API anahtarınla bağladığın servis "Yapay zekâya sor" düğmelerini (kelime, cümle, gramer, sözlük) çalıştırır; Google Gemini\'nin ücretsiz planı yeterlidir. Uygulamanın geri kalanı bu servis olmadan da tamamen çalışır. Ayrıca bu servis, internet olduğunda henüz taranmamış kitapları tarar: her cümlenin Türkçe çevirisi ve bölüm özetleri cihazına kaydedilir ve bir daha taranmaz. Kullanım ücreti varsa kendi hesabından düşer.',
-              'The service you connect with your own API key powers the "Ask the AI" buttons (word, sentence, grammar, dictionary); Google Gemini\'s free plan is enough. The rest of the app works fully without it. When you are online, the service also scans books that have not been scanned yet: a Turkish translation of every sentence and chapter summaries are saved on your device and never scanned again. Any usage fee is billed to your own account.'),
-          style: small,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          L('Ücretsiz başlamak için Google Gemini ya da Groq\'u seç. Anahtarı nereden ve nasıl alacağın aşağıda adım adım yazar.',
-              'To start for free, pick Google Gemini or Groq. The steps to get its key appear below.'),
-          style: small?.copyWith(fontWeight: FontWeight.w600),
-        ),
+        Row(children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(gradient: Brand.gradient, borderRadius: BorderRadius.circular(12)),
+            child: const Icon(Icons.auto_awesome_rounded, color: Colors.white, size: 22),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(L('Kendi anahtarınla yapay zekâ', 'AI with your own key'),
+                style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+          ),
+        ]),
+        point(Icons.forum_rounded, L('Kelime, cümle, gramer ve sözlükteki "Yapay zekâya sor" düğmelerini çalıştırır.', 'Powers the "Ask the AI" buttons on words, sentences, grammar and the dictionary.')),
+        point(Icons.translate_rounded, L('İnternet olunca kitaplarının cümle çevirilerini ve bölüm özetlerini hazırlayıp cihaza kaydeder.', 'When online, prepares sentence translations and chapter summaries of your books and saves them on the device.')),
+        point(Icons.savings_rounded, L('Google Gemini\'nin ücretsiz planı yeterli. Ücret varsa kendi hesabından düşer.', 'Google Gemini\'s free plan is enough. Any fee is billed to your own account.')),
+        point(Icons.lock_rounded, L('Anahtar yalnızca bu cihazda saklanır. Uygulamanın geri kalanı servis olmadan da çalışır.', 'The key stays on this device. The rest of the app works without the service.')),
       ]),
       SectionLabel(L('Servis', 'Service')),
       Panel(children: [

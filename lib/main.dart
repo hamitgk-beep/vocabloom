@@ -7,6 +7,7 @@ import 'ai/key_ai.dart';
 import 'app_state.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
+import 'import/importers.dart' show looksGeneratedTitle, titleFromContent;
 import 'import/word_gaps.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
@@ -64,6 +65,11 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {
         debugPrint('repairJoinedWords: $e');
+      }
+      try {
+        user.repairBookTitles(looksGeneratedTitle, titleFromContent);
+      } catch (e) {
+        debugPrint('repairBookTitles: $e');
       }
       // Optional: import files given on the command line (desktop "Open with").
       for (final f in widget.args.where((a) => File(a).existsSync())) {

@@ -22,6 +22,7 @@ DROP = {
     'build down|phrasal_verbs',        # solitaire term
     'in book|prepositional_phrases',   # chess term
     'favorite person|idioms',          # psychology jargon, not an idiom
+    'bird and baby|binomials',         # nickname of one Oxford pub
     'no holes barred|prepositional_phrases',  # eggcorn of "no holds barred" plus a crude sense
 }
 
@@ -61,6 +62,10 @@ TR = {
     # Binomials
     'bacon and eggs|binomials': 'pastırmalı yumurta',
     'day and night|binomials': 'gece gündüz, durmadan',
+    # The nightly translation kept these names in English inside the Turkish line.
+    'dark and stormy|binomials': 'koyu rom ve zencefilli gazozla yapılan kokteyl',
+    'post and pair|binomials': 'eski bir İngiliz iskambil oyunu',
+    'rake and scrape|binomials': "Bahamalar'a özgü bir halk müziği türü",
 
     # Idioms
     'all at once|idioms': 'birden, aniden; hep birlikte',

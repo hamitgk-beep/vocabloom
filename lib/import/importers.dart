@@ -26,8 +26,57 @@ class ImportException implements Exception {
   String toString() => message;
 }
 
+/// Whether a book title is a machine-made name rather than a real title:
+/// a UUID or a long hex/number string ("9bfdefed-8b6d-4c1e-…"), which some
+/// Android file providers give copied files, or an empty one.
+bool looksGeneratedTitle(String title) {
+  final t = title.trim().toLowerCase();
+  if (t.isEmpty) return true;
+  if (RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}').hasMatch(t)) return true;
+  final core = t.replaceAll(RegExp(r'[\s_\-.()]'), '');
+  if (core.length >= 12 && RegExp(r'^[0-9a-f]+$').hasMatch(core) && RegExp(r'\d').hasMatch(core)) return true;
+  if (RegExp(r'^(document|msf|primary|image|file|download)[:_ \-]*\d+$').hasMatch(t)) return true;
+  return false;
+}
+
+/// A readable title taken from the book itself: its first real chapter
+/// title or heading, otherwise the opening words of its first paragraph.
+String titleFromContent(List<String> chapterTitles, List<(String kind, String text)> firstParas) {
+  final generic = RegExp(r'^(bölüm|chapter|part|kısım)\s*\d+', caseSensitive: false);
+  String clip(String s) {
+    final t = s.replaceAll(RegExp(r'\s+'), ' ').trim();
+    if (t.length <= 60) return t;
+    final cut = t.substring(0, 60);
+    final sp = cut.lastIndexOf(' ');
+    return '${(sp > 30 ? cut.substring(0, sp) : cut).trim()}…';
+  }
+
+  for (final c in chapterTitles) {
+    final t = c.trim();
+    if (t.length > 2 && !generic.hasMatch(t) && !looksGeneratedTitle(t)) return clip(t);
+  }
+  for (final p in firstParas) {
+    if (p.$1 == 'h' && p.$2.trim().length > 2 && !looksGeneratedTitle(p.$2)) return clip(p.$2);
+  }
+  for (final p in firstParas) {
+    if (p.$2.trim().length > 2) return clip(p.$2.split(RegExp(r'(?<=[.!?])\s')).first);
+  }
+  return chapterTitles.firstOrNull ?? '';
+}
+
+/// [b] with a title from its contents when its own title is machine-made.
+ImportedBook withReadableTitle(ImportedBook b) {
+  if (!looksGeneratedTitle(b.title)) return b;
+  final t = titleFromContent(
+      [for (final c in b.chapters) c.title], [for (final c in b.chapters.take(2)) ...c.paragraphs.take(5)]);
+  return t.isEmpty ? b : ImportedBook(t, b.author, b.format, b.chapters);
+}
+
 /// Converts a book file into the app's own chapter/paragraph format.
-Future<ImportedBook> importFile(String path, {OcrEngine? ocr, ImportProgress? onProgress, bool Function(String word)? isWord}) async {
+Future<ImportedBook> importFile(String path, {OcrEngine? ocr, ImportProgress? onProgress, bool Function(String word)? isWord}) async =>
+    withReadableTitle(await _importFile(path, ocr: ocr, onProgress: onProgress, isWord: isWord));
+
+Future<ImportedBook> _importFile(String path, {OcrEngine? ocr, ImportProgress? onProgress, bool Function(String word)? isWord}) async {
   final ext = p.extension(path).toLowerCase().replaceFirst('.', '');
   final base = p.basenameWithoutExtension(path);
   if (ext == 'pdf') return importPdf(path, base, ocr: ocr, onProgress: onProgress, isWord: isWord);

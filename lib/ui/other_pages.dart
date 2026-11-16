@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-
+import '../import/importers.dart' show looksGeneratedTitle;
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
@@ -147,7 +147,7 @@ class _WordList extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontFamily: readingFont, fontStyle: FontStyle.italic, fontSize: 13.5, height: 1.4, color: theme.colorScheme.onSurfaceVariant)),
                         ),
-                      if (w.bookTitle != null)
+                      if (w.bookTitle != null && !looksGeneratedTitle(w.bookTitle!))
                         Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: Row(children: [

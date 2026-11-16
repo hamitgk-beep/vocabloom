@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 /// Build number baked in by CI (--dart-define=BUILD_NUMBER=...); 0 for local builds.
 const appBuild = int.fromEnvironment('BUILD_NUMBER');
 
+/// User-facing version baked in by CI (1.1, 1.2 ... 2.0); empty for local builds.
+const appVersion = String.fromEnvironment('APP_VERSION');
+
 const _release = 'https://api.github.com/repos/hamitgk-beep/vocabloom/releases/tags/latest';
 const _download = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/';
 

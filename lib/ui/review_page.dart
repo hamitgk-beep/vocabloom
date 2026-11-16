@@ -1,12 +1,19 @@
+
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
 import '../data/review.dart';
+import '../data/review_quiz.dart';
+import '../import/importers.dart' show looksGeneratedTitle;
+import '../online/ai_service.dart';
+import '../online/missing_report.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
 import '../nlp/text.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
+import 'tap_text.dart' show panelApp;
 import 'theme.dart';
 import 'word_sheet.dart';
 
@@ -38,7 +45,94 @@ class _ReviewPageState extends State<ReviewPage> {
   bool shown = false;
   int done = 0, known = 0, graduated = 0;
 
+  /// Multiple-choice state per card position (null: a plain flashcard).
+  final _choices = <int, QuizChoice?>{};
+  int? picked;
+  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user);
+
+  /// Cards whose meaning in their sentence is being asked from the AI service.
+  final _asking = <String>{};
+
   AppState get app => widget.app;
+
+  @override
+  void initState() {
+    super.initState();
+    // Other words of the example sentence open their meaning when tapped.
+    panelApp = widget.app;
+  }
+
+  QuizChoice? _choiceFor(int i) {
+    if (_choices.containsKey(i)) return _choices[i];
+    final w = queue[i].word;
+    // A guessed meaning: the AI service (when set up) gives the exact one.
+    final ans = _quiz.answerFor(w);
+    if (!ans.sure && _askAi(w)) return null;
+    final ch = _quiz.choiceFor(w);
+    if (ch == null && _askAi(w)) return null; // ask again when the answer arrives
+    // The dictionary lacks the Turkish of this sense: remember it, so it can
+    // be reported and added in a later dictionary update.
+    if ((ch == null || !ans.sure) && !w.lemma.contains(' ')) {
+      try {
+        app.user.addMissing(w.lemma, ans.synId, ans.gloss);
+      } catch (_) {}
+    }
+    return _choices[i] = ch;
+  }
+
+  /// The dictionary has no Turkish for the sense used in this sentence: asks
+  /// the AI service, when one is set up. True while the answer is on its way.
+  bool _askAi(SavedWord w) {
+    final ctx = w.context;
+    if (ctx == null || w.lemma.contains(' ')) return false;
+    final key = '${w.lemma}|$ctx';
+    if (_asking.contains(key)) return true;
+    if (_aiFailed.contains(key)) return false;
+    final svc = AiService.fromSettings(app.user);
+    if (svc == null) return false;
+    _asking.add(key);
+    svc.meaningInSentence(w.lemma, ctx).timeout(const Duration(seconds: 20)).then((tr) {
+      if (tr.isNotEmpty && tr.length < 60) {
+        app.user.setContextAi(w.lemma, ctx, tr);
+        _quiz.forget(w);
+      } else {
+        _aiFailed.add(key);
+      }
+    }, onError: (_) {
+      _aiFailed.add(key);
+    }).whenComplete(() {
+      _asking.remove(key);
+      if (mounted) setState(() {});
+    });
+    return true;
+  }
+
+  final _aiFailed = <String>{};
+
+  bool _waiting(int i) {
+    if (i >= queue.length || _choices.containsKey(i)) return false;
+    final w = queue[i].word;
+    return _asking.contains('${w.lemma}|${w.context}');
+  }
+
+  /// The right option for the current card (for tests).
+  @visibleForTesting
+  String? get debugRight {
+    final ch = pos < queue.length ? _choiceFor(pos) : null;
+    return ch?.right;
+  }
+
+  void _pick(int i) {
+    final ch = _choiceFor(pos);
+    if (ch == null || picked != null) return;
+    setState(() => picked = i);
+    if (i == ch.correct) {
+      final at = pos;
+      Future.delayed(const Duration(milliseconds: 650), () {
+        if (mounted && pos == at && picked == i) _answer(ReviewAnswer.good);
+      });
+    }
+  }
 
   void _answer(ReviewAnswer a) {
     final c = queue[pos];
@@ -53,6 +147,7 @@ class _ReviewPageState extends State<ReviewPage> {
     setState(() {
       pos++;
       shown = false;
+      picked = null;
     });
   }
 
@@ -103,15 +198,21 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Widget _card(ThemeData theme, ReviewCard c) {
     final w = c.word;
-    final meaning = w.meaning ?? app.shortMeaning(w.lemma);
-    final info = w.lemma.contains(' ') ? null : app.dict.lookup(w.lemma);
-    final gloss = info != null && info.senses.isNotEmpty ? info.senses.first.gloss : null;
+    final ch = _choiceFor(pos);
+    final waiting = ch == null && _waiting(pos);
+    final ans = _quiz.answerFor(w);
+    // What the word means in its own sentence (never an unrelated sense).
+    final meaning = ch?.right ?? ans.tr;
+    final gloss = ans.gloss;
+    final answered = picked != null;
+    final wrong = ch != null && answered && picked != ch.correct;
+    final reveal = ch == null ? shown : wrong;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
           child: GestureDetector(
-            onTap: shown ? null : () => setState(() => shown = true),
+            onTap: ch != null || shown || waiting ? null : () => setState(() => shown = true),
             child: Container(
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
@@ -124,7 +225,7 @@ class _ReviewPageState extends State<ReviewPage> {
                 Row(children: [
                   _BoxDots(box: c.box),
                   const Spacer(),
-                  if (w.bookTitle != null)
+                  if (w.bookTitle != null && !looksGeneratedTitle(w.bookTitle!))
                     Flexible(
                       child: Text(w.bookTitle!, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                     ),
@@ -141,20 +242,27 @@ class _ReviewPageState extends State<ReviewPage> {
                     const SizedBox(height: 16),
                     DefaultTextStyle.merge(
                       style: TextStyle(fontFamily: readingFont, color: theme.colorScheme.onSurfaceVariant),
-                      child: SentenceText(w.context!, w.lemma.split(' ').first, highlight: {w.lemma.split(' ').first}),
+                      // The asked word is not tappable: its panel would give the answer away.
+                      child: SentenceText(w.context!, w.lemma.split(' ').first, highlight: _targetForms(w), lockHighlight: true),
                     ),
                   ],
                   const SizedBox(height: 24),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
-                    child: !shown
-                        ? Text(L('Anlamını hatırlıyor musun? Görmek için dokun.', 'Do you remember the meaning? Tap to see it.'),
+                    child: waiting
+                        ? const SizedBox(key: ValueKey(2), height: 24, width: 24, child: CircularProgressIndicator(strokeWidth: 2.5))
+                        : !reveal
+                        ? Text(
+                            ch != null
+                                ? L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.')
+                                : L('Anlamını hatırlıyor musun? Görmek için dokun.', 'Do you remember the meaning? Tap to see it.'),
                             key: const ValueKey(0), style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant))
                         : Column(key: const ValueKey(1), crossAxisAlignment: CrossAxisAlignment.start, children: [
                             const Divider(height: 1),
                             const SizedBox(height: 20),
                             if (meaning != null && app.showTr) Text(meaning, style: trStyle(theme, theme.textTheme.titleLarge)),
-                            if (gloss != null && app.showEn) ...[
+                            // With no Turkish for this sense the English definition is the answer.
+                            if (gloss != null && (app.showEn || meaning == null)) ...[
                               const SizedBox(height: 8),
                               Text(gloss, style: enStyle(theme, theme.textTheme.bodyLarge, false)),
                             ],
@@ -180,7 +288,42 @@ class _ReviewPageState extends State<ReviewPage> {
           ),
         ),
         const SizedBox(height: 16),
-        if (!shown)
+        if (ch != null) ...[
+          for (var i = 0; i < ch.options.length; i++) ...[
+            if (i > 0) const SizedBox(height: 8),
+            _OptionButton(
+              key: ValueKey('review-option-$i'),
+              label: ch.options[i],
+              state: !answered
+                  ? _OptionState.idle
+                  : i == ch.correct
+                      ? _OptionState.right
+                      : i == picked
+                          ? _OptionState.wrong
+                          : _OptionState.dim,
+              onTap: answered ? null : () => _pick(i),
+            ),
+          ],
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 48,
+            child: wrong
+                ? FilledButton(
+                    key: const ValueKey('review-next'),
+                    onPressed: () => _answer(ReviewAnswer.again),
+                    child: Text(L('Devam', 'Continue')),
+                  )
+                : answered
+                    ? const SizedBox.shrink()
+                    : TextButton(
+                        key: const ValueKey('review-dont-know'),
+                        onPressed: () => _pick(-1),
+                        child: Text(L('Bilmiyorum', "I don't know")),
+                      ),
+          ),
+        ] else if (waiting)
+          const SizedBox(height: 54)
+        else if (!shown)
           FilledButton(
             onPressed: () => setState(() => shown = true),
             style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),
@@ -196,6 +339,41 @@ class _ReviewPageState extends State<ReviewPage> {
           ]),
       ]),
     );
+  }
+
+  List<({String lemma, int syn, String? gloss})> get _missing {
+    try {
+      return app.user.missingToReport();
+    } catch (_) {
+      return const [];
+    }
+  }
+
+  /// Opens a ready-filled GitHub issue with the words whose Turkish is
+  /// missing; the dictionary job translates them in its next run.
+  Future<void> _reportMissing() async {
+    final items = _missing;
+    if (items.isEmpty) return;
+    final url = missingReportUrl(items);
+    final ok = await launchUrl(url, mode: LaunchMode.externalApplication);
+    if (ok) {
+      app.user.markMissingReported();
+      if (mounted) setState(() {});
+    }
+  }
+
+  /// The forms of the asked word in its sentence ("ran" for "run").
+  Set<String> _targetForms(SavedWord w) {
+    final words = w.lemma.split(' ');
+    final out = {words.first};
+    if (w.context == null) return out;
+    for (final t in tokenize(w.context!)) {
+      final ls = app.dict.lemmatizer.lemmas(t.lower);
+      if (words.length == 1 ? (t.lower == w.lemma || ls.contains(w.lemma)) : words.any((x) => x.length > 2 && (t.lower == x || ls.contains(x)))) {
+        out.add(t.lower);
+      }
+    }
+    return out;
   }
 
   Widget _summary(ThemeData theme) {
@@ -217,6 +395,23 @@ class _ReviewPageState extends State<ReviewPage> {
           _Stat(icon: Icons.verified_rounded, color: Brand.violet, value: '$graduated', label: L('öğrenildi', 'learned')),
         ]),
         const SizedBox(height: 32),
+        if (_missing.isNotEmpty) ...[
+          OutlinedButton.icon(
+            key: const ValueKey('review-report-missing'),
+            onPressed: _reportMissing,
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+            icon: const Icon(Icons.flag_outlined, size: 20),
+            label: Text(L('Eksik çevirileri bildir (${_missing.length})', 'Report missing translations (${_missing.length})')),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            L('Yalnızca kelime ve anlam numarası gönderilir; sonraki sözlük güncellemesinde eklenir.',
+                'Only the word and sense number are sent; they are added in a later dictionary update.'),
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 16),
+        ],
         FilledButton(
           onPressed: () => Navigator.pop(context),
           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),
@@ -249,6 +444,52 @@ class _BoxDots extends StatelessWidget {
             ),
           ),
       ]),
+    );
+  }
+}
+
+enum _OptionState { idle, right, wrong, dim }
+
+/// One of the four meaning choices.
+class _OptionButton extends StatelessWidget {
+  final String label;
+  final _OptionState state;
+  final VoidCallback? onTap;
+  const _OptionButton({super.key, required this.label, required this.state, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final dark = t.brightness == Brightness.dark;
+    const red = Color(0xFFE5484D);
+    final (Color bg, Color border, Color fg, IconData? icon) = switch (state) {
+      _OptionState.right => (learnedColor.withValues(alpha: dark ? 0.22 : 0.12), learnedColor, dark ? Color.lerp(learnedColor, Colors.white, 0.35)! : Color.lerp(learnedColor, Colors.black, 0.3)!, Icons.check_circle_rounded),
+      _OptionState.wrong => (red.withValues(alpha: dark ? 0.22 : 0.10), red, dark ? Color.lerp(red, Colors.white, 0.35)! : Color.lerp(red, Colors.black, 0.25)!, Icons.cancel_rounded),
+      _OptionState.dim => (t.colorScheme.surface, t.colorScheme.outlineVariant, t.colorScheme.onSurface.withValues(alpha: 0.45), null),
+      _OptionState.idle => (t.colorScheme.surface, t.colorScheme.outlineVariant, t.colorScheme.onSurface, null),
+    };
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      constraints: const BoxConstraints(minHeight: 52),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: border, width: state == _OptionState.right || state == _OptionState.wrong ? 1.6 : 1),
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(children: [
+              Expanded(child: Text(label, style: t.textTheme.titleSmall?.copyWith(color: fg, fontWeight: FontWeight.w600, fontSize: 15))),
+              if (icon != null) Icon(icon, color: border, size: 22),
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -352,10 +593,21 @@ class ReviewBanner extends StatelessWidget {
           ]),
           if (due > 0) ...[
             const SizedBox(height: 12),
-            FilledButton.icon(
-              onPressed: () => startReview(context, app),
-              icon: const Icon(Icons.style_rounded, size: 20),
-              label: Text(L('Tekrara başla', 'Start review')),
+            // Full width on phones; a normal-sized button on wide screens.
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 260),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    key: const ValueKey('review-start'),
+                    onPressed: () => startReview(context, app),
+                    icon: const Icon(Icons.style_rounded, size: 20),
+                    label: Text(L('Tekrara başla', 'Start review')),
+                  ),
+                ),
+              ),
             ),
           ],
         ]);
