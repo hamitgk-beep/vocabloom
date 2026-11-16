@@ -115,9 +115,11 @@ Future<void> _windowsDownload(String url, File out, Map<String, String> headers,
         _agent,
         for (final h in headers.entries) ...['-H', '${h.key}: ${h.value}'],
         '-o',
-        out.path,
+        p.basename(out.path),
         url,
-      ]).timeout(timeout + const Duration(seconds: 30));
+        // Run inside the target folder: curl may get a folder like
+        // "Hamit Gök" in the ANSI code page and write somewhere else.
+      ], workingDirectory: out.parent.path).timeout(timeout + const Duration(seconds: 30));
       if (r.exitCode == 0 && out.existsSync()) return;
       errors.add('curl: exit ${r.exitCode} ${'${r.stderr}'.trim()}');
     } catch (e) {
@@ -132,10 +134,14 @@ Future<void> _windowsDownload(String url, File out, Map<String, String> headers,
     r"$ProgressPreference='SilentlyContinue'",
     '[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12',
     r'[Net.WebRequest]::DefaultWebProxy.Credentials=[Net.CredentialCache]::DefaultNetworkCredentials',
-    'Invoke-WebRequest -UseBasicParsing -UserAgent ${q(_agent)} -Headers @{$hdr} -Uri ${q(url)} -OutFile ${q(out.path)} -TimeoutSec ${timeout.inSeconds}',
+    'Invoke-WebRequest -UseBasicParsing -UserAgent ${q(_agent)} -Headers @{$hdr} -Uri ${q(url)} -OutFile \$env:VB_OUT -TimeoutSec ${timeout.inSeconds}',
   ].join('; ');
   try {
-    final r = await Process.run('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-Command', script]).timeout(timeout + const Duration(seconds: 30));
+    final r = await Process.run(
+      'powershell.exe',
+      ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-Command', script],
+      environment: {'VB_OUT': out.path},
+    ).timeout(timeout + const Duration(seconds: 30));
     if (r.exitCode == 0 && out.existsSync()) return;
     errors.add('powershell: exit ${r.exitCode} ${'${r.stderr}'.trim()}');
   } catch (e) {

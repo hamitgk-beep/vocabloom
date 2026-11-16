@@ -33,6 +33,20 @@ void main() {
     expect(t, contains('Build'));
   });
 
+  test('curl and PowerShell write into a folder with Turkish letters', () async {
+    debugSkipDartHttp = true;
+    final dir = Directory.systemTemp.createTempSync('vb_')..createSync();
+    final gok = Directory(p.join(dir.path, 'Hamit Gök şğü'))..createSync();
+    final f = File(p.join(gok.path, 'release.json'));
+    await fetchFile(_release, f);
+    expect(f.readAsStringSync(), contains('Build'));
+    debugSkipCurl = true;
+    f.deleteSync();
+    await fetchFile(_release, f);
+    expect(f.readAsStringSync(), contains('Build'));
+    dir.deleteSync(recursive: true);
+  });
+
   test('update zip downloads with progress and unpacks with VocaBloom.exe', () async {
     debugSkipDartHttp = true;
     final seen = <double?>[];
