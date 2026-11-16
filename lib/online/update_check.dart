@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
+import 'native_fetch.dart';
 
 /// Build number baked in by CI (--dart-define=BUILD_NUMBER=...); 0 for local builds.
 const appBuild = int.fromEnvironment('BUILD_NUMBER');
@@ -14,8 +14,11 @@ const _download = 'https://github.com/hamitgk-beep/vocabloom/releases/download/l
 
 class UpdateInfo {
   final int build;
+  final String version;
   final String url;
-  const UpdateInfo(this.build, this.url);
+  /// Size of the download in bytes, 0 when unknown.
+  final int size;
+  const UpdateInfo(this.build, this.url, {this.version = '', this.size = 0});
 }
 
 String? _assetForPlatform() {
@@ -28,17 +31,29 @@ String? _assetForPlatform() {
 
 /// Returns the newer release for this platform, or null (also when offline).
 Future<UpdateInfo?> checkForUpdate() async {
-  if (appBuild == 0) return null;
-  final asset = _assetForPlatform();
-  if (asset == null) return null;
   try {
-    final r = await http.get(Uri.parse(_release), headers: {'Accept': 'application/vnd.github+json'}).timeout(const Duration(seconds: 8));
-    if (r.statusCode != 200) return null;
-    final body = '${(jsonDecode(r.body) as Map)['body'] ?? ''}';
-    final m = RegExp(r'build[:\s]+(\d+)', caseSensitive: false).firstMatch(body);
-    final latest = int.tryParse(m?.group(1) ?? '') ?? 0;
-    return latest > appBuild ? UpdateInfo(latest, '$_download$asset') : null;
+    return await checkForUpdateOrThrow();
   } catch (_) {
     return null;
   }
+}
+
+/// Like [checkForUpdate] but throws when the release could not be read, so
+/// a manual check in Settings can say why.
+Future<UpdateInfo?> checkForUpdateOrThrow() async {
+  if (appBuild == 0) return null;
+  final asset = _assetForPlatform();
+  if (asset == null) return null;
+  final text = await fetchText(_release, headers: {'Accept': 'application/vnd.github+json'});
+  final json = jsonDecode(text) as Map;
+  final body = '${json['body'] ?? ''}';
+  final m = RegExp(r'build[:\s]+(\d+)', caseSensitive: false).firstMatch(body);
+  final latest = int.tryParse(m?.group(1) ?? '') ?? 0;
+  if (latest <= appBuild) return null;
+  final v = RegExp(r'S\u00fcr\u00fcm\s+([\d.]+)').firstMatch(body)?.group(1) ?? '';
+  var size = 0;
+  for (final a in (json['assets'] as List? ?? const [])) {
+    if (a is Map && a['name'] == asset) size = (a['size'] as num?)?.toInt() ?? 0;
+  }
+  return UpdateInfo(latest, '$_download$asset', version: v, size: size);
 }

@@ -4,6 +4,7 @@ import '../app_state.dart';
 import '../l10n.dart';
 import '../online/ai_service.dart';
 import '../online/update_check.dart';
+import 'update_prompt.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 import 'key_guide.dart';
@@ -333,6 +334,8 @@ class AboutPage extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(L('© 2026 Hamit Gök. Tüm hakları saklıdır.', '© 2026 Hamit Gök. All rights reserved.'), style: theme.textTheme.bodySmall),
+        const SizedBox(height: 14),
+        const CheckUpdateButton(),
       ]),
     ]);
   }

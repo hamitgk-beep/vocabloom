@@ -1,0 +1,17 @@
+name: update-windows
+# Checks for a new release, downloads and unpacks it, and runs the install
+# script on Windows, as the app does, without Dart's HTTP client.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['claude/**']
+    paths: ['lib/online/**', 'test/update_windows_test.dart', '.github/workflows/update-windows.yml']
+jobs:
+  update:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter pub get
+      - run: flutter test test/update_windows_test.dart --reporter expanded
