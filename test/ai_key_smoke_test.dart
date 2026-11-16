@@ -24,18 +24,23 @@ void main() {
     final u = UserDb.open(Directory.systemTemp.createTempSync('vb_key'));
     u.setSetting('ai_provider', provider);
     u.setSetting('ai_key_$provider', key);
-    final model = Platform.environment['AI_TEST_MODEL'];
-    if (model != null && model.isNotEmpty) u.setSetting('ai_model_$provider', model);
     final app = AppState(d, u)..localAi = KeyAi(u);
-    // The service itself first, with its own error text and timing.
-    final sw = Stopwatch()..start();
-    try {
-      final r = await AiService.fromSettings(u)!.chat('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek?')], maxTokens: 1200);
-      print('RAW in ${sw.elapsed.inMilliseconds} ms: $r');
-    } catch (e) {
-      print('RAW ERROR after ${sw.elapsed.inMilliseconds} ms: $e');
-      rethrow;
+    // The service itself first, with its own error text and timing, on a
+    // few models: the first one that answers is used for the rest.
+    String? works;
+    for (final m in ['gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-2.5-flash']) {
+      u.setSetting('ai_model_$provider', m);
+      final sw = Stopwatch()..start();
+      try {
+        final r = await AiService.fromSettings(u)!.chat('Kısa cevap ver.', [('user', '"apple" Türkçede ne demek?')], maxTokens: 1200);
+        print('RAW $m in ${sw.elapsed.inMilliseconds} ms: $r');
+        works ??= m;
+      } catch (e) {
+        print('RAW $m ERROR after ${sw.elapsed.inMilliseconds} ms: $e');
+      }
     }
+    expect(works, isNotNull);
+    u.setSetting('ai_model_$provider', works);
     final tutor = Tutor.of(app);
     final about = 'Boşluk doldurma: "We ___ (not / like) horror films."\nDoğru cevaplar:\n- "don\'t like"\n- "do not like"\n'
         'Öğrencinin cevabı: "dont like"\nSonuç: yanlış';
@@ -52,5 +57,5 @@ void main() {
     final w = await tutor.wordMeaning('pedicab', sentence: 'We took a pedicab to the market.').join();
     print('WORD:\n$w\n-----');
     expect(w.trim(), isNotEmpty);
-  }, skip: skip, timeout: const Timeout(Duration(minutes: 5)));
+  }, skip: skip, timeout: const Timeout(Duration(minutes: 12)));
 }

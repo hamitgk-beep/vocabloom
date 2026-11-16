@@ -235,13 +235,15 @@ class AiService {
         };
     }
     // Busy (503/529) or rate-limited (429): wait a little and try again.
-    var res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(const Duration(minutes: 5));
+    // A chat answer is short: do not let one request hang the learner.
+    final limit = history != null ? const Duration(seconds: 60) : const Duration(minutes: 5);
+    var res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(limit);
     // A learner waiting for a chat answer gets one quick retry; the error
     // (busy, limit reached) is better than a long silent wait.
     for (final wait in history != null ? const [3] : const [3, 8, 20]) {
       if (res.statusCode != 503 && res.statusCode != 529 && res.statusCode != 429) break;
       await Future<void>.delayed(Duration(seconds: wait));
-      res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(const Duration(minutes: 5));
+      res = await http.post(url, headers: headers, body: jsonEncode(body)).timeout(limit);
     }
     final raw = utf8.decode(res.bodyBytes);
     Map<String, dynamic>? data;
