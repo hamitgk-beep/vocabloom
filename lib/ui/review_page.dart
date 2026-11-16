@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
@@ -38,7 +41,89 @@ class _ReviewPageState extends State<ReviewPage> {
   bool shown = false;
   int done = 0, known = 0, graduated = 0;
 
+  /// Multiple-choice state for the current card: its options, the index of
+  /// the right one, and what the user tapped (null until they answer).
+  final _choices = <int, ({List<String> options, int correct})?>{};
+  int? picked;
+  final _rnd = Random();
+  late final List<String> _pool = _distractorPool();
+
   AppState get app => widget.app;
+
+  /// Keeps a meaning short enough for an answer button: its first two parts.
+  static String _shortTr(String s) {
+    final parts = s.split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+    return parts.isEmpty ? s.trim() : parts.take(2).join(', ');
+  }
+
+  String? _meaningOf(SavedWord w) {
+    final m = w.meaning ?? app.shortMeaning(w.lemma);
+    return m == null || m.trim().isEmpty ? null : _shortTr(m);
+  }
+
+  /// Wrong answers: Turkish meanings of the user's other saved words first
+  /// (they look like real answers), then random dictionary entries.
+  List<String> _distractorPool() {
+    final out = <String>[];
+    for (final st in [WordStatus.learning, WordStatus.learned]) {
+      for (final w in app.user.words(st)) {
+        final m = _meaningOf(w);
+        if (m != null) out.add(m);
+      }
+    }
+    try {
+      for (final r in app.dict.db.select('SELECT tr FROM ft ORDER BY random() LIMIT 300')) {
+        final list = jsonDecode(r.columnAt(0) as String) as List;
+        if (list.isNotEmpty) out.add(_shortTr(list.first as String));
+      }
+    } catch (_) {}
+    return out;
+  }
+
+  ({List<String> options, int correct})? _choiceFor(int i) => _choices.putIfAbsent(i, () {
+        final right = _meaningOf(queue[i].word);
+        if (right == null) return null;
+        final rightWords = right.toLowerCase().split(RegExp(r'[ ,]+')).toSet();
+        final seen = {right.toLowerCase()};
+        final saved = _pool.where((m) => _isSavedMeaning(m)).toList()..shuffle(_rnd);
+        final rest = _pool.where((m) => !_isSavedMeaning(m)).toList()..shuffle(_rnd);
+        final wrong = <String>[];
+        for (final m in [...saved, ...rest]) {
+          if (wrong.length == 3) break;
+          final k = m.toLowerCase();
+          if (k.length > 40 || !seen.add(k)) continue;
+          if (k.split(RegExp(r'[ ,]+')).any((x) => x.length > 2 && rightWords.contains(x))) continue;
+          wrong.add(m);
+        }
+        if (wrong.length < 3) return null;
+        final options = [...wrong, right]..shuffle(_rnd);
+        return (options: options, correct: options.indexOf(right));
+      });
+
+  late final Set<String> _savedMeanings = {
+    for (final st in [WordStatus.learning, WordStatus.learned])
+      for (final w in app.user.words(st)) ?_meaningOf(w),
+  };
+  bool _isSavedMeaning(String m) => _savedMeanings.contains(m);
+
+  /// The right option for the current card (for tests).
+  @visibleForTesting
+  String? get debugRight {
+    final ch = pos < queue.length ? _choiceFor(pos) : null;
+    return ch?.options[ch.correct];
+  }
+
+  void _pick(int i) {
+    final ch = _choiceFor(pos);
+    if (ch == null || picked != null) return;
+    setState(() => picked = i);
+    if (i == ch.correct) {
+      final at = pos;
+      Future.delayed(const Duration(milliseconds: 650), () {
+        if (mounted && pos == at && picked == i) _answer(ReviewAnswer.good);
+      });
+    }
+  }
 
   void _answer(ReviewAnswer a) {
     final c = queue[pos];
@@ -53,6 +138,7 @@ class _ReviewPageState extends State<ReviewPage> {
     setState(() {
       pos++;
       shown = false;
+      picked = null;
     });
   }
 
@@ -106,12 +192,16 @@ class _ReviewPageState extends State<ReviewPage> {
     final meaning = w.meaning ?? app.shortMeaning(w.lemma);
     final info = w.lemma.contains(' ') ? null : app.dict.lookup(w.lemma);
     final gloss = info != null && info.senses.isNotEmpty ? info.senses.first.gloss : null;
+    final ch = _choiceFor(pos);
+    final answered = picked != null;
+    final wrong = ch != null && answered && picked != ch.correct;
+    final reveal = ch == null ? shown : wrong;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
           child: GestureDetector(
-            onTap: shown ? null : () => setState(() => shown = true),
+            onTap: ch != null || shown ? null : () => setState(() => shown = true),
             child: Container(
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
@@ -147,8 +237,11 @@ class _ReviewPageState extends State<ReviewPage> {
                   const SizedBox(height: 24),
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 200),
-                    child: !shown
-                        ? Text(L('Anlamını hatırlıyor musun? Görmek için dokun.', 'Do you remember the meaning? Tap to see it.'),
+                    child: !reveal
+                        ? Text(
+                            ch != null
+                                ? L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.')
+                                : L('Anlamını hatırlıyor musun? Görmek için dokun.', 'Do you remember the meaning? Tap to see it.'),
                             key: const ValueKey(0), style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant))
                         : Column(key: const ValueKey(1), crossAxisAlignment: CrossAxisAlignment.start, children: [
                             const Divider(height: 1),
@@ -180,7 +273,40 @@ class _ReviewPageState extends State<ReviewPage> {
           ),
         ),
         const SizedBox(height: 16),
-        if (!shown)
+        if (ch != null) ...[
+          for (var i = 0; i < ch.options.length; i++) ...[
+            if (i > 0) const SizedBox(height: 8),
+            _OptionButton(
+              key: ValueKey('review-option-$i'),
+              label: ch.options[i],
+              state: !answered
+                  ? _OptionState.idle
+                  : i == ch.correct
+                      ? _OptionState.right
+                      : i == picked
+                          ? _OptionState.wrong
+                          : _OptionState.dim,
+              onTap: answered ? null : () => _pick(i),
+            ),
+          ],
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 48,
+            child: wrong
+                ? FilledButton(
+                    key: const ValueKey('review-next'),
+                    onPressed: () => _answer(ReviewAnswer.again),
+                    child: Text(L('Devam', 'Continue')),
+                  )
+                : answered
+                    ? const SizedBox.shrink()
+                    : TextButton(
+                        key: const ValueKey('review-dont-know'),
+                        onPressed: () => _pick(-1),
+                        child: Text(L('Bilmiyorum', "I don't know")),
+                      ),
+          ),
+        ] else if (!shown)
           FilledButton(
             onPressed: () => setState(() => shown = true),
             style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),
@@ -249,6 +375,52 @@ class _BoxDots extends StatelessWidget {
             ),
           ),
       ]),
+    );
+  }
+}
+
+enum _OptionState { idle, right, wrong, dim }
+
+/// One of the four meaning choices.
+class _OptionButton extends StatelessWidget {
+  final String label;
+  final _OptionState state;
+  final VoidCallback? onTap;
+  const _OptionButton({super.key, required this.label, required this.state, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final dark = t.brightness == Brightness.dark;
+    const red = Color(0xFFE5484D);
+    final (Color bg, Color border, Color fg, IconData? icon) = switch (state) {
+      _OptionState.right => (learnedColor.withValues(alpha: dark ? 0.22 : 0.12), learnedColor, dark ? Color.lerp(learnedColor, Colors.white, 0.35)! : Color.lerp(learnedColor, Colors.black, 0.3)!, Icons.check_circle_rounded),
+      _OptionState.wrong => (red.withValues(alpha: dark ? 0.22 : 0.10), red, dark ? Color.lerp(red, Colors.white, 0.35)! : Color.lerp(red, Colors.black, 0.25)!, Icons.cancel_rounded),
+      _OptionState.dim => (t.colorScheme.surface, t.colorScheme.outlineVariant, t.colorScheme.onSurface.withValues(alpha: 0.45), null),
+      _OptionState.idle => (t.colorScheme.surface, t.colorScheme.outlineVariant, t.colorScheme.onSurface, null),
+    };
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
+      constraints: const BoxConstraints(minHeight: 52),
+      decoration: BoxDecoration(
+        color: bg,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: border, width: state == _OptionState.right || state == _OptionState.wrong ? 1.6 : 1),
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(children: [
+              Expanded(child: Text(label, style: t.textTheme.titleSmall?.copyWith(color: fg, fontWeight: FontWeight.w600, fontSize: 15))),
+              if (icon != null) Icon(icon, color: border, size: 22),
+            ]),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -352,10 +524,21 @@ class ReviewBanner extends StatelessWidget {
           ]),
           if (due > 0) ...[
             const SizedBox(height: 12),
-            FilledButton.icon(
-              onPressed: () => startReview(context, app),
-              icon: const Icon(Icons.style_rounded, size: 20),
-              label: Text(L('Tekrara başla', 'Start review')),
+            // Full width on phones; a normal-sized button on wide screens.
+            Align(
+              alignment: Alignment.centerLeft,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 260),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    key: const ValueKey('review-start'),
+                    onPressed: () => startReview(context, app),
+                    icon: const Icon(Icons.style_rounded, size: 20),
+                    label: Text(L('Tekrara başla', 'Start review')),
+                  ),
+                ),
+              ),
             ),
           ],
         ]);

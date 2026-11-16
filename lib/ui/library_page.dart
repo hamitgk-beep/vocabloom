@@ -210,34 +210,55 @@ class _StatsStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    Widget stat(String value, String label, Color dot) => Expanded(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(value, style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.w800)),
-            const SizedBox(height: 2),
-            Row(children: [
-              Container(width: 7, height: 7, decoration: BoxDecoration(color: dot, shape: BoxShape.circle)),
-              const SizedBox(width: 6),
-              Flexible(
-                child: Text(label,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.labelMedium?.copyWith(color: Colors.white.withValues(alpha: 0.82))),
-              ),
-            ]),
-          ]),
-        );
-    return Container(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-      decoration: BoxDecoration(
-        gradient: Brand.gradient,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [BoxShadow(color: Brand.violet.withValues(alpha: 0.25), blurRadius: 18, offset: const Offset(0, 8))],
+    return Row(children: [
+      _StatCard(value: books, label: L('Kitap', 'Books'), icon: Icons.auto_stories_rounded, color: Brand.violet, keyName: 'stat-books'),
+      const SizedBox(width: 10),
+      _StatCard(value: learning, label: L('Öğreneceğim', 'To learn'), icon: Icons.bookmark_rounded, color: learningColor, keyName: 'stat-learning'),
+      const SizedBox(width: 10),
+      _StatCard(value: learned, label: L('Öğrendim', 'Learned'), icon: Icons.check_circle_rounded, color: learnedColor, keyName: 'stat-learned'),
+    ]);
+  }
+}
+
+/// One library number: icon, value and label, all centered.
+class _StatCard extends StatelessWidget {
+  final int value;
+  final String label, keyName;
+  final IconData icon;
+  final Color color;
+  const _StatCard({required this.value, required this.label, required this.icon, required this.color, required this.keyName});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final dark = t.brightness == Brightness.dark;
+    return Expanded(
+      key: ValueKey(keyName),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+        decoration: BoxDecoration(
+          color: t.colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: t.colorScheme.outlineVariant),
+          boxShadow: [BoxShadow(color: color.withValues(alpha: dark ? 0.10 : 0.08), blurRadius: 14, offset: const Offset(0, 6))],
+        ),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(color: color.withValues(alpha: dark ? 0.22 : 0.13), shape: BoxShape.circle),
+            child: Icon(icon, size: 19, color: dark ? Color.lerp(color, Colors.white, 0.25) : color),
+          ),
+          const SizedBox(height: 8),
+          Text('$value', textAlign: TextAlign.center, style: t.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800, height: 1.1)),
+          const SizedBox(height: 2),
+          Text(label,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: t.textTheme.labelMedium?.copyWith(color: t.colorScheme.onSurfaceVariant)),
+        ]),
       ),
-      child: Row(children: [
-        stat('$books', L('Kitap', 'Books'), Colors.white),
-        stat('$learning', L('Öğreneceğim', 'To learn'), learningColor),
-        stat('$learned', L('Öğrendim', 'Learned'), learnedColor),
-      ]),
     );
   }
 }

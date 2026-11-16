@@ -12,7 +12,7 @@ import 'theme.dart';
 // Settings: a short main list in groups. Items with a few fixed choices use a
 // drop-down on the row itself; bigger topics open their own page.
 
-String _versionLabel() => appBuild == 0 ? L('Geliştirme derlemesi', 'Development build') : L('Sürüm 1.0 ($appBuild)', 'Version 1.0 ($appBuild)');
+String _versionLabel() => appBuild == 0 ? L('Geliştirme derlemesi', 'Development build') : L('Sürüm ${appVersion.isEmpty ? '1.0' : appVersion}', 'Version ${appVersion.isEmpty ? '1.0' : appVersion}');
 
 class SettingsPage extends StatelessWidget {
   final AppState app;
