@@ -18,6 +18,11 @@ jobs:
         run: |
           lib=$(find "$LOCALAPPDATA/Pub/Cache/hosted/pub.dev" -path '*sherpa_onnx_windows-*/windows' -type d | head -1)
           echo "libs: $lib"; ls "$lib" | head -30
+          # Windows has its own older onnxruntime.dll in System32, which is
+          # found before PATH; the app avoids it by shipping the DLLs next to
+          # its exe, so do the same for the test runner.
+          tester=$(dirname "$(find "$FLUTTER_ROOT/bin/cache/artifacts/engine" -name flutter_tester.exe | head -1)")
+          cp "$lib"/*.dll "$tester"/
           export SHERPA_ONNX_LIB_DIR="$(cygpath -w "$lib")" PATH="$lib:$PATH"
           export VOCABLOOM_VOICE_BASE=https://github.com/${{ github.repository }}/releases/download/voice-models
           flutter test test/speech_test.dart --reporter expanded
