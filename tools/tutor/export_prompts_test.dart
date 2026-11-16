@@ -12,7 +12,6 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
-import 'package:kelime_okur/ai/packages.dart';
 import 'package:kelime_okur/ai/tutor.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
@@ -23,7 +22,7 @@ class _Capture extends LocalAi {
   String system = '';
   List<(String, String)> messages = const [];
   @override
-  List<AiPackage> get packages => aiPackages;
+  List<AiPackage> get packages => const [];
   @override
   Future<Set<String>> installed() async => {};
   @override
