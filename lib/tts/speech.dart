@@ -280,23 +280,26 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
   /// Downloads with curl.exe (Windows 10 and later), then PowerShell, which
   /// follow Windows' own proxy and certificate settings.
   Future<void> _fetchWindows(VoicePack pk, String url, File zip, Object first, {String? only}) async {
-    String q(String x) => "'${x.replaceAll("'", "''")}'";
     final tries = <(String, List<String>)>[
       if (only == null || only == 'curl')
-        ('curl.exe', ['-L', '-f', '-sS', '--retry', '2', '--ssl-revoke-best-effort', '-o', zip.path, url]),
+        ('curl.exe', ['-L', '-f', '-sS', '--retry', '2', '--ssl-revoke-best-effort', '-o', p.basename(zip.path), url]),
       if (only == null || only == 'powershell')
         ('powershell.exe', [
           '-NoProfile', '-NonInteractive', '-Command',
           "\$ProgressPreference='SilentlyContinue'; [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12; "
               "[Net.WebRequest]::DefaultWebProxy.Credentials=[Net.CredentialCache]::DefaultCredentials; "
-              "Invoke-WebRequest -UseBasicParsing -Uri ${q(url)} -OutFile ${q(zip.path)}",
+              r"Invoke-WebRequest -UseBasicParsing -Uri $env:VOCABLOOM_URL -OutFile $env:VOCABLOOM_OUT",
         ]),
     ];
     final errors = ['$first'];
     for (final (exe, args) in tries) {
       try {
         if (zip.existsSync()) zip.deleteSync();
-        final proc = _procs[pk.id] = await Process.start(exe, args, runInShell: false);
+        // Paths such as C:\Users\Hamit Gök can get mangled on a command
+        // line, so curl writes into its working folder by a plain name and
+        // PowerShell reads the path from the environment.
+        final proc = _procs[pk.id] = await Process.start(exe, args,
+            workingDirectory: zip.parent.path, environment: {'VOCABLOOM_URL': url, 'VOCABLOOM_OUT': zip.path});
         final err = StringBuffer();
         proc.stderr.transform(const SystemEncoding().decoder).listen(err.write);
         proc.stdout.drain<void>();
