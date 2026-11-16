@@ -55,24 +55,25 @@ void main() {
     File(p.join(fresh.path, 'data', 'x.bin')).writeAsStringSync('x');
     final marker = p.join(root.path, 'started.txt');
     final exe = p.join(app.path, 'run.cmd');
-    File(p.join(fresh.path, 'run.cmd')).writeAsStringSync('@echo started> "$marker"\r\n');
+    File(p.join(fresh.path, 'run.cmd')).writeAsStringSync('@echo started> "$marker"\r\n@exit\r\n');
     // Stands in for the running app: lives about 3 seconds.
     final fake = await Process.start('ping', ['-n', '4', '127.0.0.1']);
     final script = File(p.join(work.path, 'install.cmd'))
       ..writeAsStringSync(WindowsUpdater.installScript(newFiles: fresh.path, appDir: app.path, exe: exe, pid: fake.pid, cleanup: work.path));
+    // Started detached, as the app does: the restarted program keeps the
+    // console, so waiting on the script's output pipes would never end.
     final sw = Stopwatch()..start();
-    final r = await Process.run('cmd', ['/c', script.path]);
-    expect(r.exitCode, anyOf(0, 1), reason: '${r.stdout}\n${r.stderr}');
+    await Process.start('cmd', ['/c', script.path], mode: ProcessStartMode.detached);
+    for (var i = 0; i < 120 && (!File(marker).existsSync() || work.existsSync()); i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    }
+    expect(File(marker).existsSync(), isTrue, reason: 'app was not started again');
     expect(sw.elapsed.inMilliseconds, greaterThan(1500), reason: 'did not wait for the app to exit');
     expect(File(p.join(app.path, 'old.txt')).readAsStringSync(), 'new');
     expect(File(p.join(app.path, 'keep.txt')).readAsStringSync(), 'keep');
     expect(File(p.join(app.path, 'data', 'x.bin')).existsSync(), isTrue);
-    for (var i = 0; i < 20 && !File(marker).existsSync(); i++) {
-      await Future<void>.delayed(const Duration(milliseconds: 250));
-    }
-    expect(File(marker).existsSync(), isTrue, reason: 'app was not started again');
     expect(work.existsSync(), isFalse);
     await fake.exitCode;
     root.deleteSync(recursive: true);
-  });
+  }, timeout: const Timeout(Duration(minutes: 1)));
 }
