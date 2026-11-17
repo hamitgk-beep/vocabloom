@@ -2581,6 +2581,44 @@
     "modals_overview-b11": "Would you like …?",
     "modals_overview-b12": "can + V1 (not speaks)."
    }
+  },
+  "participle_adjectives": {
+   "explanation": "**Two adjectives from one verb:** bore → bored / boring, interest → interested / interesting. They are the verb's participles used as adjectives.\n- **-ed adjective = the person who feels it:** I am bored. She was surprised.\n- **-ing adjective = the thing or person that causes the feeling:** The film is boring. The news was surprising.\n- Both can come before a noun: a bored student, a boring lesson.\n- **Common mistake:** \"I am boring\" means you are a boring person. To say how you feel, say \"I am bored\".\n- Common pairs: tired / tiring, interested / interesting, excited / exciting, worried / worrying, confused / confusing, embarrassed / embarrassing, frightened / frightening, disappointed / disappointing, amazed / amazing.",
+   "structure": [
+    "Subject + be / feel / get + V-ed (feels it)",
+    "Subject + be + V-ing (causes it)",
+    "a / the + V-ed / V-ing + noun"
+   ],
+   "notes": {
+    "participle_adjectives-1": "The thing: boring. The people who feel it: bored.",
+    "participle_adjectives-2": "The person who feels it: interested (in).",
+    "participle_adjectives-3": "What causes the interest: interesting.",
+    "participle_adjectives-4": "tiring (causes it) / tired (feels it).",
+    "participle_adjectives-5": "What causes the feeling: disappointing.",
+    "participle_adjectives-6": "The person who feels it: disappointed.",
+    "participle_adjectives-7": "excited about.",
+    "participle_adjectives-8": "What causes it: confusing.",
+    "participle_adjectives-9": "The person who feels it: embarrassed.",
+    "participle_adjectives-10": "What causes the fear: frightening.",
+    "participle_adjectives-11": "The people who feel it: frightened.",
+    "participle_adjectives-12": "The person who feels it: surprised.",
+    "participle_adjectives-b1": "The lesson causes it: -ing.",
+    "participle_adjectives-b2": "The person who feels it: -ed.",
+    "participle_adjectives-b3": "interested in.",
+    "participle_adjectives-b4": "What causes the feeling: -ing.",
+    "participle_adjectives-b5": "The people who feel it: -ed.",
+    "participle_adjectives-b6": "What causes the worry: -ing.",
+    "participle_adjectives-b7": "The people who feel it: -ed.",
+    "participle_adjectives-b8": "feel + -ed.",
+    "participle_adjectives-b9": "What causes it: -ing.",
+    "participle_adjectives-b10": "The people who feel it: -ed.",
+    "participle_adjectives-13": "What causes it: surprising.",
+    "participle_adjectives-14": "The people who feel it: tired.",
+    "participle_adjectives-15": "I am boring = I am a boring person; I am bored = I feel bored.",
+    "participle_adjectives-16": "The person who feels it: pleased / satisfied.",
+    "participle_adjectives-b11": "What causes the feeling: -ing.",
+    "participle_adjectives-b12": "look + -ed: the person who feels it."
+   }
   }
  }
 }

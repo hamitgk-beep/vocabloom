@@ -36,7 +36,7 @@ Map<String, String> get posNames => uiEnglish
 /// [WordInfo.trFreeDict]) come from Wiktionary and damdafayton/eng-tur-dictionary
 /// (tools/main_meanings.py); WordNet gives English senses and base forms.
 class DictDb {
-  static const _version = '22';
+  static const _version = '23';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -182,6 +182,18 @@ class DictDb {
     final r = db.select('SELECT w.json FROM fam f JOIN famg g ON g.id=f.gid JOIN wfd w ON w.root=g.root WHERE f.word=?', [lemma]);
     return r.isEmpty ? null : r.first.columnAt(0) as String;
   }
+
+  final Map<String, Set<String>> _lemmaPosCache = {};
+
+  /// Parts of speech of a lemma itself ('n', 'v', 'a', 'r'), not of its other forms.
+  Set<String> lemmaPos(String lemma) => _lemmaPosCache.putIfAbsent(lemma, () {
+        final out = <String>{};
+        for (final r in db.select('SELECT DISTINCT pos FROM sense WHERE lemma=?', [lemma])) {
+          final p = r.columnAt(0) as String;
+          out.add(p == 's' ? 'a' : p);
+        }
+        return out;
+      });
 
   Set<String> posOf(String word) => _posCache.putIfAbsent(word, () {
         final out = <String>{};
