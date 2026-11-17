@@ -343,6 +343,8 @@ Future<void> allScreens(WidgetTester tester) async {
   await _settle(tester);
   final menus = find.byType(PopupMenuButton<String>);
   if (menus.evaluate().isNotEmpty) {
+    await tester.ensureVisible(menus.first); // below the free-library card on a phone
+    await _settle(tester);
     await tester.tap(menus.first);
     await capture(tester, 'library_book_menu');
     final del = find.text(L('Sil', 'Delete'));
