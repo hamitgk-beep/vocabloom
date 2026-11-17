@@ -366,6 +366,9 @@ class LicensesPage extends StatelessWidget {
       ]),
       SectionLabel(L('Sözlük kaynakları', 'Dictionary sources')),
       Panel(children: [
+        item(L('Kelime anlamları: Wiktionary çevirileri, kaikki.org üzerinden; Murat Uysal\'ın Kindle İngilizce–Türkçe sözlüğü derlemesi (CC BY-SA 4.0)',
+            'Word meanings: Wiktionary translations via kaikki.org, as compiled in Murat Uysal\'s Kindle English–Turkish dictionary (CC BY-SA 4.0)')),
+        item(L('Yardımcı kelime anlamları: damdafayton/eng-tur-dictionary (MIT)', 'Helper word meanings: damdafayton/eng-tur-dictionary (MIT)')),
         item('FreeDict English–Turkish (GPL-2.0+)'),
         item('Princeton WordNet 3.0 (WordNet License)'),
         item(L('KeNet Türkçe WordNet, Starlang / Özyeğin Üniversitesi (CC BY-SA 4.0)', 'KeNet Turkish WordNet, Starlang / Özyeğin University (CC BY-SA 4.0)')),

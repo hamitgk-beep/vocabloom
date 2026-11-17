@@ -57,6 +57,7 @@ Gramer konularının İngilizce açıklamaları `assets/grammar/lessons_en.json`
 
 ```bash
 python3 tools/build_dict.py <ham_veri_klasörü> assets/dict.db   # sözlüğü yeniden üret
+python3 tools/main_meanings.py apply assets/dict.db             # yalnızca kelime anlamlarını yeniden uygula
 flutter test                              # birim testleri + kaynakta sabit metin denetimi (test/l10n_test.dart)
                                           # PDF testleri için PDFIUM_PATH=/yol/libpdfium.so gerekir
 python3 tools/make_import_fixtures.py     # içe aktarma test kitaplarını (test/fixtures/import) yeniden üret
@@ -71,7 +72,11 @@ sürümlerini otomatik derler.
 
 ## Lisanslar
 
-- FreeDict English–Turkish: GPL-2.0-or-later
+- Kelime anlamları (`tools/data/main_meanings.jsonl.gz`, `tools/main_meanings.py`): Wiktionary çevirileri
+  (kaikki.org üzerinden, Murat Uysal'ın Kindle İngilizce–Türkçe sözlüğü derlemesinden:
+  github.com/mybottles/kindle-en-tr-dictionary): CC BY-SA 4.0 / GFDL. Yardımcı kaynak:
+  damdafayton/eng-tur-dictionary (README'ye göre MIT; verinin kaynağı belirtilmemiş)
+- FreeDict English–Turkish (artık kelime anlamı olarak gösterilmiyor; yalnızca kalıplarda yedek): GPL-2.0-or-later
 - Princeton WordNet 3.0: WordNet License
 - KeNet Turkish WordNet (Starlang Software / Özyeğin Üniversitesi): CC BY-SA 4.0
 - Collaborative Interlingual Index: CC BY 4.0

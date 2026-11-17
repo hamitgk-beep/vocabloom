@@ -366,6 +366,12 @@ Future<void> allScreens(WidgetTester tester) async {
   await capture(tester, 'dictionary');
   await tester.enterText(find.byType(TextField).first, 'wor');
   await capture(tester, 'dictionary_search');
+  await tester.enterText(find.byType(TextField).first, 'kopek');
+  await capture(tester, 'dictionary_search_tr');
+  await tester.enterText(find.byType(TextField).first, '');
+  await tester.pumpAndSettle();
+  await tester.tap(find.widgetWithText(ChoiceChip, 'B'));
+  await capture(tester, 'dictionary_letter');
   await tester.pumpWidget(shell(ExpressionListPage(app: app, cat: categories.first)));
   await capture(tester, 'dictionary_category');
 
@@ -578,7 +584,8 @@ void main() {
       if (e.en != null) content.addAll(e.en!.split('\n').map((x) => x.trim()));
     }
     // Meanings shown in the word lists, the dictionary tab and the quiz.
-    for (final w in [...d.searchWords('wor', limit: 60), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
+    content.addAll([for (final q in ['kopek', 'wor']) for (final (_, m) in d.searchTurkish(q)) m]);
+    for (final w in [...d.searchWords('wor', limit: 60), ...d.searchWords('b', limit: 101), ...d.commonWords(limit: 101), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
       final m = app.shortMeaning(w);
       if (m != null) content.addAll([m, ...m.split(', ')]);
       final info = d.lookup(w);

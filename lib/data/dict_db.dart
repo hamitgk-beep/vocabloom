@@ -32,9 +32,11 @@ Map<String, String> get posNames => uiEnglish
     ? const {'n': 'noun', 'v': 'verb', 'a': 'adjective', 'r': 'adverb'}
     : const {'n': 'isim', 'v': 'fiil', 'a': 'sıfat', 'r': 'zarf'};
 
-/// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
+/// Read-only bundled dictionary. Turkish word meanings (`ft`, read as
+/// [WordInfo.trFreeDict]) come from Wiktionary and damdafayton/eng-tur-dictionary
+/// (tools/main_meanings.py); WordNet gives English senses and base forms.
 class DictDb {
-  static const _version = '19';
+  static const _version = '20';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -285,7 +287,15 @@ class DictDb {
       final tr = info.trFreeDict.isNotEmpty
           ? shortTr(info.trFreeDict.first)
           : info.senses.where((s) => s.tr.isNotEmpty).map((s) => s.tr.take(3).join(', ')).firstOrNull;
-      return (sense: s, tr: tr, pos: s == null ? (tr != null && isTrVerb(tr) ? 'v' : null) : normPos(s.pos), sure: true);
+      // The part of speech follows the meaning shown: WordNet's first sense
+      // of "fall" is the noun (autumn) but its first meaning is "düşmek".
+      final sPos = s == null ? null : normPos(s.pos);
+      final pos = tr == null
+          ? sPos
+          : isTrVerb(tr)
+              ? 'v'
+              : (sPos == 'v' ? null : sPos);
+      return (sense: s, tr: tr, pos: pos, sure: true);
     }
     final comp = compoundAt(toks, i, lemma);
     final best = bestSense(info, toks, i);
@@ -416,18 +426,145 @@ class DictDb {
 
   /// Single words starting with [prefix] (letters, ' and - only), the most
   /// frequent first, for the dictionary search. An exact match comes first.
-  List<String> searchWords(String prefix, {int limit = 40}) {
-    final q = prefix.trim().toLowerCase().replaceAll(RegExp(r"[^a-z'\-]"), '');
+  /// Text with Turkish letters (ç, ğ, ı, ö, ş, ü) is not English: no words.
+  List<String> searchWords(String prefix, {int limit = 40, int offset = 0}) {
+    final raw = prefix.trim().toLowerCase();
+    if (RegExp('[çğıöşüâîûİ]').hasMatch(raw)) return const [];
+    final q = raw.replaceAll(RegExp(r"[^a-z'\-]"), '');
     if (q.isEmpty) return const [];
     return [
       for (final r in db.select(
           'SELECT w FROM (SELECT word AS w FROM ft WHERE word GLOB ?1 '
           'UNION SELECT word FROM wfreq WHERE word GLOB ?1 AND EXISTS (SELECT 1 FROM sense s WHERE s.lemma = word)) '
           "LEFT JOIN wfreq f ON f.word = w WHERE w NOT GLOB '* *' "
-          'ORDER BY (w = ?2) DESC, IFNULL(f.n, 0) DESC, w LIMIT ?3',
-          ['$q*', q, limit]))
+          'ORDER BY (w = ?2) DESC, IFNULL(f.n, 0) DESC, w LIMIT ?3 OFFSET ?4',
+          ['$q*', q, limit, offset]))
         r.columnAt(0) as String
     ];
+  }
+
+  /// Names and grammar words that top the frequency counts but make a poor
+  /// start for a word list ("tom", "the", "of"); still found by search.
+  static const _skipCommon = {
+    'tom', 'mary', 'sami', 'boston', 'john', 'layla', 'i', 'a', 'an', 'the', 'to', 'of', 'in', 'on', 'at', 'by', 'for', 'from',
+    'with', 'about', 'into', 'over', 'off', 'up', 'out', 'down', 'and', 'or', 'but', 'so', 'if', 'than', 'as', 'that', 'this',
+    'these', 'those', 'it', 'he', 'she', 'we', 'you', 'they', 'me', 'him', 'her', 'us', 'them', 'my', 'your', 'his', 'our',
+    'their', 'its', 'himself', 'do', 'does', 'did', 'done', 'be', 'is', 'are', 'was', 'were', 'been', 'being', 'have', 'has',
+    'had', 'can', 'could', 'will', 'would', 'shall', 'should', 'may', 'might', 'must', 'not', 'no', 'what', 'how', 'why',
+    'when', 'where', 'who', 'there', 'here', 'just', 'too', 'very', 'any', 'some', 'both', 'because', 'while', 'yet', 'even',
+  };
+
+  /// The single words met most often in books that have a Turkish meaning,
+  /// most frequent first: what the dictionary tab lists before anything is
+  /// typed (grammar words and names left out).
+  List<String> commonWords({int limit = 100, int offset = 0}) {
+    final out = <String>[];
+    var skipped = 0;
+    for (final r in db.select(
+        "SELECT f.word FROM wfreq f WHERE f.word NOT GLOB '* *' AND f.word GLOB '[a-z][a-z]*' "
+        "AND (EXISTS (SELECT 1 FROM ft WHERE ft.word = f.word AND ft.tr != '[]') "
+        "OR EXISTS (SELECT 1 FROM sense x JOIN syn s ON s.id = x.syn_id WHERE x.lemma = f.word AND s.tr IS NOT NULL AND s.tr != '[]')) "
+        'ORDER BY f.n DESC, f.word LIMIT ?',
+        [offset + limit + _skipCommon.length])) {
+      final w = r.columnAt(0) as String;
+      if (_skipCommon.contains(w)) continue;
+      if (skipped++ < offset) continue;
+      out.add(w);
+      if (out.length >= limit) break;
+    }
+    return out;
+  }
+
+  /// Lower case without Turkish accents, so "kopek" finds "köpek" and
+  /// "Işık" finds "ışık".
+  static String foldTr(String s) {
+    const from = 'çğıöşüâîû';
+    const to = 'cgiosuaiu';
+    final l = s.replaceAll('I', 'ı').replaceAll('İ', 'i').toLowerCase();
+    final b = StringBuffer();
+    for (final ch in l.split('')) {
+      final i = from.indexOf(ch);
+      b.write(i < 0 ? ch : to[i]);
+    }
+    return b.toString();
+  }
+
+  /// (English word, Turkish meaning, folded meaning) for every single word
+  /// with a Turkish meaning; built the first time someone searches in Turkish.
+  late final List<(String, String, String)> _trIndex = () {
+    final out = <(String, String, String)>[];
+    void add(String w, String json) {
+      if (w.contains(' ')) return;
+      for (final m in (jsonDecode(json) as List).cast<String>()) {
+        final t = m.trim();
+        if (t.isNotEmpty) out.add((w, t, foldTr(t)));
+      }
+    }
+
+    for (final r in db.select("SELECT word, tr FROM ft WHERE tr != '[]'")) {
+      add(r.columnAt(0) as String, r.columnAt(1) as String);
+    }
+    for (final r in db.select("SELECT x.lemma, s.tr FROM sense x JOIN syn s ON s.id = x.syn_id "
+        "WHERE s.tr IS NOT NULL AND s.tr != '[]' AND x.rank < 4")) {
+      add(r.columnAt(0) as String, r.columnAt(1) as String);
+    }
+    return out;
+  }();
+
+  late final Map<String, int> _freq = {
+    for (final r in db.select('SELECT word, n FROM wfreq')) r.columnAt(0) as String: r.columnAt(1) as int,
+  };
+
+  /// Turkish to English: English words whose Turkish meaning is [text] or
+  /// starts with it, with the meaning that matched. Words whose meaning is
+  /// exactly the text come first ("kitap" → book), then the common ones.
+  List<(String, String)> searchTurkish(String text, {int limit = 40}) =>
+      [for (final (w, m, _) in searchTurkishScored(text, limit: limit)) (w, m)];
+
+  /// [searchTurkish] with how well each meaning matched: 0 or 1 = the text
+  /// is one of the meanings, higher = a meaning only starts with it.
+  List<(String, String, int)> searchTurkishScored(String text, {int limit = 40}) {
+    final q = foldTr(text.trim()).replaceAll(RegExp(r'\s+'), ' ');
+    if (q.length < 2) return const [];
+    final wordStart = RegExp('(^|[^a-z])${RegExp.escape(q)}');
+    final best = <String, (int, String)>{};
+    for (final (w, m, f) in _trIndex) {
+      if (!f.contains(q)) continue;
+      int? score;
+      for (final part in f.split(RegExp(r'[,;()]'))) {
+        final p = part.trim();
+        if (p == q) {
+          score = 0;
+          break;
+        }
+        if (p.startsWith(q)) {
+          final next = p.length > q.length ? p[q.length] : ' ';
+          final s = next == ' ' ? 2 : 3;
+          if (score == null || s < score) score = s;
+        } else if (wordStart.hasMatch(p)) {
+          score ??= 4;
+        }
+      }
+      // Some meanings carry English derived words ("worrisome üzücü"): a
+      // partial match on an English word is not a Turkish match.
+      if (score != null && score >= 2) {
+        final hit = RegExp('(?:^|[^a-z])(${RegExp.escape(q)}[a-z]*)').firstMatch(f)?.group(1);
+        if (hit != null && lemmatizer.known.contains(hit)) continue;
+      }
+      // A meaning that is one short word ("kitap") beats a long description.
+      if (score == null) continue;
+      if (score == 0 && f != q) score = 1;
+      final old = best[w];
+      if (old == null || score < old.$1) best[w] = (score, m);
+    }
+    final words = best.keys.toList()
+      ..sort((a, b) {
+        final c = best[a]!.$1.compareTo(best[b]!.$1);
+        if (c != 0) return c;
+        final d = (_freq[b] ?? 0).compareTo(_freq[a] ?? 0);
+        return d != 0 ? d : a.length.compareTo(b.length);
+      });
+    return [for (final w in words.take(limit)) (w, best[w]!.$2, best[w]!.$1)];
   }
 
   /// The expressions of [cat] met most often in books, most frequent first
