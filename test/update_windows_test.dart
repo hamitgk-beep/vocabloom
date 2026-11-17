@@ -1,6 +1,7 @@
 @TestOn('windows')
 library;
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -100,7 +101,7 @@ void main() {
     }
     await Future<void>.delayed(const Duration(milliseconds: 500));
     final log = File(p.join(t.root.path, 'update.log'));
-    var text = log.existsSync() ? log.readAsStringSync() : '-';
+    var text = log.existsSync() ? latin1.decode(log.readAsBytesSync()) : '-';
     if (!File(t.marker).existsSync()) {
       final ps = await Process.run('tasklist', ['/v', '/fo', 'list']);
       text +=
