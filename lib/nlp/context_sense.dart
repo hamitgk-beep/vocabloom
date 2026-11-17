@@ -451,7 +451,7 @@ class SenseEngine {
     return out;
   }
 
-  static const _posCodes = {'noun': 'n', 'verb': 'v', 'adjective': 'a', 'adverb': 'r'};
+  static const _posCodes = {'noun': 'n', 'verb': 'v', 'adjective': 'a', 'adj': 'a', 'adverb': 'r', 'adv': 'r', 'n': 'n', 'v': 'v', 'a': 'a', 'r': 'r', 's': 'a'};
 
   /// Senses of our own dictionary (table `od`: word, json list of
   /// {pos, tr, note, en, ex_tr}) once it is part of the bundled dictionary.
