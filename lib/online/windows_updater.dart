@@ -55,16 +55,17 @@ class WindowsUpdater {
     exit(0);
   }
 
-  /// Runs [script] in a hidden console (no black window). Falls back to a
-  /// plain detached cmd when Windows Script Host is switched off.
-  static Future<void> launchScript(String script, Map<String, String> env) async {
-    final vbs = File(p.join(File(script).parent.path, 'install.vbs'));
-    await vbs.writeAsString('CreateObject("WScript.Shell").Run "cmd /c """ & WScript.Arguments(0) & """", 0, False\r\n');
-    try {
-      // Detached, without pipes: the script inherits nothing to wait on.
-      await Process.start('wscript.exe', ['//B', '//Nologo', vbs.path, script], environment: env, mode: ProcessStartMode.detached);
-      return;
-    } catch (_) {}
+  /// Runs [script] in a hidden console (no black window), or a plain
+  /// detached cmd when that is not possible.
+  static Future<void> launchScript(String script, Map<String, String> env, {bool hidden = true}) async {
+    if (hidden) {
+      try {
+        // conhost --headless gives the script a console without a window,
+        // so robocopy and ping open no black windows either (Windows 10 1809+).
+        await Process.start('conhost.exe', ['--headless', 'cmd.exe', '/c', script], environment: env, mode: ProcessStartMode.detached);
+        return;
+      } catch (_) {}
+    }
     await Process.start('cmd', ['/c', script], mode: ProcessStartMode.detached, environment: env);
   }
 
@@ -127,7 +128,7 @@ class WindowsUpdater {
     'goto start',
     ':free',
     'echo %TIME% copying>> %LOG%',
-    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:10 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
+    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:10 /W:1 /NDL /NJH /NP >> %LOG% 2>&1',
     'set RC=%ERRORLEVEL%',
     'echo %TIME% robocopy %RC%>> %LOG%',
     'if %RC% GEQ 8 (',
