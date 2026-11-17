@@ -83,7 +83,8 @@ sürümlerini otomatik derler.
 - Princeton WordNet 3.0: WordNet License
 - KeNet Turkish WordNet (Starlang Software / Özyeğin Üniversitesi): CC BY-SA 4.0
 - Collaborative Interlingual Index: CC BY 4.0
-- Wiktionary (deyim, phrasal verb, atasözü vb. kalıplar; kaikki.org/wiktextract üzerinden): CC BY-SA 4.0
+- Wiktionary (deyim, phrasal verb, atasözü vb. kalıplar; İngilizce ve Türkçe Vikisözlük, kaikki.org/wiktextract üzerinden): CC BY-SA 4.0
+- Tatoeba (İngilizce–Türkçe çevirili örnek cümleler): CC BY 2.0 FR
 - Kokoro-82M ses modeli (hexgrad): Apache 2.0
 - Piper LibriTTS-R İngilizce ses: CC BY 4.0
 - EMA Lightning Türkçe ses modeli (canberk7): Apache 2.0 (kod ve ağırlıklar); ONNX'e `tools/ema_export.py` ile çevrilir

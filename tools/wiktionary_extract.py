@@ -111,8 +111,13 @@ def main():
                         ex = t
                         break
         tr = []
-        for t in e.get('translations', []) or []:
-            if t.get('code') == 'tr' or t.get('lang') == 'Turkish':
+        # Translation tables sit on the entry in older dumps and on each sense
+        # in newer ones; the language is "code" or "lang_code".
+        tables = list(e.get('translations', []) or [])
+        for s in e.get('senses', []) or []:
+            tables += s.get('translations', []) or []
+        for t in tables:
+            if t.get('code') == 'tr' or t.get('lang_code') == 'tr' or t.get('lang') in ('Turkish', 'Türkçe'):
                 v = (t.get('word') or '').strip()
                 if v and v not in tr:
                     tr.append(v)
@@ -124,13 +129,77 @@ def main():
             prev['ex'] = prev['ex'] or ex
         else:
             out[key] = {'p': lw, 'c': cat, 'en': glosses, 'tr': tr[:6], 'ex': ex}
+    if len(sys.argv) > 2:
+        add_tr_wiktionary(out, sys.argv[2])
     rows = sorted(out.values(), key=lambda r: (r['c'], r['p']))
     counts = {}
     for r in rows:
         counts[r['c']] = counts.get(r['c'], 0) + 1
     print('lines', n, 'kept', len(rows), counts, file=sys.stderr)
+    with_tr = [r for r in rows if r['tr']]
+    print('with turkish', len(with_tr), {c: sum(1 for r in with_tr if r['c'] == c) for c in counts}, file=sys.stderr)
+    for r in with_tr[::max(1, len(with_tr) // 40)]:
+        print('  sample', r['c'], '|', r['p'], '|', ', '.join(r['tr'][:4]), file=sys.stderr)
     with gzip.open(sys.argv[1], 'wt', encoding='utf-8') as f:
         json.dump(rows, f, ensure_ascii=False, separators=(',', ':'))
+
+
+TR_POS = {'phrase': 'idioms', 'idiom': 'idioms', 'proverb': 'proverbs', 'prep_phrase': 'prepositional_phrases'}
+
+
+def tr_terms(gloss):
+    """Short Turkish meanings from one Turkish Wiktionary gloss; long
+    explanations are left out."""
+    g = re.sub(r'\([^)]*\)', '', gloss).strip(' .;')
+    terms = [x.strip(' .') for x in re.split(r'[,;]', g) if x.strip(' .')]
+    return [x for x in terms if len(x) <= 40 and len(x.split()) <= 5]
+
+
+def add_tr_wiktionary(out, path):
+    """English expressions in the Turkish Wiktionary (kaikki.org trwiktionary
+    dump): their Turkish definitions fill in [out]'s Turkish, and phrases no
+    other entry has are added when their kind is clear."""
+    by_phrase = {}
+    for (p, c), r in out.items():
+        by_phrase.setdefault(p, []).append(r)
+    opener = gzip.open if path.endswith('.gz') else open
+    seen = filled = added = 0
+    with opener(path, 'rt', encoding='utf-8') as f:
+        for line in f:
+            try:
+                e = json.loads(line)
+            except Exception:
+                continue
+            if e.get('lang_code') != 'en':
+                continue
+            lw = (e.get('word') or '').strip().lower().replace('’', "'")
+            if ' ' not in lw or not PHRASE_RE.fullmatch(lw) or len(lw.split()) > 9:
+                continue
+            seen += 1
+            tr = []
+            for s in e.get('senses', []) or []:
+                for g in s.get('glosses', []) or []:
+                    tr += [t for t in tr_terms(g) if t not in tr]
+            if not tr:
+                continue
+            if lw in by_phrase:
+                for r in by_phrase[lw]:
+                    if not r['tr']:
+                        filled += 1
+                    r['tr'] = (r['tr'] + [t for t in tr if t not in r['tr']])[:6]
+                continue
+            pos = e.get('pos', '')
+            toks = lw.split()
+            cat = TR_POS.get(pos)
+            if pos == 'verb' and len(toks) == 2 and toks[1] in PARTICLES:
+                cat = 'phrasal_verbs'
+            if not cat:
+                continue
+            r = {'p': lw, 'c': cat, 'en': [], 'tr': tr[:6], 'ex': None}
+            out[(lw, cat)] = r
+            by_phrase[lw] = [r]
+            added += 1
+    print('tr wiktionary: english expressions', seen, 'turkish filled', filled, 'added', added, file=sys.stderr)
 
 
 if __name__ == '__main__':

@@ -862,6 +862,21 @@ brand | marka
 pension | emekli maaşı (≠ pansiyon)
 guesthouse | pansiyon
 sentence | cümle; ceza (bağlam)
+pasta | makarna (≠ pasta/kek)
+cake | pasta, kek
+apartment | daire (≠ apartman/bina)
+flat | daire; düz
+salon | kuaför, güzellik salonu (≠ oturma odası)
+class | sınıf; ders (≠ klas/şık)
+travesty | gülünç taklit, rezalet (≠ travesti)
+prospect | ihtimal, beklenti (≠ prospektüs)
+brochure | broşür, prospektüs
+console | teselli etmek; konsol (bağlam)
+lecture | ders, konferans (≠ lektür/okuma)
+jest | şaka (≠ jest/hareket)
+gesture | jest, el hareketi
+physician | doktor, hekim (≠ fizikçi)
+physicist | fizikçi
 """
 
 MODAL_VERBS = """
