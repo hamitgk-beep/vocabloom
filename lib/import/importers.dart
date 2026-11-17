@@ -200,6 +200,13 @@ ImportedBook _fromPlain(String text, String title, String format, {required bool
   return _chunk(ImportedBook(title, null, format, chapters));
 }
 
+/// A text from the free library: Markdown made by tools/library/build_library.py,
+/// where `# Title` starts a chapter. [format] is shown on the cover (the level).
+ImportedBook importLibraryMarkdown(String md, String title, String? author, String format) {
+  final b = _fromPlain(md, title, format, markdown: true);
+  return ImportedBook(title, author, format, b.chapters);
+}
+
 /// Splits very long chapters so the reader stays fast; names unnamed chapters.
 ImportedBook _chunk(ImportedBook b, {int size = 80}) {
   final out = <ImportedChapter>[];

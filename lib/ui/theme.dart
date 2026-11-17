@@ -242,6 +242,15 @@ ThemeData buildTheme(Brightness b) {
   );
 }
 
+/// Colour of a CEFR level (A1 … C2) on chips and badges.
+Color cefrColor(String level) => switch (level) {
+      'A1' || 'A2' => const Color(0xFF0E9F6E),
+      'B1' => const Color(0xFF2563EB),
+      'B2' => const Color(0xFF7C3AED),
+      'C1' => const Color(0xFFE0752D),
+      _ => const Color(0xFFDC2626),
+    };
+
 /// Small rounded section header used on settings and lists.
 class SectionLabel extends StatelessWidget {
   final String text;

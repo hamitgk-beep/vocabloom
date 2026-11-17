@@ -12,6 +12,7 @@ import '../import/importers.dart';
 import '../import/ocr.dart';
 import '../online/ai_service.dart';
 import '../l10n.dart';
+import 'free_library_page.dart';
 import 'reader_page.dart';
 import 'review_page.dart';
 import 'theme.dart';
@@ -140,6 +141,11 @@ class _LibraryPageState extends State<LibraryPage> {
     }
   }
 
+  Future<void> _openFreeLibrary() async {
+    await Navigator.push(context, MaterialPageRoute(builder: (_) => FreeLibraryPage(app: widget.app)));
+    setState(() {});
+  }
+
   Future<void> _open(Book b) async {
     await Navigator.push(context, MaterialPageRoute(builder: (_) => ReaderPage(app: widget.app, book: b)));
     setState(() {});
@@ -185,6 +191,8 @@ class _LibraryPageState extends State<LibraryPage> {
                       style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
                   const SizedBox(height: 18),
                   _StatsStrip(books: books.length, learning: learning, learned: learned),
+                  const SizedBox(height: 12),
+                  _FreeLibraryBanner(onTap: _openFreeLibrary),
                   if (learning > 0) ...[
                     const SizedBox(height: 12),
                     ReviewBanner(app: widget.app),
@@ -207,7 +215,7 @@ class _LibraryPageState extends State<LibraryPage> {
               ),
             ),
             if (books.isEmpty)
-              SliverFillRemaining(hasScrollBody: false, child: _EmptyLibrary(onAdd: importing ? null : _import))
+              SliverFillRemaining(hasScrollBody: false, child: _EmptyLibrary(onAdd: importing ? null : _import, onFree: _openFreeLibrary))
             else if (books.length > 1)
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 110),
@@ -225,6 +233,48 @@ class _LibraryPageState extends State<LibraryPage> {
               )
             else
               const SliverToBoxAdapter(child: SizedBox(height: 110)),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+/// Opens the free library (stories and classics by level).
+class _FreeLibraryBanner extends StatelessWidget {
+  final VoidCallback onTap;
+  const _FreeLibraryBanner({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final cs = t.colorScheme;
+    return Material(
+      key: const ValueKey('free-library'),
+      color: cs.primaryContainer.withValues(alpha: t.brightness == Brightness.dark ? 0.35 : 0.6),
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+          child: Row(children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(color: cs.primary.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(12)),
+              child: Icon(Icons.local_library_rounded, color: cs.primary, size: 22),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(L('Ücretsiz kütüphane', 'Free library'), style: t.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                const SizedBox(height: 2),
+                Text(L('A1–C1 seviyelerinde telifsiz hikâye ve klasikler', 'Free stories and classics, levels A1–C1'),
+                    style: t.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant)),
+              ]),
+            ),
+            Icon(Icons.chevron_right_rounded, color: cs.onSurfaceVariant),
           ]),
         ),
       ),
@@ -428,7 +478,8 @@ class _BookCard extends StatelessWidget {
 
 class _EmptyLibrary extends StatelessWidget {
   final VoidCallback? onAdd;
-  const _EmptyLibrary({required this.onAdd});
+  final VoidCallback onFree;
+  const _EmptyLibrary({required this.onAdd, required this.onFree});
 
   @override
   Widget build(BuildContext context) {
@@ -455,6 +506,12 @@ class _EmptyLibrary extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         FilledButton.icon(onPressed: onAdd, icon: const Icon(Icons.add_rounded), label: Text(L('Kitap seç', 'Choose a book'))),
+        const SizedBox(height: 10),
+        OutlinedButton.icon(
+          onPressed: onFree,
+          icon: const Icon(Icons.local_library_outlined),
+          label: Text(L('Ücretsiz hikâye ve kitaplar', 'Free stories and books')),
+        ),
       ]),
     );
   }
