@@ -1,0 +1,11 @@
+{
+ "model": "",
+ "effort": "low",
+ "items": 33491,
+ "requests": 3350,
+ "input_tokens": 0,
+ "output_tokens": 0,
+ "cost_usd": 0.0,
+ "cost_usd_batch": 0.0,
+ "seconds": 105
+}
