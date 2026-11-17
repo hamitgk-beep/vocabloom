@@ -376,11 +376,25 @@ class LicensesPage extends StatelessWidget {
         item(L('Kalıplar: İngilizce ve Türkçe Vikisözlük, kaikki.org üzerinden (CC BY-SA 4.0)', 'Expressions: English and Turkish Wiktionary via kaikki.org (CC BY-SA 4.0)')),
         item(L('Çevirili örnek cümleler: Tatoeba (CC BY 2.0 FR)', 'Example sentences with translations: Tatoeba (CC BY 2.0 FR)')),
         item(L('Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0)', 'Category lists written for this app (CC BY-SA 4.0)')),
+        item(L('Uygulamadaki sözlük veritabanı bu kaynaklardan uyarlanmıştır ve aynı lisansla (CC BY-SA 4.0) paylaşılır. Lisans metinleri: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0',
+            'The dictionary database in the app is adapted from these sources and shared under the same licence (CC BY-SA 4.0). Licence texts: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0')),
       ]),
       SectionLabel(L('Yazı tipleri ve sesler', 'Fonts and voices')),
       Panel(children: [
         item(L('Yazı tipleri: Inter ve Literata (SIL Open Font License 1.1)', 'Fonts: Inter and Literata (SIL Open Font License 1.1)')),
         item(L('Sesler: Kokoro-82M (Apache 2.0), Piper LibriTTS-R (CC BY 4.0), EMA Lightning Türkçe (Apache 2.0), Piper Fahrettin (CC0 kayıtlar), ONNX Runtime (MIT), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)', 'Voices: Kokoro-82M (Apache 2.0), Piper LibriTTS-R (CC BY 4.0), EMA Lightning Turkish (Apache 2.0), Piper Fahrettin (CC0 recordings), ONNX Runtime (MIT), sherpa-onnx (Apache 2.0), eSpeak NG (GPL-3.0)')),
+      ]),
+      SectionLabel(L('Yazılım', 'Software')),
+      Panel(children: [
+        item(L('VocaBloom açık kaynaklıdır (GPL-3.0): github.com/hamitgk-beep/vocabloom', 'VocaBloom is open source (GPL-3.0): github.com/hamitgk-beep/vocabloom')),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            icon: const Icon(Icons.description_outlined, size: 18),
+            label: Text(L('Kullanılan kütüphanelerin lisansları', 'Licences of the libraries used')),
+            onPressed: () => showLicensePage(context: context, applicationName: 'VocaBloom'),
+          ),
+        ),
       ]),
     ]);
   }
