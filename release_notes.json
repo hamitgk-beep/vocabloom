@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "free-library",
+      "area": "app",
+      "tr": "Ücretsiz kütüphane: A1–C1 seviyelerinde 310 kısa hikâye (Pratham Books / StoryWeaver, uygulamanın içinde) ve 30 klasik kitap (Alice, Sherlock Holmes, Pride and Prejudice …, dokununca indirilir). Kitaplığım sayfasındaki \"Ücretsiz kütüphane\" kartından seviye seçip okumaya başla.",
+      "en": "Free library: 310 short stories (Pratham Books / StoryWeaver, built into the app) and 30 classic books (Alice, Sherlock Holmes, Pride and Prejudice …, downloaded when you tap them), levels A1–C1. Open it from the \"Free library\" card in My library, pick a level and start reading."
+    },
+    {
       "id": "reader-grammar-filters",
       "area": "reader",
       "tr": "Filtreler menüsünde yeni Gramer yapıları grubu: zamanlar her fiili renklendiriyor (yeşil şimdiki/geniş, kahverengi geçmiş, mavi gelecek); edilgen çatı, koşul cümleleri, sıfat cümlecikleri, ortaçlar, V-ing / to V1, karşılaştırma, dolaylı anlatım, geçmişe yönelik kipler (should have done), used to, ettirgen yapılar, devrik ve vurgu cümleleri, onay soruları. Renkli kelimeye dokununca kuralı ve ilgili Gramer konusu açılıyor. Filtreler artık 3 açılır grupta.",

@@ -26,13 +26,7 @@ String? _subtitle(GrammarTopic t) {
   return norm(s) == norm(t.title) || t.title.toLowerCase().startsWith(s.toLowerCase()) ? null : s;
 }
 
-Color _levelColor(String level) => switch (level) {
-  'A1' || 'A2' => const Color(0xFF0E9F6E),
-  'B1' => const Color(0xFF2563EB),
-  'B2' => const Color(0xFF7C3AED),
-  'C1' => const Color(0xFFE0752D),
-  _ => const Color(0xFFDC2626),
-};
+Color _levelColor(String level) => cefrColor(level);
 
 class _LevelChip extends StatelessWidget {
   final String level;

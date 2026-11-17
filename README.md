@@ -13,6 +13,11 @@ Geliştiren: Hamit Gök
   içindekiler sayfasından bulunur. `test/import_completeness_test.dart` her biçimde metnin eksiksiz ve sırasıyla
   geldiğini denetler. Kitaplık menüsündeki "Metni kaydet (.txt)" / "Metni kopyala" ve okuyucudaki kopyala düğmesi
   kitabın uygulamadaki halini dışarı verir.
+- **Ücretsiz kütüphane:** A1–C1 seviyelerinde telifsiz okuma. 310 kısa hikâye (Pratham Books / StoryWeaver,
+  CC BY 4.0, yalnız metin) uygulamanın içinde gelir (`assets/library/`, ~350 KB); 30 kamu malı klasik (Project
+  Gutenberg) `library/books/` altında durur ve ilk açılışta GitHub'dan indirilir. Hikâyelerin seviyesi kelime
+  sıklığı ve cümle uzunluğundan hesaplanır, kitaplarınki `tools/library/books.tsv`'de elle verilir. Yeniden üretmek
+  için: `python3 tools/library/build_library.py --stories <pb-source/en> --books-cache <klasör>`.
 - **Kelimeye dokun:** Türkçe karşılıklar, İngilizce tanımlar (WordNet), eş anlamlılar, örnek cümleler,
   kitabın başka yerlerinden örnekler ve "bu cümlede büyük olasılıkla şu anlamda" tahmini. Kelime bir kalıbın
   parçasıysa (give up, break the ice …) kalıp en üstte gösterilir. Türkçe/English düğmeleriyle tek dile geçilebilir.

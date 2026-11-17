@@ -1,0 +1,31 @@
+# gutenberg_id	GITenberg repo	file	title	author	level	chapters
+11339	Aesop-s-Fables--a-new-translation_11339	?	Aesop's Fables	Aesop	B1	caps
+2591	Grimms-Fairy-Tales_2591	2591.txt	Grimms' Fairy Tales	Jacob and Wilhelm Grimm	B1	caps
+1597	Andersen-s-Fairy-Tales_1597	?	Andersen's Fairy Tales	Hans Christian Andersen	B2	caps
+14838	The-Tale-of-Peter-Rabbit_14838	14838.txt	The Tale of Peter Rabbit	Beatrix Potter	B1	none
+18442	Fifty-Famous-Stories-Retold_18442	18442.txt	Fifty Famous Stories Retold	James Baldwin	B1	toc
+2781	Just-So-Stories_2781	2781.txt	Just So Stories	Rudyard Kipling	B2	caps
+11757	The-Velveteen-Rabbit_11757	11757.txt	The Velveteen Rabbit	Margery Williams	B1	none
+902	The-Happy-Prince-and-Other-Tales_902	902-0.txt	The Happy Prince and Other Tales	Oscar Wilde	B1	toc
+11	Alice-s-Adventures-in-Wonderland_11	?	Alice's Adventures in Wonderland	Lewis Carroll	B2	
+55	The-Wonderful-Wizard-of-Oz_55	55.txt	The Wonderful Wizard of Oz	L. Frank Baum	B1	re:^\d+\.\s+\S
+236	The-Jungle-Book_236	236.txt	The Jungle Book	Rudyard Kipling	B2	toc
+120	Treasure-Island_120	120.txt	Treasure Island	Robert Louis Stevenson	B2	re:^\d+$
+1661	The-Adventures-of-Sherlock-Holmes_1661	1661.txt	The Adventures of Sherlock Holmes	Arthur Conan Doyle	B2	re:^(ADVENTURE [IVX]+\.|[IVX]+\. THE ADVENTURE)
+16	Peter-Pan_16	16.txt	Peter Pan	J. M. Barrie	B2	
+113	The-Secret-Garden_113	113.txt	The Secret Garden	Frances Hodgson Burnett	B2	
+271	Black-Beauty_271	271.txt	Black Beauty	Anna Sewell	B2	re:^\d\d \S
+215	The-Call-of-the-Wild_215	215.txt	The Call of the Wild	Jack London	B2	
+46	A-Christmas-Carol_46	?	A Christmas Carol	Charles Dickens	B2	
+103	Around-the-World-in-80-Days_103	103.txt	Around the World in Eighty Days	Jules Verne	B2	
+35	The-Time-Machine_35	35.txt	The Time Machine	H. G. Wells	B2	
+1342	Pride-and-Prejudice_1342	1342.txt	Pride and Prejudice	Jane Austen	C1	
+84	Frankenstein_84	84.txt	Frankenstein	Mary Shelley	C1	
+174	The-Picture-of-Dorian-Gray_174	174.txt	The Picture of Dorian Gray	Oscar Wilde	C1	
+1260	Jane-Eyre_1260	?	Jane Eyre	Charlotte Brontë	C1	
+345	Dracula_345	345.txt	Dracula	Bram Stoker	C1	
+42	The-Strange-Case-of-Dr.-Jekyll-and-Mr.-Hyde_42	?	The Strange Case of Dr Jekyll and Mr Hyde	Robert Louis Stevenson	C1	caps
+2852	The-Hound-of-the-Baskervilles_2852	2852.txt	The Hound of the Baskervilles	Arthur Conan Doyle	B2	
+74	The-Adventures-of-Tom-Sawyer_74	74.txt	The Adventures of Tom Sawyer	Mark Twain	B2	
+768	Wuthering-Heights_768	?	Wuthering Heights	Emily Brontë	C1	
+514	Little-Women_514	?	Little Women	Louisa May Alcott	B2	

@@ -15,8 +15,11 @@ class Book {
   int lastChapter;
   int lastParagraph;
   final DateTime added;
+
+  /// Id of the free-library item this book came from (pb-0002, pg-1342), if any.
+  final String? source;
   Book(this.id, this.title, this.author, this.format, this.chapterCount, this.lastChapter,
-      this.lastParagraph, this.added);
+      this.lastParagraph, this.added, {this.source});
 }
 
 class Chapter {
@@ -89,6 +92,7 @@ class UserDb {
     ''');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
+    if (!cols.contains('source')) u.db.execute('ALTER TABLE books ADD COLUMN source TEXT');
     for (final r in u.db.select('SELECT lemma, status FROM words')) {
       u.statuses[r['lemma'] as String] = WordStatus.values[r['status'] as int];
     }
@@ -242,11 +246,11 @@ class UserDb {
   void setJson(String key, Map<String, dynamic> v) => setSetting(key, jsonEncode(v));
 
   // ---- books
-  int insertBook(ImportedBook b) {
+  int insertBook(ImportedBook b, {String? source}) {
     db.execute('BEGIN');
     try {
-      db.execute('INSERT INTO books(title, author, format, chapters, added) VALUES (?,?,?,?,?)',
-          [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch]);
+      db.execute('INSERT INTO books(title, author, format, chapters, added, source) VALUES (?,?,?,?,?,?)',
+          [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch, source]);
       final id = db.lastInsertRowId;
       final ch = db.prepare('INSERT INTO chapters(book_id, idx, title) VALUES (?,?,?)');
       final pa = db.prepare('INSERT INTO paras(book_id, chapter, idx, kind, text) VALUES (?,?,?,?,?)');
@@ -271,8 +275,12 @@ class UserDb {
         for (final r in db.select('SELECT * FROM books ORDER BY added DESC'))
           Book(r['id'] as int, r['title'] as String, r['author'] as String?, r['format'] as String,
               r['chapters'] as int, r['last_chapter'] as int, r['last_para'] as int,
-              DateTime.fromMillisecondsSinceEpoch(r['added'] as int))
+              DateTime.fromMillisecondsSinceEpoch(r['added'] as int),
+              source: r['source'] as String?)
       ];
+
+  /// Free-library item id → the book made from it.
+  Map<String, Book> booksBySource() => {for (final b in books()) if (b.source != null) b.source!: b};
 
   void deleteBook(int id) {
     db.execute('DELETE FROM paras WHERE book_id=?', [id]);
