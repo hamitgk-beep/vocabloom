@@ -115,7 +115,7 @@ jobs:
           cp prev/gl-$S.jsonl.gz . 2>/dev/null || true
           cp prev/rv-$S.jsonl.gz . 2>/dev/null || true
           python3 tools/pretranslate.py assets/dict.db exd-$S.jsonl.gz --provider $S --model "$MODEL" \
-            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --review rv-$S.jsonl.gz --gloss gl-$S.jsonl.gz --words wd-$S.jsonl.gz --senses syn-$S.jsonl.gz --priority priority.txt --shard ${{ matrix.shard }} \
+            --limit "$LIMIT" --minutes 320 --families wfd-$S.jsonl.gz --review rv-$S.jsonl.gz --gloss gl-$S.jsonl.gz --words wd-$S.jsonl.gz  --shard ${{ matrix.shard }} \
             --done prev/*.jsonl.gz
       - name: Save results
         if: always()
