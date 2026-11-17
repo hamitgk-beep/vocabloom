@@ -9,6 +9,7 @@ import 'app_state.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
 import 'import/importers.dart' show looksGeneratedTitle, titleFromContent;
+import 'import/text_repair.dart';
 import 'import/word_gaps.dart';
 import 'ui/dictionary_page.dart';
 import 'ui/library_page.dart';
@@ -66,6 +67,12 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {
         debugPrint('repairJoinedWords: $e');
+      }
+      try {
+        user.repairImportedTextOnce(
+            (t, format) => format == 'pdf' || format == 'image' ? repairPdfText(t, a.isWord) : cleanInvisible(t));
+      } catch (e) {
+        debugPrint('repairImportedText: $e');
       }
       try {
         user.repairBookTitles(looksGeneratedTitle, titleFromContent);

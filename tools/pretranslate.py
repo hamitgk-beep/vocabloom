@@ -33,7 +33,7 @@ CAT_ORDER = ['phrasal_verbs', 'conjunctions', 'discourse_markers', 'chunks', 'co
              'false_friends', 'prepositional_phrases', 'idioms', 'binomials', 'proverbs', 'irregular_verbs']
 
 PROMPT = '''You are writing a learner's dictionary of English expressions for Turkish speakers.
-For each expression below, list its common senses (1 to 4), the most common meaning first.
+For each expression below, list every common sense and use (1 to 6), the most common meaning first.
 The first sense must be the one people use most in everyday English. The given definition often lists only a
 special or rare sense: do not follow it blindly. When the words are often used in their plain meaning, that
 plain meaning is a sense and usually the first one (for example "walk down" first means walking along or down
@@ -1015,16 +1015,11 @@ def main():
         print(f'reviews: {n_done} done, {len(rtodo)} to go')
         m = run(svc, rtodo, a.review, min(deadline, start + total * 0.45), a.limit, 'review')
         print(f'reviews added {m}')
-    # Frequent words with no Turkish at all ("usually", "each"): a few hundred, before the long queues.
-    if a.words and svc.models and time.time() < deadline:
-        wd_files = [a.words] + [f for f in a.done if os.path.basename(f).startswith('wd-')]
-        wdone = read_done(wd_files, lambda j: j['w']) - {k[3:] for k in rejected if k.startswith('wd:')}
-        mtodo = shard_order(load_word_todo(a.dict_db, wdone, only_missing=True), lambda r: r[0], shard, shards)
-        print(f'words without Turkish: {len(mtodo)} to go')
-        m = run(svc, mtodo, a.words, min(deadline, start + total * 0.5), a.limit, 'word')
-        print(f'words without Turkish added {m}')
-
-    n = run(svc, todo, a.out, min(deadline, start + total * 0.65), a.limit, 'expr')
+    # Expressions (phrasal verbs, idioms ...) get all the time left: single
+    # words now take their meanings from the bundled open dictionaries
+    # (tools/main_meanings.py). Word explanations and families only use time
+    # once every expression is done.
+    n = run(svc, todo, a.out, deadline, a.limit, 'expr')
     print(f'added {n}; remaining {len(todo) - n}')
 
     if a.words and svc.models and time.time() < deadline:
