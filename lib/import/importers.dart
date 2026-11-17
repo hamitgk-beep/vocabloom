@@ -12,6 +12,7 @@ import '../data/user_db.dart';
 import 'ocr.dart';
 import '../l10n.dart';
 import 'pdf_import.dart';
+import 'text_repair.dart';
 
 const supportedExtensions = [
   'epub', 'pdf', 'txt', 'md', 'markdown', 'html', 'htm', 'xhtml', 'docx', 'odt', 'fb2', 'rtf', 'jpg', 'jpeg', 'png'
@@ -115,7 +116,14 @@ ImportedBook importBytes(List<int> bytes, String ext, String fallbackTitle) {
     default:
       throw ImportException(L('Bu dosya türü desteklenmiyor: .$ext', 'This file type is not supported: .$ext'));
   }
-  final chapters = book.chapters.where((c) => c.paragraphs.isNotEmpty).toList();
+  // Soft hyphens, zero-width spaces, control characters and symbol-font bullets.
+  final chapters = [
+    for (final c in book.chapters)
+      ImportedChapter(cleanInvisible(c.title), [
+        for (final p in c.paragraphs)
+          if (cleanInvisible(p.$2).isNotEmpty) (p.$1, cleanInvisible(p.$2))
+      ])
+  ].where((c) => c.paragraphs.isNotEmpty).toList();
   if (chapters.isEmpty) throw ImportException(L('Dosyada okunabilir metin bulunamadı.', 'No readable text was found in the file.'));
   return ImportedBook(book.title, book.author, book.format, chapters);
 }
@@ -133,10 +141,30 @@ String _decodeText(List<int> bytes) {
 String _clean(String s) => s.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
 
 // ---------------------------------------------------------------- plain text
-final _chapterLine = RegExp(r'^\s*(chapter|part|book|bölüm|kısım|prologue|epilogue)\b[\s\w.:-]{0,60}$', caseSensitive: false);
+/// "CHAPTER VIII. The Queen's Croquet-Ground", "Chapter 3", "Part Two", "Bölüm 4", "Prologue".
+final _chapterLine = RegExp(
+    r'^\s*(?:(?:chapter|part|book|bölüm|kısım)\s+(?:\d{1,3}|[ivxlc]{1,7}|one|two|three|four|five|six|seven|eight|nine|ten|'
+    r'eleven|twelve|first|second|third)\b|prologue\b|epilogue\b)[^\n]{0,60}$',
+    caseSensitive: false);
+
+/// Project Gutenberg's own notes before and after the book, and its licence.
+String _withoutGutenbergNotes(String text) {
+  final start = RegExp(r'^\*{3}\s*START OF (?:THE|THIS) PROJECT GUTENBERG.*$', multiLine: true, caseSensitive: false).firstMatch(text);
+  final end = RegExp(r'^\*{3}\s*END OF (?:THE|THIS) PROJECT GUTENBERG.*$', multiLine: true, caseSensitive: false)
+      .firstMatch(text);
+  if (start == null || end == null || end.start <= start.end) return text;
+  return text.substring(start.end, end.start);
+}
+
+/// _Italic_ words marked with underscores, as plain text books write them.
+/// Blanks to fill in ("my __ ") stay.
+String _withoutUnderscoreItalics(String s) =>
+    s.replaceAllMapped(RegExp(r'''(?<![\w_])_(?=[^\s_])([^_]*?[A-Za-z][^_]*?)(?<=[^\s_])_(?![\w_])'''), (m) => m.group(1)!);
 
 ImportedBook _fromPlain(String text, String title, String format, {required bool markdown}) {
   text = text.replaceAll('\r\n', '\n').replaceAll('\r', '\n');
+  text = _withoutGutenbergNotes(text);
+  if (!markdown) text = _withoutUnderscoreItalics(text);
   final blocks = text.split(RegExp(r'\n\s*\n'));
   // Text without blank lines: treat each line as a paragraph.
   final pieces = blocks.length < 3 ? text.split('\n') : blocks;
@@ -221,6 +249,11 @@ List<(String, String)> _htmlBlocks(dom.Element root) {
     if (n is! dom.Element) return;
     final tag = n.localName ?? '';
     if (_skipTags.contains(tag)) return;
+    // Project Gutenberg's notes and licence around the book.
+    if ({'pg-header', 'pg-footer', 'pg-machine-header', 'pg-start-separator', 'pg-end-separator'}.contains(n.id) ||
+        n.classes.contains('pg-boilerplate')) {
+      return;
+    }
     if (tag == 'br') {
       buf.write(' ');
       return;
@@ -304,7 +337,7 @@ ImportedBook _importDocx(List<int> bytes, String fallbackTitle) {
   var cur = ImportedChapter('', []);
   for (final para in doc.descendants.whereType<XmlElement>().where((e) => e.name.local == 'p' && e.name.prefix == 'w')) {
     final style = para.descendants.whereType<XmlElement>().where((e) => e.name.local == 'pStyle').firstOrNull?.getAttribute('w:val') ?? '';
-    final text = _clean(para.descendants.whereType<XmlElement>().where((e) => e.name.local == 't').map((e) => e.innerText).join());
+    final text = _clean(_docxText(para));
     if (text.isEmpty) continue;
     final heading = RegExp(r'^(Heading|Başlık|Title)', caseSensitive: false).hasMatch(style);
     if (heading && RegExp(r'(1|Title)$').hasMatch(style)) {
@@ -317,6 +350,53 @@ ImportedBook _importDocx(List<int> bytes, String fallbackTitle) {
   return _chunk(ImportedBook(fallbackTitle, null, 'docx', chapters));
 }
 
+/// Text of a Word paragraph. Tabs and line breaks inside it separate words
+/// ("Twinkle, twinkle, little star,<br>How I wonder").
+String _docxText(XmlElement para) {
+  final b = StringBuffer();
+  for (final e in para.descendants.whereType<XmlElement>()) {
+    if (e.name.prefix != 'w') continue;
+    switch (e.name.local) {
+      case 't':
+        b.write(e.innerText);
+      case 'tab' || 'br' || 'cr':
+        if (e.parentElement?.name.local == 'r') b.write(' ');
+      case 'noBreakHyphen':
+        b.write('-');
+    }
+  }
+  return b.toString();
+}
+
+/// Text of an OpenDocument paragraph: <text:s/> is a space, tabs and line
+/// breaks separate words, and a footnote's text is not part of the sentence.
+String _odtText(XmlNode n) {
+  final b = StringBuffer();
+  void walk(XmlNode n) {
+    if (n is XmlText || n is XmlCDATA) {
+      b.write(n.value);
+      return;
+    }
+    if (n is! XmlElement) return;
+    if (n.name.prefix == 'text') {
+      switch (n.name.local) {
+        case 's':
+          b.write(' ' * (int.tryParse(n.getAttribute('text:c') ?? '') ?? 1));
+          return;
+        case 'tab' || 'line-break':
+          b.write(' ');
+          return;
+        case 'note':
+          return;
+      }
+    }
+    n.children.forEach(walk);
+  }
+
+  walk(n);
+  return b.toString();
+}
+
 ImportedBook _importOdt(List<int> bytes, String fallbackTitle) {
   final arc = ZipDecoder().decodeBytes(bytes);
   final f = arc.files.where((f) => f.name == 'content.xml').firstOrNull;
@@ -325,7 +405,7 @@ ImportedBook _importOdt(List<int> bytes, String fallbackTitle) {
   final chapters = <ImportedChapter>[];
   var cur = ImportedChapter('', []);
   for (final e in doc.descendants.whereType<XmlElement>().where((e) => e.name.prefix == 'text' && (e.name.local == 'p' || e.name.local == 'h'))) {
-    final text = _clean(e.innerText);
+    final text = _clean(_odtText(e));
     if (text.isEmpty) continue;
     if (e.name.local == 'h') {
       if (e.getAttribute('text:outline-level') == '1' && cur.paragraphs.isNotEmpty) {
