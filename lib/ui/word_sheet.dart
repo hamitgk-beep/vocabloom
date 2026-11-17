@@ -17,6 +17,8 @@ import 'expr_sheet.dart';
 import 'panel.dart';
 import 'tap_text.dart';
 import 'sense_cards.dart';
+import 'context_sense_card.dart';
+import '../nlp/context_sense.dart';
 import '../l10n.dart';
 import 'paragraph_view.dart';
 import '../tts/speech.dart';
@@ -31,7 +33,17 @@ class WordContext {
   final List<String>? sentenceTr;
   final int? bookId;
   final String? bookTitle;
-  WordContext(this.sentence, this.sentenceTokens, this.indexInSentence, this.matches, this.sentenceTr, this.bookId, this.bookTitle);
+
+  /// Paragraph the sentence is in, and the sentences around it (context
+  /// meanings and the AI question use them).
+  final int? paraId;
+  final String? prevSentence;
+  final String? nextSentence;
+  WordContext(this.sentence, this.sentenceTokens, this.indexInSentence, this.matches, this.sentenceTr, this.bookId, this.bookTitle,
+      {this.paraId, this.prevSentence, this.nextSentence});
+
+  /// Id of the text for the meaning cache: book and paragraph.
+  String get contentId => 'b${bookId ?? 0}:p${paraId ?? 0}';
 }
 
 /// Builds the context for token [ti] of paragraph [para].
@@ -47,8 +59,10 @@ WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? 
   final idx = sentTokens.indexWhere((x) => x.start == t.start);
   final matches = a.matches.where((m) => m.tokens.contains(ti)).toList();
   final tr = app.user.paraTranslation(para.id);
+  String? at(int k) => k >= 0 && k < ranges.length ? para.text.substring(ranges[k].$1, ranges[k].$2).trim() : null;
   return WordContext(para.text.substring(r.$1, r.$2).trim(), sentTokens, idx < 0 ? 0 : idx, matches,
-      tr != null && sIdx < tr.length ? [tr[sIdx]] : null, bookId, bookTitle);
+      tr != null && sIdx < tr.length ? [tr[sIdx]] : null, bookId, bookTitle,
+      paraId: para.id, prevSentence: at(sIdx - 1), nextSentence: at(sIdx + 1));
 }
 
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
@@ -74,6 +88,10 @@ class _WordPanelState extends State<WordPanel> {
   WordInfo? surfaceInfo;
   String? corrected; // the dictionary word shown for a misspelt one
   Sense? best;
+
+  /// The meaning chosen for the book's sentence (null when opened from a list
+  /// or when the engine could not run).
+  ContextSense? sense;
   List<String> bookExamples = [];
   int tab = 0; // 0 = meaning, 1 = word family
 
@@ -130,6 +148,17 @@ class _WordPanelState extends State<WordPanel> {
     }
     final ctx = widget.ctx;
     if (ctx != null) best = app.dict.bestSense(info, ctx.sentenceTokens, ctx.indexInSentence);
+    if (ctx != null) {
+      sense = ContextSenseCard.resolve(app, ctx, lemma: lemma);
+      // The sense list below marks the meaning the card chose.
+      final id = sense?.best?.id;
+      if (sense?.shown == true && sense!.cat == null && id != null && id.startsWith('wn:')) {
+        final syn = int.tryParse(id.substring(3));
+        for (final s in [...info.senses, ...?surfaceInfo?.senses]) {
+          if (s.synId == syn) best = s;
+        }
+      }
+    }
     if (ctx?.bookId != null) {
       final forms = <String>{lemma, '${lemma}s', '${lemma}es', '${lemma}ed', '${lemma}d', '${lemma}ing', lower};
       if (lemma.endsWith('e')) forms.add('${lemma.substring(0, lemma.length - 1)}ing');
@@ -172,7 +201,17 @@ class _WordPanelState extends State<WordPanel> {
     return null;
   }
 
-  String? get _meaning => _trMain ?? best?.gloss;
+  /// Turkish of the meaning chosen for this sentence, when the card shows one
+  /// for this word itself (not for an expression it is part of).
+  String? get _ctxTr => sense != null && sense!.shown && sense!.cat == null && sense!.headword == lemma ? sense!.tr : null;
+
+  bool get _cardShown => sense?.shown == true;
+
+  /// The card names the sense used here (even one without Turkish), so the
+  /// first dictionary meaning is not put above it as if it were the answer.
+  bool get _cardSpeaks => _cardShown || (sense?.best != null && sense!.best!.tr.isEmpty);
+
+  String? get _meaning => _ctxTr ?? _trMain ?? best?.gloss;
 
   void _set(String key, WordStatus st) {
     widget.app.setWord(key, st,
@@ -229,9 +268,20 @@ class _WordPanelState extends State<WordPanel> {
           ]),
         ),
       if (verbForms != null) VerbFormsRow(forms: verbForms, tapped: surface),
+      if (ctx != null && sense != null)
+        ContextSenseCard(
+          key: ValueKey('ctx-${ctx.contentId}-${ctx.sentence.hashCode}-${ctx.indexInSentence}'),
+          app: app,
+          result: sense!,
+          ctx: ctx,
+          highlight: {
+            widget.surface.toLowerCase(),
+            if (sense!.cat != null) ...sense!.headword.split(' '),
+          },
+        ),
       if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: TapText(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
-      if (tr && _trMain == null) DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge),
-      if (tr && _trMain != null)
+      if (tr && _trMain == null && !_cardSpeaks) DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge),
+      if (tr && _trMain != null && !_cardSpeaks)
         Padding(
           padding: const EdgeInsets.only(top: 2),
           child: Row(children: [
@@ -304,7 +354,11 @@ class _WordPanelState extends State<WordPanel> {
     if (ctx != null) {
       children.add(_Section(L('Bu cümlede', 'In this sentence'), [
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(child: SentenceText(ctx.sentence, widget.surface)),
+          Expanded(
+              child: sense == null
+                  ? SentenceText(ctx.sentence, widget.surface)
+                  : Text(L('Cümlenin çevirisi ve içindeki kalıplar', 'Translation of the sentence and its expressions'),
+                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor))),
           if (Speech.supported) SpeakButton(ctx.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
         ]),
         if (ctx.sentenceTr == null && tr && DeviceTranslate.instance.ready(app.user))
@@ -317,7 +371,7 @@ class _WordPanelState extends State<WordPanel> {
           ]),
         ],
         for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
-        if (best != null && (en || (tr && _trMain != null && _trMain != _selfExprTr))) ...[
+        if (!_cardShown && best != null && (en || (tr && _trMain != null && _trMain != _selfExprTr))) ...[
           const SizedBox(height: 8),
           Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? L('Kelimenin tek başına anlamı:', 'Meaning of the word on its own:') : L('Bu cümledeki anlamı:', 'Meaning in this sentence:'),
               style: theme.textTheme.labelLarge),

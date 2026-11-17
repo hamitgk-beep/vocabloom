@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../app_state.dart';
 import '../l10n.dart';
@@ -86,6 +90,19 @@ class SettingsPage extends StatelessWidget {
                 subtitle: provider == null ? L('Bağlı değil · kendi anahtarınla çalışır', 'Not connected · works with your own key') : L('${provider.name} bağlı', '${provider.name} connected'),
                 onTap: () => _push(context, AiServicePage(app: app)),
               ),
+              Builder(builder: (context) {
+                final n = app.user.senseFeedbackCount();
+                return SettingsNavTile(
+                  key: const ValueKey('settings-sense-feedback'),
+                  icon: Icons.flag_outlined,
+                  color: const Color(0xFFDC2626),
+                  title: L('Anlam bildirimleri', 'Meaning reports'),
+                  subtitle: n == 0
+                      ? L('"Anlam yanlış" bildirimin yok', 'No "wrong meaning" reports')
+                      : L('$n bildirim · dışa aktar', '$n reports · export'),
+                  onTap: () => _exportSenseFeedback(context, app),
+                );
+              }),
             ]),
             SettingsGroup(title: L('Hakkında', 'About'), children: [
               SettingsNavTile(
@@ -107,6 +124,29 @@ class SettingsPage extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+/// Saves the "wrong meaning" reports as a TSV file (or copies them when the
+/// device has no save dialog), for improving the dictionary.
+Future<void> _exportSenseFeedback(BuildContext context, AppState app) async {
+  final m = ScaffoldMessenger.of(context);
+  if (app.user.senseFeedbackCount() == 0) {
+    m.showSnackBar(SnackBar(content: Text(L('Henüz "Anlam yanlış" bildirimi yok.', 'No "wrong meaning" reports yet.'))));
+    return;
+  }
+  final text = app.user.senseFeedbackTsv();
+  try {
+    final saved = await FilePicker.saveFile(
+      dialogTitle: L('Anlam bildirimlerini kaydet', 'Save the meaning reports'),
+      fileName: 'vocabloom-anlam-bildirimleri.tsv',
+      bytes: Uint8List.fromList(utf8.encode(text)),
+      mimeType: 'text/tab-separated-values',
+    );
+    if (saved != null) m.showSnackBar(SnackBar(content: Text(L('Bildirimler kaydedildi.', 'Reports saved.'))));
+  } catch (_) {
+    await Clipboard.setData(ClipboardData(text: text));
+    m.showSnackBar(SnackBar(content: Text(L('Dosya kaydedilemedi; bildirimler panoya kopyalandı.', 'Could not save a file; the reports were copied to the clipboard.'))));
   }
 }
 
