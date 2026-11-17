@@ -74,9 +74,24 @@ def _terms(item):
     return [x.strip() for x in re.split(r'[,;]', item) if x.strip()]
 
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'qa'))
+from audit_dict import FT_TAG, english_words  # noqa: E402  (same rules as the quality check)
+
+
 def _clean(t, word):
-    t = re.sub(r'^(ilg|zf|s|i|f|zam|bağ|ünl)\.\s*', '', t).strip()
+    """One Turkish meaning, or None when it is not one: labels such as
+    "(müzik)" or "(the ile)" are taken off; English fragments ("We sat on
+    the bench"), cross references ("bkz. have") and slang marks are dropped."""
+    t = re.sub(r'^(ilg|zf|s|i|f|zam|bağ|ünl|ç)\.\s*', '', t).strip()
+    if re.match(r'^(arg|kaba|bkz|bakınız)\b', t, re.I) or '(bkz' in t:
+        return None
+    t = FT_TAG.sub('', t)
+    t = re.sub(r'\((?:[a-z/ ]+|`[^)]*)\s+ile[^)]*\)', '', t)        # "(the ile)", "(for/to ile)"
+    t = re.sub(r'\([^)]*\.\.\.[^)]*\)', '', t)                     # "(both ...and ...)"
+    t = re.sub(r'\s+', ' ', t).strip(' ,;')
     if not t or t.lower() == word or len(t) > 60 or (t.isupper() and len(t) <= 6):
+        return None
+    if t.endswith('.') or english_words(t, extra={word} if len(word) > 3 else ()):
         return None
     return t
 
