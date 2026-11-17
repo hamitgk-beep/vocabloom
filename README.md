@@ -27,7 +27,7 @@ Geliştiren: Hamit Gök
   Koşul cümleleri (0, 1, 2, 3. tip, karışık, devrik), Relative clauses, Gerund / Infinitive, Comparative / Superlative,
   Reported speech, Edilgen (passive), Geçmiş modallar (should have done …), Used to / be used to, Causative
   (have something done, make someone do), Vurgu (devrik "Never have I …", "It was … who", "What I need is …"),
-  Tag questions. Renkli kelimeye dokununca yapının adı, bu cümledeki hali, kuralı ve ilgili Gramer konusuna bağlantı
+  Tag questions, Ortaçlar (Walking home, I …; Having finished, …; the man standing there; bored / boring). Renkli kelimeye dokununca yapının adı, bu cümledeki hali, kuralı ve ilgili Gramer konusuna bağlantı
   çıkar. Tespit çevrimdışı ve kurallarla yapılır (`lib/nlp/grammar_marks.dart`); emin olunmayan yer işaretlenmez
   (ör. "was tired" edilgen sayılmaz, "asked if" koşul sayılmaz). `test/grammar_marks_test.dart` doğru ve yanlış örnekleri denetler.
   Filtreler menüsü üç açılır gruptan oluşur: Kalıplar ve deyimler, Gramer yapıları, Kelime türleri.

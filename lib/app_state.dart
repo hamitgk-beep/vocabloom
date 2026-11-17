@@ -198,7 +198,7 @@ const grammarFilters = <CategoryInfo>[
     'Participles',
     'Ortaçlar (-ing / -ed)',
     Color(0xFF4E342E),
-    'Walking home, I …; Having finished, …; a letter written by him; the man standing there; bored / boring.',
+    'Fiilin -ing / -ed hali: Walking home, I … (eve yürürken), Having finished, … (bitirince), the man standing there (orada duran adam), bored / boring (sıkılmış / sıkıcı).',
     'Walking home, I …; Having finished, …; a letter written by him; the man standing there; bored / boring.',
   ),
 ];
