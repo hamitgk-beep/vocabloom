@@ -36,7 +36,7 @@ Map<String, String> get posNames => uiEnglish
 /// [WordInfo.trFreeDict]) come from Wiktionary and damdafayton/eng-tur-dictionary
 /// (tools/main_meanings.py); WordNet gives English senses and base forms.
 class DictDb {
-  static const _version = '20';
+  static const _version = '21';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -502,6 +502,58 @@ class DictDb {
   late final Map<String, int> _freq = {
     for (final r in db.select('SELECT word, n FROM wfreq')) r.columnAt(0) as String: r.columnAt(1) as int,
   };
+
+  /// Single words the dictionary has a meaning for (Turkish or WordNet).
+  late final Set<String> _headwords = {
+    for (final r in db.select("SELECT word FROM ft WHERE word NOT GLOB '* *'")) r.columnAt(0) as String,
+    for (final r in db.select("SELECT DISTINCT lemma FROM sense WHERE lemma NOT GLOB '* *'")) r.columnAt(0) as String,
+  };
+
+  static const _abc = 'abcdefghijklmnopqrstuvwxyz';
+
+  static Iterable<String> _edits1(String w) sync* {
+    for (var i = 0; i <= w.length; i++) {
+      final a = w.substring(0, i), b = w.substring(i);
+      if (b.isNotEmpty) yield a + b.substring(1); // delete
+      if (b.length > 1) yield a + b[1] + b[0] + b.substring(2); // swap
+      for (var k = 0; k < _abc.length; k++) {
+        final c = _abc[k];
+        if (b.isNotEmpty && c != b[0]) yield a + c + b.substring(1); // replace
+        yield a + c + b; // insert
+      }
+    }
+  }
+
+  /// The dictionary word a misspelt [word] most likely stands for
+  /// ("overwhelmn" → overwhelm), or null. One letter off for words of 4 to 6
+  /// letters, up to two for longer ones; the most common candidate wins.
+  String? closestWord(String word) {
+    final w = word.toLowerCase();
+    if (w.length < 4 || !RegExp(r"^[a-z]+$").hasMatch(w) || _headwords.contains(w) || _freq.containsKey(w)) {
+      return null; // a real word the dictionary lacks ("gonna") is not a typo
+    }
+    String? pick(Iterable<String> cands) {
+      String? best;
+      var bestN = -1;
+      for (final c in cands) {
+        if (c.length < 3 || !_headwords.contains(c)) continue;
+        final n = _freq[c] ?? 0;
+        if (n > bestN || (n == bestN && best != null && c.compareTo(best) < 0)) {
+          best = c;
+          bestN = n;
+        }
+      }
+      return best;
+    }
+
+    final one = _edits1(w).toSet();
+    final p1 = pick(one);
+    if (p1 != null || w.length < 7) return p1;
+    // Two letters off: only common words, so a long rare word is not taken
+    // for a different one.
+    final p2 = pick({for (final e in one) ..._edits1(e)});
+    return p2 != null && (_freq[p2] ?? 0) > 0 ? p2 : null;
+  }
 
   /// Turkish to English: English words whose Turkish meaning is [text] or
   /// starts with it, with the meaning that matched. Words whose meaning is

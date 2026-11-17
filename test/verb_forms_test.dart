@@ -47,6 +47,11 @@ void main() {
     expect(app.dict.irregular['find'], ['find', 'found', 'found']);
     expect(app.dict.irregularOf['found'], contains('find'));
     expect(app.dict.irregularOf['fell'], contains('fall'));
+    expect(app.dict.irregular['show'], ['show', 'showed', 'shown']);
+    expect(app.dict.irregularOf['stuck'], contains('stick'));
+    expect(app.dict.irregular['lie'], ['lie', 'lay', 'lain']);
+    // "lay" is a verb of its own too, so it is not taken for lie's past.
+    expect(app.dict.irregular.containsKey('lay'), isTrue);
   });
 
   testWidgets('tapped V2 form stays in the header and is bold in the row', (tester) async {
