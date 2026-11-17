@@ -1,0 +1,31 @@
+# -ed / -ing adjectives (bored / boring).
+X('participle_adjectives', [
+ ('Film çok sıkıcıydı, herkes sıkıldı.', ['The film was very boring, and everyone was bored.', 'The movie was very boring; everyone got bored.', 'The film was so boring that everyone was bored.'], 'Sıkıcı olan şey: boring. Sıkılan kişi: bored.', 'The thing: boring. The people who feel it: bored.'),
+ ('Tarihle çok ilgiliyim.', ['I am very interested in history.', "I'm really interested in history."], 'Hisseden kişi: interested (in).', 'The person who feels it: interested (in).'),
+ ('Bu kitap çok ilginç.', ['This book is very interesting.', 'This book is really interesting.'], 'İlgi uyandıran şey: interesting.', 'What causes the interest: interesting.'),
+ ('Uzun yolculuk çok yorucuydu; çok yorulduk.', ['The long journey was very tiring; we were very tired.', 'The long trip was really tiring, and we were very tired.'], 'tiring (yorucu) / tired (yorgun).', 'tiring (causes it) / tired (feels it).'),
+ ('Sonuçlar hayal kırıklığı yaratıcıydı.', ['The results were disappointing.', 'The results were very disappointing.'], 'Hissi veren şey: disappointing.', 'What causes the feeling: disappointing.'),
+ ('Sınav sonuçları yüzünden hayal kırıklığına uğradı.', ['She was disappointed with her exam results.', 'He was disappointed by his exam results.', 'She was disappointed about her exam results.'], 'Hisseden kişi: disappointed.', 'The person who feels it: disappointed.'),
+ ('Tatil için çok heyecanlıyız.', ['We are very excited about the holiday.', "We're really excited about the trip.", "We're very excited about our holiday."], 'excited about: heyecanlı.', 'excited about.'),
+ ('Bu talimatlar çok kafa karıştırıcı.', ['These instructions are very confusing.', 'These instructions are really confusing.'], 'Kafayı karıştıran şey: confusing.', 'What causes it: confusing.'),
+ ('Herkesin önünde düştüğüm için utandım.', ['I was embarrassed because I fell in front of everyone.', 'I felt embarrassed because I fell over in front of everybody.'], 'Utanan kişi: embarrassed.', 'The person who feels it: embarrassed.'),
+ ('Karanlıkta yalnız yürümek korkutucu.', ['Walking alone in the dark is frightening.', 'Walking alone in the dark is scary.'], 'Korku veren şey: frightening.', 'What causes the fear: frightening.'),
+ ('Çocuklar fırtınadan korkmuştu.', ['The children were frightened of the storm.', 'The children were frightened by the storm.', 'The kids were scared of the storm.'], 'Korkan kişi: frightened.', 'The people who feel it: frightened.'),
+ ('Haberi duyunca çok şaşırdım.', ['I was very surprised when I heard the news.', 'I was really surprised to hear the news.'], 'Şaşıran kişi: surprised.', 'The person who feels it: surprised.'), ('Bu ne şaşırtıcı bir sonuç!', ['What a surprising result!', 'What a surprising result this is!'], 'Şaşırtan şey: surprising.', 'What causes it: surprising.'),
+ ('Maçtan sonra çok yorgun ama mutluyduk.', ['We were very tired but happy after the match.', 'After the match we were very tired but happy.', 'We were really tired but happy after the game.'], 'Yorgun olan kişi: tired.', 'The people who feel it: tired.'),
+ ('Ben sıkıcı biri değilim, sadece sıkıldım.', ["I'm not boring, I'm just bored.", "I am not a boring person; I'm just bored.", "I'm not boring; I'm only bored."], 'I am boring = sıkıcı biriyim; I am bored = sıkıldım.', 'I am boring = I am a boring person; I am bored = I feel bored.'),
+ ('Annem sonuçtan çok memnun kaldı.', ['My mother was very pleased with the result.', 'My mum was very pleased with the result.', 'My mother was very satisfied with the result.'], 'Memnun olan kişi: pleased / satisfied.', 'The person who feels it: pleased / satisfied.'),
+])
+G('participle_adjectives', [
+ ('The lesson was so ___ (bore) that I fell asleep.', ['boring'], 'Ders o kadar sıkıcıydı ki uyuyakaldım.', 'Dersin kendisi: -ing.', 'The lesson causes it: -ing.'),
+ ("I'm ___ (bore). Let's go out.", ['bored'], 'Sıkıldım. Hadi dışarı çıkalım.', 'Hisseden kişi: -ed.', 'The person who feels it: -ed.'),
+ ('She is ___ (interest) in art.', ['interested'], 'Sanatla ilgileniyor.', 'interested in.', 'interested in.'),
+ ('That was an ___ (amaze) concert!', ['amazing'], 'Muhteşem bir konserdi!', 'Hissi veren şey: -ing.', 'What causes the feeling: -ing.'),
+ ('After the match, the players were very ___ (tire).', ['tired'], 'Maçtan sonra oyuncular çok yorgundu.', 'Hisseden kişi: -ed.', 'The people who feel it: -ed.'),
+ ('The news about the accident is very ___ (worry).', ['worrying'], 'Kazayla ilgili haber çok endişe verici.', 'Endişe veren şey: -ing.', 'What causes the worry: -ing.'),
+ ('Her parents are ___ (worry) about her.', ['worried'], 'Ailesi onun için endişeli.', 'Endişelenen kişi: -ed.', 'The people who feel it: -ed.'),
+ ('I felt ___ (embarrass) when I forgot his name.', ['embarrassed'], 'Adını unutunca utandım.', 'feel + -ed.', 'feel + -ed.'),
+ ('This map is really ___ (confuse).', ['confusing'], 'Bu harita gerçekten kafa karıştırıcı.', 'Kafa karıştıran şey: -ing.', 'What causes it: -ing.'),
+ ('We were ___ (excite) to meet the singer.', ['excited'], 'Şarkıcıyla tanışacağımız için heyecanlıydık.', 'Hisseden kişi: -ed.', 'The people who feel it: -ed.'), ('The ending of the film was really ___ (disappoint).', ['disappointing'], 'Filmin sonu gerçekten hayal kırıklığı yarattı.', 'Hissi veren şey: -ing.', 'What causes the feeling: -ing.'),
+ ('He looked ___ (surprise) when he saw us.', ['surprised'], 'Bizi görünce şaşırmış göründü.', 'look + -ed: hisseden kişi.', 'look + -ed: the person who feels it.'),
+])

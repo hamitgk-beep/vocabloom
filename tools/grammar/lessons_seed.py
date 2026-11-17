@@ -941,6 +941,17 @@ topic('participle_clauses', 'clauses', 'C1', 'Ortaç cümlecikleri (Having finis
  ('Çin\'de üretilen telefonlar dünyanın her yerine satılıyor.', ['Phones made in China are sold all over the world.', 'The phones produced in China are sold all around the world.'], 'İsim + V3: which are made → made.'),
 ])
 
+topic('participle_adjectives', 'forms', 'B1', '-ed / -ing sıfatları (bored / boring)', '-ed and -ing Adjectives (bored / boring)', '''
+**Aynı fiilden iki sıfat:** bore → bored / boring, interest → interested / interesting. Bunlar fiilin ortaç (participle) halleridir ama cümlede sıfat gibi kullanılır.
+- **-ed sıfatı = hisseden kişi:** I am bored. (Sıkıldım.) She was surprised. (Şaşırdı.)
+- **-ing sıfatı = o duyguyu veren şey ya da kişi:** The film is boring. (Film sıkıcı.) The news was surprising. (Haber şaşırtıcıydı.)
+- İkisi de isimden önce gelebilir: a bored student (sıkılmış bir öğrenci), a boring lesson (sıkıcı bir ders).
+- **Sık yapılan hata:** "I am boring" = "Ben sıkıcı biriyim" demektir. Sıkıldığını söylemek için "I am bored" denir.
+- Sık kullanılanlar: tired / tiring, interested / interesting, excited / exciting, worried / worrying, confused / confusing, embarrassed / embarrassing, frightened / frightening, disappointed / disappointing, amazed / amazing.
+''', ['Özne + be / feel / get + V-ed (hisseden)', 'Özne + be + V-ing (hissettiren)', 'a / the + V-ed / V-ing + isim'],
+[['I was bored because the lesson was boring.', 'Ders sıkıcı olduğu için sıkıldım.'], ['We were excited about the exciting news.', 'Heyecan verici haber yüzünden heyecanlıydık.']],
+[])
+
 topic('impersonal_passive', 'passive', 'C1', 'Kişisiz edilgen: It is said that…', 'Impersonal Passive (It is said that…)', '''
 **Söylenti, kanı ve haber dilinde kullanılır:** "… olduğu söyleniyor / düşünülüyor / sanılıyor".
 - **It + is/was + V3 + that + cümle:** It is said that he is very rich.
@@ -1043,6 +1054,7 @@ ORDER = [
     'ability', 'obligation', 'supposed_to', 'requests_permission', 'deduction', 'past_modals',
     'passive', 'impersonal_passive', 'reported_speech',
     'relative_clauses', 'noun_clauses', 'indirect_questions', 'time_clauses', 'adverb_clauses', 'participle_clauses',
+    'participle_adjectives',
     'irregular_verbs', 'gerund_infinitive', 'used_to', 'causative',
     'comparison', 'inversion', 'cleft_sentences', 'subjunctive', 'mixed_review',
 ]
@@ -1100,6 +1112,7 @@ ALIASES = {
     'used_to': ['used to', 'be used to', 'get used to'],
     'causative': ['causative', 'causatives', 'causative verbs', 'have something done', 'get something done', 'ettirgen'],
     'comparison': ['comparative', 'superlative', 'comparatives', 'superlatives', 'comparative-superlative', 'comparative superlative', 'karşılaştırma', 'üstünlük'],
+    'participle_adjectives': ['ed ing adjectives', '-ed -ing adjectives', 'bored boring', 'participle adjectives', 'participial adjectives', 'ed ing sıfatlar', '-ed / -ing sıfatları', 'sıfat fiil'],
     'participle_clauses': ['participle clause', 'participle clauses', 'participles', 'reduced relative clauses', 'ortaç', 'ortac', 'ortaç cümlecikleri'],
     'impersonal_passive': ['impersonal passive', 'it is said', 'it is said that', 'is said to', 'kişisiz edilgen'],
     'inverted_conditionals': ['inverted conditional', 'inverted conditionals', 'had i known', 'should you', 'devrik koşul'],
@@ -1171,7 +1184,7 @@ T.sort(key=lambda t: rank[t['id']])
 # CEFR level of each topic, following the public CEFR grammar inventories
 # (British Council / EAQUALS Core Inventory for General English). All
 # explanations, examples and sentences here are our own.
-LEVEL = {'simple_present': 'A1', 'present_continuous': 'A1', 'simple_past': 'A2', 'past_continuous': 'A2', 'present_perfect': 'A2', 'present_perfect_continuous': 'B1', 'past_perfect': 'B1', 'future': 'A2', 'future_continuous_perfect': 'B2', 'articles': 'A1', 'countable_uncountable': 'A2', 'quantifiers': 'A2', 'demonstratives': 'A1', 'possessives': 'A1', 'prepositions_time': 'A1', 'prepositions_place': 'A1', 'there_is': 'A1', 'adverbs_frequency': 'A1', 'too_enough': 'B1', 'so_neither': 'B1', 'question_tags': 'B1', 'because_so': 'A2', 'although_despite': 'B1', 'unless': 'B1', 'while_when': 'B1', 'transition_words': 'B2', 'zero_conditional': 'B1', 'first_conditional': 'B1', 'second_conditional': 'B1', 'third_conditional': 'B2', 'mixed_conditionals': 'C1', 'wish': 'B2', 'inverted_conditionals': 'C2', 'ability': 'A1', 'obligation': 'A2', 'supposed_to': 'B1', 'requests_permission': 'A2', 'deduction': 'B2', 'past_modals': 'B2', 'passive': 'B1', 'impersonal_passive': 'C1', 'reported_speech': 'B2', 'relative_clauses': 'B1', 'noun_clauses': 'B2', 'indirect_questions': 'B1', 'time_clauses': 'B1', 'adverb_clauses': 'B2', 'participle_clauses': 'C1', 'irregular_verbs': 'A2', 'gerund_infinitive': 'B1', 'used_to': 'B1', 'causative': 'B2', 'comparison': 'A2', 'inversion': 'C1', 'cleft_sentences': 'C1', 'subjunctive': 'C2', 'mixed_review': 'B1'}
+LEVEL = {'simple_present': 'A1', 'present_continuous': 'A1', 'simple_past': 'A2', 'past_continuous': 'A2', 'present_perfect': 'A2', 'present_perfect_continuous': 'B1', 'past_perfect': 'B1', 'future': 'A2', 'future_continuous_perfect': 'B2', 'articles': 'A1', 'countable_uncountable': 'A2', 'quantifiers': 'A2', 'demonstratives': 'A1', 'possessives': 'A1', 'prepositions_time': 'A1', 'prepositions_place': 'A1', 'there_is': 'A1', 'adverbs_frequency': 'A1', 'too_enough': 'B1', 'so_neither': 'B1', 'question_tags': 'B1', 'because_so': 'A2', 'although_despite': 'B1', 'unless': 'B1', 'while_when': 'B1', 'transition_words': 'B2', 'zero_conditional': 'B1', 'first_conditional': 'B1', 'second_conditional': 'B1', 'third_conditional': 'B2', 'mixed_conditionals': 'C1', 'wish': 'B2', 'inverted_conditionals': 'C2', 'ability': 'A1', 'obligation': 'A2', 'supposed_to': 'B1', 'requests_permission': 'A2', 'deduction': 'B2', 'past_modals': 'B2', 'passive': 'B1', 'impersonal_passive': 'C1', 'reported_speech': 'B2', 'relative_clauses': 'B1', 'noun_clauses': 'B2', 'indirect_questions': 'B1', 'time_clauses': 'B1', 'adverb_clauses': 'B2', 'participle_clauses': 'C1', 'participle_adjectives': 'B1', 'irregular_verbs': 'A2', 'gerund_infinitive': 'B1', 'used_to': 'B1', 'causative': 'B2', 'comparison': 'A2', 'inversion': 'C1', 'cleft_sentences': 'C1', 'subjunctive': 'C2', 'mixed_review': 'B1'}
 assert set(LEVEL) == set(rank), set(LEVEL) ^ set(rank)
 for t in T:
     t['aliases'] = ALIASES[t['id']]

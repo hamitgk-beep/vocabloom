@@ -719,6 +719,73 @@ what do you mean | ne demek istiyorsun
 I see | anlıyorum
 you're welcome | rica ederim
 thank goodness | çok şükür
+come to think of it | şimdi düşünüyorum da
+could you do me a favour | bana bir iyilik yapar mısın
+do you mind if | ... sakıncası var mı
+don't mention it | lafı bile olmaz, rica ederim
+excuse me | affedersiniz, pardon
+for ages | uzun zamandır, yıllardır
+good luck | iyi şanslar, bol şans
+have a nice day | iyi günler
+help yourself | buyurun, kendiniz alın
+here you are | buyurun, al
+here you go | buyurun, al
+how are you doing | nasılsın, nasıl gidiyor
+how do you do | memnun oldum (resmî tanışma)
+how's it going | nasıl gidiyor
+I can't believe it | inanamıyorum
+I couldn't agree more | sonuna kadar katılıyorum
+I didn't mean it | öyle demek istemedim
+I don't get it | anlamadım, kafam almıyor
+I don't mind | bana uyar, fark etmez
+I have no idea | hiçbir fikrim yok
+I hope so | umarım öyledir
+I mean it | ciddiyim
+I'm sorry to hear that | buna üzüldüm
+I'm not sure | emin değilim
+it doesn't matter | önemli değil, fark etmez
+it's a deal | anlaştık
+it's a pity | ne yazık, yazık
+it's not worth it | değmez
+it's no use | boşuna, faydası yok
+it's time to | ... zamanı geldi
+just a moment | bir dakika, bir saniye
+let's see | bakalım, dur bir bakalım
+no problem | sorun değil
+no doubt | hiç şüphesiz
+not bad | fena değil
+not yet | henüz değil
+nothing much | pek bir şey yok
+same here | ben de öyle
+see you soon | yakında görüşürüz
+sorry to bother you | rahatsız ettiğim için kusura bakmayın
+take your time | acele etme
+thanks a lot | çok teşekkürler
+that's a good idea | iyi fikir
+that's all right | önemli değil, sorun yok
+that's it | işte bu, bu kadar
+that's right | doğru, aynen öyle
+that's why | bu yüzden, işte bu yüzden
+the sooner the better | ne kadar erken o kadar iyi
+there you go | işte, al bakalım
+what a pity | ne yazık
+what a shame | ne yazık, ne ayıp
+what do you think | ne düşünüyorsun
+what's wrong | sorun ne, ne oldu
+why not | neden olmasın
+you never know | belli olmaz
+you're right | haklısın
+I'm looking forward to | ... iple çekiyorum, dört gözle bekliyorum
+mind your own business | kendi işine bak
+it takes time | zaman alır
+on my way | yoldayım, geliyorum
+if I were you | senin yerinde olsam
+what's more | üstelik, dahası
+not only that | sadece bu da değil
+that reminds me | aklıma geldi
+it's my fault | benim hatam
+it's on me | benden, ben ısmarlıyorum
+I'll be right back | hemen dönerim
 """
 
 BINOMIALS = """
