@@ -25,9 +25,12 @@ Geliştiren: Hamit Gök
   Seçilen her tür kitapta kendi rengiyle altı çizili görünür.
 - **Gramer filtreleri:** Zamanlar (her fiil zamanına göre renklenir: yeşil şimdiki/geniş, kahverengi geçmiş, mavi gelecek),
   Koşul cümleleri (0, 1, 2, 3. tip, karışık, devrik), Relative clauses, Gerund / Infinitive, Comparative / Superlative,
-  Reported speech. Renkli kelimeye dokununca yapının adı, bu cümledeki hali, kuralı ve ilgili Gramer konusuna bağlantı
+  Reported speech, Edilgen (passive), Geçmiş modallar (should have done …), Used to / be used to, Causative
+  (have something done, make someone do), Vurgu (devrik "Never have I …", "It was … who", "What I need is …"),
+  Tag questions. Renkli kelimeye dokununca yapının adı, bu cümledeki hali, kuralı ve ilgili Gramer konusuna bağlantı
   çıkar. Tespit çevrimdışı ve kurallarla yapılır (`lib/nlp/grammar_marks.dart`); emin olunmayan yer işaretlenmez
   (ör. "was tired" edilgen sayılmaz, "asked if" koşul sayılmaz). `test/grammar_marks_test.dart` doğru ve yanlış örnekleri denetler.
+  Filtreler menüsü üç açılır gruptan oluşur: Kalıplar ve deyimler, Gramer yapıları, Kelime türleri.
 - **Sözlük sekmesi:** yalnızca kelimeler. Yazdıkça eşleşen kelimeler Türkçe anlamlarıyla listelenir, dokununca
   okuyucudaki kelime paneli açılır; son bakılan kelimeler saklanır.
 - **Gramer:** 68 konu, A1–C2. Filtrelerdeki 12 ifade türünün (phrasal verb, deyim, eşdizim, bağlaç …) her biri

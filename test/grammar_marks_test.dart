@@ -62,7 +62,7 @@ void main() {
     });
 
     test('passive', () {
-      final p = app.grammar.mark('The palace was built in a single night.', tokenize('The palace was built in a single night.'));
+      final p = app.grammar.mark('The palace was built in a single night.', tokenize('The palace was built in a single night.')).where((m) => m.cat == 'g_tenses');
       expect(p.single.key, 'simple_past');
       expect(p.single.en, 'Simple Past (Passive)');
       expect(p.single.lessons, contains('passive'));
@@ -232,6 +232,79 @@ void main() {
     });
   });
 
+  group('passive, past modals, used to', () {
+    test('passive', () {
+      expectMarks('The palace was built in a single night.', 'g_passive', ['passive: was built']);
+      expectMarks('The thief was caught by the police.', 'g_passive', ['passive: was caught']);
+      expectMarks('The lamp can be found in the garden.', 'g_passive', ['passive: can be found']);
+      expectMarks('She was tired.', 'g_passive', [], not: ['passive']);
+      expectMarks('They are married.', 'g_passive', [], not: ['passive']);
+      final m = app.grammar.mark('The thief was caught by the police.', tokenize('The thief was caught by the police.')).firstWhere((m) => m.cat == 'g_passive');
+      expect(m.note?.$2, contains('by the police'));
+    });
+
+    test('past modals', () {
+      expectMarks('You should have told me.', 'g_past_modals', ['past_modal: should have told']);
+      expectMarks('He must have left early.', 'g_past_modals', ['past_modal: must have left']);
+      expectMarks("She can't have seen us.", 'g_past_modals', ["past_modal: can't have seen"]);
+      expectMarks('They might have missed the train.', 'g_past_modals', ['past_modal: might have missed']);
+      expectMarks('You should tell me.', 'g_past_modals', [], not: ['past_modal']);
+    });
+
+    test('used to / be used to', () {
+      expectMarks('He used to play football.', 'g_used_to', ['used_to: used to play']);
+      expectMarks('She is used to working at night.', 'g_used_to', ['be_used_to: is used to working']);
+      expectMarks('I got used to the cold.', 'g_used_to', ['be_used_to: got used to']);
+      expectMarks('This knife is used to cut bread.', 'g_used_to', ['used_for: is used to cut']);
+      expectMarks('I used the money to buy a coat.', 'g_used_to', [], not: ['used']);
+    });
+  });
+
+  group('causative, emphasis, tags, condition words', () {
+    test('causative', () {
+      expectMarks('I had my hair cut yesterday.', 'g_causative', ['causative_pp: had cut']);
+      expectMarks('She got the car repaired.', 'g_causative', ['causative_pp: got repaired']);
+      expectMarks('The film made him cry.', 'g_causative', ['causative_base: made him cry']);
+      expectMarks('He made her dinner.', 'g_causative', [], not: ['causative']);
+      expectMarks('She is used to pain.', 'g_used_to', [], not: ['used_for']);
+      expectMarks('He got his friend to help.', 'g_causative', [], not: ['causative_pp']);
+      expectMarks('I got him to help me.', 'g_causative', ['causative_get: got him to help']);
+      expectMarks('I had a broken leg.', 'g_causative', [], not: ['causative']);
+      expectMarks('Have you finished your work?', 'g_causative', [], not: ['causative']);
+      expectMarks('She had a cup of tea.', 'g_causative', [], not: ['causative']);
+      expectMarks('He made a cake for her.', 'g_causative', [], not: ['causative']);
+      expectMarks('They have the money.', 'g_causative', [], not: ['causative']);
+    });
+
+    test('inversion and cleft', () {
+      expectMarks('Never have I seen such a thing.', 'g_emphasis', ['inversion: Never have']);
+      expectMarks('Not only did he lie, but he also stole.', 'g_emphasis', ['inversion: Not only did']);
+      expectMarks('Little did she know what was coming.', 'g_emphasis', ['inversion: Little did']);
+      expectMarks('Never mind.', 'g_emphasis', [], not: ['inversion']);
+      expectMarks('Hardly anyone came to the party.', 'g_emphasis', [], not: ['inversion']);
+      expectMarks('It was John who called.', 'g_emphasis', ['cleft: It was who']);
+      expectMarks('It was in Paris that they met.', 'g_emphasis', ['cleft: It was that']);
+      expectMarks('It was clear that he had left.', 'g_emphasis', [], not: ['cleft']);
+      expectMarks('It was the best book that I have read.', 'g_emphasis', [], not: ['cleft']);
+      expectMarks('What I need is a holiday.', 'g_emphasis', ['pseudo_cleft: What is']);
+      expectMarks('What is your name?', 'g_emphasis', [], not: ['pseudo_cleft']);
+    });
+
+    test('question tags', () {
+      expectMarks("She is late, isn't she?", 'g_tags', ["tag: isn't she"]);
+      expectMarks("You didn't see him, did you?", 'g_tags', ['tag: did you']);
+      expectMarks('Did you see him?', 'g_tags', [], not: ['tag']);
+      expectMarks('Where is he?', 'g_tags', [], not: ['tag']);
+    });
+
+    test('other condition words', () {
+      expectMarks('You can go, provided that you come back early.', 'g_conditionals', ['cond_1: can go provided that come']);
+      expectMarks('As long as you work hard, you will pass.', 'g_conditionals', ['cond_1: As long as work will pass']);
+      expectMarks('The river is as long as the road.', 'g_conditionals', [], not: ['cond']);
+      expectMarks('He provided the food.', 'g_conditionals', [], not: ['cond']);
+    });
+  });
+
   test('every lesson link exists in the grammar topics', () {
     final topics = File('assets/grammar/lessons.json').readAsStringSync();
     const text =
@@ -239,7 +312,7 @@ void main() {
         'I enjoy reading and want to learn. It is bigger than mine. If it rains, we will stay. If I were you, I would go. '
         'She has been waiting. He will have left. The house was built. I had left before they came.';
     final all = app.grammar.mark(text, tokenize(text));
-    expect(all.map((m) => m.cat).toSet().length, 6);
+    expect(all.map((m) => m.cat).toSet().length, greaterThanOrEqualTo(6));
     for (final m in all) {
       for (final l in m.lessons) {
         expect(topics, contains('"id": "$l"'), reason: l);

@@ -142,32 +142,39 @@ class _ReaderPageState extends State<ReaderPage> {
         top: false,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: Row(children: [
-            const SizedBox(width: 6),
-            Icon(Icons.headphones_rounded, size: 20, color: theme.colorScheme.primary),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(s.voice.name, style: theme.textTheme.titleSmall, overflow: TextOverflow.ellipsis),
-            ),
-            IconButton(tooltip: L('Önceki cümle', 'Previous sentence'), onPressed: () => reader.skip(-1), icon: const Icon(Icons.skip_previous_rounded)),
-            IconButton.filled(
-              tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
-              onPressed: reader.toggle,
-              icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
-            ),
-            IconButton(tooltip: L('Sonraki cümle', 'Next sentence'), onPressed: () => reader.skip(1), icon: const Icon(Icons.skip_next_rounded)),
-            PopupMenuButton<double>(
-              tooltip: L('Hız', 'Speed'),
-              initialValue: s.speed,
-              onSelected: (v) {
-                s.speed = v;
-                reader.skip(0);
-              },
-              itemBuilder: (_) => [for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×'))],
-              child: Padding(padding: const EdgeInsets.symmetric(horizontal: 8), child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 0 : 2)}×', style: theme.textTheme.labelLarge)),
-            ),
-            IconButton(tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'), onPressed: reader.stop, icon: const Icon(Icons.close_rounded)),
-          ]),
+          child: Row(
+            children: [
+              const SizedBox(width: 6),
+              Icon(Icons.headphones_rounded, size: 20, color: theme.colorScheme.primary),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(s.voice.name, style: theme.textTheme.titleSmall, overflow: TextOverflow.ellipsis),
+              ),
+              IconButton(tooltip: L('Önceki cümle', 'Previous sentence'), onPressed: () => reader.skip(-1), icon: const Icon(Icons.skip_previous_rounded)),
+              IconButton.filled(
+                tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
+                onPressed: reader.toggle,
+                icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
+              ),
+              IconButton(tooltip: L('Sonraki cümle', 'Next sentence'), onPressed: () => reader.skip(1), icon: const Icon(Icons.skip_next_rounded)),
+              PopupMenuButton<double>(
+                tooltip: L('Hız', 'Speed'),
+                initialValue: s.speed,
+                onSelected: (v) {
+                  s.speed = v;
+                  reader.skip(0);
+                },
+                itemBuilder: (_) => [
+                  for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
+                ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 0 : 2)}×', style: theme.textTheme.labelLarge),
+                ),
+              ),
+              IconButton(tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'), onPressed: reader.stop, icon: const Icon(Icons.close_rounded)),
+            ],
+          ),
         ),
       ),
     );
@@ -187,8 +194,7 @@ class _ReaderPageState extends State<ReaderPage> {
     if (!mounted) return;
     final ctx = buildContext(app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
     // A tap anywhere on an underlined multi-word expression opens the whole expression.
-    final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()
-      ..sort((x, y) => y.tokens.length.compareTo(x.tokens.length));
+    final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()..sort((x, y) => y.tokens.length.compareTo(x.tokens.length));
     if (shown.isNotEmpty) {
       final m = shown.first;
       await showExprSheet(context, app, m.expr, ctx, [for (final t in m.tokens) a.tokens[t].text]);
@@ -214,245 +220,324 @@ class _ReaderPageState extends State<ReaderPage> {
     return Theme(
       data: readerTheme(app, theme),
       child: Scaffold(
-      key: _scaffold,
-      backgroundColor: paper,
-      appBar: AppBar(
+        key: _scaffold,
         backgroundColor: paper,
-        leading: const BackButton(),
-        titleSpacing: 0,
-        title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(widget.book.title, style: theme.textTheme.titleMedium, overflow: TextOverflow.ellipsis),
-          Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}',
-              style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
-        ]),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(3),
-          child: LinearProgressIndicator(
-            value: (chapter + 1) / chapters.length,
-            minHeight: 3,
-            borderRadius: BorderRadius.zero,
-            backgroundColor: theme.colorScheme.outlineVariant.withValues(alpha: 0.6),
+        appBar: AppBar(
+          backgroundColor: paper,
+          leading: const BackButton(),
+          titleSpacing: 0,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.book.title, style: theme.textTheme.titleMedium, overflow: TextOverflow.ellipsis),
+              Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+            ],
           ),
-        ),
-        actions: [
-          if (Speech.supported)
-            IconButton(
-              tooltip: reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud'),
-              icon: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
-              onPressed: _toggleReadAloud,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(3),
+            child: LinearProgressIndicator(
+              value: (chapter + 1) / chapters.length,
+              minHeight: 3,
+              borderRadius: BorderRadius.zero,
+              backgroundColor: theme.colorScheme.outlineVariant.withValues(alpha: 0.6),
             ),
-          IconButton(
-            tooltip: L('Okuma görünümü', 'Reading view'),
-            icon: const Icon(Icons.text_fields_rounded),
-            onPressed: () => showReadingSheet(context, app),
           ),
-          IconButton(
-            tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'),
-            icon: const Icon(Icons.copy_all_rounded),
-            onPressed: _copyChapter,
-          ),
-          IconButton(
-            tooltip: L('Bölümler', 'Chapters'),
-            icon: const Icon(Icons.list),
-            onPressed: () => _scaffold.currentState!.openDrawer(),
-          ),
-          if (!wide)
-            IconButton(
-              tooltip: L('Filtreler', 'Filters'),
-              icon: Badge(
-                isLabelVisible: app.enabledCats.isNotEmpty,
-                label: Text('${app.enabledCats.length}'),
-                child: const Icon(Icons.filter_alt_outlined),
+          actions: [
+            if (Speech.supported)
+              IconButton(
+                tooltip: reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud'),
+                icon: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
+                onPressed: _toggleReadAloud,
               ),
-              onPressed: () => _scaffold.currentState!.openEndDrawer(),
-            ),
-        ],
-      ),
-      drawer: Drawer(
-        child: SafeArea(
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-              child: Row(children: [
-                BookCover(title: widget.book.title, format: widget.book.format, width: 44),
-                const SizedBox(width: 14),
+            IconButton(tooltip: L('Okuma görünümü', 'Reading view'), icon: const Icon(Icons.text_fields_rounded), onPressed: () => showReadingSheet(context, app)),
+            IconButton(tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'), icon: const Icon(Icons.copy_all_rounded), onPressed: _copyChapter),
+            IconButton(tooltip: L('Bölümler', 'Chapters'), icon: const Icon(Icons.list), onPressed: () => _scaffold.currentState!.openDrawer()),
+            if (!wide)
+              IconButton(
+                tooltip: L('Filtreler', 'Filters'),
+                icon: Badge(isLabelVisible: app.enabledCats.isNotEmpty, label: Text('${app.enabledCats.length}'), child: const Icon(Icons.filter_alt_outlined)),
+                onPressed: () => _scaffold.currentState!.openEndDrawer(),
+              ),
+          ],
+        ),
+        drawer: Drawer(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+                  child: Row(
+                    children: [
+                      BookCover(title: widget.book.title, format: widget.book.format, width: 44),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.book.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleMedium),
+                            Text(L('${chapters.length} bölüm', '${chapters.length} chapters'), style: theme.textTheme.bodySmall),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
                 Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(widget.book.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleMedium),
-                    Text(L('${chapters.length} bölüm', '${chapters.length} chapters'), style: theme.textTheme.bodySmall),
-                  ]),
-                ),
-              ]),
-            ),
-            const Divider(),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                itemCount: chapters.length,
-                itemBuilder: (c, i) => ListTile(
-                  selected: i == chapter,
-                  selectedTileColor: theme.colorScheme.primaryContainer,
-                  leading: Text('${i + 1}'.padLeft(2, '0'),
-                      style: theme.textTheme.labelLarge?.copyWith(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    itemCount: chapters.length,
+                    itemBuilder: (c, i) => ListTile(
+                      selected: i == chapter,
+                      selectedTileColor: theme.colorScheme.primaryContainer,
+                      leading: Text(
+                        '${i + 1}'.padLeft(2, '0'),
+                        style: theme.textTheme.labelLarge?.copyWith(
                           color: i == chapter ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
-                          fontFeatures: const [FontFeature.tabularFigures()])),
-                  minLeadingWidth: 24,
-                  title: Text(chapterName(chapters[i].title), maxLines: 2, overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyLarge?.copyWith(fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500,
-                          color: i == chapter ? theme.colorScheme.primary : null)),
-                  onTap: () {
-                    Navigator.pop(c);
-                    _go(i);
-                  },
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
+                      ),
+                      minLeadingWidth: 24,
+                      title: Text(
+                        chapterName(chapters[i].title),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodyLarge?.copyWith(fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500, color: i == chapter ? theme.colorScheme.primary : null),
+                      ),
+                      onTap: () {
+                        Navigator.pop(c);
+                        _go(i);
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ]),
-        ),
-      ),
-      bottomNavigationBar: reader.active ? _speechBar(theme) : null,
-      endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
-      body: Row(children: [
-        Expanded(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 760),
-              child: ListView.builder(
-                controller: scroll,
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
-                itemCount: paras.length + 2,
-                itemBuilder: (c, i) {
-                  if (i == 0) {
-                    return ch.summary == null || !app.showTr
-                        ? const SizedBox.shrink()
-                        : Container(
-                            margin: const EdgeInsets.only(bottom: 20),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Row(children: [
-                                Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
-                                const SizedBox(width: 6),
-                                Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'),
-                                    style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-                              ]),
-                              const SizedBox(height: 6),
-                              Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
-                            ]),
-                          );
-                  }
-                  if (i == paras.length + 1) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 28),
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        OutlinedButton.icon(
-                          onPressed: chapter > 0 ? () => _go(chapter - 1) : null,
-                          icon: const Icon(Icons.chevron_left),
-                          label: Text(L('Önceki', 'Previous')),
-                        ),
-                        FilledButton.icon(
-                          onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
-                          icon: const Icon(Icons.chevron_right),
-                          label: Text(L('Sonraki bölüm', 'Next chapter')),
-                        ),
-                      ]),
-                    );
-                  }
-                  final p = paras[i - 1];
-                  return KeyedSubtree(
-                    key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
-                    child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
-                  );
-                },
-              ),
+              ],
             ),
           ),
         ),
-        if (wide) ...[
-          const VerticalDivider(width: 1),
-          SizedBox(width: 320, child: ColoredBox(color: theme.colorScheme.surface, child: filters)),
-        ],
-      ]),
+        bottomNavigationBar: reader.active ? _speechBar(theme) : null,
+        endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
+        body: Row(
+          children: [
+            Expanded(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 760),
+                  child: ListView.builder(
+                    controller: scroll,
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
+                    itemCount: paras.length + 2,
+                    itemBuilder: (c, i) {
+                      if (i == 0) {
+                        return ch.summary == null || !app.showTr
+                            ? const SizedBox.shrink()
+                            : Container(
+                                margin: const EdgeInsets.only(bottom: 20),
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
+                                        const SizedBox(width: 6),
+                                        Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
+                                  ],
+                                ),
+                              );
+                      }
+                      if (i == paras.length + 1) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 28),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              OutlinedButton.icon(onPressed: chapter > 0 ? () => _go(chapter - 1) : null, icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
+                              FilledButton.icon(
+                                onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
+                                icon: const Icon(Icons.chevron_right),
+                                label: Text(L('Sonraki bölüm', 'Next chapter')),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      final p = paras[i - 1];
+                      return KeyedSubtree(
+                        key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
+                        child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            if (wide) ...[
+              const VerticalDivider(width: 1),
+              SizedBox(
+                width: 320,
+                child: ColoredBox(color: theme.colorScheme.surface, child: filters),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class FilterPanel extends StatelessWidget {
+class FilterPanel extends StatefulWidget {
   final AppState app;
   const FilterPanel({super.key, required this.app});
+
+  @override
+  State<FilterPanel> createState() => _FilterPanelState();
+}
+
+class _FilterPanelState extends State<FilterPanel> {
+  AppState get app => widget.app;
+
+  /// Open groups: those with a filter on, or the first one when nothing is on.
+  late final Set<int> _open = {
+    for (var g = 0; g < filterGroups.length; g++)
+      if (filterGroups[g].$3.any(app.enabledCats.contains)) g,
+  }..addAll(app.enabledCats.isEmpty ? const {0} : const <int>{});
+
+  Widget _group(ThemeData theme, int g) {
+    final (tr, en, ids) = filterGroups[g];
+    final on = ids.where(app.enabledCats.contains).length;
+    final open = _open.contains(g);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        InkWell(
+          key: ValueKey('filter-group-$g'),
+          onTap: () => setState(() => open ? _open.remove(g) : _open.add(g)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(L(tr, en), style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                ),
+                if (on > 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(10)),
+                    child: Text('$on / ${ids.length}', style: theme.textTheme.labelSmall),
+                  ),
+                Icon(open ? Icons.expand_less_rounded : Icons.expand_more_rounded),
+              ],
+            ),
+          ),
+        ),
+        if (open) ...[
+          if (g == 1) Text(L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'), style: theme.textTheme.bodySmall),
+          Row(
+            children: [
+              TextButton(onPressed: () => app.setCats(ids, true), child: Text(L('Bu grubun tümü', 'All in this group'))),
+              TextButton(onPressed: () => app.setCats(ids, false), child: Text(L('Hiçbiri', 'None'))),
+            ],
+          ),
+          for (final id in ids) ...[_tile(theme, categoryById[id]!), if (id == 'g_tenses' && app.enabledCats.contains(id)) _tenseLegend(theme)],
+        ],
+        const Divider(height: 1),
+      ],
+    );
+  }
+
+  Widget _tenseLegend(ThemeData theme) => Padding(
+    padding: const EdgeInsets.only(left: 40, bottom: 6),
+    child: Wrap(
+      spacing: 12,
+      runSpacing: 4,
+      children: [
+        for (final (i, t) in [L('şimdiki / geniş', 'present'), L('geçmiş', 'past'), L('gelecek', 'future')].indexed)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(color: _shade(theme, tenseToneColors[i]), shape: BoxShape.circle),
+              ),
+              const SizedBox(width: 4),
+              Text(
+                t,
+                style: theme.textTheme.bodySmall?.copyWith(color: _shade(theme, tenseToneColors[i]), fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListenableBuilder(
       listenable: app,
-      builder: (context, _) => ListView(padding: const EdgeInsets.fromLTRB(16, 16, 12, 16), children: [
-        Row(children: [
-          Expanded(child: Text(L('Filtreler', 'Filters'), style: theme.textTheme.titleLarge?.copyWith(fontSize: 19))),
-          TextButton(onPressed: () => app.setAllCats(true), child: Text(L('Tümü', 'All'))),
-          TextButton(onPressed: () => app.setAllCats(false), child: Text(L('Hiçbiri', 'None'))),
-        ]),
-        Text(L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'), style: theme.textTheme.bodySmall),
-        const SizedBox(height: 8),
-        for (final c in categories) _tile(theme, c),
-        const Divider(),
-        Text(L('Gramer yapıları', 'Grammar structures'), style: theme.textTheme.titleSmall),
-        Text(L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'), style: theme.textTheme.bodySmall),
-        const SizedBox(height: 4),
-        for (final c in grammarFilters) ...[
-          _tile(theme, c),
-          if (c.id == 'g_tenses' && app.enabledCats.contains(c.id))
-            Padding(
-              padding: const EdgeInsets.only(left: 40, bottom: 6),
-              child: Wrap(spacing: 12, runSpacing: 4, children: [
-                for (final (i, t) in [L('şimdiki / geniş', 'present'), L('geçmiş', 'past'), L('gelecek', 'future')].indexed)
-                  Row(mainAxisSize: MainAxisSize.min, children: [
-                    Container(width: 10, height: 10, decoration: BoxDecoration(color: _shade(theme, tenseToneColors[i]), shape: BoxShape.circle)),
-                    const SizedBox(width: 4),
-                    Text(t, style: theme.textTheme.bodySmall?.copyWith(color: _shade(theme, tenseToneColors[i]), fontWeight: FontWeight.w600)),
-                  ]),
-              ]),
-            ),
+      builder: (context, _) => ListView(
+        padding: const EdgeInsets.fromLTRB(16, 16, 12, 16),
+        children: [
+          Row(
+            children: [
+              Expanded(child: Text(L('Filtreler', 'Filters'), style: theme.textTheme.titleLarge?.copyWith(fontSize: 19))),
+              TextButton(onPressed: () => app.setAllCats(true), child: Text(L('Tümü', 'All'))),
+              TextButton(onPressed: () => app.setAllCats(false), child: Text(L('Hiçbiri', 'None'))),
+            ],
+          ),
+          Text(L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'), style: theme.textTheme.bodySmall),
+          const SizedBox(height: 4),
+          for (var g = 0; g < filterGroups.length; g++) _group(theme, g),
+          const SizedBox(height: 8),
+          Text(L('Kelime renkleri', 'Word colors'), style: theme.textTheme.titleSmall),
+          const SizedBox(height: 6),
+          _legend(learningColor, L('Öğreneceğim listesindeki kelimeler', 'Words on your To learn list')),
+          _legend(learnedColor, L('Öğrendim dediğin kelimeler', 'Words you marked as Learned')),
+          const SizedBox(height: 10),
+          Text(L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'), style: theme.textTheme.bodySmall),
         ],
-        const Divider(),
-        Text(L('Kelime renkleri', 'Word colors'), style: theme.textTheme.titleSmall),
-        const SizedBox(height: 6),
-        _legend(learningColor, L('Öğreneceğim listesindeki kelimeler', 'Words on your To learn list')),
-        _legend(learnedColor, L('Öğrendim dediğin kelimeler', 'Words you marked as Learned')),
-        const SizedBox(height: 10),
-        Text(L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'), style: theme.textTheme.bodySmall),
-      ]),
+      ),
     );
   }
 
   Color _shade(ThemeData theme, Color c) => theme.brightness == Brightness.dark ? Color.lerp(c, Colors.white, 0.35)! : c;
 
   Widget _tile(ThemeData theme, CategoryInfo c) => CheckboxListTile(
-        key: ValueKey('filter-${c.id}'),
-        dense: true,
-        contentPadding: EdgeInsets.zero,
-        value: app.enabledCats.contains(c.id),
-        onChanged: (_) => app.toggleCat(c.id),
-        secondary: Container(width: 14, height: 14, decoration: BoxDecoration(color: c.color, shape: BoxShape.circle)),
-        title: Text(uiEnglish ? c.name : c.tr, style: TextStyle(color: _shade(theme, c.color), fontWeight: FontWeight.w600)),
-        // The English name of the type is worth learning, so the Turkish
-        // interface shows it after the description.
-        subtitle: Text(uiEnglish ? c.desc : '${c.desc} (${c.name})'),
-      );
+    key: ValueKey('filter-${c.id}'),
+    dense: true,
+    contentPadding: EdgeInsets.zero,
+    value: app.enabledCats.contains(c.id),
+    onChanged: (_) => app.toggleCat(c.id),
+    secondary: Container(
+      width: 14,
+      height: 14,
+      decoration: BoxDecoration(color: c.color, shape: BoxShape.circle),
+    ),
+    title: Text(
+      uiEnglish ? c.name : c.tr,
+      style: TextStyle(color: _shade(theme, c.color), fontWeight: FontWeight.w600),
+    ),
+    // The English name of the type is worth learning, so the Turkish
+    // interface shows it after the description.
+    subtitle: Text(uiEnglish ? c.desc : '${c.desc} (${c.name})'),
+  );
 
   Widget _legend(Color c, String t) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 3),
-        child: Row(children: [
-          Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              color: c.withValues(alpha: 0.38),
-              child: Text(L('kelime', 'words'))),
-          const SizedBox(width: 8),
-          Expanded(child: Text(t)),
-        ]),
-      );
+    padding: const EdgeInsets.symmetric(vertical: 3),
+    child: Row(
+      children: [
+        Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), color: c.withValues(alpha: 0.38), child: Text(L('kelime', 'words'))),
+        const SizedBox(width: 8),
+        Expanded(child: Text(t)),
+      ],
+    ),
+  );
 }

@@ -45,7 +45,7 @@ class ParaAnalysis {
     final order = _catOrder;
     return [
       for (final m in grammar(app))
-        if (app.enabledCats.contains(m.cat) && m.tokens.contains(i)) m
+        if (app.enabledCats.contains(m.cat) && m.tokens.contains(i)) m,
     ]..sort((a, b) => order[a.cat]!.compareTo(order[b.cat]!));
   }
 }
@@ -148,7 +148,11 @@ class _ParagraphViewState extends State<ParagraphView> {
     // A picture caption from a PDF: shown apart from the story text.
     final caption = widget.para.kind == 'c';
     final base = theme.textTheme.bodyLarge!.copyWith(
-      fontSize: heading ? app.fontSize * 1.3 : caption ? app.fontSize * 0.88 : app.fontSize,
+      fontSize: heading
+          ? app.fontSize * 1.3
+          : caption
+          ? app.fontSize * 0.88
+          : app.fontSize,
       height: app.lineHeight,
       fontWeight: heading ? FontWeight.w700 : FontWeight.w400,
       fontStyle: caption ? FontStyle.italic : null,
@@ -201,35 +205,34 @@ class _ParagraphViewState extends State<ParagraphView> {
         // underline the gap inside a multi-word expression (or one grammar structure) too
         final same = i > 0 && catOf[i] != null && catOf[i] == catOf[i - 1] && markOf[i] == markOf[i - 1];
         final gc = same ? colorAt(i) : null;
-        spans.add(TextSpan(
-          text: text.substring(pos, t.start),
-          style: TextStyle(
-            decoration: gc == null ? null : TextDecoration.underline,
-            decorationColor: gc,
-            decorationThickness: 2.2,
-            backgroundColor: inSpeech(pos, t.start) ? speakBg : null,
+        spans.add(
+          TextSpan(
+            text: text.substring(pos, t.start),
+            style: TextStyle(decoration: gc == null ? null : TextDecoration.underline, decorationColor: gc, decorationThickness: 2.2, backgroundColor: inSpeech(pos, t.start) ? speakBg : null),
           ),
-        ));
+        );
       }
       var st = app.statusOf(t);
       if (st == WordStatus.none) st = phraseStatus[i];
       final cat = catOf[i];
       final cc = cat == null ? null : colorAt(i);
-      spans.add(TextSpan(
-        text: t.text,
-        style: TextStyle(
-          backgroundColor: switch (st) {
-            WordStatus.learning => learningColor.withValues(alpha: 0.38),
-            WordStatus.learned => learnedColor.withValues(alpha: 0.32),
-            _ => inSpeech(t.start, t.end) ? speakBg : null,
-          },
-          color: cc,
-          decoration: cc == null ? null : TextDecoration.underline,
-          decorationColor: cc,
-          decorationThickness: 2.2,
-          fontWeight: cc == null ? null : FontWeight.w600,
+      spans.add(
+        TextSpan(
+          text: t.text,
+          style: TextStyle(
+            backgroundColor: switch (st) {
+              WordStatus.learning => learningColor.withValues(alpha: 0.38),
+              WordStatus.learned => learnedColor.withValues(alpha: 0.32),
+              _ => inSpeech(t.start, t.end) ? speakBg : null,
+            },
+            color: cc,
+            decoration: cc == null ? null : TextDecoration.underline,
+            decorationColor: cc,
+            decorationThickness: 2.2,
+            fontWeight: cc == null ? null : FontWeight.w600,
+          ),
         ),
-      ));
+      );
       pos = t.end;
     }
     if (pos < text.length) spans.add(TextSpan(text: text.substring(pos)));
@@ -246,7 +249,11 @@ class _ParagraphViewState extends State<ParagraphView> {
           final i = _tokenAt(d.localPosition, a);
           if (i != null) widget.onSentence(widget.para, a, i);
         },
-        child: RichText(key: _key, text: TextSpan(style: base, children: spans), textScaler: MediaQuery.textScalerOf(context)),
+        child: RichText(
+          key: _key,
+          text: TextSpan(style: base, children: spans),
+          textScaler: MediaQuery.textScalerOf(context),
+        ),
       ),
     );
   }

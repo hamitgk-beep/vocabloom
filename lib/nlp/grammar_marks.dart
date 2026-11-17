@@ -13,7 +13,10 @@ import 'text.dart';
 typedef Tx = (String, String);
 
 /// Filter ids of the grammar highlights, in display order.
-const grammarCatIds = ['g_tenses', 'g_conditionals', 'g_relative', 'g_gerund_inf', 'g_comparison', 'g_reported'];
+const grammarCatIds = [
+  'g_tenses', 'g_passive', 'g_conditionals', 'g_relative', 'g_gerund_inf', 'g_comparison', 'g_reported', //
+  'g_past_modals', 'g_used_to', 'g_causative', 'g_emphasis', 'g_tags',
+];
 
 /// One structure found in a paragraph.
 class GMark {
@@ -709,7 +712,13 @@ const _ingAdj = {
 };
 
 /// -ed / V3 words used as adjectives after "be" ("she was tired").
+/// Old English "is come", "was become": be + a verb that takes no object is no passive.
+const _intransPP = {'come', 'become', 'gone', 'arrived', 'fallen', 'risen', 'departed'};
+bool _noPassive(String x) => _edAdj.contains(x) || _intransPP.contains(x);
+
 const _edAdj = {
+  'grown',
+  'indisposed',
   'tired',
   'bored',
   'interested',
@@ -1450,6 +1459,7 @@ class _Sentence {
   String at(int i) => i >= s && i < e ? w[i] : '';
 
   bool isCap(int i) {
+    if (i < s || i >= e) return false;
     final t = toks[i].text;
     return t[0].toUpperCase() == t[0] && t[0].toLowerCase() != t[0];
   }
@@ -1464,6 +1474,7 @@ class _Sentence {
 
   /// The auxiliary a token stands for: "isn't" -> is, "he'd" -> 'd, "it's" -> 's.
   String? aux(int i) {
+    if (i < s || i >= e) return null;
     final x = w[i];
     const plain = {'am', 'is', 'are', 'was', 'were', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'shall', 'would', 'can', 'could', 'may', 'might', 'must', 'should', 'ought'};
     if (plain.contains(x)) return x;
@@ -1619,7 +1630,7 @@ class _Sentence {
           addGroup(grp([j, k]), 'future_perfect');
         } else if (b == 'be' && g._isIng(c) && !_ingAdj.contains(c)) {
           addGroup(grp([j, k]), 'future_continuous');
-        } else if (b == 'be' && g._isPP(c) && !_edAdj.contains(c)) {
+        } else if (b == 'be' && g._isPP(c) && !_noPassive(c)) {
           addGroup(grp([j, k]), 'future_simple', passive: true);
         } else if (g._isBase(b)) {
           addGroup(grp([j]), 'future_simple');
@@ -1633,9 +1644,11 @@ class _Sentence {
         final kk = jj < e ? nx(jj) : e;
         if (bb == 'have' && (g._isPP(at(kk)) || at(kk) == 'been')) {
           final ll = nx(kk);
-          addGroup(grp([jj, kk, if (at(kk) == 'been' && (g._isIng(at(ll)) || g._isPP(at(ll)))) ll]), 'modal_perfect', modal: a);
+          final pass = at(kk) == 'been' && g._isPP(at(ll)) && !g._isIng(at(ll)) && !_noPassive(at(ll));
+          addGroup(grp([jj, kk, if (at(kk) == 'been' && (g._isIng(at(ll)) || g._isPP(at(ll)))) ll]), 'modal_perfect', modal: a, passive: pass);
         } else if (bb == 'be' && (g._isIng(at(kk)) || g._isPP(at(kk)))) {
-          addGroup(grp([jj, kk]), 'modal', modal: a);
+          final pass = g._isPP(at(kk)) && !g._isIng(at(kk)) && !_noPassive(at(kk));
+          addGroup(grp([jj, kk]), 'modal', modal: a, passive: pass);
         } else if (g._isBase(bb)) {
           addGroup(grp([jj]), 'modal', modal: a);
         } else {
@@ -1646,11 +1659,11 @@ class _Sentence {
       if (const {'am', 'is', 'are'}.contains(a)) {
         if (b == 'going' && c == 'to' && g._isBase(d)) {
           addGroup(grp([j, k, l]), 'going_to');
-        } else if (b == 'being' && g._isPP(c) && !_edAdj.contains(c)) {
+        } else if (b == 'being' && g._isPP(c) && !_noPassive(c)) {
           addGroup(grp([j, k]), 'present_continuous', passive: true);
         } else if (g._isIng(b) && b != 'being' && !_ingAdj.contains(b)) {
           addGroup(grp([j]), 'present_continuous');
-        } else if (g._isPP(b) && !_edAdj.contains(b) && !g._isIng(b) && b != 'been') {
+        } else if (g._isPP(b) && !_noPassive(b) && !g._isIng(b) && b != 'been') {
           addGroup(grp([j]), 'simple_present', passive: true);
         } else {
           addGroup(head, 'simple_present');
@@ -1660,11 +1673,11 @@ class _Sentence {
       if (a == 'was' || a == 'were') {
         if (b == 'going' && c == 'to' && g._isBase(d)) {
           addGroup(grp([j, k, l]), 'was_going_to');
-        } else if (b == 'being' && g._isPP(c) && !_edAdj.contains(c)) {
+        } else if (b == 'being' && g._isPP(c) && !_noPassive(c)) {
           addGroup(grp([j, k]), 'past_continuous', passive: true);
         } else if (g._isIng(b) && b != 'being' && !_ingAdj.contains(b)) {
           addGroup(grp([j]), 'past_continuous');
-        } else if (g._isPP(b) && !_edAdj.contains(b) && b != 'been') {
+        } else if (g._isPP(b) && !_noPassive(b) && b != 'been') {
           addGroup(grp([j]), 'simple_past', passive: true);
         } else {
           addGroup(head, 'simple_past');
@@ -1675,7 +1688,7 @@ class _Sentence {
         final perf = a == 'had' ? 'past_perfect' : 'present_perfect';
         if (b == 'been' && g._isIng(c) && !_ingAdj.contains(c)) {
           addGroup(grp([j, k]), '${perf}_continuous');
-        } else if (b == 'been' && g._isPP(c) && !_edAdj.contains(c)) {
+        } else if (b == 'been' && g._isPP(c) && !_noPassive(c)) {
           addGroup(grp([j, k]), perf, passive: true);
         } else if (g._isPP(b) || b == 'been') {
           addGroup(grp([j]), perf);
@@ -1702,7 +1715,7 @@ class _Sentence {
           w[i + 1] == 'to' &&
           !used.contains(i) &&
           g._isBase(w[i + 2]) &&
-          !(i > s && (aux(i - 1) != null || const {'get', 'got', 'getting', 'be', 'been', 'being'}.contains(w[i - 1])))) {
+          !(pv(i) >= s && (aux(pv(i)) != null || const {'get', 'got', 'getting', 'be', 'been', 'being'}.contains(w[pv(i)])))) {
         addGroup([i, i + 1, i + 2], 'used_to');
       }
     }
@@ -1732,7 +1745,7 @@ class _Sentence {
           kind = 'simple_past';
         } else if (pres3 && (sub == 's' || sub == '?')) {
           kind = 'simple_present';
-        } else if (base && (sub == 'p' || sub == '?' && !g._isNounish(x)) && !g.participles.contains(x)) {
+        } else if (base && (sub == 'p' || sub == '?' && !g._isNounish(x)) && (!g.participles.contains(x) || g.lemmas(x).contains(x))) {
           kind = 'simple_present';
         }
       } else {
@@ -1777,6 +1790,12 @@ class _Sentence {
     _gerundInf(out);
     _comparison(out);
     _reported(out);
+    _passive(out);
+    _pastModals(out);
+    _usedTo(out);
+    _causative(out);
+    _emphasis(out);
+    _tags(out);
   }
 
   String words(List<int> idx) => idx.map((i) => toks[i].text).join(' ');
@@ -1817,7 +1836,10 @@ class _Sentence {
     for (var i = s; i < e; i++) {
       final x = w[i];
       final inverted = i == s && (x == 'had' || x == 'were' || x == 'should') && i + 2 < e && (_subjOnly.contains(w[i + 1]) || w[i + 1] == 'you' || w[i + 1] == 'it' || isName(i + 1));
-      if (x != 'if' && x != 'unless' && !inverted) continue;
+      // "provided (that)", "as long as", "on condition that": other words for "if".
+      final conn = inverted || x == 'if' || x == 'unless' ? <int>[i] : _condConnector(i);
+      if (conn == null) continue;
+      final cw = words(conn).toLowerCase();
       if (x == 'if' || x == 'unless') {
         if (i > s && (w[i - 1] == 'as' || w[i - 1] == 'what')) continue;
         if (at(i + 1) == 'only' || at(i + 1) == 'so' || at(i + 1) == 'not' || at(i + 1) == 'any' || at(i + 1) == 'ever' && at(i + 2) == 'there') continue;
@@ -1892,7 +1914,8 @@ class _Sentence {
       }
       if (type == null) continue;
       final info = _condInfo[type]!;
-      final idx = <int>{if (!inverted) i, if (inverted) i, ...?ifV?.toks, ...m.toks}.toList()..sort();
+      final idx = <int>{...conn, ...?ifV?.toks, ...m.toks}.toList()..sort();
+      final other = conn.length > 1 || x == 'provided' || x == 'providing';
       final ifText = words([for (var k = ifA; k < ifB && k < ifA + 8; k++) k]);
       final mainText = words([for (var k = mainA; k < mainB && k < mainA + 8; k++) k]);
       final lessons = [info.lesson, if (x == 'unless') 'unless', if (inverted) 'inverted_conditionals'];
@@ -1905,8 +1928,14 @@ class _Sentence {
           inverted ? '${info.en} (inverted)' : info.en,
           inverted ? '${info.tr}, devrik' : info.tr,
           (
-            info.exTr + (x == 'unless' ? ' Unless = if … not (-medikçe, -mezse).' : '') + (inverted ? ' "If" düşmüş, yardımcı fiil başa gelmiş (devrik koşul).' : ''),
-            info.exEn + (x == 'unless' ? ' Unless = if … not.' : '') + (inverted ? ' "If" is dropped and the auxiliary comes first (inversion).' : ''),
+            info.exTr +
+                (x == 'unless' ? ' Unless = if … not (-medikçe, -mezse).' : '') +
+                (inverted ? ' "If" düşmüş, yardımcı fiil başa gelmiş (devrik koşul).' : '') +
+                (other ? ' Burada "if" yerine "$cw" kullanılmış: "-mek şartıyla, -diği sürece" anlamında, koşulu daha vurgulu söyler.' : ''),
+            info.exEn +
+                (x == 'unless' ? ' Unless = if … not.' : '') +
+                (inverted ? ' "If" is dropped and the auxiliary comes first (inversion).' : '') +
+                (other ? ' Here "$cw" is used instead of "if": "only if", stressing the condition.' : ''),
           ),
           note: (
             'Koşul: "$ifText${ifB - ifA > 8 ? ' …' : ''}" · Sonuç: "$mainText${mainB - mainA > 8 ? ' …' : ''}"',
@@ -1915,6 +1944,379 @@ class _Sentence {
         ),
       );
     }
+  }
+
+  /// Token indices of a condition word other than "if" starting at [i], or null.
+  List<int>? _condConnector(int i) {
+    final x = w[i];
+    final startOk = clauseStart(i) || i == s;
+    if ((x == 'provided' || x == 'providing') && startOk && i + 1 < e) {
+      final j = at(i + 1) == 'that' ? i + 2 : i + 1;
+      if (j < e && (_subjOnly.contains(w[j]) || w[j] == 'you' || w[j] == 'it' || _det.contains(w[j]) || isName(j) || subjInside(j)) && groups.any((v) => v.first > j - 1 && v.first <= j + 4)) {
+        return [i, if (j == i + 2) i + 1];
+      }
+    }
+    if ((x == 'as' || x == 'so') && at(i + 1) == 'long' && at(i + 2) == 'as' && i + 3 < e && !(i > s && (aux(i - 1) != null || w[i - 1] == 'for'))) {
+      final j = i + 3;
+      // "as long as you promise" (a condition), not "as long as the river" (a length).
+      if ((_subjOnly.contains(w[j]) || w[j] == 'you' || w[j] == 'it' || isName(j) || subjInside(j)) && groups.any((v) => v.first >= j && v.first <= j + 3)) return [i, i + 1, i + 2];
+    }
+    if (x == 'on' && at(i + 1) == 'condition' && at(i + 2) == 'that') return [i, i + 1, i + 2];
+    return null;
+  }
+
+  // ------------------------------------------------------------ passive
+
+  void _passive(List<GMark> out) {
+    for (final v in groups) {
+      if (!v.passive) continue;
+      final String en, tr;
+      final Tx ex;
+      if (v.isTense) {
+        final t = _tenses[v.kind]!;
+        en = '${t.en} Passive';
+        tr = '${t.tr}, edilgen';
+        ex = (t.exTr.split(':').first, t.exEn.split(':').first);
+      } else {
+        en = 'Modal Passive';
+        tr = 'Kipli edilgen';
+        ex = ('${v.modal} be / have been + V3', '${v.modal} be / have been + V3');
+      }
+      // The doer, when the sentence names it: "by the police".
+      int? by;
+      for (var k = v.last + 1; k < e && k <= v.last + 5; k++) {
+        if (cut(k)) break;
+        if (w[k] == 'by' && k + 1 < e && !g._isIng(w[k + 1])) {
+          by = k;
+          break;
+        }
+      }
+      final byText = by == null ? null : words([for (var k = by; k < e && k <= by + 3 && (k == by || !cut(k)); k++) k]);
+      out.add(
+        GMark(
+          'g_passive',
+          'passive',
+          v.toks,
+          ['passive', if (v.isTense) _tenses[v.kind]!.lesson],
+          'Passive Voice · $en',
+          'Edilgen çatı · $tr',
+          (
+            'Edilgen: özne işi yapan değil, işten etkilenendir (be + V3). Önemli olan iş ve sonucudur; yapan kişi gerekirse "by" ile söylenir. Bu cümlede zaman: ${ex.$1}.',
+            'Passive: the subject does not do the action but receives it (be + V3). What matters is the action; the doer, if needed, comes with "by". Here: ${ex.$2}.',
+          ),
+          note: byText == null
+              ? ('Yapan kişi söylenmemiş: kim yaptığı bilinmiyor ya da önemli değil.', 'The doer is not mentioned: unknown or not important.')
+              : ('İşi yapan: "$byText".', 'The doer: "$byText".'),
+          tone: v.isTense ? _tenses[v.kind]!.tone : 0,
+        ),
+      );
+    }
+  }
+
+  // ------------------------------------------------------------ past modals
+
+  void _pastModals(List<GMark> out) {
+    for (final v in groups) {
+      if (v.kind != 'modal_perfect') continue;
+      final neg = v.toks.any((k) => toks[k].lower.endsWith("n't") || toks[k].lower == 'cannot') || (v.first + 1 < e && w[v.first + 1] == 'not');
+      final key = '${v.modal}${neg ? '_not' : ''}';
+      final info = _pastModalInfo[key] ?? _pastModalInfo[v.modal];
+      if (info == null) continue;
+      final idx = [...v.toks, if (v.first + 1 < e && w[v.first + 1] == 'not' && !v.toks.contains(v.first + 1)) v.first + 1]..sort();
+      out.add(GMark('g_past_modals', 'past_modal', idx, const ['past_modals', 'deduction'], '${words([v.first])} have + V3', info.$1, (info.$2, info.$3)));
+    }
+  }
+
+  // ------------------------------------------------------- used to / be used to
+
+  void _usedTo(List<GMark> out) {
+    for (final v in groups) {
+      if (v.kind == 'used_to') {
+        out.add(
+          GMark(
+            'g_used_to',
+            'used_to',
+            v.toks,
+            const ['used_to'],
+            'used to + V1',
+            'Geçmiş alışkanlık (-erdi)',
+            (
+              'used to + V1: eskiden düzenli yapılan ama artık yapılmayan şey (I used to swim = eskiden yüzerdim). "be used to + V-ing" ile karıştırma: o "alışkın olmak" demektir.',
+              'used to + V1: something done regularly in the past but not now (I used to swim). Do not mix it up with "be used to + V-ing", which means "be accustomed to".',
+            ),
+          ),
+        );
+      }
+    }
+    for (var i = s + 1; i < e - 2; i++) {
+      if (w[i] != 'used' || w[i + 1] != 'to') continue;
+      final p = pv(i);
+      if (p < s) continue;
+      final be = aux(p) != null && const {'am', 'is', 'are', 'was', 'were', "'s"}.contains(aux(p)) || const {'be', 'been', 'being'}.contains(w[p]);
+      final get = g.lemmas(w[p]).contains('get') || g.lemmas(w[p]).contains('become');
+      if (!be && !get) continue;
+      final n = w[i + 2];
+      final head = [p, i, i + 1];
+      if (g._isIng(n) && n != 'being') {
+        out.add(
+          GMark('g_used_to', 'be_used_to', [...head, i + 2], const ['used_to', 'gerund_infinitive'], '${get ? 'get' : 'be'} used to + V-ing', get ? 'Alışmak' : 'Alışkın olmak', (
+            '${get ? 'get' : 'be'} used to + V-ing / isim: ${get ? 'bir şeye alışmak (zamanla)' : 'bir şeye alışkın olmak'}. Buradaki "to" edat olduğu için fiil -ing alır. "used to + V1" (eskiden yapardı) ile karıştırma.',
+            '${get ? 'get' : 'be'} used to + V-ing / noun: ${get ? 'become accustomed to something' : 'be accustomed to something'}. This "to" is a preposition, so the verb takes -ing. Not the same as "used to + V1" (a past habit).',
+          )),
+        );
+      } else if ((_det.contains(n) || _objPron.contains(n) || isName(i + 2) || g._isNounish(n) && !g._isBase(n)) && !cut(i + 2)) {
+        out.add(
+          GMark(
+            'g_used_to',
+            'be_used_to',
+            head,
+            const ['used_to'],
+            '${get ? 'get' : 'be'} used to + noun',
+            get ? 'Alışmak' : 'Alışkın olmak',
+            (
+              '${get ? 'get' : 'be'} used to + isim / V-ing: ${get ? 'bir şeye alışmak' : 'bir şeye alışkın olmak'} (I am used to the cold = soğuğa alışkınım). "used to + V1" (eskiden yapardı) ile karıştırma.',
+              '${get ? 'get' : 'be'} used to + noun / V-ing: ${get ? 'become accustomed to' : 'be accustomed to'} (I am used to the cold). Not the same as "used to + V1" (a past habit).',
+            ),
+          ),
+        );
+      } else if (be &&
+          g._isBase(n) &&
+          !cut(i + 2) &&
+          (!g._isNounish(n) || i + 3 < e && !cut(i + 3) && (_det.contains(w[i + 3]) || _objPron.contains(w[i + 3]) || g._isNounish(w[i + 3]) && !const {'and', 'or', 'but'}.contains(w[i + 3])))) {
+        out.add(
+          GMark('g_used_to', 'used_for', [...head, i + 2], const ['passive', 'used_to'], 'be used to + V1 (passive)', 'Kullanılmak (-mek için)', (
+            'Dikkat: be used to + V1 burada "-mek için kullanılmak" demek (edilgen: use → used). "Alışkın olmak" (be used to + V-ing) ya da "eskiden yapardı" (used to + V1) değil.',
+            'Careful: be used to + V1 here means "be used for doing" (the passive of use). Not "be accustomed to" (be used to + V-ing) or a past habit (used to + V1).',
+          )),
+        );
+      }
+    }
+  }
+
+  // ------------------------------------------------------------ causative
+
+  void _causative(List<GMark> out) {
+    final question = text.substring(toks[e - 1].end).trimLeft().startsWith('?');
+    for (var i = s; i < e - 2; i++) {
+      final lem = g.lemmas(w[i]);
+      final verb = lem.contains('have')
+          ? 'have'
+          : lem.contains('get')
+          ? 'get'
+          : lem.contains('make')
+          ? 'make'
+          : null;
+      if (verb == null || w[i].contains("'")) continue;
+      // "Have you finished?", "Had I known": a question or inversion, not a causative.
+      if (verb == 'have' && (i == s || cut(i) || _whWords.contains(w[i - 1])) && (question || i == s && w[i] == 'had')) continue;
+      final isV = groups.any((v) => v.toks.contains(i)) || i > s && (w[i - 1] == 'to' || aux(i - 1) != null || _skip.contains(w[i - 1]));
+      if (!isV) continue;
+      // The object: a pronoun, a name, or a short noun phrase ending in a noun.
+      var j = i + 1;
+      if (cut(j)) continue;
+      int objEnd;
+      if (_objPron.contains(w[j]) && w[j] != 'you' || isName(j)) {
+        objEnd = j;
+      } else if (_det.contains(w[j]) || _possDet.contains(w[j])) {
+        var k = j + 1;
+        var last = -1;
+        while (k < e && k <= j + 4 && !cut(k)) {
+          if (g._isNounish(w[k]) && !g._isPP(w[k])) {
+            last = k;
+            k++;
+            continue;
+          }
+          if (g._isAdjLemma(w[k]) && !g._isPP(w[k])) {
+            k++;
+            continue;
+          }
+          break;
+        }
+        if (last < 0) continue;
+        objEnd = last;
+      } else {
+        continue;
+      }
+      final k = objEnd + 1;
+      if (k >= e || cut(k)) continue;
+      final y = w[k];
+      // "made Reddy Fox jump": a name goes on; "had a little better arranged": no object.
+      if (isCap(k) || [for (var q = j; q <= objEnd; q++) w[q]].any((x) => const {'little', 'bit', 'lot', 'few', 'better'}.contains(x) || _skip.contains(x))) continue;
+      final objText = words([for (var q = j; q <= objEnd; q++) q]);
+      // have / get + object + V3: "had his hair cut", "got the car repaired".
+      if ((verb == 'have' || verb == 'get') &&
+          g._isPP(y) &&
+          !_edAdj.contains(y) &&
+          !g._isIng(y) &&
+          !(k + 1 < e && !cut(k + 1) && g._isNounish(w[k + 1]) && !_preps.contains(w[k + 1]) && !_det.contains(w[k + 1]) && g._isAdjLemma(y))) {
+        out.add(
+          GMark(
+            'g_causative',
+            'causative_pp',
+            [i, k],
+            const ['causative'],
+            '$verb + object + V3',
+            'Ettirgen yapı (-tırmak)',
+            (
+              '$verb + nesne + V3: işi kendin yapmazsın, başkasına yaptırırsın (I had my hair cut = saçımı kestirdim). Aynı yapı bazen başına gelen kötü bir olayı anlatır (He had his car stolen = arabası çalındı).',
+              '$verb + object + V3: you do not do the job yourself, someone does it for you (I had my hair cut). The same pattern can also tell what happened to you (He had his car stolen).',
+            ),
+            note: ('Yaptırılan iş: "$objText ${toks[k].text}".', 'The job: "$objText ${toks[k].text}".'),
+          ),
+        );
+        continue;
+      }
+      // have / make + person + V1: "made him cry", "had them wait".
+      if ((verb == 'have' || verb == 'make') && objEnd == j && g._isBase(y) && (!g._isNounish(y) || w[j] != 'her' && !_det.contains(w[j])) && !_notVerb.contains(y)) {
+        out.add(
+          GMark(
+            'g_causative',
+            'causative_base',
+            [i, j, k],
+            const ['causative'],
+            '$verb + person + V1',
+            verb == 'make' ? 'Zorla yaptırmak' : 'Birine yaptırmak',
+            verb == 'make'
+                ? (
+                    'make + kişi + V1 (to yok): birini bir şey yapmaya zorlamak ya da yol açmak (made him cry = onu ağlattı).',
+                    'make + person + V1 (no "to"): force or cause someone to do something (made him cry).',
+                  )
+                : ('have + kişi + V1 (to yok): birine bir işi yaptırmak, görev vermek (had them wait = onları beklettirdi).', 'have + person + V1 (no "to"): get someone to do a job (had them wait).'),
+          ),
+        );
+        continue;
+      }
+      // get + person + to V1: "got him to help".
+      if (verb == 'get' && objEnd == j && y == 'to' && k + 1 < e && g._isBase(w[k + 1])) {
+        out.add(
+          GMark('g_causative', 'causative_get', [i, j, k, k + 1], const ['causative'], 'get + person + to V1', 'İkna ederek yaptırmak', (
+            'get + kişi + to V1: birini ikna ederek bir şey yaptırmak (got him to help = ona yardım ettirdi, onu yardıma razı etti).',
+            'get + person + to V1: persuade someone to do something (got him to help).',
+          )),
+        );
+      }
+    }
+  }
+
+  // ------------------------------------------------------- inversion and cleft
+
+  void _emphasis(List<GMark> out) {
+    final question = text.substring(toks[e - 1].end).trimLeft().startsWith('?');
+    if (question || e - s < 4) return;
+    bool subj(int k) => k < e && (_subjOnly.contains(w[k]) || w[k] == 'you' || w[k] == 'it' || w[k] == 'there' || _det.contains(w[k]) || isName(k));
+    // Inversion after a negative word at the start: "Never have I seen …".
+    int? lead;
+    if (const {'never', 'rarely', 'seldom', 'hardly', 'scarcely', 'barely', 'little', 'nowhere'}.contains(w[s])) lead = s + 1;
+    if (w[s] == 'not' && at(s + 1) == 'only') lead = s + 2;
+    if (w[s] == 'no' && at(s + 1) == 'sooner') lead = s + 2;
+    if (const {'under', 'on', 'at', 'in'}.contains(w[s]) && at(s + 1) == 'no' && const {'circumstances', 'account', 'time', 'way', 'condition'}.contains(at(s + 2))) lead = s + 3;
+    if (lead != null && lead < e - 1 && !cut(lead) && aux(lead) != null && !subjInside(lead) && subj(lead + 1)) {
+      out.add(
+        GMark(
+          'g_emphasis',
+          'inversion',
+          [for (var k = s; k <= lead; k++) k],
+          const ['inversion'],
+          'Inversion',
+          'Devrik cümle',
+          (
+            'Olumsuz ya da kısıtlayıcı bir söz (never, hardly, not only, no sooner …) cümle başına gelince soru gibi yardımcı fiil özneden önce gelir: Never have I seen = hiç görmedim. Anlamı vurgular; resmî ve edebî dilde sık görülür.',
+            'When a negative or limiting word (never, hardly, not only, no sooner …) starts the sentence, the auxiliary comes before the subject, as in a question: Never have I seen. It adds emphasis and is common in formal and literary English.',
+          ),
+          note: ('Düz sırası: "${toks[lead + 1].text} ${toks[lead].text.toLowerCase()} …"', 'Normal order: "${toks[lead + 1].text} ${toks[lead].text.toLowerCase()} …"'),
+        ),
+      );
+    }
+    // Cleft: "It was John who called", "It was in Paris that they met".
+    if (w[s] == 'it' || w[s] == "it's" || w[s] == "'twas") {
+      var k = s + 1;
+      if (w[s] == 'it') {
+        if (!const {'is', 'was', "isn't", "wasn't"}.contains(at(k))) k = -1;
+        k = k < 0 ? -1 : k + 1;
+      }
+      if (k > 0 && at(k) == 'not') k++;
+      if (k > 0 && k < e - 1) {
+        int? end;
+        if (isName(k) || const {'me', 'him', 'her', 'us', 'them', 'you', 'i', 'he', 'she', 'we', 'they'}.contains(w[k])) {
+          end = k;
+          while (end! + 1 < e && isName(end + 1) && !cut(end + 1)) {
+            end++;
+          }
+        } else if (const {'in', 'at', 'on', 'because', 'for', 'by', 'from', 'with', 'during', 'after', 'before', 'here', 'there', 'then'}.contains(w[k])) {
+          var q = k + 1;
+          while (q < e && q <= k + 5 && !cut(q) && w[q] != 'that' && w[q] != 'who') {
+            q++;
+          }
+          if (q < e && q > k + 1 && (w[q] == 'that') && !cut(q)) end = q - 1;
+        }
+        if (end != null && end + 1 < e && (w[end + 1] == 'who' || w[end + 1] == 'that') && !cut(end + 1) && groups.any((v) => v.first > end! + 1 && v.first <= end + 5)) {
+          final idx = [s, if (w[s] == 'it') s + 1, end + 1];
+          out.add(
+            GMark(
+              'g_emphasis',
+              'cleft',
+              idx,
+              const ['cleft_sentences'],
+              'Cleft Sentence',
+              'Vurgu cümlesi (It is … that)',
+              (
+                'It is / It was + vurgulanan öğe + who / that …: cümlenin bir parçasını öne çıkarır (It was John who called = arayan John idi, başkası değil).',
+                'It is / It was + focus + who / that …: puts one part of the sentence in focus (It was John who called, not someone else).',
+              ),
+              note: ('Vurgulanan: "${words([for (var q = s + (w[s] == 'it' ? 2 : 1); q <= end; q++) q])}".', 'In focus: "${words([for (var q = s + (w[s] == 'it' ? 2 : 1); q <= end; q++) q])}".'),
+            ),
+          );
+        }
+      }
+    }
+    // Pseudo-cleft: "What I need is a holiday", "What happened was …".
+    if (w[s] == 'what') {
+      final first = groups.where((v) => v.first > s && v.first <= s + 3).firstOrNull;
+      if (first != null) {
+        final be = groups.where((v) => v.first > first.last && v.first <= first.last + 6 && v.toks.length == 1 && const {'is', 'was'}.contains(aux(v.first))).firstOrNull;
+        if (be != null && be.first + 1 < e && !cut(be.first) && ![for (var q = first.last + 1; q < be.first; q++) q].any((q) => cut(q) || const {'but', 'and', 'or'}.contains(w[q]))) {
+          out.add(
+            GMark('g_emphasis', 'pseudo_cleft', [s, be.first], const ['cleft_sentences'], 'Cleft Sentence (What …)', 'Vurgu cümlesi (What … is)', (
+              'What + cümle + is / was + vurgulanan: önce merak uyandırır, asıl bilgiyi sona bırakır (What I need is a holiday = ihtiyacım olan şey bir tatil).',
+              'What + clause + is / was + focus: builds up to the main information at the end (What I need is a holiday).',
+            )),
+          );
+        }
+      }
+    }
+  }
+
+  // ------------------------------------------------------------ tag questions
+
+  void _tags(List<GMark> out) {
+    if (e - s < 4) return;
+    final after = text.substring(toks[e - 1].end);
+    if (!after.trimLeft().startsWith('?')) return;
+    final a = e - 2, p = e - 1;
+    final ax = aux(a);
+    if (ax == null || ax == "'s" || ax == "'d" || subjInside(a) || !cut(a)) return;
+    if (!const {'i', 'you', 'he', 'she', 'it', 'we', 'they', 'there'}.contains(w[p])) return;
+    final neg = w[a].endsWith("n't") || w[a] == 'cannot';
+    out.add(
+      GMark(
+        'g_tags',
+        'tag',
+        [a, p],
+        const ['question_tags'],
+        'Question Tag',
+        'Onay sorusu (değil mi?)',
+        (
+          'Cümle sonundaki kısa soru "değil mi?" anlamı verir. Olumlu cümleye olumsuz, olumsuz cümleye olumlu etiket gelir; yardımcı fiil ana cümleninkiyle aynıdır (She is late, isn’t she?).',
+          'A short question at the end means "right?". A positive sentence takes a negative tag and the other way round, with the same auxiliary as the main clause (She is late, isn’t she?).',
+        ),
+        note: neg
+            ? (
+                'Etiket olumsuz ("${words([a, p])}"), yani ana cümle olumlu: konuşan onay bekliyor.',
+                'The tag is negative ("${words([a, p])}"), so the main clause is positive: the speaker expects a yes.',
+              )
+            : ('Etiket olumlu ("${words([a, p])}"): ana cümle olumsuz ya da emir cümlesi.', 'The tag is positive ("${words([a, p])}"): the main clause is negative or an order.'),
+      ),
+    );
   }
 
   // ------------------------------------------------------- relative clauses
@@ -2410,6 +2812,67 @@ const _backshift = <String, (String, String)>{
   'past_perfect': ('Present Perfect ya da Simple Past', 'Present Perfect or the Simple Past'),
   'past_perfect_continuous': ('Present Perfect Continuous', 'Present Perfect Continuous'),
   'was_going_to': ('am / is / are going to', 'am / is / are going to'),
+};
+
+/// Past modals: (Turkish name, Turkish, English explanation).
+const _pastModalInfo = <String, (String, String, String)>{
+  'should': (
+    'Yapmalıydı (eleştiri / pişmanlık)',
+    'should have + V3: geçmişte yapılması doğru olan ama yapılmayan şey; eleştiri ya da pişmanlık (You should have told me = bana söylemeliydin).',
+    'should have + V3: the right thing to do in the past, which was not done; criticism or regret (You should have told me).',
+  ),
+  'should_not': (
+    'Yapmamalıydı',
+    "shouldn't have + V3: geçmişte yapılan ama yapılmaması gereken şey (I shouldn't have said that = bunu söylememeliydim).",
+    "shouldn't have + V3: something done in the past that was a mistake (I shouldn't have said that).",
+  ),
+  'ought': ('Yapmalıydı', 'ought to have + V3: should have gibi; yapılması gereken ama yapılmayan şey.', 'ought to have + V3: like should have; the right thing that was not done.'),
+  'could': (
+    'Yapabilirdi / olmuş olabilir',
+    'could have + V3: iki anlamı var: (1) geçmişte mümkündü ama olmadı (You could have died = ölebilirdin); (2) olmuş olabilir, emin değiliz (He could have taken it = o almış olabilir).',
+    'could have + V3: two meanings: (1) it was possible but did not happen (You could have died); (2) it may have happened, we are not sure (He could have taken it).',
+  ),
+  'could_not': (
+    'Olmuş olamaz / yapamazdı',
+    "couldn't have + V3: kesin olumsuz çıkarım, geçmişte olmuş olması imkânsız (She couldn't have seen us = bizi görmüş olamaz).",
+    "couldn't have + V3: a sure negative deduction, it is impossible that it happened (She couldn't have seen us).",
+  ),
+  'can_not': (
+    'Olmuş olamaz',
+    "can't have + V3: geçmiş hakkında kesin olumsuz tahmin (He can't have forgotten = unutmuş olamaz).",
+    "can't have + V3: a sure negative deduction about the past (He can't have forgotten).",
+  ),
+  'must': (
+    '-mış olmalı (güçlü tahmin)',
+    'must have + V3: geçmiş hakkında güçlü tahmin, kanıta dayanan çıkarım (He must have left = gitmiş olmalı).',
+    'must have + V3: a strong deduction about the past, based on evidence (He must have left).',
+  ),
+  'might': (
+    'Belki -mıştır',
+    'might have + V3: geçmişte belki olmuştur, emin değiliz; ya da olabilirdi ama olmadı (It might have been him = belki oydu).',
+    'might have + V3: perhaps it happened, we are not sure; or it was possible but did not happen (It might have been him).',
+  ),
+  'might_not': (
+    'Belki -mamıştır',
+    "might not have + V3: belki olmamıştır (She might not have heard = belki duymamıştır).",
+    "might not have + V3: perhaps it did not happen (She might not have heard).",
+  ),
+  'may': (
+    'Belki -mıştır',
+    'may have + V3: geçmişte belki olmuştur (They may have missed the train = treni kaçırmış olabilirler).',
+    'may have + V3: perhaps it happened (They may have missed the train).',
+  ),
+  'may_not': ('Belki -mamıştır', 'may not have + V3: belki olmamıştır.', 'may not have + V3: perhaps it did not happen.'),
+  'would': (
+    'Yapardı (gerçekleşmemiş)',
+    'would have + V3: geçmişte olmamış bir durumun hayalî sonucu; çoğu zaman 3. tip koşulun sonuç kısmıdır (I would have helped = yardım ederdim).',
+    'would have + V3: the imagined result of something that did not happen; often the result part of a third conditional (I would have helped).',
+  ),
+  'would_not': (
+    'Yapmazdı (gerçekleşmemiş)',
+    "wouldn't have + V3: olmamış bir durumda yapılmayacak olan (I wouldn't have gone = gitmezdim).",
+    "wouldn't have + V3: what would not have happened in an imagined past (I wouldn't have gone).",
+  ),
 };
 
 class _CondInfo {

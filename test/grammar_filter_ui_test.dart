@@ -13,6 +13,7 @@ import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
+import 'package:kelime_okur/nlp/grammar_marks.dart';
 import 'package:kelime_okur/ui/grammar/grammar_page.dart';
 import 'package:kelime_okur/ui/grammar_mark_sheet.dart';
 import 'package:kelime_okur/ui/paragraph_view.dart';
@@ -127,6 +128,12 @@ void main() {
     addTearDown(tester.view.reset);
     await tester.pumpWidget(shell(Scaffold(body: FilterPanel(app: app))));
     await tester.pump();
+    // Three groups; the grammar group opens with a tap.
+    expect(find.text('Kalıplar ve deyimler'), findsOneWidget);
+    expect(find.text('Kelime türleri'), findsOneWidget);
+    expect(find.byKey(const ValueKey('filter-g_tenses')), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('filter-group-1')));
+    await tester.pump();
     for (final id in grammarCatIdsForTest) {
       expect(find.byKey(ValueKey('filter-$id')), findsOneWidget, reason: id);
     }
@@ -216,4 +223,4 @@ void main() {
   });
 }
 
-const grammarCatIdsForTest = ['g_tenses', 'g_conditionals', 'g_relative', 'g_gerund_inf', 'g_comparison', 'g_reported'];
+const grammarCatIdsForTest = grammarCatIds;
