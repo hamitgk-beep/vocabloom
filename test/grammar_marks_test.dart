@@ -72,7 +72,7 @@ void main() {
     });
 
     test('be + adjective is not passive or continuous', () {
-      final tired = app.grammar.mark('She was tired.', tokenize('She was tired.'));
+      final tired = app.grammar.mark('She was tired.', tokenize('She was tired.')).where((m) => m.cat == 'g_tenses');
       expect(tired.single.en, 'Simple Past');
       expect(tired.single.tokens.length, 1);
       expectMarks('The film was interesting.', 'g_tenses', ['simple_past: was'], not: ['past_continuous']);
@@ -267,6 +267,7 @@ void main() {
       expectMarks('The film made him cry.', 'g_causative', ['causative_base: made him cry']);
       expectMarks('He made her dinner.', 'g_causative', [], not: ['causative']);
       expectMarks('She is used to pain.', 'g_used_to', [], not: ['used_for']);
+      expectMarks('I got a letter written by my grandfather.', 'g_causative', [], not: ['causative']);
       expectMarks('He got his friend to help.', 'g_causative', [], not: ['causative_pp']);
       expectMarks('I got him to help me.', 'g_causative', ['causative_get: got him to help']);
       expectMarks('I had a broken leg.', 'g_causative', [], not: ['causative']);
@@ -305,12 +306,43 @@ void main() {
     });
   });
 
+  group('participles', () {
+    test('participle clauses', () {
+      expectMarks('Walking home, I met an old friend.', 'g_participles', ['participle_ing: Walking']);
+      expectMarks('Having finished her work, she went out.', 'g_participles', ['participle_perfect: Having finished']);
+      expectMarks('Built in 1890, the bridge is still in use.', 'g_participles', ['participle_passive: Built']);
+      expectMarks('While waiting for the bus, I read a book.', 'g_participles', ['participle_ing: While waiting']);
+      expectMarks('She left the room, slamming the door.', 'g_participles', ['participle_ing: slamming']);
+      expectMarks('Walking is good for you.', 'g_participles', [], not: ['participle']);
+      expectMarks('I like swimming, running and cycling.', 'g_participles', [], not: ['participle']);
+      expectMarks('According to John, the shop is closed.', 'g_participles', [], not: ['participle']);
+      expectMarks('Had he known, he would have come.', 'g_participles', [], not: ['participle']);
+      expectMarks('She was a sensible, deserving woman.', 'g_participles', [], not: ['participle']);
+    });
+
+    test('reduced relative clauses', () {
+      expectMarks('The man standing by the door is my uncle.', 'g_participles', ['reduced_relative_ing: standing']);
+      expectMarks('I read a letter written by my grandfather.', 'g_participles', ['reduced_relative_pp: written']);
+      expectMarks('She spent the day reading books.', 'g_participles', [], not: ['reduced']);
+      expectMarks('The building was old.', 'g_participles', [], not: ['reduced']);
+    });
+
+    test('-ed / -ing adjectives', () {
+      expectMarks('The film was boring and I was bored.', 'g_participles', ['feeling_ing: boring', 'feeling_ed: bored']);
+      expectMarks('It was an exciting game.', 'g_participles', ['feeling_ing: exciting']);
+      expectMarks('He was boring us with his stories.', 'g_participles', [], not: ['feeling']);
+      final m = app.grammar.mark('I was bored.', tokenize('I was bored.')).firstWhere((m) => m.cat == 'g_participles');
+      expect(m.note?.$2, contains('boring'));
+    });
+  });
+
   test('every lesson link exists in the grammar topics', () {
     final topics = File('assets/grammar/lessons.json').readAsStringSync();
     const text =
         'If she had studied, she would have passed. The man who lives here said that he was tired. '
         'I enjoy reading and want to learn. It is bigger than mine. If it rains, we will stay. If I were you, I would go. '
-        'She has been waiting. He will have left. The house was built. I had left before they came.';
+        'She has been waiting. He will have left. The house was built. I had left before they came. '
+        'Walking home, I saw a girl wearing a red hat. The film was boring.';
     final all = app.grammar.mark(text, tokenize(text));
     expect(all.map((m) => m.cat).toSet().length, greaterThanOrEqualTo(6));
     for (final m in all) {

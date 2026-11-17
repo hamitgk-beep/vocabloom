@@ -15164,6 +15164,300 @@
    ]
   },
   {
+   "id": "participle_adjectives",
+   "category": "forms",
+   "level": "B1",
+   "title_tr": "-ed / -ing sıfatları (bored / boring)",
+   "title_en": "-ed and -ing Adjectives (bored / boring)",
+   "explanation": "**Aynı fiilden iki sıfat:** bore → bored / boring, interest → interested / interesting. Bunlar fiilin ortaç (participle) halleridir ama cümlede sıfat gibi kullanılır.\n- **-ed sıfatı = hisseden kişi:** I am bored. (Sıkıldım.) She was surprised. (Şaşırdı.)\n- **-ing sıfatı = o duyguyu veren şey ya da kişi:** The film is boring. (Film sıkıcı.) The news was surprising. (Haber şaşırtıcıydı.)\n- İkisi de isimden önce gelebilir: a bored student (sıkılmış bir öğrenci), a boring lesson (sıkıcı bir ders).\n- **Sık yapılan hata:** \"I am boring\" = \"Ben sıkıcı biriyim\" demektir. Sıkıldığını söylemek için \"I am bored\" denir.\n- Sık kullanılanlar: tired / tiring, interested / interesting, excited / exciting, worried / worrying, confused / confusing, embarrassed / embarrassing, frightened / frightening, disappointed / disappointing, amazed / amazing.",
+   "structure": [
+    "Özne + be / feel / get + V-ed (hisseden)",
+    "Özne + be + V-ing (hissettiren)",
+    "a / the + V-ed / V-ing + isim"
+   ],
+   "examples": [
+    [
+     "I was bored because the lesson was boring.",
+     "Ders sıkıcı olduğu için sıkıldım."
+    ],
+    [
+     "We were excited about the exciting news.",
+     "Heyecan verici haber yüzünden heyecanlıydık."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "participle_adjectives-1",
+     "tr": "Film çok sıkıcıydı, herkes sıkıldı.",
+     "answers": [
+      "The film was very boring, and everyone was bored.",
+      "The movie was very boring; everyone got bored.",
+      "The film was so boring that everyone was bored."
+     ],
+     "note": "Sıkıcı olan şey: boring. Sıkılan kişi: bored."
+    },
+    {
+     "id": "participle_adjectives-2",
+     "tr": "Tarihle çok ilgiliyim.",
+     "answers": [
+      "I am very interested in history.",
+      "I'm really interested in history."
+     ],
+     "note": "Hisseden kişi: interested (in)."
+    },
+    {
+     "id": "participle_adjectives-3",
+     "tr": "Bu kitap çok ilginç.",
+     "answers": [
+      "This book is very interesting.",
+      "This book is really interesting."
+     ],
+     "note": "İlgi uyandıran şey: interesting."
+    },
+    {
+     "id": "participle_adjectives-4",
+     "tr": "Uzun yolculuk çok yorucuydu; çok yorulduk.",
+     "answers": [
+      "The long journey was very tiring; we were very tired.",
+      "The long trip was really tiring, and we were very tired."
+     ],
+     "note": "tiring (yorucu) / tired (yorgun)."
+    },
+    {
+     "id": "participle_adjectives-5",
+     "tr": "Sonuçlar hayal kırıklığı yaratıcıydı.",
+     "answers": [
+      "The results were disappointing.",
+      "The results were very disappointing."
+     ],
+     "note": "Hissi veren şey: disappointing."
+    },
+    {
+     "id": "participle_adjectives-6",
+     "tr": "Sınav sonuçları yüzünden hayal kırıklığına uğradı.",
+     "answers": [
+      "She was disappointed with her exam results.",
+      "He was disappointed by his exam results.",
+      "She was disappointed about her exam results."
+     ],
+     "note": "Hisseden kişi: disappointed."
+    },
+    {
+     "id": "participle_adjectives-7",
+     "tr": "Tatil için çok heyecanlıyız.",
+     "answers": [
+      "We are very excited about the holiday.",
+      "We're really excited about the trip.",
+      "We're very excited about our holiday."
+     ],
+     "note": "excited about: heyecanlı."
+    },
+    {
+     "id": "participle_adjectives-8",
+     "tr": "Bu talimatlar çok kafa karıştırıcı.",
+     "answers": [
+      "These instructions are very confusing.",
+      "These instructions are really confusing."
+     ],
+     "note": "Kafayı karıştıran şey: confusing."
+    },
+    {
+     "id": "participle_adjectives-9",
+     "tr": "Herkesin önünde düştüğüm için utandım.",
+     "answers": [
+      "I was embarrassed because I fell in front of everyone.",
+      "I felt embarrassed because I fell over in front of everybody."
+     ],
+     "note": "Utanan kişi: embarrassed."
+    },
+    {
+     "id": "participle_adjectives-10",
+     "tr": "Karanlıkta yalnız yürümek korkutucu.",
+     "answers": [
+      "Walking alone in the dark is frightening.",
+      "Walking alone in the dark is scary."
+     ],
+     "note": "Korku veren şey: frightening."
+    },
+    {
+     "id": "participle_adjectives-11",
+     "tr": "Çocuklar fırtınadan korkmuştu.",
+     "answers": [
+      "The children were frightened of the storm.",
+      "The children were frightened by the storm.",
+      "The kids were scared of the storm."
+     ],
+     "note": "Korkan kişi: frightened."
+    },
+    {
+     "id": "participle_adjectives-12",
+     "tr": "Haberi duyunca çok şaşırdım.",
+     "answers": [
+      "I was very surprised when I heard the news.",
+      "I was really surprised to hear the news."
+     ],
+     "note": "Şaşıran kişi: surprised."
+    },
+    {
+     "id": "participle_adjectives-13",
+     "tr": "Bu ne şaşırtıcı bir sonuç!",
+     "answers": [
+      "What a surprising result!",
+      "What a surprising result this is!"
+     ],
+     "note": "Şaşırtan şey: surprising."
+    },
+    {
+     "id": "participle_adjectives-14",
+     "tr": "Maçtan sonra çok yorgun ama mutluyduk.",
+     "answers": [
+      "We were very tired but happy after the match.",
+      "After the match we were very tired but happy.",
+      "We were really tired but happy after the game."
+     ],
+     "note": "Yorgun olan kişi: tired."
+    },
+    {
+     "id": "participle_adjectives-15",
+     "tr": "Ben sıkıcı biri değilim, sadece sıkıldım.",
+     "answers": [
+      "I'm not boring, I'm just bored.",
+      "I am not a boring person; I'm just bored.",
+      "I'm not boring; I'm only bored."
+     ],
+     "note": "I am boring = sıkıcı biriyim; I am bored = sıkıldım."
+    },
+    {
+     "id": "participle_adjectives-16",
+     "tr": "Annem sonuçtan çok memnun kaldı.",
+     "answers": [
+      "My mother was very pleased with the result.",
+      "My mum was very pleased with the result.",
+      "My mother was very satisfied with the result."
+     ],
+     "note": "Memnun olan kişi: pleased / satisfied."
+    },
+    {
+     "id": "participle_adjectives-b1",
+     "gap": "The lesson was so ___ (bore) that I fell asleep.",
+     "tr": "Ders o kadar sıkıcıydı ki uyuyakaldım.",
+     "answers": [
+      "boring"
+     ],
+     "note": "Dersin kendisi: -ing."
+    },
+    {
+     "id": "participle_adjectives-b2",
+     "gap": "I'm ___ (bore). Let's go out.",
+     "tr": "Sıkıldım. Hadi dışarı çıkalım.",
+     "answers": [
+      "bored"
+     ],
+     "note": "Hisseden kişi: -ed."
+    },
+    {
+     "id": "participle_adjectives-b3",
+     "gap": "She is ___ (interest) in art.",
+     "tr": "Sanatla ilgileniyor.",
+     "answers": [
+      "interested"
+     ],
+     "note": "interested in."
+    },
+    {
+     "id": "participle_adjectives-b4",
+     "gap": "That was an ___ (amaze) concert!",
+     "tr": "Muhteşem bir konserdi!",
+     "answers": [
+      "amazing"
+     ],
+     "note": "Hissi veren şey: -ing."
+    },
+    {
+     "id": "participle_adjectives-b5",
+     "gap": "After the match, the players were very ___ (tire).",
+     "tr": "Maçtan sonra oyuncular çok yorgundu.",
+     "answers": [
+      "tired"
+     ],
+     "note": "Hisseden kişi: -ed."
+    },
+    {
+     "id": "participle_adjectives-b6",
+     "gap": "The news about the accident is very ___ (worry).",
+     "tr": "Kazayla ilgili haber çok endişe verici.",
+     "answers": [
+      "worrying"
+     ],
+     "note": "Endişe veren şey: -ing."
+    },
+    {
+     "id": "participle_adjectives-b7",
+     "gap": "Her parents are ___ (worry) about her.",
+     "tr": "Ailesi onun için endişeli.",
+     "answers": [
+      "worried"
+     ],
+     "note": "Endişelenen kişi: -ed."
+    },
+    {
+     "id": "participle_adjectives-b8",
+     "gap": "I felt ___ (embarrass) when I forgot his name.",
+     "tr": "Adını unutunca utandım.",
+     "answers": [
+      "embarrassed"
+     ],
+     "note": "feel + -ed."
+    },
+    {
+     "id": "participle_adjectives-b9",
+     "gap": "This map is really ___ (confuse).",
+     "tr": "Bu harita gerçekten kafa karıştırıcı.",
+     "answers": [
+      "confusing"
+     ],
+     "note": "Kafa karıştıran şey: -ing."
+    },
+    {
+     "id": "participle_adjectives-b10",
+     "gap": "We were ___ (excite) to meet the singer.",
+     "tr": "Şarkıcıyla tanışacağımız için heyecanlıydık.",
+     "answers": [
+      "excited"
+     ],
+     "note": "Hisseden kişi: -ed."
+    },
+    {
+     "id": "participle_adjectives-b11",
+     "gap": "The ending of the film was really ___ (disappoint).",
+     "tr": "Filmin sonu gerçekten hayal kırıklığı yarattı.",
+     "answers": [
+      "disappointing"
+     ],
+     "note": "Hissi veren şey: -ing."
+    },
+    {
+     "id": "participle_adjectives-b12",
+     "gap": "He looked ___ (surprise) when he saw us.",
+     "tr": "Bizi görünce şaşırmış göründü.",
+     "answers": [
+      "surprised"
+     ],
+     "note": "look + -ed: hisseden kişi."
+    }
+   ],
+   "aliases": [
+    "ed ing adjectives",
+    "-ed -ing adjectives",
+    "bored boring",
+    "participle adjectives",
+    "participial adjectives",
+    "ed ing sıfatlar",
+    "-ed / -ing sıfatları",
+    "sıfat fiil"
+   ]
+  },
+  {
    "id": "irregular_verbs",
    "category": "forms",
    "level": "A2",

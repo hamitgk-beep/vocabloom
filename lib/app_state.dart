@@ -193,6 +193,14 @@ const grammarFilters = <CategoryInfo>[
     "…, isn't it?  …, didn't they?: cümle sonundaki \"değil mi?\" soruları.",
     "…, isn't it?  …, didn't they?: short \"right?\" questions at the end of a sentence.",
   ),
+  CategoryInfo(
+    'g_participles',
+    'Participles',
+    'Ortaçlar (-ing / -ed)',
+    Color(0xFF4E342E),
+    'Walking home, I …; Having finished, …; a letter written by him; the man standing there; bored / boring.',
+    'Walking home, I …; Having finished, …; a letter written by him; the man standing there; bored / boring.',
+  ),
 ];
 
 /// The Filters menu in three groups; the colour priority still follows [allCategories].
@@ -201,7 +209,22 @@ const filterGroups = <(String, String, List<String>)>[
   (
     'Gramer yapıları',
     'Grammar structures',
-    ['g_tenses', 'g_passive', 'modal_verbs', 'g_past_modals', 'g_conditionals', 'g_relative', 'g_gerund_inf', 'g_comparison', 'g_reported', 'g_used_to', 'g_causative', 'g_emphasis', 'g_tags'],
+    [
+      'g_tenses',
+      'g_passive',
+      'modal_verbs',
+      'g_past_modals',
+      'g_conditionals',
+      'g_relative',
+      'g_participles',
+      'g_gerund_inf',
+      'g_comparison',
+      'g_reported',
+      'g_used_to',
+      'g_causative',
+      'g_emphasis',
+      'g_tags',
+    ],
   ),
   ('Kelime türleri', 'Word types', ['false_friends', 'irregular_verbs']),
 ];

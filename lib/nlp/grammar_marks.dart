@@ -15,7 +15,7 @@ typedef Tx = (String, String);
 /// Filter ids of the grammar highlights, in display order.
 const grammarCatIds = [
   'g_tenses', 'g_passive', 'g_conditionals', 'g_relative', 'g_gerund_inf', 'g_comparison', 'g_reported', //
-  'g_past_modals', 'g_used_to', 'g_causative', 'g_emphasis', 'g_tags',
+  'g_past_modals', 'g_used_to', 'g_causative', 'g_emphasis', 'g_tags', 'g_participles',
 ];
 
 /// One structure found in a paragraph.
@@ -712,6 +712,122 @@ const _ingAdj = {
 };
 
 /// -ed / V3 words used as adjectives after "be" ("she was tired").
+
+/// -ing words that are prepositions or nouns, not participles.
+const _ingNotParticiple = {
+  'according', 'including', 'regarding', 'concerning', 'considering', 'during', 'notwithstanding', 'excepting', 'following', 'pending', //
+  'nothing', 'something', 'anything', 'everything', 'morning', 'evening', 'king', 'thing', 'ring', 'wing', 'string', 'spring', 'ceiling',
+  'darling', 'pudding', 'shilling', 'farthing', 'sterling', 'lightning', 'stocking', 'wedding', 'clothing', 'ending', 'beginning', 'building',
+  'meeting', 'feeling', 'painting', 'drawing', 'reading', 'writing', 'living', 'opening', 'setting', 'surroundings', 'savings', 'gathering',
+  'good-morning', 'good-evening', 'supposing', 'providing', 'seeing', 'granting', 'saying',
+};
+
+/// Nouns of time: "spent the day reading" is spend + time + V-ing, not a reduced relative.
+const _spendNouns = {
+  'day',
+  'days',
+  'time',
+  'times',
+  'hour',
+  'hours',
+  'minute',
+  'minutes',
+  'morning',
+  'evening',
+  'night',
+  'nights',
+  'afternoon',
+  'week',
+  'weeks',
+  'month',
+  'months',
+  'year',
+  'years',
+  'while',
+  'moment',
+  'trouble',
+  'difficulty',
+  'fun',
+  'problem',
+  'problems',
+  'way',
+  'life',
+  'rest',
+  'lot',
+  'deal',
+};
+
+/// Verbs like "be" before a feeling adjective: "feel bored", "looks interesting".
+const _linkVerbs = {'feel', 'seem', 'look', 'get', 'become', 'sound', 'remain', 'grow', 'appear'};
+
+/// -ed / -ing feeling adjectives and their pair.
+const _feelingPairs = <String, String>{
+  'bored': 'boring',
+  'boring': 'bored',
+  'interested': 'interesting',
+  'interesting': 'interested',
+  'excited': 'exciting',
+  'exciting': 'excited',
+  'tired': 'tiring',
+  'tiring': 'tired',
+  'surprised': 'surprising',
+  'surprising': 'surprised',
+  'amazed': 'amazing',
+  'amazing': 'amazed',
+  'confused': 'confusing',
+  'confusing': 'confused',
+  'embarrassed': 'embarrassing',
+  'embarrassing': 'embarrassed',
+  'frightened': 'frightening',
+  'frightening': 'frightened',
+  'worried': 'worrying',
+  'worrying': 'worried',
+  'disappointed': 'disappointing',
+  'disappointing': 'disappointed',
+  'exhausted': 'exhausting',
+  'exhausting': 'exhausted',
+  'annoyed': 'annoying',
+  'annoying': 'annoyed',
+  'shocked': 'shocking',
+  'shocking': 'shocked',
+  'satisfied': 'satisfying',
+  'satisfying': 'satisfied',
+  'terrified': 'terrifying',
+  'terrifying': 'terrified',
+  'fascinated': 'fascinating',
+  'fascinating': 'fascinated',
+  'relaxed': 'relaxing',
+  'relaxing': 'relaxed',
+  'depressed': 'depressing',
+  'depressing': 'depressed',
+  'amused': 'amusing',
+  'amusing': 'amused',
+  'thrilled': 'thrilling',
+  'thrilling': 'thrilled',
+  'astonished': 'astonishing',
+  'astonishing': 'astonished',
+  'disgusted': 'disgusting',
+  'disgusting': 'disgusted',
+  'irritated': 'irritating',
+  'irritating': 'irritated',
+  'puzzled': 'puzzling',
+  'puzzling': 'puzzled',
+  'charmed': 'charming',
+  'charming': 'charmed',
+  'alarmed': 'alarming',
+  'alarming': 'alarmed',
+  'inspired': 'inspiring',
+  'inspiring': 'inspired',
+  'touched': 'touching',
+  'touching': 'touched',
+  'overwhelmed': 'overwhelming',
+  'overwhelming': 'overwhelmed',
+  'frustrated': 'frustrating',
+  'frustrating': 'frustrated',
+  'scared': 'scary',
+  'pleased': 'pleasing',
+};
+
 /// Old English "is come", "was become": be + a verb that takes no object is no passive.
 const _intransPP = {'come', 'become', 'gone', 'arrived', 'fallen', 'risen', 'departed'};
 bool _noPassive(String x) => _edAdj.contains(x) || _intransPP.contains(x);
@@ -1796,6 +1912,7 @@ class _Sentence {
     _causative(out);
     _emphasis(out);
     _tags(out);
+    _participles(out);
   }
 
   String words(List<int> idx) => idx.map((i) => toks[i].text).join(' ');
@@ -2148,6 +2265,8 @@ class _Sentence {
           g._isPP(y) &&
           !_edAdj.contains(y) &&
           !g._isIng(y) &&
+          // "I got a letter written by him": something received, not a job.
+          !(verb == 'get' && (w[j] == 'a' || w[j] == 'an') && at(k + 1) == 'by') &&
           !(k + 1 < e && !cut(k + 1) && g._isNounish(w[k + 1]) && !_preps.contains(w[k + 1]) && !_det.contains(w[k + 1]) && g._isAdjLemma(y))) {
         out.add(
           GMark(
@@ -2287,6 +2406,207 @@ class _Sentence {
   }
 
   // ------------------------------------------------------------ tag questions
+
+  // ------------------------------------------------------------ participles
+
+  void _participles(List<GMark> out) {
+    final taken = <int>{};
+    bool inGroup(int k) => groups.any((v) => v.toks.contains(k));
+    bool subjAt(int k) => k < e && (_subjOnly.contains(w[k]) || const {'you', 'it', 'there'}.contains(w[k]) || _det.contains(w[k]) || _possDet.contains(w[k]) || isName(k));
+    bool partIng(String x) => g._isIng(x) && x != 'being' && !_ingNotParticiple.contains(x) && !g.posOfLemma(x).contains('n') && !g.posOfLemma(x).contains('a');
+    bool partIngFront(String x) => (g._isIng(x) || x == 'being') && !_ingNotParticiple.contains(x);
+    const clauseTr =
+        'Ortaç cümleciği, yan cümleyi kısaltır: V-ing = aynı anda / etken (yaparken, yaparak), Having + V3 = önce olan (yaptıktan sonra), V3 = edilgen (yapılmış). Öznesi ana cümlenin öznesiyle aynıdır.';
+    const clauseEn = 'A participle clause shortens a clause: V-ing = at the same time / active, Having + V3 = earlier, V3 = passive meaning. Its subject is the subject of the main clause.';
+
+    // 1. At the start: "Walking home, I met …", "Having finished, she left", "Built in 1890, the bridge …".
+    var k0 = s;
+    if (const {'while', 'when'}.contains(w[s]) && s + 1 < e && partIngFront(w[s + 1])) k0 = s + 1;
+    final x0 = w[k0];
+    int? head;
+    String? kind;
+    if (x0 == 'having' && k0 + 1 < e && g._isPP(w[k0 + 1]) && !cut(k0 + 1)) {
+      head = k0 + 1;
+      kind = 'perfect';
+    } else if (x0 == 'not' && k0 + 1 < e && partIngFront(w[k0 + 1]) && !cut(k0 + 1)) {
+      head = k0 + 1;
+      kind = 'ing';
+    } else if (partIngFront(x0) && x0 != 'having') {
+      head = k0;
+      kind = 'ing';
+    } else if (k0 == s && g._isPP(x0) && !_intransPP.contains(x0) && !_feelingPairs.containsKey(x0) && !g._isIng(x0)) {
+      head = k0;
+      kind = 'pp';
+    }
+    // "Had he known …"; and a real sentence start with a capital, not the rest after a quote ("… !" said Alice).
+    if (head != null && (aux(head) != null || !isCap(s))) head = null;
+    if (head != null) {
+      int? comma;
+      for (var k = head + 1; k < e && k <= head + 12; k++) {
+        if (cut(k)) {
+          comma = k;
+          break;
+        }
+      }
+      final commaOnly = comma != null && comma > head + 1 && RegExp(r'^[\s\d]*,\s*$').hasMatch(gap(comma));
+      if (commaOnly && subjAt(comma) && !groups.any((v) => v.first > head! && v.first < comma!) && groups.any((v) => v.first >= comma! && v.first <= comma + 4 && v.first > comma)) {
+        final idx = [for (var q = s; q <= head; q++) q];
+        taken.addAll(idx);
+        out.add(
+          GMark(
+            'g_participles',
+            kind == 'perfect'
+                ? 'participle_perfect'
+                : kind == 'pp'
+                ? 'participle_passive'
+                : 'participle_ing',
+            idx,
+            const ['participle_clauses'],
+            kind == 'perfect'
+                ? 'Participle Clause (Having + V3)'
+                : kind == 'pp'
+                ? 'Participle Clause (V3)'
+                : 'Participle Clause (V-ing)',
+            kind == 'perfect'
+                ? 'Ortaç cümleciği (yaptıktan sonra)'
+                : kind == 'pp'
+                ? 'Ortaç cümleciği (edilgen, yapılmış)'
+                : 'Ortaç cümleciği (yaparken / yaparak)',
+            (clauseTr, clauseEn),
+            note: ('Cümleciğin öznesi virgülden sonra gelen özne: "${words([comma])}".', 'The clause shares the subject after the comma: "${words([comma])}".'),
+          ),
+        );
+      }
+    }
+
+    for (var i = s + 1; i < e; i++) {
+      if (taken.contains(i)) continue;
+      final x = w[i];
+      // 2. After a comma at the end: "She left the room, slamming the door."
+      if (cut(i) && RegExp(r'^\s*,\s*$').hasMatch(gap(i)) && partIng(x) && !inGroup(i) && !g._isIng(w[i - 1]) && groups.any((v) => v.isTense && v.last < i && v.first >= s)) {
+        final n1 = at(i + 1);
+        final pw = w[i - 1];
+        // "a sensible, deserving woman": a list of adjectives before a noun.
+        final adjList = (g._isAdjLemma(pw) || _edAdj.contains(pw) || _feelingPairs.containsKey(pw)) && g._isNounish(n1) && !_det.contains(n1) && !_preps.contains(n1) && !_possDet.contains(n1);
+        if (n1 != 'and' && n1 != 'or' && !adjList && !(i + 1 < e && cut(i + 1) && g._isIng(n1))) {
+          taken.add(i);
+          out.add(
+            GMark(
+              'g_participles',
+              'participle_ing',
+              [i],
+              const ['participle_clauses'],
+              'Participle Clause (V-ing)',
+              'Ortaç cümleciği (yaparak / yaparken)',
+              (clauseTr, clauseEn),
+              note: (
+                'Virgülden sonraki V-ing, ana cümledeki kişinin aynı anda yaptığı şeyi anlatır: "-erek, -ken".',
+                'The V-ing after the comma tells what the same person was doing at the same time.',
+              ),
+            ),
+          );
+          continue;
+        }
+      }
+      // 3. A reduced relative clause after a noun: "a letter written by him", "the man standing by the door".
+      if (!cut(i) && !inGroup(i) && i + 1 < e && !cut(i + 1)) {
+        final y = w[i - 1];
+        final pp = g.participles.contains(x) && !g.pastForms.contains(x) && !_edAdj.contains(x) && !_noPassive(x);
+        final ing = g._isIng(x) && x != 'being' && !_ingNotParticiple.contains(x) && !_ingAdj.contains(x) && !_feelingPairs.containsKey(x);
+        if ((pp || ing) &&
+            x != 'having' &&
+            x != 'going' &&
+            g._isNounish(y) &&
+            !y.endsWith("'s") &&
+            !y.endsWith('ly') &&
+            y != 'being' &&
+            !_spendNouns.contains(y) &&
+            !isName(i - 1) &&
+            !inGroup(i - 1) &&
+            aux(i - 1) == null &&
+            !_subjOnly.contains(y) &&
+            !_objPron.contains(y)) {
+          var d = i - 1;
+          while (d > s && d > i - 4 && !cut(d) && (g._isAdjLemma(w[d - 1]) || g._isNounish(w[d - 1])) && !_det.contains(w[d - 1])) {
+            d--;
+          }
+          final hasDet = d > s && !cut(d) && (_det.contains(w[d - 1]) || _possDet.contains(w[d - 1])) && w[d - 1] != 'that';
+          final n = w[i + 1];
+          final follows = pp
+              ? (const {'by', 'in', 'on', 'at', 'from', 'with', 'for', 'as', 'into', 'during', 'since', 'over', 'under'}.contains(n))
+              : (_preps.contains(n) || _det.contains(n) || _possDet.contains(n));
+          if (hasDet && follows) {
+            taken.add(i);
+            final np = words([for (var q = d - 1; q < i; q++) q]);
+            out.add(
+              GMark(
+                'g_participles',
+                pp ? 'reduced_relative_pp' : 'reduced_relative_ing',
+                [i],
+                const ['participle_clauses', 'relative_clauses'],
+                pp ? 'Reduced Relative Clause (V3)' : 'Reduced Relative Clause (V-ing)',
+                pp ? 'Kısaltılmış sıfat cümleciği (yapılmış olan)' : 'Kısaltılmış sıfat cümleciği (yapan)',
+                pp
+                    ? (
+                        'İsimden sonra gelen V3, "which / who + be + V3" yerine geçer ve edilgen anlam verir (a letter written by him = onun yazdığı mektup).',
+                        'A V3 after a noun stands for "which / who + be + V3" and has a passive meaning (a letter written by him).',
+                      )
+                    : (
+                        'İsimden sonra gelen V-ing, "who / which + fiil" yerine geçer (the man standing by the door = kapının yanında duran adam).',
+                        'A V-ing after a noun stands for "who / which + verb" (the man standing by the door).',
+                      ),
+                note: (
+                  'Kısaltılmamış hali: "$np ${pp ? 'which / who is (was)' : 'who / which'} ${toks[i].text} …".',
+                  'In full: "$np ${pp ? 'which / who is (was)' : 'who / which'} ${toks[i].text} …".',
+                ),
+              ),
+            );
+            continue;
+          }
+        }
+      }
+      // 4. Feeling adjectives: "I was bored", "a boring film".
+      final pair = _feelingPairs[x];
+      if (pair != null && !inGroup(i)) {
+        final p = pv(i);
+        final y = p >= s ? w[p] : '';
+        final afterBe =
+            p >= s &&
+            !cut(p + 1) &&
+            (aux(p) != null && const {'am', 'is', 'are', 'was', 'were', "'s"}.contains(aux(p)) && !subjInside(p) ||
+                const {'be', 'been', 'being'}.contains(y) ||
+                _linkVerbs.any((l) => g.lemmas(y).contains(l)) ||
+                subjInside(p) && const {"'m", "'re", "'s"}.any(w[p].endsWith));
+        final n1 = at(i + 1);
+        final ingObj = x.endsWith('ing') && i + 1 < e && !cut(i + 1) && (_det.contains(n1) || _objPron.contains(n1) || _possDet.contains(n1));
+        final beforeNoun =
+            i + 1 < e &&
+            !cut(i + 1) &&
+            g._isNounish(n1) &&
+            !g._isS(n1) &&
+            (y == 'very' || y == 'so' || y == 'really' || y == 'quite' || y == 'most' || y == 'more' || _det.contains(y) || _possDet.contains(y));
+        if ((afterBe && !ingObj) || beforeNoun) {
+          final ed = x.endsWith('ed') || x.endsWith('en');
+          out.add(
+            GMark(
+              'g_participles',
+              ed ? 'feeling_ed' : 'feeling_ing',
+              [i],
+              const ['participle_adjectives'],
+              ed ? '-ed adjective (how someone feels)' : '-ing adjective (what causes the feeling)',
+              ed ? '-ed sıfatı (hisseden)' : '-ing sıfatı (hissettiren)',
+              ed
+                  ? ('-ed ile biten sıfat, kişinin ne hissettiğini anlatır: I am bored = sıkıldım.', 'An -ed adjective tells how someone feels: I am bored.')
+                  : ('-ing ile biten sıfat, o duyguyu neyin verdiğini anlatır: The film is boring = film sıkıcı.', 'An -ing adjective tells what causes the feeling: The film is boring.'),
+              note: ed
+                  ? ('Karşılığı: "$pair" (o duyguyu veren şey).', 'Its pair: "$pair" (what causes the feeling).')
+                  : ('Karşılığı: "$pair" (o duyguyu yaşayan kişi).', 'Its pair: "$pair" (the person who feels it).'),
+            ),
+          );
+        }
+      }
+    }
+  }
 
   void _tags(List<GMark> out) {
     if (e - s < 4) return;
