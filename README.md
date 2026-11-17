@@ -80,22 +80,30 @@ sürümlerini otomatik derler.
 
 ## Lisanslar
 
+VocaBloom'un kaynak kodu GPL-3.0 lisanslıdır (`LICENSE`). eSpeak NG (GPL-3.0) uygulamayla birlikte dağıtıldığı için
+bu gereklidir; uygulama Play Store'da reklamlı/ücretli olsa da kaynak kodu bu depoda açık kalmalıdır.
+Sözlük veritabanı (`assets/dict.db`) aşağıdaki CC BY-SA kaynaklardan uyarlandığı için CC BY-SA 4.0 ile paylaşılır.
+Uygulamada Ayarlar > Gizlilik ve lisanslar bütün kaynakları ve kütüphane lisanslarını gösterir.
+
 - Kelime anlamları (`tools/data/main_meanings.jsonl.gz`, `tools/main_meanings.py`): Wiktionary çevirileri
-  (kaikki.org üzerinden, Murat Uysal'ın Kindle İngilizce–Türkçe sözlüğü derlemesinden:
+  (kaikki.org üzerinden, Murat Uysal'ın Kindle İngilizce–Türkçe sözlüğü derlemesinin yalnızca Wiktionary kısmı:
   github.com/mybottles/kindle-en-tr-dictionary): CC BY-SA 4.0 / GFDL. Yardımcı kaynak:
-  damdafayton/eng-tur-dictionary (README'ye göre MIT; verinin kaynağı belirtilmemiş)
-- FreeDict English–Turkish (artık kelime anlamı olarak gösterilmiyor; yalnızca kalıplarda yedek): GPL-2.0-or-later
+  damdafayton/eng-tur-dictionary (README'ye göre MIT, ama lisans dosyası yok ve verinin kaynağı belirtilmemiş;
+  yayından önce yazarından izin ve kaynağı sorulmalı)
+- FreeDict English–Turkish (kelime anlamı olarak gösterilmiyor; yalnızca kalıplarda yedek): GPL-2.0-or-later
 - Princeton WordNet 3.0: WordNet License
-- KeNet Turkish WordNet (Starlang Software / Özyeğin Üniversitesi): CC BY-SA 4.0
+- KeNet Turkish WordNet (Starlang Software / Özyeğin Üniversitesi): veri CC BY-SA 4.0
 - Collaborative Interlingual Index: CC BY 4.0
 - Wiktionary (deyim, phrasal verb, atasözü vb. kalıplar; İngilizce ve Türkçe Vikisözlük, kaikki.org/wiktextract üzerinden): CC BY-SA 4.0
 - Tatoeba (İngilizce–Türkçe çevirili örnek cümleler): CC BY 2.0 FR
+- Yapay zekâyla yazılmış Türkçe açıklamalar (`dictionary-data` iş akışı): Gemini, Groq, Mistral, Cerebras ve OpenRouter
+  API'leri; bu servislerin şartları çıktının kullanıcıya ait olduğunu söyler. NVIDIA API denemesi (yalnızca test
+  amaçlı, çıktısı dağıtılamaz) ve kapanan GitHub Models kullanılmıyor.
 - Kokoro-82M ses modeli (hexgrad): Apache 2.0
 - Piper LibriTTS-R İngilizce ses: CC BY 4.0
 - EMA Lightning Türkçe ses modeli (canberk7): Apache 2.0 (kod ve ağırlıklar); ONNX'e `tools/ema_export.py` ile çevrilir
 - Piper Türkçe ses (Fahrettin): NabuCasa voice-datasets kayıtları, CC0
 - ONNX Runtime: MIT
 - sherpa-onnx: Apache 2.0 · eSpeak NG (telaffuz verisi): GPL-3.0
+- Yazı tipleri Inter ve Literata: SIL Open Font License 1.1
 - `tools/categories.py` kalıp listeleri bu proje için yazıldı: CC BY-SA 4.0
-
-FreeDict GPL olduğu için uygulama dağıtılacaksa GPL uyumlu (ör. GPL-3.0) açık kaynak lisansla dağıtılmalıdır.
