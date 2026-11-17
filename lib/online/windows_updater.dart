@@ -61,8 +61,9 @@ class WindowsUpdater {
     final vbs = File(p.join(File(script).parent.path, 'install.vbs'));
     await vbs.writeAsString('CreateObject("WScript.Shell").Run "cmd /c """ & WScript.Arguments(0) & """", 0, False\r\n');
     try {
-      final r = await Process.run('wscript.exe', ['//B', '//Nologo', vbs.path, script], environment: env);
-      if (r.exitCode == 0) return;
+      // Detached, without pipes: the script inherits nothing to wait on.
+      await Process.start('wscript.exe', ['//B', '//Nologo', vbs.path, script], environment: env, mode: ProcessStartMode.detached);
+      return;
     } catch (_) {}
     await Process.start('cmd', ['/c', script], mode: ProcessStartMode.detached, environment: env);
   }
@@ -76,9 +77,21 @@ class WindowsUpdater {
     required String exe,
     required String cleanup,
     required String result,
+    String? appName,
+    String? log,
     int killAfter = 10,
     int giveUpAfter = 40,
-  }) => {'VB_NEW': newFiles, 'VB_APP': appDir, 'VB_EXE': exe, 'VB_NAME': p.basename(exe), 'VB_CLEAN': cleanup, 'VB_RESULT': result, 'VB_KILL': '$killAfter', 'VB_GIVEUP': '$giveUpAfter'};
+  }) => {
+    'VB_NEW': newFiles,
+    'VB_APP': appDir,
+    'VB_EXE': exe,
+    'VB_NAME': appName ?? p.basename(exe),
+    'VB_LOG': log ?? p.join(Directory.systemTemp.path, 'vocabloom-update.log'),
+    'VB_CLEAN': cleanup,
+    'VB_RESULT': result,
+    'VB_KILL': '$killAfter',
+    'VB_GIVEUP': '$giveUpAfter',
+  };
 
   /// The batch file (ASCII only). It waits until no .exe or .dll in %VB_APP%
   /// is in use (a running program's files cannot be opened for writing),
@@ -90,7 +103,7 @@ class WindowsUpdater {
   static String installScript(int pid) => [
     '@echo off',
     'setlocal',
-    'set LOG="%TEMP%\\vocabloom-update.log"',
+    'set LOG="%VB_LOG%"',
     'echo %DATE% %TIME% waiting for $pid > %LOG%',
     'set /a T=0',
     ':wait',
@@ -98,6 +111,8 @@ class WindowsUpdater {
     'for %%F in ("%VB_APP%\\*.exe" "%VB_APP%\\*.dll") do ( (call ) 2>nul >>"%%~F" || set BUSY=%%~nxF)',
     'if not defined BUSY goto free',
     'set /a T+=1',
+    'set /a M=T %% 5',
+    'if %M%==0 echo %TIME% in use: %BUSY%>> %LOG%',
     'if %T%==%VB_KILL% (',
     '  echo %TIME% still in use: %BUSY%, ending the old app>> %LOG%',
     '  taskkill /F /PID $pid >> %LOG% 2>&1',

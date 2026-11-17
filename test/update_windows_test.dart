@@ -83,13 +83,23 @@ void main() {
     final script = File(p.join(t.work.path, 'install.cmd'))..writeAsStringSync(WindowsUpdater.installScript(appPid));
     await WindowsUpdater.launchScript(
       script.path,
-      WindowsUpdater.installEnv(newFiles: t.fresh.path, appDir: t.app.path, exe: t.exe, cleanup: t.work.path, result: t.result.path, killAfter: killAfter, giveUpAfter: giveUpAfter),
+      WindowsUpdater.installEnv(
+        newFiles: t.fresh.path,
+        appDir: t.app.path,
+        exe: t.exe,
+        cleanup: t.work.path,
+        result: t.result.path,
+        appName: 'VocaBloom.exe',
+        log: p.join(t.root.path, 'update.log'),
+        killAfter: killAfter,
+        giveUpAfter: giveUpAfter,
+      ),
     );
     for (var i = 0; i < 240 && !File(t.marker).existsSync(); i++) {
       await Future<void>.delayed(const Duration(milliseconds: 250));
     }
     await Future<void>.delayed(const Duration(milliseconds: 500));
-    final log = File(p.join(Platform.environment['TEMP']!, 'vocabloom-update.log'));
+    final log = File(p.join(t.root.path, 'update.log'));
     return log.existsSync() ? log.readAsStringSync() : '-';
   }
 
