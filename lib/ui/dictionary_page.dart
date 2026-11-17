@@ -241,7 +241,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                   final r = rows[i];
                   if (r is String) return Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: SectionLabel(r));
                   final (w, m) = r as (String, String?);
-                  final meaning = m ?? app.listMeaning(w);
+                  final meaning = m ?? app.shortMeaning(w);
                   final st = app.user.statuses[w];
                   return Column(mainAxisSize: MainAxisSize.min, children: [
                     if (i > 0 && rows[i - 1] is! String) const Divider(height: 1, indent: 16, endIndent: 16),

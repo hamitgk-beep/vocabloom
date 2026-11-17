@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "dictionary-wiktionary-meanings",
+      "area": "dictionary",
+      "tr": "Kelime anlamları yenilendi: artık Wiktionary'den (Kindle İngilizce-Türkçe sözlüğü) geliyor, eksikleri ikinci bir açık sözlük tamamlıyor. \"ask\", \"easy\", \"every\" gibi binlerce kelimeye Türkçe anlam eklendi.",
+      "en": "Word meanings renewed: they now come from Wiktionary (the Kindle English-Turkish dictionary), with a second open dictionary filling the gaps. Thousands of words such as \"ask\", \"easy\" and \"every\" got a Turkish meaning."
+    },
+    {
       "id": "dictionary-search-browse",
       "area": "dictionary",
       "tr": "Sözlük sekmesi dolu: en sık kullanılan kelimeler ve A'dan Z'ye kelime listesi Türkçe anlamlarıyla. Arama artık iki yönlü; Türkçe yazınca İngilizcesini bulur (\"kopek\" → dog).",

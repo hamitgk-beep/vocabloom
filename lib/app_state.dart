@@ -178,33 +178,6 @@ class AppState extends ChangeNotifier {
   }
 
   /// Short Turkish meaning used in lists.
-  /// A short meaning for the dictionary list: the Turkish words that the
-  /// two dictionaries (FreeDict and the WordNet senses) agree on, most agreed
-  /// first ("know" → "bilmek, haberi olmak" rather than FreeDict's first line
-  /// "seçmek, farketmek"). Falls back to [shortMeaning].
-  String? listMeaning(String lemma) {
-    final info = dict.lookup(lemma);
-    final groups = <List<String>>[
-      for (final i in info.trFreeDict.take(6)) [for (final p in i.split(RegExp('[,;:]'))) if (p.trim().isNotEmpty) p.trim()],
-      for (final s in info.senses.take(12)) s.tr,
-    ];
-    final order = <String>[];
-    final count = <String, int>{};
-    for (final g in groups) {
-      for (final t in g.toSet()) {
-        if (t.contains('bakınız') || t.length > 30) continue;
-        if (!count.containsKey(t)) order.add(t);
-        count[t] = (count[t] ?? 0) + 1;
-      }
-    }
-    final agreed = order.where((t) => count[t]! > 1).toList()
-      ..sort((a, b) {
-        final c = count[b]!.compareTo(count[a]!);
-        return c != 0 ? c : order.indexOf(a).compareTo(order.indexOf(b));
-      });
-    return agreed.isEmpty ? shortMeaning(lemma) : agreed.take(3).join(', ');
-  }
-
   String? shortMeaning(String lemma) {
     final info = dict.lookup(lemma);
     if (info.trFreeDict.isNotEmpty) return info.trFreeDict.first;
