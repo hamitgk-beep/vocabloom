@@ -32,9 +32,11 @@ Map<String, String> get posNames => uiEnglish
     ? const {'n': 'noun', 'v': 'verb', 'a': 'adjective', 'r': 'adverb'}
     : const {'n': 'isim', 'v': 'fiil', 'a': 'sıfat', 'r': 'zarf'};
 
-/// Read-only bundled dictionary (FreeDict + WordNet + KeNet + categories).
+/// Read-only bundled dictionary. Turkish word meanings (`ft`, read as
+/// [WordInfo.trFreeDict]) come from Wiktionary and damdafayton/eng-tur-dictionary
+/// (tools/main_meanings.py); WordNet gives English senses and base forms.
 class DictDb {
-  static const _version = '19';
+  static const _version = '20';
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
@@ -273,7 +275,15 @@ class DictDb {
       final tr = info.trFreeDict.isNotEmpty
           ? shortTr(info.trFreeDict.first)
           : info.senses.where((s) => s.tr.isNotEmpty).map((s) => s.tr.take(3).join(', ')).firstOrNull;
-      return (sense: s, tr: tr, pos: s == null ? (tr != null && isTrVerb(tr) ? 'v' : null) : normPos(s.pos), sure: true);
+      // The part of speech follows the meaning shown: WordNet's first sense
+      // of "fall" is the noun (autumn) but its first meaning is "düşmek".
+      final sPos = s == null ? null : normPos(s.pos);
+      final pos = tr == null
+          ? sPos
+          : isTrVerb(tr)
+              ? 'v'
+              : (sPos == 'v' ? null : sPos);
+      return (sense: s, tr: tr, pos: pos, sure: true);
     }
     final comp = compoundAt(toks, i, lemma);
     final best = bestSense(info, toks, i);

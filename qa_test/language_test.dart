@@ -586,9 +586,8 @@ void main() {
     // Meanings shown in the word lists, the dictionary tab and the quiz.
     content.addAll([for (final q in ['kopek', 'wor']) for (final (_, m) in d.searchTurkish(q)) m]);
     for (final w in [...d.searchWords('wor', limit: 60), ...d.searchWords('b', limit: 101), ...d.commonWords(limit: 101), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
-      for (final m in [app.shortMeaning(w), app.listMeaning(w)]) {
-        if (m != null) content.addAll([m, ...m.split(', ')]);
-      }
+      final m = app.shortMeaning(w);
+      if (m != null) content.addAll([m, ...m.split(', ')]);
       final info = d.lookup(w);
       for (final t in [...info.trFreeDict, for (final s in info.senses) ...s.tr]) {
         content.addAll([t, ...t.split(',').map((x) => x.trim())]);

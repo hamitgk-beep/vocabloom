@@ -768,6 +768,10 @@ def main():
     print('word families', len(gid_of), 'words', len(fam_rows))
     load_syn(db)
     load_wd(db)
+    # Word meanings: Wiktionary (Kindle compilation) first, damdafayton as helper.
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import main_meanings
+    main_meanings.apply(db)
 
     db.executescript('''
       CREATE INDEX sense_lemma ON sense(lemma);
