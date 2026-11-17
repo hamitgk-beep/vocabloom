@@ -977,6 +977,10 @@ weave|wove|woven | dokumak
 weep|wept|wept | ağlamak
 withdraw|withdrew|withdrawn | geri çekmek, çekilmek
 wring|wrung|wrung | sıkmak (çamaşır)
+lie|lay|lain | uzanmak, yatmak, bulunmak
+shear|sheared|shorn | kırkmak, makasla kesmek
+show|showed|shown | göstermek
+stick|stuck|stuck | yapıştırmak, saplamak, bağlı kalmak
 """
 
 CATEGORIES = {
