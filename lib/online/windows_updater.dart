@@ -36,45 +36,107 @@ class WindowsUpdater {
     return out;
   }
 
+  /// Where the install script writes "ok" or "fail ..." for the next start.
+  static String get resultPath => p.join(Directory.systemTemp.path, 'vocabloom-update-result.txt');
+
   /// Starts the copy script and closes the app.
   static Future<void> installAndRestart(Directory newFiles) async {
     final appDir = File(Platform.resolvedExecutable).parent.path;
     final exe = p.join(appDir, p.basename(Platform.resolvedExecutable));
     final script = File(p.join(newFiles.parent.path, 'install.cmd'));
     await script.writeAsString(installScript(pid));
-    await Process.start(
-      'cmd',
-      ['/c', script.path],
-      mode: ProcessStartMode.detached,
-      environment: installEnv(newFiles: newFiles.path, appDir: appDir, exe: exe, cleanup: newFiles.parent.path),
-    );
+    try {
+      File(resultPath).deleteSync();
+    } catch (_) {}
+    await launchScript(script.path, installEnv(newFiles: newFiles.path, appDir: appDir, exe: exe, cleanup: newFiles.parent.path, result: resultPath));
+    // Ends the process at once. A normal exit can hang while native audio
+    // and ONNX threads shut down, and then the app's DLLs stay locked.
+    Process.killPid(pid, ProcessSignal.sigkill);
     exit(0);
+  }
+
+  /// Runs [script] in a hidden console (no black window). Falls back to a
+  /// plain detached cmd when Windows Script Host is switched off.
+  static Future<void> launchScript(String script, Map<String, String> env) async {
+    final vbs = File(p.join(File(script).parent.path, 'install.vbs'));
+    await vbs.writeAsString('CreateObject("WScript.Shell").Run "cmd /c """ & WScript.Arguments(0) & """", 0, False\r\n');
+    try {
+      final r = await Process.run('wscript.exe', ['//B', '//Nologo', vbs.path, script], environment: env);
+      if (r.exitCode == 0) return;
+    } catch (_) {}
+    await Process.start('cmd', ['/c', script], mode: ProcessStartMode.detached, environment: env);
   }
 
   /// Paths go to the script as environment variables, which keep every
   /// character: written into the batch file, a folder like "Hamit Gök" was
   /// read in the console code page and the files went to a wrong folder.
-  static Map<String, String> installEnv({required String newFiles, required String appDir, required String exe, required String cleanup}) => {
-    'VB_NEW': newFiles,
-    'VB_APP': appDir,
-    'VB_EXE': exe,
-    'VB_CLEAN': cleanup,
-  };
+  static Map<String, String> installEnv({
+    required String newFiles,
+    required String appDir,
+    required String exe,
+    required String cleanup,
+    required String result,
+    int killAfter = 10,
+    int giveUpAfter = 40,
+  }) => {'VB_NEW': newFiles, 'VB_APP': appDir, 'VB_EXE': exe, 'VB_NAME': p.basename(exe), 'VB_CLEAN': cleanup, 'VB_RESULT': result, 'VB_KILL': '$killAfter', 'VB_GIVEUP': '$giveUpAfter'};
 
-  /// The batch file (ASCII only) that waits for process [pid] to end, copies
-  /// %VB_NEW% over %VB_APP%, starts %VB_EXE% and removes %VB_CLEAN%.
+  /// The batch file (ASCII only). It waits until no .exe or .dll in %VB_APP%
+  /// is in use (a running program's files cannot be opened for writing),
+  /// after %VB_KILL% seconds ends process [pid] and any %VB_NAME% still
+  /// running, and copies %VB_NEW% over %VB_APP% only once every file is
+  /// free, so the app is never left half old, half new. It then writes the
+  /// outcome to %VB_RESULT% and starts %VB_EXE% (the new or, after a
+  /// failure, the untouched old app).
   static String installScript(int pid) => [
     '@echo off',
+    'setlocal',
     'set LOG="%TEMP%\\vocabloom-update.log"',
     'echo %DATE% %TIME% waiting for $pid > %LOG%',
-    // Wait until the app has exited so its files can be replaced.
-    // (tasklist and timeout.exe hang or refuse to run without a console.)
-    'powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "Wait-Process -Id $pid -ErrorAction SilentlyContinue; Start-Sleep -Milliseconds 700" >> %LOG% 2>&1',
+    'set /a T=0',
+    ':wait',
+    'set BUSY=',
+    'for %%F in ("%VB_APP%\\*.exe" "%VB_APP%\\*.dll") do ( (call ) 2>nul >>"%%~F" || set BUSY=%%~nxF)',
+    'if not defined BUSY goto free',
+    'set /a T+=1',
+    'if %T%==%VB_KILL% (',
+    '  echo %TIME% still in use: %BUSY%, ending the old app>> %LOG%',
+    '  taskkill /F /PID $pid >> %LOG% 2>&1',
+    '  taskkill /F /IM "%VB_NAME%" >> %LOG% 2>&1',
+    ')',
+    'if %T% GEQ %VB_GIVEUP% goto locked',
+    'ping -n 2 127.0.0.1 >nul',
+    'goto wait',
+    ':locked',
+    'echo %TIME% gave up, still in use: %BUSY%>> %LOG%',
+    '> "%VB_RESULT%" echo fail locked %BUSY%',
+    'goto start',
+    ':free',
     'echo %TIME% copying>> %LOG%',
-    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:5 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
-    'echo %TIME% robocopy %ERRORLEVEL%, starting>> %LOG%',
+    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:10 /W:1 /NFL /NDL /NJH /NJS /NP >> %LOG% 2>&1',
+    'set RC=%ERRORLEVEL%',
+    'echo %TIME% robocopy %RC%>> %LOG%',
+    'if %RC% GEQ 8 (',
+    '  > "%VB_RESULT%" echo fail copy %RC%',
+    ') else (',
+    '  > "%VB_RESULT%" echo ok',
+    '  rmdir /S /Q "%VB_CLEAN%" >nul 2>&1',
+    ')',
+    ':start',
     'start "" "%VB_EXE%"',
-    'rmdir /S /Q "%VB_CLEAN%" >nul 2>&1',
     '',
   ].join('\r\n');
+
+  /// The outcome of the last update, read once at start-up: null when
+  /// there was none or it worked, otherwise the reason it failed.
+  static String? takeFailedResult() {
+    final f = File(resultPath);
+    try {
+      if (!f.existsSync()) return null;
+      final t = f.readAsStringSync().trim();
+      f.deleteSync();
+      return t.startsWith('fail') ? t : null;
+    } catch (_) {
+      return null;
+    }
+  }
 }

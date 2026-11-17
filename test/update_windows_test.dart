@@ -57,40 +57,89 @@ void main() {
     dir.parent.deleteSync(recursive: true);
   }, timeout: const Timeout(Duration(minutes: 10)));
 
-  test('install script waits for the app, copies the files and restarts it', () async {
+  // A fake installed app: VocaBloom.exe is a copy of ping.exe, so while it
+  // runs Windows keeps the file locked, like the real app's exe and DLLs.
+  Future<({Directory root, Directory app, Directory work, Directory fresh, String marker, String exe, File result})> setUp_() async {
     final root = Directory.systemTemp.createTempSync('vb_install');
     final app = Directory(p.join(root.path, 'Kitaplar Gök'))..createSync();
+    File(p.join(Platform.environment['SystemRoot']!, 'System32', 'PING.EXE')).copySync(p.join(app.path, 'VocaBloom.exe'));
     File(p.join(app.path, 'old.txt')).writeAsStringSync('old');
     File(p.join(app.path, 'keep.txt')).writeAsStringSync('keep');
     final work = Directory(p.join(root.path, 'İndirilen ğüş'))..createSync();
     final fresh = Directory(p.join(work.path, 'new'))..createSync();
     Directory(p.join(fresh.path, 'data')).createSync();
     File(p.join(fresh.path, 'old.txt')).writeAsStringSync('new');
+    File(p.join(fresh.path, 'VocaBloom.exe')).writeAsStringSync('new exe');
     File(p.join(fresh.path, 'data', 'x.bin')).writeAsStringSync('x');
     final marker = p.join(root.path, 'started.txt');
     final exe = p.join(app.path, 'run.cmd');
-    File(p.join(fresh.path, 'run.cmd')).writeAsStringSync('@echo started> "$marker"\r\n@exit\r\n');
-    // Stands in for the running app: lives about 3 seconds.
-    final fake = await Process.start('ping', ['-n', '4', '127.0.0.1']);
-    final script = File(p.join(work.path, 'install.cmd'))..writeAsStringSync(WindowsUpdater.installScript(fake.pid));
-    final sw = Stopwatch()..start();
-    await Process.start(
-      'cmd',
-      ['/c', script.path],
-      mode: ProcessStartMode.detached,
-      environment: WindowsUpdater.installEnv(newFiles: fresh.path, appDir: app.path, exe: exe, cleanup: work.path),
+    final run = '@echo started> "$marker"\r\n@exit\r\n';
+    File(exe).writeAsStringSync(run);
+    File(p.join(fresh.path, 'run.cmd')).writeAsStringSync(run);
+    return (root: root, app: app, work: work, fresh: fresh, marker: marker, exe: exe, result: File(p.join(root.path, 'result.txt')));
+  }
+
+  Future<String> runInstall(dynamic t, int appPid, {int killAfter = 10, int giveUpAfter = 40}) async {
+    final script = File(p.join(t.work.path, 'install.cmd'))..writeAsStringSync(WindowsUpdater.installScript(appPid));
+    await WindowsUpdater.launchScript(
+      script.path,
+      WindowsUpdater.installEnv(newFiles: t.fresh.path, appDir: t.app.path, exe: t.exe, cleanup: t.work.path, result: t.result.path, killAfter: killAfter, giveUpAfter: giveUpAfter),
     );
-    for (var i = 0; i < 120 && (!File(marker).existsSync() || work.existsSync()); i++) {
+    for (var i = 0; i < 240 && !File(t.marker).existsSync(); i++) {
       await Future<void>.delayed(const Duration(milliseconds: 250));
     }
+    await Future<void>.delayed(const Duration(milliseconds: 500));
     final log = File(p.join(Platform.environment['TEMP']!, 'vocabloom-update.log'));
-    expect(File(marker).existsSync(), isTrue, reason: 'app was not started again. Log: ${log.existsSync() ? log.readAsStringSync() : '-'}');
-    expect(sw.elapsed.inMilliseconds, greaterThan(1500), reason: 'did not wait for the app to exit');
-    expect(File(p.join(app.path, 'old.txt')).readAsStringSync(), 'new', reason: log.readAsStringSync());
-    expect(File(p.join(app.path, 'keep.txt')).readAsStringSync(), 'keep');
-    expect(File(p.join(app.path, 'data', 'x.bin')).existsSync(), isTrue);
-    expect(work.existsSync(), isFalse);
-    await fake.exitCode;
-    root.deleteSync(recursive: true);
+    return log.existsSync() ? log.readAsStringSync() : '-';
+  }
+
+  test('install waits until the app has let go of its files, copies them and restarts', () async {
+    final t = await setUp_();
+    final app = await Process.start(p.join(t.app.path, 'VocaBloom.exe'), ['-n', '4', '127.0.0.1']);
+    final sw = Stopwatch()..start();
+    final log = await runInstall(t, app.pid);
+    expect(File(t.marker).existsSync(), isTrue, reason: 'app was not started again. Log: $log');
+    expect(sw.elapsed.inMilliseconds, greaterThan(2000), reason: 'did not wait for the app to exit. Log: $log');
+    expect(t.result.readAsStringSync().trim(), 'ok', reason: log);
+    expect(File(p.join(t.app.path, 'VocaBloom.exe')).readAsStringSync(), 'new exe', reason: log);
+    expect(File(p.join(t.app.path, 'old.txt')).readAsStringSync(), 'new', reason: log);
+    expect(File(p.join(t.app.path, 'keep.txt')).readAsStringSync(), 'keep');
+    expect(File(p.join(t.app.path, 'data', 'x.bin')).existsSync(), isTrue);
+    expect(t.work.existsSync(), isFalse);
+    await app.exitCode;
+    t.root.deleteSync(recursive: true);
+  }, timeout: const Timeout(Duration(minutes: 1)));
+
+  test('install ends an app that does not close and then updates it', () async {
+    final t = await setUp_();
+    // Hangs for 10 minutes; the pid given to the script is another process,
+    // so only the "end any VocaBloom.exe" step can free the files.
+    final hung = await Process.start(p.join(t.app.path, 'VocaBloom.exe'), ['-n', '600', '127.0.0.1']);
+    final other = await Process.start('cmd', ['/c', 'exit']);
+    await other.exitCode;
+    final log = await runInstall(t, other.pid, killAfter: 3, giveUpAfter: 20);
+    expect(t.result.readAsStringSync().trim(), 'ok', reason: log);
+    expect(File(p.join(t.app.path, 'VocaBloom.exe')).readAsStringSync(), 'new exe', reason: log);
+    expect(await hung.exitCode.timeout(const Duration(seconds: 5)), isNot(0));
+    t.root.deleteSync(recursive: true);
+  }, timeout: const Timeout(Duration(minutes: 1)));
+
+  test('install copies nothing while a file stays locked and reports it', () async {
+    final t = await setUp_();
+    // Not named VocaBloom.exe, so it is not ended: the update must give up
+    // without touching any file, and start the old app again.
+    final lockerExe = p.join(t.app.path, 'helper.exe');
+    File(p.join(t.app.path, 'VocaBloom.exe')).copySync(lockerExe);
+    final locker = await Process.start(lockerExe, ['-n', '600', '127.0.0.1']);
+    final other = await Process.start('cmd', ['/c', 'exit']);
+    await other.exitCode;
+    final log = await runInstall(t, other.pid, killAfter: 2, giveUpAfter: 4);
+    expect(File(t.marker).existsSync(), isTrue, reason: 'old app was not started again. Log: $log');
+    expect(t.result.readAsStringSync().trim(), startsWith('fail locked'), reason: log);
+    expect(File(p.join(t.app.path, 'old.txt')).readAsStringSync(), 'old', reason: log);
+    expect(File(p.join(t.app.path, 'data', 'x.bin')).existsSync(), isFalse);
+    locker.kill();
+    await locker.exitCode;
+    t.root.deleteSync(recursive: true);
   }, timeout: const Timeout(Duration(minutes: 1)));
 }

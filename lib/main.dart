@@ -14,6 +14,7 @@ import 'import/word_gaps.dart';
 import 'ui/dictionary_page.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
+import 'online/windows_updater.dart';
 import 'ui/other_pages.dart';
 import 'ui/settings_page.dart';
 import 'ui/update_prompt.dart';
@@ -50,9 +51,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
   Future<void> _init() async {
     try {
       final override = Platform.environment['KELIME_OKUR_DATA'];
-      final dir = override != null
-          ? Directory(override)
-          : await getApplicationSupportDirectory();
+      final dir = override != null ? Directory(override) : await getApplicationSupportDirectory();
       await dir.create(recursive: true);
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
@@ -69,8 +68,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         debugPrint('repairJoinedWords: $e');
       }
       try {
-        user.repairImportedTextOnce(
-            (t, format) => format == 'pdf' || format == 'image' ? repairPdfText(t, a.isWord) : cleanInvisible(t));
+        user.repairImportedTextOnce((t, format) => format == 'pdf' || format == 'image' ? repairPdfText(t, a.isWord) : cleanInvisible(t));
       } catch (e) {
         debugPrint('repairImportedText: $e');
       }
@@ -110,18 +108,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
             : Scaffold(
                 body: Center(
                   child: error != null
-                      ? Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Text(L('Başlatılamadı: $error', 'Could not start: $error')),
-                        )
-                      : Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircularProgressIndicator(),
-                            SizedBox(height: 16),
-                            Text(L('Sözlük hazırlanıyor…', 'Preparing the dictionary…')),
-                          ],
-                        ),
+                      ? Padding(padding: const EdgeInsets.all(24), child: Text(L('Başlatılamadı: $error', 'Could not start: $error')))
+                      : Column(mainAxisSize: MainAxisSize.min, children: [CircularProgressIndicator(), SizedBox(height: 16), Text(L('Sözlük hazırlanıyor…', 'Preparing the dictionary…'))]),
                 ),
               ),
       ),
@@ -156,7 +144,17 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  bool _installChecked = false;
+
   Future<void> _checkUpdate() async {
+    if (!_installChecked && Platform.isWindows) {
+      _installChecked = true;
+      final failed = WindowsUpdater.takeFailedResult();
+      if (failed != null && mounted) {
+        UpdatePrompt.showInstallFailed(context, failed);
+        return;
+      }
+    }
     final u = await checkForUpdate();
     if (u == null || !mounted) return;
     UpdatePrompt.showBanner(context, u);
@@ -164,13 +162,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = [
-      LibraryPage(app: widget.app),
-      WordsPage(app: widget.app),
-      DictionaryPage(app: widget.app),
-      GrammarPage(app: widget.app),
-      SettingsPage(app: widget.app),
-    ];
+    final pages = [LibraryPage(app: widget.app), WordsPage(app: widget.app), DictionaryPage(app: widget.app), GrammarPage(app: widget.app), SettingsPage(app: widget.app)];
     final dests = [
       (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
       (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimeler', 'My words')),
@@ -192,14 +184,7 @@ class _HomePageState extends State<HomePage> {
               groupAlignment: -0.9,
               leading: const Padding(padding: EdgeInsets.only(top: 12, bottom: 20), child: BrandMark(size: 40)),
               onDestinationSelected: (i) => setState(() => tab = i),
-              destinations: [
-                for (final d in dests)
-                  NavigationRailDestination(
-                    icon: Icon(d.$1),
-                    selectedIcon: Icon(d.$2),
-                    label: Text(d.$3),
-                  ),
-              ],
+              destinations: [for (final d in dests) NavigationRailDestination(icon: Icon(d.$1), selectedIcon: Icon(d.$2), label: Text(d.$3))],
             ),
             const VerticalDivider(width: 1),
             Expanded(child: body),
@@ -209,11 +194,7 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       body: body,
-      bottomNavigationBar: _BottomNav(
-        selected: tab,
-        items: dests,
-        onSelect: (i) => setState(() => tab = i),
-      ),
+      bottomNavigationBar: _BottomNav(selected: tab, items: dests, onSelect: (i) => setState(() => tab = i)),
     );
   }
 }
@@ -239,67 +220,77 @@ class _BottomNav extends StatelessWidget {
     final slot = mq.size.width / items.length - 6;
     var widest = 0.0;
     for (final d in items) {
-      final tp = TextPainter(text: TextSpan(text: d.$3, style: base), textDirection: TextDirection.ltr, textScaler: scaler, maxLines: 1)..layout();
+      final tp = TextPainter(
+        text: TextSpan(text: d.$3, style: base),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
       if (tp.width > widest) widest = tp.width;
       tp.dispose();
     }
     final fontSize = widest > slot ? 11.5 * slot / widest : 11.5;
     return Container(
-      decoration: BoxDecoration(color: cs.surface, border: Border(top: BorderSide(color: cs.outlineVariant))),
+      decoration: BoxDecoration(
+        color: cs.surface,
+        border: Border(top: BorderSide(color: cs.outlineVariant)),
+      ),
       child: SafeArea(
         top: false,
         child: MediaQuery(
           data: mq.copyWith(textScaler: scaler),
           child: SizedBox(
             height: 66,
-            child: Row(children: [
-              for (final (i, d) in items.indexed)
-                Expanded(
-                  key: ValueKey('nav_$i'),
-                  child: Semantics(
-                    selected: i == selected,
-                    button: true,
-                    label: d.$3,
-                    excludeSemantics: true,
-                    child: InkResponse(
-                      onTap: () => onSelect(i),
-                      radius: 36,
-                      highlightShape: BoxShape.rectangle,
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeOut,
-                          width: i == selected ? 52 : 40,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: i == selected ? cs.primaryContainer : Colors.transparent,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(i == selected ? d.$2 : d.$1, size: 23, color: i == selected ? cs.primary : cs.onSurfaceVariant),
-                        ),
-                        const SizedBox(height: 4),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 2),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              d.$3,
-                              maxLines: 1,
-                              softWrap: false,
-                              style: theme.textTheme.labelSmall?.copyWith(
-                                fontSize: fontSize,
-                                letterSpacing: 0,
-                                color: i == selected ? cs.primary : cs.onSurfaceVariant,
-                                fontWeight: i == selected ? FontWeight.w700 : FontWeight.w500,
+            child: Row(
+              children: [
+                for (final (i, d) in items.indexed)
+                  Expanded(
+                    key: ValueKey('nav_$i'),
+                    child: Semantics(
+                      selected: i == selected,
+                      button: true,
+                      label: d.$3,
+                      excludeSemantics: true,
+                      child: InkResponse(
+                        onTap: () => onSelect(i),
+                        radius: 36,
+                        highlightShape: BoxShape.rectangle,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeOut,
+                              width: i == selected ? 52 : 40,
+                              height: 30,
+                              decoration: BoxDecoration(color: i == selected ? cs.primaryContainer : Colors.transparent, borderRadius: BorderRadius.circular(12)),
+                              child: Icon(i == selected ? d.$2 : d.$1, size: 23, color: i == selected ? cs.primary : cs.onSurfaceVariant),
+                            ),
+                            const SizedBox(height: 4),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 2),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  d.$3,
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    fontSize: fontSize,
+                                    letterSpacing: 0,
+                                    color: i == selected ? cs.primary : cs.onSurfaceVariant,
+                                    fontWeight: i == selected ? FontWeight.w700 : FontWeight.w500,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ]),
+                      ),
                     ),
                   ),
-                ),
-            ]),
+              ],
+            ),
           ),
         ),
       ),

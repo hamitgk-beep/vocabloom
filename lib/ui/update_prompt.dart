@@ -13,6 +13,36 @@ class UpdatePrompt {
 
   static String _versionText(UpdateInfo u) => u.version.isEmpty ? '' : ' (${u.version})';
 
+  /// Windows: tells the user when the last in-app update could not finish,
+  /// with what to do. The old app was left as it was unless copying broke
+  /// off midway ("fail copy").
+  static void showInstallFailed(BuildContext context, String reason) {
+    const zip = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/VocaBloom-Windows.zip';
+    final m = ScaffoldMessenger.of(context);
+    m.hideCurrentMaterialBanner();
+    m.showMaterialBanner(
+      MaterialBanner(
+        leading: const Icon(Icons.error_outline),
+        content: Text(
+          L(
+            'Son güncelleme kurulamadı ($reason). VocaBloom\'u kapat, yeni sürümün zip\'ini indirip aç ve içindekileri VocaBloom klasörünün üstüne kopyala ("Hedefteki dosyaları değiştir"). Kitapların ve kelimelerin korunur.',
+            'The last update could not be installed ($reason). Close VocaBloom, download and open the new version\'s zip, and copy its contents over the VocaBloom folder ("Replace the files in the destination"). Your books and words are kept.',
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: m.hideCurrentMaterialBanner, child: Text(L('Kapat', 'Close'))),
+          FilledButton(
+            onPressed: () {
+              m.hideCurrentMaterialBanner();
+              launchUrl(Uri.parse(zip), mode: LaunchMode.externalApplication);
+            },
+            child: Text(L('Zip\'i indir', 'Download the zip')),
+          ),
+        ],
+      ),
+    );
+  }
+
   /// Shows the banner once per new build. [force] shows it again (manual check).
   static void showBanner(BuildContext context, UpdateInfo u, {bool force = false}) {
     if (!force && u.build <= _shownBuild) return;
@@ -40,10 +70,7 @@ class UpdatePrompt {
                     )
                   : L('VocaBloom\'un yeni sürümü var$v.', 'A new version of VocaBloom is available$v.'),
             ),
-            if (u.notes.isNotEmpty) ...[
-              const SizedBox(height: 6),
-              Text(L('Yenilikler: ', "What's new: ") + _areas(u.notes), style: const TextStyle(fontWeight: FontWeight.w600)),
-            ],
+            if (u.notes.isNotEmpty) ...[const SizedBox(height: 6), Text(L('Yenilikler: ', "What's new: ") + _areas(u.notes), style: const TextStyle(fontWeight: FontWeight.w600))],
           ],
         ),
         actions: [
@@ -238,11 +265,7 @@ class _CheckUpdateButtonState extends State<CheckUpdateButton> {
               label: Text(L('Güncellemeleri denetle', 'Check for updates')),
             ),
             if (found != null && found!.notes.isNotEmpty)
-              OutlinedButton.icon(
-                onPressed: () => UpdatePrompt.showWhatsNew(context, found!),
-                icon: const Icon(Icons.new_releases_outlined),
-                label: Text(L('Yenilikler', "What's new")),
-              ),
+              OutlinedButton.icon(onPressed: () => UpdatePrompt.showWhatsNew(context, found!), icon: const Icon(Icons.new_releases_outlined), label: Text(L('Yenilikler', "What's new"))),
             if (found != null)
               FilledButton.icon(
                 onPressed: () => UpdatePrompt.start(context, found!),
