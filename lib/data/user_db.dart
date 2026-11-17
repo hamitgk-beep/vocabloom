@@ -194,6 +194,32 @@ class UserDb {
     setSetting(key, '1');
   }
 
+  /// Once per device: text slips in books imported before the import
+  /// repaired them itself (see text_repair.dart): hidden characters and
+  /// symbol-font bullets in every book; broken words, "uEven", "pOOr",
+  /// "mormng", "overwhelmn" in books from PDFs and pictures.
+  /// [fix] gets a paragraph and its book's format.
+  void repairImportedTextOnce(String Function(String text, String format) fix) {
+    const key = 'repair_imported_text_v1';
+    if (getSetting(key) != null) return;
+    final rows = db.select('SELECT p.id, p.text, b.format FROM paras p JOIN books b ON b.id = p.book_id');
+    db.execute('BEGIN');
+    try {
+      final upd = db.prepare('UPDATE paras SET text=? WHERE id=?');
+      for (final r in rows) {
+        final t = r['text'] as String? ?? '';
+        final f = fix(t, r['format'] as String? ?? '');
+        if (f != t && f.isNotEmpty) upd.execute([f, r['id']]);
+      }
+      upd.close();
+      db.execute('COMMIT');
+    } catch (_) {
+      db.execute('ROLLBACK');
+      rethrow;
+    }
+    setSetting(key, '1');
+  }
+
   // ---- settings
   String? getSetting(String key) {
     final r = db.select('SELECT value FROM settings WHERE key=?', [key]);
