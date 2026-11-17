@@ -2,6 +2,10 @@ name: own-dict-full
 # Full run of our own English-Turkish dictionary (33,491 items) with Claude Haiku.
 # Started by hand only. Results are committed back to the branch, gzipped.
 on:
+  # Started by pushing the marker file tools/own_dict/START_FULL to this branch.
+  push:
+    branches: [claude/project-thread-qj1ytv]
+    paths: [tools/own_dict/START_FULL]
   workflow_dispatch:
     inputs:
       model:
