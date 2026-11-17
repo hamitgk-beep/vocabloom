@@ -2,6 +2,18 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "reader-grammar-filters",
+      "area": "reader",
+      "tr": "Filtreler menüsünde yeni Gramer yapıları grubu: zamanlar her fiili renklendiriyor (yeşil şimdiki/geniş, kahverengi geçmiş, mavi gelecek); edilgen çatı, koşul cümleleri, sıfat cümlecikleri, ortaçlar, V-ing / to V1, karşılaştırma, dolaylı anlatım, geçmişe yönelik kipler (should have done), used to, ettirgen yapılar, devrik ve vurgu cümleleri, onay soruları. Renkli kelimeye dokununca kuralı ve ilgili Gramer konusu açılıyor. Filtreler artık 3 açılır grupta.",
+      "en": "A new Grammar structures group in the Filters menu: tenses colour every verb (green present, brown past, blue future); passive, conditionals, relative clauses, participles, V-ing / to V1, comparison, reported speech, past modals (should have done), used to, causatives, inversion and cleft sentences, question tags. Tap a coloured word for the rule and its Grammar topic. The filters are now in 3 collapsible groups."
+    },
+    {
+      "id": "grammar-ed-ing-adjectives",
+      "area": "grammar",
+      "tr": "Yeni gramer konusu: -ed / -ing sıfatları (bored / boring), çeviri ve boşluk doldurma alıştırmalarıyla. Chunks (kalıp ifadeler) filtresi 56 ifadeden 123'e çıktı (no problem, take your time, if I were you …).",
+      "en": "New grammar topic: -ed / -ing adjectives (bored / boring), with translation and gap exercises. The Chunks filter grew from 56 to 123 phrases (no problem, take your time, if I were you …)."
+    },
+    {
       "id": "reader-did-you-mean",
       "area": "reader",
       "tr": "Sözlükte olmayan yazım hatalı bir kelimeye dokunduğunda (\"overwhelmn\") en yakın kelime \"Bunu mu demek istediniz\" notuyla anlamlarıyla gösteriliyor.",
