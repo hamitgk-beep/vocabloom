@@ -1,0 +1,37 @@
+name: own-dict-full
+# Full run of our own English-Turkish dictionary (33,491 items) with Claude Haiku.
+# Started by hand only. Results are committed back to the branch, gzipped.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "model id"
+        default: claude-haiku-5-5
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install anthropic
+      - name: Generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing"; exit 1; fi
+          cd tools/own_dict
+          python3 generate_full.py full_items.json full_out --model "${{ inputs.model }}" --workers 6
+          gzip -9 full_out/results.jsonl
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/own_dict/full_out
+          git commit -m "Own dictionary: full run results (gzipped) [skip ci]" || exit 0
+          git push
