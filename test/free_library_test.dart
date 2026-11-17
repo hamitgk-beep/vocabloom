@@ -158,6 +158,8 @@ void main() {
       await tester.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
       await tester.pump();
     }
+    await tester.ensureVisible(find.byKey(const ValueKey('lib-level-B2')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('lib-level-B2')));
     await tester.pump();
     final it = lib.items.firstWhere((x) => x.level == 'B2' && x.isBook);
