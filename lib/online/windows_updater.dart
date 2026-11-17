@@ -55,18 +55,10 @@ class WindowsUpdater {
     exit(0);
   }
 
-  /// Runs [script] in a hidden console (no black window), or a plain
-  /// detached cmd when that is not possible.
-  static Future<void> launchScript(String script, Map<String, String> env, {bool hidden = true}) async {
-    if (hidden) {
-      try {
-        // Window style 0: the script's console, and so robocopy's, stays hidden.
-        final vbs = File(p.join(File(script).parent.path, 'install.vbs'));
-        await vbs.writeAsString('CreateObject("WScript.Shell").Run "cmd /c """ & WScript.Arguments(0) & """", 0, False\r\n');
-        await Process.start('wscript.exe', ['//B', '//Nologo', vbs.path, script], environment: env, mode: ProcessStartMode.detached);
-        return;
-      } catch (_) {}
-    }
+  /// Runs [script] detached from the app, so it outlives it. (A hidden
+  /// console through wscript was tried: there the script stopped right
+  /// after robocopy on the Windows test runner.)
+  static Future<void> launchScript(String script, Map<String, String> env) async {
     await Process.start('cmd', ['/c', script], mode: ProcessStartMode.detached, environment: env);
   }
 

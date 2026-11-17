@@ -80,7 +80,7 @@ void main() {
     return (root: root, app: app, work: work, fresh: fresh, marker: marker, exe: exe, result: File(p.join(root.path, 'result.txt')));
   }
 
-  Future<String> runInstall(dynamic t, int appPid, {int killAfter = 10, int giveUpAfter = 40, bool hidden = true}) async {
+  Future<String> runInstall(dynamic t, int appPid, {int killAfter = 10, int giveUpAfter = 40}) async {
     final script = File(p.join(t.work.path, 'install.cmd'))..writeAsStringSync(WindowsUpdater.installScript(appPid));
     await WindowsUpdater.launchScript(
       script.path,
@@ -134,7 +134,7 @@ void main() {
     final hung = await Process.start(p.join(t.app.path, 'VocaBloom.exe'), ['-n', '600', '127.0.0.1']);
     final other = await Process.start('cmd', ['/c', 'exit']);
     await other.exitCode;
-    final log = await runInstall(t, other.pid, killAfter: 3, giveUpAfter: 20, hidden: false);
+    final log = await runInstall(t, other.pid, killAfter: 3, giveUpAfter: 20);
     expect(t.result.readAsStringSync().trim(), 'ok', reason: log);
     expect(File(p.join(t.app.path, 'VocaBloom.exe')).readAsStringSync(), 'new exe', reason: log);
     expect(await hung.exitCode.timeout(const Duration(seconds: 5)), isNot(0));
