@@ -136,6 +136,10 @@ def main():
     for r in rows:
         counts[r['c']] = counts.get(r['c'], 0) + 1
     print('lines', n, 'kept', len(rows), counts, file=sys.stderr)
+    with_tr = [r for r in rows if r['tr']]
+    print('with turkish', len(with_tr), {c: sum(1 for r in with_tr if r['c'] == c) for c in counts}, file=sys.stderr)
+    for r in with_tr[::max(1, len(with_tr) // 40)]:
+        print('  sample', r['c'], '|', r['p'], '|', ', '.join(r['tr'][:4]), file=sys.stderr)
     with gzip.open(sys.argv[1], 'wt', encoding='utf-8') as f:
         json.dump(rows, f, ensure_ascii=False, separators=(',', ':'))
 
