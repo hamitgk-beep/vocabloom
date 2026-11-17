@@ -1,0 +1,153 @@
+{
+ "model": "claude-haiku-5-5",
+ "effort": "low",
+ "items": 200,
+ "requests": 20,
+ "input_tokens": 32366,
+ "output_tokens": 45152,
+ "cost_usd": 0.0258,
+ "cost_usd_batch": 0.0129,
+ "seconds": 224,
+ "per_request": [
+  {
+   "first": "run",
+   "n": 10,
+   "in": 2306,
+   "out": 6416,
+   "stop": "end_turn"
+  },
+  {
+   "first": "stuck",
+   "n": 10,
+   "in": 1528,
+   "out": 2412,
+   "stop": "end_turn"
+  },
+  {
+   "first": "ago",
+   "n": 10,
+   "in": 1800,
+   "out": 2671,
+   "stop": "end_turn"
+  },
+  {
+   "first": "whoever",
+   "n": 10,
+   "in": 1569,
+   "out": 2471,
+   "stop": "end_turn"
+  },
+  {
+   "first": "dealing",
+   "n": 10,
+   "in": 1503,
+   "out": 2563,
+   "stop": "end_turn"
+  },
+  {
+   "first": "mr",
+   "n": 10,
+   "in": 1868,
+   "out": 2730,
+   "stop": "end_turn"
+  },
+  {
+   "first": "sleeved",
+   "n": 10,
+   "in": 1634,
+   "out": 2353,
+   "stop": "end_turn"
+  },
+  {
+   "first": "beset",
+   "n": 10,
+   "in": 1724,
+   "out": 2413,
+   "stop": "end_turn"
+  },
+  {
+   "first": "unattended",
+   "n": 10,
+   "in": 1657,
+   "out": 2055,
+   "stop": "end_turn"
+  },
+  {
+   "first": "merger",
+   "n": 10,
+   "in": 1630,
+   "out": 2751,
+   "stop": "end_turn"
+  },
+  {
+   "first": "overall",
+   "n": 10,
+   "in": 1544,
+   "out": 1724,
+   "stop": "end_turn"
+  },
+  {
+   "first": "titillate",
+   "n": 10,
+   "in": 1470,
+   "out": 1787,
+   "stop": "end_turn"
+  },
+  {
+   "first": "helter-skelter",
+   "n": 10,
+   "in": 1450,
+   "out": 2114,
+   "stop": "end_turn"
+  },
+  {
+   "first": "ambassadress",
+   "n": 10,
+   "in": 1480,
+   "out": 1560,
+   "stop": "end_turn"
+  },
+  {
+   "first": "creepage",
+   "n": 10,
+   "in": 1480,
+   "out": 1656,
+   "stop": "end_turn"
+  },
+  {
+   "first": "let them eat cake",
+   "n": 10,
+   "in": 1655,
+   "out": 1829,
+   "stop": "end_turn"
+  },
+  {
+   "first": "closet case",
+   "n": 10,
+   "in": 1531,
+   "out": 1468,
+   "stop": "end_turn"
+  },
+  {
+   "first": "bad up",
+   "n": 10,
+   "in": 1492,
+   "out": 1478,
+   "stop": "end_turn"
+  },
+  {
+   "first": "wire in",
+   "n": 10,
+   "in": 1448,
+   "out": 1259,
+   "stop": "end_turn"
+  },
+  {
+   "first": "of the century",
+   "n": 10,
+   "in": 1597,
+   "out": 1442,
+   "stop": "end_turn"
+  }
+ ]
+}
