@@ -72,6 +72,7 @@ class _WordPanelState extends State<WordPanel> {
   late String lemma;
   late WordInfo info;
   WordInfo? surfaceInfo;
+  String? corrected; // the dictionary word shown for a misspelt one
   Sense? best;
   List<String> bookExamples = [];
   int tab = 0; // 0 = meaning, 1 = word family
@@ -106,6 +107,21 @@ class _WordPanelState extends State<WordPanel> {
           info = i;
           break;
         }
+      }
+    }
+    // A misspelling in the book ("overwhelmn"): show the closest dictionary
+    // word instead of "not found". Not for names ("Harry" is not "hurry"):
+    // a capitalised word only counts at the start of a sentence.
+    final ctx0 = widget.ctx;
+    final named = widget.surface.isNotEmpty &&
+        widget.surface[0] != widget.surface[0].toLowerCase() &&
+        (ctx0 == null || ctx0.indexInSentence != 0);
+    if (info.isEmpty && widget.lemma == null && !named && (ctx0?.matches.isEmpty ?? true)) {
+      final fix = app.dict.closestWord(lower);
+      if (fix != null) {
+        corrected = fix;
+        lemma = fix;
+        info = app.dict.lookup(fix);
       }
     }
     if (lower != lemma && cands.contains(lower)) {
@@ -197,6 +213,21 @@ class _WordPanelState extends State<WordPanel> {
             child: Text(posNames[best!.pos] ?? '', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
           ),
       ]),
+      if (corrected != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 4, bottom: 2),
+          child: Row(children: [
+            Icon(Icons.spellcheck, size: 18, color: theme.colorScheme.primary),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                L('"${widget.surface}" sözlükte yok, yazım hatası olabilir. Bunu mu demek istediniz: $corrected',
+                    '"${widget.surface}" is not in the dictionary; it may be a typo. Did you mean: $corrected'),
+                style: TextStyle(color: theme.hintColor, fontSize: 14),
+              ),
+            ),
+          ]),
+        ),
       if (verbForms != null) VerbFormsRow(forms: verbForms, tapped: surface),
       if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: TapText(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
       if (tr && _trMain == null) DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge),
