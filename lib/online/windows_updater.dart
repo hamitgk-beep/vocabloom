@@ -60,9 +60,10 @@ class WindowsUpdater {
   static Future<void> launchScript(String script, Map<String, String> env, {bool hidden = true}) async {
     if (hidden) {
       try {
-        // conhost --headless gives the script a console without a window,
-        // so robocopy and ping open no black windows either (Windows 10 1809+).
-        await Process.start('conhost.exe', ['--headless', 'cmd.exe', '/c', script], environment: env, mode: ProcessStartMode.detached);
+        // Window style 0: the script's console, and so robocopy's, stays hidden.
+        final vbs = File(p.join(File(script).parent.path, 'install.vbs'));
+        await vbs.writeAsString('CreateObject("WScript.Shell").Run "cmd /c """ & WScript.Arguments(0) & """", 0, False\r\n');
+        await Process.start('wscript.exe', ['//B', '//Nologo', vbs.path, script], environment: env, mode: ProcessStartMode.detached);
         return;
       } catch (_) {}
     }
@@ -128,7 +129,7 @@ class WindowsUpdater {
     'goto start',
     ':free',
     'echo %TIME% copying>> %LOG%',
-    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:10 /W:1 /NDL /NJH /NP >> %LOG% 2>&1',
+    'robocopy "%VB_NEW%" "%VB_APP%" /E /IS /IT /R:5 /W:1 /NDL /NJH /NP < nul >> %LOG% 2>&1',
     'set RC=%ERRORLEVEL%',
     'echo %TIME% robocopy %RC%>> %LOG%',
     'if %RC% GEQ 8 (',

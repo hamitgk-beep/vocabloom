@@ -95,12 +95,18 @@ void main() {
         giveUpAfter: giveUpAfter,
       ),
     );
-    for (var i = 0; i < 240 && !File(t.marker).existsSync(); i++) {
+    for (var i = 0; i < 160 && !File(t.marker).existsSync(); i++) {
       await Future<void>.delayed(const Duration(milliseconds: 250));
     }
     await Future<void>.delayed(const Duration(milliseconds: 500));
     final log = File(p.join(t.root.path, 'update.log'));
-    return log.existsSync() ? log.readAsStringSync() : '-';
+    var text = log.existsSync() ? log.readAsStringSync() : '-';
+    if (!File(t.marker).existsSync()) {
+      final ps = await Process.run('tasklist', ['/v', '/fo', 'list']);
+      text +=
+          '\n--- processes ---\n${'${ps.stdout}'.split(RegExp(r'\r?\n\r?\n')).where((b) => RegExp(r'cmd|robocopy|wscript|conhost|ping|VocaBloom|helper', caseSensitive: false).hasMatch(b)).join('\n\n')}';
+    }
+    return text;
   }
 
   test('install waits until the app has let go of its files, copies them and restarts', () async {
