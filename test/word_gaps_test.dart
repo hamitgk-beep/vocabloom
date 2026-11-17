@@ -39,6 +39,17 @@ void main() {
     }
   });
 
+  test('symbol-font bullets and stray capitals are repaired', () {
+    String f(String s) => fixGlyphSlips(s, isWord);
+    expect(f('uEven with all its energy and activity, Vietnam is still a pOOr country.'),
+        'Even with all its energy and activity, Vietnam is still a poor country.');
+    expect(f('stories be removed.\nuEven with all'), 'stories be removed.\nEven with all');
+    expect(f('nThe market. lMany people'), 'The market. Many people');
+    // Names, abbreviations and real words stay; a typo is left to the word panel.
+    const keep = 'Visit iPod, eBay, McDonald and the mRNA, cDNA lab. He saw uHaul. Inguinal macular retellings overwhelmn.';
+    expect(f(keep), keep);
+  });
+
   test('gap spaces from glyph positions', () {
     // "witha" where the 'a' sits a word space away from "with".
     GlyphBox box(double l, double r) => (left: l, top: 10, right: r, bottom: 0);

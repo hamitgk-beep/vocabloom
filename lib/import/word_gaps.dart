@@ -153,3 +153,40 @@ String splitJoinedWords(String text, bool Function(String word) isWord) {
     return best ?? w;
   });
 }
+
+/// Letters that symbol fonts (Wingdings, Wingdings 3, Zapf Dingbats) use for
+/// bullets and arrows; a PDF's text layer gives them back as these letters
+/// ("uEven" for "► Even").
+const _dingbatLetters = 'lnuqvwxyzot';
+
+/// Repairs word slips that come from symbol fonts and text
+/// recognition, each checked against the dictionary:
+///
+/// * a bullet glued to a capitalised word at the start of a paragraph or
+///   sentence: "uEven with all its energy" -> "Even with all its energy";
+/// * capitals inside a lowercase word: "a pOOr country" -> "a poor country".
+///
+/// A stray letter at the end of a word ("overwhelmn") is not changed here:
+/// too many rare real words look the same ("macular", "retellings"); the
+/// word panel shows the closest dictionary word instead.
+String fixGlyphSlips(String text, bool Function(String word) isWord) {
+  return text.replaceAllMapped(_token, (m) {
+    final w = m.group(0)!;
+    final s = m.start, e = m.end;
+    final glued = RegExp(r"[A-Za-z0-9'’\-_/@]");
+    if ((s > 0 && glued.hasMatch(text[s - 1])) || (e < text.length && glued.hasMatch(text[e]))) return w;
+    if (w.length < 3) return w;
+    final lower = w.toLowerCase();
+    // Bullet + Capitalised word, where a sentence starts.
+    if (RegExp(r'^[a-z][A-Z][a-z]+$').hasMatch(w) && _dingbatLetters.contains(w[0])) {
+      final before = text.substring(0, s).trimRight();
+      final starts = before.isEmpty || RegExp(r'''[.!?:;\n"”)\]•]$''').hasMatch(before);
+      if (starts && !isWord(lower) && isWord(w.substring(1).toLowerCase())) return w.substring(1);
+    }
+    // Capitals inside a lowercase word ("pOOr"); not names like "iPod" (one
+    // capital) or abbreviations like "mRNA" (ending in capitals).
+    final caps = RegExp('[A-Z]').allMatches(w).length;
+    if (w[0] == lower[0] && caps >= 2 && w[w.length - 1] == lower[lower.length - 1] && isWord(lower)) return lower;
+    return w;
+  });
+}

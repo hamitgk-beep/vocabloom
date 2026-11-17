@@ -10,6 +10,7 @@ import 'importers.dart';
 import '../l10n.dart';
 import 'ocr.dart';
 import 'pdf_layout.dart';
+import 'text_repair.dart';
 import 'word_gaps.dart';
 
 String _clean(String s) => s.replaceAll(RegExp(r'[\s ]+'), ' ').trim();
@@ -47,9 +48,10 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
       final boxes = raw == null
           ? const <GlyphBox>[]
           : [for (final r in raw.charRects) (left: r.left, top: r.top, right: r.right, bottom: r.bottom)];
-      final t = raw == null
-          ? ''
-          : layoutPdfPage(raw.fullText, boxes, isWord: isWord) ?? addGapSpaces(raw.fullText, boxes, isWord);
+      // PDFium marks a word broken at a line end with U+0002, which the layout
+      // uses for captions: make it a soft hyphen (same length, so the letter boxes still match).
+      final full = raw == null ? '' : raw.fullText.replaceAll(pdfiumBreak, softHyphen);
+      final t = raw == null ? '' : layoutPdfPage(full, boxes, isWord: isWord) ?? addGapSpaces(full, boxes, isWord);
       pages.add(t);
       if ((raw?.fullText ?? '').trim().length < 25) ocrPages.add(i);
     }
@@ -235,6 +237,7 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
       }
       text = kept.join('\n\n');
     }
+    text = joinDropCaps(text.split('\n'), isWord).join('\n');
     final hasContents = text.split('\n').any((l) => _contentsLine.hasMatch(l.trim().replaceAll(RegExp(r'(?<=\w) (?=\w)'), '')));
     final lines = text
         .split('\n')
@@ -244,11 +247,15 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
     final blocks = <String>[];
     void addLine(StringBuffer buf, String l) {
       final s = buf.toString();
-      if (s.endsWith('-') && RegExp(r'^[a-z]').hasMatch(l)) {
+      final broken = RegExp('([A-Za-z]+)[-$softHyphen]\$').firstMatch(s);
+      final next = RegExp(r'^[a-z]+').firstMatch(l);
+      if (s.endsWith(softHyphen) || (broken != null && next != null)) {
+        // A word broken over two lines: joined ("dan-gerous") or kept as a compound ("good-for-nothing").
+        final a = broken?.group(1) ?? '';
         buf
           ..clear()
-          ..write(s.substring(0, s.length - 1))
-          ..write(l);
+          ..write(s.substring(0, s.length - 1 - a.length))
+          ..write(next == null ? '$a$l' : '${joinHalves(a, next.group(0)!, isWord)}${l.substring(next.end)}');
       } else {
         if (s.isNotEmpty) buf.write(' ');
         buf.write(l);
@@ -310,9 +317,9 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
       return ok / ws.length < 0.6 || (ws.length <= 2 && ws.every((w) => w.length <= 2));
     }
 
-    String fix(String b) => isWord == null ? b : splitJoinedWords(b, isWord);
+    String fix(String b) => repairPdfText(b, isWord);
     pageBlocks.add([
-      for (final b in blocks)
+      for (final b in blocks.expand(splitAtBullets))
         if (b.isNotEmpty && !garbage(b)) fix(b)
     ]);
     printed.add(pageNo);
@@ -331,7 +338,10 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
       final b = pageBlocks[pg][i];
       final prev = flat.isEmpty || flat.last.$2 != 'p' ? '' : flat.last.$3;
       final open = prev.isNotEmpty && !RegExp(r'''[.!?]["”’)]?$''').hasMatch(prev);
-      if (open && RegExp(r'^[a-z]').hasMatch(b)) {
+      // A sentence cut by a picture or a page turn goes on with a small letter,
+      // or after a comma with anything ("'But he knows my name,' | Aladdin said.").
+      final midSentence = open && prev.length > 25 && b.length > 40 && RegExp(r'''[,;]["”’']?$''').hasMatch(prev);
+      if (open && (RegExp(r'^[a-z]').hasMatch(b) || midSentence)) {
         flat[flat.length - 1] = (flat.last.$1, 'p', '$prev $b');
       } else {
         flat.addAll(waiting);

@@ -8,6 +8,12 @@
       "en": "Tap a misspelt word the dictionary lacks (\"overwhelmn\") and the closest word is shown with its meanings and a \"Did you mean\" note."
     },
     {
+      "id": "reader-import-text-repairs",
+      "area": "reader",
+      "tr": "Yüklenen kitaplardaki yazı hataları düzeltildi: satır sonunda bölünen kelimeler (\"dan-gerous\") birleşiyor, \"uEven\", \"pOOr\", \"mormng\" gibi tarama hataları ve Word'deki kutucuk görünen madde işaretleri temizleniyor, büyük ilk harf kelimesine dönüyor, resim yüzünden bölünen cümleler tek paragraf oluyor. Daha önce yüklediğiniz kitaplar da bir kez otomatik onarılıyor.",
+      "en": "Text slips in imported books are fixed: words broken at a line end (\"dan-gerous\") are joined, scan slips such as \"uEven\", \"pOOr\" and \"mormng\" and Word's boxed bullets are cleaned up, a large first letter goes back to its word, and sentences cut by a picture stay one paragraph. Books you imported earlier are repaired once automatically."
+    },
+    {
       "id": "dictionary-wiktionary-meanings",
       "area": "dictionary",
       "tr": "Kelime anlamları yenilendi: artık Wiktionary'den (Kindle İngilizce-Türkçe sözlüğü) geliyor, eksikleri ikinci bir açık sözlük tamamlıyor. \"ask\", \"easy\", \"every\" gibi binlerce kelimeye Türkçe anlam eklendi.",
