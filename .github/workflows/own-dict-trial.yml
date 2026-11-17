@@ -1,0 +1,37 @@
+name: own-dict-trial
+# Writes a small trial of our own English-Turkish dictionary with Claude and
+# commits the result (meanings + measured token cost) back to the branch.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-qj1ytv]
+    paths: [tools/own_dict/trial_items.json, tools/own_dict/generate.py, .github/workflows/own-dict-trial.yml]
+
+jobs:
+  trial:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install anthropic
+      - name: Generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing"; exit 1; fi
+          python3 tools/own_dict/generate.py tools/own_dict/trial_items.json tools/own_dict/trial_out --model claude-haiku-5-5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: own-dict-trial
+          path: tools/own_dict/trial_out
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/own_dict/trial_out
+          git commit -m "Own dictionary trial: Claude Haiku results [skip ci]" || exit 0
+          git push
