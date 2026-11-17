@@ -30,7 +30,8 @@ jobs:
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing"; exit 1; fi
           cd tools/own_dict
-          python3 generate_full.py full_items.json full_out --model "${{ inputs.model }}" --workers 6
+          MODEL="${{ inputs.model }}"
+          python3 generate_full.py full_items.json full_out --model "${MODEL:-claude-haiku-5-5}" --workers 6
           gzip -9 full_out/results.jsonl
       - name: Commit result
         run: |
