@@ -122,7 +122,11 @@ void main() {
     expect(File(p.join(t.app.path, 'old.txt')).readAsStringSync(), 'new', reason: log);
     expect(File(p.join(t.app.path, 'keep.txt')).readAsStringSync(), 'keep');
     expect(File(p.join(t.app.path, 'data', 'x.bin')).existsSync(), isTrue);
-    expect(t.work.existsSync(), isFalse);
+    // The download folder (with the script in it) is removed just after the start.
+    for (var i = 0; i < 40 && t.work.existsSync(); i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    }
+    expect(t.work.existsSync(), isFalse, reason: log);
     await app.exitCode;
     t.root.deleteSync(recursive: true);
   }, timeout: const Timeout(Duration(minutes: 1)));

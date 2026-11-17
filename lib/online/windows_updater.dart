@@ -92,8 +92,9 @@ class WindowsUpdater {
   /// after %VB_KILL% seconds ends process [pid] and any %VB_NAME% still
   /// running, and copies %VB_NEW% over %VB_APP% only once every file is
   /// free, so the app is never left half old, half new. It then writes the
-  /// outcome to %VB_RESULT% and starts %VB_EXE% (the new or, after a
-  /// failure, the untouched old app).
+  /// outcome to %VB_RESULT%, starts %VB_EXE% (the new or, after a
+  /// failure, the untouched old app) and, after a good copy, deletes the
+  /// download folder with itself in it.
   static String installScript(int pid) => [
     '@echo off',
     'setlocal',
@@ -130,10 +131,15 @@ class WindowsUpdater {
     '  > "%VB_RESULT%" echo fail copy %RC%',
     ') else (',
     '  > "%VB_RESULT%" echo ok',
-    '  rmdir /S /Q "%VB_CLEAN%" >nul 2>&1',
+    '  set CLEAN=1',
     ')',
     ':start',
     'start "" "%VB_EXE%"',
+    'if not defined CLEAN exit /b 0',
+    // This script lives in %VB_CLEAN%. cmd reads a batch file line by line,
+    // so deleting it earlier stopped the script before the app was started.
+    // "(goto)" leaves the batch file first; rmdir then runs on this line.
+    '(goto) 2>nul & rmdir /S /Q "%VB_CLEAN%" >nul 2>&1',
     '',
   ].join('\r\n');
 
