@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "reader-did-you-mean",
+      "area": "reader",
+      "tr": "Sözlükte olmayan yazım hatalı bir kelimeye dokunduğunda (\"overwhelmn\") en yakın kelime \"Bunu mu demek istediniz\" notuyla anlamlarıyla gösteriliyor.",
+      "en": "Tap a misspelt word the dictionary lacks (\"overwhelmn\") and the closest word is shown with its meanings and a \"Did you mean\" note."
+    },
+    {
       "id": "dictionary-wiktionary-meanings",
       "area": "dictionary",
       "tr": "Kelime anlamları yenilendi: artık Wiktionary'den (Kindle İngilizce-Türkçe sözlüğü) geliyor, eksikleri ikinci bir açık sözlük tamamlıyor. \"ask\", \"easy\", \"every\" gibi binlerce kelimeye Türkçe anlam eklendi.",
