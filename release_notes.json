@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "dictionary-search-browse",
+      "area": "dictionary",
+      "tr": "Sözlük sekmesi dolu: en sık kullanılan kelimeler ve A'dan Z'ye kelime listesi Türkçe anlamlarıyla. Arama artık iki yönlü; Türkçe yazınca İngilizcesini bulur (\"kopek\" → dog).",
+      "en": "The Dictionary tab is full: the most common words and an A–Z word list with Turkish meanings. Search works both ways; type Turkish to find the English (\"kopek\" → dog)."
+    },
+    {
       "id": "update-whats-new",
       "area": "app",
       "tr": "Yeni sürüm bildirimi artık neyin değiştiğini de söylüyor: sözlük, gramer, okuyucu ve diğer yenilikler.",
