@@ -1,0 +1,45 @@
+name: own-dict-fill2
+# Free-tier fill of missing own-dictionary meanings (Gemini first, then Groq). Never touches the app DB or main.
+# Started by pushing tools/own_dict/fill2/START to this branch. Resumable: finished keys are skipped.
+on:
+  push:
+    branches: [claude/project-thread-qj1ytv]
+    paths: [tools/own_dict/fill2/START]
+  workflow_dispatch:
+concurrency:
+  group: own-dict-fill2
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fill missing meanings (free tiers only)
+        env:
+          GEMINI_API_KEY_FOR_DICTIONARY: ${{ secrets.GEMINI_API_KEY_FOR_DICTIONARY }}
+          GROQ_API_KEY_FOR_DICTIONARY: ${{ secrets.GROQ_API_KEY_FOR_DICTIONARY }}
+        run: |
+          cd tools/own_dict/fill2
+          if [ -f out/results.jsonl.gz ]; then gunzip -kf out/results.jsonl.gz; fi
+          touch out/results.jsonl
+          gunzip -kf items.json.gz
+          python3 run_fill.py items.json out --batch 10 --max-requests 150 --max-minutes 240 || true
+          cat out/summary.json || true
+      - name: Save results and commit
+        if: always()
+        run: |
+          cd tools/own_dict/fill2
+          if [ -f out/results.jsonl ]; then gzip -9 -f out/results.jsonl; fi
+          rm -f items.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cd "$GITHUB_WORKSPACE"
+          git add tools/own_dict/fill2/out
+          git commit -m "Own dictionary: free-tier fill run results [skip ci]" || exit 0
+          for i in 1 2 3 4; do git push && break; git pull --rebase -q; sleep 5; done
