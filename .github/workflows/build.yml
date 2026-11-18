@@ -95,8 +95,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # GTK for the window, GStreamer for audioplayers, a JDK for the jni plugin.
       - name: Linux build tools
-        run: sudo apt-get update -q && sudo apt-get install -yq ninja-build libgtk-3-dev
+        run: sudo apt-get update -q && sudo apt-get install -yq ninja-build libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
       - uses: subosito/flutter-action@v2
         with: { channel: stable, flutter-version: 3.50.0 }
       - run: flutter build linux --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
