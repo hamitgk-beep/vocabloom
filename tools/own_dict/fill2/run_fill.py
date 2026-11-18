@@ -201,7 +201,11 @@ def main():
                 pass
     todo = [i for i in items if i["key"] not in done]
     providers = [p for p in a.providers.split(",") if p]
-    cost = {"usd": 0.0, "in": 0, "out": 0}
+    # Spend carries over between runs, so the USD cap covers the whole project, not one run.
+    # Before spend.json existed, 0.75 is a conservative figure for the earlier Haiku runs.
+    spend_file = out / "spend.json"
+    base = json.loads(spend_file.read_text(encoding="utf-8"))["usd"] if spend_file.exists() else 0.75
+    cost = {"usd": base, "base": base, "in": 0, "out": 0}
     state = {"gemini_model": None}
     stats = {"requests": 0, "ok_items": 0, "failed_requests": 0, "quota_switch": [], "stop": ""}
     pos = 0
@@ -238,7 +242,7 @@ def main():
                 if u:
                     cost["in"] += int(u.get("input_tokens", 0) or 0)
                     cost["out"] += int(u.get("output_tokens", 0) or 0)
-                    cost["usd"] = cost["in"] * PRICE_IN + cost["out"] * PRICE_OUT
+                    cost["usd"] = cost["base"] + cost["in"] * PRICE_IN + cost["out"] * PRICE_OUT
                 obj = parse_model_json(raw)
                 if isinstance(obj, list):  # some models return the bare list
                     obj = {"items": obj}
@@ -277,6 +281,7 @@ def main():
     stats.update({"paid_usage": {"input_tokens": cost["in"], "output_tokens": cost["out"], "usd_estimate": round(cost["usd"], 4)},
                   "items_total": len(items), "items_done_total": len(done) + stats["ok_items"],
                   "seconds": round(time.time() - t0), "pending_after_run": len(todo) - pos})
+    spend_file.write_text(json.dumps({"usd": round(cost["usd"], 4)}), encoding="utf-8")
     (out / "summary.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(stats, ensure_ascii=False))
 
