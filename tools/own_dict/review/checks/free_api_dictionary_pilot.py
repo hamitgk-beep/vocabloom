@@ -30,13 +30,36 @@ def call(url, key, payload):
         # Never print a request body, key, or provider response.
         raise RuntimeError("Provider HTTP " + str(e.code)) from None
 
+def choose_gemini_model(key):
+    """Discover an available text generation model; never assume an old model ID exists."""
+    preferred = os.environ.get("GEMINI_DICTIONARY_MODEL", "").strip()
+    req = urllib.request.Request(
+        "https://generativelanguage.googleapis.com/v1beta/models?pageSize=100",
+        headers={"x-goog-api-key": key})
+    try:
+        with urllib.request.urlopen(req, timeout=25) as resp:
+            data = json.load(resp)
+    except urllib.error.HTTPError as exc:
+        raise RuntimeError("Gemini model discovery HTTP " + str(exc.code)) from None
+    models = [m["name"].split("/")[-1] for m in data.get("models", [])
+              if "generateContent" in m.get("supportedGenerationMethods", [])]
+    candidates = ([preferred] if preferred else []) + [
+        "gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash-lite"]
+    for name in candidates:
+        if name and name in models:
+            print("Gemini model selected: " + name)
+            return name
+    raise RuntimeError("No compatible Gemini model listed; available: " +
+                       ", ".join(models[:12]))
+
+
 def generate(word, provider):
     prompt = "English headword: " + word + "\n" + SYSTEM
     if provider == "gemini":
         key = os.environ.get("GEMINI_API_KEY_FOR_DICTIONARY", "")
         if not key:
             raise RuntimeError("Missing Gemini secret")
-        model = os.environ.get("GEMINI_DICTIONARY_MODEL", "gemini-2.5-flash-lite")
+        model = choose_gemini_model(key)
         result = call("https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent", key,
             {"contents": [{"parts": [{"text": prompt}]}],
              "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json", "maxOutputTokens": 2000}})
