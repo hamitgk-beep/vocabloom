@@ -115,18 +115,18 @@ class DictDb {
 
   /// Off until the own-dictionary tables have been checked on a copy of the database.
   /// While it is off, the app shows exactly the meanings it shows today.
-  /// Not const, so the tests can switch it on for one check; the app never changes it.
-  static bool useOwnDictionary = false;
+  static const bool useOwnDictionary = false;
 
   late final bool _hasOwnWord = db
       .select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_word'")
       .isNotEmpty;
 
-  WordInfo lookup(String lemma) {
+  /// [ownEnabled] defaults to [useOwnDictionary] (false in the app). Only tests pass it.
+  WordInfo lookup(String lemma, {bool ownEnabled = useOwnDictionary}) {
     // Own meanings first: keep_tr (the Wiktionary part that stays), then the new senses.
     // No own row, or an empty one, falls back to the current table (ft).
     var tr = <String>[];
-    if (useOwnDictionary && _hasOwnWord) {
+    if (ownEnabled && _hasOwnWord) {
       final own = db.select('SELECT senses, keep_tr FROM own_word WHERE word = ?', [lemma]);
       if (own.isNotEmpty) {
         tr = [

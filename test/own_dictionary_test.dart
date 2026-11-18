@@ -50,45 +50,36 @@ void main() {
     expect(baselineBook, isNotEmpty, reason: 'the bundled ft table must have a meaning for book');
   });
 
-  tearDown(() {
-    DictDb.useOwnDictionary = false;
-  });
-
-  test('flag off: lookup reads ft even when own_word exists', () {
-    DictDb.useOwnDictionary = false;
+  test('flag off (the app default): lookup reads ft even when own_word exists', () {
+    expect(DictDb.useOwnDictionary, isFalse, reason: 'production default must stay off');
     final d = _open(_copy(withOwn: true));
     expect(d.lookup('book').trFreeDict, baselineBook);
     expect(d.lookup('dog').trFreeDict, baselineDog);
   });
 
   test('flag on: own meanings come first, keep_tr before the new senses', () {
-    DictDb.useOwnDictionary = true;
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('book').trFreeDict, ['eski anlam', 'yeni anlam']);
+    expect(d.lookup('book', ownEnabled: true).trFreeDict, ['eski anlam', 'yeni anlam']);
   });
 
   test('flag on: a word without an own row still reads ft', () {
-    DictDb.useOwnDictionary = true;
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('house').trFreeDict, _open(_asset).lookup('house').trFreeDict);
+    expect(d.lookup('house', ownEnabled: true).trFreeDict, _open(_asset).lookup('house').trFreeDict);
   });
 
   test('flag on: an empty own row falls back to ft', () {
-    DictDb.useOwnDictionary = true;
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('dog').trFreeDict, baselineDog);
+    expect(d.lookup('dog', ownEnabled: true).trFreeDict, baselineDog);
   });
 
   test('flag on but no own_word table: no error, ft is used', () {
-    DictDb.useOwnDictionary = true;
     final d = _open(_asset);
-    expect(d.lookup('book').trFreeDict, baselineBook);
+    expect(d.lookup('book', ownEnabled: true).trFreeDict, baselineBook);
   });
 
   test('the bundled database is still opened read-only and unchanged', () {
     final before = File(_asset).lengthSync();
-    DictDb.useOwnDictionary = true;
-    _open(_asset).lookup('book');
+    _open(_asset).lookup('book', ownEnabled: true);
     expect(File(_asset).lengthSync(), before);
   });
 }
