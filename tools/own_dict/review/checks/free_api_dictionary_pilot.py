@@ -7,7 +7,7 @@ import sys
 import urllib.error
 import urllib.request
 
-ROOT = pathlib.Path(__file__).resolve().parents[3]
+ROOT = pathlib.Path(__file__).resolve().parents[4]
 SOURCE = ROOT / "tools/own_dict/gap/missing_words.json"
 OUT = pathlib.Path(os.environ.get("RUNNER_TEMP", "/tmp")) / "vocabloom_dictionary_pilot"
 SYSTEM = (
@@ -80,9 +80,9 @@ def main():
             print(word + ": draft generated")
         except Exception as exc:
             errors.append({"w": word, "error": str(exc)[:120]})
-            print(word + ": failed (" + type(exc).__name__ + ")")
-            if "HTTP 429" in str(exc) or "HTTP 402" in str(exc):
-                print("Quota/billing limit encountered; stopping immediately.")
+            print(word + ": failed (" + type(exc).__name__ + ": " + str(exc)[:120] + ")")
+            if any("HTTP " + str(code) in str(exc) for code in (400, 401, 402, 403, 404, 429)):
+                print("Provider configuration, access, or quota error; stopping immediately.")
                 break
     with (OUT / "drafts.jsonl").open("w", encoding="utf-8") as f:
         for row in success:
