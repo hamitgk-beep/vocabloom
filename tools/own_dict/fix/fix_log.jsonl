@@ -1,0 +1,35 @@
+{"w": "affluent", "change": "added_missing", "new": ["varlıklı, zengin", "zenginler, varlıklı kişi", "karışan, birleşen"]}
+{"w": "afterlife", "change": "added_missing", "new": ["ahiret, öteki dünya"]}
+{"w": "airliner", "change": "added_missing", "new": ["yolcu uçağı"]}
+{"w": "alchemist", "change": "added_missing", "new": ["simyacı"]}
+{"w": "ale", "change": "added_missing", "new": ["ale bira, koyu bira"]}
+{"w": "alexandria", "change": "added_missing", "new": ["İskenderiye", "İskenderiye"]}
+{"w": "alleviate", "change": "added_missing", "new": ["hafifletmek, dindirmek", "azaltmak, kolaylaştırmak"]}
+{"w": "chink", "change": "added_missing", "new": ["yarık, çatlak, aralık", "tıngırtı, şıngırtı", "tıngırdatmak, şıngırdamak", "yarık kapatmak, dolgu yapmak"]}
+{"w": "tourniquet", "change": "added_missing", "new": ["turnike, kan durdurucu bağ"]}
+{"w": "tout", "change": "added_missing", "new": ["över, abartarak tanıtmak", "ortalıkta gösteriş yapmak", "bilet karaborsacısı", "tahminci, at yarışı danışmanı"]}
+{"w": "toad", "change": "added_missing", "new": ["kurbağa, karakurbağası", "iğrenç kimse, nefret edilen kişi"]}
+{"w": "trader", "change": "added_missing", "new": ["tüccar, tacir", "borsacı, yatırımcı"]}
+{"w": "trainee", "change": "added_missing", "new": ["stajyer, çırak, acemi"]}
+{"w": "troy", "change": "added_missing", "new": ["troy ağırlık sistemi", "Truva"]}
+{"w": "tweet", "change": "added_missing", "new": ["cıvıltı, ötüş", "tweet, kısa mesaj", "cıvıldamak, ötmek", "tweet atmak, paylaşmak", "parmakla sıkıştırmak, çimdiklemek"]}
+{"w": "twist", "change": "added_missing", "new": ["bükmek, çevirmek", "burkmak, incitmek", "çarpıtmak, yanlış yorumlamak", "dönüş, kıvrım, bükülme", "beklenmedik gelişme, sürpriz", "yorum, farklı bakış", "burkulma, incinme"]}
+{"w": "tyrant", "change": "added_missing", "new": ["zalim yönetici, diktatör", "zorba, baskıcı kimse", "kadim Yunan'da gasp eden hükümdar"]}
+{"w": "unapproachable", "change": "added_missing", "new": ["yaklaşılmaz, soğuk, mesafeli", "ulaşılmaz, erişilmez"]}
+{"w": "unpack", "change": "added_missing", "new": ["açmak, boşaltmak", "ayrıntılarıyla incelemek, çözümlemek"]}
+{"w": "aerial", "change": "added_missing", "new": ["havadan, havaya ait", "havada yaşayan, havada bulunan", "hafif, uçucu, havadar", "anten", "uzun pas, havadan pas"]}
+{"w": "prosperity", "change": "replaced_with_fix", "old": [], "new": ["refah, zenginlik", "ekonomik büyüme, gelişme", "başarı, talih"], "kept": []}
+{"w": "maiden", "change": "replaced_with_fix", "old": ["genç kız, bakire", "ilk, ilk kez yapılan", "sayısız, hiç sayı yapılmayan over"], "new": ["genç kız, bakire", "ilk, ilk kez yapılan", "bakire, evlenmemiş", "sayısız, kesintisiz over"], "kept": []}
+{"w": "suggestive", "change": "replaced_with_fix", "old": ["düşündürücü, ima eden", "(of) işaret eden, gösteren", "edepsiz, müstehcen"], "new": ["akla getiren, ima eden", "edepsiz, müstehcen"], "kept": []}
+{"w": "curing", "change": "replaced_with_fix", "old": ["kürleme, olgunlaştırma", "sertleşme, katılaşma", "iyileştirme"], "new": ["kürleme, olgunlaştırma", "iyileştiren, tedavi eden", "kurutmak, tuzlamak"], "kept": ["sertleşme, katılaşma"]}
+{"w": "toxicity", "change": "added_missing", "new": ["zehirlilik, toksisite", "zararlılık, öldürücülük"]}
+{"w": "trachea", "change": "added_missing", "new": ["nefes borusu, soluk borusu", "solunum tüpü, trake"]}
+{"w": "tracheitis", "change": "added_missing", "new": ["nefes borusu iltihabı, trakeit"]}
+{"w": "tracker", "change": "added_missing", "new": ["iz sürücü, izci", "takip cihazı, izleyici"]}
+{"w": "traduce", "change": "added_missing", "new": ["karalamak, iftira atmak"]}
+{"w": "tragacanth", "change": "added_missing", "new": ["tragakant, katıran zamkı"]}
+{"w": "nail", "change": "replaced_with_fix", "old": ["tırnak", "çivi", "çivi gibi sert ve kısa hareket", "çivilemek, çakmak", "yakalamak, tutuklamak", "çakmak, vurmak"], "new": ["tırnak", "çivi", "çivilemek, çakmak", "yakalamak, tutuklamak", "sert vurmak, çarpmak", "tam isabet etmek, mükemmel yapmak"], "kept": []}
+{"w": "lord", "change": "replaced_with_fix", "old": ["lord, efendi, hükümdar", "tanrı, rab", "lord, soylu, asilzade", "lord unvanı vermek", "lord it over, kibirle hükmetmek"], "new": ["Rab, Tanrı", "efendi, hâkim, lord", "lord", "lord yapmak, soyluluk vermek", "efendilik taslamak"], "kept": ["lord unvanı vermek"]}
+{"w": "fuss", "change": "replaced_with_fix", "old": ["gereksiz heyecan, telaş", "kavga, itiraz, tartışma", "şamata, gürültü, patırtı", "tasalanmak, endişelenmek", "şımartmak, aşırı ilgilenmek", "fuss about (ile) uğraşmak"], "new": ["telaş, heyecan", "kavga, gürültü, patırtı", "hareketlilik, koşuşturma", "tasalanmak, endişelenmek", "ilgilenmek, şımartmak"], "kept": []}
+{"w": "screw", "change": "replaced_with_fix", "old": ["vida", "pervane", "gardiyan", "vidalamak, sıkıştırmak", "dolandırmak, kazık atmak", "sikmek"], "new": ["vida", "vida mili, sarmal", "pervane", "gardiyan", "vidalamak, sıkıştırmak", "sıkmak, buruşturmak", "becermek, dolandırmak", "sevişmek, yatmak"], "kept": []}
+{"w": "maiden", "change": "english_token_removed", "before": "sayısız, kesintisiz over", "after": "sayısız"}
