@@ -90,14 +90,25 @@ def main():
     ap.add_argument("--offset", type=int, default=0)
     ap.add_argument("--provider", choices=["gemini", "groq"], default="gemini")
     args = ap.parse_args()
-    if not (1 <= args.count <= 10) or args.offset < 0:
-        ap.error("Pilot limited to 1-10 words per manual run")
+    if not (1 <= args.count <= 26) or args.offset < 0:
+        ap.error("Pilot limited to 1-26 words per run")
     words = json.loads(SOURCE.read_text(encoding="utf-8")) if SOURCE.exists() else ["toad","trader","trainee","troy","tweet","twist","tyrant","unapproachable","unpack","aerial","affluent","afterlife","airliner","alchemist","ale","alexandria","alleviate","chink","tourniquet","tout","toxicity","trachea","tracheitis","tracker","traduce","tragacanth"]
     selected = words[args.offset:args.offset + args.count]
     if not selected:
         ap.error("Offset beyond missing words")
     OUT.mkdir(parents=True, exist_ok=True)
     success, errors = [], []
+    prior = pathlib.Path(os.environ.get("PILOT_PREVIOUS_DRAFTS", "/nonexistent"))
+    if prior.is_file():
+        for line in prior.read_text(encoding="utf-8").splitlines():
+            try:
+                record = json.loads(line)
+                if record.get("w") in selected and record.get("senses"):
+                    success.append(record)
+            except (ValueError, TypeError):
+                continue
+    already = {row["w"] for row in success}
+    print("Existing draft words reused: " + str(len(already)))
     gemini_model = None
     if args.provider == "gemini":
         key = os.environ.get("GEMINI_API_KEY_FOR_DICTIONARY", "")
@@ -105,6 +116,8 @@ def main():
             ap.error("Missing Gemini secret")
         gemini_model = choose_gemini_model(key)
     for word in selected:
+        if word in already:
+            continue
         try:
             for attempt in range(3):
                 try:
