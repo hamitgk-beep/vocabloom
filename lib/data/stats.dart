@@ -59,6 +59,35 @@ class StatsStore {
     return r.first['s'] as int;
   }
 
+  /// Seconds read on each of the last [days] days, oldest first, ending [now].
+  List<(DateTime, int)> readingByDay(int days, {DateTime? now}) {
+    final n = now ?? DateTime.now();
+    final end = DateTime(n.year, n.month, n.day);
+    final from = end.subtract(Duration(days: days - 1));
+    final by = {
+      for (final r in user.db.select('SELECT day, SUM(seconds) AS s FROM reading_time WHERE day >= ? GROUP BY day', [ReviewStore.dayKey(from)]))
+        r['day'] as String: r['s'] as int,
+    };
+    return [
+      for (var i = 0; i < days; i++)
+        (from.add(Duration(days: i)), by[ReviewStore.dayKey(from.add(Duration(days: i)))] ?? 0),
+    ];
+  }
+
+  /// Dictionary lookups on each of the last [days] days, oldest first.
+  List<(DateTime, int)> lookupsByDay(int days, {DateTime? now}) {
+    final n = now ?? DateTime.now();
+    final end = DateTime(n.year, n.month, n.day);
+    final from = end.subtract(Duration(days: days - 1));
+    final counts = List.filled(days, 0);
+    for (final r in user.db.select('SELECT created FROM lookup_log WHERE created >= ?', [from.millisecondsSinceEpoch])) {
+      final d = DateTime.fromMillisecondsSinceEpoch(r['created'] as int);
+      final i = DateTime(d.year, d.month, d.day).difference(from).inDays;
+      if (i >= 0 && i < days) counts[i]++;
+    }
+    return [for (var i = 0; i < days; i++) (from.add(Duration(days: i)), counts[i])];
+  }
+
   /// Distinct days with any reading time.
   int readingDays() => user.db.select('SELECT COUNT(DISTINCT day) AS n FROM reading_time WHERE seconds > 0').first['n'] as int;
 
@@ -92,8 +121,12 @@ class StatsStore {
     return (r.first['w'] as int) + (bookId == null ? (int.tryParse(user.getSetting(_deletedWordsKey) ?? '') ?? 0) : 0);
   }
 
-  /// Text words in the whole book (captions not counted).
-  int bookWords(int bookId) {
+  final _bookWords = <int, int>{};
+
+  /// Text words in the whole book (captions not counted). A book's text does not change.
+  int bookWords(int bookId) => _bookWords[bookId] ??= _countBook(bookId);
+
+  int _countBook(int bookId) {
     var n = 0;
     for (final r in user.db.select("SELECT text FROM paras WHERE book_id = ? AND kind != 'c'", [bookId])) {
       n += countWords(r['text'] as String);
@@ -109,6 +142,7 @@ class StatsStore {
       final old = int.tryParse(user.getSetting(_deletedWordsKey) ?? '') ?? 0;
       user.setSetting(_deletedWordsKey, '${old + w}');
     }
+    _bookWords.remove(bookId);
     user.db.execute('DELETE FROM read_para WHERE book_id = ?', [bookId]);
     user.db.execute('''
       INSERT INTO reading_time(day, book_id, seconds) SELECT day, 0, seconds FROM reading_time WHERE book_id = ?
@@ -130,10 +164,9 @@ class StatsStore {
 
   int uniqueLookups() => user.db.select('SELECT COUNT(DISTINCT kind || key) AS n FROM lookup_log').first['n'] as int;
 
-  /// Expressions and word meanings the AI explained, from what is stored on the device.
-  int aiExplained() =>
-      (user.db.select('SELECT COUNT(*) AS n FROM ai_meaning').first['n'] as int) +
-      (user.db.select('SELECT COUNT(*) AS n FROM expr_ai').first['n'] as int);
+  /// Meanings the learner asked the AI for in the reader (the background analysis
+  /// of whole books is not counted: nobody asked for those one by one).
+  int aiExplained() => user.db.select('SELECT COUNT(*) AS n FROM ai_meaning').first['n'] as int;
 
   // ---- reviews
 

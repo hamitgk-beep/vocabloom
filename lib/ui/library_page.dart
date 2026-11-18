@@ -194,6 +194,8 @@ class _LibraryPageState extends State<LibraryPage> {
                   const SizedBox(height: 18),
                   _StatsStrip(books: books.length, learning: learning, learned: learned),
                   const SizedBox(height: 12),
+                  // On a wide window both are in the side menu.
+                  if (width < 720) ...[
                   _FreeLibraryBanner(onTap: _openFreeLibrary),
                   const SizedBox(height: 12),
                   _FreeLibraryBanner.link(
@@ -206,6 +208,7 @@ class _LibraryPageState extends State<LibraryPage> {
                     title: L('Benim Yolculuğum', 'My journey'),
                     subtitle: L('Okuma süren, kelimelerin ve gramer sonuçların', 'Your reading time, words and grammar results'),
                   ),
+                  ],
                   if (learning > 0) ...[
                     const SizedBox(height: 12),
                     ReviewBanner(app: widget.app),

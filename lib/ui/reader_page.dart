@@ -55,12 +55,14 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
       // Listening to the book read aloud is reading too.
       if (reader.active) _active.touch();
       _flushTime();
+      // A short chapter never scrolls: what is on screen is read too.
+      _markRead();
     });
   }
 
   // Active reading time: counted while the reader is used, see ActiveTimer.
   final _active = ActiveTimer();
-  Timer? _tick;
+  Timer? _tick, _readSoon;
 
   void _flushTime() => app.stats.addReadingSeconds(widget.book.id, _active.take());
 
@@ -88,6 +90,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   @override
   void dispose() {
     _tick?.cancel();
+    _readSoon?.cancel();
     _flushTime();
     WidgetsBinding.instance.removeObserver(this);
     _save();
@@ -121,6 +124,9 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scroll.hasClients) scroll.jumpTo(restoreOffset.clamp(0, scroll.position.maxScrollExtent));
     });
+    // What is on screen after a few seconds counts as read.
+    _readSoon?.cancel();
+    _readSoon = Timer(const Duration(seconds: 5), _markRead);
   }
 
   void _go(int c) {

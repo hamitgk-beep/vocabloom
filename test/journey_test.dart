@@ -160,6 +160,46 @@ void main() {
     });
   });
 
+  test('reading time and lookups by day for the charts; AI count is only what the learner asked', () {
+    final app = newApp();
+    final id = addBook(app.user, ['One.']);
+    final now = DateTime(2026, 5, 20, 15);
+    app.stats.addReadingSeconds(id, 300, now: now);
+    app.stats.addReadingSeconds(id, 120, now: now.subtract(const Duration(days: 2)));
+    app.stats.addReadingSeconds(id, 999, now: now.subtract(const Duration(days: 30)));
+    final days = app.stats.readingByDay(14, now: now);
+    expect(days.length, 14);
+    expect(days.last.$2, 300);
+    expect(days[11].$2, 120);
+    expect(days.fold(0, (a, d) => a + d.$2), 420);
+    app.stats.logLookup('word', 'bank', now: now);
+    app.stats.logLookup('word', 'bank', now: now.subtract(const Duration(days: 1)));
+    expect(app.stats.lookupsByDay(14, now: now).map((d) => d.$2).toList().sublist(12), [1, 1]);
+    // Background analysis of a book is not "asked the AI".
+    app.user.setExprAi('look up', 'phrasal_verbs', 'aramak', null);
+    expect(app.stats.aiExplained(), 0);
+  });
+
+  testWidgets('a folded section stays folded when the screen opens again', (tester) async {
+    final app = newApp();
+    tester.view.physicalSize = const Size(820 * 2, 1800 * 2);
+    tester.view.devicePixelRatio = 2;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(MaterialApp(theme: buildTheme(Brightness.light), home: JourneyPage(app: app)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('journey-chart-reading')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('journey-section-reading')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('journey-chart-reading')), findsNothing);
+    await tester.pumpWidget(MaterialApp(key: UniqueKey(), theme: buildTheme(Brightness.light), home: JourneyPage(app: app)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('journey-chart-reading')), findsNothing);
+    expect(find.byKey(const ValueKey('journey-total')), findsOneWidget, reason: 'the headline numbers never fold');
+    await tester.tap(find.byKey(const ValueKey('journey-section-reading')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('journey-chart-reading')), findsOneWidget);
+  });
+
   test('week comparison only when both weeks have reading time', () {
     expect(Journey.compareWeeks(0, 600), isNull);
     expect(Journey.compareWeeks(600, 0), isNull);
@@ -171,7 +211,7 @@ void main() {
     expect(formatNumber(12789), '12.789');
   });
 
-  for (final width in [360.0, 820.0]) {
+  for (final width in [360.0, 820.0, 1280.0]) {
     testWidgets('journey screen at width $width: real numbers, no overflow', (tester) async {
       final app = newApp();
       final id = addBook(app.user, ['One two three.', 'Four five.']);

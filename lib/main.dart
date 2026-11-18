@@ -12,6 +12,8 @@ import 'import/importers.dart' show looksGeneratedTitle, titleFromContent;
 import 'import/text_repair.dart';
 import 'import/word_gaps.dart';
 import 'ui/dictionary_page.dart';
+import 'ui/free_library_page.dart';
+import 'ui/journey_page.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'online/windows_updater.dart';
@@ -127,6 +129,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int tab = 0;
+  bool _wasWide = false;
 
   Timer? _updateTimer;
 
@@ -162,16 +165,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = [LibraryPage(app: widget.app), WordsPage(app: widget.app), DictionaryPage(app: widget.app), GrammarPage(app: widget.app), SettingsPage(app: widget.app)];
+    final wide = MediaQuery.sizeOf(context).width >= 720;
+    // The free library and the journey get their own place in the side menu;
+    // on a phone they stay as cards on the library page (the bar has no room).
+    final pages = [
+      LibraryPage(app: widget.app),
+      WordsPage(app: widget.app),
+      DictionaryPage(app: widget.app),
+      GrammarPage(app: widget.app),
+      // Built only while shown: the catalog loads when opened, the numbers are current.
+      if (wide) tab == 4 ? FreeLibraryPage(app: widget.app) : const SizedBox.shrink(),
+      if (wide) tab == 5 ? JourneyPage(app: widget.app) : const SizedBox.shrink(),
+      SettingsPage(app: widget.app),
+    ];
     final dests = [
       (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
       (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimeler', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
+      if (wide) (Icons.local_library_outlined, Icons.local_library_rounded, L('Ücretsiz kütüphane', 'Free library')),
+      if (wide) (Icons.insights_outlined, Icons.insights_rounded, L('Benim Yolculuğum', 'My journey')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
+    // Settings is last in both layouts: keep it selected when the window changes width.
+    if (wide != _wasWide) {
+      if (tab == (_wasWide ? 6 : 4)) {
+        tab = wide ? 6 : 4;
+      } else if (!wide && tab >= 4) {
+        tab = 0;
+      }
+      _wasWide = wide;
+    }
     if (tab >= pages.length) tab = pages.length - 1;
-    final wide = MediaQuery.sizeOf(context).width >= 720;
     final body = IndexedStack(index: tab, children: pages);
     if (wide) {
       return Scaffold(

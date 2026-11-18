@@ -20,11 +20,13 @@ class JourneyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final j = Journey.of(app);
+    final days = app.stats.readingByDay(14);
+    final looks = app.stats.lookupsByDay(14);
     return Scaffold(
       appBar: AppBar(title: Text(L('Benim Yolculuğum', 'My journey'))),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
+          constraints: const BoxConstraints(maxWidth: 980),
           child: ListView(
             key: const ValueKey('journey-list'),
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
@@ -35,50 +37,162 @@ class JourneyPage extends StatelessWidget {
                 key: const ValueKey('journey-since'),
                 style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
               ),
+              const SizedBox(height: 12),
+              // The headline numbers, always open.
+              _Grid(big: true, tiles: [
+                _Tile(L('Bugün okuma', 'Read today'), formatDuration(j.today), 'journey-today', Icons.today_rounded),
+                _Tile(L('Toplam okuma', 'Total reading'), formatDuration(j.total), 'journey-total', Icons.schedule_rounded),
+                _Tile(L('Okunan kelime (tahmini)', 'Words read (estimate)'), formatNumber(j.wordsRead), 'journey-words', Icons.menu_book_rounded),
+                _Tile(L('Öğrendim listesinde', 'On "Learned"'), formatNumber(j.learned), 'journey-learned', Icons.check_circle_rounded),
+              ]),
               if (j.weekMessage != null) ...[
                 const SizedBox(height: 12),
                 _Note(text: j.weekMessage!, keyName: 'journey-week'),
               ],
-              SectionLabel(L('Okuma', 'Reading')),
-              _Grid(tiles: [
-                _Tile(L('Bugün', 'Today'), formatDuration(j.today), 'journey-today'),
-                _Tile(L('Son 7 gün', 'Last 7 days'), formatDuration(j.week), 'journey-week-time'),
-                _Tile(L('Son 30 gün', 'Last 30 days'), formatDuration(j.month), 'journey-month'),
-                _Tile(L('Toplam', 'Total'), formatDuration(j.total), 'journey-total'),
-                _Tile(L('Okuduğun gün', 'Days read'), formatNumber(j.days), 'journey-days'),
-                _Tile(L('Okunan kelime (tahmini)', 'Words read (estimate)'), formatNumber(j.wordsRead), 'journey-words'),
+              _Section(app: app, id: 'reading', title: L('Okuma', 'Reading'), children: [
+                _BarChart(
+                  key: const ValueKey('journey-chart-reading'),
+                  title: L('Son 14 gün (dakika)', 'Last 14 days (minutes)'),
+                  values: [for (final d in days) (d.$1, d.$2 ~/ 60)],
+                ),
+                const SizedBox(height: 10),
+                _Grid(tiles: [
+                  _Tile(L('Son 7 gün', 'Last 7 days'), formatDuration(j.week), 'journey-week-time'),
+                  _Tile(L('Son 30 gün', 'Last 30 days'), formatDuration(j.month), 'journey-month'),
+                  _Tile(L('Okuduğun gün', 'Days read'), formatNumber(j.days), 'journey-days'),
+                ]),
               ]),
-              SectionLabel(L('Kitaplar', 'Books')),
-              _Grid(tiles: [
-                _Tile(L('Kitaplıkta', 'In library'), formatNumber(j.books.length), 'journey-books'),
-                _Tile(L('Başlanan', 'Started'), formatNumber(j.started), 'journey-started'),
-                _Tile(L('Devam eden', 'In progress'), formatNumber(j.started - j.finished), 'journey-progress'),
-                _Tile(L('Biten', 'Finished'), formatNumber(j.finished), 'journey-finished'),
+              _Section(app: app, id: 'books', title: L('Kitaplar', 'Books'), children: [
+                _Grid(tiles: [
+                  _Tile(L('Kitaplıkta', 'In library'), formatNumber(j.books.length), 'journey-books'),
+                  _Tile(L('Başlanan', 'Started'), formatNumber(j.started), 'journey-started'),
+                  _Tile(L('Devam eden', 'In progress'), formatNumber(j.started - j.finished), 'journey-progress'),
+                  _Tile(L('Biten', 'Finished'), formatNumber(j.finished), 'journey-finished'),
+                ]),
+                for (final b in j.books.where((b) => b.started)) _BookRow(b: b),
               ]),
-              for (final b in j.books.where((b) => b.started)) _BookRow(b: b),
-              SectionLabel(L('Kelimeler', 'Words')),
-              _Grid(tiles: [
-                _Tile(L('Öğreneceğim', 'To learn'), formatNumber(j.learning), 'journey-learning'),
-                _Tile(L('Öğrendim listesinde', 'On "Learned"'), formatNumber(j.learned), 'journey-learned'),
-                _Tile(L('Tekrarla öğrenilen', 'Learned by review'), formatNumber(j.learnedByReview), 'journey-graduated'),
-                _Tile(L('Tekrar zamanı gelen', 'Due for review'), formatNumber(j.due), 'journey-due'),
-                _Tile(L('Toplam tekrar', 'Reviews'), formatNumber(j.reviews), 'journey-reviews'),
-                _Tile(L('Tekrar başarısı', 'Review success'), j.reviewSuccess ?? L('Henüz az veri', 'Not enough yet'), 'journey-review-success'),
+              _Section(app: app, id: 'words', title: L('Kelimeler', 'Words'), children: [
+                _Grid(tiles: [
+                  _Tile(L('Öğreneceğim', 'To learn'), formatNumber(j.learning), 'journey-learning'),
+                  _Tile(L('Tekrarla öğrenilen', 'Learned by review'), formatNumber(j.learnedByReview), 'journey-graduated'),
+                  _Tile(L('Tekrar zamanı gelen', 'Due for review'), formatNumber(j.due), 'journey-due'),
+                  _Tile(L('Toplam tekrar', 'Reviews'), formatNumber(j.reviews), 'journey-reviews'),
+                  _Tile(L('Tekrar başarısı', 'Review success'), j.reviewSuccess ?? L('Henüz az veri', 'Not enough yet'), 'journey-review-success'),
+                ]),
               ]),
-              SectionLabel(L('Sözlük', 'Dictionary')),
-              _Grid(tiles: [
-                _Tile(L('Sorgu', 'Lookups'), formatNumber(j.lookups), 'journey-lookups'),
-                _Tile(L('Son 7 gün', 'Last 7 days'), formatNumber(j.lookupsWeek), 'journey-lookups-week'),
-                _Tile(L('Farklı kelime/ifade', 'Different words'), formatNumber(j.uniqueLookups), 'journey-lookups-unique'),
-                _Tile(L('AI ile açıklanan', 'Explained by AI'), formatNumber(j.aiExplained), 'journey-ai'),
+              _Section(app: app, id: 'dictionary', title: L('Sözlük', 'Dictionary'), children: [
+                _BarChart(
+                  key: const ValueKey('journey-chart-lookups'),
+                  title: L('Son 14 gün (sorgu)', 'Last 14 days (lookups)'),
+                  values: looks,
+                ),
+                const SizedBox(height: 10),
+                _Grid(tiles: [
+                  _Tile(L('Sorgu', 'Lookups'), formatNumber(j.lookups), 'journey-lookups'),
+                  _Tile(L('Son 7 gün', 'Last 7 days'), formatNumber(j.lookupsWeek), 'journey-lookups-week'),
+                  _Tile(L('Farklı kelime/ifade', 'Different words'), formatNumber(j.uniqueLookups), 'journey-lookups-unique'),
+                  _Tile(L('AI\'a sorulan anlam', 'Asked the AI'), formatNumber(j.aiExplained), 'journey-ai'),
+                ]),
               ]),
-              SectionLabel(L('Gramer', 'Grammar')),
-              _Grammar(app: app, byTopic: j.grammar),
+              _Section(app: app, id: 'grammar', title: L('Gramer', 'Grammar'), children: [
+                _Grammar(app: app, byTopic: j.grammar),
+              ]),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+/// A section the learner can fold; the folded ones are remembered on the device.
+class _Section extends StatefulWidget {
+  final AppState app;
+  final String id, title;
+  final List<Widget> children;
+  const _Section({required this.app, required this.id, required this.title, required this.children});
+
+  @override
+  State<_Section> createState() => _SectionState();
+}
+
+class _SectionState extends State<_Section> {
+  static const _key = 'journey_closed';
+  Set<String> get _closed => {...?widget.app.user.getSetting(_key)?.split(',').where((x) => x.isNotEmpty)};
+  late bool open = !_closed.contains(widget.id);
+
+  void _toggle() {
+    setState(() => open = !open);
+    final c = _closed;
+    open ? c.remove(widget.id) : c.add(widget.id);
+    widget.app.user.setSetting(_key, c.join(','));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      const SizedBox(height: 14),
+      InkWell(
+        key: ValueKey('journey-section-${widget.id}'),
+        borderRadius: BorderRadius.circular(10),
+        onTap: _toggle,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+          child: Row(children: [
+            Expanded(
+              child: Text(widget.title.toUpperCase(),
+                  style: t.textTheme.labelMedium?.copyWith(letterSpacing: 1.0, color: t.colorScheme.onSurfaceVariant)),
+            ),
+            Icon(open ? Icons.expand_less_rounded : Icons.expand_more_rounded, color: t.colorScheme.onSurfaceVariant),
+          ]),
+        ),
+      ),
+      if (open) ...widget.children,
+    ]);
+  }
+}
+
+/// Bars for the last days; the day of the month below each bar.
+class _BarChart extends StatelessWidget {
+  final String title;
+  final List<(DateTime, int)> values;
+  const _BarChart({super.key, required this.title, required this.values});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final top = values.fold(0, (a, v) => v.$2 > a ? v.$2 : a);
+    return Panel(padding: const EdgeInsets.fromLTRB(14, 12, 14, 10), children: [
+      Row(children: [
+        Expanded(child: Text(title, style: t.textTheme.titleSmall)),
+        Text(L('en çok: $top', 'max: $top'), style: t.textTheme.labelSmall?.copyWith(color: t.colorScheme.onSurfaceVariant)),
+      ]),
+      const SizedBox(height: 10),
+      SizedBox(
+        height: 110,
+        child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          for (final v in values)
+            Expanded(
+              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Tooltip(
+                  message: '${_date(v.$1)}: ${v.$2}',
+                  child: Container(
+                    height: top == 0 ? 2 : 2 + 84 * v.$2 / top,
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
+                    decoration: BoxDecoration(
+                      color: v.$2 == 0 ? t.colorScheme.outlineVariant : t.colorScheme.primary,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text('${v.$1.day}', style: t.textTheme.labelSmall?.copyWith(fontSize: 10, color: t.colorScheme.onSurfaceVariant)),
+              ]),
+            ),
+        ]),
+      ),
+    ]);
   }
 }
 
@@ -185,19 +299,21 @@ String _date(DateTime d) => '${d.day.toString().padLeft(2, '0')}.${d.month.toStr
 
 class _Tile {
   final String label, value, keyName;
-  const _Tile(this.label, this.value, this.keyName);
+  final IconData? icon;
+  const _Tile(this.label, this.value, this.keyName, [this.icon]);
 }
 
 /// Two to three numbers per row, depending on the width.
 class _Grid extends StatelessWidget {
   final List<_Tile> tiles;
-  const _Grid({required this.tiles});
+  final bool big;
+  const _Grid({required this.tiles, this.big = false});
 
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
     return LayoutBuilder(builder: (context, c) {
-      final cols = c.maxWidth >= 560 ? 3 : 2;
+      final cols = big ? (c.maxWidth >= 720 ? 4 : 2) : (c.maxWidth >= 560 ? 3 : 2);
       final w = (c.maxWidth - 10 * (cols - 1)) / cols;
       return Wrap(spacing: 10, runSpacing: 10, children: [
         for (final x in tiles)
@@ -212,7 +328,11 @@ class _Grid extends StatelessWidget {
                 border: Border.all(color: t.colorScheme.outlineVariant),
               ),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(x.value, style: t.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800, fontSize: 20)),
+                if (x.icon != null) ...[
+                  Icon(x.icon, size: 20, color: t.colorScheme.primary),
+                  const SizedBox(height: 6),
+                ],
+                Text(x.value, style: t.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800, fontSize: big ? 24 : 20)),
                 const SizedBox(height: 2),
                 Text(x.label, style: t.textTheme.bodySmall?.copyWith(color: t.colorScheme.onSurfaceVariant)),
               ]),
