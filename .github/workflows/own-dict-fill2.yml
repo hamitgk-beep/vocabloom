@@ -33,7 +33,7 @@ jobs:
           gunzip -kf items.json.gz
           PROVIDERS=$(tr -d ' \n' < PROVIDERS)
           BUDGET=$(tr -d ' \n' < BUDGET_USD)
-          python3 run_fill.py items.json out --batch 10 --max-requests 400 --max-minutes 240 --providers "$PROVIDERS" --budget-usd "$BUDGET" || true
+          python3 run_fill.py items.json out --batch 10 --max-requests 1000 --max-minutes 280 --providers "$PROVIDERS" --budget-usd "$BUDGET" || true
           cat out/summary.json || true
       - name: Save results and commit
         if: always()
