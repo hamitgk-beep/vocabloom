@@ -1,0 +1,45 @@
+name: own-dict-gap
+# Translates the 9,673 words whose app meaning is partly from damdafayton (Wiktionary first).
+# Four parts, run one after another; each part commits its own results, so a stop loses at most one part.
+# A part whose results are already in the repository is skipped.
+# Started by pushing the marker file tools/own_dict/gap/START_GAP to the branch.
+on:
+  push:
+    branches: [claude/project-thread-qj1ytv]
+    paths: [tools/own_dict/gap/START_GAP]
+  workflow_dispatch:
+
+jobs:
+  gap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        part: [1, 2, 3, 4]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install anthropic
+      - name: Generate part
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing"; exit 1; fi
+          cd tools/own_dict
+          if [ -f gap/out${{ matrix.part }}/usage.json ]; then echo "part ${{ matrix.part }} already done"; exit 0; fi
+          python3 generate_full.py gap/part${{ matrix.part }}.json gap/out${{ matrix.part }} --model claude-haiku-5-5 --workers 6
+          gzip -9 -f gap/out${{ matrix.part }}/results.jsonl
+      - name: Commit part
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/own_dict/gap/out${{ matrix.part }}
+          git commit -m "Own dictionary: gap part ${{ matrix.part }} results [skip ci]" || exit 0
+          git pull -q --rebase origin claude/project-thread-qj1ytv
+          git push -q origin HEAD:claude/project-thread-qj1ytv
