@@ -1,0 +1,28 @@
+kelime	işlem	mevcut_ft_veya_expr	mevcut_own	öneri	silme
+dieselise	takma_ad	"[""dizel motorları ile donatmak""]"		dieselize	silinmedi
+monar'chical	takma_ad	"[""krallık usulüne ait""]"		monarchical	silinmedi
+nonagression	takma_ad	"[""saldırmazlık""]"		nonaggression	silinmedi
+accouterments	geçerli_varyant	"[""donatı, teçhizat""]"		accoutrements	silinmedi
+accoutrements	yeni_başlık_önerisi			donatı, teçhizat, gereçler	silinmedi
+capapie	takma_ad	"[""tepeden tırnağa""]"		cap-a-pie	silinmedi
+cap-a-pie	yeni_başlık_önerisi			baştan ayağa, baştan başa donanımlı	silinmedi
+babunbaby	unverified_lexeme	"[""bebek, (hayvan) yavru, bir türkümün en genç üyesi, yavru"", ""fıstık, bebek muamelesi yapmak""]"			silinmedi
+diagnotor	unverified_lexeme	"[""hata bulucu""]"			silinmedi
+rindish	unverified_lexeme	"[""rindane""]"			silinmedi
+ringster	unverified_lexeme	"[""klik/tröst üyesi""]"			silinmedi
+hard ever	öneri_yeni_kayıt	Çok ama çok nadir görülen		çok nadiren, neredeyse hiç	silinmedi
+find quarrel in a straw	tr_düzeltme	Her şeye mız koymak		küçük şeylere takılmak, her şeyden kavga çıkarmak	silinmedi
+hone in on	varyant_korunur	hedef almak, odaklanmak, dikkatini vermek		home in on	silinmedi
+stride along	anlam_ekle	arşınlamak		uzun adımlarla yürümek, adımlarla ilerlemek	silinmedi
+walk up	anlam_ekle	yukarı yürümek		yanına yürümek, yaklaşmak	silinmedi
+at stool	etiket_ekle	hacetini giderirken, kaka yaparken, dışkısını yaparken		['eufemistik']	silinmedi
+faggot	anlam_etiketi	"[""çalı çırpı demeti, çıra demeti, (Aİ) ibne, sevimsiz kimse"", ""köfte""]"	"own:[{""pos"": ""noun"", ""tr"": ""odun demeti"", ""note"": """", ""en"": ""He carried a faggot of "	['asagilayici', 'kaba']	silinmedi
+sod	anlam_etiketi	"[""çim, çimen parçası, gıcık, kıl"", ""sinir herif, herif, ahbap, hıyar"", ""baş belası""]"	"own:[{""pos"": ""noun"", ""tr"": ""çim kaplı toprak, çim örtüsü"", ""note"": """", ""en"": ""They l"	['asagilayici', 'argo', 'kaba']	silinmedi
+sod	anlam_etiketi	"[""çim, çimen parçası, gıcık, kıl"", ""sinir herif, herif, ahbap, hıyar"", ""baş belası""]"	"own:[{""pos"": ""noun"", ""tr"": ""çim kaplı toprak, çim örtüsü"", ""note"": """", ""en"": ""They l"	['argo', 'tarihsel']	silinmedi
+frigid	anlam_etiketi	"[""çok soğuk, buz gibi, dondurucu, (kişi/davranış/vb.) soğuk"", ""cansız, resmi, (kadın) (cinsel yönden) soğuk"", ""frijit""]"	"own:[{""pos"": ""adjective"", ""tr"": ""buz gibi, dondurucu"", ""note"": ""hava, ortam için"", """	['cinsel', 'tarihsel', 'asagilayici']	silinmedi
+creep	anlam_etiketi	"[""sürünmek, sürünerek ilerlemek, sessizce sokulmak, (sarmaşık/vb.) sarılmak"", ""sarılarak büyümek, ürpermek, tüyleri ürpe"	"own:[{""pos"": ""verb"", ""tr"": ""sürünmek, emekleyerek ilerlemek"", ""note"": """", ""en"": ""The"	['gayriresmi']	silinmedi
+creep	anlam_etiketi	"[""sürünmek, sürünerek ilerlemek, sessizce sokulmak, (sarmaşık/vb.) sarılmak"", ""sarılarak büyümek, ürpermek, tüyleri ürpe"	"own:[{""pos"": ""verb"", ""tr"": ""sürünmek, emekleyerek ilerlemek"", ""note"": """", ""en"": ""The"	['asagilayici', 'gayriresmi']	silinmedi
+screw	anlam_etiketi	"[""vida"", ""vidalamak"", ""sikmek"", ""pervane, uskur, kâğıt külah"", ""(İİ) maaş, vergin, gardiyan, (İİ) yaşlı"", ""zayıf at, (İİ"	"own:[{""pos"": ""noun"", ""tr"": ""vida"", ""note"": """", ""en"": ""Use a screw to attach the shel"	['argo', 'tarihsel']	silinmedi
+screw	anlam_etiketi	"[""vida"", ""vidalamak"", ""sikmek"", ""pervane, uskur, kâğıt külah"", ""(İİ) maaş, vergin, gardiyan, (İİ) yaşlı"", ""zayıf at, (İİ"	"own:[{""pos"": ""noun"", ""tr"": ""vida"", ""note"": """", ""en"": ""Use a screw to attach the shel"	['argo']	silinmedi
+screw	anlam_etiketi	"[""vida"", ""vidalamak"", ""sikmek"", ""pervane, uskur, kâğıt külah"", ""(İİ) maaş, vergin, gardiyan, (İİ) yaşlı"", ""zayıf at, (İİ"	"own:[{""pos"": ""noun"", ""tr"": ""vida"", ""note"": """", ""en"": ""Use a screw to attach the shel"	['cinsel', 'kaba', 'argo']	silinmedi
+fuss	anlam_etiketi	"[""telaş, velvele, yaygara"", ""gürültü patırtı, gereksiz telaş/kızgınlık/sabırsızlık"", ""gereksiz yere telaşlanmak, ortalığ"	"own:[{""pos"": ""noun"", ""tr"": ""telaş, heyecan"", ""note"": ""gereksiz hareketlilik"", ""en"": "	['gayriresmi']	silinmedi
