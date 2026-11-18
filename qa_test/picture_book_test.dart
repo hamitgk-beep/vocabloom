@@ -54,10 +54,14 @@ Widget shell(Widget home, Brightness b) => MaterialApp(
   home: home,
 );
 
+/// The PDF import needs the PDFium library (PDFIUM_PATH); without it there is nothing to show.
+final noPdfium = (Platform.environment['PDFIUM_PATH'] ?? '').isEmpty;
+
 void main() {
   late AppState app;
   late int bookId;
   setUpAll(() async {
+    if (noPdfium) return;
     pdfrxInitialize();
     await loadFonts();
     final d = DictDb();
@@ -68,7 +72,7 @@ void main() {
     bookId = app.user.insertBook(b);
   });
 
-  testWidgets('pages of the book in the reader', (tester) async {
+  testWidgets('pages of the book in the reader', skip: noPdfium, (tester) async {
     uiEnglish = false;
     for (final (size, name) in [(const Size(430, 900), 'phone'), (const Size(1280, 860), 'desktop')]) {
       for (final b in [Brightness.light, if (size.width < 500) Brightness.dark]) {
