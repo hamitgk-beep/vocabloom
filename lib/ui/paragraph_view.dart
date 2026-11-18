@@ -47,6 +47,12 @@ class ParaAnalysis {
       });
   }
 
+  /// The expression category underlined on each token: the expression a tap
+  /// on that token opens ([expressionsAt]), or null.
+  List<String?> expressionCats(AppState app) => [
+        for (var i = 0; i < tokens.length; i++) expressionsAt(app, i).firstOrNull?.expr.cat,
+      ];
+
   /// The highlight that colours token [i]: the expression [expressionsAt]
   /// picks, else an enabled grammar structure. Returns the expression
   /// category or the grammar mark.
@@ -184,8 +190,8 @@ class _ParagraphViewState extends State<ParagraphView> {
       fontFamily: readingFont,
     );
 
-    // category per token (first enabled category in display order wins;
-    // expressions before grammar structures)
+    // category per token: the expression the tap opens (the same rule,
+    // expressionsAt), then grammar structures
     final catOf = List<String?>.filled(a.tokens.length, null);
     final markOf = List<GMark?>.filled(a.tokens.length, null);
     final phraseStatus = List<WordStatus>.filled(a.tokens.length, WordStatus.none);
@@ -197,11 +203,10 @@ class _ParagraphViewState extends State<ParagraphView> {
           phraseStatus[t] = st;
         }
       }
-      if (!app.enabledCats.contains(m.expr.cat)) continue;
-      for (final t in m.tokens) {
-        final cur = catOf[t];
-        if (cur == null || order[m.expr.cat]! < order[cur]!) catOf[t] = m.expr.cat;
-      }
+    }
+    final ec = a.expressionCats(app);
+    for (var t = 0; t < a.tokens.length; t++) {
+      catOf[t] = ec[t];
     }
     if (app.enabledCats.any(grammarCatIds.contains)) {
       for (final m in a.grammar(app)) {

@@ -21,6 +21,12 @@ void main() {
     expect(phrases('Please turn off the light.'), contains('turn off[1, 2]'));
   });
 
+  test('the particle may be followed by a new clause: turn the light off before you leave', () {
+    expect(phrases('Please turn the light off before you leave.'), contains('turn off[1, 4]'));
+    expect(phrases('Pick the toys up when you finish.'), contains('pick up[0, 3]'));
+    expect(phrases('She put the book on the table before dinner.').where((x) => x.startsWith('put on')), isEmpty);
+  });
+
   test('pick the cup up and turn the lights out', () {
     expect(phrases('He picked the cup up and left.'), contains('pick up[1, 4]'));
     expect(phrases('She turned the lights out and slept.'), contains('turn out[1, 4]'));

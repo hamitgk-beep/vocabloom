@@ -174,17 +174,26 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('"I don\'t understand" without a written explanation says what the word means here', (tester) async {
+    await pumpPanel(tester, WordPanel(app: app, surface: 'bank', ctx: ctxFor('The bank approved the loan.', 'bank')));
+    await tester.ensureVisible(find.byKey(const ValueKey('ctx-sense-help')));
+    await tester.tap(find.byKey(const ValueKey('ctx-sense-help')));
+    await tester.pump();
+    expect(find.textContaining('“banka” anlamında kullanılmış'), findsOneWidget);
+    expect(find.textContaining('kısa açıklaması sözlükte yok'), findsNothing);
+  });
+
   testWidgets('a report can be withdrawn; the state is still there after a restart', (tester) async {
     final old = app.user.activeSenseFeedbackId('know', 'I know her very well.');
     if (old != null) app.user.withdrawSenseFeedback(old);
     final before = app.user.senseFeedbackCount();
-    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')));
+    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')), height: 1300);
     await tester.ensureVisible(find.byKey(const ValueKey('ctx-sense-wrong')));
     await tester.tap(find.byKey(const ValueKey('ctx-sense-wrong')));
     await tester.pump();
     expect(find.byKey(const ValueKey('ctx-sense-undo')), findsOneWidget);
     // A new panel, as after a restart: the report is still active, not sent twice.
-    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')));
+    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')), height: 1300);
     await tester.pump();
     expect(find.byKey(const ValueKey('ctx-sense-undo')), findsOneWidget);
     expect(find.text('Bildirildi'), findsOneWidget);

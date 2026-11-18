@@ -68,6 +68,19 @@ void main() {
     });
   }
 
+  test('the underline follows the tap: a literal phrasal verb inside an idiom is not underlined as a phrasal verb', () {
+    app.enabledCats..clear()..addAll(['phrasal_verbs', 'idioms']);
+    final a = analyze(app, 'He finally made up his mind about the trip.');
+    final cats = a.expressionCats(app);
+    for (final i in [2, 3, 4, 5]) {
+      expect(cats[i], a.expressionsAt(app, i).first.expr.cat, reason: 'token $i');
+      expect(cats[i], 'idioms', reason: 'token $i: "made up his mind" is one idiom');
+    }
+    final b = analyze(app, 'Please turn the light off before you leave.');
+    expect(b.expressionCats(app)[1], 'phrasal_verbs');
+    expect(b.expressionCats(app)[4], 'phrasal_verbs');
+  });
+
   test('a disabled category gives no underline and no tap target', () {
     final a = analyze(app, 'He finally broke the ice.');
     app.enabledCats..clear()..add('phrasal_verbs');

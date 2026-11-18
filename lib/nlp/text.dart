@@ -209,7 +209,12 @@ class PhraseMatcher {
   /// ("turn the light off and leave").
   static const _prepAfter = {'in', 'on', 'at', 'to', 'for', 'from', 'with', 'into', 'of'};
 
-  static const _afterParticle = {'and', 'but', 'or', 'then', 'again', 'now', 'too', 'quickly', 'completely', 'first'};
+  static const _afterParticle = {
+    'and', 'but', 'or', 'then', 'again', 'now', 'too', 'quickly', 'completely', 'first',
+    // a new clause starts ("turn the light off before you leave")
+    'before', 'after', 'when', 'while', 'because', 'so', 'until', 'till', 'if', 'unless', 'once', 'as',
+    'soon', 'later', 'today', 'tonight', 'tomorrow', 'please', 'carefully', 'slowly',
+  };
 
   /// A two-word phrasal verb split by a short noun object: verb at [i], a
   /// determiner or possessive at i+1, at most two more words, then the
