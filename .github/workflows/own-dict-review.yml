@@ -1,0 +1,36 @@
+name: own-dict-review
+# Re-translates the few headwords queued by the review step (typos, proper names, empty meanings or examples).
+# Started by pushing the marker file tools/own_dict/review/START_REVIEW to the branch.
+on:
+  push:
+    branches: [claude/project-thread-qj1ytv]
+    paths: [tools/own_dict/review/START_REVIEW]
+  workflow_dispatch:
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install anthropic
+      - name: Generate queued items
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing"; exit 1; fi
+          cd tools/own_dict
+          python3 generate_full.py review/api_queue.json review/review_out --model claude-haiku-5-5 --workers 2
+          gzip -9 -f review/review_out/results.jsonl
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/own_dict/review/review_out
+          git commit -m "Own dictionary: review run results (gzipped) [skip ci]" || exit 0
+          git push

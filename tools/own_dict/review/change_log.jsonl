@@ -1,0 +1,47 @@
+{"w": "math", "kind": "word", "change": "duplicate_sense_removed", "before": "matematik", "after": ""}
+{"w": "ah", "kind": "word", "change": "english_token_removed", "before": "ah, of", "after": "ah"}
+{"w": "interpretation", "kind": "word", "change": "duplicate_sense_removed", "before": "yorum, yorumlama", "after": ""}
+{"w": "omelet", "kind": "word", "change": "duplicate_sense_removed", "before": "omlet", "after": ""}
+{"w": "sustained", "kind": "word", "change": "duplicate_sense_removed", "before": "sürekli, kesintisiz", "after": ""}
+{"w": "columbia", "kind": "word", "change": "duplicate_sense_removed", "before": "Columbia", "after": ""}
+{"w": "columbia", "kind": "word", "change": "duplicate_sense_removed", "before": "Columbia", "after": ""}
+{"w": "symmetry", "kind": "word", "change": "duplicate_sense_removed", "before": "simetri", "after": ""}
+{"w": "tarantula", "kind": "word", "change": "duplicate_sense_removed", "before": "tarantula", "after": ""}
+{"w": "southpaw", "kind": "word", "change": "duplicate_sense_removed", "before": "solak", "after": ""}
+{"w": "quart", "kind": "word", "change": "duplicate_sense_removed", "before": "kuart", "after": ""}
+{"w": "wellington", "kind": "word", "change": "duplicate_sense_removed", "before": "Wellington", "after": ""}
+{"w": "hastings", "kind": "word", "change": "duplicate_sense_removed", "before": "Hastings", "after": ""}
+{"w": "phew", "kind": "word", "change": "english_token_removed", "before": "uf, of, ohh", "after": "uf, ohh"}
+{"w": "ampule", "kind": "word", "change": "duplicate_sense_removed", "before": "ampul", "after": ""}
+{"w": "bah", "kind": "word", "change": "english_token_removed", "before": "hah, boş ver, of", "after": "hah, boş ver"}
+{"w": "chlorite", "kind": "word", "change": "duplicate_sense_removed", "before": "klorit", "after": ""}
+{"w": "cross-border", "kind": "word", "change": "duplicate_sense_removed", "before": "sınır ötesi, sınır aşan", "after": ""}
+{"w": "descriptivism", "kind": "word", "change": "duplicate_sense_removed", "before": "betimselcilik", "after": ""}
+{"w": "dram", "kind": "word", "change": "duplicate_sense_removed", "before": "dram", "after": ""}
+{"w": "ethene", "kind": "word", "change": "duplicate_sense_removed", "before": "etilen", "after": ""}
+{"w": "expressionism", "kind": "word", "change": "duplicate_sense_removed", "before": "dışavurumculuk", "after": ""}
+{"w": "foreground", "kind": "word", "change": "duplicate_sense_removed", "before": "ön plan", "after": ""}
+{"w": "input-output", "kind": "word", "change": "duplicate_sense_removed", "before": "girdi-çıktı", "after": ""}
+{"w": "isobar", "kind": "word", "change": "duplicate_sense_removed", "before": "izobar", "after": ""}
+{"w": "maxwell", "kind": "word", "change": "duplicate_sense_removed", "before": "Maxwell", "after": ""}
+{"w": "mildness", "kind": "word", "change": "duplicate_sense_removed", "before": "ılımlılık, yumuşaklık", "after": ""}
+{"w": "oof", "kind": "word", "change": "english_token_removed", "before": "of, ah", "after": "ah"}
+{"w": "ovarian", "kind": "word", "change": "english_token_removed", "before": "yumurtalıkla ilgili, over", "after": "yumurtalıkla ilgili"}
+{"w": "pah", "kind": "word", "change": "english_token_removed", "before": "Of, hah", "after": "hah"}
+{"w": "roentgen", "kind": "word", "change": "duplicate_sense_removed", "before": "röntgen", "after": ""}
+{"w": "selenite", "kind": "word", "change": "duplicate_sense_removed", "before": "selenit", "after": ""}
+{"w": "semiautomatic", "kind": "word", "change": "duplicate_sense_removed", "before": "yarı otomatik", "after": ""}
+{"w": "shilling", "kind": "word", "change": "duplicate_sense_removed", "before": "şilin", "after": ""}
+{"w": "structuralism", "kind": "word", "change": "duplicate_sense_removed", "before": "yapısalcılık", "after": ""}
+{"w": "structuralism", "kind": "word", "change": "duplicate_sense_removed", "before": "yapısalcılık", "after": ""}
+{"w": "terrier", "kind": "word", "change": "duplicate_sense_removed", "before": "teriyer", "after": ""}
+{"w": "transitivity", "kind": "word", "change": "duplicate_sense_removed", "before": "geçişlilik", "after": ""}
+{"w": "twosome", "kind": "word", "change": "duplicate_sense_removed", "before": "ikili, çift", "after": ""}
+{"w": "alack and alas", "kind": "expr", "change": "english_token_removed", "before": "eyvah, of, vah vah", "after": "eyvah, vah vah"}
+{"w": "fox and geese", "kind": "expr", "change": "duplicate_sense_removed", "before": "tilki ve kazlar", "after": ""}
+{"w": "bamboo ceiling", "kind": "expr", "change": "duplicate_sense_removed", "before": "görünmez engel, cam tavan", "after": ""}
+{"w": "for crying out loud", "kind": "expr", "change": "english_token_removed", "before": "Yahu, of, Allah Allah", "after": "Yahu, Allah Allah"}
+{"w": "golden rule", "kind": "expr", "change": "duplicate_sense_removed", "before": "altın kural", "after": ""}
+{"w": "shoot the gold", "kind": "expr", "change": "english_token_removed", "before": "hit the gold ile aynı anlamda, büyük başarı kazanmak", "after": "büyük başarı kazanmak"}
+{"w": "monar'chical", "kind": "word", "change": "typo_headword", "before": "monar'chical", "after": "monarchical"}
+{"w": "nonagression", "kind": "word", "change": "typo_headword", "before": "nonagression", "after": "nonaggression"}
