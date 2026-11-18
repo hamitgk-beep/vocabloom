@@ -1,6 +1,6 @@
-// The own-dictionary fallback in DictDb.lookup(): with the flag off the app reads
-// exactly what it reads today (ft); with the flag on, own_word comes first and
-// ft is used whenever there is no own meaning or the table is missing.
+// The own-dictionary fallback in DictDb.lookup(): with ownEnabled false the app reads exactly what
+// it reads today (ft); with ownEnabled true, own_word comes first and ft is used whenever there is
+// no own meaning or the table is missing. The released default is on (useOwnDictionary = true).
 // The bundled database is never written to; every test works on a temporary copy.
 import 'dart:io';
 
@@ -11,14 +11,16 @@ import 'package:kelime_okur/data/dict_db.dart';
 
 const _asset = 'assets/dict.db';
 
-/// A temporary copy of the bundled database. With [withOwn] it also gets an own_word table
-/// shaped like the one tools/own_dict/db/migrate.py creates.
+/// A temporary copy of the bundled database. With [withOwn] it gets a fresh own_word table
+/// shaped like the one tools/own_dict/db/migrate.py creates, with two test rows. Without it the
+/// own tables are removed, so the copy behaves like a database from before the import.
 String _copy({required bool withOwn}) {
   final dir = Directory.systemTemp.createTempSync('own_dict_test');
   final path = '${dir.path}/dict.db';
   File(_asset).copySync(path);
+  final db = sqlite3.open(path);
+  db.execute('DROP VIEW IF EXISTS od; DROP TABLE IF EXISTS own_word; DROP TABLE IF EXISTS own_expr;');
   if (withOwn) {
-    final db = sqlite3.open(path);
     db.execute('''
       CREATE TABLE own_word(
         word TEXT PRIMARY KEY, senses TEXT NOT NULL, keep_tr TEXT NOT NULL DEFAULT '[]',
@@ -27,8 +29,8 @@ String _copy({required bool withOwn}) {
         ('book', '[{"tr":"yeni anlam","src":"fix"}]', '["eski anlam"]', 'auto_generated'),
         ('dog', '[]', '[]', 'auto_generated');
     ''');
-    db.dispose();
   }
+  db.dispose();
   return path;
 }
 
@@ -44,17 +46,18 @@ void main() {
   late List<String> baselineDog;
 
   setUpAll(() {
+    // ft-only baseline, taken with the own dictionary explicitly off.
     final base = _open(_asset);
-    baselineBook = base.lookup('book').trFreeDict;
-    baselineDog = base.lookup('dog').trFreeDict;
+    baselineBook = base.lookup('book', ownEnabled: false).trFreeDict;
+    baselineDog = base.lookup('dog', ownEnabled: false).trFreeDict;
     expect(baselineBook, isNotEmpty, reason: 'the bundled ft table must have a meaning for book');
   });
 
-  test('flag off (the app default): lookup reads ft even when own_word exists', () {
-    expect(DictDb.useOwnDictionary, isFalse, reason: 'production default must stay off');
+  test('released default is on, and turning it off reads ft even when own_word exists', () {
+    expect(DictDb.useOwnDictionary, isTrue, reason: 'the import is released with the flag on');
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('book').trFreeDict, baselineBook);
-    expect(d.lookup('dog').trFreeDict, baselineDog);
+    expect(d.lookup('book', ownEnabled: false).trFreeDict, baselineBook);
+    expect(d.lookup('dog', ownEnabled: false).trFreeDict, baselineDog);
   });
 
   test('flag on: own meanings come first, keep_tr before the new senses', () {
@@ -64,7 +67,8 @@ void main() {
 
   test('flag on: a word without an own row still reads ft', () {
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('house', ownEnabled: true).trFreeDict, _open(_asset).lookup('house').trFreeDict);
+    expect(d.lookup('house', ownEnabled: true).trFreeDict,
+        _open(_asset).lookup('house', ownEnabled: false).trFreeDict);
   });
 
   test('flag on: an empty own row falls back to ft', () {
@@ -73,7 +77,7 @@ void main() {
   });
 
   test('flag on but no own_word table: no error, ft is used', () {
-    final d = _open(_asset);
+    final d = _open(_copy(withOwn: false));
     expect(d.lookup('book', ownEnabled: true).trFreeDict, baselineBook);
   });
 
