@@ -60,4 +60,4 @@ Note: this comparison ran before the 24 re-translations were merged. Those 24 ar
 
 ## Waiting for approval
 - Approve the import plan steps 1 to 4 (new tables, no change to current meanings).
-- Decide how to handle the 927 register entries and the 9,673 words still using damdafayton text (second run, about 3.5 USD).
+- Decide how to handle the 927 register entries and the 9,673 words still using damdafayton text (second run, about 1 USD).
