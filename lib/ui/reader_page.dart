@@ -14,7 +14,6 @@ import 'reading_sheet.dart';
 import 'theme.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
-import 'context_sense_card.dart';
 import '../nlp/text.dart' as nlp;
 
 class ReaderPage extends StatefulWidget {
@@ -195,29 +194,52 @@ class _ReaderPageState extends State<ReaderPage> {
   Future<void> _openWord(Para p, ParaAnalysis a, int i) async {
     if (!mounted) return;
     final ctx = buildContext(app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
-    // A tap anywhere on an underlined multi-word expression opens the whole expression.
-    final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()..sort((x, y) => y.tokens.length.compareTo(x.tokens.length));
-    // "lived in Kansas": the dictionary's "live in" (live at the workplace) is
-    // not what the sentence says, so the word itself opens.
-    shown.removeWhere((m) => _literal(m, ctx));
-    if (shown.isNotEmpty) {
-      final m = shown.first;
-      await showExprSheet(context, app, m.expr, ctx, [for (final t in m.tokens) a.tokens[t].text]);
+    // The expression the tap belongs to (the same one the underline shows).
+    final multi = a.expressionsAt(app, i).where((m) => m.tokens.length > 1).toList();
+    if (multi.isEmpty) {
+      await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
       if (mounted) setState(() {});
       return;
     }
-    await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
+    var chosen = multi.first;
+    final overlapping = multi.any((m) => m.tokens.join(',') != chosen.tokens.join(','));
+    if (overlapping) {
+      // Expressions that share the word ("make up" / "make up one's mind"):
+      // the reader asks which one is meant, and allows the single word.
+      final pick = await _pickPhrase([for (final m in multi) nlp.displayPhrase(m.expr.phrase)], a.tokens[i].text);
+      if (!mounted || pick == null) return;
+      if (pick < 0) {
+        await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
+        if (mounted) setState(() {});
+        return;
+      }
+      chosen = multi[pick];
+    }
+    await showExprSheet(context, app, chosen.expr, ctx, [for (final t in chosen.tokens) a.tokens[t].text]);
     if (mounted) setState(() {});
   }
 
-  bool _literal(nlp.Match m, WordContext ctx) {
-    try {
-      final r = ContextSenseCard.resolveExpr(app, ctx, m.expr);
-      return r?.literalPhrase != null;
-    } catch (_) {
-      return false;
-    }
-  }
+  /// "Bunu mu demek istedin?": the phrases that share a word, and the word alone (-1).
+  Future<int?> _pickPhrase(List<String> phrases, String word) => showModalBottomSheet<int>(
+        context: context,
+        showDragHandle: true,
+        builder: (c) => SafeArea(
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+              child: Text(L('Bunu mu demek istedin?', 'Did you mean?'), style: Theme.of(c).textTheme.titleMedium),
+            ),
+            for (var k = 0; k < phrases.length; k++)
+              ListTile(key: ValueKey('phrase-choice-$k'), title: Text(phrases[k]), onTap: () => Navigator.pop(c, k)),
+            ListTile(
+              key: const ValueKey('phrase-choice-word'),
+              leading: const Icon(Icons.text_fields_rounded),
+              title: Text(L("Sadece '$word' kelimesi", "Only the word '$word'")),
+              onTap: () => Navigator.pop(c, -1),
+            ),
+          ]),
+        ),
+      );
 
   void _onSentence(Para p, ParaAnalysis a, int i) async {
     await showSentenceSheet(context, app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);

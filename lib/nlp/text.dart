@@ -207,6 +207,8 @@ class PhraseMatcher {
 
   /// Words that may follow the particle when it closes the clause
   /// ("turn the light off and leave").
+  static const _prepAfter = {'in', 'on', 'at', 'to', 'for', 'from', 'with', 'into', 'of'};
+
   static const _afterParticle = {'and', 'but', 'or', 'then', 'again', 'now', 'too', 'quickly', 'completely', 'first'};
 
   /// A two-word phrasal verb split by a short noun object: verb at [i], a
@@ -224,9 +226,13 @@ class PhraseMatcher {
         continue;
       }
       if (k == i + 2) return; // "the up": the object needs a noun
+      // "look the word up in the dictionary": a preposition may follow "up" or
+      // "out"; after other particles ("take the bus in town") it may not.
+      final next = k + 1 < toks.length ? toks[k + 1].lower : '';
       final closes = k + 1 >= toks.length ||
           RegExp(r'[.,;:!?)"”]').hasMatch(text.substring(toks[k].end, toks[k + 1].start)) ||
-          _afterParticle.contains(toks[k + 1].lower);
+          _afterParticle.contains(next) ||
+          ((p == 'up' || p == 'out') && _prepAfter.contains(next));
       if (!closes) return;
       for (final l in lemmas) {
         for (final e in _byFirst[l] ?? const <Expr>[]) {

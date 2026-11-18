@@ -19,7 +19,14 @@ class LocalAiCard extends StatefulWidget {
   final String button;
   final bool auto;
   final Stream<String> Function() run;
-  const LocalAiCard({super.key, required this.app, required this.cacheKey, required this.title, required this.button, required this.run, this.auto = false});
+
+  /// An answer saved earlier (shown without asking again), if any.
+  final String? initialText;
+
+  /// Called with the full answer once it is complete (to keep it).
+  final void Function(String text)? onDone;
+  const LocalAiCard({super.key, required this.app, required this.cacheKey, required this.title, required this.button, required this.run,
+      this.auto = false, this.initialText, this.onDone});
 
   /// Whether an AI service is connected.
   static bool available(AppState app) => app.localAi.activeId != null;
@@ -39,7 +46,7 @@ class _LocalAiCardState extends State<LocalAiCard> {
   @override
   void initState() {
     super.initState();
-    text = widget.app.user.getSetting(_key) ?? '';
+    text = widget.initialText ?? widget.app.user.getSetting(_key) ?? '';
     if (text.isEmpty && widget.auto) WidgetsBinding.instance.addPostFrameCallback((_) => _start());
   }
 
@@ -63,7 +70,10 @@ class _LocalAiCardState extends State<LocalAiCard> {
         running = false;
       },
       onDone: () {
-        if (text.trim().isNotEmpty) widget.app.user.setSetting(_key, text.trim());
+        if (text.trim().isNotEmpty) {
+          widget.app.user.setSetting(_key, text.trim());
+          widget.onDone?.call(text.trim());
+        }
         if (mounted) setState(() => running = false);
       },
     );

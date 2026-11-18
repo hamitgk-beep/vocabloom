@@ -73,11 +73,21 @@ class ContextSenseCard extends StatefulWidget {
 }
 
 class _ContextSenseCardState extends State<ContextSenseCard> {
-  bool reported = false;
+  /// The active "wrong meaning" report for this word in this sentence (kept
+  /// across restarts), and whether the simple explanation is open.
+  int? feedbackId;
+  late bool helpOpen;
   bool askAi = false;
   bool allOthers = false;
 
   ContextSense get r => widget.result;
+
+  @override
+  void initState() {
+    super.initState();
+    feedbackId = widget.app.user.activeSenseFeedbackId(r.headword, widget.ctx.sentence);
+    helpOpen = widget.app.user.senseHelpShown(r.headword, widget.ctx.sentence);
+  }
 
   static const _catTr = {
     'phrasal_verbs': ('Phrasal verb (deyimsel fiil)', 'Phrasal verb'),
@@ -100,7 +110,7 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
 
   void _report() {
     final b = r.best;
-    widget.app.user.addSenseFeedback(
+    final id = widget.app.user.addSenseFeedback(
       word: r.headword,
       sentence: widget.ctx.sentence,
       senseId: b?.id,
@@ -110,10 +120,54 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
       engineVersion: SenseEngine.version,
       book: widget.ctx.bookTitle,
     );
-    setState(() => reported = true);
+    // The AI drafts for this word in this sentence are no longer offered.
+    widget.app.user.flagAiMeanings(r.headword, widget.ctx.sentence);
+    setState(() => feedbackId = id);
     ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(
         content: Text(L('Teşekkürler, kaydedildi. Bu bildirim sözlüğü geliştirmek için kullanılacak.',
             'Thanks, saved. The report will be used to improve the dictionary.'))));
+  }
+
+  /// Takes the report back: the row stays in the database, marked as withdrawn.
+  void _undo() {
+    final id = feedbackId;
+    if (id == null) return;
+    widget.app.user.withdrawSenseFeedback(id);
+    setState(() => feedbackId = null);
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(SnackBar(
+        content: Text(L('Bildirim geri alındı.', 'The report was withdrawn.'))));
+  }
+
+  /// "Anlamı anlamadım": a request for a plainer explanation, not a wrong report.
+  void _help() {
+    widget.app.user.markSenseHelp(r.headword, widget.ctx.sentence);
+    setState(() => helpOpen = true);
+  }
+
+  /// The dictionary's own plain explanation of the sense, offline.
+  Widget _plainExplanation(ThemeData theme) {
+    final b = r.best;
+    final text = b == null
+        ? L('Bu cümle için sözlükte bir açıklama yok. İstersen yapay zekâya sorabilirsin.',
+            'The dictionary has no explanation for this sentence. You can ask the AI.')
+        : (b.explainTr ?? b.note ?? b.explainEn ?? L('Bu anlamın kısa açıklaması sözlükte yok.', 'No short explanation for this meaning.'));
+    final ex = b != null && b.examples.isNotEmpty ? b.examples.first : null;
+    final exTr = b != null && b.examplesTr.isNotEmpty ? b.examplesTr.first : null;
+    return Padding(
+      key: const ValueKey('ctx-sense-help-text'),
+      padding: const EdgeInsets.only(top: 12),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(L('SADE AÇIKLAMA', 'PLAIN EXPLANATION'),
+            style: theme.textTheme.labelSmall?.copyWith(letterSpacing: 1.1, color: theme.hintColor)),
+        const SizedBox(height: 4),
+        Text(text, style: theme.textTheme.bodyMedium),
+        if (ex != null) ...[
+          const SizedBox(height: 6),
+          Text('“$ex”', style: theme.textTheme.bodyMedium?.copyWith(fontStyle: FontStyle.italic)),
+          if (exTr != null) Text(exTr, style: theme.textTheme.bodyMedium),
+        ],
+      ]),
+    );
   }
 
   Future<void> _askAi() async {
@@ -128,6 +182,7 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
     final cs = theme.colorScheme;
     final app = widget.app;
     final tr = app.showTr, en = app.showEn;
+    final reported = feedbackId != null;
     final b = r.best;
     final shown = r.shown;
     final label = theme.textTheme.labelMedium?.copyWith(letterSpacing: 1.1, color: theme.hintColor);
@@ -234,15 +289,30 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
       }
     }
 
+    if (helpOpen) children.add(_plainExplanation(theme));
     children.add(Padding(
       padding: const EdgeInsets.only(top: 12),
       child: Wrap(spacing: 8, runSpacing: 8, children: [
+        if (!helpOpen)
+          OutlinedButton.icon(
+            key: const ValueKey('ctx-sense-help'),
+            onPressed: _help,
+            icon: const Icon(Icons.help_outline_rounded, size: 18),
+            label: Text(L('Anlamı anlamadım', "I don't understand")),
+          ),
         if (shown)
           OutlinedButton.icon(
             key: const ValueKey('ctx-sense-wrong'),
             onPressed: reported ? null : _report,
             icon: Icon(reported ? Icons.check : Icons.flag_outlined, size: 18),
             label: Text(reported ? L('Bildirildi', 'Reported') : L('Anlam yanlış', 'Wrong meaning')),
+          ),
+        if (reported)
+          TextButton.icon(
+            key: const ValueKey('ctx-sense-undo'),
+            onPressed: _undo,
+            icon: const Icon(Icons.undo_rounded, size: 18),
+            label: Text(L('Bildirimi geri al', 'Withdraw report')),
           ),
         if (!askAi)
           FilledButton.tonalIcon(
@@ -259,13 +329,24 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
         for (final o in r.others.take(6)) '${o.trShown}${o.en == null ? '' : ' (${o.en})'}',
       ];
       final level = app.user.getSetting('grammar_level') ?? app.user.getSetting('library_level');
+      final cat = r.cat ?? 'word';
       children.add(LocalAiCard(
         key: ValueKey('ai-ctx-${r.headword}|${widget.ctx.sentence}'),
         app: app,
         cacheKey: 'ctx:${r.headword}|${widget.ctx.sentence}',
-        title: L('Yapay zekâ: bu cümledeki anlamı', 'AI: meaning in this sentence'),
+        title: L('Yapay zekâ taslağı · doğrulanmadı', 'AI draft · not verified'),
         button: L('Yapay zekâya sor', 'Ask the AI'),
         auto: true,
+        initialText: app.user.aiMeaning(widget.ctx.sentence, r.headword, cat),
+        onDone: (text) => app.user.saveAiMeaning(
+            sentence: widget.ctx.sentence,
+            phrase: r.headword,
+            cat: cat,
+            lemma: r.headword,
+            tr: text,
+            model: app.localAi.activeId,
+            dictVersion: app.senses.dictVersion,
+            engineVersion: SenseEngine.version),
         run: () => Tutor.of(app).contextMeaning(r.headword,
             sentence: widget.ctx.sentence,
             prev: widget.ctx.prevSentence,

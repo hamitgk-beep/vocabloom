@@ -160,6 +160,43 @@ void main() {
     expect(find.text('banka'), findsWidgets);
   });
 
+  testWidgets('"I don\'t understand" opens the plain explanation and the request is kept', (tester) async {
+    final reportsBefore = app.user.senseFeedbackCount();
+    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')));
+    await tester.ensureVisible(find.byKey(const ValueKey('ctx-sense-help')));
+    await tester.tap(find.byKey(const ValueKey('ctx-sense-help')));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('ctx-sense-help-text')), findsOneWidget);
+    expect(find.byKey(const ValueKey('ctx-sense-help')), findsNothing);
+    expect(app.user.senseHelpShown('know', 'I know her very well.'), isTrue);
+    // A request is not a wrong-meaning report.
+    expect(app.user.senseFeedbackCount(), reportsBefore);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a report can be withdrawn; the state is still there after a restart', (tester) async {
+    final old = app.user.activeSenseFeedbackId('know', 'I know her very well.');
+    if (old != null) app.user.withdrawSenseFeedback(old);
+    final before = app.user.senseFeedbackCount();
+    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')));
+    await tester.ensureVisible(find.byKey(const ValueKey('ctx-sense-wrong')));
+    await tester.tap(find.byKey(const ValueKey('ctx-sense-wrong')));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('ctx-sense-undo')), findsOneWidget);
+    // A new panel, as after a restart: the report is still active, not sent twice.
+    await pumpPanel(tester, WordPanel(app: app, surface: 'know', ctx: ctxFor('I know her very well.', 'know')));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('ctx-sense-undo')), findsOneWidget);
+    expect(find.text('Bildirildi'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const ValueKey('ctx-sense-undo')));
+    await tester.tap(find.byKey(const ValueKey('ctx-sense-undo')));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('ctx-sense-undo')), findsNothing);
+    expect(app.user.senseFeedbackCount(), before + 1, reason: 'the row stays, marked as withdrawn');
+    expect(app.user.activeSenseFeedbackId('know', 'I know her very well.'), isNull);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('screenshots', (tester) async {
     if (shots == null) return;
     await tester.runAsync(loadFonts);
