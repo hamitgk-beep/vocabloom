@@ -11,6 +11,7 @@ import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 import 'expr_sheet.dart';
 import 'grammar_mark_sheet.dart';
+import 'pages.dart';
 import 'paragraph_view.dart';
 import 'phrase_choice.dart';
 import 'sentence_sheet.dart';
@@ -33,6 +34,14 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   late List<Chapter> chapters;
   late int chapter;
   List<Para> paras = [];
+
+  /// The chapter's pages ([pagesOf]) and the one on screen.
+  List<(int, int)> pages = const [(0, 0)];
+  int page = 0;
+
+  /// Pages of the original book (a PDF), for "page 12 / 65".
+  late final int? bookPages = app.user.bookPages(widget.book.id);
+  final _focus = FocusNode();
   final scroll = ScrollController();
   final _scaffold = GlobalKey<ScaffoldState>();
   final _paraKeys = <int, GlobalKey>{};
@@ -45,10 +54,10 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     super.initState();
     chapters = app.user.chapters(widget.book.id);
     chapter = widget.book.lastChapter.clamp(0, chapters.length - 1);
-    _load(restoreOffset: widget.book.lastParagraph.toDouble());
+    _load(restoreOffset: widget.book.lastParagraph.toDouble(), page: widget.book.lastPage);
     scroll.addListener(_saveSoon);
     app.addListener(_onApp);
-    reader.addListener(_onApp);
+    reader.addListener(_onSpeech);
     WidgetsBinding.instance.addObserver(this);
     _active.touch();
     _tick = Timer.periodic(const Duration(seconds: 15), (_) {
@@ -97,10 +106,47 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     app.removeListener(_onApp);
     reader.dispose();
     scroll.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
   void _onApp() => setState(() {});
+
+  /// Reading aloud goes on to the next page: the page turns with it.
+  void _onSpeech() {
+    final c = reader.current;
+    if (c != null && c.para < paras.length) {
+      final pg = pageOfPara(pages, c.para);
+      if (pg != page) {
+        _markRead();
+        setState(() => page = pg);
+        _toTop();
+        _save();
+        return;
+      }
+    }
+    setState(() {});
+  }
+
+  void _toTop() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (scroll.hasClients) scroll.jumpTo(0);
+  });
+
+  /// Turns to the next (+1) or previous (-1) page, into the next or previous chapter at the ends.
+  void _turn(int d) {
+    _active.touch();
+    final p = page + d;
+    if (p >= 0 && p < pages.length) {
+      _markRead();
+      reader.stop();
+      setState(() => page = p);
+      _toTop();
+      _save();
+      return;
+    }
+    if (d > 0 && chapter < chapters.length - 1) _go(chapter + 1);
+    if (d < 0 && chapter > 0) _go(chapter - 1, lastPage: true);
+  }
 
   DateTime _lastSave = DateTime(0);
   void _saveSoon() {
@@ -116,11 +162,14 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final off = scroll.hasClients ? scroll.offset.round() : 0;
     widget.book.lastChapter = chapter;
     widget.book.lastParagraph = off;
-    app.user.saveProgress(widget.book.id, chapter, off);
+    widget.book.lastPage = page;
+    app.user.saveProgress(widget.book.id, chapter, off, page: page);
   }
 
-  void _load({double restoreOffset = 0}) {
+  void _load({double restoreOffset = 0, int page = 0}) {
     paras = app.user.paras(widget.book.id, chapter);
+    pages = pagesOf(paras);
+    this.page = page < 0 ? pages.length - 1 : page.clamp(0, pages.length - 1);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scroll.hasClients) scroll.jumpTo(restoreOffset.clamp(0, scroll.position.maxScrollExtent));
     });
@@ -129,13 +178,13 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     _readSoon = Timer(const Duration(seconds: 5), _markRead);
   }
 
-  void _go(int c) {
+  void _go(int c, {bool lastPage = false}) {
     if (c < 0 || c >= chapters.length) return;
     _markRead();
     reader.stop();
     setState(() {
       chapter = c;
-      _load();
+      _load(page: lastPage ? -1 : 0);
     });
     _save();
   }
@@ -166,7 +215,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
         best = e.key;
       }
     }
-    return best < 0 ? 0 : best;
+    return best < 0 ? pages[page].$1 : best;
   }
 
   /// The chapter's text on the clipboard, to paste anywhere (the reader's own
@@ -276,6 +325,70 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     if (mounted) setState(() {});
   }
 
+  /// "Sayfa 12 / 65" for a book with pages of its own, otherwise the page of the chapter.
+  String _pageLabel() {
+    final first = paras.isEmpty ? null : paras[pages[page].$1].page;
+    if (first != null && bookPages != null) return L('Sayfa ${first + 1} / $bookPages', 'Page ${first + 1} / $bookPages');
+    return L('Sayfa ${page + 1} / ${pages.length}', 'Page ${page + 1} / ${pages.length}');
+  }
+
+  /// A picture of the book, as wide as the book has it (at most the text's width).
+  Widget _picture(Para p) {
+    final file = app.user.imageFile(p);
+    final wr = ((p.meta['wr'] as num?)?.toDouble() ?? 1).clamp(0.3, 1.0);
+    return Padding(
+      padding: const EdgeInsets.only(top: 6, bottom: 10),
+      child: LayoutBuilder(
+        builder: (c, box) {
+          final w = box.maxWidth * wr;
+          final ar = p.aspect;
+          return Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Image.file(
+                file,
+                width: w,
+                height: ar == null ? null : w / ar,
+                fit: BoxFit.contain,
+                // The page colour shows through a white drawing in the dark theme.
+                color: Theme.of(c).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.88) : null,
+                colorBlendMode: Theme.of(c).brightness == Brightness.dark ? BlendMode.modulate : null,
+                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  /// Buttons under the page: previous page, where we are, next page.
+  Widget _pageNav(ThemeData theme) {
+    final atStart = page == 0 && chapter == 0;
+    final atEnd = page == pages.length - 1 && chapter == chapters.length - 1;
+    final lastOfChapter = page == pages.length - 1;
+    return Padding(
+      padding: const EdgeInsets.only(top: 28),
+      child: Row(
+        children: [
+          OutlinedButton.icon(onPressed: atStart ? null : () => _turn(-1), icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
+          Expanded(
+            child: Text(
+              _pageLabel(),
+              textAlign: TextAlign.center,
+              style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+            ),
+          ),
+          FilledButton.icon(
+            onPressed: atEnd ? null : () => _turn(1),
+            icon: const Icon(Icons.chevron_right),
+            label: Text(lastOfChapter ? L('Sonraki bölüm', 'Next chapter') : L('Sonraki', 'Next')),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -296,7 +409,11 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget.book.title, style: theme.textTheme.titleMedium, overflow: TextOverflow.ellipsis),
-              Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+              Text(
+                '${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}  ·  ${_pageLabel()}',
+                style: theme.textTheme.bodySmall,
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
           bottom: PreferredSize(
@@ -315,8 +432,16 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                 icon: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
                 onPressed: _toggleReadAloud,
               ),
-            IconButton(tooltip: L('Okuma görünümü', 'Reading view'), icon: const Icon(Icons.text_fields_rounded), onPressed: () => showReadingSheet(context, app)),
-            IconButton(tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'), icon: const Icon(Icons.copy_all_rounded), onPressed: _copyChapter),
+            IconButton(
+              tooltip: L('Okuma görünümü', 'Reading view'),
+              icon: const Icon(Icons.text_fields_rounded),
+              onPressed: () => showReadingSheet(context, app),
+            ),
+            IconButton(
+              tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'),
+              icon: const Icon(Icons.copy_all_rounded),
+              onPressed: _copyChapter,
+            ),
             IconButton(tooltip: L('Bölümler', 'Chapters'), icon: const Icon(Icons.list), onPressed: () => _scaffold.currentState!.openDrawer()),
             if (!wide)
               IconButton(
@@ -369,7 +494,10 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                         chapterName(chapters[i].title),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyLarge?.copyWith(fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500, color: i == chapter ? theme.colorScheme.primary : null),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500,
+                          color: i == chapter ? theme.colorScheme.primary : null,
+                        ),
                       ),
                       onTap: () {
                         Navigator.pop(c);
@@ -384,77 +512,97 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
         ),
         bottomNavigationBar: reader.active ? _speechBar(theme) : null,
         endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
-        body: Listener(
-          onPointerDown: (_) => _active.touch(),
-          onPointerSignal: (_) => _active.touch(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 760),
-                    child: ListView.builder(
-                      controller: scroll,
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
-                      itemCount: paras.length + 2,
-                      itemBuilder: (c, i) {
-                        if (i == 0) {
-                          return ch.summary == null || !app.showTr
-                              ? const SizedBox.shrink()
-                              : Container(
-                                  margin: const EdgeInsets.only(bottom: 20),
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16)),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
-                                          const SizedBox(width: 6),
-                                          Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 6),
-                                      Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
-                                    ],
-                                  ),
-                                );
-                        }
-                        if (i == paras.length + 1) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 28),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                OutlinedButton.icon(onPressed: chapter > 0 ? () => _go(chapter - 1) : null, icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
-                                FilledButton.icon(
-                                  onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
-                                  icon: const Icon(Icons.chevron_right),
-                                  label: Text(L('Sonraki bölüm', 'Next chapter')),
+        body: CallbackShortcuts(
+          bindings: {
+            const SingleActivator(LogicalKeyboardKey.arrowRight): () => _turn(1),
+            const SingleActivator(LogicalKeyboardKey.arrowLeft): () => _turn(-1),
+            const SingleActivator(LogicalKeyboardKey.pageDown): () => _turn(1),
+            const SingleActivator(LogicalKeyboardKey.pageUp): () => _turn(-1),
+          },
+          child: Focus(
+            focusNode: _focus,
+            autofocus: true,
+            child: Listener(
+              onPointerDown: (_) => _active.touch(),
+              onPointerSignal: (_) => _active.touch(),
+              child: GestureDetector(
+                // A swipe to the side turns the page.
+                onHorizontalDragEnd: (d) {
+                  final v = d.primaryVelocity ?? 0;
+                  if (v.abs() > 300) _turn(v < 0 ? 1 : -1);
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 760),
+                          child: ListView.builder(
+                            controller: scroll,
+                            padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
+                            itemCount: pages[page].$2 - pages[page].$1 + 2,
+                            itemBuilder: (c, i) {
+                              final first = pages[page].$1;
+                              if (i == 0) {
+                                return ch.summary == null || !app.showTr || page > 0
+                                    ? const SizedBox.shrink()
+                                    : Container(
+                                        margin: const EdgeInsets.only(bottom: 20),
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55),
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
+                                                const SizedBox(width: 6),
+                                                Text(
+                                                  L('Bu bölümde neler anlatılıyor', 'What this chapter is about'),
+                                                  style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 6),
+                                            Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
+                                          ],
+                                        ),
+                                      );
+                              }
+                              if (i == pages[page].$2 - first + 1) return _pageNav(theme);
+                              final k = first + i - 1;
+                              final p = paras[k];
+                              if (p.kind == 'i') return KeyedSubtree(key: _paraKeys.putIfAbsent(k, GlobalKey.new), child: _picture(p));
+                              return KeyedSubtree(
+                                key: _paraKeys.putIfAbsent(k, GlobalKey.new),
+                                child: ParagraphView(
+                                  key: ValueKey(p.id),
+                                  app: app,
+                                  para: p,
+                                  onWord: _onWord,
+                                  onSentence: _onSentence,
+                                  speaking: reader.rangeIn(k),
                                 ),
-                              ],
-                            ),
-                          );
-                        }
-                        final p = paras[i - 1];
-                        return KeyedSubtree(
-                          key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
-                          child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
-                        );
-                      },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    if (wide) ...[
+                      const VerticalDivider(width: 1),
+                      SizedBox(
+                        width: 320,
+                        child: ColoredBox(color: theme.colorScheme.surface, child: filters),
+                      ),
+                    ],
+                  ],
                 ),
               ),
-              if (wide) ...[
-                const VerticalDivider(width: 1),
-                SizedBox(
-                  width: 320,
-                  child: ColoredBox(color: theme.colorScheme.surface, child: filters),
-                ),
-              ],
-            ],
+            ),
           ),
         ),
       ),
@@ -508,7 +656,11 @@ class _FilterPanelState extends State<FilterPanel> {
           ),
         ),
         if (open) ...[
-          if (g == 1) Text(L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'), style: theme.textTheme.bodySmall),
+          if (g == 1)
+            Text(
+              L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'),
+              style: theme.textTheme.bodySmall,
+            ),
           Row(
             children: [
               TextButton(onPressed: () => app.setCats(ids, true), child: Text(L('Bu grubun tümü', 'All in this group'))),
@@ -563,7 +715,10 @@ class _FilterPanelState extends State<FilterPanel> {
               TextButton(onPressed: () => app.setAllCats(false), child: Text(L('Hiçbiri', 'None'))),
             ],
           ),
-          Text(L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'), style: theme.textTheme.bodySmall),
+          Text(
+            L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'),
+            style: theme.textTheme.bodySmall,
+          ),
           const SizedBox(height: 4),
           for (var g = 0; g < filterGroups.length; g++) _group(theme, g),
           const SizedBox(height: 8),
@@ -572,7 +727,10 @@ class _FilterPanelState extends State<FilterPanel> {
           _legend(learningColor, L('Öğreneceğim listesindeki kelimeler', 'Words on your To learn list')),
           _legend(learnedColor, L('Öğrendim dediğin kelimeler', 'Words you marked as Learned')),
           const SizedBox(height: 10),
-          Text(L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'), style: theme.textTheme.bodySmall),
+          Text(
+            L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'),
+            style: theme.textTheme.bodySmall,
+          ),
         ],
       ),
     );

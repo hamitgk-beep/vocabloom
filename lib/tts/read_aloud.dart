@@ -56,6 +56,7 @@ class ReadAloud extends ChangeNotifier {
     final ps = paras();
     return [
       for (var i = fromPara; i < ps.length; i++)
+        if (ps[i].kind != 'i')
         for (final r in sentenceRanges(ps[i].text))
           if (RegExp(r'[A-Za-z0-9]').hasMatch(ps[i].text.substring(r.$1, r.$2)))
             for (final c in speechChunks(ps[i].text, r.$1, r.$2, maxWords: 22)) (para: i, start: c.$1, end: c.$2),

@@ -204,6 +204,8 @@ List<String> splitAtBullets(String block) => [
 String repairPdfText(String s, bool Function(String word)? isWord) {
   s = joinBrokenWords(s, isWord);
   s = cleanInvisible(s);
+  // A "J" some fonts give as a bracket ("Editors: ] ennifer Bassett").
+  s = s.replaceAllMapped(RegExp(r'(^|[\s:])\] ?(?=[a-z]{3,})'), (m) => '${m[1]}${m[1] == ':' ? ' ' : ''}J');
   if (isWord == null) return s;
   s = splitJoinedWords(s, isWord);
   s = fixGlyphSlips(s, isWord);
@@ -242,4 +244,63 @@ List<String> joinDropCaps(List<String> blocks, bool Function(String word)? isWor
     }
   }
   return out;
+}
+
+/// Titles set in spaced-out capitals come out of a PDF cut in odd places
+/// ("AL A D D IN", "AN D T HE EN C H ANTE D L A MP", "CONT ENTS", "A ND").
+/// In a line of capitals, pieces are joined again into dictionary words:
+/// when most pieces are one or two letters the whole line is split anew
+/// into words; otherwise two neighbours are joined where together they are
+/// a word and one of them is not ("A ND" -> "AND") or is a stray piece of one
+/// or two letters ("EN CHANTED" -> "ENCHANTED").
+String joinSpacedCaps(String s, bool Function(String word)? isWord) {
+  if (isWord == null) return s;
+  final letters = RegExp(r'[A-Za-z]').allMatches(s).length;
+  final upper = RegExp(r'[A-Z]').allMatches(s).length;
+  if (letters < 3 || upper < letters * 0.9) return s;
+  bool word(String w) => w.length > 1 || w == 'A' || w == 'I' ? isWord(w.toLowerCase()) : false;
+  // Runs of capitals separated by single spaces; punctuation ends a run.
+  return s.replaceAllMapped(RegExp(r"[A-Z]+(?: [A-Z]+)+"), (m) {
+    final toks = m.group(0)!.split(' ');
+    final short = toks.where((t) => t.length <= 2).length;
+    if (toks.length >= 3 && short >= toks.length * 0.5) {
+      // Split the letters again: known words cost 1, an unknown piece (a
+      // name) costs more the longer it is, so words win where they fit.
+      final all = toks.join();
+      final n = all.length;
+      final best = List<double>.filled(n + 1, double.infinity)..[0] = 0;
+      final from = List<int>.filled(n + 1, -1);
+      for (var e = 1; e <= n; e++) {
+        for (var b = e - 1; b >= 0 && e - b <= 20; b--) {
+          if (best[b] == double.infinity) continue;
+          final piece = all.substring(b, e);
+          final c = word(piece) ? 1.0 : (piece.length >= 4 ? 1 + 0.25 * piece.length : double.infinity);
+          if (best[b] + c < best[e]) {
+            best[e] = best[b] + c;
+            from[e] = b;
+          }
+        }
+      }
+      if (best[n] == double.infinity) return m.group(0)!;
+      final out = <String>[];
+      for (var e = n; e > 0; e = from[e]) {
+        out.insert(0, all.substring(from[e], e));
+      }
+      return out.join(' ');
+    }
+    final out = <String>[];
+    for (final t in toks) {
+      final j = out.isEmpty ? '' : out.last + t;
+      if (out.isNotEmpty &&
+          word(j) &&
+          ((!word(out.last) || !word(t)) ||
+              ((out.last.length <= 2 || t.length <= 2) && j.length >= 6) ||
+              (out.last.length <= 2 && t.length <= 2))) {
+        out[out.length - 1] = out.last + t;
+      } else {
+        out.add(t);
+      }
+    }
+    return out.join(' ');
+  });
 }
