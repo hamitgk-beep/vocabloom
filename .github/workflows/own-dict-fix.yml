@@ -1,0 +1,36 @@
+name: own-dict-fix
+# Re-translates the 26 missing gap words and the 8 flagged gap records (34 items, one API run).
+# Started by pushing the marker file tools/own_dict/fix/START_FIX to the branch.
+on:
+  push:
+    branches: [claude/project-thread-qj1ytv]
+    paths: [tools/own_dict/fix/START_FIX]
+  workflow_dispatch:
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install anthropic
+      - name: Generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret is missing"; exit 1; fi
+          cd tools/own_dict
+          python3 generate_full.py fix/fix_items.json fix/fix_out --model claude-haiku-5-5 --workers 2
+          gzip -9 -f fix/fix_out/results.jsonl
+      - name: Commit result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/own_dict/fix/fix_out
+          git commit -m "Own dictionary: fix run results (gzipped) [skip ci]" || exit 0
+          git push
