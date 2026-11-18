@@ -13,13 +13,18 @@ class Book {
   final String format;
   final int chapterCount;
   int lastChapter;
+
+  /// Scroll offset in the page last read.
   int lastParagraph;
+
+  /// Page of [lastChapter] last read (counted from 0 in that chapter).
+  int lastPage;
   final DateTime added;
 
   /// Id of the free-library item this book came from (pb-0002, pg-1342), if any.
   final String? source;
   Book(this.id, this.title, this.author, this.format, this.chapterCount, this.lastChapter,
-      this.lastParagraph, this.added, {this.source});
+      this.lastParagraph, this.added, {this.source, this.lastPage = 0});
 }
 
 class Chapter {
@@ -32,9 +37,27 @@ class Chapter {
 class Para {
   final int id;
   final int idx;
-  final String kind; // p, h
+
+  /// p (paragraph), h (heading), c (picture caption), i (picture: [text] is
+  /// its file, relative to the app folder).
+  final String kind;
   final String text;
-  Para(this.id, this.idx, this.kind, this.text);
+
+  /// How the book sets it, from the import (see [ParaMeta]); empty when unknown.
+  final Map<String, dynamic> meta;
+  Para(this.id, this.idx, this.kind, this.text, [this.meta = const {}]);
+
+  /// Page of the original book (from 0), when the book has pages (PDF).
+  int? get page => (meta['pg'] as num?)?.toInt();
+
+  /// Type size compared with the book's body text (1 = the same).
+  double get size => (meta['sz'] as num?)?.toDouble() ?? 1;
+
+  /// l (left), c (centre), r (right), j (justified); null when unknown.
+  String? get align => meta['al'] as String?;
+
+  /// Width / height of a picture.
+  double? get aspect => (meta['ar'] as num?)?.toDouble();
 }
 
 class SavedWord {
@@ -53,22 +76,44 @@ class ImportedBook {
   final String? author;
   final String format;
   final List<ImportedChapter> chapters;
-  ImportedBook(this.title, this.author, this.format, this.chapters);
+
+  /// Pictures of the book by name; an 'i' paragraph's text is one of these names.
+  final Map<String, List<int>> images;
+  ImportedBook(this.title, this.author, this.format, this.chapters, [Map<String, List<int>>? images]) : images = images ?? {};
 }
 
 class ImportedChapter {
   final String title;
   final List<(String kind, String text)> paragraphs;
-  ImportedChapter(this.title, this.paragraphs);
+
+  /// How each paragraph is set ([Para.meta]); shorter than [paragraphs] (or
+  /// empty) when not known.
+  final List<Map<String, Object?>?> meta;
+  ImportedChapter(this.title, this.paragraphs, [List<Map<String, Object?>?>? meta]) : meta = meta ?? [];
+
+  Map<String, Object?>? metaAt(int i) => i >= 0 && i < meta.length ? meta[i] : null;
+
+  /// Adds a paragraph with its [m] (kept in step with [paragraphs]).
+  void add(String kind, String text, [Map<String, Object?>? m]) {
+    while (meta.length < paragraphs.length) {
+      meta.add(null);
+    }
+    paragraphs.add((kind, text));
+    meta.add(m);
+  }
 }
 
 /// Everything the user creates lives here, on the device.
 class UserDb {
   late final Database db;
+
+  /// The app folder: the database and the books' pictures (`books/<id>/`).
+  late final String dir;
   final Map<String, WordStatus> statuses = {};
 
   static UserDb open(Directory dir) {
     final u = UserDb();
+    u.dir = dir.path;
     u.db = sqlite3.open(p.join(dir.path, 'user.db'));
     u.db.execute('PRAGMA journal_mode=WAL');
     u.db.execute('''
@@ -102,6 +147,9 @@ class UserDb {
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
     if (!cols.contains('source')) u.db.execute('ALTER TABLE books ADD COLUMN source TEXT');
+    if (!cols.contains('last_page')) u.db.execute('ALTER TABLE books ADD COLUMN last_page INTEGER DEFAULT 0');
+    final pc = u.db.select('PRAGMA table_info(paras)').map((r) => r['name']).toSet();
+    if (!pc.contains('meta')) u.db.execute('ALTER TABLE paras ADD COLUMN meta TEXT');
     for (final r in u.db.select('SELECT lemma, status FROM words')) {
       u.statuses[r['lemma'] as String] = WordStatus.values[r['status'] as int];
     }
@@ -259,7 +307,7 @@ class UserDb {
     const key = 'repair_joined_words_v1';
     if (getSetting(key) != null) return;
     final rows = db.select(
-        "SELECT p.id, p.text FROM paras p JOIN books b ON b.id = p.book_id WHERE b.format IN ('pdf', 'image')");
+        "SELECT p.id, p.text FROM paras p JOIN books b ON b.id = p.book_id WHERE b.format IN ('pdf', 'image') AND p.kind != 'i'");
     db.execute('BEGIN');
     try {
       final upd = db.prepare('UPDATE paras SET text=? WHERE id=?');
@@ -285,7 +333,7 @@ class UserDb {
   void repairImportedTextOnce(String Function(String text, String format) fix) {
     const key = 'repair_imported_text_v1';
     if (getSetting(key) != null) return;
-    final rows = db.select('SELECT p.id, p.text, b.format FROM paras p JOIN books b ON b.id = p.book_id');
+    final rows = db.select("SELECT p.id, p.text, b.format FROM paras p JOIN books b ON b.id = p.book_id WHERE p.kind != 'i'");
     db.execute('BEGIN');
     try {
       final upd = db.prepare('UPDATE paras SET text=? WHERE id=?');
@@ -331,13 +379,26 @@ class UserDb {
       db.execute('INSERT INTO books(title, author, format, chapters, added, source) VALUES (?,?,?,?,?,?)',
           [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch, source]);
       final id = db.lastInsertRowId;
+      // Pictures go to books/<id>/ in the app folder.
+      final imgDir = p.join('books', '$id');
+      if (b.images.isNotEmpty) Directory(p.join(dir, imgDir)).createSync(recursive: true);
+      for (final e in b.images.entries) {
+        File(p.join(dir, imgDir, e.key)).writeAsBytesSync(e.value);
+      }
       final ch = db.prepare('INSERT INTO chapters(book_id, idx, title) VALUES (?,?,?)');
-      final pa = db.prepare('INSERT INTO paras(book_id, chapter, idx, kind, text) VALUES (?,?,?,?,?)');
+      final pa = db.prepare('INSERT INTO paras(book_id, chapter, idx, kind, text, meta) VALUES (?,?,?,?,?,?)');
       for (var c = 0; c < b.chapters.length; c++) {
         ch.execute([id, c, b.chapters[c].title]);
         final ps = b.chapters[c].paragraphs;
+        var n = 0;
         for (var i = 0; i < ps.length; i++) {
-          pa.execute([id, c, i, ps[i].$1, ps[i].$2]);
+          final m = b.chapters[c].metaAt(i);
+          var text = ps[i].$2;
+          if (ps[i].$1 == 'i') {
+            if (!b.images.containsKey(text)) continue; // a picture that was not kept
+            text = p.posix.join('books', '$id', text);
+          }
+          pa.execute([id, c, n++, ps[i].$1, text, m == null || m.isEmpty ? null : jsonEncode(m)]);
         }
       }
       ch.close();
@@ -355,7 +416,7 @@ class UserDb {
           Book(r['id'] as int, r['title'] as String, r['author'] as String?, r['format'] as String,
               r['chapters'] as int, r['last_chapter'] as int, r['last_para'] as int,
               DateTime.fromMillisecondsSinceEpoch(r['added'] as int),
-              source: r['source'] as String?)
+              source: r['source'] as String?, lastPage: (r['last_page'] as int?) ?? 0)
       ];
 
   /// Free-library item id → the book made from it.
@@ -365,10 +426,28 @@ class UserDb {
     db.execute('DELETE FROM paras WHERE book_id=?', [id]);
     db.execute('DELETE FROM chapters WHERE book_id=?', [id]);
     db.execute('DELETE FROM books WHERE id=?', [id]);
+    try {
+      final d = Directory(p.join(dir, 'books', '$id'));
+      if (d.existsSync()) d.deleteSync(recursive: true);
+    } catch (_) {}
   }
 
-  void saveProgress(int bookId, int chapter, int para) =>
-      db.execute('UPDATE books SET last_chapter=?, last_para=? WHERE id=?', [chapter, para, bookId]);
+  /// Number of pages of the original book (a PDF), null when it has none.
+  int? bookPages(int bookId) {
+    try {
+      final r = db.select("SELECT MAX(CAST(json_extract(meta, '\$.pg') AS INTEGER)) AS m FROM paras WHERE book_id=?", [bookId]);
+      final m = r.first['m'] as int?;
+      return m == null ? null : m + 1;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// A picture's file on this device.
+  File imageFile(Para para) => File(p.join(dir, para.text));
+
+  void saveProgress(int bookId, int chapter, int para, {int page = 0}) =>
+      db.execute('UPDATE books SET last_chapter=?, last_para=?, last_page=? WHERE id=?', [chapter, para, page, bookId]);
 
   List<Chapter> chapters(int bookId) => [
         for (final r in db.select('SELECT idx, title, summary FROM chapters WHERE book_id=? ORDER BY idx', [bookId]))
@@ -399,6 +478,7 @@ class UserDb {
   String chapterText(int bookId, int chapter) {
     final out = StringBuffer();
     for (final p in paras(bookId, chapter)) {
+      if (p.kind == 'i') continue;
       out
         ..writeln(p.kind == 'c' ? '[${p.text}]' : p.text)
         ..writeln();
@@ -408,8 +488,9 @@ class UserDb {
 
   List<Para> paras(int bookId, int chapter) => [
         for (final r in db.select(
-            'SELECT id, idx, kind, text FROM paras WHERE book_id=? AND chapter=? ORDER BY idx', [bookId, chapter]))
-          Para(r['id'] as int, r['idx'] as int, r['kind'] as String, r['text'] as String)
+            'SELECT id, idx, kind, text, meta FROM paras WHERE book_id=? AND chapter=? ORDER BY idx', [bookId, chapter]))
+          Para(r['id'] as int, r['idx'] as int, r['kind'] as String, r['text'] as String,
+              r['meta'] == null ? const {} : (jsonDecode(r['meta'] as String) as Map<String, dynamic>))
       ];
 
   /// Sentence translations stored by the online analysis (JSON list).
@@ -427,7 +508,7 @@ class UserDb {
 
   List<({int id, String text})> parasMissingTranslation(int bookId) => [
         for (final r in db.select(
-            'SELECT id, text FROM paras WHERE book_id=? AND tr IS NULL ORDER BY chapter, idx', [bookId]))
+            "SELECT id, text FROM paras WHERE book_id=? AND tr IS NULL AND kind != 'i' ORDER BY chapter, idx", [bookId]))
           (id: r['id'] as int, text: r['text'] as String)
       ];
 

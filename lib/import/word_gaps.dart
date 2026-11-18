@@ -61,6 +61,14 @@ String addGapSpaces(String text, List<GlyphBox> boxes, bool Function(String word
     }
     final strong = <int>[]; // cut positions (index of the first char after the gap)
     final weak = <int>[];
+    // Letters set wide apart (a title in spaced-out capitals, "A L A D D I N"):
+    // only a gap clearly wider than the others is a word space.
+    final gaps = <double>[];
+    for (var k = i + 1; k < e && h > 0; k++) {
+      if (!empty(boxes[k - 1]) && !empty(boxes[k])) gaps.add(boxes[k].left - boxes[k - 1].right);
+    }
+    final spaced = gaps.length >= 3 && gaps.where((g) => g > h * 0.18).length >= gaps.length * 0.6;
+    final usual = spaced ? ([...gaps]..sort())[gaps.length ~/ 2] : 0.0;
     if (h > 0) {
       for (var k = i + 1; k < e; k++) {
         final a = boxes[k - 1], b = boxes[k];
@@ -70,7 +78,9 @@ String addGapSpaces(String text, List<GlyphBox> boxes, bool Function(String word
         final minH = (a.top - a.bottom) < (b.top - b.bottom) ? (a.top - a.bottom) : (b.top - b.bottom);
         if (overlap < minH * 0.3) continue; // not on the same line
         final gap = b.left - a.right;
-        if (gap > h * 0.35) {
+        if (spaced) {
+          if (gap > usual * 1.8 && gap > h * 0.35) strong.add(k);
+        } else if (gap > h * 0.35) {
           strong.add(k);
         } else if (gap > h * 0.18) {
           weak.add(k);

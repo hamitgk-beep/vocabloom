@@ -106,7 +106,7 @@ class StatsStore {
     try {
       for (final p in paras) {
         if (p.idx > toIdx) break;
-        if (p.kind == 'c') continue;
+        if (p.kind == 'c' || p.kind == 'i') continue;
         st.execute([bookId, chapter, p.idx, countWords(p.text), day]);
       }
     } finally {
@@ -128,7 +128,7 @@ class StatsStore {
 
   int _countBook(int bookId) {
     var n = 0;
-    for (final r in user.db.select("SELECT text FROM paras WHERE book_id = ? AND kind != 'c'", [bookId])) {
+    for (final r in user.db.select("SELECT text FROM paras WHERE book_id = ? AND kind NOT IN ('c', 'i')", [bookId])) {
       n += countWords(r['text'] as String);
     }
     return n;

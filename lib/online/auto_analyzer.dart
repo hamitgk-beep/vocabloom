@@ -84,7 +84,7 @@ class AutoAnalyzer {
       if (!_scannedBooks.add(b.id)) continue;
       for (final ch in db.chapters(b.id)) {
         await Future<void>.delayed(Duration.zero); // keep the UI responsive
-        for (final p in db.paras(b.id, ch.idx)) {
+        for (final p in db.paras(b.id, ch.idx).where((p) => p.kind != 'i')) {
           for (final m in d.matcher.match(tokenize(p.text), text: p.text)) {
             _inBooks.add(m.expr.id);
           }

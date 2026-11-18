@@ -633,7 +633,7 @@ Future<void> analyzeBook(AiService svc, UserDb db, int bookId,
   final total = db.parasMissingTranslation(bookId).length;
   var done = 0;
   for (final ch in chapters) {
-    final paras = db.paras(bookId, ch.idx).where((p) => db.paraTranslation(p.id) == null).toList();
+    final paras = db.paras(bookId, ch.idx).where((p) => p.kind != 'i' && db.paraTranslation(p.id) == null).toList();
     final summaries = <String>[if (ch.summary != null) ch.summary!];
     var i = 0;
     while (i < paras.length) {

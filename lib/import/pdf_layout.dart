@@ -55,9 +55,29 @@ class _Line {
   bool get allSmall => body.isEmpty && small.isNotEmpty;
 }
 
+/// Where a paragraph or caption of the page is and how it is set: what the
+/// reader needs to show it the way the book does (size, centred or not) and
+/// to put the pictures between the right paragraphs.
+class LayoutBlock {
+  /// Letters only, lower case: finds the block again after the text repairs.
+  final String key;
+  final bool caption;
+  final double top, bottom;
+
+  /// Left and right end of each line, top to bottom.
+  final List<(double, double)> lines;
+
+  /// Height of a small letter (x-height) in PDF points, null when unknown.
+  final double? xHeight;
+  LayoutBlock(this.key, this.caption, this.top, this.bottom, this.lines, this.xHeight);
+}
+
+String layoutKey(String s) => s.toLowerCase().replaceAll(RegExp(r'[^a-z]'), '');
+
 /// [boxes] has one entry per character of [text] (PDF coordinates, top >
-/// bottom). Returns `null` when the boxes do not match the text.
-String? layoutPdfPage(String text, List<GlyphBox> boxes, {bool Function(String word)? isWord}) {
+/// bottom). Returns `null` when the boxes do not match the text. When
+/// [blocks] is given, it gets one entry per paragraph and caption.
+String? layoutPdfPage(String text, List<GlyphBox> boxes, {bool Function(String word)? isWord, List<LayoutBlock>? blocks}) {
   if (boxes.length != text.length) return null;
   bool hasBox(int i) {
     final b = boxes[i];
@@ -88,6 +108,26 @@ String? layoutPdfPage(String text, List<GlyphBox> boxes, {bool Function(String w
         if (hasBox(k) && ref[text[k]] != null && ref[text[k]]! > 0) (boxes[k].top - boxes[k].bottom) / ref[text[k]]!
     ];
     return rs.length < 3 ? null : _median(rs);
+  }
+
+  // Size of the type of the lines [ls]: x-height from the small letters
+  // without ascenders, or from capitals (about 0.68 of their height).
+  double? xHeightOf(Iterable<_Line> ls) {
+    final hs = <double>[];
+    for (final l in ls) {
+      for (final pc in [...l.body, ...l.small]) {
+        for (var k = pc.start; k < pc.end; k++) {
+          if (!hasBox(k)) continue;
+          final c = text[k], h = boxes[k].top - boxes[k].bottom;
+          if ('acemnorsuvwxz'.contains(c)) {
+            hs.add(h);
+          } else if ('ABCDEFHIKLMNOPRSTUVWXYZ'.contains(c)) {
+            hs.add(h * 0.68);
+          }
+        }
+      }
+    }
+    return hs.length < 2 ? null : _median(hs);
   }
 
   // 1. lines, cut into pieces of main-size and small type.
@@ -292,9 +332,29 @@ String? layoutPdfPage(String text, List<GlyphBox> boxes, {bool Function(String w
   final margin = lefts.isEmpty ? 0.0 : lefts.keys.reduce((a, b) => near(a) >= near(b) ? a : b).toDouble();
   final paras = <String>[];
   final buf = <String>[];
+  final bufLines = <_Line>[];
+  void note(String t, List<_Line> ls, bool caption, {bool small = false}) {
+    if (blocks == null || ls.isEmpty) return;
+    blocks.add(LayoutBlock(
+      layoutKey(t),
+      caption,
+      ls.map((l) => l.top).reduce((a, b) => a > b ? a : b),
+      ls.map((l) => l.bottom).reduce((a, b) => a < b ? a : b),
+      [
+        for (final l in ls)
+          if ((small ? l.small : l.body).isNotEmpty) ((small ? l.small : l.body).first.left, (small ? l.small : l.body).last.right)
+      ],
+      xHeightOf(ls),
+    ));
+  }
+
   void flush() {
-    if (buf.isNotEmpty) paras.add(buf.join('\n'));
+    if (buf.isNotEmpty) {
+      paras.add(buf.join('\n'));
+      note(paras.last, bufLines, false);
+    }
     buf.clear();
+    bufLines.clear();
   }
 
   for (var n = 0; n < bodyIdx.length; n++) {
@@ -321,32 +381,46 @@ String? layoutPdfPage(String text, List<GlyphBox> boxes, {bool Function(String w
       if (indent || shortEnd || heading || (jump && !continues)) flush();
     }
     buf.add(l.bodyText);
+    bufLines.add(l);
   }
   flush();
 
   final out = <String>[];
   for (final i in order.take(1)) {
-    if (edge.contains(i)) out.add('$edgeMark${lines[i].allSmall ? 's' : 'n'}${lines[i].allText}');
+    if (edge.contains(i)) {
+      out.add('$edgeMark${lines[i].allSmall ? 's' : 'n'}${lines[i].allText}');
+      note(lines[i].allText, [lines[i]], lines[i].allSmall, small: lines[i].allSmall);
+    }
   }
   out.addAll(paras);
   // Small type that is not a header: captions and notes, one block per run of lines.
   final caps = <String>[];
   var capBuf = <String>[];
+  var capLines = <_Line>[];
   var lastCap = -1;
+  void capFlush() {
+    if (capBuf.isEmpty) return;
+    caps.add(capBuf.join('\n'));
+    note(caps.last, capLines, true, small: true);
+    capBuf = [];
+    capLines = [];
+  }
+
   for (final i in order) {
     if (edge.contains(i) || lines[i].small.isEmpty) continue;
     final s = lines[i].small.map((p) => p.text).join(' ');
-    if (lastCap >= 0 && (mid[lastCap] - mid[i]) > pitch * 1.6 && capBuf.isNotEmpty) {
-      caps.add(capBuf.join('\n'));
-      capBuf = [];
-    }
+    if (lastCap >= 0 && (mid[lastCap] - mid[i]) > pitch * 1.6) capFlush();
     capBuf.add(s);
+    capLines.add(lines[i]);
     lastCap = i;
   }
-  if (capBuf.isNotEmpty) caps.add(capBuf.join('\n'));
+  capFlush();
   out.addAll(caps.map((c) => '$captionMark$c'));
   for (final i in order.reversed.take(3).toList().reversed) {
-    if (edge.contains(i) && i != order.first) out.add('$edgeMark${lines[i].allSmall ? 's' : 'n'}${lines[i].allText}');
+    if (edge.contains(i) && i != order.first) {
+      out.add('$edgeMark${lines[i].allSmall ? 's' : 'n'}${lines[i].allText}');
+      note(lines[i].allText, [lines[i]], lines[i].allSmall, small: lines[i].allSmall);
+    }
   }
   return '$layoutMark${out.join('\n\n')}';
 }
