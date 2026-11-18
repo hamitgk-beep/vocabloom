@@ -1,5 +1,8 @@
 name: Vocabloom dictionary draft pilot (manual)
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/dictionary-free-api-pilot.yml']
   workflow_dispatch:
     inputs:
       provider:
@@ -18,24 +21,32 @@ on:
         default: "10"
 permissions:
   contents: read
+  actions: read
 jobs:
   draft:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Recover existing successful drafts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/previous"
+          gh run download 44272127406 -n dictionary-drafts-gemini-44272127406 -D "$RUNNER_TEMP/previous" || true
       - name: Generate original Turkish draft meanings
         env:
           GEMINI_API_KEY_FOR_DICTIONARY: ${{ secrets.GEMINI_API_KEY_FOR_DICTIONARY }}
           GROQ_API_KEY_FOR_DICTIONARY: ${{ secrets.GROQ_API_KEY_FOR_DICTIONARY }}
-          PILOT_PROVIDER: ${{ inputs.provider }}
-          PILOT_OFFSET: ${{ inputs.offset }}
-          PILOT_COUNT: ${{ inputs.count }}
+          PILOT_PREVIOUS_DRAFTS: ${{ runner.temp }}/previous/drafts.jsonl
+          PILOT_PROVIDER: ${{ github.event_name == 'push' && 'gemini' || inputs.provider }}
+          PILOT_OFFSET: ${{ github.event_name == 'push' && '0' || inputs.offset }}
+          PILOT_COUNT: ${{ github.event_name == 'push' && '26' || inputs.count }}
         run: python3 tools/own_dict/review/checks/free_api_dictionary_pilot.py --provider "$PILOT_PROVIDER" --offset "$PILOT_OFFSET" --count "$PILOT_COUNT"
       - name: Archive unreviewed drafts (never modify DB)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dictionary-drafts-${{ inputs.provider }}-${{ github.run_id }}
+          name: dictionary-drafts-${{ github.event_name == 'push' && 'gemini' || inputs.provider }}-${{ github.run_id }}
           path: ${{ runner.temp }}/vocabloom_dictionary_pilot/
           if-no-files-found: warn
