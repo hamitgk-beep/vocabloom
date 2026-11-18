@@ -1,17 +1,17 @@
 {
  "requests": 400,
- "ok_items": 3332,
- "failed_requests": 3,
+ "ok_items": 3525,
+ "failed_requests": 2,
  "quota_switch": [],
  "stop": "request_budget",
- "last_error": "JSONDecodeError: Expecting ':' delimiter: line 1 column 811 (char 810)",
+ "last_error": "JSONDecodeError: Expecting ',' delimiter: line 1 column 4052 (char 4051)",
  "paid_usage": {
-  "input_tokens": 201528,
-  "output_tokens": 1249873,
-  "usd_estimate": 1.3951
+  "input_tokens": 229512,
+  "output_tokens": 1384739,
+  "usd_estimate": 2.1104
  },
  "items_total": 15137,
- "items_done_total": 7832,
- "seconds": 5953,
- "pending_after_run": 6637
+ "items_done_total": 11995,
+ "seconds": 6722,
+ "pending_after_run": 2667
 }
