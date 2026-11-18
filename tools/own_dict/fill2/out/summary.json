@@ -1,17 +1,17 @@
 {
- "requests": 204,
- "ok_items": 1560,
+ "requests": 48,
+ "ok_items": 164,
  "failed_requests": 0,
  "quota_switch": [],
  "stop": "",
  "paid_usage": {
-  "input_tokens": 107127,
-  "output_tokens": 640414,
-  "usd_estimate": 3.6395
+  "input_tokens": 26208,
+  "output_tokens": 112281,
+  "usd_estimate": 3.6983
  },
- "run_usd": 0.3309,
+ "run_usd": 0.0588,
  "items_total": 15137,
- "items_done_total": 14662,
- "seconds": 3054,
+ "items_done_total": 14826,
+ "seconds": 523,
  "pending_after_run": 0
 }
