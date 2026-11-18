@@ -4,6 +4,7 @@ import json
 import os
 import pathlib
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -53,13 +54,13 @@ def choose_gemini_model(key):
                        ", ".join(models[:12]))
 
 
-def generate(word, provider):
+def generate(word, provider, gemini_model=None):
     prompt = "English headword: " + word + "\n" + SYSTEM
     if provider == "gemini":
         key = os.environ.get("GEMINI_API_KEY_FOR_DICTIONARY", "")
         if not key:
             raise RuntimeError("Missing Gemini secret")
-        model = choose_gemini_model(key)
+        model = gemini_model or choose_gemini_model(key)
         result = call("https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent", key,
             {"contents": [{"parts": [{"text": prompt}]}],
              "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json", "maxOutputTokens": 2000}})
@@ -97,9 +98,23 @@ def main():
         ap.error("Offset beyond missing words")
     OUT.mkdir(parents=True, exist_ok=True)
     success, errors = [], []
+    gemini_model = None
+    if args.provider == "gemini":
+        key = os.environ.get("GEMINI_API_KEY_FOR_DICTIONARY", "")
+        if not key:
+            ap.error("Missing Gemini secret")
+        gemini_model = choose_gemini_model(key)
     for word in selected:
         try:
-            success.append(generate(word, args.provider))
+            for attempt in range(3):
+                try:
+                    draft = generate(word, args.provider, gemini_model)
+                    break
+                except RuntimeError as transient:
+                    if "HTTP 503" not in str(transient) or attempt == 2:
+                        raise
+                    time.sleep(2 * (attempt + 1))
+            success.append(draft)
             print(word + ": draft generated")
         except Exception as exc:
             errors.append({"w": word, "error": str(exc)[:120]})
