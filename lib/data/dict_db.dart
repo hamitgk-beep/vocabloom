@@ -123,7 +123,7 @@ class DictDb {
 
   /// Off until the own-dictionary tables have been checked on a copy of the database.
   /// While it is off, the app shows exactly the meanings it shows today.
-  static const bool useOwnDictionary = false;
+  static const bool useOwnDictionary = true;
 
   late final bool _hasOwnWord = db
       .select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_word'")

@@ -29,7 +29,7 @@ n_w = n_e = skipped = 0
 with gzip.open(entries, 'rt', encoding='utf-8') as f:
     for line in f:
         r = json.loads(line)
-        if not r['senses'] or r['status'] != 'auto_generated':
+        if not r['senses'] or r['status'] not in ('auto_generated', 'ai_draft_unreviewed'):
             skipped += 1
             continue
         senses = json.dumps(r['senses'], ensure_ascii=False)
