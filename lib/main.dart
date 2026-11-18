@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
       if (wide) (Icons.local_library_outlined, Icons.local_library_rounded, L('Ücretsiz kütüphane', 'Free library')),
-      if (wide) (Icons.insights_outlined, Icons.insights_rounded, L('Benim Yolculuğum', 'My journey')),
+      if (wide) (Icons.insights_outlined, Icons.insights_rounded, L('İstatistiklerim', 'My stats')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
     // Settings is last in both layouts: keep it selected when the window changes width.
@@ -202,14 +202,11 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         body: Row(
           children: [
-            NavigationRail(
-              selectedIndex: tab,
-              labelType: NavigationRailLabelType.all,
-              minWidth: 88,
-              groupAlignment: -0.9,
-              leading: const Padding(padding: EdgeInsets.only(top: 12, bottom: 20), child: BrandMark(size: 40)),
-              onDestinationSelected: (i) => setState(() => tab = i),
-              destinations: [for (final d in dests) NavigationRailDestination(icon: Icon(d.$1), selectedIcon: Icon(d.$2), label: Text(d.$3))],
+            _SideMenu(
+              selected: tab,
+              items: dests,
+              full: MediaQuery.sizeOf(context).width >= 1000,
+              onSelect: (i) => setState(() => tab = i),
             ),
             const VerticalDivider(width: 1),
             Expanded(child: body),
@@ -220,6 +217,91 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: body,
       bottomNavigationBar: _BottomNav(selected: tab, items: dests, onSelect: (i) => setState(() => tab = i)),
+    );
+  }
+}
+
+/// Side menu on wide screens: icon and name on one line, the main pages on
+/// top, the free library and the journey in their own group, Settings at the
+/// bottom. Narrower windows show only the icons, with the name as a tooltip.
+class _SideMenu extends StatelessWidget {
+  final int selected;
+  final List<(IconData, IconData, String)> items;
+  final bool full;
+  final ValueChanged<int> onSelect;
+  const _SideMenu({required this.selected, required this.items, required this.full, required this.onSelect});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    Widget item(int i) {
+      final d = items[i];
+      final on = i == selected;
+      final color = on ? cs.primary : cs.onSurfaceVariant;
+      final tile = Material(
+        color: on ? cs.primary.withValues(alpha: 0.14) : Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          key: ValueKey('side-menu-$i'),
+          borderRadius: BorderRadius.circular(12),
+          onTap: () => onSelect(i),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: full ? 14 : 0, vertical: 11),
+            child: Row(mainAxisAlignment: full ? MainAxisAlignment.start : MainAxisAlignment.center, children: [
+              Icon(on ? d.$2 : d.$1, size: 22, color: color),
+              if (full) ...[
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Text(d.$3,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14.5, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: on ? cs.primary : cs.onSurface)),
+                ),
+              ],
+            ]),
+          ),
+        ),
+      );
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: full ? tile : Tooltip(message: d.$3, waitDuration: const Duration(milliseconds: 300), child: tile),
+      );
+    }
+
+    final last = items.length - 1;
+    final main = [for (var i = 0; i < last && i < 4; i++) item(i)];
+    final extra = [for (var i = 4; i < last; i++) item(i)];
+    return SizedBox(
+      width: full ? 232 : 76,
+      child: SafeArea(
+        right: false,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: full ? 12 : 10, vertical: 12),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Padding(
+              padding: EdgeInsets.only(left: full ? 6 : 0, top: 4, bottom: 22),
+              child: Row(mainAxisAlignment: full ? MainAxisAlignment.start : MainAxisAlignment.center, children: [
+                const BrandMark(size: 36),
+                if (full) ...[
+                  const SizedBox(width: 12),
+                  Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                ],
+              ]),
+            ),
+            Expanded(
+              child: ListView(padding: EdgeInsets.zero, children: [
+                ...main,
+                if (extra.isNotEmpty) ...[
+                  Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: Divider(height: 1, indent: full ? 8 : 6, endIndent: full ? 8 : 6)),
+                  ...extra,
+                ],
+              ]),
+            ),
+            item(last),
+          ]),
+        ),
+      ),
     );
   }
 }

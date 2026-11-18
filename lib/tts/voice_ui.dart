@@ -128,7 +128,10 @@ class SpeakButton extends StatefulWidget {
 
   /// Make the audio as soon as the button appears (short texts only).
   final bool prefetch;
-  const SpeakButton(this.text, {super.key, this.lang = 'en', this.speed, this.tooltip, this.autoPlay = false, this.size = 24, this.prefetch = true});
+
+  /// When set, a small labelled button ("Dinle") instead of a bare icon.
+  final String? label;
+  const SpeakButton(this.text, {super.key, this.lang = 'en', this.speed, this.tooltip, this.autoPlay = false, this.size = 24, this.prefetch = true, this.label});
 
   @override
   State<SpeakButton> createState() => _SpeakButtonState();
@@ -167,6 +170,19 @@ class _SpeakButtonState extends State<SpeakButton> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    if (widget.label != null) {
+      return Tooltip(
+        message: widget.tooltip ?? widget.label!,
+        child: OutlinedButton.icon(
+          style: OutlinedButton.styleFrom(visualDensity: VisualDensity.compact, padding: const EdgeInsets.symmetric(horizontal: 12)),
+          onPressed: busy ? null : _say,
+          icon: busy
+              ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+              : Icon(widget.speed != null && widget.speed! < 1 ? Icons.slow_motion_video_rounded : Icons.volume_up_rounded, size: 18),
+          label: Text(widget.label!),
+        ),
+      );
+    }
     return IconButton(
       tooltip: widget.tooltip ?? (widget.lang == 'tr' ? L('Türkçesini dinle', 'Listen in Turkish') : L('Dinle', 'Listen')),
       iconSize: widget.size,

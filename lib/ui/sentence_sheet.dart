@@ -114,15 +114,19 @@ class _SentencePanelState extends State<SentencePanel> {
     }
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
-      Row(children: [
-        Expanded(child: Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700))),
-        if (Speech.supported) ...[
-          SpeakButton(ctx.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
-          SpeakButton(ctx.sentence, speed: 0.75, tooltip: L('Yavaş dinle', 'Listen slowly'), size: 20),
-        ],
-      ]),
+      // The title row stays free: the close button sits in that corner.
+      Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
       const SizedBox(height: 10),
       SelectableText(ctx.sentence, style: const TextStyle(fontSize: 18, height: 1.5, fontFamily: 'serif')),
+      if (Speech.supported)
+        Padding(
+          key: const ValueKey('sentence-listen'),
+          padding: const EdgeInsets.only(top: 6),
+          child: Wrap(spacing: 8, runSpacing: 6, children: [
+            SpeakButton(ctx.sentence, label: L('Dinle', 'Listen'), tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
+            SpeakButton(ctx.sentence, speed: 0.75, label: L('Yavaş dinle', 'Listen slowly')),
+          ]),
+        ),
       // Full Turkish translation right under the English sentence.
       if (tr != null && showTr)
         Padding(

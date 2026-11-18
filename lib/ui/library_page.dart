@@ -205,7 +205,7 @@ class _LibraryPageState extends State<LibraryPage> {
                     },
                     keyName: 'journey',
                     icon: Icons.insights_rounded,
-                    title: L('Benim Yolculuğum', 'My journey'),
+                    title: L('İstatistiklerim', 'My stats'),
                     subtitle: L('Okuma süren, kelimelerin ve gramer sonuçların', 'Your reading time, words and grammar results'),
                   ),
                   ],
