@@ -4,3 +4,4 @@ haiku run 2026-11-18T09:36:17Z
 haiku run (parser fix + cost accounting) 2026-11-18T09:45:49Z
 haiku run (max_tokens 8000) 2026-11-18T09:59:14Z
 haiku run (cross-run cap) 2026-11-18T11:39:25Z
+haiku run (continue, spend carried) 2026-11-18T13:33:03Z
