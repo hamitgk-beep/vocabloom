@@ -1,0 +1,855 @@
+oncelik	kelime	kategori	freq	eski_1_2_3	kaybolan_konum	eski_anlam	yeni_anlam
+1	of	onemli_anlam_kaybi_riski	46119	lost | lost | lost	1;2;3	(edat) -in; -nin; -nın	-in, -ın, -un, -ün, hakkında, ile ilgili, -den, -dan, -den yapılmış, -li
+1	it	onemli_anlam_kaybi_riski	36395	lost | lost | lost	1;2;3	onu; ona; (oyunda) ebe	o, o, ebe
+1	be	onemli_anlam_kaybi_riski	31087	lost | lost | lost	1;2;3	-dir; -dır; -di	olmak, var olmak, bulunmak, olmak, gerçekleşmek, bulunmak, yerinde olmak
+1	and	onemli_anlam_kaybi_riski	29005	lost | lost | lost	1;2;3	ma; sonra; daha sonra	ve, ile, ve sonra, ardından, oysa, halbuki
+1	are	onemli_anlam_kaybi_riski	25984	lost | lost | lost	1;2;3	yüz metre karelik bir alan ölçüsü; -sin; -iz	olmak, ar
+1	her	onemli_anlam_kaybi_riski	17348	lost | lost | lost	1;2;3	(dişil) onu; ona; o	onun (kadın için), onu, ona (kadın için)
+1	they	onemli_anlam_kaybi_riski	12032	lost | lost | lost	1;2;3	insanlar; millet; ilgililer	onlar, o, kişi
+1	help	onemli_anlam_kaybi_riski	9046	lost | lost | lost	1;2;3	kömek etmek; işe yaramak; daha iyi yapmak	yardım etmek, yardımcı olmak, faydalı olmak, yardım, yardımcı, hizmetçi, imdat, yardım edin
+1	so	onemli_anlam_kaybi_riski	7894	lost | lost | lost	1;2;3	bu kadar; o derece; bu nedenle	çok, o kadar, böylece, bu yüzden, öyle, öyleyse, aynı şekilde, de, yaklaşık, kabaca, bu yüzden, o halde, sol, solmizasyonda beşinci nota
+1	but	onemli_anlam_kaybi_riski	7344	lost | lost | lost	1;2;3	amma; ki; -den başka	ama, fakat, hariç, dışında, sadece, yalnızca, ama, fakat
+1	always	onemli_anlam_kaybi_riski	4787	lost | lost | lost	1;2;3	hemişe; sonuna dek; durmadan	her zaman, daima, hep, sürekli, ne olursa olsun, her durumda, sonsuza dek, daima
+1	school	onemli_anlam_kaybi_riski	4244	kept_kenet | lost | lost	2;3	mektep; medrese; bilimyurdu	okul, okul binası, öğrenim, eğitim, okul dönemi, ders saati, ekol, okul, okul, fakülte
+1	love	onemli_anlam_kaybi_riski	4180	lost | lost | lost	1;2;3	(İİ.) canım; (tenis) sıfır; ile sevişmek	sevgi, aşk, sevgili, canım, aşk, tutku, sıfır, seks, cinsel ilişki, sevmek, çok beğenmek
+1	may	onemli_anlam_kaybi_riski	3045	lost | lost | lost	1;2;3	(olasılık belirtir) -ebilmek; (izin belirtir) -ebilmek; (dilek belirtir) --ir inşallah	mayıs, alıç, alıç çalısı, olabilir, ihtimal, izin vermek, serbest olmak, dilemek, temenni etmek
+1	father	onemli_anlam_kaybi_riski	2738	lost | lost | lost	1;2;3	müdafaacı; himayeci; ata gibi kaygı göstermek	baba, peder, kurucu, atadan, peder, rahip, kilise babası, baba olmak, babalık etmek
+1	might	onemli_anlam_kaybi_riski	2705	lost | lost | lost	1;2;3	(olasılık belirtir) -ebilmek; (İİ.) (rica belirtir) -ebilmek; (dolaylı anlatımda `may' in yerine kullanılır) -ebilmek	güç, kuvvet, olabilir, belki yapabilir
+1	thing	onemli_anlam_kaybi_riski	2353	lost | lost | lost	1;2;3	zat; cisim; yaratık	şey, nesne, durum, mesele, davranış, iş, kaygı, endişe, olay, hadise
+1	being	onemli_anlam_kaybi_riski	2174	lost | lost | lost	1;2;3	yaşam; mevcudiyet; oluş	varlık, var olma, canlı, yaratık, kişi, insan
+1	lost	onemli_anlam_kaybi_riski	2036	lost | lost | lost	1;2;3	yitirilmiş; geçmiş; boşa gitmiş	kayıp, kaybolmuş, yolunu kaybetmiş, şaşkın, mahvolmuş, yok olmuş, kaybeden, yenilmiş, dalgın, kendinden geçmiş
+1	teacher	onemli_anlam_kaybi_riski	1779	lost | lost | lost	1;2;3	üstat; mektep işçisi; mirza	öğretmen, eğitmen, öğretici, rehber
+1	bed	onemli_anlam_kaybi_riski	1565	lost | lost | lost	1;2;3	serir; çarpayi; karyola	yatak, tarla, bahçe yatağı, dip, yatak, tabaka, katman, damar, yatak
+1	watch	onemli_anlam_kaybi_riski	1463	lost | lost | lost	1;2;3	beklemek; kollamak; ile ilgilenmek	kol saati, saat, nöbet, gözetim, gözlem, nöbetçi, bekçi, ayin, uyanık bekleyiş, izlemek, seyretmek, gözetlemek, gözlemlemek, dikkat etmek, sakınmak, bakmak, göz kulak olmak
+1	fun	onemli_anlam_kaybi_riski	1409	lost | kept_kenet | lost	1;3	oyunculuk; neşe; zevk	eğlence, keyif, şaka, espri, heyecan, hareketlilik, eğlenceli, keyifli
+1	angry	onemli_anlam_kaybi_riski	1281	lost | lost | lost	1;2;3	acıklı; hırslı; dargın	kızgın, öfkeli, sert, fırtınalı, iltihaplı, kızarmış
+1	bit	onemli_anlam_kaybi_riski	1142	lost | kept_kenet | kept_kenet	1	keski; lokma; kırıntı	biraz, parça, kısa an, dakika, gem, bit, uç, matkap ucu
+1	child	onemli_anlam_kaybi_riski	1099	lost | lost | lost	1;2;3	velet; deneyimsiz; toy	çocuk, evlat, çocuk, olgunlaşmamış kimse, çocuk, soy, boy
+1	die	onemli_anlam_kaybi_riski	920	lost | lost | lost	1;2;3	sona ermek; bitmek; metal kalıp	ölmek, can vermek, ölmek, ölümüne acı çekmek, ölesiye istemek, çok özlemek, sönmek, yok olmak, zar, kalıp, matris
+1	also	onemli_anlam_kaybi_riski	869	lost | lost | kept_kenet	1;2	dahi; hem de; yine	ayrıca, bunun yanında
+1	whole	onemli_anlam_kaybi_riski	866	lost | lost | lost	1;2;3	hamısı; tek parça; bitev	bütün, tüm, tam, eksiksiz, sağlam, yaralanmamış, aynı anne babadan, bütün, tümü, bütünüyle, tamamen
+1	clothes	onemli_anlam_kaybi_riski	837	kept_kenet | lost | kept_kenet	2	elbise; paltar; libas	giysi, kıyafet, yatak örtüsü, çarşaf
+1	student	onemli_anlam_kaybi_riski	800	lost | lost | kept_kenet	1;2	okuvcu; talip; talebe	öğrenci, araştırmacı, bilgin
+1	breakfast	onemli_anlam_kaybi_riski	761	lost | lost | lost	1;2;3	seher yemeği; ertirlik; seher yemeği yemek	kahvaltı, kahvaltı yapmak
+1	baby	onemli_anlam_kaybi_riski	760	lost | kept_kenet | lost	1;3	körpe; çağa; bala	bebek, yavru, en küçük, en genç, çocuksu kişi, şımarık, hayvan yavrusu, tatlım, canım
+1	deal	onemli_anlam_kaybi_riski	753	lost | lost | lost	1;2;3	vermek; paylaştırmak; vurmak	anlaşma, pazarlık, anlaşma, sözleşme, çok miktar, epey, kereste, tahta, dağıtım, el, ilgilenmek, uğraşmak, ticaret yapmak, alışveriş etmek, dağıtmak
+1	full	onemli_anlam_kaybi_riski	736	lost | kept_kenet | lost	1;3	kalabalık; doymuş; (giysi) gevşek	dolu, tam, bütün, tok, derin, zengin, tam, normal
+1	explain	onemli_anlam_kaybi_riski	666	lost | lost | lost	1;2;3	başa salmak; düşündürmek; tavzih vermek	açıklamak, anlatmak, tanımlamak, gerekçe göstermek, haklı çıkarmak
+1	send	onemli_anlam_kaybi_riski	575	lost | lost | lost	1;2;3	yubarmak; etmek; -e çevirmek	göndermek, yollamak, iletmek, ulaştırmak, yayınlamak, yayın yapmak, sürüklemek, itmek
+1	apartment	onemli_anlam_kaybi_riski	524	lost | lost | lost	1;2;3	lüks daire; oda; menzil	daire, apartman dairesi
+1	alive	onemli_anlam_kaybi_riski	477	lost | lost | lost	1;2;3	yaşayan; berhayat; hareketli	canlı, hayatta, neşeli, canlı, farkında olan, duyarlı, işleyen, çalışan
+1	certain	onemli_anlam_kaybi_riski	443	lost | kept_kenet | lost	1;3	muhakkak; kuşkusuz; anık	emin, kesin, belli, belirli, bazı, güvenilir, etkili, bazıları
+1	recently	onemli_anlam_kaybi_riski	428	lost | lost | lost	1;2;3	son günlerde; bu yakında; bu aralar	son zamanlarda, geçenlerde
+1	gift	onemli_anlam_kaybi_riski	394	kept_kenet | lost | lost	2;3	Allah vergisi; (İİ) çocuk oyuncağı; basit iş	hediye, armağan, yetenek, kabiliyet, bağışlamak, hediye etmek
+1	single	onemli_anlam_kaybi_riski	390	lost | kept_kenet | lost	1;3	çift olmayan; tek kat; ayrı	tek, tek bir, bekar, evli olmayan, tek kişilik, tek yön bilet
+1	suggest	onemli_anlam_kaybi_riski	381	lost | lost | lost	1;2;3	belirtmek; göstermek; işaret etmek	önermek, öne sürmek, ima etmek, akla getirmek, akla getirmek, çağrıştırmak
+1	wake	onemli_anlam_kaybi_riski	378	lost | lost | lost	1;2;3	canlandırmak; harekete geçirmek; geminin suda bıraktığı iz	uyanmak, uyandırmak, uyanık olmak, uyanık kalmak, ardından gelen iz, dalga izi, cenaze nöbeti, başucu, sonuç, etki
+1	machine	onemli_anlam_kaybi_riski	363	lost | lost | lost	1;2;3	kılga; kılgayla yapmak; öndürmek	makine, alet, makine gibi çalışan kişi, örgüt, mekanizma, basit makine, parti örgütü, siyasi çevre, araba, otomobil
+1	murder	onemli_anlam_kaybi_riski	362	lost | lost | lost	1;2;3	çok zor iş; ölüm; içine etmek	cinayet, adam öldürme, öldürmek, katletmek, berbat etmek, mahvetmek
+1	dad	onemli_anlam_kaybi_riski	350	lost | lost | lost	1;2;3	atacan; ata; dede	baba, babacık
+1	telephone	onemli_anlam_kaybi_riski	345	lost | lost | lost	1;2;3	çınka; hatif; alısünlemek	telefon, telefon iletişimi, telefon etmek, aramak
+1	crime	onemli_anlam_kaybi_riski	337	lost | lost | lost	1;2;3	aptallık; mantıksızlık; mantıksızca hareket	suç, suçluluk, suç işleme, ahlaksızlık, kötülük
+1	joke	onemli_anlam_kaybi_riski	332	lost | kept_kenet | lost	1;3	kaçırım; hezel; takılmak	şaka, fıkra, şaka konusu, alay konusu, eğlence, oyun, şaka yapmak, espri yapmak
+1	leg	onemli_anlam_kaybi_riski	310	lost | lost | lost	1;2;3	(hayvanlarda) but; kıç; (giysi) kıçı örten bölüm	bacak, bacak, ayak, ayak, destek, parça, kol, but
+1	fat	onemli_anlam_kaybi_riski	306	lost | kept_kenet | lost	1;3	(et) yağlı; tombul; kök	şişman, kilolu, kalın, geniş, yağlı, kazançlı, bol kazançlı, yağ
+1	oh	onemli_anlam_kaybi_riski	301	lost | lost | lost	1;2;3	hey!; o!; aman!	ay, ah, oh, aa, evet
+1	art	onemli_anlam_kaybi_riski	299	lost | lost | lost	1;2;3	yöntem; usül; yol yordam	sanat, sanat eseri, sanat ürünleri, beceri, maharet, resim, illüstrasyon
+1	eventually	onemli_anlam_kaybi_riski	287	lost | lost | lost	1;2;3	en sonunda; sonuç olarak; neticede	sonunda, nihayetinde
+1	amazing	onemli_anlam_kaybi_riski	265	lost | lost | lost	1;2;3	hayretamiz; hayrete düşürücü; füsunkâr	şaşırtıcı, inanılmaz, harika, muhteşem
+1	fly	onemli_anlam_kaybi_riski	259	kept_kenet | lost | lost	2;3	uçakla gitmek; çok hızlı hareket etmek; jet gibi gitmek	uçmak, uçurmak, kullanmak, hızla gitmek, koşmak, dalgalanmak, açılmak, sinek, böcek, fermuar, düğme kapağı, çadır kapısı, kurnaz, uyanık
+1	accused	onemli_anlam_kaybi_riski	256	lost | lost | lost	1;2;3	müddeaaleyh; mukassir; taksirkâr	suçlanan, sanık, sanık, zanlı
+1	result	onemli_anlam_kaybi_riski	228	lost | kept_kenet | kept_kenet	1	-den sonuçlanmak; meydana gelmek; çıkmak	sonuç, not, sonuç, sonuçlanmak, neden olmak, kaynaklanmak
+1	fixed	onemli_anlam_kaybi_riski	224	lost | lost | lost	1;2;3	oynamaz; belirlenmiş; kararlaştırılmış	sabit, değişmez, hareketsiz, sabit, yerine sağlam oturtulmuş, sabitlenmiş, değiştirilemez, kesin
+1	speaker	onemli_anlam_kaybi_riski	216	lost | lost | lost	1;2;3	sözcü; kolon; aytar	konuşmacı, hatip, hoparlör, ses kutusu, başkan, meclis başkanı, konuşan dil kullanıcısı
+1	roof	onemli_anlam_kaybi_riski	214	lost | lost | lost	1;2;3	ev; yuva; en yüksek çekit ya da düzey	çatı, damKat, üst kısım, tavan, üst sınır, çatı yapmak, çatıyla örtmek
+1	hello	onemli_anlam_kaybi_riski	211	lost | lost | lost	1;2;3	a!; hay Allah!; hey	merhaba, selam, alo, selamlama, merhaba
+1	clock	onemli_anlam_kaybi_riski	201	lost | lost | lost	1;2;3	masa/duvar saati; hız göstergesi; hızölçer	saat, kilometre sayacı, süresini ölçmek, zamanlamak, hız yapmak, ulaşmak
+1	gate	onemli_anlam_kaybi_riski	189	lost | lost | lost	1;2;3	bab; giriş yeri; giriş kapısı	kapı, geçit, biletli seyirci, gişe hasılatı, kapı, çıkış kapısı, mantık kapısı, kapatmak, kapı koymak, cezalandırmak, okuldan men etmek
+1	text	onemli_anlam_kaybi_riski	188	kept_kenet | lost | lost	2;3	tekst; parça; konu	metin, yazı, ders kitabı, ayet, dini metin, kısa mesaj, mesaj atmak
+1	acting	onemli_anlam_kaybi_riski	187	lost | lost | lost	1;2;3	muvakkati vazife ifa eden; vazifesini icra eden; yerine bakan	geçici, vekâleten, oyunculuk, rol yapma
+1	anxious	onemli_anlam_kaybi_riski	176	lost | lost | lost	1;2;3	korkulu; narahat; tedirgin	endişeli, kaygılı, hevesli, istekli, kaygı verici, gergin
+1	silence	onemli_anlam_kaybi_riski	173	lost | lost | lost	1;2;3	susma; dinginlik; sır saklama	sessizlik, sessizlik, ses yokluğu, suskunluk, konuşmama, susturmak, sessizleştirmek, bastırmak, sindirmek
+1	survive	onemli_anlam_kaybi_riski	168	kept_kenet | lost | lost	2;3	yaşamayı sürdürmek; sağ salim çıkmak; -den sağ kurtulmak	hayatta kalmak, atlatmak, üstesinden gelmek, geçinmek, ayakta kalmak, ömrünü aşmak, daha uzun yaşamak
+1	argue	onemli_anlam_kaybi_riski	166	lost | lost | lost	1;2;3	mübahase etmek; atışmak; kanıtlamaya çalışmak	savunmak, ileri sürmek, tartışmak, kavga etmek, göstermek, işaret etmek
+1	hug	onemli_anlam_kaybi_riski	164	lost | lost | kept_kenet	1;2	sevgiyle sarılmak; sıkıca kucaklamak; bağrına basmak	sarılmak, kucaklamak, yapışmak, sıkı oturmak, sarılma, kucaklama
+1	abandoned	onemli_anlam_kaybi_riski	161	lost | lost | lost	1;2;3	atılmış; arsız; çapkın	terk edilmiş, ıssız, serbest, kayıtsız
+1	expert	onemli_anlam_kaybi_riski	159	lost | lost | lost	1;2;3	bilici; eksper; başbilen	uzman, becerikli, uzmanlık gerektiren, uzman, bilirkişi
+1	leader	onemli_anlam_kaybi_riski	158	lost | lost | lost	1;2;3	önde gelen kimse; başta gelen kimse; yedekçi	lider, önder, öncü, birinci, cazibe ürünü, zarara satılan ürün
+1	argument	onemli_anlam_kaybi_riski	152	lost | lost | lost	1;2;3	mübahase; anlaşmazlık; üzerinde konuşma	tartışma, münakaşa, delil, gerekçe, savunu, tartışma, münazara, özet, konu özeti, argüman, parametre, bağımsız değişken
+1	fan	onemli_anlam_kaybi_riski	150	lost | lost | lost	1;2;3	pervane; yelletke; yellenmek	vantilatör, fan, hayran, taraftar, yelpaze, havalandırmak, serinletmek, körüklemek, alevlendirmek
+1	neck	onemli_anlam_kaybi_riski	146	lost | lost | lost	1;2;3	giysi boynu; dil; kıstak	boyun, dar geçit, dar boğaz, yaka, yaka kısmı, şişe boynu, dar kısım, kuzu boyun eti, öpüşmek, sevişmek
+1	ex	onemli_anlam_kaybi_riski	140	lost | lost | lost	1;2;3	-de teslim; -den dışarı; -siz	eski eş, eski, önceki, x harfi
+1	refrigerator	onemli_anlam_kaybi_riski	137	kept_kenet | lost | lost	2;3	soğutucu; buzlatka; sellace	buzdolabı
+1	although	onemli_anlam_kaybi_riski	135	lost | lost | lost	1;2;3	-e karşın; ise de; -dığı halde	-e rağmen, -mesine karşın, ama, fakat
+1	lack	onemli_anlam_kaybi_riski	134	lost | lost | lost	1;2;3	-sizlik çekmek; -den yoksun olmak; olmayış	yokluk, eksiklik, yoksun olmak, eksik olmak, gerekli şeye sahip olmamak
+1	criminal	onemli_anlam_kaybi_riski	132	lost | lost | lost	1;2;3	suçla ilgili; cezalı; çok kötü	suçlu, mahkûm, suç niteliğinde, cezai, suç işleyen, suçlu, utanç verici, yüz karası
+1	actor	onemli_anlam_kaybi_riski	130	lost | lost | lost	1;2;3	(erkek) oyuncu; mukallit; bir hadisede yer alan kimse	oyuncu, aktör, fail, etken
+1	allergic	onemli_anlam_kaybi_riski	130	lost | lost | lost	1;2;3	sinir olan; nefret eden; sevmeyen	alerjik, aşırı hassas, tahammülsüz
+1	diary	onemli_anlam_kaybi_riski	129	lost | lost | lost	1;2;3	anı defteri; günce; not defteri	günlük, ajanda, randevu defteri
+1	sport	onemli_anlam_kaybi_riski	126	lost | lost | kept_kenet	1;2	kafa dengi; gırgır kimse; sportmen kimse	spor, profesyonel sporculuk, sporcu, iyi huylu kişi, yaban yaratığı, mutasyon, takmak, sergilemek
+1	active	onemli_anlam_kaybi_riski	125	lost | lost | lost	1;2;3	hareketli; canlı; işgüzar	etkin, faal, aktif, katılımcı, etkili, işleyen, savaşta, görevde, etken
+1	soft	onemli_anlam_kaybi_riski	124	lost | lost | lost	1;2;3	rahatsız etmeyen; alkolsüz; fazla hoşgörülü	yumuşak, şefkatli, nazik, alçak, kısık, hassas, kırılgan, korumasız, savunmasız
+1	queen	onemli_anlam_kaybi_riski	120	lost | lost | lost	1;2;3	(iskambil) kız; dam; (satranç) vezir	kraliçe, kraliçe, kral eşi, kraliçe arı, ana, en güzel, başköşe, kraliçe
+1	repeat	onemli_anlam_kaybi_riski	120	lost | lost | lost	1;2;3	kaytalamak; yeniden yayınlanan bağdarlama; nakarat	tekrar, yineleme, tekrarlamak, yinelemek, yinelemek, tekrar etmek, tekrarlamak, ezberlemek, geri getirmek, ağzını yakmak
+1	per	onemli_anlam_kaybi_riski	119	lost | lost | lost	1;2;3	-da; her biri için; vasıtasıyla	başına, her, göre, uyarınca
+1	flag	onemli_anlam_kaybi_riski	118	lost | lost | lost	1;2;3	alem; bandıra; flama	bayrak, işaret bayrağı, sinyal, süsen, gazetenin künyesi, bayrak direği, düz taş, kaldırım taşı, işaretlemek, dikkat çekmek, yorulmak, zayıflamak
+1	yard	onemli_anlam_kaybi_riski	115	kept_kenet | kept_kenet | lost	3	yarda (0.9144 metre); hayat; belli bir amaç için ayrılmış kapalı yer	yard, bahçe, avlu, saha, depo alanı, kereste deposu, hacim birimi
+1	garbage	onemli_anlam_kaybi_riski	109	lost | lost | lost	1;2;3	tullantı; zibil; zırva	çöp, artık yemek, saçma, değersiz şey, çöp kutusu, çöp bidonu
+1	lobby	onemli_anlam_kaybi_riski	108	lost | kept_kenet | lost	1;3	hol; kulis faaliyeti; oylarını kazanmak amacıyla senatörlerle görüşmek	lobi, giriş salonu, baskı grubu, lobi, lobi yapmak, baskı yapmak, oyalamak, tutmak
+1	graduate	onemli_anlam_kaybi_riski	107	lost | lost | lost	1;2;3	birdem mezunu; hangise kursu/okulu bitirmiş; bir eğitimi tamamlamış kimse	mezun, lisansüstü öğrenci, ölçü kabı, dereceli kap, mezun olmak, derece vermek, mezun etmek, dereceye bölmek, derecelendirmek, lisansüstü
+1	electric	onemli_anlam_kaybi_riski	105	lost | lost | lost	1;2;3	çıngıyla ilgili; çıngılık; çıngılı	elektrikli, gerilimli, elektriklenmiş gibi, heyecan verici, çarpıcı, elektrikli araba
+1	pleasant	onemli_anlam_kaybi_riski	103	lost | lost | lost	1;2;3	canayakın; şirin; yakın	hoş, keyifli, sevimli, nazik
+1	strength	onemli_anlam_kaybi_riski	103	lost | lost | lost	1;2;3	dayanıklılık; dayanma gücü; sertlik	güç, kuvvet, güç, kuvvet, güçlü yan, avantaj, mevcut sayı, kadro, şiddet, yoğunluk
+1	mystery	onemli_anlam_kaybi_riski	98	kept_kenet | lost | kept_kenet	2	giz; anlaşılmaz şey; esrar	gizem, muamma, gizemli olay, bilmece, polisiye, gizem romanı
+1	author	onemli_anlam_kaybi_riski	97	lost | lost | lost	1;2;3	yazıcı; bir şeye kaynak olan/oluşturan kişi; teşebbüskâr	yazar, yaratıcı, mimar, yazmak, kaleme almak
+1	path	onemli_anlam_kaybi_riski	97	lost | lost | kept_kenet	1;2	keçiyolu; (neyinse izlediği) yön; rota	patika, yol, yol, güzergâh, yol, izlenecek yol, yörünge, gidişat
+1	mall	onemli_anlam_kaybi_riski	93	lost | lost | lost	1;2;3	tokmakla dövmek; tokmak; taşıtlara kapalı cadde	alışveriş merkezi, avm, yaya yolu, bulvar
+1	camp	onemli_anlam_kaybi_riski	91	lost | lost | lost	1;2;3	düşerge; düşerge yapmak; düşerge salmak	abartılı, gösterişli, kamp, karargâh, kamp, kamp alanı, grup, klik, toplama kampı, ceza kampı, kamp kurmak, kamp yapmak
+1	cruel	onemli_anlam_kaybi_riski	88	lost | lost | lost	1;2;3	gaddar; çok acı; dayanılmaz	zalim, acımasız, kalpsiz, merhametsiz
+1	fog	onemli_anlam_kaybi_riski	85	lost | lost | lost	1;2;3	çen; sislemek; sislenmek	sis, duman, bulut, kafa karışıklığı, bulanıklık, buğulandırmak, bulanıklaştırmak
+1	knee	onemli_anlam_kaybi_riski	85	lost | lost | lost	1;2;3	(giyside) diz; diz yeri; diz vurmak	diz, diz, dört ayaklı hayvanın dizi, pantolon dizi, dizle vurmak
+1	peter	onemli_anlam_kaybi_riski	85	lost | lost | lost	1;2;3	yavaş yavaş tükenmek; son bulmak; bitmek	Petrus, Aziz Petrus, azalmak, tükenmek
+1	dancer	onemli_anlam_kaybi_riski	84	kept_kenet | lost | lost	2;3	dansör; çengi; köçek	dansçı, dans eden kişi
+1	rabbit	onemli_anlam_kaybi_riski	84	lost | lost | lost	1;2;3	adatavşanı; dırdır etmek; kafa ütülemek	tavşan, tavşan kürkü, tavşan eti, tavşan avlamak
+1	wolf	onemli_anlam_kaybi_riski	84	lost | lost | lost	1;2;3	zampara; kurt gibi yemek; abur cubur yemek	kurt, kadın avcısı, çapkın, açgözlü insan, zalim, hızla yemek, tıkınmak
+1	breathing	onemli_anlam_kaybi_riski	83	lost | kept_kenet | kept_kenet	1	soluk alma; teneffüs etme; teneffüs	solunum, nefes alma, solunum yapabilen, nefes alan
+1	barn	onemli_anlam_kaybi_riski	82	lost | lost | lost	1;2;3	ağıl; kotan; büyük ve sevimsiz bina	ahır, samanlık, barn
+1	decent	onemli_anlam_kaybi_riski	80	lost | lost | lost	1;2;3	yakışık alır; saygılı; oldukça iyi	düzgün, uygun, terbiyeli, ahlaklı, yeterli, idare eder, giyimli, edepli
+1	discount	onemli_anlam_kaybi_riski	79	lost | lost | lost	1;2;3	(senet/bono) kırmak; kırdırmak; tamamen inanmamak	indirim, iskonto, indirim yapmak, fiyat düşürmek, göz ardı etmek, hesaba katmamak
+1	talkative	onemli_anlam_kaybi_riski	75	lost | lost | kept_kenet	1;2	yanşak; sirgep; çenesi düşük	konuşkan, geveze, laf kalabalığı yapan, samimi, sohbet sever
+1	bitter	onemli_anlam_kaybi_riski	73	lost | lost | lost	1;2;3	(soğuk/rüzgâr/vb.) sert; kötü; üzücü	acı, küskün, kırgın, zor, acı verici, sert, buz gibi, kin dolu, düşmanca
+1	majority	onemli_anlam_kaybi_riski	73	lost | lost | lost	1;2;3	sayı farkı; fark; rüşt	çoğunluk, ekseriyet, oy çoğunluğu, mutlak çoğunluk, reşitlik
+1	site	onemli_anlam_kaybi_riski	71	lost | lost | kept_kenet	1;2	orun; mevki; arsa	alan, arazi, yer, konum, web sitesi, yerleştirmek, konumlandırmak
+1	regular	onemli_anlam_kaybi_riski	69	lost | lost | lost	1;2;3	düzgün; muntazam; her zamanki	düzenli, sürekli, normal, olağan, kurallı, standart, müdavim, sık gelen, müdavim, daimi müşteri
+1	toast	onemli_anlam_kaybi_riski	69	lost | lost | lost	1;2;3	sağlığına içme; kutlama; tebrik etme	tost, kızarmış ekmek, kadeh kaldırma, şerefe, gözde kişi, ilgi odağı, kızartmak, kavurmak, şerefine kadeh kaldırmak
+1	uniform	onemli_anlam_kaybi_riski	67	lost | lost | lost	1;2;3	tek biçimli; aynı; birörnek	tek tip, düzgün, değişmeyen, sabit, üniforma, üniforma giydirmek
+1	spicy	onemli_anlam_kaybi_riski	66	kept_kenet | lost | lost	2;3	açık saçık; edepsiz; muzır	baharatlı, acılı, müstehcen, cinsel çağrışımlı
+1	treasure	onemli_anlam_kaybi_riski	65	lost | lost | lost	1;2;3	gömü; çok değerli şey/varlık; çok kıymetli tutmak	hazine, servet, değerli eser, sanat eseri, kıymetli şey, değerli varlık, koleksiyon, değerli şeyler, değer vermek, saymak, çok sevmek, bağlanmak
+1	alternative	onemli_anlam_kaybi_riski	64	lost | lost | lost	1;2;3	seçimli; diğer; seçim	alternatif, yerine geçen, seçenekli, ikili, alternatif, geleneksel olmayan, seçenek, alternatif
+1	bone	onemli_anlam_kaybi_riski	63	lost | lost | lost	1;2;3	sümük; süyek; azm	kemik, kemik dokusu, fildişi beyazı, kemiklerini ayıklamak, çalışmak, ezberlemek, kemikten yapılmış
+1	innocence	onemli_anlam_kaybi_riski	63	lost | lost | lost	1;2;3	günahsızlık; cahillik; cehalet	masumiyet, saflık, toyluk, saflık, beraat, suçsuzluk
+1	bake	onemli_anlam_kaybi_riski	61	lost | lost | lost	1;2;3	sıcaktan katılaşmak; sertleşmek; sıcaktan pişmek	fırında pişirmek, fırınlamak, kurutmak, kavrulmak, kavurmak
+1	remove	onemli_anlam_kaybi_riski	60	lost | lost | lost	1;2;3	temizlemek; silmek; öçürmek	çıkarmak, kaldırmak, görevden almak, uzaklaştırmak, ortadan kaldırmak, gidermek, uzaklaştırmak, çıkarmak, taşımak, yer değiştirmek, uzaklık, mesafe
+1	democracy	onemli_anlam_kaybi_riski	59	kept_kenet | lost | lost	2;3	elerki; demorkasiyle yönetilen ülke; sosyal eşitlik	demokrasi, halk yönetimi, demokratik ilke, demokratik anlayış, çoğunluk yönetimi
+1	unique	onemli_anlam_kaybi_riski	59	lost | lost | lost	1;2;3	yegâne; tek; biricik	eşsiz, benzersiz, özgü, has, olağanüstü, çok özel
+1	sum	onemli_anlam_kaybi_riski	53	lost | lost | kept_kenet	1;2	işlem; problem; tutar	toplam, bütün, meblağ, para miktarı, özet, öz, toplamak, özetlemek
+1	scandal	onemli_anlam_kaybi_riski	52	lost | lost | lost	1;2;3	kepazelik; kara çalma; iftira	skandal, rezalet, dedikodu, çirkin söylenti, utanç verici durum
+1	wage	onemli_anlam_kaybi_riski	52	lost | lost | lost	1;2;3	savaş açmak; mücadele başlatmak; vergin	ücret, maaş, yürütmek, sürdürmek
+1	fortunately	onemli_anlam_kaybi_riski	50	lost | lost | lost	1;2;3	Allahtan; şükür ki; şansa	neyse ki, şans eseri
+1	organization	onemli_anlam_kaybi_riski	50	kept_kenet | lost | kept_kenet	2	teşkilat; uyuşma; teşkilatlanma	örgüt, kuruluş, düzenleme, organizasyon, yapılanma, yapı, düzenlilik, titizlik
+1	calendar	onemli_anlam_kaybi_riski	49	lost | lost | lost	1;2;3	gündizme; köm; dallık	takvim, ajanda, program listesi, çizelge, dizelge, takvime kaydetmek
+1	efficient	onemli_anlam_kaybi_riski	48	lost | lost | lost	1;2;3	iyi çalışan; hızlı ve verimli; becerikli	verimli, etkili, işini iyi bilen, yetkin, ekonomik, tasarruflu
+1	passion	onemli_anlam_kaybi_riski	48	lost | lost | lost	1;2;3	hırs; ani öfke; düşkünlük	tutku, ateş, öfke, coşku, şehvet, cinsel arzu, sevgili, tutku nesnesi
+1	campus	onemli_anlam_kaybi_riski	47	lost | lost | lost	1;2;3	şehircik; hayat; avlu	kampüs, yerleşke
+1	thankful	onemli_anlam_kaybi_riski	47	lost | lost | lost	1;2;3	şükreden; memnun; mutlu	minnettar, müteşekkir
+1	confirmed	onemli_anlam_kaybi_riski	45	lost | lost | lost	1;2;3	alışkanlıklarını değiştirmez; sürekli; müzmin	kesinleşmiş, değişmez, kanıtlanmış, doğrulanmış, onaylanmış, kesinleşmiş
+1	remote	onemli_anlam_kaybi_riski	44	lost | lost | lost	1;2;3	(davranış) soğuk; (şans/olasılık/vb.) küçük; az	uzak, ıssız, çok küçük, uzak ihtimal, uzak, dolaylı, uzaktan kumanda
+1	touching	onemli_anlam_kaybi_riski	44	lost | lost | lost	1;2;3	etkili; acıklı; (edat) -e dayanarak	dokunaklı, duygulandırıcı, dokunma, temas, ile ilgili, hakkında
+1	vehicle	onemli_anlam_kaybi_riski	44	lost | kept_kenet | lost	1;3	binek aracı; nakil aracı; iletme aracı	araç, taşıt, araç, vasıta, taşıyıcı, ortam, bulaştırıcı nesne
+1	identical	onemli_anlam_kaybi_riski	43	lost | lost | lost	1;2;3	benzer; benzeş; bendeş	aynı, özdeş, tıpatıp aynı, birebir, tek yumurta ikizlerine ait
+1	load	onemli_anlam_kaybi_riski	41	lost | lost | lost	1;2;3	taşınan miktar; şarj; iş	yük, ağırlık, miktar, partî, sarhoşluk miktarı, içki, yük, sorumluluk, külfet, güç çıkışı
+1	pan	onemli_anlam_kaybi_riski	41	lost | lost | lost	1;2;3	lavabo taşı; elek; suda yüzen ince buz	tava, tencere, kap, leğen, kefe, eleyip ayıklamak, sağa sola çevirmek, kötülemek, yermek
+1	phrase	onemli_anlam_kaybi_riski	40	lost | lost | lost	1;2;3	birkaç sözcükten oluşan anlamlı birim; sözcük öbeği; sözce	deyim, ifade, söz öbeği, cümle, ifade biçimi, motif, kısa müzik parçası, ifade etmek, sözle dile getirmek
+1	congress	onemli_anlam_kaybi_riski	39	kept_kenet | lost | lost	2;3	kurultay; toplantı; (ABD'de) Millet Meclisi	Kongre, meclis, kongre, konferans, meclis, yasama organı, cinsel birleşme
+1	tragic	onemli_anlam_kaybi_riski	39	lost | lost | lost	1;2;3	üzücü; talihsiz; müthiş	acıklı, feci, trajik, dramatik
+1	duck	onemli_anlam_kaybi_riski	38	lost | lost | lost	1;2;3	(kafasını) eğmek; (başını) suya daldırmak; kaçmak	ördek, sıfır puan, ördek eti, kanvas, sert pamuklu kumaş, eğilmek, sinmek, dalmak, suya batırmak
+1	naughty	onemli_anlam_kaybi_riski	38	lost | lost | lost	1;2;3	şıltak; edepsiz; ahlaksız	yaramaz, haylaz, edepli olmayan, müstehcen
+1	harsh	onemli_anlam_kaybi_riski	37	lost | lost | lost	1;2;3	duyuları yıpratıcı; (renk) cırtlak; zalim	sert, acımasız, sert, rahatsız edici, zorlu, sert, pürüzlü, kaba
+1	kindly	onemli_anlam_kaybi_riski	37	lost | lost | lost	1;2;3	arkadaşça; müşfik; sevecen	nazik, şefkatli, iyi kalpli, hoş, sevimli, nazikçe, iyilikle, lütfen
+1	mass	onemli_anlam_kaybi_riski	37	lost | lost | lost	1;2;3	küme; çokluk; çok kişiyi ilgilendiren	kütle, yığın, kitle, topluluk, çok miktar, yığın, ayin, kitlesel, toplu, kütle, bloklu madde
+1	worthless	onemli_anlam_kaybi_riski	37	lost | lost | lost	1;2;3	adi; karaktersiz; kötü	değersiz, işe yaramaz, aşağılık, değersiz
+1	cellar	onemli_anlam_kaybi_riski	36	lost | lost | lost	1;2;3	zirizemin; zirzemi; ambar	bodrum, kiler, şarap mahzeni
+1	poisonous	onemli_anlam_kaybi_riski	36	lost | lost | lost	1;2;3	kötü; iğrenç; berbat	zehirli, zehir gibi, kötü niyetli, zehirli
+1	punish	onemli_anlam_kaybi_riski	36	lost | lost | lost	1;2;3	kötü biçimde dövmek; hırpalamak; katlamak	cezalandırmak, ceza vermek, haksızlığa uğratmak, zarar vermek
+1	device	onemli_anlam_kaybi_riski	35	lost | lost | lost	1;2;3	hile; oyun; plan	alet, cihaz, aygıt, yöntem, numara, desen, süsleme, arma, amblem
+1	distant	onemli_anlam_kaybi_riski	35	lost | lost | lost	1;2;3	alıs; uzakta; (akraba) uzaktan	uzak, ıssız, uzak akraba, uzak, soğuk, mesafeli, uzak, geçmişteki
+1	element	onemli_anlam_kaybi_riski	35	kept_kenet | lost | lost	2;3	öge; bütünün gerekli parçası; küçük bir miktar	öğe, unsur, bileşen, element, kimyasal madde, ortam, doğal çevre, unsur, ana öğe
+1	breast	onemli_anlam_kaybi_riski	34	lost | lost | lost	1;2;3	gönül; sine; döş	göğüs, meme, göğüs eti, göğsüyle karşılamak, aşmak
+1	scholarship	onemli_anlam_kaybi_riski	34	lost | kept_kenet | lost	1;3	derin bilgi; bilginlik; ciddi çalışma	burs, bilimsel bilgi, akademik birikim
+1	straw	onemli_anlam_kaybi_riski	34	lost | lost | lost	1;2;3	kamış; kamış çubuk; önemsiz şey	saman, pipet, içme borusu, saman sarısı, saman serpmek, kaplamak
+1	fantasy	onemli_anlam_kaybi_riski	33	lost | lost | lost	1;2;3	imgelem; düş gücü; düş	hayal, hayal gücü, fantastik kurgu, fantezi, yanılsama, hayal, hayal kurmak
+1	instant	onemli_anlam_kaybi_riski	33	lost | lost | lost	1;2;3	dakika; hemen olan; (yiyecek/vb.) çabuk ve kolay hazırlanabilen	an, saniye, an, belirli zaman noktası, anlık, ani, hazır, çabuk hazırlanan, acil, öncelikli, bu ayın
+1	pathetic	onemli_anlam_kaybi_riski	33	lost | lost | lost	1;2;3	acınırlı; üzücü; boktan	acınası, zavallı, içler acısı, berbat
+1	trump	onemli_anlam_kaybi_riski	33	lost | lost | lost	1;2;3	(iskambil) koz; koz çakmak; kozla almak	koz, koz rengi, trompet, trompet çalmak, yenmek, geçmek, koz oynamak
+1	leak	onemli_anlam_kaybi_riski	32	lost | lost | lost	1;2;3	su sızdıran delik ya da çatlak; (gaz/vb.) sızıntı; (haber/vb.) sızma	sızıntı, delik, sızdırma, ifşa, sızmak, akmak, sızdırmak, ifşa etmek, gizlice bildirmek
+1	parent	onemli_anlam_kaybi_riski	31	lost | kept_kenet | lost	1;3	ana ya da baba; ana baba; valideyn	ebeveyn, anne baba, vasi, koruyucu, ana kök, kaynak, yetiştirmek, büyütmek
+1	negotiate	onemli_anlam_kaybi_riski	30	kept_kenet | lost | lost	2;3	görüşmek; akdetmek; rahatça geçmek	müzakere etmek, pazarlık yapmak, aşmak, geçmek
+1	route	onemli_anlam_kaybi_riski	30	lost | lost | lost	1;2;3	izlenecek yol; ...yoluyla yollamak; ...yolu üzerinden göndermek	güzergâh, rota, yol, geçit, yönlendirmek, göndermek
+1	smoker	onemli_anlam_kaybi_riski	30	lost | lost | lost	1;2;3	çilim çeken kimse; çilimkeş; çilim çekenlere ayrılmış vagon	sigara içen kişi, sigara içilen vagon, erkekler toplantısı, erkek partisi
+1	obnoxious	onemli_anlam_kaybi_riski	29	lost | lost | lost	1;2;3	uygunsuz; çirkin; kötü	iğrenç, katlanılmaz, tiksindirici, nahoş
+1	contagious	onemli_anlam_kaybi_riski	28	lost | lost | lost	1;2;3	(hastalık) temasla geçen; yolukucu; yukmalı	bulaşıcı, bulaşıcı, yayılan
+1	damp	onemli_anlam_kaybi_riski	28	lost | lost | lost	1;2;3	ıslaklık; (ateşi) yavaşlatmak; küllemek	nemli, rutubetli, nem, rutubet, sönümlemek, azaltmak, söndürmek, kırmak
+1	inch	onemli_anlam_kaybi_riski	28	kept_kenet | lost | lost	2;3	pus; güçlükle yol açmak; güçlükle ilerlemek	inç, az miktar, santim, yavaş yavaş ilerlemek
+1	principle	onemli_anlam_kaybi_riski	28	lost | lost | lost	1;2;3	ana kaynak; köken; ahlak	ilke, prensip, ilke, kural, yasa, kanun, temel gerçek, ilke
+1	aloud	onemli_anlam_kaybi_riski	27	lost | lost | lost	1;2;3	pek; cehren; savtı bülent ile	yüksek sesle, sesli olarak
+1	bait	onemli_anlam_kaybi_riski	27	lost | lost | lost	1;2;3	dikkati çeken şey; istek uyandıran şey; oltaya ya da tuzağa yem koymak	yem, cazibe, tuzak, yemlemek, tuzağa çekmek, taciz etmek, rahatsız etmek, köpekle saldırtmak
+1	brake	onemli_anlam_kaybi_riski	27	lost | lost | lost	1;2;3	eğleçleyip durdurmak/yavaşlatmak; eğleç yapmak; eğleçlemek	fren, engel, fren, çalılık, kır, fren yapmak, yavaşlamak
+1	foundation	onemli_anlam_kaybi_riski	27	lost | lost | lost	1;2;3	tesis; özül; kurma	temel, esas, vakıf, kuruluş, temel, bina temeli, temel eğitim, temel bilgi, fondöten, makyaj tabanı, korse, kadın iç giyimi
+1	halfway	onemli_anlam_kaybi_riski	27	kept_kenet | lost | lost	2;3	ortada; işi bitirmeden; tamamlamadan	yarı yolda, yarıya kadar, kısmen, yarım yamalak, yarı yolda olan, orta, uzlaşmak, orta yol bulmak
+1	butcher	onemli_anlam_kaybi_riski	26	lost | lost | lost	1;2;3	cellat; katil; cani	kasap, katliamcı, gaddar katil, beceriksiz cerrah, acemi, kesmek, boğazlamak, katletmek, acımasızca öldürmek
+1	registration	onemli_anlam_kaybi_riski	26	lost | lost | lost	1;2;3	(kütüğe) kaydetme; listeye alma; kaydetme	kayıt, kayıt işlemi, ruhsat, tescil belgesi, kayıtlı kişiler, katılımcılar, ayar, düzeltme
+1	invisible	onemli_anlam_kaybi_riski	25	lost | lost | lost	1;2;3	görülemez; (özellikle kâr zarar hesaplarında) deftere kayıtlı olmayan; resmi hesaplarda görülmeyen	görünmez, fark edilmez, önemsiz
+1	legend	onemli_anlam_kaybi_riski	25	kept_kenet | lost | lost	2;3	söylence; büyük; ünlü kimse	efsane, destan, açıklama, lejant, efsanevi kişi, unutulmaz isim
+1	prescription	onemli_anlam_kaybi_riski	25	lost | lost | lost	1;2;3	buyruk; emir; zamanaşımına dayanan hak	reçete, tavsiye, öneri, gözlük reçetesi
+1	alley	onemli_anlam_kaybi_riski	24	lost | lost | lost	1;2;3	çıkmaz sokak; dönge; patika	dar sokak, arka sokak, bowling oyun yolu
+1	bruise	onemli_anlam_kaybi_riski	24	lost | lost | lost	1;2;3	bere; ezik; çürütmek	morluk, çürük, morartmak, ezmek, incitmek, kırmak, ezmek, parçalamak
+1	fierce	onemli_anlam_kaybi_riski	24	lost | lost | lost	1;2;3	acımasız; kızgın; çok büyük	vahşi, saldırgan, şiddetli, sert, amansız, çetin, ateşli, tutkulu
+1	hood	onemli_anlam_kaybi_riski	24	kept_kenet | lost | lost	2;3	kukuleta; kapişon; (Aİ) kaput	kapüşon, başlık, motor kapağı, kaput, serbest bölge, mahalle, serseri, külhanbeyi, kapak, siper
+1	resolution	onemli_anlam_kaybi_riski	24	lost | lost | lost	1;2;3	azimlilik; yasa tasarısı; yeçim	karar, önerge, çözüm, çözümleme, kararlılık, azim, çözünürlük, ayrıştırma, çözümleme
+1	landscape	onemli_anlam_kaybi_riski	23	lost | lost | lost	1;2;3	kır manzarası; (ev/fabrika/vb.) çevresini yeşillendirmek; çevresine bahçe yapmak	manzara, peyzaj, manzara resmi, peyzaj tablosu, durum, ortam, görünüm, peyzaj düzenlemek, bahçe tasarlamak
+1	elegant	onemli_anlam_kaybi_riski	22	lost | lost | lost	1;2;3	ince; güzel; düzenli	zarif, şık, zarif, rafine, lüks, zarif, akıcı, sade
+1	bloody	onemli_anlam_kaybi_riski	21	lost | lost | lost	1;2;3	kanla kaplı; kanlanmış; kan dökülen	kanlı, kanlı, vahşi, lanet olası, son derece, çok, kana bulamak
+1	dense	onemli_anlam_kaybi_riski	21	lost | lost | lost	1;2;3	sıkışık; kalabalık; (sis/duman/vb.) yoğun	yoğun, sık, yoğun, kesif, yoğun, ağır, kafası basmayan, kıt anlayışlı
+1	heal	onemli_anlam_kaybi_riski	21	lost | lost | lost	1;2;3	(yara/vb.) iyileşmek; son vermek; bitirmek	iyileşmek, şifa bulmak, iyileştirmek, şifalandırmak, gidermek, düzeltmek
+1	landlord	onemli_anlam_kaybi_riski	21	lost | lost | lost	1;2;3	mal sahibi; emlak sahibi; otelci	ev sahibi, kiraya veren, toprak sahibi, arazi sahibi, han sahibi, meyhane sahibi
+1	survival	onemli_anlam_kaybi_riski	21	lost | lost | lost	1;2;3	kalım; yaşamı sürdürme; eskiden kalma şey	hayatta kalma, varlığını sürdürme, devamlılık, doğal seçilim, evrim, kalan, artakalan şey
+1	vicious	onemli_anlam_kaybi_riski	21	lost | lost | lost	1;2;3	kötü amaçlı; gaddar; garazlı	acımasız, vahşi, kötü niyetli, zalimce, şiddetli, sert
+1	melting	onemli_anlam_kaybi_riski	20	lost | lost | lost	1;2;3	eritme; ergime; eritme	eriyen, erimekte olan, yumuşak, duygusal, şefkatli, erime
+1	agriculture	onemli_anlam_kaybi_riski	19	lost | lost | lost	1;2;3	haraset; hiraset; felahat	tarım, ziraat, çiftçilik, toprak işleme, tarımsal işletme, çiftlik, Tarım Bakanlığı
+1	angle	onemli_anlam_kaybi_riski	19	lost | lost | lost	1;2;3	bucak; açı yapmak; açı oluşturmak	açı, bakış açısı, perspektif, köşe, taraf, eğmek, açıyla yönelmek, dolaylı yoldan istemek, kurnazca yönlendirmek
+1	bats	onemli_anlam_kaybi_riski	19	kept_kenet | kept_kenet | lost	3	deli; çılgın; kaçık	yarasa, beyzbol sopası, sopa, çıldırmış, kafayı yemiş
+1	productive	onemli_anlam_kaybi_riski	19	lost | lost | lost	1;2;3	mahsullü; semereli; faydalı	üretken, verimli, yararlı, sonuç veren, üretici, üretme yeteneği olan
+1	spectacular	onemli_anlam_kaybi_riski	19	lost | lost | lost	1;2;3	olağanüstü; görülmeye değer; şaşırtıcı	muhteşem, çarpıcı, göz kamaştırıcı, gösterişli, dramatik, büyük gösteri, şölen
+1	virgin	onemli_anlam_kaybi_riski	19	kept_kenet | lost | lost	2;3	kız; saf; bozulmamış	bakire, namuslu kadın, bakir, dokunulmamış, ilk, yeni, Başak, Başak burcu
+1	cabbage	onemli_anlam_kaybi_riski	18	kept_kenet | lost | lost	2;3	kelem; uyuşuk kimse; ruh	lahana, para, nakit, çalmak, aşırmak
+1	cube	onemli_anlam_kaybi_riski	18	lost | lost | lost	1;2;3	(neyise) küp biçiminde kesmek; doğramak; bir sayının küpünü almak	küp, küp, altı yüzlü blok, üçüncü kuvvet, küp biçimli, kübik, küp haline getirmek, üçüncü kuvvetini almak
+1	guidance	onemli_anlam_kaybi_riski	18	lost | lost | lost	1;2;3	yardım; öğüt; akıl	rehberlik, yol gösterme, tavsiye, öneri, yönlendirme, kontrol
+1	obligation	onemli_anlam_kaybi_riski	18	lost | lost | lost	1;2;3	zorunluluk; mecburiyet; ödev	yükümlülük, borç, minnet borcu, taahhüt, sözleşme yükümlülüğü
+1	thread	onemli_anlam_kaybi_riski	18	lost | lost | lost	1;2;3	lif; tel; yiv	iplik, dikiş ipliği, ince çizgi, ip gibi uzun şey, akış, bağlantı, düşünce ipi, vida dişi, ipten geçirmek, iplik geçirmek, dolanarak ilerlemek, kıvrılarak geçmek
+1	verify	onemli_anlam_kaybi_riski	18	lost | lost | lost	1;2;3	onaylamak; kanıtlamak; soruşturmak	doğrulamak, teyit etmek, kontrol etmek, sınamak, yemin altında onaylamak
+1	agony	onemli_anlam_kaybi_riski	17	lost | lost | lost	1;2;3	şiddetli acı; aşırı ıstırap; azîm ızdırap	ıstırap, acı, azap, sıkıntı
+1	assumption	onemli_anlam_kaybi_riski	17	lost | lost | kept_kenet	1;2	üzerine alma; farz; zan	varsayım, kabul, üstlenme, ele geçirme, küstahlık, pervasızlık, Meryem'in göğe alınışı
+1	buddy	onemli_anlam_kaybi_riski	17	lost | kept_kenet | lost	1;3	arkadaş; kafadar; lan	yakın arkadaş, dost, ortak, yoldaş
+1	companion	onemli_anlam_kaybi_riski	17	lost | lost | lost	1;2;3	yardımcı; kılavuz; el kitabı	arkadaş, yoldaş, yol arkadaşı, refakatçi, refakatçi, bakıcı, eşlik etmek, yoldaşlık etmek
+1	intervene	onemli_anlam_kaybi_riski	17	lost | lost | lost	1;2;3	olaylar arasında oluşmak; arada olmak; geçmek	müdahale etmek, araya girmek, araya girmek, yer almak, olmak, gerçekleşmek
+1	stray	onemli_anlam_kaybi_riski	17	lost | lost | lost	1;2;3	yolunu yitirmek; azmak; doğru yoldan sapmak	sahipsiz, başıboş, dağınık, seyrek, sahipsiz hayvan, başıboş hayvan, dolaşmak, başıboş gezmek, sapmak, konudan uzaklaşmak
+1	batter	onemli_anlam_kaybi_riski	16	lost | lost | lost	1;2;3	süt; yağ ve un karışımı hamur; pasta hamuru	vurucu, hücumcu, hamur, kıvam, dövmek, sürekli vurmak, ezmek, tahrip etmek, çizmek, ezip büzmek
+1	carrot	onemli_anlam_kaybi_riski	16	lost | lost | lost	1;2;3	kök; yerkökü; mükafat	havuç, ödül vaadi, cazip teklif
+1	indifferent	onemli_anlam_kaybi_riski	16	lost | lost | lost	1;2;3	aldırışsız; şöyle böyle; orta	ilgisiz, kayıtsız, duyarsız, umursamaz, önemsiz, fark etmez, orta halli, vasat, tepkisiz, kimyasal olarak etkisiz
+1	publish	onemli_anlam_kaybi_riski	16	lost | lost | lost	1;2;3	herkese yaymak; açık etmek; açığa vurmak	yayımlamak, basmak, yayınlamak, duyurmak, yayımlatmak
+1	stormy	onemli_anlam_kaybi_riski	16	lost | kept_kenet | lost	1;3	şiddetli; gürültülü; sinirli	fırtınalı, sert, çalkantılı, öfkeli
+1	tricky	onemli_anlam_kaybi_riski	16	lost | lost | lost	1;2;3	ustalık ve dikkat isteyen; nazik; ince	zor, çetrefilli, kurnaz, hileli
+1	volcanic	onemli_anlam_kaybi_riski	16	lost | lost | lost	1;2;3	yanardağla ilgili; taşkın; coşkun	volkanik, patlamaya hazır, çok öfkeli
+1	abortion	onemli_anlam_kaybi_riski	15	lost | lost | lost	1;2;3	çocuk düşürme; uşak salma; ölü çocuk doğurma	kürtaj, gebelik sonlandırma, başarısızlık, akim kalma
+1	adequate	onemli_anlam_kaybi_riski	15	lost | lost | kept_kenet	1;2	elverir; yetişir; kâfi	yeterli, yeter, gerekli niteliklere sahip, yetkin, idare eder, orta düzeyde
+1	booth	onemli_anlam_kaybi_riski	15	lost | lost | lost	1;2;3	satış pavyonu; baraka; çardak	lokanta gözü, loca, kabin, kulübe, tezgâh, standart, John Wilkes Booth
+1	bravery	onemli_anlam_kaybi_riski	15	lost | lost | lost	1;2;3	koçaklık; mertlik; kahramanlık	cesaret, yiğitlik, korkusuzluk, gözüpek
+1	spade	onemli_anlam_kaybi_riski	15	lost | lost | kept_kenet	1;2	bahçıvan beli; (iskambil) maça; bellemek	kürek, maça, kürekle kazmak
+1	vast	onemli_anlam_kaybi_riski	15	lost | lost | lost	1;2;3	çok geniş; çok; pek çok	geniş, engin, çok büyük, muazzam
+1	yield	onemli_anlam_kaybi_riski	15	lost | lost | lost	1;2;3	ürün/meyve vermek; (kâr) getirmek; çökmek	verim, ürün, getiri, kazanç, vermek, doğurmak, teslim olmak, boyun eğmek, yol vermek
+1	zombie	onemli_anlam_kaybi_riski	15	lost | lost | lost	1;2;3	uyuşuk kimse; ölü gibi kimse; ruh	zombi, robot gibi, bitkin kişi, meyveli rom içkisi
+1	charger	onemli_anlam_kaybi_riski	14	lost | lost | lost	1;2;3	şarj redresörü; doldurma cihazı; şarjör	şarj aleti, savaş atı
+1	drastic	onemli_anlam_kaybi_riski	14	lost | lost | lost	1;2;3	güçlü; şiddetli; etkili	köklü, sert, çarpıcı
+1	drown	onemli_anlam_kaybi_riski	14	kept_kenet | lost | lost	2;3	(suda) boğulmak; suyun altında bırakmak; (sesi) bastırmak	boğulmak, suda ölmek, boğmak, suda öldürmek, bastırmak, örtmek, su basmak, sular altında kalmak
+1	epidemic	onemli_anlam_kaybi_riski	14	lost | lost | lost	1;2;3	(hastalık) salgın; bulaşıcı; yolukucu	salgın, yaygın artış, dalga, salgın halinde yayılan
+1	handicapped	onemli_anlam_kaybi_riski	14	lost | lost | lost	1;2;3	handikaplı; topal; aksak	engelli, sakat, dezavantajlı, eksik, engelliler
+1	nerd	onemli_anlam_kaybi_riski	14	lost | lost | lost	1;2;3	ebleh; sarsak; ahmak	inek, çalışkan çocuk, meraklı uzman, teknoloji tutkunu
+1	pension	onemli_anlam_kaybi_riski	14	kept_kenet | lost | kept_kenet	2	tekaüt; pansiyon; tekaüde vermek	emekli maaşı, aylık, emeklilik fonu, tasarruf, emekli maaşı bağlamak
+1	subtle	onemli_anlam_kaybi_riski	14	lost | lost | lost	1;2;3	güç farkedilen; kurnaz; zeki	ince, hafif, incelikli, zarif, sinsi, gizli
+1	workshop	onemli_anlam_kaybi_riski	14	kept_kenet | lost | lost	2;3	atelye; kârhane; işyeri	atölye, işlik, atölye çalışması, seminer
+1	asshole	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	büzük; anüs; aşağılık herif	aptal herif, gerizekalı, göt deliği
+1	automatic	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	özdevinimli; kendiliğinden; olması kesin	otomatik, refleks gibi, bilinçsiz, otomatik silah, tabanca, otomatik vites
+1	core	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	(meyve) göbek; koçan; özek	çekirdek, öz, temel, özü, küçük grup, çekirdek kadro, Dünya'nın çekirdeği, karot numunesi, çekirdeğini çıkarmak
+1	feature	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	yüzün herhangi bir tarafı; neyinse göze çarpan tarafı; belirleyici nitelik	özellik, nitelik, yüz hatları, çehre, ana film, uzun metraj film, özel yazı, dosya haber, dilbilgisel özellik, öne çıkarmak, yer vermek
+1	grudge	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	esirgemek; çok görmek; vermek istememek	kin, içerleme, kıskanmak, çekememek, isteksizce kabul etmek, kin tutmak
+1	impulse	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	itme; itiş; itici güç	dürtü, içgüdü, ani istek, ani arzu, sinir uyarısı, darbe, ani itme, ani elektrik dalgası
+1	institution	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	dernek; yerleşmiş gelenek; yerleşmiş yasa	kurum, kuruluş, bina, tesis, gelenek, töre, kuruluş, başlatma, akıl hastanesi, bakımevi
+1	knob	onemli_anlam_kaybi_riski	13	lost | lost | kept_kenet	1;2	top; yumru; tokmak	düğme, topuz, düğme, tuş, tümsek, çıkıntı, kabartı, top süs
+1	lane	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	dar sokak; dar geçit; yol	dar yol, sokak, şerit, yol şeridi, kulvar, parkur
+1	scam	onemli_anlam_kaybi_riski	13	lost | lost | lost	1;2;3	dolap; sahtekârlık; kelek	dolandırıcılık, düzen, dolandırmak, kandırmak
+1	devote	onemli_anlam_kaybi_riski	12	lost | lost | lost	1;2;3	-e adamak; nezretmek; vermek	adamak, ayırmak, ayırmak, tahsis etmek
+1	rod	onemli_anlam_kaybi_riski	12	lost | lost | lost	1;2;3	baston; sırık; kamış	çubuk, sopa, değnek, olta kamışı, çubuk hücre, çubuk, tabanca, silah
+1	glory	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	ün; ad san; aşk	şan, şeref, onur, ihtişam, görkem, hale, nur çemberi, övünmek, sevinmek
+1	manipulate	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	beceriyle kullanmak; ustalıkla yönetmek; kendi amacı doğrultusunda yönlendirmek	manipüle etmek, yönlendirmek, kullanmak, elle idare etmek, oynamak, değiştirmek, masaj yapmak, ovmak
+1	oral	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	sözel; ağızdan; ağızla ilgili	sözlü, şifahi, ağıza ait, oral, sözlü sınav
+1	overlook	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	-e nazır olmak; bakmak; görememek	gözden kaçırmak, fark etmemek, göz yummak, hoş görmek, manzarasına bakmak, küçümsemek, hor görmek, manzaralı yer, seyir noktası
+1	pit	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	maden ocağı; kârhane; (araba yarışında) hızlı tamirat yeri	çukur, kuyu, oyuk, girinti, çekirdek, cehennem, uçurum, dövüş çukuru, arena, borsa salonu, işlem alanı, karşı karşıya getirmek, yarıştırmak
+1	possess	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	-si olmak; etkilemek; etkisi altına almak	sahip olmak, mülkiyetinde bulundurmak, ele geçirmek, kontrol altına almak
+1	privilege	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	özel hak; nasip; şeref	ayrıcalık, imtiyaz, hak, yetki, gizlilik hakkı, ayrıcalık tanımak
+1	sermon	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	dinsel konuşma; vaız; uzun ve sıkıcı öğüt	vaaz, hutbe, nasihat, öğüt
+1	slam	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	kapıyı çarparak kapama; kapının çarpma sesi; (briçte) şlem	çarpmak, sertçe kapatmak, fırlatmak, çarpmak, sert eleştirmek, yermek, çarpma, gümbürtü, sert eleştiri, saldırı, slam, tam el
+1	spiritual	onemli_anlam_kaybi_riski	11	lost | lost | lost	1;2;3	ruhi; dinsel; mukaddes	dinî, kutsal, ruhsal, manevi, maddi olmayan, ruhani, ruhani şarkı, spiritüel
+1	axe	onemli_anlam_kaybi_riski	10	lost | lost | lost	1;2;3	kaldırmak; azaltmak; kısmak	balta, baltalamak, kesmek, kesmek, iptal etmek
+1	bulk	onemli_anlam_kaybi_riski	10	lost | lost | lost	1;2;3	oylum; hantal gövde; en önemli kısım	çoğunluk, büyük kısım, hacim, büyüklük, toptan miktar, çıkıntı yapmak, şişkin görünmek, şişirmek, genişletmek
+1	convertible	onemli_anlam_kaybi_riski	10	lost | lost | lost	1;2;3	(para) konvertibıl; başka bir şeye dönüştürülebilen; üstü açılır araba	değiştirilebilir, dönüştürülebilir, değiştirilebilir, takas edilebilir, açılır tepeli otomobil, kabriyole, çevrilebilir tahvil
+1	perfectionist	onemli_anlam_kaybi_riski	10	lost | lost | lost	1;2;3	herşeyin mükemmel olmasını isteyen; kılı kırk yaran; aşırı titiz kimse	mükemmeliyetçi
+1	touchy	onemli_anlam_kaybi_riski	10	lost | lost | lost	1;2;3	fazla duyarlı; çıtkırıldım; küseğen	alıngan, kolay gücenen, nazik, hassas
+1	vent	onemli_anlam_kaybi_riski	10	lost | lost | lost	1;2;3	(sinirini/vb.) -den çıkarmak; delik; menfez	havalandırma deliği, baca, yarık, volkan bacası, yırtmaç, dışa vurmak, boşaltmak, havalandırmak, boşaltmak
+1	ace	onemli_anlam_kaybi_riski	9	kept_kenet | lost | kept_kenet	2	birli; (sınıf/pozisyon/beceri/vb.açısından) as; yıldız	as, usta, üstat, bir, tek, birinci sınıf, harika, servis ası
+1	limb	onemli_anlam_kaybi_riski	9	kept_kenet | lost | lost	2;3	kol; bacak; kanat gibi gövdeye bağlı kılgan	uzuv, organ, dal, yay kolu
+1	scotch	onemli_anlam_kaybi_riski	9	lost | lost | lost	1;2;3	Skoç viski; sonlandırmak; bitirmek	viski, bastırmak, önlemek, çizmek, çentik atmak, çentik, yüzeysel kesik, İskoç
+1	abreast	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	cerge ile; yanaşı; bir cergede	yan yana, haberdar, güncel
+1	allergy	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	hoşlanmama; sevmeme; nefret	alerji, hassasiyet, tepki
+1	dose	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	düze; miktar; belli bir dozda ilaç vermek	doz, ilaç miktarı, doz, maruz kalınan miktar, zührevi hastalık, LSD, ilaç vermek, tedavi etmek, katmak, karıştırmak
+1	hairy	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	heyecanlandırıcı; korkutucu; müthiş	tüylü, kıllı, tehlikeli, ürkütücü
+1	horizontal	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	yatık; ufkî; düz	yatay, ufka paralel, yatay, düzeyler arası, yatay çizgi, yatay konum
+1	indulge	onemli_anlam_kaybi_riski	8	lost | kept_kenet | lost	1;3	isteklerini yerine getirmek; yüz vermek; (yemek/içmek/vb.'de) aşırıya kaçmak	kendine izin vermek, keyfini çıkarmak, şımartmak, nazını çekmek, boyun eğmek, uymak
+1	kitty	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	yavru kedi; kedi; pişik	ortak para, kumbara, bahis havuzu, pot, kedicik, kedi yavrusu
+1	lever	onemli_anlam_kaybi_riski	8	kept_kenet | kept_kenet | lost	3	manivela; manivela kolu; birini emek harcamaya zorlayan şey	kaldıraç, kol, tutamak, etki aracı, baskı unsuru, kaldıraçla oynatmak, zorla açmak
+1	merciful	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	sevecen; bağışlayıcı; şefkatli	merhametli, acıyan, şükredilecek, rahatlatıcı
+1	quantum	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	kuvantum; kemiyet; yeterli miktar	kuantum, belirli miktar, kuantum, en küçük enerji birimi, kuantum ile ilgili
+1	slump	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	birdenbire düşmek; küt diye düşmek; yığılmak	düşüş, gerileme, ekonomik durgunluk, buhran, düşmek, çökmek, çökmek, kamburlaşmak
+1	sounding	onemli_anlam_kaybi_riski	8	kept_kenet | lost | lost	2;3	iskandil; çınlayan; tınlayan	görünüşte, izlenim veren, yankılı, güçlü sesli, derinlik ölçümü
+1	swamp	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	suyla doldurmak; taşırmak; (iş/vb.) yüklemek	bataklık, sazlık, çıkmaz, sıkıntılı durum, sular altında bırakmak, batırmak, bunaltmak, boğmak
+1	unfounded	onemli_anlam_kaybi_riski	8	lost | lost | lost	1;2;3	esassız; yersiz; gereksiz	asılsız, temelsiz
+1	functional	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	görevini yapar; iş görür; pratik	işlevsel, fonksiyonel, kullanıma hazır, çalışır durumda, işlevle ilgili
+1	liberation	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	serbest kalma; azat etme; kurtarma	kurtuluş, özgürleşme, özgürlük mücadelesi, hak arayışı, işten çıkarma
+1	manufacturer	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	imâlatçı; fabrikatör; yapımcı	üretici firma, imalatçı, üretici, imal eden kişi
+1	protagonist	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	(roman/oyun/vb.) kahraman; elebaşı; öncü	başkahraman, baş karakter, savunucu, destekçi
+1	receiver	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	alan; kabul eden kimse; (ünalgı/vb.) alıcı	alıcı, alıcı cihaz, ahize, telefon ahizesi, alan kişi, alıcı, kayyum, tasfiye memuru, karşılayıcı, top tutan oyuncu
+1	resilient	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	sağlığını; gücünü çabuk toplayan; çabuk iyileşen	dayanıklı, toparlanabilen, esnek, elastik
+1	sluggish	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	tembel; mıymıntı; asta	ağır, yavaş, durgun, hareketsiz, halsiz, isteksiz
+1	steer	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	hadım öküz; dümen kullanmak; dümenle yönetmek	yön vermek, idare etmek, yönlendirmek, yönetmek, yönelmek, gitmek, etki etmek, yol göstermek, ipucu, tavsiye, öküz
+1	verbal	onemli_anlam_kaybi_riski	7	lost | kept_kenet | lost	1;3	ağızdan; sözel; kelimesi kelimesine	sözlü, sözcüklerle ilgili, fiille ilgili, fiilsel
+1	vintage	onemli_anlam_kaybi_riski	7	lost | lost | lost	1;2;3	(otomobil) 1919-1930 yılları arasında üretilmiş; başarılı bir dönemde yapılmış; bağbozumu	hasat, üretim yılı, eski ve kaliteli, klasik, en iyi dönemine ait, antika, eski dönem ürünü
+1	aardvark	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	karınca yiyen; yerdomuzu; borudişli	toprakdomuzu
+1	accordance	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	uzlaşma; anlaşma; razılık	uyarınca, göre, uygunluk, uyum
+1	archaic	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	geçmişe ait; eski; köhne	çok eski, eski çağa ait, eskimiş, güncelliğini yitirmiş
+1	bisexual	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	çift cinsiyetli; ikieşeyli; erdişi	biseksüel, iki cinsiyete de yönelik, biseksüel kişi
+1	cardinal	onemli_anlam_kaybi_riski	6	lost | lost | kept_kenet	1;2	en önemli; baş; ana	temel, başlıca, sayı bildiren, kardinal, kardinal sayı, kırmızı, koyu kırmızı, kardinal kuşu
+1	cot	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	beşik; baraka; kulübe	bebek beşiği, katlanır yatak, parmak kılıfı
+1	dashboard	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	(oto) gösterge kestesi; kumanda kestesi; alet kestesi	gösterge paneli, çamurluk siperliği
+1	herd	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	hayvan sürüsü; sığırtmaç çoban; (insanlar için) koyun sürüsü	sürü, sürü, kalabalık, güruh, toplamak, sürmek, sürü halinde hareket etmek
+1	imperative	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	gerekli; şart; emir	zorunlu, acil, emir kipinde, emir kipi, zorunluluk, görev
+1	latch	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	kapı mandalı; kapı kilidi; kilitlemek	mandal, sürgü, yaylı kilit, otomatik kilit, mandallamak, sürgülemek
+1	lumber	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	tahta şalban; lüzumsuz eşya; sınık-sarkık mobilya	kereste, tomruk, eşya yığını, ağır ağır ilerlemek, sendelemek, ağaç kesmek, kereste yapmak
+1	marvellous	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	müthiş; fevkalade; süper	harika, muhteşem, olağanüstü, mucizevi
+1	mastermind	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	çok zeki kimse; akıllıca planlamak; tezgâhlamak	beyin, mimar, dahi, üstün zekâlı, planlamak, yönetmek
+1	pod	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	bezelye; fasulye; /vb.kabuğu	kılıf, bakla, sürü, grup, kapsül, yuva, kılıftan çıkarmak
+1	saddle	onemli_anlam_kaybi_riski	6	kept_kenet | lost | lost	2;3	semer; oturak; (koyun/vb.) sırtın alt ucundan kesilmiş et	eyer, bisiklet sele, sele, sırt, dağ eyeri, bel eti, eyerlemek, eyer vurmak, yük yüklemek, sorumluluk vermek
+1	scan	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	inceden inceye gözden geçirmek; iyice incelemek; süzmek	taramak, incelemek, hızlıca göz atmak, taratmak, dijital kopyasını almak, ölçü kalıbına uymak, tarama, muayene, tarama görüntüsü, tomografi
+1	simultaneously	onemli_anlam_kaybi_riski	6	lost | lost | lost	1;2;3	aynı zamanda; birlikte; hep beraber	aynı anda, eş zamanlı
+1	alas	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	ay; vay; vah	eyvah, ne yazık ki, maalesef, talihsizlikle
+1	arch	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	yay; eğmeç; en yüksek düzeyde	kemer, kemer, ayak tabanı kavsi, geçit kemeri, küçümseyici, kibirli, haylaz, şakacı, kurnaz, düzenbaz
+1	birch	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	vurmak; dövmek; kamçılamak	huş ağacı, huş, huş ağacı odunu, değnek, sopa, huş dalıyla dövmek, huş ağacından yapılmış
+1	chastity	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	erdemlik; bekaret; namusluluk	iffet, bekâret, ahlaklılık, iffet
+1	disgruntled	onemli_anlam_kaybi_riski	5	lost | kept_kenet | lost	1;3	üzgün; canı sıkılmış; düş kırıklığına uğramış	hoşnutsuz, memnuniyetsiz
+1	distinctive	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	diğerlerinden ayrı; ayıran; özel	ayırt edici, belirgin, farklı, özgün, sınıflandırılabilir, ayırt edilebilir
+1	fret	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	(sürekli olarak) üzülmek; sıkılmak; kaygılanmak	endişelenmek, üzülmek, huzursuzlanmak, sinirlenmek, aşındırmak, yontmak, endişe, huzursuzluk, aşınma izi, yıpranma, geometrik süsleme, kıvrımlı desen, perde, tel çıtası
+1	imbecile	onemli_anlam_kaybi_riski	5	kept_kenet | lost | lost	2;3	geri zekâlı; sefih; sarsak	aptal, ahmak, zihni geri, aptal
+1	peg	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	kanca; askı; asılgan	çivi, kazık, tutturucu, puan işaretçisi, işaret, bacak, protez bacak, tahta bacak, akort mandalı, kürek yuvası, kürek dayanağı, sabitlemek, tutturmak, sabitlemek, belirli seviyede tutmak
+1	purr	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	(pişik) mırlamak; (motor) hırıldamak; tatlı bir sesle söylemek	mırıltı, hafif hırıltı, mırlamak, vızıldamak, uğuldamak
+1	weasel	onemli_anlam_kaybi_riski	5	lost | lost | lost	1;2;3	kelek gelmek; azdırmak; hile etmek	gelincik, sinsi kimse, dönek, sıvışmak, kaçamak yapmak
+1	abominable	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	tiksindirici; felaket; rezil	iğrenç, nefret verici, berbat, içler acısı
+1	accelerate	onemli_anlam_kaybi_riski	4	kept_kenet | kept_kenet | kept_kenet		tesri etmek; süratlendirmek; tacil etmek	hızlanmak, hızlandırmak, çabuklaştırmak
+1	aloof	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	ilgisiz; uzak; uzakta	mesafeli, soğuk, mesafeli biçimde, uzak durarak
+1	comrade	onemli_anlam_kaybi_riski	4	kept_kenet | lost | lost	2;3	arkadaş; yazgı arkadaşı; (komünist ülkelerde) yoldaş	yoldaş, dost, yoldaş, parti üyesi
+1	connoisseur	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	yakşı bilen; bilici; başbilen	uzman, bilgin, zevk sahibi, takdir edici
+1	crank	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	dirsek; kanırtmaç; saplantılı kimse	huysuz kimse, aksi insan, tuhaf kimse, garip fikirli kişi, manivela, kol, manivelayla çalıştırmak, çevirmek, zikzak çizerek ilerlemek, yalpalayan, devrilmeye meyilli
+1	feeble	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	(şaka/düşünce/vb.) iyi düşünülmemiş; soğuk; aptal	zayıf, güçsüz, zayıf, etkisiz, cılız, sönük
+1	firstly	onemli_anlam_kaybi_riski	4	kept_kenet | lost | lost	2;3	ilk önce; birincil olarak; herşeyden önce	öncelikle, ilk olarak
+1	gospel	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	hakikat; gerçek; ilke	İncil, İncil metni, mutlak doğru, kesin gerçek, gospel müziği, ilahi, öğreti, inanç ilkesi
+1	humiliation	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	kibrini kırma; rezil etme; utandırma	aşağılanma, küçük düşme, utanç, mahcubiyet
+1	insurmountable	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	çok büyük; çok güç; yenilemez	aşılmaz, üstesinden gelinmez
+1	loop	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	ilmik; ilmik yapmak; bağlamak	halka, ilmek, döngü, çember, döngü, iç çevre, yakın danışmanlar, parmak izi kıvrımı, halka yapmak, döndürmek
+1	lust	onemli_anlam_kaybi_riski	4	kept_kenet | lost | lost	2;3	kösnü; sahip olmaya çalışmak; arzulamak	şehvet, cinsel arzu, açgözlülük, tutku, özlemek, hırslanmak
+1	malfunction	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	kötü çalışmak; teklemek; bozukluk	arıza, bozulma, arızalanmak, bozulmak
+1	playful	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	şen; şakacı; şuluk	neşeli, oyuncu, şaka yollu, muzip
+1	pulp	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	meyve eti; hamurlaşmak; hamurlaştırmak	posa, lapa, kağıt hamuru, ucuz dergi, magazin, diş özü, diş minesi altı, posasını çıkarmak, ezmek
+1	relevance	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	ayırıcı olma özelliği; ayırıcılık; belirginlik	ilgi, uygunluk, önem, güncellik
+1	resentment	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	kızma; gücenme; küskünlük	kırgınlık, içerleme
+1	starter	onemli_anlam_kaybi_riski	4	kept_kenet | lost | lost	2;3	marş; yoğurt mayası; yarışa katılan kişi/at	marş motoru, ilk oyuncu, ilk on bir oyuncusu, start veren görevli, hakem, yeni başlayan, acemi, başlangıç, meze, matkap, el tornavidası
+1	trifle	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	ıvır zıvır; değersiz şey; meyveli tatlı	önemsiz şey, ufak tefek, az miktar, biraz, trifl (tatlı), oyalanmak, zaman harcamak, ciddiye almamak, oynamak
+1	twat	onemli_anlam_kaybi_riski	4	lost | lost | lost	1;2;3	yarak; sik; dalyarak	aptal, beceriksiz herif, kaba küfür, kadın cinsel organı
+1	blowtorch	onemli_anlam_kaybi_riski	3	kept_kenet | lost | lost	2;3	pürmüs lambası; lehim lambası; pompa	üfleç, kaynak lambası
+1	bowline	onemli_anlam_kaybi_riski	3	kept_kenet | kept_kenet | lost	3	borina halatı; borina izbarço; barço bağı	bulina düğümü
+1	breakthrough	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	(düşmana yapılan) ani saldırı; hücum; ani atak	önemli buluş, atılım, ilerleme, sıçrama, yarma, delip geçme
+1	carcass	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	yemek için kesilmiş hayvanın ölüsü; hayvan ölüsü; hkr	leş, ölü hayvan gövdesi, karkas, kesilmiş hayvan gövdesi
+1	complacency	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	öz özüne yetme; halinden memnun olma; gönül rahatlığı	kendini beğenmişlik, rehavet
+1	compliance	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	itaat; razı olma; rıza	uyum, uygunluk, boyun eğme, uysallık, teslim olma, boyun eğme
+1	crescent	onemli_anlam_kaybi_riski	3	lost | kept_kenet | lost	1;3	hilâl; ayça; yeniay	hilal, hilal şeklinde şey, yarım daire, hilal, yarım daire sokak, hilal biçimli, kavisli
+1	crutch	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	kasık; pantolon ağı; apışlık	koltuk değneği, destek, dayanak
+1	derogatory	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	küçültücü; onur kırıcı; hakaret edici	küçümseyici, aşağılayıcı
+1	dietary	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	perhizle ilgili; perhiz yemeği; perhiz kuralları	beslenmeyle ilgili, diyet, besin, gıda ile ilgili
+1	dipper	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	kova; parç; maşrapa	kepçe, sap uzun kepçe, Büyükayı, Büyükayı takımyıldızı, dalgıç ördek, ibibik, suda dalan küçük kuş
+1	dumping	onemli_anlam_kaybi_riski	3	kept_kenet | lost | lost	2;3	ucuzluk; fiyat indirme; tenzilat	damping, dökme, atma, damping, ucuza satış
+1	fluff	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	toz topağı; yumuşak tüy; kuş tüyü	tiftik, tüy, önemsiz şey, boş laf, unutma, sahne hatası, berbat etmek, mahvetmek, kabartmak, kabarttırmak, taramak, kabartarak düzeltmek
+1	hector	onemli_anlam_kaybi_riski	3	kept_kenet | lost | lost	2;3	kabadayı; yıldırmak; sindirmek	gözdağı vermek, azarlamak, baskı yapmak, zorbalık etmek, Hektor
+1	lurch	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	yalpa; yalpalama; yalpalamak	sendelemek, sallanmak, ani hareket etmek, fırlamak, sendeleme, sarsıntı, yenilgi, ağır mağlubiyet, çaresiz bırakmak
+1	moor	onemli_anlam_kaybi_riski	3	lost | kept_kenet | lost	1;3	çalılık arazi; fundalık; arazi	bataklık çayır, orman, demirlemek, bağlamak, bağlamak, sabitlemek
+1	nepotism	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	yakınlarını kayırma; hısım akraba kayırıcılığı; dayıcılık	akrabakayırmacılık, torpil
+1	novelty	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	yeni çıkmış şey; alışılmamış şey; ıvır zıvır	yenilik, özgünlük, yenilik, ilginçlik, ucuz hediyelik eşya, süs eşyası, gösterişli bijuteri
+1	originality	onemli_anlam_kaybi_riski	3	kept_kenet | lost | lost	2;3	orijinallik; asıllık; özüne mahsusluk	özgünlük, yaratıcılık, bağımsız düşünce, özgürlük
+1	paddle	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	kısa kürek; (masa tenisi) raket; kısa kürekle yürütmek	kürek, pala, raket, tahta vurma aleti, çark kanadı, kürek, tahta kürek ceza aracı, kürek çekmek, suda oynamak, çapalamak
+1	patronize	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	sürekli müşteri olmak; tenezzülen iltifat etmek; lütuf göstermek	himaye etmek, desteklemek, düzenli alışveriş yapmak, müşterisi olmak, küçümsemek, tepeden bakmak
+1	peek	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	röntgenlemek; dikizleme; röntgen	gizlice bakış, göz atma, gizlice bakmak, göz atmak
+1	renowned	onemli_anlam_kaybi_riski	3	kept_kenet | kept_kenet | kept_kenet		şanlı; şöhretli; namlı	ünlü, meşhur
+1	shady	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	gizli saklı; namussuz; üçkâğıtçı	şüpheli, dürüst olmayan, gölgeli, serin, ahlaka aykırı, kuşkulu
+1	shaver	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	ülgüç; berber; tellak	tıraş makinesi, tıraş olan kimse, küçük çocuk, delikanlı
+1	stilted	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	çok resmi; azametli; tumturaklı	yapmacık, suni
+1	telltale	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	gammaz; (duygu/düşünce/suç/vb.) belli eden; açığa vuran	ele veren, belli eden, ispiyoncu, dedikoducu
+1	torso	onemli_anlam_kaybi_riski	3	lost | lost | lost	1;2;3	kolsuz; bacaksız; ve başsız insan vücudu	gövde, bedenin orta kısmı
+1	alloy	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	altına/gümüşe katılan bakır; katışık; metal alaşımı	alaşım, karışım, saf olmayan şey, alaşım yapmak, karıştırmak, değerini düşürmek, bozmak
+1	amphibian	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	hem suda hem karada yaşayabilen hayvan; ikiyaşayışlı; hem karada hem suda gidebilen araç	kurbağagiller, çift yaşamlı hayvan, amfibi araç, amfibi uçak, amfibi, çift yaşamlı
+1	appropriation	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	tahsisat; ayırma; tahsis etme	ödenek, bütçe tahsisi, el koyma, zimmetine geçirme, birleştirme, kaynaştırma
+1	aspire	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	çabalarını ve ümitlerini bir amaca yöneltmek; çok istemek; arzu etmek	özlemek, hedeflemek, göz dikmek, can atmak
+1	authorization	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	ruhsat; onama; uygun görme	izin, onay, yetki, yetkilendirme, resmî belge, yetki belgesi
+1	backbone	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	belsümüğü; esas; özül	omurga, cesaret, azim, kararlılık, temel, dayanak, sırt, kitap sırtı, omurga ağı, ana bağlantı hattı
+1	berry	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	(çilek/kiraz/vb.) küçük/yumuşak meyve; gile meyve; gile meyve yığmak	yemişi, meyve, yemiş toplamak
+1	bile	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	huysuzluk; sinirlilik; aksilik	safra, öfke, kin
+1	chivalry	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	yiğitlik; yüreklilik; kahramanlık	şövalyelik, şövalye ahlakı, kadınlara karşı nezaket, centilmenlik
+1	competence	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	yetenek; beceri; ustalık	yetkinlik, yeterlilik, yetki, ehliyet
+1	complimentary	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	övgü niteliğinde; hayranlık belirtici; övücü	övgü dolu, iltifat niteliğinde, bedava, ücretsiz
+1	corral	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	çevresi çitle sarılı büyükbaş koyun ağılı; kora; kotan	ağıl, hayvan kapalı alanı, ağıla koymak, kapatmak, toplamak, bir araya getirmek
+1	cram	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	sıkıştırmak; tıka basa doldurmak; ağzına kadar doldurmak	tıkıştırmak, doldurmak, ezberlemek, çalışmak, tıkınmak, doymak
+1	crest	onemli_anlam_kaybi_riski	2	lost | lost | kept_kenet	1;2	taç; tepe; doruk	zirve, tepe sırtı, amblem, arma, tepelik, kuş tüyü tacı, zirveye ulaşmak, tepesine çıkmak
+1	cunt	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	amcık herif; itoğlu it; puşt	orospu çocuğu, şerefsiz
+1	denigrate	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	leke sürmek; yermek; kötülemek	küçümsemek, değersizleştirmek, karalamak, itibarsızlaştırmak
+1	enunciate	onemli_anlam_kaybi_riski	2	kept_kenet | lost | lost	2;3	telaffuz etmek; düşünceleri açıkça belirtmek; kesinlikle ifade etmek	net telaffuz etmek, söylemek, açıkça ifade etmek, dile getirmek
+1	facade	onemli_anlam_kaybi_riski	2	lost | lost | kept_kenet	1;2	binanın ön yüzü; bina cephesi; alnaç	cephe, ön yüz, maske, görünüş
+1	flyer	onemli_anlam_kaybi_riski	2	kept_kenet | lost | lost	2;3	havacı; flayer; fitil makinesi	broşür, el ilanı, yolcu, uçan kişi, pilot, uçakçı
+1	greatness	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	çokluk; şöhret; cesamet	büyüklük, ululuk, büyüklük, boyut, genişlik
+1	hum	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	(şarkı) mırıldanmak; canlanmak; hızlanmak	vızıltı, uğultu, hareketlilik, faaliyet, Hizbülmücahidin, mırıldanmak, dudaklarını kapatıp söylemek, vızıldamak, uğuldamak, hareketli olmak, kaynamak
+1	immaculate	onemli_anlam_kaybi_riski	2	kept_kenet | lost | kept_kenet	2	tertemiz; sağlam; yepyeni	kusursuz derecede temiz, pırıl pırıl, lekesiz, saf, kusursuz, hatasız
+1	inertia	onemli_anlam_kaybi_riski	2	kept_kenet | lost | lost	2;3	süredurum; tembellik; uyuşukluk	atalet, eylemsizlik, durgunluk, hareketsizlik
+1	infertility	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	verimsizlik; çoraklık; bereketsizlik	kısırlık, doğurganlığın olmaması
+1	leverage	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	manivela hareketi/kuvveti; sonuç almak için kullanılan güç; dürtü	kaldıraç kuvveti, nüfuz, etki gücü, kaldıraç, borçla yatırım, kaldıraç olarak kullanmak, yararlanmak, borçla finanse etmek
+1	occult	onemli_anlam_kaybi_riski	2	lost | kept_kenet | kept_kenet	1	büyülü; gizemli; esrarengiz	gizli, sırlı, doğaüstü, büyüsel, anlaşılmaz, kavranması güç, büyücülük, doğaüstü güçler, gizlemek, örtmek
+1	pip	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	oyun kâğıtlarındaki işaretlerin her biri; rütbe belirten yıldız; meyve çekirdeği	çekirdek, tohum, zar gözü, iskambil işareti, radar noktası, kümes hayvanı hastalığı, vurmak, öldürmek
+1	prowess	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	(hayvan) av peşinde koşmak; av aramak; sinsi sinsi dolaşmak	üstün beceri, ustalık, yiğitlik, cesaret
+1	retain	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	yitirmemek; sahip olmak; pulla (avukat) tutmak	korumak, elinde tutmak, akılda tutmak, hatırlamak, tutmak, alıkoymak, tutmak, ayırmak
+1	rhetoric	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	konuşma sanatı; uzsözlülük; cafcaflı konuşma/yazı	retorik, söz sanatı, süslü dil, gösterişli söz, boş laf, palavra, retorik bilimi
+1	sandbar	onemli_anlam_kaybi_riski	2	kept_kenet | lost | kept_kenet	2	kıyı dili; kıyı kordonu; sahil kordonu	kum sahili, kumluk
+1	selfless	onemli_anlam_kaybi_riski	2	lost | lost | kept_kenet	1;2	özünü ya da çıkarını düşünmeyen; başkalarını düşünen; özgeci	fedakâr, özverili
+1	sever	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	kesilmek; parçalamak; parçalanmak	koparmak, kesmek, kesmek, sona erdirmek, ayırmak
+1	shoo	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	hoşt; pist; kış	kovmak, uzaklaştırmak, hışt, git başka yere
+1	shrew	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	kır faresi; şirret kadın; cırlak kadın	huysuz kadın, cadaloz, sivri fare
+1	spatula	onemli_anlam_kaybi_riski	2	kept_kenet | lost | lost	2;3	spatül; boya bıçağı; dilbasan	spatula, mala, spatula, ince bıçak
+1	sprout	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	çıkarmak; tomurcuk; brüksellahanası	filiz, sürgün, filiz, tohum sürgünü, filizlenmek, sürmek, ortaya çıkmak, türemek
+1	toil	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	yorulmadan çalışmak; çok çalışmak; zar zor ilerlemek	zahmetli iş, çile, çalışmak, didinmek, ilerlemek güçlükle
+1	venerable	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	kıymetli; mukaddes; mübarek	saygın, muhterem, eski, köklü
+1	vernacular	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	anadilini kullanan; anadil; yerli dil	yerel, günlük dile ait, yerel dil, halk dili, argo, gruba özgü dil
+1	wank	onemli_anlam_kaybi_riski	2	lost | lost | lost	1;2;3	kab; otuzbir çekme; tek atma	el işi, mastürbasyon, mastürbasyon yapmak
+1	abash	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	bozmak; kırmak; karıktırmak	utandırmak, mahcup etmek
+1	abductor	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	adam kaçıran; oğurlayan; oğru	kaçıran, kaçırıcı, açıcı kas
+1	aberration	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	doğru yoldan ayrılma; düz yoldan uzaklaşma; azma	sapma, anormallik, zihinsel bozukluk, sapkınlık, optik sapma
+1	abscond	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gizlenmek; gizlice kaçıp gitmek; aradan çıkmak	kaçmak, firar etmek
+1	absolve	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	temize çıkarmak; beraat vermek; (suçunu/günahını) bağışlamak	günahını bağışlamak, affetmek, aklamak, sorumluluktan kurtarmak
+1	absorbing	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çok meraklı; çok ilginç; cezbeden	ilgi çekici, sürükleyici
+1	absorption	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	emme; içine çekme; yutma	emilim, soğurma, soğurma, besin emilimi, sindirim, bütünleşme, kaynaşma, dalma, yoğunlaşma, dalgınlık, meşguliyet
+1	abstemious	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çok yemek ve içmekten sakınan; nefsini saklayan; özünü saklayan	ölçülü, perhizkâr, ılımlı, ölçülü
+1	abstinent	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	nefsini saklayan; temkinli; toktak	perhizkâr, ölçülü, alkol kullanmayan kişi, ayık
+1	abstraction	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	mücerretlik; fikrî dağınıklık; huşsuzluk	soyutlama, soyut kavram, çıkarma, ayırma, soyutlama süreci, soyut resim, dalgınlık, zihnini başka yere verme
+1	achene	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kapçık meyva; tek tohumlu; açılmaz ve sert kabuklu bir meyve tipi	aken, kuru meyve
+1	aconite	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	itboğan; kaplanboğan; hanıkuzzip	kurt üzümü, akonit, akonit zehri
+1	adventurer	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	serseri; serüvenci; bahtına güvenir meçhulülasıl kimse	maceraperest, cesur, kaşif, gezgin, fırsatçı, çıkarcı
+1	affable	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çelebi; taltifçi; cana yakın	sıcakkanlı, samimi
+1	affiliate	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	birleştirmek; üye etmek; birleşmek	bağlı kuruluş, iştirak, üye, bağlantılı kişi, bağlamak, ortaklaşmak, takılmak, görüşmek
+1	agate	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	süleymani; yüzük taşı; bilye	akik, akik havan
+1	agio	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	baş; para farkı; ara değer	agyo, kur komisyonu
+1	ailment	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(ciddi olmayan) hastalık; keyifsizlik; illet	rahatsızlık, hastalık
+1	airborne	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(tohum/vb.) tenekten savrulan/atılan; tenekte; uçan	havada, havadaki, havalanmış, uçuşta, hava birliği
+1	alternation	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	birbirini izleme; almaş; nevbeleşme	dönüşümlü değişim, sıralı değişme, nöbetleşe değişme, sırayla gelme
+1	annex	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	istila etmek; müsadere etmek; (güçle) birleştirmek	ilhak etmek, el koymak, eklemek, eklemek ilişkilendirmek, ek bina, ek
+1	antechamber	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	küçük oda; bekleme odası; ön yanma odası	giriş odası, ön oda
+1	antipathy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	hoşlanmama; beğenmeme; sevmezlik	antipati, düşmanlık, nefret edilen şey
+1	apportionment	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	pay; bölme; taksim	pay etme, dağıtım
+1	assail	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sözlerle ya da yumruklarla saldırmak; dil uzatmak; işe girişmek	saldırmak, üşüşmek, sarsmak, bunaltmak, eleştirmek, saldırmak
+1	assent	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	anlaşmak; anlaşmaya varmak; razılaşmak	onay, rıza, onaylamak, kabul etmek
+1	asthenia	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	asteni; dermansızlık; kuvvetsizlik	güçsüzlük, halsizlik
+1	audacity	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yüreklilik; saygısızlık; kabalık	cesaret, yiğitlik, küstahlık, pervasızlık
+1	austere	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çetin zor; güç; rahatsız	sade, süssüz, ciddi, katı, ürkütücü, sert
+1	bane	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kötülük; zarar; ziyan	belâ, kâbus
+1	bead	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tespih tanesi; kürecik; tespih	boncuk, damla, tane, pervaz, kenar çıtası, damlacıklar halinde toplanmak, boncuk işlemek, süslemek, dizmek, sıralamak
+1	bereft	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	-sız; -siz; -den yoksun	yoksun, mahrum, kederli, yas tutan
+1	bigoted	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	dar kafalı; fanatik; yobaz	bağnaz, dogmatik
+1	blacken	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	karalamak; leke sürmek; kirletmek	karartmak, kararmak, kötülemek, lekelemek, hafifçe yanmak, kavrulmak
+1	boaster	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	basıp kesen; özünü öven; loka	palavracı, övünmeci
+1	breakup	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(arkadaşlık/evlilik/birlik/vb.) sona erme; son; bölüm	ayrılık, kopuş, dağılma, parçalanma, kırılma, parçalanma
+1	brevity	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(çay ya da kahve) yapmak; hazırlamak; demlemek	kısalık, özlülük, kısa süreli olma, geçicilik
+1	brigadier	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tugay komutanı; tuğbay; tümgeneral	tuğgeneral
+1	brigand	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yol kesen; kuldur; baskıncı	haydut, eşkıya
+1	bristle	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kısa; sert saç; (tüy/kıl/saç/vb.) diken diken olmak	kıl, sert tüy, sert kıl, kıl, kıllanmak, ürpermek, kaynamak, hareketlenmek, alınmak, öfkelenmek
+1	browbeat	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sert bakış ya da sözlerle gözünü korkutmak; yıldırmak; zorlamak	gözdağı vermek, zorbalamak, korkutup sindirmek
+1	buoyancy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	su yüzünde durabilme; yüzme özelliği; batmama	yüzdürme kuvveti, kaldırma, neşe, canlılık, hafiflik, havadarlık
+1	calumny	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	suç atma; uydurma; kemsöz	iftira, karalama, kötüleme, hakaret
+1	cantle	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	eyerin arka kaşı; parça; kısım	eyer arkalığı
+1	carmine	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	lal; kızıl; vişne çürüğü	karmin kırmızısı, koyu kırmızı, karmin kırmızısı, kan kırmızısı, karmin kırmızısına boyamak
+1	carrion	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	pis; kokmuş; kokmuş et	leş, çürüyen hayvan kalıntısı
+1	chaff	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tahılın dış kabuğu; (hayvan yemi olarak) saman; lak	saman kırığı, pıtrak, önemsiz şey, çer çöp, radar yanıltıcı folyo, şaka yapmak, takılmak
+1	chalet	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	küçük köşk; deniz kıyısında yazlık kulübe; bungalov	dağ evi, şale
+1	chimera	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	vehim; kuruntu; kâbus	hayal ürünü, asılsız düşünce, kimera, ateş püskürten canavar
+1	chump	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	odun; takoz; aptal	budala, enayi, kalın et dilimi
+1	clamp	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	mengene; kenet; mengeneyle sıkıştırmak	maşa, kelepçe, sıkaç, sıkıştırmak, kelepçelemek, zorla uygulamak, dayatmak
+1	clatter	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tangırdamak; tangırtmak; tangırtı	takırtı, gürültü, takırdamak, şıngırdamak
+1	coherence	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yapışma; birbirini tutma; uygunluk	tutarlılık, mantıklı bütünlük, bir arada durma, birlikte tutunma
+1	coil	onemli_anlam_kaybi_riski	0	lost | lost | kept_kenet	1;2	dolanmak; kangal haline gelmek; dolamak	bobin, sarmal, halka, kıvrım, rahim içi araç, spiral, ateşleme bobini, sarmak, kıvrılmak
+1	colt	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	sıpa; acemi; toy	tay, genç erkek at, tabanca, revolver
+1	commonplace	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	alalade; basit; beylik	sıradan, olağan, basmakalıp, bayat, klişe, basmakalıp söz
+1	concord	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	birlik; dostluk; barış	uyum, anlaşma, görüş birliği, mutabakat, dilbilgisel uyum
+1	concurrence	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	rastlantı; uyuşma; uygun görme	görüş birliği, onay, eş zamanlılık, birlikte oluş, işbirliği
+1	concurrent	onemli_anlam_kaybi_riski	0	lost | lost | kept_kenet	1;2	aynı zamanda oluşan; rastlantısal; tesadüfi	eşzamanlı, aynı anda olan
+1	conspire	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	plan yapmak; (olaylar) bir araya gelmek; birleşmek	komplo kurmak, el birliği etmek, birlikte etkili olmak, el ele vermek
+1	coo	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(kumru gibi) ötmek; öpüşüp koklaşmak; kumru gibi sevişmek	guguklamak, gugukla ötmek, şefkatle fısıldamak, okşayıcı konuşmak, guguk sesi
+1	coquette	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	edabaz; fettan kadın; oynak kadın	cilveli kadın, flörtöz kadın, cilveleşmek, flört etmek
+1	corrosive	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yiyici; yiygen; çürütücü	aşındırıcı, yakıcı, iğneleyici, zehir gibi, aşındırıcı madde
+1	coupling	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kavrama; kuplaj; manşon	bağlantı, birleşim, kaplin, bağlantı parçası, çiftleşme, eşleşme
+1	cracker	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çatapat; fıstık; yavru	kraker, gevrek bisküvi, havai fişek, patlayıcı, bilgisayar korsanı, hacker, şapırtı, çekme şekeri
+1	crumb	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	ekmek kırıntısı; çok az miktar; (Aİ) ciğeri beş para etmez adam	kırıntı, parça, az miktar, parça, adi herif, aşağılık kimse, kırıntıya ayırmak, galeta ile kaplamak, ufalamak, kırıntılara ayırmak, kırıntılarını temizlemek
+1	culvert	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ark; arna; suyolu	menfez, su kanalı
+1	dally	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sallanmak; boş bikâr gezmek; boş yere vakit yitirmek	vakit kaybetmek, oyalanmak, umursamamak, ilgisiz davranmak, flörtleşmek, oynaşmak, üzerinde az durmak
+1	deadpan	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	cansız; ölü gibi; ruhsuz	ifadesiz, duygusuz, ifadesizce, duygusuzca
+1	debug	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	hata bulmak; hata yakalamak; hata ayıklamak	hatalarını ayıklamak, hatalarını gidermek, arızalarını temizlemek
+1	defamation	onemli_anlam_kaybi_riski	0	kept_kenet | kept_kenet | lost	3	karalama; lekeleme; aşağılama	iftira, itibarsızlaştırma
+1	deflower	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çiçeklerini koparmak; yolmak; kızlığını bozmak	bekaretini almak, bozmak, mahvetmek
+1	deify	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yüceltmek; ululaştırmak; tapmak	tanrılaştırmak, put gibi yüceltmek
+1	derision	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	lağ; alay etme; lağa koyma	alay, küçümseme, hor görme, aşağılama
+1	derisive	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	alay edici; komik; gülünç	alaycı, küçümseyici, alaylı, aşağılayıcı
+1	diaphragm	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ışık bebeği; zar; bir doğum kontrol aygıtı	diyafram, solunum kası, diyafram, objektif açıklığı, diyafram, rahim ağzı kapağı, membran, titreşen zar
+1	dividend	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	pay; hisse; kâr hissesi	temettü, kâr payı, bölünecek sayı, temettü, ek kazanç, bonus
+1	divination	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sezme; fal; keşif	falcılık, kehanet, kehanet, önseziye dayalı tahmin, sezgi, şans eseri isabet
+1	doublet	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çift mercek; duble taş; mükerrer satır	yelek ceket, cakete benzer giysi, ikiz, benzer çift
+1	dovetail	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	geçme yapmak; tam uymak; köşe bağı kesmek	kuyruk kırlangıcı geçme, birbirine uymak, örtüşmek, kuyruk kırlangıcı geçmeyle birleştirmek
+1	dowdy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(kadın) kılıksız; rüküş; (giysi) demode	özensiz, eski moda, demode, tatsız, Dowding, RAF komutanı, elmalı tatlı, kaplamalı pasta
+1	dragoon	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	dragon; halka işkence etmek; zulmetmek	süvari, atlı asker, zorlamak, baskı yapmak, asker zoruyla boyun eğdirmek
+1	dun	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	boz renk; sıkıştıran alacaklı; alacağını istemek	kirli kahverengi, donuk gri, kirli kahverengi at, borç için rahatsız etmek, ısrarla istemek, zulmetmek, acımasızca davranmak, tuzlamak
+1	e-book	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çıncalık kitap; çıncalık hun; ç-hun	elektronik kitap, e-kitap
+1	effusion	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	dışarı akma; taşma; sızım	taşkınlık, coşku, akıntı, sızıntı
+1	eligibility	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	nitelik; özellik; üstünlük	uygunluk, hak sahipliği
+1	eminence	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yükseklik; şöhret; saygınlık	yücelik, üstün mevki, çıkıntı, yumru
+1	emission	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	ihraç; yayım; dışarı verme	salınım, yayılım, salınan madde, emisyon, elektron salınımı, boşaltım, akıntı, akış
+1	empty-headed	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	boş kafalı; kuş beyinli; akılsız	aptal, kafası boş
+1	enamel	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	mine ile süslemek; parlatmak; diş minesi	mine, emaye, emaye, sır, emaye boya, vernik boya, emaye ile kaplamak, sırlamak
+1	engulf	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	içine çekmek; yutmak; yok etmek	sarmak, kaplamak, kapılmak, gömülmek, kendini vermek
+1	envisage	onemli_anlam_kaybi_riski	0	lost | lost | kept_kenet	1;2	usunda canlandırmak; gözünün önüne getirmek; imgelemek	ggözünde canlandırmak, tasavvur etmek, öngörmek, düşünmek
+1	epilogue	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	son deyiş; son bölüm; bitim	epilog, son söz, oyunun sonunda seyirciye konuşma
+1	equipage	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	levazım; kumanya; azık	donanım, techizat, süslü at arabası
+1	equivocate	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	iki anlama gelmek; iki manalı tarzda danışmak; gayrimuayyen tarzda danışmak	laf dolandırmak, kaçamak cevap vermek
+1	expulsion	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	çıkarma; atma; çıkarılma	ihraç, kovma, dışarı atma, boşaltma
+1	familial	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kodak; kodaktan geçmiş; kodağa değişli	aileye ait, ailevi, kalıtsal, soyla geçen
+1	fascia	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	karın sargısı; renkli şerit; bağdoku	fasya, zar, gösterge paneli
+1	fidgety	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yerinde duramayan; kurtlu; rahat durmayan	huzursuz, kıpırdanan
+1	fillet	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sümüksüz/kılçıksız et; (eti) fileto kesmek; kılçığını ya da sümüklerini ayıklamak	fileto, kemiksiz et, fileto, balık fileto, şerit, bant, sinir demeti, birleştirme profili, filetosunu çıkarmak
+1	fodder	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	hayvan yemi; kuru ot; saman	yem, top yemi, harcanabilir asker, yem vermek
+1	forethought	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ileriyi görme; öngörürlük; basiret	önceden düşünme, planlama, ihtiyat, tedbir
+1	frailty	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	zayıflık; dayanıksızlık; narinlik	kırılganlık, güçsüzlük, zaaf, ahlaki zayıflık
+1	frivolity	onemli_anlam_kaybi_riski	0	kept_kenet | kept_kenet | lost	3	havailik; sululuk; saçmalık	önemsizlik, hafiflik, ciddiyetsizlik, lakayıtlık, değersiz şey, boş şey
+1	froward	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ters; aksi; asi	inatçı, itaatsiz
+1	fustian	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	dimi; pamuklu kadife; tumturaklı	şişirilmiş söz, gösterişli laf, fustan kumaşı, gösterişli, abartılı
+1	fuzzy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(saç) kıvırcık; cingelek; kabarık	tüylü, kıvırcık, bulanık, belirsiz, muğlak, karışık
+1	genealogy	onemli_anlam_kaybi_riski	0	lost | kept_kenet | kept_kenet	1	soy; soy kütüğü; şecere	soy ağacı, soyağacı, soy araştırması, soy bilimi
+1	glacis	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	az meyilli satıh; bayır; eğinti	eğimli set, sur yamacı, buzul, buz yığını
+1	glottal	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gırtlaksıl; gırtlak ünsüzü; gırtlaksıl	glottis ile ilgili
+1	grovel	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(korku/vb.'den) yerlerde sürünmek; dizlerine kapanmak; yağ çekmek	yere kapanmak, dalkavukluk etmek, yalvarmak, boyun eğmek
+1	gudgeon	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	mil; mihver; pim	kolyoz, dikenli balık, küçük tatlısu balığı, oltalık balık
+1	gush	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	aşırı hayranlık göstermek; bayılmak; gırtlaktan	fışkırma, akıntı, coşku, taşkınlık, fışkırmak, boşalmak, abartılı övmek, methetmek
+1	hake	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kurutma çardağı; sergen; merlos	mezgit balığı, mezgit, mezgitgiller
+1	half-witted	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	geri zekâlı; ahmak; budala	aptal, zihinsel geri
+1	handsel	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	pey; ilk taksit; siftah ettirmek	ilk satış hayırlısı, ilk alışveriş armağanı, hayır duası, ilk kullanım armağanı
+1	haughtiness	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	azamet; gurur; kurum	kibir, küstahlık
+1	heartache	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gönül yarası; ıstırap; acı	yürek acısı, keder
+1	helper	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	çırak; hizmetçi; uşak	yardımcı, asistan, hayırsever, destekçi
+1	hemstitch	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kenar dikişi; kenar süsü; ajur yapmak	ipli işleme, yaprak nakışı, ipli işlemek
+1	hex	onemli_anlam_kaybi_riski	0	lost | lost | kept_kenet	1;2	nazar; nazar değmek; büyülemek	büyü, lanet, altılı sayı sistemi, büyü yapmak, lanetlemek, birinin üzerine lanet okumak
+1	highlight	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(resimde) parlak çekit; en önemli/göze çarpan kısım; (neyinse özel bir bölümüne) dikkati çekmek	en güzel an, öne çıkan kısım, aydınlık nokta, parlak leke, vurgulamak, öne çıkarmak, renklendirmek, işaretlemek
+1	horny	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	sert ve kaba; abaza; azmış	cinsel isteği yüksek, kösnül, boynuzlu, boynuz gibi çıkıntılı, boynuzdan yapılmış, boynuz gibi sert
+1	humerus	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	pazı sümüğü; karaca sümüğü; üst kol sümüğü	pazı kemiği, kol kemiği
+1	impassable	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(yol/vb.) geçilmez; geçit vermez; bozuk	geçilmez, aşılamaz
+1	impassive	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	lakayt; umursamaz; kayıtsız	duygusuz, soğukkanlı, sakin, itidalli
+1	impervious	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	su; /vb.geçirmez; etki altında kalmaz	geçirmez, işlemez, etkilenmez, duyarsız
+1	implacable	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tatmin olmaz; doymaz; açgözlü	uzlaşmaz, acımasız, yatışmaz, dinmez
+1	importunity	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	usandırıcı ısrar; tacizlik; tedirgin etme	ısrar, yalvarış
+1	incongruous	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	birbirine uymayan; uyuşmaz; bağdaşmaz	uyumsuz, yakışıksız
+1	intrusive	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	zorla giren; izinsiz giren; mütecaviz	rahatsız edici, müdahaleci, sokulmuş, sokulum
+1	judicial	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	türel; hukuki; tüzel	adli, yargısal, yargıca ait, hâkimlik, tarafsız, ölçülü
+1	judicious	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sağgörülü; doğru karar veren; iyi düşünebilen	isabetli, akıllıca, ölçülü, basiretli
+1	kerchief	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	eşarp; mendil; destimal	başörtüsü, fular, boyun eşarbı
+1	knave	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	hilekâr; üçkâğıtçı; (iskambil) bacak	düzenbaz, alçak herif, vale
+1	lachrymose	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sulu gözlü; acıklı; göz yaşartıcı	ağlamaklı, hüzünlü
+1	languish	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	isteksiz olmak; güçsüzleşmek; erimek	solmak, zayıflamak, özlem duymak, hasret çekmek, ihmal edilmek, durgunlaşmak
+1	lanyard	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çekme ipi; savlo; kordon	boyun ipi, anahtarlık ipi, ip, halat, tetik ipi
+1	lapidary	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	taşa işlenmiş; gösterişli; hakkâk	değerli taşlarla ilgili, zarif, özenli, kıymetli taş ustası
+1	lath	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sıva tirizi; bağdadi çıta; lata ile kaplamak	latalı, ince çıta
+1	levy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	zorla toplama; toplanan para; zorla toplamak	vergi, resim, askere alma, asker toplama, vergi koymak, tahsil etmek, asker toplamak, askere almak
+1	lightness	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yumuşaklık; sürat; neşelilik	hafiflik, neşe, sevinç, çeviklik, zarafet, açıklık, parlaklık, aydınlık, ışık dengesi, hafifmeşreplik, umursamazlık
+1	linger	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gitmemek; takılıp kalmak; yubanmak	oyalanmak, gecikmek, kalmak, sürmek, devam etmek, ağır ağır ayrılmak, tereddütle gitmek, ağır ilerlemek, dolaşmak
+1	mandate	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	buyruk; emir; vekillik	yetki, resmî emir, seçim yetkisi, halk onayı, manda, himaye bölgesi, zorunlu kılmak, emretmek, yetki vermek, görevlendirmek
+1	matchmaker	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	elçi; dünür; dünürcü	evlilik aracısı, kurnaz, aracı, eşleştirici
+1	matinee	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gündüz temaşası; gündüz oyunu; temaşa	matine
+1	mead	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	bal likörü; çayır; otlak	bal şarabı
+1	memorandum	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	not; nota; tezkere	muhtıra, resmî not, hatırlatma notu
+1	mite	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kene; peynir kurdu; uyuz böceği	küçük miktar, az miktar, akar, minik örümcek
+1	mollycoddle	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	erköyün; üstüne titremek; nazlı büyütmek	şımartmak, aşırı korumak, aşırı korunan kişi, naz çeken
+1	mortar	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	dibek; ask.havan topu; harç ile sıvamak	havan, harç, şap, havan topu, moloz atar, harçla sıvamak, harçla örmek
+1	nacelle	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	beşik; sepet; kaporta	motor kılıfı, nasel
+1	nameless	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	bilinmeyen; meçhul; anlatılamaz	isimsiz, adsız, adı bilinmeyen, belirsiz
+1	nettle	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	kızdırmak; öfkelendirmek; sabırsızlandırmak	ısırgan otu, yakmak, batmak, sinirlendirmek, rahatsız etmek
+1	nibble	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ufak parçalar koparmak; ilgi duymak; ilgilenmek	kemirmek, ufak ufak ısırmak, atıştırmak, az az yemek, yavaş yavaş aşındırmak, ısırık, kemirik
+1	nifty	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çok iyi; çekici; etkileyici	harika, çok güzel, becerikli, kurnaz
+1	noncommittal	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	suya sabuna dokunmaz; çekimser; fikrini söylemeyen	kesin konuşmayan, temkinli
+1	nostalgia	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	eslem; geçmişe özlem; yurtsama	özlem, nostalji
+1	offal	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	süprüntü; artık; çerçöp	sakatat, iç organlar, çöp, atık
+1	ogle	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ilgiyle/arzuyla bakmak; süzmek; kesmek	göz süzmek, baka baka bakmak
+1	oracle	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	en iyi öğüt verebilecek kimse; nasihatçı; tanrıların halkın sorularına cevap verdiğine inanılan yer	kahin, falcı, kehanet, gaipten haber, kehanet yeri, tapınak, bilgi kaynağı, danışılan uzman
+1	orthodox	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	herkesin inandığına inanan; alışılmış; geçerli	geleneksel, yerleşik, ortodoks, ortodoks, dindar
+1	outsmart	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kurnazlıkla üstesinden gelmek; yenmek; altetmek	zekâsıyla alt etmek, kandırmak, hile ve becerikle yenmek
+1	papilla	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tomur; meme; kabarcık	papilla, küçük çıkıntı, tat papillası, dil çıkıntısı, kıl kökü çıkıntısı, papilla
+1	patriarch	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	piskopos; kodak reisi; kabile reisi	patrik, aile reisi, aile büyüğü, atalar, ilk babalar
+1	penury	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	fukaralık; sıkıntı; kıtlık	yoksulluk, sefalet
+1	peon	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	piyade; emir eri; amele	ücretli işçi, hizmetkâr
+1	perennial	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	bir yıl süren; (bitki) uzun ömürlü; uzun ömürlü bitki	sürekli, bitmek bilmeyen, çok yıllık, çok yıllık bitki
+1	perpendicular	onemli_anlam_kaybi_riski	0	kept_kenet | kept_kenet | kept_kenet		dikey; dikey çizgi; dikey	dik, dik açılı, çok dik, sarp, dik çizgi, dik doğru, şakul, ağırlık ipi
+1	pesky	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kıl; gıcık; belalı	can sıkıcı, rahatsız edici
+1	pittance	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çok düşük vergin; acınacak miktarda az vergin; kapik-kuruş	çok az para, kuruş
+1	plumb	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	çekül; şakul; anlamını çıkartmaya çalışmak	dik, düşey, tam, tamamen, tam olarak, düz, şakül, derinliğini ölçmek, incelemek
+1	plush	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	müthiş; süper; görkemli	lüks, gösterişli, peluş, kadifemsi, peluş kumaş, kadife
+1	pocketbook	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	not defteri; sapsız bayan çantası; kese	mali durum, cüzdan, cüzdan, para çantası, cep kitabı, cep boy kitap
+1	potty	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(İİ.) aptal; kaçık; üşütük	aptal, saçma, önemsiz, hafif, hafif sarhoş, kafası karışık, tuvalet, lavabo, oturaklı kap, çocuk tuvaleti
+1	precede	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	-den önde yer almak; -den önce gelmek; -den üstün olmak	önce gelmek, öncülük etmek, önüne geçmek, öne geçmek, önceki olmak, selefi olmak, önsöz ile tanıtmak
+1	precept	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ana kural; temel; temel prensip	ilke, kural, öğüt, öğreti, doktrin
+1	prerequisite	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	önceden olması zorunlu; ön gereksinim duyulan; önceden gerekli olan (şey)	ön koşul, şart, önkoşul olan, gerekli
+1	primal	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	başlıca; ana; baş	ilkel, ilk, temel, esas
+1	prospective	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	umulan; beklenen; niyetli	olası, muhtemel, gelecekteki, ileride olacak
+1	providence	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ilahi takdir; hazırlık; öngörü	takdir-i ilahi, kader, tedbir, basiret
+1	pursuant	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	uygun; mutabık; muvafık	uyarınca, göre
+1	purview	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	alan; anlam; meal	yetki alanı, kapsam, ilgi alanı, görüş alanı
+1	ravage	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	mahvetmek; kırıp geçirmek; soymak	yıkmak, tahrip etmek, yağmalamak, talan etmek, tahribat, yıkım
+1	reagent	onemli_anlam_kaybi_riski	0	kept_kenet | kept_kenet | lost	3	miyar; ayıraç; belirteç	reaktif, tepkime maddesi
+1	red-hot	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(metal) kızarmış; akkor halinde; çok öfkeli	kızgın, kızıl kor halinde, çok heyecanlı, ateşli, çok yeni, son çıkan, çok hızlı, son derece çevik
+1	redeem	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	bedelini vererek geri almak; (günahtan) kurtarmak; yapmak	kurtarmak, affettirmek, yeniden kazanmak, aklamak, değiştirmek, karşılığını almak, geri satın almak, ödemek, kapatmak, paraya çevirmek
+1	rehabilitate	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yararlı duruma getirmek; düzeltmek; ıslah etmek	rehabilite etmek, iyileştirmek, toplumla bütünleştirmek, yeniden kazandırmak, eski itibarını geri vermek, aklamak, onarmak, eski düzenine getirmek
+1	reimburse	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(pulunu) geri vermek; ödemek; birinin yaptığı masrafı ödemek	geri ödemek, karşılamak, tazmin etmek, zararı karşılamak
+1	religiosity	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	bağnazlık; yobazlık; sofuluk	aşırı dindarlık, dini taassup
+1	reticence	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	az konuşma; ağzı sıkılık; gizlilik	çekingenlik, ketumluk
+1	revamp	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tamir etmek; düzeltmek; kayırmak	yenilemek, baştan düzenlemek, yeni biçim vermek, tazelemek, yenileme, baştan düzenleme
+1	revere	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	saymak; büyük saygı ve hayranlık göstermek; sevip saymak	saygı göstermek, hürmet etmek, tapmak, aşırı sevmek, yaka, ceket yakası
+1	rigging	onemli_anlam_kaybi_riski	0	kept_kenet | lost | lost	2;3	donanım; teçhizat; kanat ayarı	gemi donanımı, halat takımı, direk ve yelken düzeni
+1	rite	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	(dinsel) alışkı; töre; adet	ayin, tören, âdet, gelenek
+1	rive	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	koparmak; kır(ıl)mak; incitmek	yırtmak, parçalamak, yarmak, ayırmak
+1	ruff	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kırmalı yaka; (iskambilde) koz ile alma; (iskambilde) koz ile almak	boyun tüyleri, yaka tüyü, fırfırlı yaka, ruff kuşu, koz kesme, koz atmak
+1	scalpel	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	küçük bıçak; skalpel; bistüri	neşter
+1	scruffy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	pis; kirli; leş gibi	dağınık, bakımsız, özensiz
+1	sentimentality	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	aşırı duygusallık; içlilik; hassaslık	duygusallık, sentimentalizm, duygusal yapmacıklık
+1	shoddy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	baştansavma; uydurma; bayağı	kalitesiz, özensiz, sahte, dürüst olmayan, yeniden işlenmiş yün
+1	simpleton	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	avanak kimse; ahmak kimse; acemi çaylak	budala, aptal
+1	skimp	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	-den kısmak; tasarruf etmek; az harcamak	cimri davranmak, kısmak, özensiz yapmak, geçiştirmek, kıt tutmak, az vermek
+1	skittish	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	canlı; hareketli; oyuncu	ürkek, tedirgin, huysuz, kaygılı
+1	slur	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kara çalmak; çamur atmak; (esriklikten/vb.) sözcükleri kötü telaffuz etmek	aşağılayıcı söz, hakaret, leke, kir, bağlama işareti, peltek konuşmak, yutarak söylemek, küçümsemek, karalamak, bağlayarak çalmak
+1	smallness	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	ufaklık; önemsizlik; basitlik	küçüklük, az miktar, azlık, güçsüzlük, zayıflık, cimrilik, dar görüşlülük
+1	smokescreen	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	düşmana görünmemek için çıkarılan duman; gerçek niyetini gizlemek için uydurulan şey; paravana	duman perdesi, gözboyama, perde
+1	snipe	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gizli bir yerden ateş etmek; siperden ateş etmek; haince saldırmak	çulluk, pusu atışı, keskin nişancı atışı, çulluk avlamak, hedefi tam vurmak, nişan almak, iğneleyici eleştirmek, çekiştirmek
+1	snooker	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	zor duruma sokmak; belaya sokmak; kırmızı	snooker (bilardo oyunu), aldatmak, kandırmak, rakibi engellemek
+1	soften	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	gevşetmek; gevşemek; tatlılaşmak	yumuşatmak, yumuşamak, hafifletmek, azaltmak, yumuşatmak, ikna olmak, korumak, tampon olmak
+1	sortie	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	hücum; huruç; çıkma hareketi	çıkın, baskın, uçuş görevi
+1	spartan	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	basit; sıradan; lüks olmayan	sade, yalın, kendini sakınmayan, cesur, acımasız, katı, Sparta'ya ait, Spartalı
+1	spawn	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	balık yumurtası; kürü; (balık/kurbağa/vb.) yumurtlamak	yumurta, döl, yumurtlamak, döl bırakmak, doğurmak, yaratmak, ortaya çıkarmak
+1	speckle	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	ufak benek; leke; çekit	benek, lekecik, benekle kaplamak, benekli yapmak
+1	splint	onemli_anlam_kaybi_riski	0	kept_kenet | kept_kenet | lost	3	süyek; cebire; kırık sarmada kullanılan tahta	atel, ince tahta parçası, kıymık, atel yapmak, atele almak
+1	squib	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	maytap; yergi; hiciv	kıvılcımlı havai fişek, fitil
+1	stalk	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sezdirmeden izleyip avlamak; yakalamak; azametle yürümek	sap, gövde, sinsi takip, avlanma, sinsice izlemek, peşine düşmek, kibirli kibirli yürümek, kibirli yürüyüş
+1	stave	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	fıçı tahtası; değnek; şiir kıtası	nota portesi, beşli çizgi, tahta şerit, duvar lamelası, traverse, bağlantı çubuğu, donatmak, kaplamak, delmek, kırarak açmak
+1	stigma	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	damga; namus lekesi; ayıp	utanç, leke, dişicik ucu, stigma, solunum deliği, deri lezyonu, işaret
+1	stinger	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	arı iğnesi; diken; kırıcı söz	iğne, sokucu, iğneleyici söz, omuzdan atılan füze, sert darbe, çarpma, nane likörlü içki
+1	stopper	onemli_anlam_kaybi_riski	0	lost | kept_kenet | lost	1;3	tapa; tıkaç; durdurucu	tıpa, kapak, alkış kesen gösteri, unutulmaz an, susturucu cevap, tıkamak, kapatmak
+1	subatomic	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	atom içindeki; atomla ilgili; atomdan küçük	atomaltı
+1	surcharge	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	alışılmış bir yükün üzerine eklenen fazladan yük; sürşarj; yeni fiyatlı posta pulu	ek ücret, ilave ücret, ceza, para cezası, ek ücret almak, fazla ücretlendirmek, aşırı doldurmak, tıkıştırmak, yeni değer basmak
+1	susceptible	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kolay etkilenen; etki altında kalan; -e dayanıksız	açık, yatkın, etkilenebilir, duygusal
+1	sweetness	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sevimlik; şirinlik; güzel koku	tatlılık, şekerlilik, tatlılık hissi, hoş koku, tatlı koku, nezaket, incelik
+1	tact	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	zaman ve durumun gerektirdiği biçimdeki davranış; davranış inceliği; insanlarla anlaşabilme yetisi	incelik, takt, anlayış
+1	thong	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	sırım; kamçı sırımı; kayış	deri kayış, şerit, tanga, string iç çamaşırı, ince askılı sandalet, parmak arası terlik
+1	tirade	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	uzun sıkıcı konuşma; nutuk; paylama	sert azar, öfkeli nutuk
+1	torque	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	buru; dönme momenti; bükme momenti	tork, döndürme momenti, boyunluk, tork halkası
+1	torus	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tor; yumru; kabartı	simit yüzey, halka yüzey, sütun kaidesi silmesi
+1	transfix	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	şaşkına çevirmek; afallatmak; sersemletmek	büyülemek, mıhlamak, saplamak, delmek
+1	trimmer	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	fletner ayarlayıcısı; süsleyen kimse; yağcı	budayıcı, bahçe makası, kesme makinesi, kereste kesici, trimer kapasitör
+1	trough	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tekne; iki dalga arasındaki çukur; alçak basınçlı hava sahası	çukur, oluk, dalga çukuru, yalak, besleme kabı, oluk, yağmur oluğu, düşük seviye, dip
+1	undermine	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yıkmak; el altından çökertmeye çalışmak; temelini çürütmek	zayıflatmak, baltalamak, altını oymak, kazmak
+1	unfeeling	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	acımasız; insafsız; katı	duygusuz, merhametsiz, hissiz, duyarsız
+1	unheard-of	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	olağan dışı; görülmemiş; acayip	duyulmamış, eşi benzeri görülmemiş
+1	uptown	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	şehir merkezinin dışında; şehir merkezinin dışında; şehir merkezinin dışı	şehrin üst kısmındaki, villa semtine ait, şehrin seçkin semti, yerleşim bölgesi, şehrin üst kısmına, kuzeye
+1	vasectomy	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	meni arnası ameliyatı; vasektomi; kısırlaştırma (ameliyatı)	vazektomi, erkek kısırlaştırma
+1	vaulting	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	tonoslu yapı; kubbe; kemer	kendini beğenmiş, aşırı özgüvenli
+1	votary	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	özünü dine adamış; özünü bir şeye adamış kimse; taraftar	bağlı, adanmış kişi, tapınak hizmetkârı, rahip, tutkun, hayran
+1	waddle	onemli_anlam_kaybi_riski	0	lost | kept_kenet | kept_kenet	1	ördek gibi salına salına yürümek; badi badi yürümek; badi badi yürüyüş	pıtırtı, bocalayarak yürüyüş, bocalayarak yürümek, pıtır pıtır yürümek
+1	wallow	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yuvarlanmak; zevklenmek; acı çekmek	çamurluk, çamur çukuru, tembel dönüp durma, çamurda yuvarlanmak, debelenmek, kendini kaptırmak, gömülmek, keyfine varmak, zevk almak, dalgalanmak, sallanmak
+1	wanton	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	değişken; kaprisli; oyunbaz	gereksiz, keyfi, ahlaksız, düşkün, ahlaksız kadın, boşa harcamak, vakit öldürmek
+1	weal	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	mutluluk; refah; hayır	kabarık iz, şerit izi, kurdeşen kabarığı
+1	wedge	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	kıskı; kama ile sıkıştırmak; araya sıkışmak	takoz, kama, dilim, parça, topuklu taban, pitching wedge, golf sopası, sıkıştırmak, tıkamak
+1	whence	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	haradan; hangi yerden; nere	nereden
+1	whiting	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	mezitbalığı; merlanos; arıtılmış tebeşir tozu	mezgit balığı, tebeşir tozu
+1	wildcat	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	yasadışı ve beklenmedik; düzensiz; hırçın kimse	spekülatif, kontrolsüz, yetkisiz, izinsiz, vahşi kedi, spekülatif petrol kuyusu, açgözlü insan, yırtıcı
+1	woodwork	onemli_anlam_kaybi_riski	0	lost | lost | lost	1;2;3	dülgerlik; tahta işi; bir binanın ahşap kısımları	ahşap işi, marangozluk, ahşap süsleme, doğrama
+2	tonight	supheli	1478	kept		bu gece	bu gece, bu gece
+2	least	supheli	676	kept | kept		be.en az, en küçük, adl.en küçük sayı, en küçük miktar; en az	en az, en az, en az, en küçük, önemsiz şey
+2	neither	supheli	509	kept		(ikisinden) hiçbiri, hiçbir, hiçbiri, de değil	ikisinden hiçbiri, ikisinden hiçbiri, ne ... ne de, ne de, -de değil
+2	less	supheli	485	kept		be.daha az, adl.daha az şey/kimse, daha az miktar	daha az, daha az, daha az, daha düşük, daha aşağı, eksi, -siz, -sız, -siz
+2	shake	supheli	93	kept | kept | kept		sallamak, sarsmak, sallanmak, sarsılmak; silkelemek, silkmek, allak bullak etmek; çalkalamak, (el) sıkışmak, sarsıntı, sarsma; titreme, sallama, sallanma, silkme; el sıkışma, an, saniye	sallamak, silkelemek, titremek, sarsılmak, sarsmak, derin etki yapmak, sarsıntı, titreme, el sıkışma, tokalaşma, milkshake, süt kokteyli
+2	nail	supheli	66	kept_kenet		mıhlamak	tırnak, çivi, çivilemek, çakmak, yakalamak, tutuklamak, sert vurmak, çarpmak, tam isabet etmek, mükemmel yapmak
+2	lord	supheli	60	lost | kept | lost	1;3	Allah; Tanrı; (ünvan) lort	Rab, Tanrı, efendi, hâkim, lord, lord, lord yapmak, soyluluk vermek, efendilik taslamak, lord unvanı vermek
+2	fuss	supheli	28	kept | lost | lost	2;3	gürültü patırtı; gereksiz telaş/kızgınlık/sabırsızlık; gereksiz yere telaşlanmak	telaş, heyecan, kavga, gürültü, patırtı, hareketlilik, koşuşturma, tasalanmak, endişelenmek, ilgilenmek, şımartmak
+2	temptation	supheli	27	kept | kept		istek uyandıran şey, cezbedici şey, ayartma, baştan çıkarma; baştan çıkma, şeytana uyma	ayartma, cazibe, ayartı, baştan çıkarma, arzu, istek
+2	definite	supheli	22	kept		belirli, açık, kesin, anık	kesin, belirgin, kesin, emin, belirli
+2	entitled	supheli	21	kept		yetkili	hakkı olan, yetkili, başlıklı, adı ... olan, haklı görünen, ayrıcalıklı
+2	screw	supheli	20	kept | lost | lost	2;3	pervane; uskur; kâğıt külah	vida, vida mili, sarmal, pervane, gardiyan, vidalamak, sıkıştırmak, sıkmak, buruşturmak, becermek, dolandırmak, sevişmek, yatmak
+2	prosperity	supheli	18	kept		başarı	refah, zenginlik, ekonomik büyüme, gelişme, başarı, talih
+2	maiden	supheli	17	kept | kept | kept		evlenmemiş kız; evlenmemiş; ilk	genç kız, bakire, ilk, ilk kez yapılan, bakire, evlenmemiş, sayısız
+2	strive	supheli	17	kept		çalışmak, çabalamak, çekişmek, uğraşmak	çabalamak, uğraşmak, gayret göstermek, emek vermek
+2	creep	supheli	13	kept | kept | lost	3	sürünmek, sürünerek ilerlemek, sessizce sokulmak, (sarmaşık/vb.) sarılmak; sarılarak büyümek, ürpermek, tüyleri ürpermek, dalkavuk; yağcı, gıcık, kıl	sürünmek, emekleyerek ilerlemek, yavaş yavaş ilerlemek, sinsice gitmek, ürpertmek, tüylerini diken diken etmek, ürkütücü tip, tuhaf adam, yavaş kayma, deformasyon, küçük hayvan bölmesi, çit
+2	freshwater	supheli	10	kept		tatlı su	tatlı su, tatlı su
+2	vary	supheli	10	kept | kept		çeşitli olmak, değişik olmak, değişmek, başka hale dönmek; değiştirmek	değişmek, farklılaşmak, çeşitlendirmek, değiştirmek, uymamak, ayrılmak
+2	gaze	supheli	7	kept_kenet		gözünü dikerek bakmak, gözünü zillemek, sürekli bakış	bakış, dikkatli bakış, dikkatle bakmak, dalıp bakmak
+2	banking	supheli	6	kept		bankacılık	bankacılık, banka işlemleri, bankacılık işi
+2	dike	supheli	5	kept		set, bent, hendek	set, dalgakıran, set çekmek, çevirmek
+2	wring	supheli	5	kept		burmak, bükmek, sıkmak, sıkıp suyunu çıkarmak	sıkmak, burmak, ellerini ovuşturmak, kıvranmak, zorla almak, koparmak
+2	cite	supheli	4	lost | kept	1	mahkemeye çağırmak, celpname göndermek, bahsetmek, adından söz etmek; örnek olarak vermek/göstermek	alıntılamak, referans vermek, anmak, söz etmek, övmek, takdir etmek, örnek göstermek, kanıt olarak sunmak, alıntı notu, atıf
+2	protestant	supheli	4	kept		Protestan	Protestan, Protestan, protesto eden, itiraz eden
+2	tread	supheli	4	kept | kept | lost	3	üzerinde yürümek, katetmek, basmak, taptalamak; çiğnemek, ezmek, ayak basışı/sesi, lastik tırtılı; merdiven basamağı	adım, basış sesi, lastik dişi, yüzey, basamak tahtası, basmak, adım atmak, ezmek, çiğnemek
+2	baritone	supheli	3	kept		bariton	bariton, bariton, baritoncu, bariton ses
+2	bending	supheli	3	lost	1	eğme, bükme	eğilme, bükülme, eğrilik, kıvrım
+2	biweekly	supheli	3	kept		iki haftada bir, iki haftalık, haftada iki kere, haftada iki kere olan/çıkan	iki haftada bir, haftada iki kez, iki haftada bir, iki haftada bir çıkan dergi
+2	slay	supheli	3	kept		vahşice öldürmek, katletmek	öldürmek, katletmek
+2	tit	supheli	3	kept | kept		meme, ayva, memebaşı, salak; baştankara	baştankara, meme, göğüs, meme ucu
+2	ascetic	supheli	2	lost	1	özünü her türlü dünyevi zevkten/işten soyutlamış	çileci, zahit, sade, keyfe düşkün olmayan, çileci, zahit
+2	colloquial	supheli	2	kept		konuşma diline özgü	konuşma diline ait, günlük dile özgü
+2	counterclockwise	supheli	2	kept		saat yönünün tersine	saat yönünün tersine, saat yönünün tersine
+2	expansionist	supheli	2	kept		yayılma politikası yanlısı	yayılmacı, yayılmacı
+2	frigid	supheli	2	kept | lost | lost	2;3	çok soğuk, buz gibi, dondurucu, (kişi/davranış/vb.) soğuk; cansız, resmi, (kadın) (cinsel yönden) soğuk; frijit	buz gibi, dondurucu, soğuk, mesafeli, cinsel isteksiz
+2	lug	supheli	2	kept		zorlukla çekmek, sürüklemek, taşımak	sürüklemek, zorla taşımak, kulp, tutamak, çıkıntı, deniz solucanı, dört köşeli yelken, engellemek, tıkamak, kum solucanı
+2	mu	supheli	2	lost	1	Yunan alfabesinde m harfi	mü (Yunan alfabesinin on ikinci harfi)
+2	suggestive	supheli	2	kept | lost | lost	2;3	müstehcen; açık saçık; ayıp şeyler öneren	akla getiren, ima eden, edepsiz, müstehcen
+2	tangerine	supheli	2	kept		mandalina	mandalina, koyu turuncu, mandalina rengi, koyu turuncu, mandalina rengi
+2	uphold	supheli	2	kept		desteklemek, tarafını tutmak, arka çıkmak, onaylamak	sürdürmek, korumak, savunmak, desteklemek, desteklemek, ayakta tutmak
+2	westerly	supheli	2	kept		batıya giden, (rüzgâr) batıdan esen	batıdan esen, batı yönlü, batıya doğru, batı rüzgârı, batıya doğru
+2	abkhazian	supheli	0	kept		Abhaz, Abhazca	Abhaz, Abhaz, Abhazca
+2	acrylic	supheli	0	kept		akrilik	akrilik, akrilik boya, akrilik kumaş, akrilik elyaf, akrilik
+2	adressee	supheli	0	kept		alıcı	alıcı, muhatap
+2	agressive	supheli	0	kept		saldırgan	saldırgan, agresif
+2	alfresco	supheli	0	kept		açık havada, açık hava	açık havada, açık havada
+2	aneshesiologist	supheli	0	kept		anestezi uzmanı	anestezi uzmanı, anestezist
+2	antecedent	supheli	0	kept		önce gelen, önceki, evvelki, kabakki	önceki, önce gelen, ata, ecdat, önceki durum, neden, öncül, gönderilen sözcük
+2	anti-semite	supheli	0	kept		Yahudi aleyhtarı, Yahudi karşıtı	Yahudi düşmanı, Yahudi düşmanı
+2	autihistamine	supheli	0	kept		antihistamin	antihistamin, alerji ilacı
+2	bah	supheli	0	lost	1	tüü!, tüh!	hah, boş ver
+2	bainsmarie	supheli	0	lost	1	benmari, iki katlı tencere	su banyosu kabı
+2	bareheaded	supheli	0	kept		başı açık	başı açık, başı açık
+2	befall	supheli	0	kept		(kötü bir şey) olmak, başına gelmek	başına gelmek, uğramak, olmak, meydana gelmek
+2	bioclimatalogy	supheli	0	lost	1	biyoklimatoloji	biyoiklimbilim
+2	blacky	supheli	0	lost	1	zenci	karabaş, siyah hayvan
+2	bridging	supheli	0	kept		köprüleme	köprü kurmak, geçici, aradaki
+2	bye-pass	supheli	0	lost | kept	1	kestirme yol, baypas, çevre yolu, yan geçit; atlatmak, yanından geçmek	bypass, yan yol, yan yoldan geçmek, atlatmak
+2	cainozoic	supheli	0	lost	1	dördüncü zaman, dördüncü zaman	Senozoik, Yeni Yaşam Çağı, Senozoik, Yeni Yaşam Çağı
+2	carouse	supheli	0	kept		âlem, cümbüş yapma, içki âlemi yapmak	içki âlemi yapmak, sarhoş eğlenmek, içki âlemi, eğlence
+2	causecelebre	supheli	0	lost	1	meşhur bir dava	tartışmalı dava, ünlü dava
+2	centralist	supheli	0	kept		merkezci, merkeziyetçi	merkeziyetçi, merkeziyetçi
+2	cerise	supheli	0	kept		kiraz kırmızısı, kiraz kırmızısı	kiraz kırmızısı, kiraz kırmızısı
+2	cerulean	supheli	0	kept		gök mavisi	gök mavisi, gök mavisi
+2	chimp	supheli	0	kept		şempanze	şempanze
+2	chow	supheli	0	kept		yiyecek	yemek, yiyecek, çau çau, Çin kökenli köpek cinsi, Chou hanedanı
+2	cirassian	supheli	0	kept		Çerkezce	Çerkes, Çerkes
+2	condor	supheli	0	lost	1	(özellikle Güney Amerika'da bulunan) iri bir tür akbaba	kondor
+2	contralto	supheli	0	kept		kontralto	kontralto, kontralto
+2	coon	supheli	0	lost | kept	1	zenci, marsık, karaköpek, hayb; rakun	rakun, sakar köylü, kaba adam, ırkçı hakaret
+2	coordinative	supheli	0	kept		eşgüdümlü, koordine	bağlayıcı, eşgüdümlü
+2	counterrevolutionary	supheli	0	kept		karşı devrimci	karşı devrimci, devrim karşıtı, karşı devrimci
+2	cule	supheli	0	lost	1	-cik	kıç, alt kısım
+2	curing	supheli	0	lost | lost	1;2	eti tuzlama; vulkanizasyon	kürleme, olgunlaştırma, iyileştiren, tedavi eden, kurutmak, tuzlamak, sertleşme, katılaşma
+2	daghistan	supheli	0	kept		Dağıstan	Dağıstan
+2	determiner	supheli	0	kept		belirtici, bir adın anlamını sınırlayan ve bu adı tanımlayan sözcük	belirleyici sözcük, belirleyici, etken, kesin kanıt, karar verici delil
+2	dielectric	supheli	0	kept		dielektrik	yalıtkan, dielektrik, yalıtkan, dielektrik
+2	diphtongisation	supheli	0	lost	1	iki ünlünün kaynaşması	çift sesli hale getirme
+2	disjunctive	supheli	0	lost	1	ayıran, bölen	ayırıcı, bölücü
+2	distal	supheli	0	lost	1	merkezdenuzak	uzak, dıştaki, orta hattan uzak
+2	distributionalist	supheli	0	kept		dağılımcı	dağılımcı, dağılımcı
+2	douche	supheli	0	kept_kenet		şırınga, şırınga etmek	duş, sprey tipi yıkama, vajinal yıkama aleti, yıkamak, duşla temizlemek
+2	dres-coat	supheli	0	kept		frak	frak, redingot
+2	drowsiess	supheli	0	kept		uyuşukluk	uykulu hal, uyuşukluk
+2	ebullioscopy	supheli	0	kept		ebüliyoskopi, kaynargözleyim	kaynama noktası ölçümü
+2	eddy	supheli	0	kept		burgaç, anafor, girdap	girdap, anafor, girdap oluşturmak, dönerek akmak
+2	enate	supheli	0	kept		anne tarafından akraba	anne tarafından akraba, anne tarafından akraba
+2	enlightment	supheli	0	kept		aydınlatma, aydınlanma	aydınlanma, bilgilenme
+2	enwind	supheli	0	lost	1	dolaşmak, -a sarılmak	sarmak, dolamak
+2	espy	supheli	0	kept		görmek, farketmek, gözüne ilişmek	gözüne ilişmek, fark etmek
+2	expletive	supheli	0	lost	1	kızınca söylenen, çoğu zaman anlamsız sözcük	küfür, sövgü, dolgu sözcük, boş ifade
+2	fabeceae	supheli	0	lost	1	fasulye familyası	baklagiller familyası
+2	faggot	supheli	0	lost | lost	1;2	çalı çırpı demeti, çıra demeti, (Aİ) ibne, sevimsiz kimse; köfte	odun demeti, eşcinsel erkek, demetlemek, bağlamak
+2	fanny	supheli	0	lost	1	but	popo, kalça, kadın cinsel organı
+2	febrifuge	supheli	0	kept		ateş düşürücü ilaç	ateş düşürücü, ateş düşürücü
+2	fete	supheli	0	kept | kept		eğlence, şenlik, şölen, piknik; onurlandırmak, iyi ağırlamak, ziyafet vermek	şenlik, festival, gösteri, etkinlik dizisi, onurlandırmak, kutlamak
+2	filiariasis	supheli	0	lost	1	kan ve bağırsak asalakları hastalığı	filarya hastalığı, filaryaz
+2	fling	supheli	0	kept | kept | kept		fırlatıp atmak, savurmak, atma, atış; fırlatma, bir İskoç dansı, deneme, girişim; çılgınça zaman	kısa deneme, denemek, kısa macera, geçici ilişki, eğlence, çılgınlık, fırlatmak, savurmak, atılmak, savrulmak, kendini bırakmak, sefa sürmek
+2	forgo	supheli	0	lost | kept	1	imtina etmek, zıt gitmek, boyun kaçırmak, itiraz etmek; bırakmak, vazgeçmek, feragat etmek	vazgeçmek, feragat etmek, önce gelmek, öncesinde olmak, hakkını kaybetmek, yitirmek
+2	fourscore	supheli	0	kept		seksen	seksen, seksen
+2	freehand	supheli	0	lost	1	(çizim/resim/vb.) alet kullanmadan elle yapılmış	serbest el ile, serbest el ile
+2	gazalle	supheli	0	lost	1	ahu	ceylan
+2	geosscience	supheli	0	lost	1	yeryüzü bilimi	yer bilimi, jeoloji bilimi
+2	gnostic	supheli	0	lost	1	ilmi	gnostik, sezgisel, esoterik bilgili, gnostik
+2	greaser	supheli	0	lost	1	yağlayıcı	aşağılayıcı: Meksika kökenli kişi, makine yağlayıcısı, yağcı
+2	guerilla	supheli	0	kept		gerilla, guerrilla, gerilla	gerilla, gerilla, gayrinizamî
+2	hard-on	supheli	0	lost	1	kalkmış yarak	sert erkeklik, ereksiyon
+2	head-on	supheli	0	lost	1	burun buruna, burun buruna	kafa kafaya, doğrudan, doğrudan karşı, açık, kafa kafaya, doğrudan, yüzleşerek, doğrudan
+2	hit-and-run	supheli	0	kept		çarpıp kaçan (haydavcı)	ani saldırıp kaçan, çarpıp kaçan, hit-and-run tarzı, ani saldırı, kaçma, sürücüsü kaçan
+2	hopomythumb	supheli	0	lost	1	cüce	tanınmayan sözcük
+2	humus	supheli	0	lost	1	kara toprak	humus, toprak çürüntüsü, humus, nohut ezmesi
+2	hypothenuse	supheli	0	kept		hipotenüs	hipotenüs
+2	inspiraional	supheli	0	kept		ilham verici	ilham verici
+2	intellingibility	supheli	0	kept		anlaşılabilme	anlaşılırlık, okunabilirlik
+2	junctive	supheli	0	kept		bağlayıcı	bağlayıcı, birleştirici
+2	knocker	supheli	0	kept		kapı tokmağı	kapı tokmağı, kapı çalan kişi, küçümseyen kişi, eleştirmen, meme, göğüs, kibirli adam, büyükbaba taslayan
+2	laze	supheli	0	kept		tembelce vakit geçirmek, tembellik etmek, tembellikle ya da hareketsiz geçirilen kısa süre, tembellik	boş boş oturmak, tembellik etmek, hiçbir şey yapmadan durmak, vakit geçirmek
+2	lengthways	supheli	0	kept		uzunlamasına, uzunluğuna	boyuna, uzunlamasına, boyuna, uzunlamasına
+2	mamilla	supheli	0	kept		meme başı	meme ucu, meme başı, küçük çıkıntı
+2	maraud	supheli	0	kept		yağma etmek, yağmalamak, çapulculuk etmek	yağma etmek, talan etmek, ganimet aramak, dolaşmak, ani saldırı, baskın
+2	mazarine	supheli	0	kept		koyu mavi, lacivert	koyu mavi, koyu mavi
+2	mercantilist	supheli	0	kept		merkantilist	merkantilist, merkantilist
+2	middleweight	supheli	0	lost	1	(boks) orta siklet	orta siklet, orta siklet
+2	milli-	supheli	0	lost	1	mili	binde bir
+2	mohammedan	supheli	0	kept		Müslüman	Hz. Muhammed'e ait, İslami, Müslüman
+2	monarchist	supheli	0	kept		krallık taraftarı	monarşist, krallık yanlısı, monarşist, krallık yanlısı
+2	mope	supheli	0	kept		neşesiz, kederli olmak	somurtmak, kederlenmek, aylak aylak dolaşmak, asık suratlı kimse, somurtkan
+2	muhammadan	supheli	0	kept		Müslüman	Muhammed'e ait, İslami, Müslüman
+2	muller	supheli	0	kept_kenet		havaneli, öğütme taşı	öğütücü, ezici, Müller (soyadı)
+2	omophalic	supheli	0	kept		göbek ile ilgili	göbekle ilgili, göbeğe ait
+2	omophalocele	supheli	0	kept		omfalosel	göbek fıtığı, omfalosel
+2	one-to-one	supheli	0	kept		birebir	birebir, birebir eşleşen, birebir
+2	oof	supheli	0	lost	1	mangır, para	ah
+2	overland	supheli	0	kept		karayolu ile yapılan, karadan	kara yoluyla, kara yoluyla
+2	pah	supheli	0	lost	1	püh!	hah
+2	para	supheli	0	kept		paraşütçü asker, paragraf	para, sayı, para, paraşütçü, Para (Brezilya), Belém
+2	partitive	supheli	0	lost	1	kısımlara ayıran	bölümsel, kısmi, bölen, ayıran, bölümsel sözcük
+2	pecker	supheli	0	lost	1	(kaba) yarak	ağaçkakan, gaga, goncaya benzer çıkıntı, penis, cesaret, moral
+2	peritonaeum	supheli	0	kept		periton, karınzarı	karın zarı, periton
+2	picaninny	supheli	0	lost	1	zenci çocuğu	siyah çocuk için ırkçı hakaret
+2	ply	supheli	0	kept | kept		düzenli sefer yapmak, gidip gelmek, işlemek, çalışmak; iş yapmak, kat, katmer	kat, tabaka, iplik teli, sağlamak, tedarik etmek, çalışmak, uğraşmak, düzenli sefer yapmak, gidip gelmek, birleştirmek, örmek, bükmek
+2	poltroon	supheli	0	kept		korkak adam, tabansız	korkak, yüreksiz, korkak, yüreksiz
+2	polysyndeton	supheli	0	lost	1	çokbağlaçlılık	çoksöz bağlama
+2	presto	supheli	0	lost	1	hızlı, çabuk	çok hızlı, presto, çok hızlı, presto
+2	puce	supheli	0	lost	1	koyu mor	koyu kızılımsı kahverengi, koyu kızılımsı kahverengi
+2	push-pull	supheli	0	lost	1	puşpul, açma-kapama	itme-çekme, itme-çekme
+2	quim	supheli	0	lost	1	am, amcık	kaba argo
+2	racialist	supheli	0	kept		ırkçı	ırkçı, ırkçı
+2	recreant	supheli	0	kept		alçak, korkak, namert	hain, sadakatsiz, korkak, hain, dönek, korkak
+2	remarrriage	supheli	0	kept		yeniden evlenme	yeniden evlenme
+2	rend	supheli	0	kept | kept		yırtmak, cırmak, yarmak, koparmak; bölmek, ayırmak, zorla çekip almak	yırtmak, parçalamak, yaralamak, bölmek
+2	reproducable	supheli	0	lost	1	üretilebilir	yeniden üretilebilir
+2	resell	supheli	0	lost	1	aynı şeyi bir daha satmak	yeniden satmak
+2	retell	supheli	0	kept		yeniden anlatmak	yeniden anlatmak, aktarmak, yeniden yazmak, uyarlamak
+2	seaward	supheli	0	kept		denize doğru giden	denize doğru, denizden esen, denize doğru, deniz yönü
+2	secessionist	supheli	0	kept		ayrılma yanlısı	ayrılıkçı, ayrılıkçı
+2	seminomad	supheli	0	kept		yarı göçebe	yarı göçebe, yarı göçebe
+2	shatter	supheli	0	kept | kept | kept		darmadağın etmek, bozmak, doğramak, parça parça etmek; kırmak, paramparça etmek, parçalamak, hurdalamak; körlemek, altüst etmek, kırılmak, paramparça olmak; mahvetmek, suya düşürmek, bozulmak; mahvolm	parçalanmak, kırılıp dağılmak, parçalamak, paramparça etmek, yıkmak, mahvetmek, altüst etmek
+2	sheeny	supheli	0	kept		parlak	parlak, ışıltılı, Yahudi (aşağılayıcı)
+2	shrive	supheli	0	lost	1	itiraf edilen günahları dinlemek	günahını bağışlamak
+2	slink	supheli	0	kept		gizlice sessiz sessiz yürümek	sinsice sıvışmak, süzülmek, gizlice uzaklaşmak
+2	slowtness	supheli	0	lost	1	tutukluk	yavaşlık, ağırlık
+2	sod	supheli	0	kept_kenet | kept | lost	3	çim, çimen parçası, gıcık, kıl; sinir herif, herif, ahbap, hıyar; baş belası	çim kaplı toprak, çim örtüsü, süperoksit dismutaz, eşcinsel erkek, ibne, herif, adam, çimle kaplamak
+2	southeastward	supheli	0	kept		güneydoğuya giden	güneydoğuya doğru, güneydoğu yönü, güneydoğuya doğru
+2	southerly	supheli	0	kept		güneye doğru, (rüzgâr) güneyden esen	güneyden esen, güneye doğru, güney rüzgârı, güneye doğru
+2	structuralist	supheli	0	kept		yapısalcı, yapısalcı	yapısalcı, yapısalcı
+2	sufragan	supheli	0	kept		yardımcı	yardımcı piskopos
+2	sufrage	supheli	0	kept		oy verme hakkı	oy verme hakkı, seçme hakkı, dua, şefaat
+2	sup	supheli	0	kept		akşam yemeği yemek, yudumlamak	yudum, az miktar içecek, yudumlamak, yavaş yavaş içmek, kaşıkla yemek
+2	surrealist	supheli	0	kept		gerçeküstücü, sürrealist, gerçeküstücü kimse, sürrealist	sürrealist, gerçeküstücü, sürrealist, gerçeküstücü
+2	syllepsis	supheli	0	lost	1	çiftleme	sillepsis, çift bağlama
+2	syntagm	supheli	0	kept		dizim, sentagma	sözdizimsel birim, dizim
+2	transfinite	supheli	0	kept		sonluötesi	sonlu olmayan, sonsuz
+2	transformationalist	supheli	0	kept		dönüşümcü, dönüşümcü	dönüşümselci, dönüşümselci
+2	uigur	supheli	0	kept		Uygur, Uygurca	Uygur, Uygur Türkü, Uygurca, Uygur alfabesi, Uygur yazısı
+2	unbind	supheli	0	lost	1	bağını çözmek, salıvermek	çözmek, açmak, serbest bırakmak, özgürleştirmek
+2	underglaze	supheli	0	lost	1	alt sırlama	sır altı, sır altı
+2	unobstrusive	supheli	0	lost	1	dikkati çekmeyen, göze çarpmayan	göze batmayan, sessiz
+2	untimely	supheli	0	kept | kept		vakitsiz, zamanından önce, mevsimsiz, uygunsuz; yersiz	zamansız, vaktinden önce, uygunsuz, yersiz, zamansız, vaktinden önce
+2	uranalysis	supheli	0	kept		idrar tahlili	idrar analizi
+2	vapourization	supheli	0	kept		buharlaşma	buharlaştırma, buharlaşma
+2	westward	supheli	0	kept		batıya doğru, garp istikameti	batıya doğru, batıya doğru, batı yönü
+2	winchbeck	supheli	0	lost	1	(boya) çıkrıklı tekne, haspel teknesi	İngilizce bir soyadı
+2	yankee	supheli	0	kept		Kuzey Amerikalı	Kuzeyli, Yankee, Yeni İngiltere'li, Amerikalı, Kuzeyli, Yankee

@@ -1,0 +1,38 @@
+id	ifade	kategori	mevcut_tr	sorun	karar
+3726	husband and wife	binomials	karı koca		tut
+4398	as expected	idioms	beklendiği gibi		tut
+4425	at stool	idioms	hacetini giderirken, kaka yaparken, dışkısını yaparken	tıbbi/eufemistik, uygun etiket gerekebilir	gözden_geçir
+4480	bag of nerves	idioms	sinir küpü		tut
+4852	break one's heart	idioms	birinin kalbini kırmak		tut
+4883	bricks and mortar	idioms	mağaza binası, sanal mağazaya nazaran fiziksel mağaza		tut
+5719	do you have a girlfriend	idioms	Kız arkadaşın var mı?		tut
+5890	easy peasy	idioms	çok kolay, çocuk oyuncağı		tut
+6117	find quarrel in a straw	idioms	Her şeye mız koymak	"Türkçe anlam bozuk (""Her şeye mız koymak""), yeniden yazım gerekir"	gözden_geçir
+6390	get off your high horse	idioms	insanlara tepeden bakmayı bırakmak		tut
+6461	get the shaft	idioms	kazığı yemek, kandırılmak, kazıklanmak, haksızlığa uğramak		tut
+6740	good morning	idioms	günaydın		tut
+6893	hard ever	idioms	Çok ama çok nadir görülen	geçersiz İngilizce, muhtemelen hardly ever; anlam tek başına kullanılamaz	gözden_geçir
+7194	home in on	idioms	hedef almak, odaklanmak, dikkatini vermek		tut
+7199	hone in on	idioms	hedef almak, odaklanmak, dikkatini vermek	home in on ile aynı anlam; yazım varyantı, tekrar olarak işaretlendi	gözden_geçir
+7272	i love you	idioms	Seni seviyorum		tut
+7276	i think therefore i am	idioms	Düşünüyorum, öyleyse varım – René Descartes		tut
+7287	i'm a girl	idioms	Ben bir kızım, ben kızım, kızım		tut
+7289	i'm married	idioms	evliyim		tut
+7340	in which case	idioms	olduğu durumda		tut
+7373	it's snowing	idioms	kar yağıyor		tut
+7443	keep a stiff upper lip	idioms	metin olmak, soğukkanlı olmak, dayanıklı durmak, duygusallığa kapılmamak		tut
+7665	leave somebody high and dry	idioms	Kimsesiz ve çaresiz bırakmak		tut
+8204	mind the gap	idioms	boşluğa dikkat edin		tut
+8206	mind your ps and qs	idioms	hareketlerine/davranışlarına dikkat et		tut
+8293	my love	idioms	aşkım, sevdiğim, sevdiceğim		tut
+8473	off the rack	idioms	hazır ürün, hazır giyim, raf ürünü		tut
+8782	play a blinder	idioms	çok iyi oynamak		tut
+9195	reach the heights	idioms	zirveye çıkmak		tut
+9286	right up one's alley	idioms	tam onun işi		tut
+9385	run circles around	idioms	kolayca yenmek, üstün gelmek		tut
+10275	take breath away	idioms	aklını başından almak, nefesini kesmek		tut
+10449	thank you	idioms	teşekkür ederim sana		tut
+11054	whipping boy	idioms	şamar oğlanı, günah keçisi		tut
+11116	wipe the floor	idioms	kolayca yenmek, alt etmek, sahadan silmek		tut
+13243	stride along	phrasal_verbs	arşınlamak	çeviri zayıf olabilir (arşınlamak), gözden geçirilmeli	gözden_geçir
+13468	walk up	phrasal_verbs	yukarı yürümek	çeviri zayıf olabilir (yukarı yürümek), gözden geçirilmeli	gözden_geçir

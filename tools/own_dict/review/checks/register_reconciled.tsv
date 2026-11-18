@@ -1,0 +1,1146 @@
+kelime	tür	durum	yeni_anlam_ve_not	eski_uygulama_anlamı	not_listede
+nobody	word	yeni_anlamda_isaret_var	önemsiz kişi, hiçkimse [küçümseyici]	hiç kimse, önemsiz kişi, sıradan kimse	hayir
+express	word	yeni_anlamda_isaret_var	acele, öncelikli [posta, kargo için]	(buyruk/istek/vb.) açık, kesin, hızlı, süratli, ekspres, ekspres tren, ekspres posta, ekspres taşımacılık, anlatmak, dile getirmek, belirtmek, ifade etmek, göstermek, belli etmek, açığa vurmak, ekspre	hayir
+junk	word	yeni_anlamda_isaret_var	uyuşturucu [argo]	ıvır zıvır, döküntü eşya, pılı pırtı, süprüntü, çöp, kalitesiz, boktan şey, Çinli'lere özgü altı düz yelkenli gemi	hayir
+baggage	word	yeni_anlamda_isaret_var	ahlaksız kadın [eskimiş, aşağılayıcı]	yük, bagaj	hayir
+grand	word	yeni_anlamda_isaret_var	bin dolar [gayriresmî argo]	ulu, yüce, görkemli, büyük, heybetli, parlak, debdebeli, muhteşem, tatlı, güzel, hoş, çok iyi, enfes, mükemmel, baş, yüksek, en önemli, ana, ince, kibar, tam, bütün, genel, (insan) önemli, bin dolar, 	hayir
+nick	word	yeni_anlamda_isaret_var	hapishane, kodes [İngiliz argosu]; çalmak, aşırmak [argo]	çentik, sıyrık, (İİ) kodes, çentmek, sıyırmak, (İİ) araklamak, yürütmek, sağlık yağdayı, form, kondisyon	hayir
+roger	word	yeni_anlamda_isaret_var	cinsel ilişkiye girmek [argo, kaba]	anlaşıldı!, tamam!, evet! peki!	hayir
+sneak	word	yeni_anlamda_isaret_var	sinsi herif, güvenilmez kimse [hakaret, gayriciddi]		evet
+medieval	word	yeni_anlamda_isaret_var	ortaçağ gibi, çok eski [mecazi, küçümseyici]	ortaçağa ait	hayir
+moron	word	yeni_anlamda_isaret_var	aptal, salak [hakaret, gayriresmî]		evet
+proposition	word	yeni_anlamda_isaret_var	ilişki teklifi [cinsel, gayriresmî]; yanaşmak, ilişki teklif etmek [gayriresmî, cinsel]	öneri, önerme, teklif, önerme, sav, iş teklifi, sevişme teklifi, sevişme teklif etmek	hayir
+dim	word	yeni_anlamda_isaret_var	kafası basit, yavaş [gayriresmî, küçümseyici]	loş, sönük, bulanık, belirsiz, ahmak, budala, salak, sönükleşmek, loşlaşmak, belirsizleşmek, kararmak, loşlaştırmak, karartmak	hayir
+crap	word	yeni_anlamda_isaret_var	boktan şey, saçmalık [kaba, argo]; dışkı, pislik [kaba, argo]; bok atmak, işemek [kaba, argo; tuvalete gitmek]	bok, zırva, saçmalık, boktan laf, ıvır zıvır döküntü	hayir
+lag	word	yeni_anlamda_isaret_var	hapsetmek, kilitlemek [eski, argo]	yavaş ilerlemek, arkadan gelmek, (boru) keçe ya da asbest kaplamak	hayir
+stink	word	yeni_anlamda_isaret_var	kıyamet, büyük gürültü [argo]	pis kokmak, leş gibi kokmak, berbat olmak, pis koku	hayir
+creep	word	yeni_anlamda_isaret_var	ürkütücü tip, tuhaf adam [aşağılayıcı]	sürünmek, sürünerek ilerlemek, sessizce sokulmak, (sarmaşık/vb.) sarılmak, sarılarak büyümek, ürpermek, tüyleri ürpermek, dalkavuk, yağcı, gıcık, kıl	hayir
+creeps	word	yeni_anlamda_isaret_var	ürkütücü tip, tiksindirici kimse [aşağılayıcı]	ürperti, korku	hayir
+punk	word	yeni_anlamda_isaret_var	serseri, külhanbeyi [argo]	pank, siktiriboktan, (Aİ) hasta, rahatsız, çürümüş odun, zırva, saçmalık, pankçı	hayir
+stuffy	word	yeni_anlamda_isaret_var	kurallara bağlı, sıkıcı [küçümseyici]	havasız, havası pis, sıkıcı, resmi, eski kafalı, tutucu	hayir
+jerry	word	yeni_anlamda_isaret_var	Alman [aşağılayıcı, ırkçı; kullanmayın]	lazımlık, oturak, Alman	hayir
+pox	word	yeni_anlamda_isaret_var	frengi, sifiliz [cinsel yolla bulaşan hastalık]	çiçek gibi kabarcıklar oluşturan hastalık	hayir
+babe	word	yeni_anlamda_isaret_var	güzel kadın [argo, eski]	bebek, körpe, yavru, bebek, fıstık	hayir
+slob	word	yeni_anlamda_isaret_var	kaba saba, adi herif [küçümseyici]	hantal, kılıksız, ayı	hayir
+lech	word	yeni_anlamda_isaret_var	şehvet düşkünü adam, kadınbaz [aşağılayıcı]	şehvet, şehvete düşkün olmak, hırs beslemek	hayir
+pat	word	yeni_anlamda_isaret_var	hazır, kolay cevap [küçümseyici]	hafifçe vurma, okşama, ufak kalıp tereyağı, elle hafifçe vurmak, hafifçe vurarak okşamak, tam yerinde, tam zamanında, tamamiyle uygun, münasip	hayir
+butcher's	word	yeni_anlamda_isaret_var	bir bakma, göz atma [İngiliz argosu]	kasap dükkânı, et dükkânı	hayir
+seduce	word	yeni_anlamda_isaret_var	baştan çıkarmak, ayartmak [cinsel anlamda]	baştan çıkarmak, ayartmak, kanına girmek, kandırmak, iğfal etmek	hayir
+poop	word	yeni_anlamda_isaret_var	dışkı, kaka [kaba, çocuk dili]; aptal, salak [gayriresmî, hakaret]; içeriden bilgi, gizli bilgi [argo]	kıç, pupa	hayir
+shooter	word	yeni_anlamda_isaret_var	tutucu, kiralık katil [argo]	vurucu, nişancı, atıcı, avcı	hayir
+dime	word	yeni_anlamda_isaret_var	küçük paket uyuşturucu [argo, on dolarlık]	(ABD ve Kanada'da) on sent değerindeki madeni pul	hayir
+hack	word	yeni_anlamda_isaret_var	karalama yazar, şarlatan yazar [küçümseyici]; taksi [argo]	kesmek, yarmak, yaşlı ve yorgun at, kira beygiri, binek atı, çok sayıda düşük kaliteli eserler yazan yazar	hayir
+scum	word	yeni_anlamda_isaret_var	aşağılık herifler, serseriler [hakaret]		evet
+tommy	word	yeni_anlamda_isaret_var	İngiliz askeri [argo, eski]; tommy silahı [Thompson makineli tüfek, argo]	ingiliz ordusunda er, somun anahtarı	hayir
+crib	word	yeni_anlamda_isaret_var	kopya notu, çeviri özeti [yasa dışı, okul argosu]; kopya çekmek [sınav argosu]	çocuk karyolası, hayvan yemliği, kopya çekmek	hayir
+chit	word	yeni_anlamda_isaret_var	küstah kız, şımarık kız [aşağılayıcı, olgunlaşmamış genç kız için]	küçük çocuk, küstah, saygısız ve yaygaracı kadın	hayir
+hooker	word	yeni_anlamda_isaret_var	fahişe, sokak kadını [argo, kaba]	tek direkli balıkçı gemisi, fahişe, orospu	hayir
+nuthouse	word	yeni_anlamda_isaret_var	akıl hastanesi, deli dolu yer [aşağılayıcı, argo]	tımarhane	hayir
+sissy	word	yeni_anlamda_isaret_var	korkak çocuk, ödlek [aşağılayıcı]; kadınsı, erkekliğe yakışmayan [aşağılayıcı]	hanımevladı, kız gibi (oğlan)	hayir
+swine	word	yeni_anlamda_isaret_var	iğrenç herif, pislik [hakaret]		evet
+applesauce	word	yeni_anlamda_isaret_var	saçma sapan laf, boş konuşma [argo]	elma püresi	hayir
+yahoo	word	yeni_anlamda_isaret_var	kaba adam, cahil herif [aşağılayıcı]	ayı	hayir
+dope	word	yeni_anlamda_isaret_var	uyuşturucu, esrar [argo]; salak, aptal [argo]; gizli bilgi, içeriden bilgi [argo]	uyuşturucu madde, budala, salak, bilgi haber, uyuşturucu madde vermek, uyuşturucu katmak, (at/vb.ye) doping yapmak	hayir
+illicit	word	yeni_anlamda_isaret_var	ahlaka aykırı, gayrimeşru [özellikle cinsel ahlak için]	yasaya aykırı, yasadışı, yasak	hayir
+homo	word	yeni_anlamda_isaret_var	eşcinsel [aşağılayıcı olabilir, dikkatli kullanın]	insan, homoseksüel, eşcinsel	hayir
+mossy	word	yeni_anlamda_isaret_var	eski moda, demode [küçümseyici]	yosunlu	hayir
+provincial	word	yeni_anlamda_isaret_var	taşralı, kasaba [aşağılayıcı olabilir]	taşralı, ile ait, taşraya ait, görgüsüz	hayir
+slowness	word	yeni_anlamda_isaret_var	geri zekâlılık, kıt zekâ [eskimiş, kaba]	yavaşlık, hantallık	hayir
+tartar	word	yeni_anlamda_isaret_var	huysuz kadın, cadaloz [hakaret, argo]	kefeki, pesek, şirret, bela, vahşi kimse	hayir
+suburban	word	yeni_anlamda_isaret_var	banliyö tipi, sıradan, küçük burjuva [hafif küçümseyici]	banliyöde oturan, banliyö, civarda bulunan	hayir
+tit	word	yeni_anlamda_isaret_var	meme, göğüs [resmî değil, kaba olmayan]	meme, ayva, memebaşı, salak, baştankara	hayir
+abstinence	word	yeni_anlamda_isaret_var	çekinme, uzak durma [alkol, cinsellik için]	uzak durma, perhiz, geri durma, kaçınma	hayir
+amateurish	word	yeni_anlamda_isaret_var	amatörce, beceriksiz [küçümseyici]	amatörce, beceriksiz, kalitesiz	hayir
+arse	word	yeni_anlamda_isaret_var	göt deliği [kaba, argo]	kab, göt, gıcık kimse, kıl, sinir	hayir
+booby	word	yeni_anlamda_isaret_var	aptal, budala [hafif hakaret]		evet
+bugger	word	yeni_anlamda_isaret_var	sodomi yapan kişi [kaba, hakaret]; sodomi yapmak [kaba, cinsel]; canını sıkmak, bozmak [gayriresmî, İngiliz argosu]; Lanet olsun, kahretsin [ünlem, argo]	adamcağız/hayvancağız, başbelası, karın ağrısı, bela, salak, kıl, gıcık, sinir, oğlancı, götçü, Kahretsin!, Hay ...!	hayir
+climax	word	yeni_anlamda_isaret_var	orgazm, doruk [cinsel]	en heyecanlı bölüm, orgazm, en heyacanlı çekide ulaşmak, doruğa ulaşmak	hayir
+cunnilingus	word	yeni_anlamda_isaret_var	oral seks (kadında) [cinsel, teknik]	ferce dil vurma	hayir
+flunky	word	yeni_anlamda_isaret_var	yaltakçı, kölece itaatkâr kimse [aşağılayıcı]	dalkavuk, yağcı, hizmetçi	hayir
+hick	word	yeni_anlamda_isaret_var	köylü, kaba saba kişi [aşağılayıcı]	hödük, kıro	hayir
+jackass	word	yeni_anlamda_isaret_var	aptal, salak [hakaret]		evet
+mammy	word	yeni_anlamda_isaret_var	siyahi dadı [aşağılayıcı, tarihî]	anne, ana	hayir
+pitiful	word	yeni_anlamda_isaret_var	berbat, içler acısı [küçümseyici]	acıklı, acınırlı, acınacak, merhametli	hayir
+prick	word	yeni_anlamda_isaret_var	aptal, sersem [hakaret, argo]	delik, delme, sokma, batırma, küçük keskin acı, iğne acısı, diken, iğne, kab, yarak, kab, ahmak, hıyar, batmak, delmek, batırmak, sançmak, giydirmek, sokmak, iğnelemek, iğne ya da batma acısı duymak, 	hayir
+puke	word	yeni_anlamda_isaret_var	iğrenç herif, alçak [küçümseyici, gayriresmî]	kusmak, kusmuk	hayir
+pup	word	yeni_anlamda_isaret_var	toy, acemi genç [gayriresmî, küçümseyici]	yavru fok, yavru köpek, küçük, (köpek) doğurmak, yavrulamak	hayir
+rascal	word	yeni_anlamda_isaret_var	yaramaz, şirret [şakacı, sevimli kabahat]	namussuz, alçak, hergele, yaramaz, kerata, haydut	hayir
+shag	word	yeni_anlamda_isaret_var	seks, cinsel ilişki [argo, kaba]	sert tütün	hayir
+smack	word	yeni_anlamda_isaret_var	eroin [argo]	şaplak atmak, tokatlamak, ...kokmak/tadı vermek/hissi uyandırmak, şamar, tokat, şaplak, şaklama, şak sesi, şapırtı, şapırtılı öpücük, küçük balıkçı teknesi, küt diye, güm diye	hayir
+stimulation	word	yeni_anlamda_isaret_var	cinsel okşama [cinsel bağlam]	dürtme, teşvik, uyarma, uyarım	hayir
+topping	word	yeni_anlamda_isaret_var	harika, mükemmel [İngiliz argosu, eskimiş]	birinci sınıf, en iyi kalite, üstün, mükemmel, tepesini kesme, üst, tepe	hayir
+underling	word	yeni_anlamda_isaret_var	astlar, emrindeki kişi [aşağılayıcı]	ast, önemsiz memur	hayir
+accost	word	yeni_anlamda_isaret_var	taciz etmek, sarkıntılık etmek [cinsel bağlamda]	yanına gidip konuşmak	hayir
+addlebrained	word	yeni_anlamda_isaret_var	aptal, kafası karışık [hakaret içerir]		evet
+afro	word	yeni_anlamda_isaret_var	afro saç modeli [kıvırcık, kabarık]	uzun ve cingelek saç	hayir
+airfreight	word	yeni_anlamda_isaret_var	havayoluyla taşımak [kargo için]	tenek yükü	hayir
+amatory	word	yeni_anlamda_isaret_var	aşka dair, aşk dolu [cinsel çağrışımlı da olabilir]	âşıkane, şehvetli	hayir
+antediluvian	word	yeni_anlamda_isaret_var	çok eski, modası geçmiş [mizahi, küçümseyici]	Tufandan evvelki devre ait, çok yaşlı adam, çok yaşlı kimse	hayir
+ap	word	yeni_anlamda_isaret_var	ergen, delikanlı [Batı İngiltere ağzı, argo]	nisan, on iki havariden biri	hayir
+arousal	word	yeni_anlamda_isaret_var	cinsel uyarılma, okşaşma [cinsel bağlam]	uyandırma, canlandırma	hayir
+arty	word	yeni_anlamda_isaret_var	sanatsal görünümlü, gösterişli [küçümseyici]	sanat konusunda hava atan	hayir
+babbit	word	yeni_anlamda_isaret_var	konformist burjuva [mecazi, küçümseyici]	vaytmetal	hayir
+babbler	word	yeni_anlamda_isaret_var	geveze, boşboğaz [küçümseyici]	geveze kimse, ezme, boşboğaz, çağlayan	hayir
+bah	word	yeni_anlamda_isaret_var	hah, boş ver [küçümseme]	tüü!, tüh!	hayir
+balladmonger	word	yeni_anlamda_isaret_var	sokak şarkıcısı, ucuz baladcı [aşağılayıcı]	şarkı satan kimse	hayir
+banger	word	yeni_anlamda_isaret_var	sosis [İngiliz argosu, domuz eti]; hurda araba, eski araba [gayriresmî, İngiliz argosu]	sosis, havai fişek, külüstür otomobil, hurda araba	hayir
+bawd	word	yeni_anlamda_isaret_var	fahişe, orospu [aşağılayıcı, eskimiş]	eski genelev patroniçesi	hayir
+bawdily	word	yeni_anlamda_isaret_var	müstehcen biçimde, edepsizce [kaba şakalarla]	açık saçık bir şekilde	hayir
+bedlam	word	yeni_anlamda_isaret_var	akıl hastanesi [eski, aşağılayıcı]	gürültülü patırtılı yer, çıfıt çarşısı	hayir
+berk	word	yeni_anlamda_isaret_var	aptal, salak [İngiliz argosu]	aptal, salak, pezevenk	hayir
+billingsgate	word	yeni_anlamda_isaret_var	küfür, kaba sözler [argo, eski]	ağız bozukluğu	hayir
+bloodsucker	word	yeni_anlamda_isaret_var	asalak, sömürücü [mecaz, aşağılayıcı]	asalak, parazit, kan emici, sülük	hayir
+blimp	word	yeni_anlamda_isaret_var	gerici, aşırı milliyetçi yaşlı kişi [mecazi, küçümseyici]	keşif balonu	hayir
+bolshy	word	yeni_anlamda_isaret_var	aşırı solcu, devrimci [aşağılayıcı]	kurulu toplum düzenine karşı, yardımı esirgeyen	hayir
+bogtrotter	word	yeni_anlamda_isaret_var	bataklık bölgede yaşayan kişi [aşağılayıcı, eski kullanım]	bataklık arazide oturan kimse	hayir
+boilermaker	word	yeni_anlamda_isaret_var	bira ve viski karışımı içki [argo]	kazancı	hayir
+bonehead	word	yeni_anlamda_isaret_var	aptal, kafasız [hakaret]		evet
+bonk	word	yeni_anlamda_isaret_var	sevişmek, birlikte olmak [resmî değil, argo]	sikişmek, sikiş	hayir
+boozer	word	yeni_anlamda_isaret_var	meyhane, bar [İngiliz argosu]	içkici, ayyaş, meyhane	hayir
+boss-eyed	word	yeni_anlamda_isaret_var	şaşı [İngiliz argosu, gayriresmî]	şaşı	hayir
+brummagem	word	yeni_anlamda_isaret_var	ucuz ve gösterişli, sahte [aşağılayıcı]	sahte, taklit	hayir
+brocade	word	yeni_anlamda_isaret_var	brokar dokumak, desen işlemek [kumaşa kabartmalı desen dokumak]	işlemeli, simli kumaş	hayir
+bub	word	yeni_anlamda_isaret_var	dostum, kardeşim [eski ve argo]	kardeş	hayir
+buffoon	word	yeni_anlamda_isaret_var	palyaço, soytarı [aşağılayıcı, gülünç davranan]; aptal, budala [hakaret, kaba ve cahil]	soytarı, maskara, telhek, nedim, hokkabaz, oyunbaz, özünden hokka çıkarmak, hokkabazlık etmek, telheklik etmek, oyunbazlık etmek	hayir
+bumpkin	word	yeni_anlamda_isaret_var	köylü, kaba saba adam [aşağılayıcı]	hödük, kıro	hayir
+bunghole	word	yeni_anlamda_isaret_var	anüs [kaba, argo]	fıçı ağzı	hayir
+burin	word	yeni_anlamda_isaret_var	oyma kalemi, gravür kazıma aleti [gravürcülük, kabartma için]	hakkak kalemi	hayir
+butch	word	yeni_anlamda_isaret_var	erkeksi, maskülen [eşcinsellik bağlamında]; erkeksi kadın [aşağılayıcı, argo]	erkeksi, erkeksi kadın, erkek fatma	hayir
+canaille	word	yeni_anlamda_isaret_var	serseri takımı, alt tabaka [küçümseyici, eski]	ayaktakımı	hayir
+carnal	word	yeni_anlamda_isaret_var	bedensel, şehvani [cinsel arzu için]	cinsel, şehvetle ilgili	hayir
+changeling	word	yeni_anlamda_isaret_var	aptal, geri zekâlı kişi [eski, aşağılayıcı]	aptal kimse, gizlice değiştirilen bebek	hayir
+chassis	word	yeni_anlamda_isaret_var	gövde, vücut [şaka veya argo, insan]	şasi	hayir
+chatterer	word	yeni_anlamda_isaret_var	geveze, çenesi düşük kimse [küçümseyici]	geveze, nakkal, çerenci, farfaracı	hayir
+chesterfield	word	yeni_anlamda_isaret_var	kanepe, koltuk [kolçaklı, kabarık döşemeli]	kanape	hayir
+chinaman	word	yeni_anlamda_isaret_var	Çinli [aşağılayıcı, kullanmaktan kaçının]	Çinli	hayir
+choky	word	yeni_anlamda_isaret_var	hapishane [İngiliz argosu, eski]	boğucu, hapishane	hayir
+chucklehead	word	yeni_anlamda_isaret_var	aptal, kafasız [gayriresmî, hafif hakaret]		evet
+clod	word	yeni_anlamda_isaret_var	ahmak, beceriksiz kişi [hakaret]		evet
+clink	word	yeni_anlamda_isaret_var	hapishane, cezaevi [argo, gayriresmî]	çınlamak, tınlamak, çınlatmak, tınlatmak, çınlama, tınlama, kodes	hayir
+cobblers	word	yeni_anlamda_isaret_var	testis [argo, kaba]	aptalca konuşma, saçmalık, zırva	hayir
+collaborationist	word	yeni_anlamda_isaret_var	işbirlikçi [düşman işgaline karşı, aşağılayıcı]	işbirlikçi	hayir
+collaborator	word	yeni_anlamda_isaret_var	düşmana yardım eden [işgal altında, aşağılayıcı]	iş arkadaşı, işbirlikçi, mesai arkadaşı	hayir
+commie	word	yeni_anlamda_isaret_var	komünist [aşağılayıcı, argo]	komünist	hayir
+compere	word	yeni_anlamda_isaret_var	sunucu [televizyon, kabare için]	sunucu, sunuculuk yapmak, sunmak	hayir
+continence	word	yeni_anlamda_isaret_var	iffet, nefsine hâkimiyet [cinsel konularda]	ılımlılık, ölçülülük	hayir
+coon	word	yeni_anlamda_isaret_var	ırkçı hakaret [çok aşağılayıcı, kullanmayın]	zenci, marsık, karaköpek, hayb, rakun	hayir
+countrified	word	yeni_anlamda_isaret_var	köylü gibi, kırsal [çoğunlukla hafif küçümseyici]	köylümsü, kır halkı gibi	hayir
+crawler	word	yeni_anlamda_isaret_var	dalkavuk, yaltaklanan kişi [resmî olmayan, küçümseyici]	tırtıl zincirli makine	hayir
+crone	word	yeni_anlamda_isaret_var	cadaloz, yaşlı cadı [aşağılayıcı]	kocakarı	hayir
+cuckoldry	word	yeni_anlamda_isaret_var	karısını aldatılan kocalık, boynuzluluk [aşağılayıcı]	zina	hayir
+cur	word	yeni_anlamda_isaret_var	melez köpek, sokak köpeği [aşağılayıcı]; korkak, alçak adam [hakaret]	sokak köpeği, adi köpek, korkak/adi herif, aşağılık köpek	hayir
+cyprian	word	yeni_anlamda_isaret_var	fahişe, sokak kadını [eskimiş, aşağılayıcı]	Kıbrıslı kimse, şehvetli, çapkın	hayir
+dago	word	yeni_anlamda_isaret_var	İtalyan kökenli kişiyi aşağılayan söz [hakaret, kullanmayın]		evet
+darbies	word	yeni_anlamda_isaret_var	kelepçe [argo, eski]	kelepçe	hayir
+darky	word	yeni_anlamda_isaret_var	hakaret içeren ırkçı ifade [aşağılayıcı, kullanılmamalı]	zenci	hayir
+dalliance	word	yeni_anlamda_isaret_var	flört, cilveleşme [cinsel ilgi için]	tembellik, oynaşma, flört, vakit geçirme	hayir
+dauber	word	yeni_anlamda_isaret_var	acemi ressam, beceriksiz boyacı [küçümseyici]	acemi ressam	hayir
+deign	word	yeni_anlamda_isaret_var	tenezzül etmek [küçümseyerek, onur meselesi olarak]	tenezzül etmek	hayir
+dekko	word	yeni_anlamda_isaret_var	bakış, göz atma [İngiliz argosu]	bakış	hayir
+demimonde	word	yeni_anlamda_isaret_var	yarı fahişe çevresi [tarihî, küçümseyici]	toplumca lekelenmiş kadınlar	hayir
+desirability	word	yeni_anlamda_isaret_var	çekicilik, cazibe [cinsel çekicilik için]	istenilme, hoşa gitme	hayir
+dibs	word	yeni_anlamda_isaret_var	para, nakit [argo, eskimiş]	ufak para	hayir
+dickens	word	yeni_anlamda_isaret_var	şeytan [eski, argo]	şeytan	hayir
+dickey	word	yeni_anlamda_isaret_var	bozuk, güvenilmez [İngiliz argosu]	önlük, göğüslük, eşek, küçük kuş	hayir
+dilettante	word	yeni_anlamda_isaret_var	amatör, hevesli ama ciddiyetsiz kişi [küçümseyici]; yüzeysel, amatörce [küçümseyici]	sanat meraklısı kimse, amatör	hayir
+dinky	word	yeni_anlamda_isaret_var	şirin, zarif [İngiliz argosu]	önemsiz, küçük	hayir
+dishy	word	yeni_anlamda_isaret_var	çekici, cazip [İngiliz argosu, gayriresmî]	seksi	hayir
+dolt	word	yeni_anlamda_isaret_var	aptal, kafasız [hakaret]		evet
+doss	word	yeni_anlamda_isaret_var	geçici yatak, kalacak yer [argo]	kısa uyku, şekerleme, yatmak	hayir
+dosser	word	yeni_anlamda_isaret_var	evsiz, gelişigüzel yerde yatan kişi [İngiliz argosu]	sırtta taşınan sepet, küfe	hayir
+dotard	word	yeni_anlamda_isaret_var	bunamış ihtiyar, yaşlı bunak [aşağılayıcı]	bunak, moruk	hayir
+doxy	word	yeni_anlamda_isaret_var	metres, sevgili [eski, küçümseyici]	metres, doktrin	hayir
+drivel	word	yeni_anlamda_isaret_var	saçmalık, boş laf [küçümseyici]	saçma sapan söz, saçma, saçmalık, saçma sapan konuşmak	hayir
+dry-as-dust	word	yeni_anlamda_isaret_var	sıkıcı kitap, akademisyen [hafif küçümseyici]	sıkıcı	hayir
+drool	word	yeni_anlamda_isaret_var	saçma sapan laf, boş konuşma [küçümseyici]	ağzının suyu akmak, ağzı sulanmak	hayir
+dullard	word	yeni_anlamda_isaret_var	kafası basit kişi, aptal [hafif hakaret]		evet
+dunce	word	yeni_anlamda_isaret_var	aptal, kafası çalışmayan kişi [küçümseyici]	kolay öğrenemeyen kimse, aptal	hayir
+dunderhead	word	yeni_anlamda_isaret_var	aptal, kafasız [küçümseyici]	ahmak, kalın kafalı kimse, aptal	hayir
+earthiness	word	yeni_anlamda_isaret_var	topraklılık, kabalık [doğal ve kaba tarz]; açık sözlülük, kabalık [cinsellik ya da argo ile ilgili]	sağlamlık, metanet	hayir
+effeminacy	word	yeni_anlamda_isaret_var	kadınsılık, kadınsı tavır [erkekler için, aşağılayıcı]	kadınımsı davranış, çıtkırıldımlık	hayir
+epicene	word	yeni_anlamda_isaret_var	kadınsı, erkeksi [küçümseyici]	her iki cinse ait, kadınımsı (erkek)	hayir
+epigone	word	yeni_anlamda_isaret_var	taklitçi, epigon [aşağılayıcı, sanatçı için]	epigon	hayir
+exhibitionist	word	yeni_anlamda_isaret_var	teşhirci [cinsel bağlamda, resmî]	teşhirci, göstermeci	hayir
+faggot	word	yeni_anlamda_isaret_var	eşcinsel erkek [aşağılayıcı, küfür niteliğinde]	çalı çırpı demeti, çıra demeti, (Aİ) ibne, sevimsiz kimse, köfte	hayir
+fanny	word	yeni_anlamda_isaret_var	kadın cinsel organı [kaba, vulgar]	but	hayir
+fiddle-faddle	word	yeni_anlamda_isaret_var	boş laf, saçma sapan [küçümseyici]	ıvır zıvır, saçma sapan söz	hayir
+fishwife	word	yeni_anlamda_isaret_var	kaba kadın, arsız kadın [aşağılayıcı]	balıkçı kadın	hayir
+fiver	word	yeni_anlamda_isaret_var	beş dolarlık banknot [ABD, argo]	beş sterlin	hayir
+flagellant	word	yeni_anlamda_isaret_var	kamçılanmaktan zevk alan kişi [cinsel, resmî]	döven, kırbaçlayan	hayir
+flatfoot	word	yeni_anlamda_isaret_var	polis memuru, devriye polisi [argo, mecaz]	düztaban	hayir
+flasher	word	yeni_anlamda_isaret_var	teşhirci [cinsel organını gösteren kişi]	flaşör, teşhirci	hayir
+fleabag	word	yeni_anlamda_isaret_var	pasaklı kimse, bakımsız hayvan [gayriresmî, hakaret]		evet
+flic	word	yeni_anlamda_isaret_var	polis memuru, polis [argo, Fransızca kökenli]	sakçı	hayir
+flivver	word	yeni_anlamda_isaret_var	küçük ucuz araba, hurda otomobil [eskimiş, argo]	külüstür otomobil, başarısızlık	hayir
+flit	word	yeni_anlamda_isaret_var	gece yarısı kaçışı [borçlardan, argo]	uçmak, uçuşmak, gitmek	hayir
+flog	word	yeni_anlamda_isaret_var	satmak, pazarlamak [gayriresmî, İngiliz argosu]	dövmek, kırbaçlamak, satmak, satmaya çalışmak	hayir
+floozie	word	yeni_anlamda_isaret_var	fahişe, orospu [aşağılayıcı, eskimiş]	hafifmeşrep kadın	hayir
+floozy	word	yeni_anlamda_isaret_var	fahişe, orospu [aşağılayıcı, eskimiş]	hafifmeşrep kadın	hayir
+fogyish	word	yeni_anlamda_isaret_var	modası geçmiş, eski kafalı [küçümseyici]	eski kafalı	hayir
+frump	word	yeni_anlamda_isaret_var	özensiz, şekilsiz kadın [aşağılayıcı]	acayip kılıklı kadın	hayir
+fuddy-duddy	word	yeni_anlamda_isaret_var	eski kafalı, modası geçmiş kimse [mizahi, küçümseyici]	eski kafalı, tutucu, örümcek kafalı kimse	hayir
+fuggy	word	yeni_anlamda_isaret_var	havasız, kapalı, bunaltıcı [İngiliz argosu]	havasız	hayir
+fuzz	word	yeni_anlamda_isaret_var	polis, emniyetçi [argo, aşağılayıcı]	kısa tüy, hav, sakçı, aynasız	hayir
+gam	word	yeni_anlamda_isaret_var	bacak [argo, eski kullanım]	balina sürüsü, bacak	hayir
+gammon	word	yeni_anlamda_isaret_var	kandırmak, aldatmak [İngiliz argosu]	tütsülenmiş jambon	hayir
+gamp	word	yeni_anlamda_isaret_var	şemsiye [gayriresmî, argo]	şemsiye	hayir
+ganef	word	yeni_anlamda_isaret_var	hırsız, dolandırıcı [Yidiş kökenli, hakaret]; alçak herif, sahtekâr [genel hakaret]		evet
+gasser	word	yeni_anlamda_isaret_var	şahane kişi, eğlenceli adam [argo, eski]	gaz sondajı, atıp tutan kimse	hayir
+gat	word	yeni_anlamda_isaret_var	tabanca, silah [argo]	dar arna, tüfek, tabanca	hayir
+gayness	word	yeni_anlamda_isaret_var	eşcinsellik [cinsel yönelim için]	ibnelik, sevicilik, neşelilik, neşe	hayir
+gawk	word	yeni_anlamda_isaret_var	sersem, beceriksiz kimse [hakaret]		evet
+geriatric	word	yeni_anlamda_isaret_var	yaşlılara özgü, yaşlı [gayriresmî, bazen küçümseyici]	ihtiyarlığa ait	hayir
+gipsy	word	yeni_anlamda_isaret_var	çingene [ırk adı, aşağılayıcı olabilir]	çingene	hayir
+gob	word	yeni_anlamda_isaret_var	denizci, gemici [argo]; ağız [argo, gayriresmî]	ağız	hayir
+gooey	word	yeni_anlamda_isaret_var	duygusal, şekerli [gündelik, hafif küçümseyici]	yapışkan	hayir
+goop	word	yeni_anlamda_isaret_var	GHB uyuşturucusu [argo]	yapıştırıcı madde	hayir
+grabber	word	yeni_anlamda_isaret_var	kapıp koparan kimse, açgözlü adam [aşağılayıcı]	yağmacı, vinç	hayir
+greaser	word	yeni_anlamda_isaret_var	aşağılayıcı: Meksika kökenli kişi [ırkçı, hakaret içerir]		evet
+groveller	word	yeni_anlamda_isaret_var	yaltakçı, dalkavuk [aşağılayıcı]	dalkavuk, yardakçı	hayir
+guffaw	word	yeni_anlamda_isaret_var	yüksek sesli kahkaha, kahkahalar [gür ve kaba]	gürültülü kahkaha, gürültülü kahkaha atmak	hayir
+gushy	word	yeni_anlamda_isaret_var	abartılı duygusal, coşkulu [gayri resmî, hafif küçümseyici]	konuşkan	hayir
+guttersnipe	word	yeni_anlamda_isaret_var	sokak çocuğu, serseri çocuk [aşağılayıcı]	sokak çocuğu	hayir
+gyp-joint	word	yeni_anlamda_isaret_var	müşteri soyan yer, dolandırıcılık yuvası [argo]	kazık yer, pahalı yer	hayir
+hackie	word	yeni_anlamda_isaret_var	taksici, şoför [Avustralya, Yeni Zelanda argosu]	taksi haydavcısı	hayir
+hag	word	yeni_anlamda_isaret_var	cadı, çirkin yaşlı kadın [aşağılayıcı]	yaşlı/çirkin kadın, acuze, cadı, cadaloz	hayir
+half-wit	word	yeni_anlamda_isaret_var	aptal, budala [hakaret, gayriresmî]; geri zekâlı [eski, küçümseyici]	aptal, budala, geri zekâlı	hayir
+hard-on	word	yeni_anlamda_isaret_var	sert erkeklik, ereksiyon [kaba, argo]	kalkmış yarak	hayir
+hanger-on	word	yeni_anlamda_isaret_var	yapışkan, asalak [aşağılayıcı]	yağcı, dalkavuk, yalaka, beleşçi, çanak yalayıcı	hayir
+hanky-panky	word	yeni_anlamda_isaret_var	ayıp iş, gizli ilişki [cinsel, hafif]	dümen, hile, pislik, adilik, sinsilik, zina	hayir
+harlotry	word	yeni_anlamda_isaret_var	fuhuş, orospuluk [resmî değil, aşağılayıcı]	fahişelik, orospuluk	hayir
+harpy	word	yeni_anlamda_isaret_var	cadaloz, huysuz kadın [hakaret]		evet
+harridan	word	yeni_anlamda_isaret_var	cadaloz, azarlayıcı yaşlı kadın [hakaret]		evet
+hayseed	word	yeni_anlamda_isaret_var	köylü bumin, kaba saba taşralı [aşağılayıcı]	saman tohumu	hayir
+headshrinker	word	yeni_anlamda_isaret_var	psikiyatrist, ruh doktoru [gayriresmî, argo]	psikiyatrist	hayir
+heathenish	word	yeni_anlamda_isaret_var	putperest, dinsiz [eski, küçümseyici]	dinsiz	hayir
+heathenism	word	yeni_anlamda_isaret_var	putperestlik, dinsizlik [tarihsel, küçümseyici]	putperestlik, dinsizlik, barbarlık	hayir
+hellcat	word	yeni_anlamda_isaret_var	cadaloz, şeytan kadın [hakaret]		evet
+heeler	word	yeni_anlamda_isaret_var	yardımcı, peşinde koşan kişi [siyaset, argo]	kunduracı, bir politikacının adamı	hayir
+hellhound	word	yeni_anlamda_isaret_var	zalim adam, canavar [mecazi, hakaret]		evet
+hetero	word	yeni_anlamda_isaret_var	heteroseksüel [gündelik, argo]	karşı cinse ilgi duyan, homoseksüel olmayan, karşı cinse ilgi duyan kimse	hayir
+high-class	word	yeni_anlamda_isaret_var	gösterişli, şık [küçümseyici de olabilir]	kaliteli, birinci sınıf, mükemmel	hayir
+hillbilly	word	yeni_anlamda_isaret_var	köylü, kaba saba kişi [aşağılayıcı]	çiftçi, kentçi	hayir
+hindoo	word	yeni_anlamda_isaret_var	Hindu [eski ve aşağılayıcı, yerine Hindu kullanılır]	Hintli, Hindu	hayir
+hoggish	word	yeni_anlamda_isaret_var	domuz gibi, obur [aşağılayıcı]	domuz gibi, aç gözlü, arsız	hayir
+hoitytoity	word	yeni_anlamda_isaret_var	kendini beğenmiş, züppe [küçümseyici]	azametli, kibirli, düşüncesiz, kibirlilik, düşüncesizlik, hoppalık	hayir
+hooey	word	yeni_anlamda_isaret_var	saçmalık, boş laf [argo]	zırva	hayir
+hooha	word	yeni_anlamda_isaret_var	patırtı, gürültü, abartılı heyecan [argo]	yaygara	hayir
+hookup	word	yeni_anlamda_isaret_var	kısa süreli ilişki, tanışma [argo]	bağlantı, birbirine bağlama	hayir
+hoosegow	word	yeni_anlamda_isaret_var	hapishane, kodes [argo]	hapishane	hayir
+hooter	word	yeni_anlamda_isaret_var	burun [argo]	siren, düdük, paydos düdüğü	hayir
+hopper	word	yeni_anlamda_isaret_var	huni, lehim [bir kaba boşaltılan maddeler için]	doldurma hunisi, çamur ve çöp mavnası, silo	hayir
+hooch	word	yeni_anlamda_isaret_var	kaçak içki, sahte rakı [argo]	içki, alkollü içecek	hayir
+hoodlum	word	yeni_anlamda_isaret_var	serseri, külhanbeyi [argo]	külhanbeyi, kabadayı, serseri	hayir
+hotness	word	yeni_anlamda_isaret_var	cinsel istek, ateşlilik [argo]	sıcaklık, hararet	hayir
+hound	word	yeni_anlamda_isaret_var	alçak, rezil herif [hakaret]		evet
+ignoramus	word	yeni_anlamda_isaret_var	cahil, bilgisiz kimse [aşağılayıcı]	cahil, cahil kimse	hayir
+ilk	word	yeni_anlamda_isaret_var	tür, cins, sınıf [genellikle kişiler için, küçümseyici]	tür	hayir
+impotence	word	yeni_anlamda_isaret_var	iktidarsızlık [tıbbi, erkeklerde cinsel ilişki]	iktidarsızlık, etkisizlik, güçsüzlük, acizlik	hayir
+impotency	word	yeni_anlamda_isaret_var	iktidarsızlık [tıbbi, erkeklerde cinsel ilişki]	etkisizlik, güçsüzlük, iktidarsızlık	hayir
+indelicate	word	yeni_anlamda_isaret_var	edepsiz, uygunsuz [resmî olmayan, neredeyse müstehcen]		evet
+ingurgitate	word	yeni_anlamda_isaret_var	aşırı yemek, tıkınmak [resmî olmayan, küçümseyici]	oburca yiyip içmek, tıkınmak	hayir
+injun	word	yeni_anlamda_isaret_var	kızılderili (hakaret) [ırkçı, kullanılmamalı]		evet
+jingo	word	yeni_anlamda_isaret_var	aşırı milliyetçi, savaş yanlısı [aşağılayıcı]	şoven	hayir
+jive	word	yeni_anlamda_isaret_var	saçma sapan laf, yalan [argo, konuşma dili]	hızlı bir tür caz müziği, bu müzikle yapılan dans, yanıltıcı/saçma konuşma	hayir
+jesuitical	word	yeni_anlamda_isaret_var	ikiyüzlü, kurnaz [aşırı mantık oyunu, küçümseyici]	hilekâr, ikiyüzlü	hayir
+jezebel	word	yeni_anlamda_isaret_var	ahlaksız kadın, fettan [aşağılayıcı]	kötü kadın	hayir
+joskin	word	yeni_anlamda_isaret_var	köylü, kaba saba adam [küçümseyici, şehirli bakışla]	köylü, kentçi	hayir
+joyride	word	yeni_anlamda_isaret_var	izinsiz araba çalıp sürme [argo]	çalıntı araç kullanma	hayir
+kickshaw	word	yeni_anlamda_isaret_var	süs, gösterişli şey [küçümseyici]	değersiz şey	hayir
+kinky	word	yeni_anlamda_isaret_var	sapkın, alışılmadık [cinsel davranış için, gayriresmî]	karışık, dolaşmış, birbirine girmiş, acayip, tuhaf	hayir
+knocker	word	yeni_anlamda_isaret_var	meme, göğüs [argo, gayriresmî]	kapı tokmağı	hayir
+know-all	word	yeni_anlamda_isaret_var	her şeyi bilir geçinen kimse [küçümseyici]	çok bilmiş kimse, ukala	hayir
+lam	word	yeni_anlamda_isaret_var	kaçış, firar [argo]; kaçmak, firar etmek [argo]	dövmek, dayak atmak	hayir
+lecher	word	yeni_anlamda_isaret_var	şehvet düşkünü, kadın peşinde [aşağılayıcı]	aşırı seks düşkünü, azgın	hayir
+libertinism	word	yeni_anlamda_isaret_var	serbestlik, ahlaksızlık [cinsel konularda]	çapkınlık, sefahat	hayir
+licentious	word	yeni_anlamda_isaret_var	ahlaksız, şehvetli [cinsel konularda]	şehvetli, azgın	hayir
+limey	word	yeni_anlamda_isaret_var	İngiliz [Amerikan argosu, bazen aşağılayıcı]	ingiliz denizcisi	hayir
+liquidator	word	yeni_anlamda_isaret_var	katil, tetikçi [argo, gizli örgüt bağlamında]	tasfiye memuru	hayir
+loafer	word	yeni_anlamda_isaret_var	serseri, boş gezen [çalışmayan kişi, argo]	aylaklık eden kimse, aylak	hayir
+loco	word	yeni_anlamda_isaret_var	çılgın, deli [gayriresmî, argo]	deli, çılgın, lokomotif	hayir
+loony	word	yeni_anlamda_isaret_var	çılgın, saçma, akılsız [gayriresmî, aşağılayıcı]; deli, akıl hastası [gayriresmî, aşağılayıcı]	deli, kaçık, çatlak	hayir
+lothario	word	yeni_anlamda_isaret_var	çapkın, kadın avcısı [aşağılayıcı]	baştan çıkartan kımse, çapkın	hayir
+low-down	word	yeni_anlamda_isaret_var	içeriden bilgi, dedikodu [argo]	rezil, ahlaksız, alçak, adi	hayir
+lowbrow	word	yeni_anlamda_isaret_var	entelektüel olmayan, kültürel [küçümseyici]; entelektüel zevkten yoksun kişi [küçümseyici]	hkr.sanattan anlamaz, kültürsüz, odun	hayir
+lubber	word	yeni_anlamda_isaret_var	beceriksiz kişi, hantal [küçümseyici]	acemi ve hantal kimse, beceriksiz adam	hayir
+marxist	word	yeni_anlamda_isaret_var	aşırı solcu, devrimci [aşağılayıcı]	Marksist, Marksçı	hayir
+matey	word	yeni_anlamda_isaret_var	dostum, ahbap [İngiliz argosu]	samimi, senli benli	hayir
+measly	word	yeni_anlamda_isaret_var	çok az, önemsiz [küçümseyerek]	değersiz, önemsiz, sıradan, adi	hayir
+midget	word	yeni_anlamda_isaret_var	cüce, bodur [aşağılayıcı olabilir]	cüce, çok küçük	hayir
+milksop	word	yeni_anlamda_isaret_var	korkak adam, ezik herif [aşağılayıcı]	hanımevladı, avratağız, muhallebi çocuğu	hayir
+mincing	word	yeni_anlamda_isaret_var	kendini beğenmiş, suni nazik [küçümseyici]	işveli, nazlı, yapmacık tavırlı	hayir
+missy	word	yeni_anlamda_isaret_var	genç kız, kızım [gayriresmî, bazen küçümseyici]	gençkız, bayan	hayir
+molest	word	yeni_anlamda_isaret_var	cinsel saldırıda bulunmak, taciz etmek [cinsel bağlamda]	saldırmak, rahatsız etmek, ört.sarkıntılık etmek	hayir
+moneybag	word	yeni_anlamda_isaret_var	zengin kimse, paradan pul [mecazi, argo]	para çantası	hayir
+moralize	word	yeni_anlamda_isaret_var	ahlak dersi vermek, öğüt vermek [küçümseyici]	ahlak dersi vermek, ahlakını düzeltmek	hayir
+mucker	word	yeni_anlamda_isaret_var	arkadaş, dost [İngiliz argosu, eskimiş]	çamur kimse, pislik kimse	hayir
+mullock	word	yeni_anlamda_isaret_var	kazmak, dağıtmak [Avustralya argosu, nadir]	çöp, tullantı, zibil	hayir
+mummery	word	yeni_anlamda_isaret_var	boş tören, anlamsız gösteri [küçümseyici]; dalkavukluk, yağcılık [küçümseyici]	soytarılık, maskaralık, anlamsız tören	hayir
+muttonhead	word	yeni_anlamda_isaret_var	aptal, kafasız [hakaret, gayriresmî]		evet
+nambypamby	word	yeni_anlamda_isaret_var	cansız, sulu [gayriresmî, küçümseyici]; şapşal, sulu kişi [gayriresmî, küçümseyici]	yapmacıklı, duyarlı, karakteri güçsüz	hayir
+nark	word	yeni_anlamda_isaret_var	uyuşturucu polisi [argo]	jurnalcı, muhbir, ihbar etmek	hayir
+nary	word	yeni_anlamda_isaret_var	hiç, tek bir [argo, olumsuz]	hiçbir	hayir
+navvy	word	yeni_anlamda_isaret_var	amele, işçi [ağır ve kaba iş yapan]	ağır işçi, mekanik ekskavatör	hayir
+negress	word	yeni_anlamda_isaret_var	zenci kadın [aşağılayıcı, kullanılmamalı]	zenci kadın	hayir
+negroid	word	yeni_anlamda_isaret_var	zenci özellikleri taşıyan [eskimiş, ırkçı bağlam, kullanılmamalı]; zenci [eskimiş, kullanılmamalı]		evet
+newfangled	word	yeni_anlamda_isaret_var	yeni çıkmış, gereksiz yere yeni [çoğunlukla küçümseyici]	yeni, alışılmamış, uyduruk	hayir
+ninny	word	yeni_anlamda_isaret_var	aptal, budala [hafif hakaret]		evet
+nouveau-riche	word	yeni_anlamda_isaret_var	sonradan görme [küçümseyici]	sonradan görme	hayir
+nozzle	word	yeni_anlamda_isaret_var	burun [argo]	hortum başı, ağızlık, meme	hayir
+oaf	word	yeni_anlamda_isaret_var	beceriksiz adam, kaba saba adam [hafif hakaret]		evet
+nympho	word	yeni_anlamda_isaret_var	nemfoman, aşırı cinsel istekli kadın [gayriresmî, aşağılayıcı]	nemfoman, erkek delisi	hayir
+officialdom	word	yeni_anlamda_isaret_var	bürokrasi, resmî erkân [küçümseyici]	memur sınıfı, bürokrasi	hayir
+oner	word	yeni_anlamda_isaret_var	harika şey, büyük yalan, çok iyi vuruş [İngiliz argosu]	yaman kimse, müthiş şey	hayir
+oratory	word	yeni_anlamda_isaret_var	gösterişli nutuk [küçümseyici]	hitabet, güzel konuşma sanatı	hayir
+orgiastic	word	yeni_anlamda_isaret_var	coşkulu, çılgınca [cinsel ya da kontrolsüz eğlence için]	sefahatla ilgili, âlemle ilgili	hayir
+pah	word	yeni_anlamda_isaret_var	hah [hoşnutsuzluk veya küçümseme]	püh!	hayir
+palooka	word	yeni_anlamda_isaret_var	ikinci sınıf boksör, becerisiz dövüşçü [argo]	beceriksiz boksör, hödük, ayı, kıro	hayir
+pander	word	yeni_anlamda_isaret_var	aracılık etmek, pezevenklik yapmak [cinsel bağlamda, eskimiş]	pezevenk	hayir
+paltry	word	yeni_anlamda_isaret_var	çok az, aşağılık [miktar için, küçümseyici]	önemsiz, değersiz, düşük	hayir
+paleface	word	yeni_anlamda_isaret_var	beyaz adam [argo, aşağılayıcı]	solukbenizli, beyaz (adam)	hayir
+pap	word	yeni_anlamda_isaret_var	saçma sapan fikirler, basit laflar [mecaz, küçümseyici]	lapa, sulu yemek	hayir
+paperhanger	word	yeni_anlamda_isaret_var	sahtekâr, sahte çek düzenleyen [argo, sahte çek veya para için]	duvar kâğıtçısı	hayir
+papistry	word	yeni_anlamda_isaret_var	Papalık inancı [aşağılayıcı, tarihsel]	Katoliklik	hayir
+pappy	word	yeni_anlamda_isaret_var	baba, babacığım [argo, çocuk dili]	baba	hayir
+pard	word	yeni_anlamda_isaret_var	yoldaş, arkadaş [eski, argo]	dost, arkadaş, ahbap	hayir
+parvenu	word	yeni_anlamda_isaret_var	türedi, sonradan görme [aşağılayıcı]	türedi	hayir
+pater	word	yeni_anlamda_isaret_var	baba, babacığım [mizahi veya İngiliz okul argosu]	peder, baba	hayir
+patrioteer	word	yeni_anlamda_isaret_var	aşırı milliyetçi, savaşçı vatansever [aşağılayıcı]	aşırı yurtsever	hayir
+peacenik	word	yeni_anlamda_isaret_var	barış yanlısı, savaş karşıtı [aşağılayıcı kullanılabilir]	savaş karşıtı kimse	hayir
+pecker	word	yeni_anlamda_isaret_var	penis [kaba, argo]; cesaret, moral [argo, İngiliz ağzı]	(kaba) yarak	hayir
+pelf	word	yeni_anlamda_isaret_var	para, servet [küçümseyici]	para, varlık, vurgun, yağma	hayir
+pedagogue	word	yeni_anlamda_isaret_var	katı öğretmen, dersçi [küçümseyici]	pedagog, eğitimci	hayir
+peeler	word	yeni_anlamda_isaret_var	striptizci [argo, erotik gösteri]	soyucu, soyma bıçağı, soyma makinesi, aynasız	hayir
+pensionary	word	yeni_anlamda_isaret_var	yalnızca para için çalışan kişi, paralı asker [aşağılayıcı]	emekli	hayir
+perorate	word	yeni_anlamda_isaret_var	nutuk atmak, uzun uzun konuşmak [kabarık, süslü dille]	nutuk çekmek, uzun ve sıkıcı konuşma yapmak	hayir
+perversion	word	yeni_anlamda_isaret_var	sapkınlık [cinsel bağlamda, dikkatli kullanın]	baştan çıkarma, ayartma, sapıklık	hayir
+pharisee	word	yeni_anlamda_isaret_var	ikiyüzlü kimse, riyakâr [aşağılayıcı]	ferisi, ikiyüzlü kimse	hayir
+phrasemonger	word	yeni_anlamda_isaret_var	laf kalabalığı, süslü cümle düşkünü [küçümseyici]	süslü cümleler kullanan kimse	hayir
+picaninny	word	yeni_anlamda_isaret_var	siyah çocuk için ırkçı hakaret [aşağılayıcı, kullanılmamalı]	zenci çocuğu	hayir
+pinghead	word	yeni_anlamda_isaret_var	küçük kafalı, aptal [argo, hakaret]	topluiğne başı	hayir
+pinko	word	yeni_anlamda_isaret_var	solcu, hafif sol görüşlü [aşağılayıcı]	solcu	hayir
+pish	word	yeni_anlamda_isaret_var	hah, boş ver [küçümseme, sabırsızlık]	öf!, püf!	hayir
+pitance	word	yeni_anlamda_isaret_var	az ücret, kıt geçim [küçümseme]	bağış, yardım	hayir
+platitudinarian	word	yeni_anlamda_isaret_var	klişe konuşan kimse [küçümseyici]	geveze, boşboğaz	hayir
+plebeian	word	yeni_anlamda_isaret_var	kaba, adi [küçümseyici]	halk tabakasından olan, aşağı tabaka	hayir
+plodder	word	yeni_anlamda_isaret_var	yavaş ama çalışkan kimse, öküz gibi çalışan [küçümseyici, sıkıcı işlerde]	yavaş ama verimli çalışan işçi	hayir
+poky	word	yeni_anlamda_isaret_var	hapishane, cezaevi [argo]	(yer/oda) dar, küçük, basık	hayir
+podunk	word	yeni_anlamda_isaret_var	kasaba, taşra [küçük ve sıkıcı yer, aşağılayıcı]; taşralı, köhne [küçük ve geri kalmış, aşağılayıcı]	geri kalmış küçük kasaba	hayir
+poetaster	word	yeni_anlamda_isaret_var	önemsiz şair, karalayıcı [küçümseyici]	şair bozuntusu	hayir
+poll	word	yeni_anlamda_isaret_var	tepe, kafa tepesi [eski/argo kullanım]	saylav, oylama, oy verme, oy sayısı, komuoyu yoklaması, oy almak, oy vermek	hayir
+ponce	word	yeni_anlamda_isaret_var	kadınsı, züppe adam [İngiliz argosu, aşağılayıcı]	pezevenk, ibne, homo	hayir
+poof	word	yeni_anlamda_isaret_var	ibne, eşcinsel erkek [çok aşağılayıcı, kullanmaktan kaçının]	hkr, ibne	hayir
+pooh	word	yeni_anlamda_isaret_var	hah, boş ver [küçümseme]	öf!	hayir
+popish	word	yeni_anlamda_isaret_var	Katolik karşıtı söylemde papist [aşağılayıcı]	katolik	hayir
+popper	word	yeni_anlamda_isaret_var	popper (uyarıcı ilaç kabı) [argo, uyuşturucu]	patlangaç	hayir
+porcine	word	yeni_anlamda_isaret_var	obur, açgözlü, şişman [aşağılayıcı]	domuza ait	hayir
+portentous	word	yeni_anlamda_isaret_var	ağır başlı, gösterişli, kendini beğenmiş [küçümseyici]	(kötü bir şeyin) haberci/işareti olan	hayir
+preachify	word	yeni_anlamda_isaret_var	vaaz vermek, nasihat etmek [küçümseyici]	(sıkıcı) vaız vermek	hayir
+preachy	word	yeni_anlamda_isaret_var	vaaz verir gibi, nasihatçi [küçümseyici]	nutuk çekme meraklısı	hayir
+preggers	word	yeni_anlamda_isaret_var	hamile [gayriresmî, argo]	gebe, hamile	hayir
+princelet	word	yeni_anlamda_isaret_var	küçük prens, küçük hükümdar [küçümseyici]	küçük prens	hayir
+prole	word	yeni_anlamda_isaret_var	emekçi, işçi sınıfı üyesi [küçümseyici, eski kullanım]	emekçi, proleter	hayir
+prying	word	yeni_anlamda_isaret_var	meraklı, burnunu sokan [olumsuz, kaba anlamda]; burnunu sokma, merak [kaba, rahatsız edici]	meraklı	hayir
+pshaw	word	yeni_anlamda_isaret_var	hadi canım, boş ver [küçümseme, sabırsızlık bildirir]	öf (be)!	hayir
+pubescence	word	yeni_anlamda_isaret_var	ergenlik [cinsel olgunlaşma dönemi]	ergenlik, ergenleşme	hayir
+puerile	word	yeni_anlamda_isaret_var	çocukça, çocuksu [küçümseyici]	çocukça, çocuksu, aptalca	hayir
+puerility	word	yeni_anlamda_isaret_var	çocukluk, çocukça davranış [küçümseyici]	çocukluk	hayir
+pusher	word	yeni_anlamda_isaret_var	uyuşturucu satıcısı [kaçak, argo]	fırsatçı, uyuşturucu satıcısı	hayir
+pusillanimity	word	yeni_anlamda_isaret_var	korkaklık, yüreksizlik [resmî, küçümseyici]	korkaklık, ödleklik, alçaklık	hayir
+quean	word	yeni_anlamda_isaret_var	şımarık kadın, orospu [eski, aşağılayıcı]	edepsiz kız, oynak kız	hayir
+quim	word	yeni_anlamda_isaret_var	kaba argo [kaba, vulgar; kullanmaktan kaçının]	am, amcık	hayir
+quid	word	yeni_anlamda_isaret_var	pound, İngiliz lirası [İngiliz argosu]	ağızda çiğnenen tütün, paund, sterlin	hayir
+rabble	word	yeni_anlamda_isaret_var	kalabalık, güruh [küçümseyici]; avam, halk tabakası [küçümseyici]	gürültücü kalabalık, ayaktakımı	hayir
+quod	word	yeni_anlamda_isaret_var	hapishane, cezaevi [argo, eski]	hapishane	hayir
+racy	word	yeni_anlamda_isaret_var	müstehcen, açık saçık [cinsellik çağrıştıran]	eğlendirici, canlı, seksle ilgili, ayıplı	hayir
+ragtag	word	yeni_anlamda_isaret_var	avam, sıradan halk [aşağılayıcı]	ayaktakımı	hayir
+razz	word	yeni_anlamda_isaret_var	alay, yuhalama [hoşnutsuzluk veya küçümseme]	yuha, alay etmek, makaraya sarmak	hayir
+ratten	word	yeni_anlamda_isaret_var	ihbar etmek, gammazlamak [argo]	sabotaj yapmak	hayir
+rehash	word	yeni_anlamda_isaret_var	yeniden düzenlenmiş eski malzeme [küçümseyici]; yeniden işlemek, aynen sunmak [küçümseyici]	tekrarlama	hayir
+reptilian	word	yeni_anlamda_isaret_var	ilkel, vahşi [mecaz, aşağılayıcı]	sürüngenlere ait, sürüngen, sürüngen	hayir
+retard	word	yeni_anlamda_isaret_var	zihinsel engelli kişi [aşağılayıcı, kullanılmamalı]	geciktirmek, yavaşlatmak	hayir
+rhino	word	yeni_anlamda_isaret_var	para, nakit [argo]	gergedan	hayir
+ripping	word	yeni_anlamda_isaret_var	harika, süper [eski kullanım, İngilizce argo]	mükemmel, âlâ, nefis, yırtan, kesen	hayir
+romanticist	word	yeni_anlamda_isaret_var	duygusallığa kapılan kişi, hayalperest [küçümseyici]	romantik kimse	hayir
+rube	word	yeni_anlamda_isaret_var	kaba saba adam, cahil [küçümseyici, argo]	taşralı, köylü	hayir
+ruddy	word	yeni_anlamda_isaret_var	lanet olası, kahrolası [İngiliz argosu, hafif]	(yüz) sağlıklı, pembe, parlak kırmızı, al, kahrolasıca, lanet olasıca, lanet	hayir
+runt	word	yeni_anlamda_isaret_var	cüce, bodur [aşağılayıcı]	çelimsiz hayvan	hayir
+sackcloth	word	yeni_anlamda_isaret_var	çuval bezi [kaba kumaş]	çuval bezi, çul	hayir
+salacious	word	yeni_anlamda_isaret_var	şehvetli, müstehcen [cinsel çağrışım]	açık saçık, müstehcen	hayir
+schlep	word	yeni_anlamda_isaret_var	beceriksiz kimse, hödük [gayriresmî, hakaret]		evet
+scholastic	word	yeni_anlamda_isaret_var	kitap bilgisine düşkün kimse, kuralcı [aşağılayıcı]	okullara ve öğretime ilişkin, skolastik, kılı kırk yaran	hayir
+schizo	word	yeni_anlamda_isaret_var	şizofren, şizofreni hastası [gayriresmî, aşağılayıcı]	bölme	hayir
+scran	word	yeni_anlamda_isaret_var	yiyecek, yemek [İngiliz argosu]	yiyecek	hayir
+scurrility	word	yeni_anlamda_isaret_var	küfür, edepsiz hakaret [kaba, müstehcen söz]	ağız bozukluğu, küfürbazlık	hayir
+scurrilous	word	yeni_anlamda_isaret_var	küfürlü, edepsiz [müstehcen dil için]		evet
+sententious	word	yeni_anlamda_isaret_var	ahlak dersi veren, vaaz veren [küçümseyici]	özdeyişli sözlerle dolu, özdeyişlerle konuşan	hayir
+sermonize	word	yeni_anlamda_isaret_var	vaaz vermek, öğüt vermek [küçümseyici kullanılır]	vaaz vermek	hayir
+servile	word	yeni_anlamda_isaret_var	yaltaklanan, boyun eğen [aşağılayıcı]	köle gibi, köle gibi davranan, kulluk eden	hayir
+servility	word	yeni_anlamda_isaret_var	yaltakçılık, köleci boyun eğme [aşağılayıcı]	gurursuzluk, aşağılık, haysiyetsizlik	hayir
+setto	word	yeni_anlamda_isaret_var	kavga, tartışma [İngiliz argosu]	çarpışma, tartışma, kavga	hayir
+sheeny	word	yeni_anlamda_isaret_var	Yahudi (aşağılayıcı) [ırkçı, hakaret içerir; kullanmayın]		evet
+sheepish	word	yeni_anlamda_isaret_var	uysal, saf [aşağılayıcı; koyun gibi]	utangaç, çekingen	hayir
+shirty	word	yeni_anlamda_isaret_var	huysuz, sinirli [İngiliz argosu]	huysuz, aksi	hayir
+simpleminded	word	yeni_anlamda_isaret_var	basit düşünceli, kafasız [küçümseyici]	saf	hayir
+skint	word	yeni_anlamda_isaret_var	parasız, fakir [İngiliz argosu, gayriresmî]	(İİ) meteliksiz, züğürt, beş parasız	hayir
+skivvy	word	yeni_anlamda_isaret_var	hizmetçi kız, ev işçisi [eski, küçümseyici]	ayak işleri yapan hizmetçi	hayir
+skuiffy	word	yeni_anlamda_isaret_var	şık, gösterişli [İngiliz argosu, gayriresmî]	çakırkeyf	hayir
+slattern	word	yeni_anlamda_isaret_var	pasaklı kadın, dağınık kadın [aşağılayıcı]; fahişe, orospu [eski, aşağılayıcı]	pasaklı kadın	hayir
+slavey	word	yeni_anlamda_isaret_var	hizmetçi kız, ev işçisi [eskimiş, aşağılayıcı]	orta hizmetçisi	hayir
+slavish	word	yeni_anlamda_isaret_var	boyun eğen, köleci [aşağılayıcı]	köle gibi, başkalarına boyun eğen, kopya edilmiş, kopyası	hayir
+slowwitted	word	yeni_anlamda_isaret_var	kavrayışı yavaş, kıt zekâlı [hakaret içerir]		evet
+smarmy	word	yeni_anlamda_isaret_var	yağcı, dalkavuk, şirin görünmeye çalışan [küçümseyici]	(İİ) kibarlık budalası, yağcı, dalkavuk	hayir
+smartass	word	yeni_anlamda_isaret_var	akıllı taslayan, kendini bilmez [gayriresmî, küçümseyici]	ukala, bilgiç	hayir
+sluttish	word	yeni_anlamda_isaret_var	ahlaksız, özensiz [aşağılayıcı, kadınlar için]; açık saçık, rahat cinsel davranışlı [aşağılayıcı]	pasaklı, şapşal	hayir
+snobbery	word	yeni_anlamda_isaret_var	züppelik, snobluk [alt sınıfı küçümseme]	züppelik	hayir
+snobbism	word	yeni_anlamda_isaret_var	züppelik, snobluk [sosyal statüye göre küçümseme]	snopluk	hayir
+snoot	word	yeni_anlamda_isaret_var	burun [argo, gayri resmî]	surat, yüz, yüzü ekşitme	hayir
+sod	word	yeni_anlamda_isaret_var	eşcinsel erkek, ibne [aşağılayıcı, argo]; herif, adam [İngiliz argosu, eski]	çim, çimen parçası, gıcık, kıl, sinir herif, herif, ahbap, hıyar, baş belası	hayir
+sodomite	word	yeni_anlamda_isaret_var	eşcinsel erkek, sodomit [aşağılayıcı, eskimiş]	oğlan, oğlancı, ibne, sapık	hayir
+sot	word	yeni_anlamda_isaret_var	ayyaş, kötü içici [aşağılayıcı]	ayyaş	hayir
+soupy	word	yeni_anlamda_isaret_var	duygusal, sahte duygusal [küçümseyici]	çorba gibi, duygusal	hayir
+souse	word	yeni_anlamda_isaret_var	ayyaş, içki düşkünü [eski, argo]	salamura	hayir
+speechification	word	yeni_anlamda_isaret_var	nutuk atma, hitabet gösterisi [küçümseyici]	nutuk çekme	hayir
+speechifier	word	yeni_anlamda_isaret_var	nutuk atan kişi, hatip [küçümseyici]	nutuk çeken kişi	hayir
+speechify	word	yeni_anlamda_isaret_var	nutuk atmak, uzun uzun konuşmak [küçümseyici]	nutuk çekmek, fazla konuşmak	hayir
+spiv	word	yeni_anlamda_isaret_var	dolandırıcı, kaçak işle uğraşan züppe [İngiliz argosu]	beleşçi, dolandırıcı	hayir
+sponger	word	yeni_anlamda_isaret_var	asalak, parazit [aşağılayıcı]	otlakçı, beleşçi, asalak	hayir
+squaw	word	yeni_anlamda_isaret_var	Kızılderili kadını [tarihsel, artık aşağılayıcı kabul edilir]	kızılderili kadın	hayir
+stingo	word	yeni_anlamda_isaret_var	güçlü bira, sert içki [eski, argo]	kuvvetli bira	hayir
+stodgy	word	yeni_anlamda_isaret_var	modası geçmiş, eski kafalı [küçümseyici]	(yemek) sindirimi güç, ağır, ağır, sıkıcı, eski kafalı	hayir
+streetwalker	word	yeni_anlamda_isaret_var	sokak fahişesi [resmî olmayan, aşağılayıcı]	fahişe	hayir
+strumpet	word	yeni_anlamda_isaret_var	fahişe, orospu [aşağılayıcı, eski]	fahişe	hayir
+stuffiness	word	yeni_anlamda_isaret_var	kasvetli ciddiyet, ağırbaşlılık [küçümseyici]	tıkanıklık, alınganlık, dargınlık, sıkıcılık	hayir
+subhuman	word	yeni_anlamda_isaret_var	insanlıktan aşağı, insan onuruna yakışmayan [aşağılayıcı]	insanlıkdışı	hayir
+subnormal	word	yeni_anlamda_isaret_var	zihinsel geriliği olan kişi [eski, kaba]	(özellikle zekâca) eksik, yetersiz, normalin altında	hayir
+swearword	word	yeni_anlamda_isaret_var	küfür, argo söz [kaba, saygısız]	küfür, sövgü	hayir
+talkee-talkee	word	yeni_anlamda_isaret_var	boş konuşma, gevezelik [eski, argo]	palavra, masal	hayir
+taffy	word	yeni_anlamda_isaret_var	dalkavukluk, iltifat [argo, ABD]	karamela	hayir
+tec	word	yeni_anlamda_isaret_var	dedektif, polis [gayriresmî, argo]	dedektif	hayir
+tenspot	word	yeni_anlamda_isaret_var	on dolarlık banknot [amerikan argosu]	onlu	hayir
+throwaway	word	yeni_anlamda_isaret_var	sokak çocuğu, terk edilmiş çocuk [aşağılayıcı, eski]	iadesiz, atılır, geri verilmeyen, el ilanı	hayir
+timeserver	word	yeni_anlamda_isaret_var	fırsatçı, dalkavuk [aşağılayıcı]	zamana uyan kimse	hayir
+tike	word	yeni_anlamda_isaret_var	kaba saba adam, görgüsüz [aşağılayıcı]	sokak köpeği, yaramaz çocuk	hayir
+tomfool	word	yeni_anlamda_isaret_var	aptal, budala [hafif hakaret]		evet
+toothsome	word	yeni_anlamda_isaret_var	çekici, cazip [kişi için, cinsel çekicilik]	lezzetli, tadı güzel	hayir
+tomtit	word	yeni_anlamda_isaret_var	baştankara, küçük kuş [genel, argo]	mavi baştankara	hayir
+trank	word	yeni_anlamda_isaret_var	şişe, kap [eski, argo]	yatıştırıcı madde	hayir
+trollop	word	yeni_anlamda_isaret_var	pasaklı kadın, çapkın kadın [aşağılayıcı, eski]; fahişe, orospu [çok aşağılayıcı]	pasaklı kadın, fahişe, sürtük	hayir
+tripper	word	yeni_anlamda_isaret_var	uyuşturucu etkisindeki kişi [argo]	turist, kastanyola	hayir
+truculence	word	yeni_anlamda_isaret_var	saldırganlık, meydan okuma [kabadayı, huysuz tavır]	vahşilik, saldırganlık, kavgacılık, kabadayılık	hayir
+tubular	word	yeni_anlamda_isaret_var	harika, süper [argo, Amerikan]	tüp/boru şeklinde, borulu	hayir
+turd	word	yeni_anlamda_isaret_var	dışkı, kaka [kaba]; pislik, adi herif [hakaret, kaba]	bok, kaka, rezil, alçak	hayir
+twerp	word	yeni_anlamda_isaret_var	aptal herif, işe yaramaz tip [gayriresmî, hafif hakaret]		evet
+unco	word	yeni_anlamda_isaret_var	son derece, oldukça [İskoçya ağzı, argo]	son derece, olağanüstü, acayip, yabancı	hayir
+unwashed	word	yeni_anlamda_isaret_var	halk kitleleri, avam [mecaz, küçümseyici]	yıkanmamış	hayir
+varmint	word	yeni_anlamda_isaret_var	belalı herif, sinir bozucu kişi [argo, eski]	zararlı böcek, sefil adam	hayir
+vermin	word	yeni_anlamda_isaret_var	iğrenç kimse, pis herif [aşağılayıcı]	zararlı böcek ya da hayvanlar	hayir
+voluptuousness	word	yeni_anlamda_isaret_var	baştan çıkarıcılık, cazibe [özellikle cinsel çekicilik]	şehvetlilik, seksilik	hayir
+washout	word	yeni_anlamda_isaret_var	başarısız kişi [gayriresmî, aşağılayıcı]	fiyasko	hayir
+whacked	word	yeni_anlamda_isaret_var	bitkin, yorgun [İngiliz argosu]	yorgunluktan ölmüş, çok yorgun	hayir
+whacking	word	yeni_anlamda_isaret_var	koca, devasa [İngiliz argosu]; son derece, oldukça [İngiliz argosu]	çok, dayak	hayir
+would-be	word	yeni_anlamda_isaret_var	özenti, sonradan olma [aşağılayıcı]	sözde, sözümona, taslağı	hayir
+zonked	word	yeni_anlamda_isaret_var	sarhoş, uyuşturucu etkisinde [gündelik, argo]	içki veya uyuşturucu ile zom olmuş, uçmuş, kafayı bulmuş	hayir
+a short drop and a sudden stop	expr	yeni_anlamda_isaret_var	ipte sallanarak ölüm [mizahi, argo]		hayir
+adam and steve	expr	yeni_anlamda_isaret_var	Adem ile Steve [alaycı, aşağılayıcı kullanım]		hayir
+apples and pears	expr	yeni_anlamda_isaret_var	merdiven [gayriresmî, Cockney argosu]		hayir
+banker and broker	expr	yeni_anlamda_isaret_var	kart oyunu, bahisli iskambil [argo]		hayir
+bees and honey	expr	yeni_anlamda_isaret_var	para, nakit [argo, gayriresmî]		hayir
+block and tackle	expr	yeni_anlamda_isaret_var	jartiyer ve çorap takımı [eski moda, argo]		hayir
+brahms and liszt	expr	yeni_anlamda_isaret_var	sarhoş, çakırkeyif [gayriresmî, argo]		hayir
+close one's eyes and think of england	expr	yeni_anlamda_isaret_var	istemeden de olsa görevini yapmak, katlanmak [mecaz, cinsel ilişki için kullanılan alaycı deyim]		hayir
+cope and seethe	expr	yeni_anlamda_isaret_var	katlanmak ve öfkeden kudurmak [internet argosu, alaycı]		hayir
+deaf and dumb	expr	yeni_anlamda_isaret_var	sağır ve dilsiz [eski, artık kaba kabul edilen kullanım]		hayir
+english or spanish	expr	yeni_anlamda_isaret_var	İngilizce mi İspanyolca mı oyunu [şaka, oyun; eşcinsel ilan etme şakası]		hayir
+gas and dash	expr	yeni_anlamda_isaret_var	benzin parasını ödemeden kaçmak [argo]		hayir
+gas and gaiters	expr	yeni_anlamda_isaret_var	keyifli durum; kibir ve gevezelik [eski, İngiliz argosu]		hayir
+hewers of wood and drawers of water	expr	yeni_anlamda_isaret_var	ağır işte çalıştırılan emekçiler, hizmetkârlar [aşağılayıcı, mecazi]		hayir
+hit and hope	expr	yeni_anlamda_isaret_var	gelişigüzel vurmak, şansa bırakmak [spor jargonu]		hayir
+hit it and quit it	expr	yeni_anlamda_isaret_var	tek geceliğine birlikte olup ayrılmak [gayriresmî, cinsel]		hayir
+is you is or is you ain't	expr	yeni_anlamda_isaret_var	Yani ya öyle ya değil, net cevap ver [gayriresmî, argo]		hayir
+meat and two veg	expr	yeni_anlamda_isaret_var	ev tipi standart öğle yemeği [İngiliz argosu]; erkeklik organı [argo, kaba]		hayir
+north and south	expr	yeni_anlamda_isaret_var	ağız [argo, mizahi]		hayir
+mother thumb and her four daughters	expr	yeni_anlamda_isaret_var	el, mastürbasyon yapan erkeğin eli (kaba, argo) [vulgar, argo]		hayir
+mozart and liszt	expr	yeni_anlamda_isaret_var	sarhoş, çakırkeyif [argo, gayriresmî]		hayir
+odds and sods	expr	yeni_anlamda_isaret_var	sıradan insanlar [hafif küçümseyici]		hayir
+ones and twos	expr	yeni_anlamda_isaret_var	DJ pikapları [müzik jargonu]		hayir
+pack and play	expr	yeni_anlamda_isaret_var	protez penis, kemerli penis [cinsel, argo]		hayir
+pony and trap	expr	yeni_anlamda_isaret_var	saçmalık, boş laf [argo, eski kullanım]		hayir
+rest and vest	expr	yeni_anlamda_isaret_var	hisse senetlerinin hak kazanmasını beklerken az çalışmak [iş dünyası, argo]		hayir
+salmon and trout	expr	yeni_anlamda_isaret_var	tütün, sigara (argo) [argo, eskimiş]		hayir
+slowed and throwed	expr	yeni_anlamda_isaret_var	yavaşlatılmış ve tempo bozulmuş [müzik, hip hop jargonu]		hayir
+smash and dash	expr	yeni_anlamda_isaret_var	vurup kaçmak, seks sonrası ayrılmak [argo, kaba]; hızlı ilişki [argo, kaba]		hayir
+short and curlies	expr	yeni_anlamda_isaret_var	tamamen kontrolü altına almak [argo, mecazi]		hayir
+skin and blister	expr	yeni_anlamda_isaret_var	kız kardeş [argo, kafiyeli argo]		hayir
+stuff and nonsense	expr	yeni_anlamda_isaret_var	saçma sapan, boş laf [bir söylemi küçümsemek için]		hayir
+three hots and a cot	expr	yeni_anlamda_isaret_var	hapishane; temel yiyecek ve barınak [argo, mizahi]		hayir
+staggers and jags	expr	yeni_anlamda_isaret_var	ağır sarhoşluk, alkol delirmesi [argo, eski]		hayir
+start and park	expr	yeni_anlamda_isaret_var	yarışa başlayıp hemen çekilmek [yarış jargonu]		hayir
+tight and curlies	expr	yeni_anlamda_isaret_var	kıl payı, tüm gücüyle [argo, gayriresmî]		hayir
+wet and warm	expr	yeni_anlamda_isaret_var	çay [İngilizce argo, içecek]		hayir
+wake and bake	expr	yeni_anlamda_isaret_var	uyanır uyanmaz esrar içmek [argo]		hayir
+trouble and strife	expr	yeni_anlamda_isaret_var	karı, eş [argo, eskimiş]		hayir
+ts and blues	expr	yeni_anlamda_isaret_var	uyuşturucu karışımı [argo, 1970-80'ler]		hayir
+ts and bs	expr	yeni_anlamda_isaret_var	uyuşturucu karışımı [argo, ts and blues'un kısaltması]		hayir
+two and eight	expr	yeni_anlamda_isaret_var	tedirgin olmak, huzursuz olmak [İngiliz argosu]		hayir
+all fur and no knickers	expr	yeni_anlamda_isaret_var	göz boyamak, süslü ama içi boş [İngiliz argosu]		hayir
+all mouth and trousers	expr	yeni_anlamda_isaret_var	boş konuşmak, laf cambazlığı [küçümseyici]		hayir
+amber gambler	expr	yeni_anlamda_isaret_var	sarıda geçen riskli sürücü [trafik, argo]; kırmızı-sarıda erken kalkan sürücü [trafik, argo]		hayir
+amber nectar	expr	yeni_anlamda_isaret_var	bira [şaka amaçlı, argo]		hayir
+as all hell	expr	yeni_anlamda_isaret_var	çok, korkunç derecede [gayriresmî, kaba]		hayir
+ants in one's pants	expr	yeni_anlamda_isaret_var	cinsel heyecan, kösnek [argo, gayriresmî]		hayir
+assume room temperature	expr	yeni_anlamda_isaret_var	ölmek, can vermek [mizahi, argo]		hayir
+backhanded compliment	expr	yeni_anlamda_isaret_var	iğneli övgü, dolaylı hakaret [aslında hakaret olan övgü]		evet
+badge bunny	expr	yeni_anlamda_isaret_var	polis hayranı kadın [gayriresmî, argo]		hayir
+ball of malt	expr	yeni_anlamda_isaret_var	bir bardak viski [gayriresmî, argo]		hayir
+bad word	expr	yeni_anlamda_isaret_var	küfür, kaba söz [argo veya hakaret]		hayir
+banyan day	expr	yeni_anlamda_isaret_var	mürettebat pikniği [gemi jargonu]		hayir
+basement battler	expr	yeni_anlamda_isaret_var	küme düşme hattındaki takım [spor jargonu]		hayir
+bash someone's head	expr	yeni_anlamda_isaret_var	birinin kafasını dağıtmak, ağzını burnunu dağıtmak [kaba, şiddet anlamında]		hayir
+bash the bishop	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [vulgar, kaba]		hayir
+bat five hundred	expr	yeni_anlamda_isaret_var	vuruşların yarısında başarılı olmak [beysbol jargonu]		hayir
+bat for the other team	expr	yeni_anlamda_isaret_var	eşcinsel olmak [gayriresmî, argo]		hayir
+beast with two backs	expr	yeni_anlamda_isaret_var	cinsel birleşme (şaka yollu, eski mizah) [argo, mecazi]		hayir
+beat the bishop	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [kaba, argo]		hayir
+beer muscles	expr	yeni_anlamda_isaret_var	alkolün verdiği saldırganlık, içki cesareti [alkol etkisiyle kabarık cesaret]		hayir
+bent as a nine-bob note	expr	yeni_anlamda_isaret_var	çok dürüstsüz, yolsuz [gayriresmî, İngiliz argosu]		hayir
+big girl	expr	yeni_anlamda_isaret_var	şişman kadın [kaba, incitici]		hayir
+bilge rat	expr	yeni_anlamda_isaret_var	pis herif, adi herif [hakaret]		evet
+blow chunks	expr	yeni_anlamda_isaret_var	kusmak [argo, kaba]; berbat olmak, rezil olmak [argo, kaba]		hayir
+blow someone's back out	expr	yeni_anlamda_isaret_var	birini sert cinsel ilişkiyle yormak [argo, vulgar]		hayir
+bop the bishop	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [argo, erkekler için, kaba]		hayir
+bow down before the porcelain god	expr	yeni_anlamda_isaret_var	kusmak, klozete kusmak [argo, mizahi]		hayir
+boy in the boat	expr	yeni_anlamda_isaret_var	klitoris [argo, kaba]		hayir
+boy toy	expr	yeni_anlamda_isaret_var	genç erkek oyuncak, gigolo [cinsel amaçla kullanılan genç erkek için, aşağılayıcı]		hayir
+break the seal	expr	yeni_anlamda_isaret_var	ilk kez işemek [argo, alkol sonrası için]		hayir
+break wind	expr	yeni_anlamda_isaret_var	osurmak [kaba olmayan kullanım]		hayir
+break one's chops	expr	yeni_anlamda_isaret_var	canını sıkmak, rahat bırakmamak [gündelik, argo]		hayir
+bronx cheer	expr	yeni_anlamda_isaret_var	dudak geverme, alaya alma sesi [küçümseme ifadesi]		hayir
+built like a brick outhouse	expr	yeni_anlamda_isaret_var	çok iri yapılı, kaslı [gayriresmî, kaba]		hayir
+built like a brick shipyard	expr	yeni_anlamda_isaret_var	çok iri yapılı, kaslı [gayriresmî, kaba]		hayir
+business girl	expr	yeni_anlamda_isaret_var	fahişe, sokak kadını [argo, aşağılayıcı]		hayir
+bust a cap	expr	yeni_anlamda_isaret_var	silah ateşlemek, vurmak [argo]		hayir
+bust a u	expr	yeni_anlamda_isaret_var	arabayı U dönüşü yapmak [argo]		hayir
+bust chops	expr	yeni_anlamda_isaret_var	azarlamak, rahat vermemek [argo]		hayir
+bust one's chops	expr	yeni_anlamda_isaret_var	canını dişine takmak, çok çalışmak [argo]		hayir
+bust the dust	expr	yeni_anlamda_isaret_var	tozu almak, süpürmek [argo]		hayir
+case the joint	expr	yeni_anlamda_isaret_var	mekânı gözetlemek, keşfetmek [suç hazırlığı için, argo]		hayir
+catch a date	expr	yeni_anlamda_isaret_var	müşteri bulmak [fuhuş için, argo]		hayir
+catch a fade	expr	yeni_anlamda_isaret_var	bayılmak, yere serilmek [argo; kendini kaybetmek]		hayir
+catch a packet	expr	yeni_anlamda_isaret_var	ateş altında kalmak, vurulmak [argo]		hayir
+catch hands	expr	yeni_anlamda_isaret_var	yumruk yemek, dövülmek [argo]		hayir
+chesterfield rugby	expr	yeni_anlamda_isaret_var	cinsel ilişki [argo, mecazi]		hayir
+choke the chicken	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [kaba, argo]		hayir
+closet case	expr	yeni_anlamda_isaret_var	dolap yolcusu [cinselliğini gizleyen kişi için, aşağılayıcı olabilir]		hayir
+cold hand	expr	yeni_anlamda_isaret_var	şutları tutmayan oyuncu, soğuk el [spor jargonu, özellikle basketbol ve bilardo]		hayir
+cool cat	expr	yeni_anlamda_isaret_var	havalı adam, caz severi [eski argo]		hayir
+couldn't stop a pig in a passage	expr	yeni_anlamda_isaret_var	bacakları çarpık olmak [argo, mizahi]		hayir
+cowgirl position	expr	yeni_anlamda_isaret_var	kadın üstte cinsel pozisyon [cinsel bağlam]		hayir
+crooked as a dog's hind leg	expr	yeni_anlamda_isaret_var	çok hilekâr, dürüstlükten uzak [deyim, argo tonu]		hayir
+curb crawler	expr	yeni_anlamda_isaret_var	arabayla fahişe arayan müşteri [argo, aşağılayıcı]		hayir
+cut someone cold	expr	yeni_anlamda_isaret_var	görmezden gelmek, yüzüne bakmamak [kasıtlı ve küçümseyici]		hayir
+cut the cheese	expr	yeni_anlamda_isaret_var	osuruk çıkarmak [kaba, gündelik dil]		hayir
+cut away one's soul	expr	yeni_anlamda_isaret_var	çok üzülmek, içi parçalanmak [gayet rahatsız olmak için, argo]		hayir
+dead as a kipper	expr	yeni_anlamda_isaret_var	tamamen ölü, tamamen cansız [İngiliz argosu, gayriresmî]		hayir
+dead soldier	expr	yeni_anlamda_isaret_var	boş şişe, boş kutu [alkol kabı için, argo]		hayir
+deader than disco	expr	yeni_anlamda_isaret_var	kesinlikle ölü, tamamen gözden düşmüş [mecaz, argo]		hayir
+do me a lemon	expr	yeni_anlamda_isaret_var	inanamamak, şaşkınlık ifadesi [argo]		hayir
+do one's own time	expr	yeni_anlamda_isaret_var	cezasını sorun çıkarmadan çekmek [hapishane argosu]		hayir
+do porridge	expr	yeni_anlamda_isaret_var	hapis yatmak, kodes vermek [argo]		hayir
+dog and pony show	expr	yeni_anlamda_isaret_var	gösterişli ama içi boş sunum, süslü tanıtım [küçümseyici]		hayir
+drive the porcelain bus	expr	yeni_anlamda_isaret_var	klozete kusmak [argo, sarhoşlukta]		hayir
+drive-by media	expr	yeni_anlamda_isaret_var	hızlı yorumcu medya, yüzeysel haber medyası [aşağılayıcı, eleştirel]		hayir
+drop trow	expr	yeni_anlamda_isaret_var	pantolonunu indirmek [argo]		hayir
+eat crow	expr	yeni_anlamda_isaret_var	hatasını kabul etmek, boynunu bükmek [aşağılayıcı bir hatayı kabullenmek]		hayir
+drunk as a sow	expr	yeni_anlamda_isaret_var	domuz gibi sarhoş [gayriresmî, kaba]		hayir
+evel knievel	expr	yeni_anlamda_isaret_var	motosikletli polis [telsiz jargonu, Citizens Band]		hayir
+extract the urine	expr	yeni_anlamda_isaret_var	alay etmek, dalga geçmek [argo]		hayir
+expose oneself	expr	yeni_anlamda_isaret_var	teşhircilik yapmak [cinsel organını göstermek, resmî]		hayir
+fast sheet	expr	yeni_anlamda_isaret_var	fuhuş yapılan otel, pansiyon [argo]		hayir
+fall off the twig	expr	yeni_anlamda_isaret_var	ölmek, can vermek [gayriresmî, argo]		hayir
+fan dance	expr	yeni_anlamda_isaret_var	yelpazeli striptiz [müstehcen, kültürel]		evet
+fold like a cheap suit	expr	yeni_anlamda_isaret_var	kolayca pes etmek, teslim olmak [argo, mecaz]		hayir
+fold under zero pressure	expr	yeni_anlamda_isaret_var	hiç baskı yokken pes etmek, sebepsiz teslim olmak [küçümseyici]		hayir
+for the birds	expr	yeni_anlamda_isaret_var	değersiz, önemsiz, boş [gayriresmî, küçümseyici]		hayir
+forty minutes of hell	expr	yeni_anlamda_isaret_var	kırk dakikalık cehennem [basketbolda yoğun baskı için spor jargonu]		hayir
+friendship with benefits	expr	yeni_anlamda_isaret_var	cinsel ilişkili dostluk [çift olmadan cinsel ilişki]		hayir
+funny as a dose of the clap	expr	yeni_anlamda_isaret_var	hiç komik değil, zerre eğlendirmeyen [kaba, alaycı]		hayir
+gagging for it	expr	yeni_anlamda_isaret_var	çok istemek, can atmak [özellikle cinsel istek için, argo]		hayir
+get into someone's pants	expr	yeni_anlamda_isaret_var	birinin yatağına girmek, birini yatağa atmak [kaba, argo]		hayir
+get one's juices flowing	expr	yeni_anlamda_isaret_var	cinsel ilgi uyandırmak [argo, resmî değil]		hayir
+get one's panties in a bunch	expr	yeni_anlamda_isaret_var	küçük şeye çok takılmak, sinirlenip huzursuzlanmak [Amerikan argosu]		hayir
+get one's panties in a wad	expr	yeni_anlamda_isaret_var	küçük şeye çok takılmak, sinirlenip huzursuzlanmak [Amerikan argosu]		hayir
+get one's shorts in a knot	expr	yeni_anlamda_isaret_var	küçük şeye çok takılmak, sinirlenip huzursuzlanmak [Amerikan argosu]		hayir
+get one's freak on	expr	yeni_anlamda_isaret_var	cinsel ilişkiye girmek [argo]		hayir
+get the dirty water off one's chest	expr	yeni_anlamda_isaret_var	cinsel ihtiyacını gidermek [argo, kaba]		hayir
+get the drawers	expr	yeni_anlamda_isaret_var	birini baştan çıkarmak, cinsel ilişkiye girmek [argo, kaba]		hayir
+give a monkey's	expr	yeni_anlamda_isaret_var	umursamak, aldırmak [gayriresmî, İngiliz argosu]		hayir
+give a sneck posset	expr	yeni_anlamda_isaret_var	soğuk davranmak, kapıyı yüzüne kapatmak [argo, eski]		hayir
+give curry	expr	yeni_anlamda_isaret_var	öfkeyle azarlamak, sert sözlerle saldırmak [argo]		hayir
+go downtown	expr	yeni_anlamda_isaret_var	gözaltına alınmak [argo]; oral seks yapmak [argo, vulgar]		hayir
+go forth and multiply	expr	yeni_anlamda_isaret_var	defol git, kaybol [argo, kaba]		hayir
+go hang	expr	yeni_anlamda_isaret_var	boş vermek, umursamamak, cehenneme git [gayriresmî, küçümseyici]		hayir
+go in the out door	expr	yeni_anlamda_isaret_var	anal ilişkiye girmek [kaba, argo]		hayir
+go down the khazi	expr	yeni_anlamda_isaret_var	batmak, boşa gitmek, gerilemek [İngiliz argosu]		hayir
+go snake	expr	yeni_anlamda_isaret_var	kontrolden çıkmak, çılgına dönmek [argo]		hayir
+go soak your head	expr	yeni_anlamda_isaret_var	git başını yıka, defol [argo, kaba]		hayir
+go south	expr	yeni_anlamda_isaret_var	ortadan kaybolmak, kaçmak [argo]		hayir
+go moggy	expr	yeni_anlamda_isaret_var	kuralsızca davranmak, çılgınlaşmak [gayriresmî, İngiliz argosu]		hayir
+go on the mitch	expr	yeni_anlamda_isaret_var	okulu asmak [gayriresmî, İngiliz argosu]		hayir
+go to prestwich	expr	yeni_anlamda_isaret_var	aklını kaçırmak, çıldırmak [argo]		hayir
+gone north about	expr	yeni_anlamda_isaret_var	ölmek, vefat etmek [argo, mizah]		hayir
+gone with the wind	expr	yeni_anlamda_isaret_var	ölmek, can vermek [argo, eskimiş]		hayir
+handbags at dawn	expr	yeni_anlamda_isaret_var	gözdağı vermek, tehdit gibi görünen ama zararsız çekişme [spor jargonu]		hayir
+hairy molly	expr	yeni_anlamda_isaret_var	kadın cinsel organı [argo, kaba]		hayir
+half a brain	expr	yeni_anlamda_isaret_var	zerre kadar akıl, az zeka [alaycı, aşağılayıcı]		hayir
+halfway decent	expr	yeni_anlamda_isaret_var	orta karar, vasat [olumsuz, küçümseyici]		hayir
+hard as chinese algebra	expr	yeni_anlamda_isaret_var	çok sert, dik [argo, mecaz]		hayir
+hash slinger	expr	yeni_anlamda_isaret_var	ucuz lokantada aşçı veya garson [argo, küçümseyici]		hayir
+hang a ralph	expr	yeni_anlamda_isaret_var	kusmak [argo, ABD]		hayir
+have bats in one's belfry	expr	yeni_anlamda_isaret_var	kafayı yemiş olmak, aklından zerre kalmamak [gülerek söylenen, hafif hakaret]		evet
+have had one's chips	expr	yeni_anlamda_isaret_var	işi bitmek, ölmek, sonu gelmek [gayriresmî, argo]		hayir
+have seen one's last gum tree	expr	yeni_anlamda_isaret_var	ölümün eşiğinde olmak, son nefesini vermek üzere olmak [argo]		hayir
+have the biscuit	expr	yeni_anlamda_isaret_var	işe yaramaz olmak, ölmek üzere olmak [gayriresmî, İngilizce argo]		hayir
+high as a georgia pine	expr	yeni_anlamda_isaret_var	uyuşturucunun etkisi altında, kafayı bulmuş [argo]		hayir
+high as a kite	expr	yeni_anlamda_isaret_var	kafayı bulmuş, uyuşturucunun etkisinde [argo]		hayir
+hit the sheets	expr	yeni_anlamda_isaret_var	cinsel ilişkiye girmek [argo, kaba]		hayir
+holy crud	expr	yeni_anlamda_isaret_var	Aman Allah'ım, vay be [kaba olmayan küfür yerine]		hayir
+horizontal dancing	expr	yeni_anlamda_isaret_var	cinsel ilişki [argo, kaba]		hayir
+horizontal jogging	expr	yeni_anlamda_isaret_var	cinsel ilişki [argo, kaba]		hayir
+horizontal mambo	expr	yeni_anlamda_isaret_var	cinsel ilişki [argo, kaba]		hayir
+hung like a donkey	expr	yeni_anlamda_isaret_var	çok iri cinsel organlı olmak [argo]		hayir
+i hardly know her	expr	yeni_anlamda_isaret_var	onu pek tanımam, ondan bana ne [şakacı, cinsel imalı yanıt]		hayir
+huckleberry above a persimmon	expr	yeni_anlamda_isaret_var	diğerlerinden üstün olan, öne çıkan [eski Amerikan argosu]		hayir
+huckleberry above one's persimmon	expr	yeni_anlamda_isaret_var	gücünün yetmeyeceği iş, elinden gelmeyen şey [eski Amerikan argosu]		hayir
+i'm not the one	expr	yeni_anlamda_isaret_var	benimle uğraşma, sınırımı aşma [uyarı, küçümseyici]		hayir
+in dickie's meadow	expr	yeni_anlamda_isaret_var	başı belada, zor durumda [gayriresmî, İngiliz argosu]		hayir
+in good sorts	expr	yeni_anlamda_isaret_var	sağlıklı, çalışır durumda [gayriresmî, İngiliz argosu]		hayir
+in your face	expr	yeni_anlamda_isaret_var	küstah, meydan okuyan [argo]; Hah, gördün mü! (zafer ilanı) [ünlem, argo]		hayir
+it's none of your business	expr	yeni_anlamda_isaret_var	sana ne, bu senin işin değil [kaba, azarlayıcı]		hayir
+itch the ditch	expr	yeni_anlamda_isaret_var	kendini tatmin etmek (kadın için) [kaba, argo]		hayir
+ivory tickler	expr	yeni_anlamda_isaret_var	piyanist, piyano çalan kişi [şaka, eski argo]		hayir
+jerkin the gherkin	expr	yeni_anlamda_isaret_var	mastürbasyon, kendini tatmin etme [argo, kaba]		hayir
+jump salty	expr	yeni_anlamda_isaret_var	öfkelenmek, sinirlenmek [gayriresmî, argo]		hayir
+keep the wolf from the door	expr	yeni_anlamda_isaret_var	boşalmayı geciktirmek [argo, cinsel]		hayir
+knock someone's block off	expr	yeni_anlamda_isaret_var	kafasını patlatmak, dövmek [kaba, tehdit ifadesi]		hayir
+know beans about	expr	yeni_anlamda_isaret_var	hakkında bir bok bilmemek [gayriresmî, kaba]		hayir
+kick to the curb	expr	yeni_anlamda_isaret_var	kapı dışarı etmek, küçümseyerek reddetmek [aşağılayıcı biçimde uzaklaştırmak]		hayir
+kick with the other foot	expr	yeni_anlamda_isaret_var	başka dinden olmak [gayriresmî, argo kullanım]		hayir
+lay the wood	expr	yeni_anlamda_isaret_var	sert vurmak, ağır darbe indirmek [argo, spor]		hayir
+let loose	expr	yeni_anlamda_isaret_var	osurmak [kaba]		hayir
+lick someone's boots	expr	yeni_anlamda_isaret_var	dalkavukluk yapmak, ayağına yatmak [aşağılayıcı]		hayir
+like a bull in a china shop	expr	yeni_anlamda_isaret_var	fil gibi, hassasiyetten yoksun [dikkatsiz, kaba davranış]		hayir
+like crack	expr	yeni_anlamda_isaret_var	bağımlılık yapan, bırakılamayan [argo]		hayir
+little head	expr	yeni_anlamda_isaret_var	penis başı, glans [vulgar argo, kaba]		hayir
+living end	expr	yeni_anlamda_isaret_var	en uç nokta, en büyük [olumlu ya da olumsuz, gayet argo]		hayir
+locker room humor	expr	yeni_anlamda_isaret_var	kaba şakalar, erkek mizahı [cinsellik ve kabalık içeren]		hayir
+made in china	expr	yeni_anlamda_isaret_var	ucuz, kalitesiz üretim [çoğunlukla aşağılayıcı]		hayir
+make like a banana and split	expr	yeni_anlamda_isaret_var	kaçıp gitmek, sıvışmak [argo, espri amaçlı]		hayir
+make like a tree and leave	expr	yeni_anlamda_isaret_var	kaçıp gitmek, toz olmak [argo, espri amaçlı]		hayir
+make the bald man cry	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [kaba, argo]		hayir
+mexican breakfast	expr	yeni_anlamda_isaret_var	sigara ve su kahvaltısı [mizahi, argo kullanım]		hayir
+meat rack	expr	yeni_anlamda_isaret_var	cinsel ilişki arayanların buluştuğu yer [argo, cinsel]		hayir
+melon head	expr	yeni_anlamda_isaret_var	aptal, salak [hakaret, gayriresmî]		evet
+master john goodfellow	expr	yeni_anlamda_isaret_var	penis [argo, mizahi]		hayir
+motion of someone's ocean	expr	yeni_anlamda_isaret_var	cinsel birliktelik sırasındaki hareketler [argo, mecazi]		hayir
+no screaming hell	expr	yeni_anlamda_isaret_var	pek iyi değil, beklentinin altında [gayriresmî, İngiliz argosu]		hayir
+oat opera	expr	yeni_anlamda_isaret_var	kovboy filmi, batı filmi [mizahi, argo]		hayir
+old stick	expr	yeni_anlamda_isaret_var	eski dost, yaşlı herif [İngiliz argosu, samimi]		hayir
+nuke the fridge	expr	yeni_anlamda_isaret_var	hikâyeye birdenbire mantıksız bir olay sokmak [film eleştirisi, argo]		hayir
+oreo cookie	expr	yeni_anlamda_isaret_var	içi beyaz, dışı siyah kişi [aşağılayıcı, ırkçı]; üçlü ilişki [argo]		hayir
+one-horse town	expr	yeni_anlamda_isaret_var	küçük kasaba, ıssız köy [hafif küçümseyici]		hayir
+open one's legs	expr	yeni_anlamda_isaret_var	cinsel ilişkiye rıza göstermek [kaba, cinsel anlam]		hayir
+other head	expr	yeni_anlamda_isaret_var	penis başı [kaba, anatomik]		hayir
+pardon my french	expr	yeni_anlamda_isaret_var	kusura bakmayın, ağzımdan kaçtı [küfür ya da kaba söz için özür]		hayir
+piece of tail	expr	yeni_anlamda_isaret_var	seksüel nesne olarak kadın, cinsel ilişki [kaba, argo]		hayir
+piffy on a rock bun	expr	yeni_anlamda_isaret_var	kenara itilmiş, dışlanmış [gayriresmî, İngiliz argosu]		hayir
+poop oneself	expr	yeni_anlamda_isaret_var	altına kaçırmak [kaba]		hayir
+poophole loophole	expr	yeni_anlamda_isaret_var	bakireliği koruma kılıfı [şaka, argo]		hayir
+pop the cherry	expr	yeni_anlamda_isaret_var	bakireliğini kaybetmek [kaba, gayriresmî]		hayir
+porcelain god	expr	yeni_anlamda_isaret_var	klozet, tuvalet [argo, mizahi]		hayir
+power of the pencil	expr	yeni_anlamda_isaret_var	kumar borcunu silme yetkisi [kumarhane jargonu]		hayir
+pray to the porcelain goddess	expr	yeni_anlamda_isaret_var	klozet başında kusmak [argo, mizahi]		hayir
+pull one's pud	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [kaba, argo]		hayir
+punch someone's ticket	expr	yeni_anlamda_isaret_var	birini öldürmek, ciddi zarar vermek [argo]		hayir
+put a lid on it	expr	yeni_anlamda_isaret_var	sus, kes sesini [kaba, azarlayıcı]		hayir
+put on the red light	expr	yeni_anlamda_isaret_var	kendini fahişe olarak ilan etmek [argo, mecazi]		hayir
+put someone on ice	expr	yeni_anlamda_isaret_var	öldürmek, ortadan kaldırmak [argo]		hayir
+put up a brick	expr	yeni_anlamda_isaret_var	basketi kaçırmak [basketbol, argo]		hayir
+queer as a clockwork orange	expr	yeni_anlamda_isaret_var	aşırı eşcinsel, kılıktan kılığa girmiş [eskimiş, küçümseyici]		hayir
+razz someone's berries	expr	yeni_anlamda_isaret_var	birinin gözünü boyamak, etkilemek [gayriresmî, argo]		hayir
+red ink	expr	yeni_anlamda_isaret_var	ucuz kırmızı şarap [gayriresmî, argo]		hayir
+ride hard and put away wet	expr	yeni_anlamda_isaret_var	kötü davranmak, ihmal etmek [argo, eskimiş kullanım]; seks yapmak [argo, kaba]		hayir
+rubber johnny	expr	yeni_anlamda_isaret_var	prezervatif [argo]		hayir
+rubber room	expr	yeni_anlamda_isaret_var	yumuşak odası, geçici görev odası [tıbbi ya da New York okul jargonu]		hayir
+rotten egg	expr	yeni_anlamda_isaret_var	ikiyüzlü, aşırı telafi eden kişi [argo, gizli trans kişi için de kullanılır; aşırı homofobik kişi]		hayir
+sail the red sea	expr	yeni_anlamda_isaret_var	adet döneminde cinsel ilişkiye girmek [kaba, argo]		hayir
+see someone's etchings	expr	yeni_anlamda_isaret_var	birini yatağa atmak [argo, cinsel ima]		hayir
+see you next tuesday	expr	yeni_anlamda_isaret_var	siktir git, defol [çok kaba, hakaret amaçlı]		hayir
+set of pipes	expr	yeni_anlamda_isaret_var	güzel ses, sesin gücü [argo]		hayir
+shoot the boots	expr	yeni_anlamda_isaret_var	kasıklara tekme atmak [argo, sert vuruş]		hayir
+shoot through like a bondi tram	expr	yeni_anlamda_isaret_var	aceleyle kaçıp gitmek, fırlayıp gitmek [Avustralya argosu]		hayir
+shut one's trap	expr	yeni_anlamda_isaret_var	ağzını kapatmak, susmak [gayriresmî, kaba]		hayir
+show someone one's etchings	expr	yeni_anlamda_isaret_var	kadını yatağa atmak için numara yapmak [klişe, cinsel ima içeren laf]		hayir
+skirt chaser	expr	yeni_anlamda_isaret_var	kadın peşinde koşan adam, çapkın [gayriresmî, küçümseyici]		hayir
+skittles party	expr	yeni_anlamda_isaret_var	hap partisi, uyuşturucu partisi [gençler arasında, argo]		hayir
+sing soprano	expr	yeni_anlamda_isaret_var	hadım olmak, testis yaralanması geçirmek [argo, tarihsel]		hayir
+singing soprano	expr	yeni_anlamda_isaret_var	hadım edilmiş, testisleri yaralanmış [argo, tarihsel]		hayir
+single as a pringle	expr	yeni_anlamda_isaret_var	tamamen bekar, bekar ve boşta [argo, mizahi]		hayir
+smell one's own farts	expr	yeni_anlamda_isaret_var	kendini beğenmek, şişinmek [kaba, gayriresmî]		hayir
+sneaky pete	expr	yeni_anlamda_isaret_var	gizli eklemli bilardo sopası [bilardo jargonu]		hayir
+soft mick	expr	yeni_anlamda_isaret_var	gösterişçi, savurgan kimse [argo]		hayir
+spill one's seed	expr	yeni_anlamda_isaret_var	boşalmak [kaba, cinsel bağlam]		hayir
+stand up to one's lick log	expr	yeni_anlamda_isaret_var	direnmek, yerinden oynamamak [argo]		hayir
+stink the joint out	expr	yeni_anlamda_isaret_var	berbat oynamak, kötü performans sergilemek [argo]		hayir
+stitched up like a kipper	expr	yeni_anlamda_isaret_var	kazığa oturtulmak, haksızlığa uğramak [argo]		hayir
+straight as an arrow	expr	yeni_anlamda_isaret_var	tam heteroseksüel [argo, eski kullanım]		hayir
+straight goods	expr	yeni_anlamda_isaret_var	gerçek, doğru bilgi [argo]; özgün, sahte olmayan [argo]		hayir
+stuffed shirt	expr	yeni_anlamda_isaret_var	kendini beğenmiş ukala, züppe [aşağılayıcı]		hayir
+suck it	expr	yeni_anlamda_isaret_var	kaş yap, git başımdan [kaba, alaycı]		hayir
+suck the kumara	expr	yeni_anlamda_isaret_var	ölmek, gebermek [Yeni Zelanda argosu, gayriresmî]		hayir
+stuff it	expr	yeni_anlamda_isaret_var	kes sesini, defol [kaba, sert]		hayir
+stuff you	expr	yeni_anlamda_isaret_var	siktir git, defol [çok kaba, sert]		hayir
+suspended congress	expr	yeni_anlamda_isaret_var	askıda seks [cinsel argo, mizahi]		hayir
+take a dookie	expr	yeni_anlamda_isaret_var	tuvalete gitmek, kaka yapmak [gayriresmî, kaba]		hayir
+swing both ways	expr	yeni_anlamda_isaret_var	biseksüel olmak, iki tarafa da yönelmek [cinsel yönelim için, gayri resmî]		hayir
+take a hike	expr	yeni_anlamda_isaret_var	defol git, çekil git [kaba, sert]		hayir
+take a walkout powder	expr	yeni_anlamda_isaret_var	aceleyle kaçmak, ortadan kaybolmak [argo, gayriresmî]		hayir
+take liberties	expr	yeni_anlamda_isaret_var	saygısızlık etmek, çekinmeden davranmak [özellikle cinsel taciz için]		hayir
+take out the trash	expr	yeni_anlamda_isaret_var	istenmeyen kişileri zorla uzaklaştırmak [argo]		hayir
+take the browns to the super bowl	expr	yeni_anlamda_isaret_var	tuvalete gitmek, kaka yapmak [kaba, argo]		hayir
+take the pee	expr	yeni_anlamda_isaret_var	dalga geçmek, alay etmek [İngiliz argosu, gayriresmî]		hayir
+take the ride	expr	yeni_anlamda_isaret_var	suçunu kabul edip tutuklanmak [argo]		hayir
+territorial pissing	expr	yeni_anlamda_isaret_var	alan kavgası, egemenlik gösterisi [mecazi, kaba]		hayir
+the finest	expr	yeni_anlamda_isaret_var	polis, emniyet güçleri [gayriresmî, argo]		hayir
+the finger	expr	yeni_anlamda_isaret_var	orta parmak göstermek [hakaret amaçlı jest]		evet
+thick as a brick	expr	yeni_anlamda_isaret_var	kafası tas gibi, çok aptal [İngiliz argosu, alaycı]		hayir
+thick as mince	expr	yeni_anlamda_isaret_var	kafası kıyma gibi, çok aptal [İngiliz argosu, alaycı]		hayir
+think with one's little head	expr	yeni_anlamda_isaret_var	akıl yerine cinsel dürtüleriyle karar vermek [kaba, gayriresmî]		hayir
+throw like a girl	expr	yeni_anlamda_isaret_var	kötü atmak, beceriksizce fırlatmak [argo, cinsiyetçi]		hayir
+toey as a roman sandal	expr	yeni_anlamda_isaret_var	cinsel istekten yanıp tutuşan [argo, gayriresmî]		hayir
+touch cotton	expr	yeni_anlamda_isaret_var	tuvalete yetişmeye çalışmak [gayriresmî, kaba]		hayir
+touch oneself	expr	yeni_anlamda_isaret_var	kendini okşamak, mastürbasyon yapmak [resmî olmayan, cinsel]		hayir
+trotter case	expr	yeni_anlamda_isaret_var	ayakkabı, bot [argo, mizahi]		hayir
+tube steak	expr	yeni_anlamda_isaret_var	sosisli sandviç [argo, mizahi]; penis [argo, vulgar]		hayir
+tug one's forelock	expr	yeni_anlamda_isaret_var	boyun eğmek, saygı gösterip yaltaklanmak [küçümseyici]		hayir
+turn a trick	expr	yeni_anlamda_isaret_var	müşteri bulup birlikte olmak, fuhuş yapmak [küçümseyici, argo]		hayir
+turn on one's heel	expr	yeni_anlamda_isaret_var	ani bir hareketle arkasını dönüp gitmek [küçümseyerek, öfkeyle]		hayir
+two penn'orth	expr	yeni_anlamda_isaret_var	görüş, fikir [İngiliz argosu]		hayir
+twelve-ounce curls	expr	yeni_anlamda_isaret_var	bira içmek [argo, gündelik]		hayir
+under the mahogany	expr	yeni_anlamda_isaret_var	sarhoş, kafayı bulmuş [argo]		hayir
+understand the assignment	expr	yeni_anlamda_isaret_var	işin hakkını vermek, görevi en iyi şekilde yapmak [argo]		hayir
+victory at sea	expr	yeni_anlamda_isaret_var	denizde zafer (sörf için kötü dalga koşulu) [sörfçüler arasında argo]		hayir
+welfare cadillac	expr	yeni_anlamda_isaret_var	gereksiz sosyal yardım almak, yardım istismarı [aşağılayıcı, siyasi söylem]		hayir
+whip the cat	expr	yeni_anlamda_isaret_var	pişmanlık duymak, kendine acımak [argo, eskimiş kullanım]		hayir
+white trashery	expr	yeni_anlamda_isaret_var	beyaz çöpçülük, düşük sınıf beyaz davranışı [aşağılayıcı, ırk ve sınıf ile ilgili]		hayir
+yankee dime	expr	yeni_anlamda_isaret_var	öpücük [argo]		hayir
+bag up	expr	yeni_anlamda_isaret_var	tutuklamak, yakalamak [polis için, argo]		hayir
+ball out	expr	yeni_anlamda_isaret_var	çok iyi oynamak, harika performans [argo]; para saçmak, savurmak [argo]		hayir
+bang off	expr	yeni_anlamda_isaret_var	hızla yazmak [argo]		hayir
+blast up	expr	yeni_anlamda_isaret_var	vurup öldürmek [argo]; dövmek, pataklamak [argo]		hayir
+blob off	expr	yeni_anlamda_isaret_var	boşalmak [kaba, argo]		hayir
+blot up	expr	yeni_anlamda_isaret_var	yemek, içmek [gayriresmî, argo]		hayir
+bog off	expr	yeni_anlamda_isaret_var	defolup gitmek, çekip gitmek [gayriresmî, kaba]		hayir
+bone down	expr	yeni_anlamda_isaret_var	birlikte yatmak, cinsel ilişkiye girmek [kaba, argo]		hayir
+brass off	expr	yeni_anlamda_isaret_var	azarlamak, paylamak [argo, sert eleştiri]		hayir
+brass up	expr	yeni_anlamda_isaret_var	ödemek, borcu vermek [argo, para vermek]		hayir
+bone out	expr	yeni_anlamda_isaret_var	tabanları yağlamak, kaçmak [argo, İngiliz kullanımı]		hayir
+booger off	expr	yeni_anlamda_isaret_var	defolup gitmek, siktir olmak [kaba, argo; bugger off eşanlamlısı]		hayir
+bug off	expr	yeni_anlamda_isaret_var	defolup gitmek, rahat bırakmak [gayriresmî, kaba]		hayir
+bust around	expr	yeni_anlamda_isaret_var	saldırmak, dövmek [argo]		hayir
+bust down	expr	yeni_anlamda_isaret_var	enerjik dans etmek [argo]; saldırıp öldürmek, yere sermek [argo]		hayir
+bust off	expr	yeni_anlamda_isaret_var	ateş etmek [argo]		hayir
+bundy off	expr	yeni_anlamda_isaret_var	mesaiden çıkmak, kart basıp çıkmak [İngiliz argosu]		hayir
+bunk off	expr	yeni_anlamda_isaret_var	okulu/işi asmak, kırmak [İngiliz argosu]		hayir
+bunk out	expr	yeni_anlamda_isaret_var	okulu/işi asmak, kırmak [İngiliz argosu]		hayir
+chop out	expr	yeni_anlamda_isaret_var	kokain hazırlamak [uyuşturucu jargonu]		hayir
+cop off	expr	yeni_anlamda_isaret_var	izinsiz erken çıkmak, kaçmak [İngiliz argosu]; kur yapıp birlikte olmak [argo]		hayir
+clout on	expr	yeni_anlamda_isaret_var	çalmak [gayriresmî, argo]		hayir
+crip out	expr	yeni_anlamda_isaret_var	Crips çetesine ait olduğunu mavi renkle belli etmek [çete jargonu]; Crips çetesine mensup olduğunu göstermek [çete jargonu]		hayir
+crack on	expr	yeni_anlamda_isaret_var	sert önlem almak, yakalamak [argo]		hayir
+crap out	expr	yeni_anlamda_isaret_var	zar oyununda kaybetmek [argo]; vazgeçmek, geri çekilmek [argo]		hayir
+f off	expr	yeni_anlamda_isaret_var	defol git, siktir ol [kaba, argo]		hayir
+fap off	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [kaba]; boşa vakit geçirmek [argo]		hayir
+fart about	expr	yeni_anlamda_isaret_var	zaman harcamak, aptalca oyalanmak [argo]		hayir
+fart around	expr	yeni_anlamda_isaret_var	zaman harcamak, saçmalamak [argo]		hayir
+fart off	expr	yeni_anlamda_isaret_var	boş boş oyalanmak, saçmalamak [argo]		hayir
+flex up	expr	yeni_anlamda_isaret_var	şık giyinmek, gösterişli görünmek [argo]		hayir
+flick off	expr	yeni_anlamda_isaret_var	orta parmağı kaldırarak hakaret etmek [argo]		hayir
+geeze up	expr	yeni_anlamda_isaret_var	uyuşturucu enjekte etmek, kafa çekmek [argo]		hayir
+fujo out	expr	yeni_anlamda_isaret_var	erkekler arasındaki eşcinsel ilişkilere aşırı ilgi duymak, fujoshi gibi davranmak [internet argosu]		hayir
+funk up	expr	yeni_anlamda_isaret_var	kokutmak, pis kokulu hale getirmek [argo]		hayir
+futt about	expr	yeni_anlamda_isaret_var	boş boş oyalanmak, aptalca vakit geçirmek [kaba, argo]		hayir
+gonk out	expr	yeni_anlamda_isaret_var	uyuyakalmak, derin uykuya dalmak [gayriresmî, argo]		hayir
+goon out	expr	yeni_anlamda_isaret_var	aşırı içmek, kafayı bulmak [gayriresmî, argo]; uyuşturucu kullanmak, kendini kaybetmek [argo, cinsel içerikli bağlam]		hayir
+grind up	expr	yeni_anlamda_isaret_var	kıvırtarak dans etmek [cinsel çağrışımlı, yakın dans]		hayir
+heel out	expr	yeni_anlamda_isaret_var	aceleyle uzaklaşmak, tabanları yağlamak [argo]		hayir
+hell around	expr	yeni_anlamda_isaret_var	çılgınca yaşamak, belaya bulaşmak [argo]; ortalığı karıştırmak, gürültü çıkarmak [argo]		hayir
+help along	expr	yeni_anlamda_isaret_var	acısız öldürmek, ötanazi yapmak [resmî olmayan, argo]		hayir
+hem up	expr	yeni_anlamda_isaret_var	yakasından tutup sıkıştırmak [argo]; tutuklamak, içeri atmak [argo]		hayir
+hoe around	expr	yeni_anlamda_isaret_var	sürekli birlikte olmak, çapkınlık yapmak [gayriresmî, cinsel ilişki için]		hayir
+honey around	expr	yeni_anlamda_isaret_var	dalkavuk gibi takılmak [küçümseyici]		hayir
+jack off	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [kaba, vulgar]		hayir
+jerk off	expr	yeni_anlamda_isaret_var	mastürbasyon yapmak [vulgar, kaba]		hayir
+hustle up	expr	yeni_anlamda_isaret_var	sıkıştırıp elde etmek, bulmak [argo, dolambaçlı yollarla]		hayir
+ice out	expr	yeni_anlamda_isaret_var	elmasla süslemek [argo]		hayir
+jog on	expr	yeni_anlamda_isaret_var	yoluna devam etmek, git gitme [gayriresmî, argo]		hayir
+jumble up	expr	yeni_anlamda_isaret_var	cinsel ilişkiye girmek [vulgar, kaba]		hayir
+kak on	expr	yeni_anlamda_isaret_var	birinin üstüne çullanmak, aşağılamak [İngiliz argosu, kaba]		hayir
+kink out	expr	yeni_anlamda_isaret_var	fetiş kıyafetleri giymek [BDSM temalı, argo]		hayir
+kiss off	expr	yeni_anlamda_isaret_var	defol git, çekil [argo, kaba]		hayir
+lick out	expr	yeni_anlamda_isaret_var	oral seks yapmak [kaba, vulgar]		hayir
+leg over	expr	yeni_anlamda_isaret_var	kötü davranıp aldatmak, mahvetmek [argo]		hayir
+micky off	expr	yeni_anlamda_isaret_var	kaçmak, sıvışmak [İngiliz argosu]		hayir
+mike off	expr	yeni_anlamda_isaret_var	kaçmak, sıvışmak [İngiliz argosu]		hayir
+lump up	expr	yeni_anlamda_isaret_var	dövüp şişirmek [argo]		hayir
+lunch out	expr	yeni_anlamda_isaret_var	dalgın olmak, kafası yerinde olmamak [argo, esrar kullanımı için]		hayir
+lust after	expr	yeni_anlamda_isaret_var	cinsel arzu duymak [cinsel bağlamda]		hayir
+macho up	expr	yeni_anlamda_isaret_var	erkeklik gösterisi yapmak, sert davranmak [argo]		hayir
+mack down	expr	yeni_anlamda_isaret_var	öpüşmek, sevişmeye başlamak [argo]		hayir
+mob up	expr	yeni_anlamda_isaret_var	mafyayla birlik olmak [argo]		hayir
+mong out	expr	yeni_anlamda_isaret_var	uyuşmak, kafası dağılmak [argo, uyuşturucu için]		hayir
+murk out	expr	yeni_anlamda_isaret_var	öldürmek, katletmek [argo, gayriresmî]		hayir
+mull up	expr	yeni_anlamda_isaret_var	esrarı tütünle karıştırmak [argo]		hayir
+pig off	expr	yeni_anlamda_isaret_var	defolup gitmek, def olmak [kaba, resmî değil]		hayir
+paw off	expr	yeni_anlamda_isaret_var	kendini tatmin etmek [argo, kaba]		hayir
+peace out	expr	yeni_anlamda_isaret_var	hoşça kal, görüşürüz [argo]; bayılmak, kendinden geçmek [argo]		hayir
+pee off	expr	yeni_anlamda_isaret_var	sinirlendirmek, canını sıkmak [İngiliz argosu]; defolup gitmek [kaba, argo]		hayir
+plead out	expr	yeni_anlamda_isaret_var	pazarlıkla cezaevinden çıkmak [hukuk, argo]		hayir
+pill up	expr	yeni_anlamda_isaret_var	hap kullanmak [argo]		hayir
+popper up	expr	yeni_anlamda_isaret_var	amil nitrit ile sarhoş etmek [uyuşturucu, argo]		hayir
+qualify out	expr	yeni_anlamda_isaret_var	müşteri dışı bırakmak [satış jargonu]		hayir
+punk out	expr	yeni_anlamda_isaret_var	aşağılamak, küçük düşürmek [argo, hakaret]		hayir
+rack off	expr	yeni_anlamda_isaret_var	defolup gitmek, toz olmak [kaba, argo]		hayir
+ride on	expr	yeni_anlamda_isaret_var	araçtan ateş ederek hedef almak [silahlı saldırı, argo]		hayir
+sack up	expr	yeni_anlamda_isaret_var	net kâr elde etmek [ticari, argo]		hayir
+rock up	expr	yeni_anlamda_isaret_var	kokainden crack yapmak [uyuşturucu jargonu]		hayir
+rizz up	expr	yeni_anlamda_isaret_var	baştan çıkarmak, çekici davranmak [gayriresmî, argo]		hayir
+rubber up	expr	yeni_anlamda_isaret_var	prezervatif takmak [argo]		hayir
+sex in	expr	yeni_anlamda_isaret_var	çete üyeleriyle cinsel ilişkiye girmek (giriş ritüeli) [argo, rahatsız edici]		hayir
+shove along	expr	yeni_anlamda_isaret_var	defolup gitmek, toslamak [kaba, argo]		hayir
+slime out	expr	yeni_anlamda_isaret_var	öldürmek, ortadan kaldırmak [argo, mafya dili]		hayir
+smack around	expr	yeni_anlamda_isaret_var	dövmek, fena halde dövmek [kaba fiziksel şiddet]		hayir
+smack down	expr	yeni_anlamda_isaret_var	ezip geçmek, ağır yenilgiye uğratmak [aşağılayıcı biçimde]		hayir
+smack up	expr	yeni_anlamda_isaret_var	eroin kullanmak, eroin almak [argo]		hayir
+snake out	expr	yeni_anlamda_isaret_var	ispiyonlamak, ele vermek [argo]		hayir
+snake up	expr	yeni_anlamda_isaret_var	safı değiştirmek, ihanet etmek [argo]		hayir
+spark out	expr	yeni_anlamda_isaret_var	bayılmak, baygınlık geçirmek [argo, gayriresmî]; bayıltmak, etkisiz hale getirmek [argo]		hayir
+spaz out	expr	yeni_anlamda_isaret_var	kontrolünü kaybetmek, sinirden çıldırmak [argo, gayriresmî]		hayir
+sperg out	expr	yeni_anlamda_isaret_var	sinirlenip çıldırmak, kontrolünü kaybetmek [internet argosu]; konuyu aşırı uzatarak anlatmak [internet argosu]		hayir
+squig out	expr	yeni_anlamda_isaret_var	tiksindirmek, rahatsız etmek [gayriresmî, argo]		hayir
+strapped up	expr	yeni_anlamda_isaret_var	silahlı olmak, silah taşımak [argo]		hayir
+trog off	expr	yeni_anlamda_isaret_var	zorlanarak ayrılmak, güç bela gitmek [gayriresmî, İngiliz argosu]		hayir
+whore up	expr	yeni_anlamda_isaret_var	fahişeleştirmek, baştan çıkarmak [küçültücü, kaba]; fahişe gibi görünmek [kaba, aşağılayıcı]		hayir
+below the salt	expr	yeni_anlamda_isaret_var	alt tabakadan, görgüsüz [eski, küçümseyici]		hayir
+between the sheets	expr	yeni_anlamda_isaret_var	yatakta, cinsel ilişki bağlamında [argo, resmî olmayan]		hayir
+down the gurgler	expr	yeni_anlamda_isaret_var	boşa gitmek, heba olmak [gayriresmî, İngiliz argosu]		hayir
+down the khazi	expr	yeni_anlamda_isaret_var	boşa gitmek, heba olmak [gayriresmî, İngiliz argosu]		hayir
+fo shizzle	expr	yeni_anlamda_isaret_var	kesinlikle, tabii ki [argo]		hayir
+for all money	expr	yeni_anlamda_isaret_var	büyük ihtimalle, neredeyse kesin [argo]		hayir
+for scotland	expr	yeni_anlamda_isaret_var	hem de çok, çok fazla [gayriresmî, İngiliz argosu]		hayir
+in a box	expr	yeni_anlamda_isaret_var	ölü, öldürülmüş [argo]		hayir
+from soda to hock	expr	yeni_anlamda_isaret_var	baştan sona, en başından sonuna [argo, gayriresmî]		hayir
+in a pig's patoot	expr	yeni_anlamda_isaret_var	kesinlikle hayır, asla [Amerikan argosu]		hayir
+in lesbians	expr	yeni_anlamda_isaret_var	âşık olmuş, şehvet duyan kadınlar arasında [kaba, aşağılayıcı; kullanmaktan kaçının]		hayir
+in quick sticks	expr	yeni_anlamda_isaret_var	hemen, çabucak [İngiliz argosu, gayriresmî]		hayir
+in rag order	expr	yeni_anlamda_isaret_var	karmakarışık, dağınık [eski, argo]		hayir
+in the bedroom	expr	yeni_anlamda_isaret_var	yatakta, cinsel alanda [cinsel ilişki için]		hayir
+in the closet	expr	yeni_anlamda_isaret_var	gizli, açığa vurulmamış [cinsel yönelim için]		hayir
+in the mix	expr	yeni_anlamda_isaret_var	DJ olarak müzik karıştırmak [müzik jargonu]		hayir
+in the nick	expr	yeni_anlamda_isaret_var	çıplak, üstsüz [argo, eski]		hayir
+in the nip	expr	yeni_anlamda_isaret_var	çıplak, üstsüz [argo, eski]		hayir
+in the nuddy	expr	yeni_anlamda_isaret_var	çıplak [argo, eski]		hayir
+in the shitter	expr	yeni_anlamda_isaret_var	berbat durumda, batmış [kaba, argo]		hayir
+in the pink	expr	yeni_anlamda_isaret_var	çıplak [argo]		hayir
+in the pudding club	expr	yeni_anlamda_isaret_var	hamile [argo, mizahi]		hayir
+in the racket	expr	yeni_anlamda_isaret_var	fuhuş yapmak [argo, resmî değil]		hayir
+in the rear with the gear	expr	yeni_anlamda_isaret_var	cepheden uzakta, destek görevinde [askerî, argo]		hayir
+like butter on a bald monkey	expr	yeni_anlamda_isaret_var	çok pürüzsüz, yumuşak [argo, mizahi kullanım]		hayir
+like fudge	expr	yeni_anlamda_isaret_var	kahretsin, lanet olsun [kaba, argo; küfür yerine]		hayir
+of that ilk	expr	yeni_anlamda_isaret_var	o türden, o cinsten [resmî ve küçümseyici]		hayir
+on a mission	expr	yeni_anlamda_isaret_var	uyuşturucu arayışında [argo]		hayir
+on a promise	expr	yeni_anlamda_isaret_var	vaat karşılığında, sözle ilişkiye girerek [argo, cinsel]		hayir
+off the hizzy	expr	yeni_anlamda_isaret_var	harika, süper [argo]; doğaçlama, hazırlıksız [argo]		hayir
+on butt	expr	yeni_anlamda_isaret_var	çıldırmış gibi davranmak, kafayı yemek [gayriresmî, argo]		hayir
+on jah	expr	yeni_anlamda_isaret_var	Tanrı adına, Tanrı şahidim olsun [argo, yemin]		hayir
+on fleek	expr	yeni_anlamda_isaret_var	kusursuz, mükemmel, çok şık [argo]		hayir
+on foenem grave	expr	yeni_anlamda_isaret_var	mezarım üzerine, yemin ederim [argo, abartılı]		hayir
+on one's pat malone	expr	yeni_anlamda_isaret_var	tek başına, yalnız [gayriresmî, argo]		hayir
+on one's tod	expr	yeni_anlamda_isaret_var	tek başına, yalnız [İngiliz argosu]		hayir
+on one's l's	expr	yeni_anlamda_isaret_var	ehliyet çırağı olmak, şoför adayı olmak [İngiliz argosu; öğrenci sürücü belgesi]		hayir
+on one's ones	expr	yeni_anlamda_isaret_var	tek başına, kendi başına [eski, argo]		hayir
+on one's p's	expr	yeni_anlamda_isaret_var	deneme sürücüsü olmak [İngiliz argosu; geçici ehliyet]		hayir
+on the batter	expr	yeni_anlamda_isaret_var	fuhuş yapmak [argo, eskimiş]		hayir
+on the beat	expr	yeni_anlamda_isaret_var	fuhuş yapmak [argo]		hayir
+on the brew	expr	yeni_anlamda_isaret_var	işsizlik maaşı almak [gayriresmî, İngiliz argosu]		hayir
+on the bung	expr	yeni_anlamda_isaret_var	bozuk, çalışmayan, işlemez durumda [gayriresmî, İngiliz argosu]		hayir
+on the nick	expr	yeni_anlamda_isaret_var	hırsızlık yapmakta [argo]		hayir
+on the nut	expr	yeni_anlamda_isaret_var	kâr etmekte, parada [argo]		hayir
+on the job	expr	yeni_anlamda_isaret_var	cinsel ilişkide bulunmak [argo, müstehcen]		hayir
+on the high rope	expr	yeni_anlamda_isaret_var	kibirli, burnu büyük [küçümseyici kullanım]		hayir
+on the hog	expr	yeni_anlamda_isaret_var	serseri hayatı yaşamak [argo, eskimiş kullanım]		hayir
+on the hop	expr	yeni_anlamda_isaret_var	okuldan kaçmak [argo, eskimiş kullanım]		hayir
+on the pat and mick	expr	yeni_anlamda_isaret_var	hasta, rahatsız [gayriresmî, İngiliz argosu]		hayir
+on the pdq	expr	yeni_anlamda_isaret_var	çabucak, hemen [gayriresmî, İngiliz argosu]		hayir
+on the turf	expr	yeni_anlamda_isaret_var	fuhuş yapmak [argo]		hayir
+on the wallaby	expr	yeni_anlamda_isaret_var	işsiz dolaşmak [Avustralya, argo]		hayir
+through the hawsehole	expr	yeni_anlamda_isaret_var	denizci olmadan subaylığa yükselen [gemicilik jargonu]		hayir
+through the wazoo	expr	yeni_anlamda_isaret_var	bol bol, sonsuz miktarda [gayriresmî, Amerikan argosu]		hayir
+under hack	expr	yeni_anlamda_isaret_var	tutuklu, gözaltında [resmî değil, argo]		hayir
+under glass	expr	yeni_anlamda_isaret_var	parmaklıklar ardında, hapiste [argo, eski]		hayir
+under the sheets	expr	yeni_anlamda_isaret_var	yatakta, cinsel ilişkide [cinsel durum]		hayir
+until the last dog is hung	expr	yeni_anlamda_isaret_var	son ana kadar, sonuna dek [eski, argo ağırlıklı]		hayir
+up the oxo tower	expr	yeni_anlamda_isaret_var	anal ilişkide bulunmak [vulgar, kaba]		hayir
+up to the hammer	expr	yeni_anlamda_isaret_var	birinci sınıf, harika, kusursuz [gayriresmî, eski argo]		hayir
+with god	expr	yeni_anlamda_isaret_var	ölmüş, rahmetli [eski, argo kullanım]		hayir
+with knobs on	expr	yeni_anlamda_isaret_var	üstelik fazlasıyla, daha da beter [İngiliz argosu, gayriresmî]		hayir
+without tea and biscuits	expr	yeni_anlamda_isaret_var	sert, acımasız sorgu [mecazi, İngiliz argosu]		hayir
+game is game	expr	yeni_anlamda_isaret_var	Oyun oyundur [cinsel ilişki bağlamında, amaç araçları haklı çıkarır]		hayir
+love is love	expr	yeni_anlamda_isaret_var	aşk aşktır [eşcinsel ilişkiler için de söylenir]		hayir
+quidquid latine dictum sit altum videtur	expr	yeni_anlamda_isaret_var	Latince söylenen her şey derin görünür [alaycı, küçümseyici]		hayir
+ship and let ship	expr	yeni_anlamda_isaret_var	herkes kendi shipini desteklesin [hayran kültürü, internet jargonu]		hayir
+snitches get stitches	expr	yeni_anlamda_isaret_var	Ispiyoncunun dikiş tutmaz, ispiyonculuğun bedeli ağırdır [argo, atasözü]		hayir
+words cut deep	expr	yeni_anlamda_isaret_var	sözler derin yara açar [hakaret ve incitici sözler için]		evet
+wrap it before you tap it	expr	yeni_anlamda_isaret_var	tatmadan önce kılıfını giy [kondom kullanımı için, argo]		hayir
+drunkard	word	yeni_anlamda_isaret_var	ayyaş, sarhoş, içkici [aşağılayıcı]		evet
+half-caste	word	yeni_anlamda_isaret_var	melez [aşağılayıcı, kullanılmamalı]		evet
+i want doesn't get	expr	yeni_anlamda_isaret_var	istemek yetmez, kibarca iste [kaba talebin işe yaramayacağını anlatır]		evet
+come	word	yeni_anlamda_isaret_var	meni [tıbbi, kaba]		hayir
+dog	word	yeni_anlamda_isaret_var	çirkin ve sevimsiz kadın [aşağılayıcı]		hayir
+drink	word	yeni_anlamda_isaret_var	deniz, büyük su kütlesi [argo, eski kullanım; the drink biçiminde]		hayir
+john	word	yeni_anlamda_isaret_var	fahişenin müşterisi [argo]		hayir
+boy	word	yeni_anlamda_isaret_var	zenci erkek [aşağılayıcı, ırkçı kullanım]		hayir
+sister	word	yeni_anlamda_isaret_var	hanım, kardeşim [argo, hitap]		hayir
+child	word	yeni_anlamda_isaret_var	olgunlaşmamış kimse, çocuk [mecaz, küçümseyici]		hayir
+cat	word	yeni_anlamda_isaret_var	dedikoducu kadın [küçümseyici]		hayir
+sing	word	yeni_anlamda_isaret_var	ispiyonlamak, ele vermek [gizli bilgi için, argo]		hayir
+stupid	word	yeni_anlamda_isaret_var	aptal, enayi [hakaret]		evet
+red	word	yeni_anlamda_isaret_var	komünist, solcu [gayriresmî, hakaret]		evet
+mean	word	yeni_anlamda_isaret_var	harika, çok iyi [argo, eskimiş]		hayir
+hot	word	yeni_anlamda_isaret_var	seksi, arzulu [argo]		hayir
+baby	word	yeni_anlamda_isaret_var	tatlım, canım [argo, hitap için]		hayir
+guess	word	yeni_anlamda_isaret_var	kestirme tahmin [kaba hesap]		hayir
+snow	word	yeni_anlamda_isaret_var	kokain [argo]		hayir
+girlfriend	word	yeni_anlamda_isaret_var	kadın arkadaş, kız arkadaş [cinsel ilişki olmayan]		hayir
+cook	word	yeni_anlamda_isaret_var	sahtelemek, oynamak [hile için, argo]		hayir
+crazy	word	yeni_anlamda_isaret_var	deli, akıl hastası [aşağılayıcı]		hayir
+bread	word	yeni_anlamda_isaret_var	para, nakit [argo]		hayir
+ice	word	yeni_anlamda_isaret_var	elmas, pırlanta [argo]; metamfetamin [uyuşturucu, argo]		hayir
+gun	word	yeni_anlamda_isaret_var	tetikçi, kiralık katil [argo]; gaz pedalı [araç, argo]		hayir
+speech	word	yeni_anlamda_isaret_var	azar, söylenme [argo]		hayir
+shop	word	yeni_anlamda_isaret_var	ispiyonlamak, ihbar etmek [argo]		hayir
+cream	word	yeni_anlamda_isaret_var	ezmek, yenilgiye uğratmak [rekabet için, argo]		hayir
+animal	word	yeni_anlamda_isaret_var	hayvan, vahşi insan [kaba kişi için]		hayir
+wet	word	yeni_anlamda_isaret_var	zayıf, yumuşak [gayriresmî, aşağılayıcı]		hayir
+chicken	word	yeni_anlamda_isaret_var	korkak, yüreksiz [gayriresmî, hakaret]		evet
+fence	word	yeni_anlamda_isaret_var	paravalıcı, çalıntı mal alıcısı [argo]		hayir
+damage	word	yeni_anlamda_isaret_var	masraf, bedel [argo, mizah]		hayir
+grass	word	yeni_anlamda_isaret_var	ispiyoncu, muhbir [argo]; esrar, ot [argo]; ihbar etmek, ispiyonlamak [argo]		hayir
+safety	word	yeni_anlamda_isaret_var	prezervatif [cinsel ilişki için]		hayir
+bomb	word	yeni_anlamda_isaret_var	büyük miktar, servet [İngilizce argo]		hayir
+square	word	yeni_anlamda_isaret_var	geleneksel, eski kafalı [gayriresmî, küçümseyici]		hayir
+jazz	word	yeni_anlamda_isaret_var	boş laf, abartılı konuşma [argo, gayriresmî]; cinsel ilişkiye girmek [argo, kaba]		hayir
+killing	word	yeni_anlamda_isaret_var	büyük kâr [ticari, argo]		hayir
+skirt	word	yeni_anlamda_isaret_var	kadın, kız [argo, eski]		hayir
+split	word	yeni_anlamda_isaret_var	şeref payı, ganimet payı [argo]		hayir
+trap	word	yeni_anlamda_isaret_var	ağız [argo]		hayir
+trash	word	yeni_anlamda_isaret_var	değersiz insanlar, serseri [aşağılayıcı]		hayir
+blow	word	yeni_anlamda_isaret_var	kokain [argo]		hayir
+cow	word	yeni_anlamda_isaret_var	şişman kadın, kaba kadın [hakaret, kaba]		hayir
+adult	word	yeni_anlamda_isaret_var	müstehcen, yetişkinlere özgü [cinsel içerikli]		hayir
+soap	word	yeni_anlamda_isaret_var	rüşvet [argo, gayriresmî]		hayir
+bleeding	word	yeni_anlamda_isaret_var	lanet olası [argo, İngiliz kullanımı]		hayir
+shit	word	yeni_anlamda_isaret_var	pislik, dışkı [kaba]; saçmalık, boktan şey [kaba]; aptal herif [kaba]; sıçmak [kaba]; lanet olsun, siktir [kaba]		hayir
+loser	word	yeni_anlamda_isaret_var	başarısız kişi, ezik [gayriresmî, aşağılayıcı]		hayir
+scratch	word	yeni_anlamda_isaret_var	para, nakit [gayriresmî, argo]		hayir
+betray	word	yeni_anlamda_isaret_var	aldatmak [eş için, cinsel]		hayir
+fuck	word	yeni_anlamda_isaret_var	sikmek, becermek [kaba, vulgar]; sikiş [kaba, argo]		hayir
+jerk	word	yeni_anlamda_isaret_var	aptal, salak [argo, hakaret]		hayir
+sauce	word	yeni_anlamda_isaret_var	küstahlık, pişkinlik [argo]		hayir
+jungle	word	yeni_anlamda_isaret_var	serseri kampı [argo, eski]		hayir
+acid	word	yeni_anlamda_isaret_var	LSD [argo]		hayir
+peel	word	yeni_anlamda_isaret_var	soyunmak [argo, gayriresmî]		hayir
+ass	word	yeni_anlamda_isaret_var	aptal, ahmak [hakaret]		evet
+fairy	word	yeni_anlamda_isaret_var	eşcinsel erkek [çok aşağılayıcı, kullanmaktan kaçının]		hayir
+rat	word	yeni_anlamda_isaret_var	hain, alçak [aşağılayıcı]; grev kırıcı [aşağılayıcı]		hayir
+rubber	word	yeni_anlamda_isaret_var	prezervatif, kondom [argo olmayan günlük dil]		hayir
+forgiveness	word	yeni_anlamda_isaret_var	bağışlama, affetme [hata, kabahat]		hayir
+lettuce	word	yeni_anlamda_isaret_var	para, nakit [argo]		hayir
+pathetic	word	yeni_anlamda_isaret_var	içler acısı, berbat [küçümseyici]		hayir
+passenger	word	yeni_anlamda_isaret_var	yolcu, gezgin [hakaret, kişiye pasif bağlılık için mecaz]		evet
+witch	word	yeni_anlamda_isaret_var	çirkin yaşlı kadın [hakaret, mecaz]		evet
+coke	word	yeni_anlamda_isaret_var	kokain [argo]		hayir
+weed	word	yeni_anlamda_isaret_var	esrar, ot [argo]		hayir
+joint	word	yeni_anlamda_isaret_var	kafe, meyhane [argo, kötü yer]; sigara, joint [argo]		hayir
+cooler	word	yeni_anlamda_isaret_var	hücre, ceza hücresi [argo]		hayir
+muscle	word	yeni_anlamda_isaret_var	koruma, tetikçi [kiralanmış adam, argo]		hayir
+sock	word	yeni_anlamda_isaret_var	yumruklamak, sert vurmak [argo]		hayir
+bull	word	yeni_anlamda_isaret_var	saçmalık, büyük hata [argo]		hayir
+bully	word	yeni_anlamda_isaret_var	kiralık dayak atan, tetikçi [eski, argo]; harika, mükemmel [eski, argo]		hayir
+hood	word	yeni_anlamda_isaret_var	serbest bölge, mahalle [argo]; serseri, külhanbeyi [argo, şiddet eğilimli genç suçlu]		hayir
+chase	word	yeni_anlamda_isaret_var	peşinde koşmak, kur yapmak [cinsel veya romantik]		hayir
+deck	word	yeni_anlamda_isaret_var	paket, doz [uyuşturucu, argo]; yere sermek, yumruklamak [argo]		hayir
+federal	word	yeni_anlamda_isaret_var	federal ajan [ABD, argo]		hayir
+clown	word	yeni_anlamda_isaret_var	aptal, salak [hakaret]		evet
+lip	word	yeni_anlamda_isaret_var	küstahlık, laf [argo]		hayir
+dense	word	yeni_anlamda_isaret_var	kafası basmayan, kıt anlayışlı [resmî olmayan, hafif hakaret]		evet
+screw	word	yeni_anlamda_isaret_var	gardiyan [eski ve argo kullanım]; becermek, dolandırmak [argo, mecazi]; sevişmek, yatmak [vulgar, kaba; dikkatli kullanın]		hayir
+lame	word	yeni_anlamda_isaret_var	aptal, anlamsız kişi [argo]		hayir
+nut	word	yeni_anlamda_isaret_var	kafa, baş [argo]		hayir
+worm	word	yeni_anlamda_isaret_var	alçak, adi herif [hakaret]		evet
+bum	word	yeni_anlamda_isaret_var	aylak, işsiz güçsüz [hakaret]		evet
+bastard	word	yeni_anlamda_isaret_var	herif, it, pislik [hakaret, kaba]		hayir
+bullshit	word	yeni_anlamda_isaret_var	saçmalık, yalan dolan [kaba, argo]; yalan söylemek, saçmalamak [kaba, argo]		hayir
+wicked	word	yeni_anlamda_isaret_var	çok iyi, harika [gayriresmî, argo]		hayir
+copper	word	yeni_anlamda_isaret_var	polis, komiser [argo, küçümseyici]		hayir
+squeeze	word	yeni_anlamda_isaret_var	sevgili [argo]		hayir
+nerd	word	yeni_anlamda_isaret_var	inek, çalışkan çocuk [alaycı, aşağılayıcı]		hayir
+asshole	word	yeni_anlamda_isaret_var	aptal herif, gerizekalı [kaba, hakaret]; göt deliği [kaba, argo]		hayir
+con	word	yeni_anlamda_isaret_var	mahkûm [argo]		hayir
+conquest	word	yeni_anlamda_isaret_var	gönül fethi [aşk veya cinsel]		hayir
+lump	word	yeni_anlamda_isaret_var	aptal, beceriksiz kişi [gayriresmî, hakaret]		evet
+piss	word	yeni_anlamda_isaret_var	işemek, sidik yapmak [kaba, gayriresmî]; kızdırmak, sinirlendirmek [kaba, gayriresmî]		hayir
+lunatic	word	yeni_anlamda_isaret_var	çılgın, akıl hastası [eski ya da kaba]; akıl hastası, deli [eski ya da kaba]		hayir
+rod	word	yeni_anlamda_isaret_var	tabanca, silah [argo]		hayir
+pi	word	yeni_anlamda_isaret_var	özel dedektif, muhbir [argo]		hayir
+prostitute	word	yeni_anlamda_isaret_var	fahişe, orospu [aşağılayıcı]		hayir
+rag	word	yeni_anlamda_isaret_var	gazete, tabloid [İngilizce argo, küçümseyici]		hayir
+bean	word	yeni_anlamda_isaret_var	kafa [argo]		hayir
+boot	word	yeni_anlamda_isaret_var	kovmak, atmak [argo]		hayir
+shrimp	word	yeni_anlamda_isaret_var	küçük adam, cüce [aşağılayıcı]		hayir
+corporation	word	yeni_anlamda_isaret_var	göbek, karın [argo]		hayir
+damned	word	yeni_anlamda_isaret_var	lanetli, kahrolası [argo, pekiştirici]; kahrolasıca, son derece [argo]		hayir
+jug	word	yeni_anlamda_isaret_var	hapse atmak [argo]		hayir
+paste	word	yeni_anlamda_isaret_var	dövmek, yumruklamak [argo]		hayir
+peasant	word	yeni_anlamda_isaret_var	kaba saba adam, görgüsüz [aşağılayıcı]		hayir
+wasp	word	yeni_anlamda_isaret_var	beyaz Anglo-Sakson Protestan [aşağılayıcı, ABD]		hayir
+shitty	word	yeni_anlamda_isaret_var	berbat, rezil [kaba, gayriresmî]		hayir
+slut	word	yeni_anlamda_isaret_var	pasaklı kadın, dağınık kadın [aşağılayıcı, eski kullanım]; orospu, fahişe [çok aşağılayıcı, kaba]		hayir
+homemade	word	yeni_anlamda_isaret_var	amatörce yapılmış, el yapımı [küçümseyici]		hayir
+shrink	word	yeni_anlamda_isaret_var	psikiyatr [argo]		hayir
+herd	word	yeni_anlamda_isaret_var	kalabalık, güruh [insanlar için, küçümseyici]		hayir
+cod	word	yeni_anlamda_isaret_var	kandırmak, dalga geçmek [argo]		hayir
+nickel	word	yeni_anlamda_isaret_var	beş dolarlık [uyuşturucu argosu]		hayir
+pussy	word	yeni_anlamda_isaret_var	kaba küfür, kadın cinsel organı [vulgar, kaba]		hayir
+chastity	word	yeni_anlamda_isaret_var	ahlaklılık, iffet [cinsel konularda]		hayir
+clam	word	yeni_anlamda_isaret_var	dolar [argo, Amerikan]		hayir
+fatty	word	yeni_anlamda_isaret_var	şişman, tombul [resmî olmayan, kaba]		hayir
+fluffy	word	yeni_anlamda_isaret_var	tüylü, yumuşak [kabarık ve yumuşak]		hayir
+imbecile	word	yeni_anlamda_isaret_var	aptal, ahmak [hakaret olarak]		evet
+pervert	word	yeni_anlamda_isaret_var	sapkın [aşağılayıcı]		hayir
+queer	word	yeni_anlamda_isaret_var	eşcinsel [eski ve aşağılayıcı]		hayir
+weasel	word	yeni_anlamda_isaret_var	sinsi kimse, dönek [aşağılayıcı]		hayir
+bottomless	word	yeni_anlamda_isaret_var	çıplak, üstsüz [kötüleyici, müstehcen]		evet
+brainless	word	yeni_anlamda_isaret_var	aptal, akılsız [hafif hakaret]		evet
+dummy	word	yeni_anlamda_isaret_var	aptal, budala [hakaret içerir]		evet
+fetish	word	yeni_anlamda_isaret_var	fetiş, cinsel takıntı [cinsel anlamda]		hayir
+indecent	word	yeni_anlamda_isaret_var	müstehcen, açık saçık [cinsellikle ilgili]		hayir
+parasite	word	yeni_anlamda_isaret_var	asalak, başkasının sırtından geçinen kimse [mecaz, aşağılayıcı]		hayir
+sensual	word	yeni_anlamda_isaret_var	şehvetli, cinsel çekicilik taşıyan [cinsel anlamda]		hayir
+twat	word	yeni_anlamda_isaret_var	aptal, beceriksiz herif [küfürlü, kaba]; kaba küfür, kadın cinsel organı [çok kaba, müstehcen]		hayir
+dildo	word	yeni_anlamda_isaret_var	yapay penis, vibratör [cinsel amaçlı]		hayir
+ecstasy	word	yeni_anlamda_isaret_var	ecstasy, uyuşturucu [uyuşturucu için, argo]		hayir
+hobo	word	yeni_anlamda_isaret_var	serseri, evsiz dolaşan adam [küçümseyici]		hayir
+psycho	word	yeni_anlamda_isaret_var	psikopat, akıl hastası [gayriresmî, aşağılayıcı]		hayir
+pimp	word	yeni_anlamda_isaret_var	pezevenk [aşağılayıcı]		hayir
+slum	word	yeni_anlamda_isaret_var	yoksul semtleri gezmek [merak için, küçümseyici]		hayir
+suds	word	yeni_anlamda_isaret_var	bira [argo, eski kullanım]		hayir
+tart	word	yeni_anlamda_isaret_var	fahişe, orospu [kaba, aşağılayıcı]		hayir
+wanker	word	yeni_anlamda_isaret_var	aptal, salak [küfür niteliğinde, kaba]; kendini tatmin eden kişi [kaba, argo]		hayir
+boob	word	yeni_anlamda_isaret_var	aptal, salak [gayriresmî, hafif hakaret]		evet
+bourgeois	word	yeni_anlamda_isaret_var	burjuva, geleneksel, muhafazakâr [küçümseyici, değerlere bağlı]		hayir
+chatterbox	word	yeni_anlamda_isaret_var	geveze, çenesi düşük kimse [küçümseyici]		hayir
+croak	word	yeni_anlamda_isaret_var	öldürmek, ölmek [argo]		hayir
+cum	word	yeni_anlamda_isaret_var	meni [kaba, tıbbi bağlam]		hayir
+cunt	word	yeni_anlamda_isaret_var	orospu çocuğu, şerefsiz [çok kaba, hakaret]		hayir
+goddamn	word	yeni_anlamda_isaret_var	çok, son derece [pekiştirici, argo]		hayir
+hump	word	yeni_anlamda_isaret_var	cinsel ilişkiye girmek [vulgar; kaba kullanım]		hayir
+jade	word	yeni_anlamda_isaret_var	yorgun at, aygır [eski, aşağılayıcı]; oynak kadın, fahişe [eski, aşağılayıcı]		hayir
+kale	word	yeni_anlamda_isaret_var	para, nakit [argo]		hayir
+laughable	word	yeni_anlamda_isaret_var	akıl almaz, saçma [küçümseyici]		hayir
+leech	word	yeni_anlamda_isaret_var	asalak, başkalarını sömüren kişi [küçümseyici]		hayir
+paddy	word	yeni_anlamda_isaret_var	Irlandalı (aşağılayıcı) [hakaret içerir, kullanmaktan kaçının]		evet
+promiscuous	word	yeni_anlamda_isaret_var	çapkın, ahlaksız [cinsel davranış için]		hayir
+raspberry	word	yeni_anlamda_isaret_var	dudak büzerek çıkarılan alay sesi, pöh [küçümseme]		hayir
+rhetoric	word	yeni_anlamda_isaret_var	süslü dil, gösterişli söz [küçümseyici]		hayir
+shrew	word	yeni_anlamda_isaret_var	huysuz kadın, cadaloz [aşağılayıcı]		hayir
+snot	word	yeni_anlamda_isaret_var	züppe, kendini beğenmiş kişi [küçümseyici]		hayir
+submissive	word	yeni_anlamda_isaret_var	uysal, kulluk eden [aşırı, aşağılayıcı]		hayir
+wank	word	yeni_anlamda_isaret_var	el işi, mastürbasyon [argo, kaba]; mastürbasyon yapmak [argo, kaba]		hayir
+blockhead	word	yeni_anlamda_isaret_var	aptal, salak [hakaret, küçümseyici]		hayir
+boffin	word	yeni_anlamda_isaret_var	bilim insanı, uzman [İngiliz argosu, askerî araştırma]		hayir
+bootlicker	word	yeni_anlamda_isaret_var	dalkavuk, yaltaklanan kimse [aşağılayıcı]		hayir
+briny	word	yeni_anlamda_isaret_var	deniz, okyanus [şiirsel, argo]		hayir
+buzzard	word	yeni_anlamda_isaret_var	açgözlü insan, sömürücü [mecaz, aşağılayıcı]		hayir
+caper	word	yeni_anlamda_isaret_var	soygun, hırsızlık [suç için, argo]		hayir
+catamite	word	yeni_anlamda_isaret_var	erkek çocuk eşcinsel ilişki için [tarihî, aşağılayıcı]		hayir
+claptrap	word	yeni_anlamda_isaret_var	boş laf, palavra [küçümseyici]		hayir
+clodhopper	word	yeni_anlamda_isaret_var	kaba saba adam, beceriksiz kişi [hakaret, mizahi]		evet
+coolie	word	yeni_anlamda_isaret_var	kuli, ücretli işçi [aşağılayıcı, tarihsel]		hayir
+cretin	word	yeni_anlamda_isaret_var	aptal, geri zekâlı [hakaret, kaba]		hayir
+cuckold	word	yeni_anlamda_isaret_var	karısı aldatılan adam, boynuzlu [aşağılayıcı]		hayir
+crumb	word	yeni_anlamda_isaret_var	adi herif, aşağılık kimse [hakaret, eskimiş]		evet
+degenerate	word	yeni_anlamda_isaret_var	sapkın, ahlaksız kimse [özellikle cinsel davranış]		hayir
+drip	word	yeni_anlamda_isaret_var	sıkıcı kişi [argo]		hayir
+dunghill	word	yeni_anlamda_isaret_var	pislik, çamur [mecazi, aşağılayıcı]		hayir
+fag	word	yeni_anlamda_isaret_var	sigara, puro tütünü [argo]; eşcinsel erkek [aşağılayıcı, argo]; çok çalışmak, didinmek [İngiliz argosu]		hayir
+fruity	word	yeni_anlamda_isaret_var	çıldırmış, kafadan kaçık [argo, eskimiş]		hayir
+fucker	word	yeni_anlamda_isaret_var	sik, orospu çocuğu [kaba, küfür]; aptal herif, salak [kaba, hakaret]		hayir
+glyph	word	yeni_anlamda_isaret_var	oyma sembol, hiyeroglif [kabartma ya da oyma simge]		hayir
+gook	word	yeni_anlamda_isaret_var	aşağılayıcı ırk tabiri [küçük düşürücü, kullanılmamalı]		evet
+grope	word	yeni_anlamda_isaret_var	taciz etmek, dokunmak [cinsel bağlamda, resmî olmayan]		hayir
+half-witted	word	yeni_anlamda_isaret_var	aptal, zihinsel geri [aşağılayıcı, kaçınılmalı]		hayir
+grunt	word	yeni_anlamda_isaret_var	er, acemi asker [askerî, argo]		hayir
+hammerhead	word	yeni_anlamda_isaret_var	aptal, kafasız [hakaret]		evet
+gurgle	word	yeni_anlamda_isaret_var	guklamak, şırıldamak [su gibi kabarcıklı ses çıkarmak]		hayir
+heel	word	yeni_anlamda_isaret_var	alçak, namussuz adam [hakaret]		evet
+hoonigan	word	yeni_anlamda_isaret_var	serseri sürücü, çılgın sürücü [argo, Avustralya ve Yeni Zelanda]; belasız gençlik, haylaz [argo, gençler için]		hayir
+horny	word	yeni_anlamda_isaret_var	cinsel isteği yüksek, kösnül [argo, gayriresmî]		hayir
+hussy	word	yeni_anlamda_isaret_var	ahlaksız kadın, orospu [eski, aşağılayıcı]		hayir
+iceman	word	yeni_anlamda_isaret_var	tetikçi, kiralık katil [argo]		hayir
+jonah	word	yeni_anlamda_isaret_var	uğursuz kişi, belâ getiren [mecazi, argo]		hayir
+louse	word	yeni_anlamda_isaret_var	alçak herif, pislik [hakaret, konuşma dilinde]		evet
+madhouse	word	yeni_anlamda_isaret_var	akıl hastanesi, deli evi [aşağılayıcı, eski kullanım]		hayir
+minion	word	yeni_anlamda_isaret_var	yalaka, uşak [aşağılayıcı]		hayir
+mollycoddle	word	yeni_anlamda_isaret_var	aşırı korunan kişi, naz çeken [küçümseyici]		hayir
+mush	word	yeni_anlamda_isaret_var	duygusal saçmalık, şekerleme [yazı veya müzik için, küçümseyici]		hayir
+nag	word	yeni_anlamda_isaret_var	huysuz kadın, söylenen kişi [kadınlar için, aşağılayıcı]		hayir
+nitwit	word	yeni_anlamda_isaret_var	aptal, salak [gayriresmî, hakaret]		evet
+nymphomaniac	word	yeni_anlamda_isaret_var	nemfoman kadın [aşağılayıcı, eskimiş]		hayir
+pansy	word	yeni_anlamda_isaret_var	korkak erkek, pısırık [aşağılayıcı]; eşcinsel erkek [çok aşağılayıcı, kullanmayın]		hayir
+poseur	word	yeni_anlamda_isaret_var	gösteriş meraklısı, süs veren [aşağılayıcı]		hayir
+potty	word	yeni_anlamda_isaret_var	aptal, saçma [İngiliz argosu]; önemsiz, hafif [İngiliz argosu]		hayir
+pouf	word	yeni_anlamda_isaret_var	eşcinsel erkek (hakaret) [aşağılayıcı, kullanmayın]		hayir
+prudery	word	yeni_anlamda_isaret_var	aşırı utangaçlık, mahcubiyet [cinsellik konusunda aşırı çekingenlik]; ahlakçılık, sofuluk [küçümseyici]		hayir
+riffraff	word	yeni_anlamda_isaret_var	sokak serserileri, avam takımı [küçümseyici]		hayir
+sanatorium	word	yeni_anlamda_isaret_var	akıl hastanesi [aşağılayıcı, eski]		hayir
+rumble	word	yeni_anlamda_isaret_var	anlamak, fark etmek [argo, İngiliz kullanımı]		hayir
+rummy	word	yeni_anlamda_isaret_var	ayyaş, içki düşkünü [argo]		hayir
+scab	word	yeni_anlamda_isaret_var	grevci olmayan işçi, grev kıran [aşağılayıcı]		hayir
+scram	word	yeni_anlamda_isaret_var	defol [kaba, azarlarken]		hayir
+seduction	word	yeni_anlamda_isaret_var	baştan çıkarma, cinsel ayartma [aşk veya cinsel ilgi]		hayir
+shaft	word	yeni_anlamda_isaret_var	sıkıntı çektirmek, dolandırmak [argo, resmî değil]		hayir
+simpleton	word	yeni_anlamda_isaret_var	budala, aptal [hakaret, küçümseyici]		hayir
+snort	word	yeni_anlamda_isaret_var	burnundan solumak, homurdanmak [öfke ya da küçümseme ile]		hayir
+so-and-so	word	yeni_anlamda_isaret_var	herif, şerefsiz [küçümseyici, gayriresmî]		hayir
+sneaker	word	yeni_anlamda_isaret_var	muhbir, ihbarcı [polis için, argo]		hayir
+snifter	word	yeni_anlamda_isaret_var	az miktarda içki [gündelik, argo]		hayir
+slug	word	yeni_anlamda_isaret_var	tembel adam, aylak [argo]; yumruklamak, vurmak [argo]		hayir
+sparkler	word	yeni_anlamda_isaret_var	pırlanta, elmas [argo]		hayir
+spurn	word	yeni_anlamda_isaret_var	reddetmek, geri çevirmek [küçümseyerek]		hayir
+spinster	word	yeni_anlamda_isaret_var	evlenmemiş kadın, bekâr kadın [eski kullanım, küçümseyici]		hayir
+thrush	word	yeni_anlamda_isaret_var	popüler şarkıcı kadın [eski, argo]		hayir
+torpedo	word	yeni_anlamda_isaret_var	tetikçi, kiralık katil [argo]		hayir
+trull	word	yeni_anlamda_isaret_var	fahişe, orospu [eski, aşağılayıcı]		hayir
+troll	word	yeni_anlamda_isaret_var	internette kışkırtmak [argo]		hayir
+tyke	word	yeni_anlamda_isaret_var	kaba adam, terbiyesiz [aşağılayıcı]		hayir
+upstart	word	yeni_anlamda_isaret_var	türedi, sonradan görme [aşağılayıcı]		hayir
+vixen	word	yeni_anlamda_isaret_var	huysuz kadın, cadı [aşağılayıcı]		hayir
+wanton	word	yeni_anlamda_isaret_var	ahlaksız, düşkün [cinsel, olumsuz]; ahlaksız kadın [eskimiş, aşağılayıcı]		hayir
+yokel	word	yeni_anlamda_isaret_var	köylü, kasaba budalası [aşağılayıcı]		hayir
+zany	word	yeni_anlamda_isaret_var	ahmak, beceriksiz [aşağılayıcı]		hayir
+toad	word	yeni_anlamda_isaret_var	iğrenç kimse, nefret edilen kişi [mecaz, hakaret]		evet
+blacky	word	eski_listede_yeni_anlamda_yok	karabaş, siyah hayvan [gayriresmî, sevgi dolu takma ad]	zenci	eski_listede_var
+dike	word	eski_listede_yeni_anlamda_yok	set, dalgakıran [su baskınını önlemek için]; set çekmek, çevirmek [su baskınına karşı]	set, bent, hendek	eski_listede_var
+nail	word	eski_listede_yeni_anlamda_yok	tırnak [el ve ayak parmakları için]; çivi []; çivilemek, çakmak []; yakalamak, tutuklamak [gayriresmî]; sert vurmak, çarpmak [gayriresmî]; tam isabet etmek, mükemmel yapmak [gayriresmî]		eski_listede_var
+lord	word	eski_listede_yeni_anlamda_yok	Rab, Tanrı [dini kullanım, büyük harfle]; efendi, hâkim, lord [yetkisi olan kişi]; lord [İngiliz soylu unvanı]; lord yapmak, soyluluk vermek [nadir]; efendilik taslamak [lord it over: başkalarına üstünlük taslamak]; lord unvanı vermek []		eski_listede_var

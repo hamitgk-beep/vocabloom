@@ -676,6 +676,7 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 2	shake	supheli	ilk_inceleme	93	14	hayir	sallamak, sarsmak, sallanmak, sarsılmak; silkelemek, silkmek, allak bullak etmek; çalkalamak, (el) sıkışmak, sarsıntı, sarsma; titreme, sallama, sallanma, silkme; el sıkışma, an, saniye	sallamak, silkelemek; titremek, sarsılmak; sarsmak, derin etki yapmak; sarsıntı, titreme; el sıkışma, tokalaşma; milkshake, süt kokteyli	sallanmak, silkmek, allak bullak etmek, çalkalamak, (el) sıkışmak, sallanma, silkme, an, saniye
 2	nail	supheli	kazanim_9673	66	1	evet	mıhlamak	tırnak; çivi; çivi gibi sert ve kısa hareket; çivilemek, çakmak; yakalamak, tutuklamak; çakmak, vurmak	mıhlamak
 2	lord	supheli	kazanim_9673	60	1	evet	Allah; Tanrı; (ünvan) lort	lord, efendi, hükümdar; tanrı, rab; lord, soylu, asilzade; lord unvanı vermek; lord it over, kibirle hükmetmek	Allah, (ünvan) lort, (ünl.) Aman Tanrım!, Hay Allah!
+2	ah	supheli	ilk_inceleme	32	4	hayir	vah, eyvah, hayıf, diriğ; uf	ah	hayıf, diriğ, uf
 2	fuss	supheli	kazanim_9673	28	1	hayir	gürültü patırtı; gereksiz telaş/kızgınlık/sabırsızlık; gereksiz yere telaşlanmak	gereksiz heyecan, telaş; kavga, itiraz, tartışma; şamata, gürültü, patırtı; tasalanmak, endişelenmek; şımartmak, aşırı ilgilenmek; fuss about (ile) uğraşmak	ortalığı velveleye vermek, rahatsız etmek, can sıkmak, sinirlendirmek
 2	temptation	supheli	ilk_inceleme	27	5	hayir	istek uyandıran şey, cezbedici şey, ayartma, baştan çıkarma; baştan çıkma, şeytana uyma	ayartma, cazibe; ayartı, baştan çıkarma; arzu, istek	cezbedici şey, baştan çıkma, şeytana uyma
 2	definite	supheli	ilk_inceleme	22	4	hayir	belirli, açık, kesin, anık	kesin, belirgin; kesin, emin; belirli	açık, anık
@@ -685,6 +686,7 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 2	maiden	supheli	kazanim_9673	17	1	hayir	evlenmemiş kız; evlenmemiş; ilk	genç kız, bakire; ilk, ilk kez yapılan; sayısız, hiç sayı yapılmayan over	evlenmemiş kız, evlenmemiş
 2	strive	supheli	ilk_inceleme	17	4	hayir	çalışmak, çabalamak, çekişmek, uğraşmak	çabalamak, uğraşmak; gayret göstermek, emek vermek	çalışmak, çekişmek
 2	creep	supheli	ilk_inceleme	13	9	evet	sürünmek, sürünerek ilerlemek, sessizce sokulmak, (sarmaşık/vb.) sarılmak; sarılarak büyümek, ürpermek, tüyleri ürpermek, dalkavuk; yağcı, gıcık, kıl	sürünmek, emekleyerek ilerlemek; yavaş yavaş ilerlemek, sinsice gitmek; ürpertmek, tüylerini diken diken etmek; ürkütücü tip, tuhaf adam; yavaş kayma, deformasyon; küçük hayvan bölmesi, çit	sürünerek ilerlemek, sessizce sokulmak, (sarmaşık/vb.) sarılmak, sarılarak büyümek, ürpermek, tüyleri ürpermek, dalkavuk, yağcı, gıcık, kıl
+2	interpretation	supheli	ilk_inceleme	13	3	hayir	yorum, tefsir, açıklama	yorum, yorumlama; açıklama, anlam; tercüme, çeviri	tefsir
 2	freshwater	supheli	ilk_inceleme	10	1	hayir	tatlı su	tatlı su; tatlı su	
 2	vary	supheli	ilk_inceleme	10	4	hayir	çeşitli olmak, değişik olmak, değişmek, başka hale dönmek; değiştirmek	değişmek, farklılaşmak; çeşitlendirmek, değiştirmek; uymamak, ayrılmak	çeşitli olmak, değişik olmak, başka hale dönmek
 2	gaze	supheli	ilk_inceleme	7	3	hayir	gözünü dikerek bakmak, gözünü zillemek, sürekli bakış	bakış, dikkatli bakış; dikkatle bakmak, dalıp bakmak	gözünü dikerek bakmak, gözünü zillemek
@@ -783,6 +785,7 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 2	hypothenuse	supheli	ilk_inceleme	0	1	hayir	hipotenüs	hipotenüs	
 2	inspiraional	supheli	ilk_inceleme	0	1	hayir	ilham verici	ilham verici	
 2	intellingibility	supheli	ilk_inceleme	0	1	hayir	anlaşılabilme	anlaşılırlık, okunabilirlik	anlaşılabilme
+2	isobar	supheli	ilk_inceleme	0	4	hayir	eşbasınç eğrisi, izobar, eşbasınç, izobar	izobar	eşbasınç eğrisi, eşbasınç
 2	junctive	supheli	ilk_inceleme	0	1	hayir	bağlayıcı	bağlayıcı, birleştirici	
 2	knocker	supheli	ilk_inceleme	0	1	evet	kapı tokmağı	kapı tokmağı; kapı çalan kişi; küçümseyen kişi, eleştirmen; meme, göğüs; kibirli adam, büyükbaba taslayan	
 2	laze	supheli	ilk_inceleme	0	4	hayir	tembelce vakit geçirmek, tembellik etmek, tembellikle ya da hareketsiz geçirilen kısa süre, tembellik	boş boş oturmak, tembellik etmek; hiçbir şey yapmadan durmak, vakit geçirmek	tembellikle ya da hareketsiz geçirilen kısa süre
@@ -792,6 +795,7 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 2	mazarine	supheli	ilk_inceleme	0	2	hayir	koyu mavi, lacivert	koyu mavi; koyu mavi	lacivert
 2	mercantilist	supheli	ilk_inceleme	0	1	hayir	merkantilist	merkantilist; merkantilist	
 2	middleweight	supheli	ilk_inceleme	0	1	hayir	(boks) orta siklet	orta siklet; orta siklet	
+2	mildness	supheli	ilk_inceleme	0	3	hayir	uysallık, ılımlılık, kibarlık	ılımlılık, yumuşaklık; merhametlilik, hoşgörü	uysallık, kibarlık
 2	milli-	supheli	ilk_inceleme	0	1	hayir	mili	milyon, bin	mili
 2	mohammedan	supheli	ilk_inceleme	0	1	hayir	Müslüman	Hz. Muhammed'e ait, İslami; Müslüman	
 2	monarchist	supheli	ilk_inceleme	0	1	hayir	krallık taraftarı	monarşist, krallık yanlısı; monarşist, krallık yanlısı	krallık taraftarı
@@ -1175,7 +1179,6 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 3	angrily	manuel_kontrol	ilk_inceleme	33	4	hayir	kızgınlıkla, öfkeyle, gazapla, hırsla; hiddetle	öfkeyle, sinirle	kızgınlıkla, gazapla, hırsla, hiddetle
 3	folks	manuel_kontrol	ilk_inceleme	33	3	hayir	akraba, halk, millet	insanlar, halk; ailem, anne babam	akraba, millet
 3	softly	manuel_kontrol	ilk_inceleme	33	3	hayir	yavaş yavaş, tatlılıkla, alçak sesle	alçak sesle, yavaşça; yumuşakça, nazikçe; hafifçe; piano, hafif çalınarak	yavaş yavaş, tatlılıkla
-3	ah	manuel_kontrol	ilk_inceleme	32	4	hayir	vah, eyvah, hayıf, diriğ; uf	ah	hayıf, diriğ, uf
 3	annoy	manuel_kontrol	ilk_inceleme	32	5	hayir	kızdırmak, sinirlendirmek, asabileştirmek, can sıkmak; tenge getirmek, baş ağrıtmak	rahatsız etmek, sinirlendirmek; taciz etmek, rahatsız etmek	kızdırmak, asabileştirmek, can sıkmak, tenge getirmek, baş ağrıtmak
 3	beware	manuel_kontrol	ilk_inceleme	32	3	hayir	sakınmak, dikkat etmek, korunmak	dikkat etmek, sakınmak; sakınmak, uyanık olmak	korunmak
 3	boarding	manuel_kontrol	ilk_inceleme	32	3	hayir	tahta kaplama, yiyecek, içecek	binme, gemiye ya da uçağa binme; tahta kaplama, tahtalar; yatılılık, pansiyonculuk	yiyecek, içecek
@@ -1424,7 +1427,6 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 3	howling	manuel_kontrol	ilk_inceleme	13	3	hayir	uluyan, inleyen, kasvetli	çok büyük, berbat; uluyan, ulumalı; uluma, feryat	inleyen, kasvetli
 3	inconsiderate	manuel_kontrol	ilk_inceleme	13	3	hayir	başkalarını düşünmez, düşüncesiz, bencil	düşüncesiz, saygısız; ölçüsüz, aceleci	başkalarını düşünmez, bencil
 3	initially	manuel_kontrol	ilk_inceleme	13	4	hayir	başlangıçta, baştan, önceden, ilkin; önce	başlangıçta, ilk önce	baştan, önceden, ilkin
-3	interpretation	manuel_kontrol	ilk_inceleme	13	3	hayir	yorum, tefsir, açıklama	yorum, yorumlama; açıklama, anlam; tercüme, çeviri	tefsir
 3	lag	manuel_kontrol	ilk_inceleme	13	3	evet	yavaş ilerlemek, arkadan gelmek, (boru) keçe ya da asbest kaplamak	geride kalmak, gecikmek; gecikme, zaman farkı; geride kalan kişi; hapsetmek, kilitlemek; fıçı tahtası	yavaş ilerlemek, arkadan gelmek, (boru) keçe ya da asbest kaplamak
 3	literal	manuel_kontrol	ilk_inceleme	13	5	hayir	tam, kelimesi kelimesine, harfi harfine, düz anlamlı; yalın, sade	gerçek anlamlı, kelimesi kelimesine; harfiyen, birebir; abartısız, gerçek; baskı hatası, dizgi hatası	tam, harfi harfine, düz anlamlı, yalın, sade
 3	outdoor	manuel_kontrol	ilk_inceleme	13	3	hayir	açık havada, açık havada olan/yapılan, açık hava	açık havada yapılan, dış mekân; doğa sporları ile ilgili, doğaya dair	açık havada olan/yapılan
@@ -4701,7 +4703,6 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 3	irrevocable	manuel_kontrol	ilk_inceleme	0	3	hayir	dönülemez, geri alınamaz, değiştirilemez	geri alınamaz, değiştirilemez	dönülemez
 3	irritability	manuel_kontrol	ilk_inceleme	0	3	hayir	sinirlilik, alınganlık, titizlik	huysuzluk, asabiyet; aşırı duyarlılık, tahriş olma; öfke nöbeti eğilimi, sinirlilik	alınganlık, titizlik
 3	ism	manuel_kontrol	ilk_inceleme	0	3	hayir	-cilik, -izm, doktrin	akım, öğreti	-cilik, -izm, doktrin
-3	isobar	manuel_kontrol	ilk_inceleme	0	4	hayir	eşbasınç eğrisi, izobar, eşbasınç, izobar	izobar	eşbasınç eğrisi, eşbasınç
 3	isochronous	manuel_kontrol	ilk_inceleme	0	3	hayir	eşsüreli, izokron, eşzamanlı	eş süreli, eşzamanlı	eşsüreli, izokron
 3	isolating	manuel_kontrol	ilk_inceleme	0	3	hayir	ayrışkan, ayrışık, çekimsiz	tek heceli, ayrıştırıcı; ayırmak, yalıtmak	ayrışkan, ayrışık, çekimsiz
 3	isomorphic	manuel_kontrol	ilk_inceleme	0	3	hayir	izomorf, eşyapılı, eşbiçimli	eşbiçimli, izomorf; benzer görünüşte, eşbiçimli	eşyapılı
@@ -4942,7 +4943,6 @@ oncelik	kelime	kategori	kaynak	freq	old_n	register	eski_anlam	yeni_anlam	kaybola
 3	miff	manuel_kontrol	ilk_inceleme	0	3	hayir	çekişme, dargınlık, küstürmek	küskünlük, alınganlık; alındırmak, gücendirmek	çekişme, dargınlık, küstürmek
 3	mightily	manuel_kontrol	ilk_inceleme	0	4	hayir	güçle, kudretle, son derece, çok fazla	büyük ölçüde, çok; güçlü bir şekilde, kuvvetle; çok, son derece	güçle, kudretle
 3	mightiness	manuel_kontrol	ilk_inceleme	0	4	hayir	güçlülük, azamet, büyüklük, kudret	fiziksel güç, kuvvet; büyüklük, heybet	güçlülük, azamet, kudret
-3	mildness	manuel_kontrol	ilk_inceleme	0	3	hayir	uysallık, ılımlılık, kibarlık	ılımlılık, yumuşaklık; merhametlilik, hoşgörü	uysallık, kibarlık
 3	militancy	manuel_kontrol	ilk_inceleme	0	3	hayir	saldırganlık, azimlilik, savaş hali	savaşçılık, militanlık	saldırganlık, azimlilik, savaş hali
 3	militant	manuel_kontrol	ilk_inceleme	0	4	hayir	saldırgan, savaşçı, kavgaya hazır, militan	savaşçı, saldırgan; mücadeleci, kararlı; militan, savaşçı; militan reformcu	kavgaya hazır
 3	militarily	manuel_kontrol	ilk_inceleme	0	3	hayir	askeri bakımdan, asker gibi, askerce	askerî olarak, askerî açıdan	askeri bakımdan, asker gibi, askerce
