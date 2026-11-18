@@ -67,6 +67,7 @@ WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? 
 
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
   panelApp = app;
+  app.stats.logLookup('word', lemma ?? surface);
   return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
 }
 

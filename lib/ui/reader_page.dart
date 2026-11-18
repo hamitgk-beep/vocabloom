@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_state.dart';
+import '../data/stats.dart';
 import '../data/user_db.dart';
 import '../tts/read_aloud.dart';
 import '../tts/speech.dart';
@@ -26,7 +29,7 @@ class ReaderPage extends StatefulWidget {
   State<ReaderPage> createState() => _ReaderPageState();
 }
 
-class _ReaderPageState extends State<ReaderPage> {
+class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   late List<Chapter> chapters;
   late int chapter;
   List<Para> paras = [];
@@ -46,10 +49,47 @@ class _ReaderPageState extends State<ReaderPage> {
     scroll.addListener(_saveSoon);
     app.addListener(_onApp);
     reader.addListener(_onApp);
+    WidgetsBinding.instance.addObserver(this);
+    _active.touch();
+    _tick = Timer.periodic(const Duration(seconds: 15), (_) {
+      // Listening to the book read aloud is reading too.
+      if (reader.active) _active.touch();
+      _flushTime();
+    });
+  }
+
+  // Active reading time: counted while the reader is used, see ActiveTimer.
+  final _active = ActiveTimer();
+  Timer? _tick;
+
+  void _flushTime() => app.stats.addReadingSeconds(widget.book.id, _active.take());
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    _active.setForeground(state == AppLifecycleState.resumed);
+    _flushTime();
+  }
+
+  /// Paragraphs up to the last one on screen count as read (once each).
+  void _markRead() {
+    if (!mounted || !scroll.hasClients) return;
+    final vp = context.findRenderObject();
+    if (vp is! RenderBox) return;
+    var last = -1;
+    for (final e in _paraKeys.entries) {
+      final ro = e.value.currentContext?.findRenderObject();
+      if (ro is! RenderBox || !ro.attached || e.key >= paras.length) continue;
+      final top = ro.localToGlobal(Offset.zero, ancestor: vp).dy;
+      if (top < vp.size.height && e.key > last) last = e.key;
+    }
+    if (last >= 0) app.stats.markRead(widget.book.id, chapter, paras, paras[last].idx);
   }
 
   @override
   void dispose() {
+    _tick?.cancel();
+    _flushTime();
+    WidgetsBinding.instance.removeObserver(this);
     _save();
     app.removeListener(_onApp);
     reader.dispose();
@@ -61,7 +101,11 @@ class _ReaderPageState extends State<ReaderPage> {
 
   DateTime _lastSave = DateTime(0);
   void _saveSoon() {
-    if (DateTime.now().difference(_lastSave).inSeconds >= 2) _save();
+    _active.touch();
+    if (DateTime.now().difference(_lastSave).inSeconds >= 2) {
+      _save();
+      _markRead();
+    }
   }
 
   void _save() {
@@ -81,6 +125,7 @@ class _ReaderPageState extends State<ReaderPage> {
 
   void _go(int c) {
     if (c < 0 || c >= chapters.length) return;
+    _markRead();
     reader.stop();
     setState(() {
       chapter = c;
@@ -333,74 +378,78 @@ class _ReaderPageState extends State<ReaderPage> {
         ),
         bottomNavigationBar: reader.active ? _speechBar(theme) : null,
         endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
-        body: Row(
-          children: [
-            Expanded(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 760),
-                  child: ListView.builder(
-                    controller: scroll,
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
-                    itemCount: paras.length + 2,
-                    itemBuilder: (c, i) {
-                      if (i == 0) {
-                        return ch.summary == null || !app.showTr
-                            ? const SizedBox.shrink()
-                            : Container(
-                                margin: const EdgeInsets.only(bottom: 20),
-                                padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16)),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
-                                        const SizedBox(width: 6),
-                                        Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
-                                  ],
+        body: Listener(
+          onPointerDown: (_) => _active.touch(),
+          onPointerSignal: (_) => _active.touch(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 760),
+                    child: ListView.builder(
+                      controller: scroll,
+                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
+                      itemCount: paras.length + 2,
+                      itemBuilder: (c, i) {
+                        if (i == 0) {
+                          return ch.summary == null || !app.showTr
+                              ? const SizedBox.shrink()
+                              : Container(
+                                  margin: const EdgeInsets.only(bottom: 20),
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16)),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
+                                          const SizedBox(width: 6),
+                                          Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
+                                    ],
+                                  ),
+                                );
+                        }
+                        if (i == paras.length + 1) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 28),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                OutlinedButton.icon(onPressed: chapter > 0 ? () => _go(chapter - 1) : null, icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
+                                FilledButton.icon(
+                                  onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
+                                  icon: const Icon(Icons.chevron_right),
+                                  label: Text(L('Sonraki bölüm', 'Next chapter')),
                                 ),
-                              );
-                      }
-                      if (i == paras.length + 1) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 28),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              OutlinedButton.icon(onPressed: chapter > 0 ? () => _go(chapter - 1) : null, icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
-                              FilledButton.icon(
-                                onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
-                                icon: const Icon(Icons.chevron_right),
-                                label: Text(L('Sonraki bölüm', 'Next chapter')),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
+                          );
+                        }
+                        final p = paras[i - 1];
+                        return KeyedSubtree(
+                          key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
+                          child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
                         );
-                      }
-                      final p = paras[i - 1];
-                      return KeyedSubtree(
-                        key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
-                        child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
-                      );
-                    },
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            if (wide) ...[
-              const VerticalDivider(width: 1),
-              SizedBox(
-                width: 320,
-                child: ColoredBox(color: theme.colorScheme.surface, child: filters),
-              ),
+              if (wide) ...[
+                const VerticalDivider(width: 1),
+                SizedBox(
+                  width: 320,
+                  child: ColoredBox(color: theme.colorScheme.surface, child: filters),
+                ),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

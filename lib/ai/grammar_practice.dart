@@ -10,6 +10,7 @@ import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../data/stats.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
 
@@ -324,6 +325,7 @@ class GrammarProgress {
   /// a right one is taken off that list.
   void record(String topicId, String exerciseId, {required bool right}) {
     markDone(topicId, exerciseId);
+    StatsStore(db).logGrammar(topicId, exerciseId, right);
     final all = _wrongAll();
     final s = wrong(topicId);
     right ? s.remove(exerciseId) : s.add(exerciseId);
