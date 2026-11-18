@@ -184,7 +184,7 @@ def main():
             except Quota as q:
                 stats["quota_switch"].append({"provider": providers[0], "at": pos, "why": str(q)})
                 providers.pop(0)
-            except (Fatal, ValueError, KeyError, RuntimeError) as e:
+            except Exception as e:  # network timeouts, bad JSON, missing keys: count it and go on
                 stats["failed_requests"] += 1
                 stats["last_error"] = type(e).__name__ + ": " + str(e)[:150]
                 if isinstance(e, Fatal) or stats["failed_requests"] >= 5:

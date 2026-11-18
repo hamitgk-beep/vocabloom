@@ -26,6 +26,7 @@ jobs:
           GROQ_API_KEY_FOR_DICTIONARY: ${{ secrets.GROQ_API_KEY_FOR_DICTIONARY }}
         run: |
           cd tools/own_dict/fill2
+          mkdir -p out
           if [ -f out/results.jsonl.gz ]; then gunzip -kf out/results.jsonl.gz; fi
           touch out/results.jsonl
           gunzip -kf items.json.gz
@@ -35,11 +36,12 @@ jobs:
         if: always()
         run: |
           cd tools/own_dict/fill2
+          mkdir -p out
           if [ -f out/results.jsonl ]; then gzip -9 -f out/results.jsonl; fi
           rm -f items.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd "$GITHUB_WORKSPACE"
-          git add tools/own_dict/fill2/out
+          git add -A tools/own_dict/fill2/out
           git commit -m "Own dictionary: free-tier fill run results [skip ci]" || exit 0
           for i in 1 2 3 4; do git push && break; git pull --rebase -q; sleep 5; done
