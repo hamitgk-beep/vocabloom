@@ -14,6 +14,8 @@ import 'reading_sheet.dart';
 import 'theme.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
+import 'context_sense_card.dart';
+import '../nlp/text.dart' as nlp;
 
 class ReaderPage extends StatefulWidget {
   final AppState app;
@@ -195,6 +197,9 @@ class _ReaderPageState extends State<ReaderPage> {
     final ctx = buildContext(app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
     // A tap anywhere on an underlined multi-word expression opens the whole expression.
     final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()..sort((x, y) => y.tokens.length.compareTo(x.tokens.length));
+    // "lived in Kansas": the dictionary's "live in" (live at the workplace) is
+    // not what the sentence says, so the word itself opens.
+    shown.removeWhere((m) => _literal(m, ctx));
     if (shown.isNotEmpty) {
       final m = shown.first;
       await showExprSheet(context, app, m.expr, ctx, [for (final t in m.tokens) a.tokens[t].text]);
@@ -203,6 +208,15 @@ class _ReaderPageState extends State<ReaderPage> {
     }
     await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
     if (mounted) setState(() {});
+  }
+
+  bool _literal(nlp.Match m, WordContext ctx) {
+    try {
+      final r = ContextSenseCard.resolveExpr(app, ctx, m.expr);
+      return r?.literalPhrase != null;
+    } catch (_) {
+      return false;
+    }
   }
 
   void _onSentence(Para p, ParaAnalysis a, int i) async {

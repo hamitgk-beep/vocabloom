@@ -36,7 +36,15 @@ Map<String, String> get posNames => uiEnglish
 /// [WordInfo.trFreeDict]) come from Wiktionary and damdafayton/eng-tur-dictionary
 /// (tools/main_meanings.py); WordNet gives English senses and base forms.
 class DictDb {
-  static const _version = '25';
+  static const _version = '26';
+
+  /// Version of the bundled dictionary; part of the context-meaning cache
+  /// keys and of the "wrong meaning" reports.
+  static const version = _version;
+
+  /// A Turkish meaning damaged when it was built: a label glued inside a
+  /// word ("de(sigortacılık)ns", "tıp(kısaltma)ı").
+  static bool badMeaning(String tr) => RegExp(r'[a-zçğıöşü]\([^)]*\)[a-zçğıöşü]').hasMatch(tr.toLowerCase());
   late final Database db;
   late final Lemmatizer lemmatizer;
   late final PhraseMatcher matcher;
