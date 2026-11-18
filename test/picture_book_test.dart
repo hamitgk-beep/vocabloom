@@ -11,7 +11,7 @@ import 'package:image/image.dart' as im;
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
-import 'package:kelime_okur/import/pdf_import.dart';
+import 'package:kelime_okur/import/pdf_pictures.dart';
 import 'package:kelime_okur/import/text_repair.dart';
 import 'package:kelime_okur/ui/pages.dart';
 import 'package:pdfrx/pdfrx.dart';
@@ -150,7 +150,66 @@ void main() {
     expect(u.chapterText(id, 0).contains('p1_1'), isFalse);
     u.saveProgress(id, 0, 120, page: 3);
     expect(u.books().first.lastPage, 3);
+    // A picture inside the book is no cover.
+    expect(u.coverFile(id), isNull);
     u.deleteBook(id);
     expect(u.imageFile(ps[1]).existsSync(), isFalse);
+
+    // A picture on the first page is the cover.
+    final c = u.insertBook(
+      ImportedBook(
+        'C',
+        null,
+        'pdf',
+        [
+          ImportedChapter(
+            'One',
+            [('i', 'p1_1.jpg'), ('h', 'Title')],
+            [
+              {'pg': 0, 'ar': 0.66},
+              {'pg': 1},
+            ],
+          ),
+        ],
+        {
+          'p1_1.jpg': [1, 2, 3],
+        },
+      ),
+    );
+    expect(u.coverFile(c)?.readAsBytesSync(), [1, 2, 3]);
+  });
+
+  test('a drop cap drawn as a picture is read from its shape and the word after it', () {
+    InkLetter ink(double aspect, double top, double bottom, bool hole) => InkLetter(0, 0, 0, 0, aspect, top, bottom, hole);
+    // "n the garden": In, An or On; a narrow bar is an I.
+    expect(dropCapLetter('n the garden', ink(0.38, 1, 1, false), isWord), 'I');
+    expect(dropCapLetter('n old man', ink(0.95, 0.2, 1, true), isWord), 'A');
+    expect(dropCapLetter('hrough the window', ink(0.9, 1, 0.5, false), isWord), 'T');
+    // A letter that is a word of its own.
+    expect(dropCapLetter('week later', ink(0.95, 0.2, 1, true), isWord), 'A ');
+    expect(dropCapLetter('The garden', ink(0.4, 1, 1, false), isWord), isNull);
+  });
+
+  test('slips of a recognised text layer: symbols for letters, spaces in words and before punctuation', () {
+    String fix(String s) => repairPdfText(s, isWord);
+    expect(fix(r'because it sho\ivs what is there'), 'because it shows what is there');
+    expect(fix(r"'Should I go, l\/Ir Gray?'"), "'Should I go, Mr Gray?'");
+    expect(fix('He went ho1ne.'), 'He went home.');
+    expect(fix("the scent of summer flowers . Lord Henry"), 'the scent of summer flowers. Lord Henry');
+    expect(fix("'So that' s my secret,' he said. 'You are not beautiful. '"), "'So that's my secret,' he said. 'You are not beautiful.'");
+    // Quoted words and formulas stay.
+    expect(fix('"veiled sounds"'), '"veiled sounds"');
+    expect(fix('vitamin A1 and C16H10'), 'vitamin A1 and C16H10');
+
+    final book = fixWithBookWords([
+      'Lord Henry smiled. Basil Hallward looked at Henry.',
+      'Lord Herny laughed, and Basil Hall ward painted.',
+      'Henry saw Dori an in the garden of Hallward. Dorian and Dorian Hallward.',
+      'He put too much of mys elf into it, every day, evety day.',
+      'I see myself, by myself, in myself.',
+    ], isWord);
+    expect(book[1], 'Lord Henry laughed, and Basil Hallward painted.');
+    expect(book[2], startsWith('Henry saw Dorian in'));
+    expect(book[3], 'He put too much of myself into it, every day, every day.');
   });
 }

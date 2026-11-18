@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:pdfrx/pdfrx.dart';
 
 import '../data/user_db.dart';
@@ -57,19 +58,24 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
       // PDFium marks a word broken at a line end with U+0002, which the layout
       // uses for captions: make it a soft hyphen (same length, so the letter boxes still match).
       final full = raw == null ? '' : raw.fullText.replaceAll(pdfiumBreak, softHyphen);
-      final blocks = <LayoutBlock>[];
-      final t = raw == null ? '' : layoutPdfPage(full, boxes, isWord: isWord, blocks: blocks) ?? addGapSpaces(full, boxes, isWord);
-      pages.add(t);
       final scanned = (raw?.fullText ?? '').trim().length < 25;
       if (scanned) ocrPages.add(i);
       // A scanned page without text is all picture to us; its text is read
       // by OCR, so it gets no pictures of its own.
       var pics = const <PagePicture>[];
+      final caps = <InkLetter>[];
       if (!scanned || ocr == null) {
         try {
-          pics = await findPictures(page, i, full, boxes, images);
-        } catch (_) {}
+          pics = await findPictures(page, i, full, boxes, images, letters: caps);
+        } catch (e) {
+          debugPrint('PDF page ${i + 1}: pictures not read: $e');
+        }
       }
+      final blocks = <LayoutBlock>[];
+      final t = raw == null
+          ? ''
+          : layoutPdfPage(full, boxes, isWord: isWord, blocks: blocks, dropCaps: caps) ?? addGapSpaces(full, boxes, isWord);
+      pages.add(t);
       layouts.add(PageLayout(page.width, page.height, blocks, pics));
     }
     if (ocrPages.isNotEmpty) {
@@ -568,7 +574,13 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
       final open = prev.isNotEmpty && !RegExp(r'''[.!?]["”’)]?$''').hasMatch(prev);
       // A sentence cut by a picture or a page turn goes on with a small letter,
       // or after a comma with anything ("'But he knows my name,' | Aladdin said.").
-      final midSentence = open && prev.length > 25 && b.length > 40 && RegExp(r'''[,;]["”’']?$''').hasMatch(prev);
+      // Not a centred title or motto before body text.
+      final midSentence =
+          open &&
+          prev.length > 25 &&
+          b.length > 40 &&
+          RegExp(r'''[,;]["”’']?$''').hasMatch(prev) &&
+          (prevF!.meta['al'] != 'c' || meta['al'] == 'c');
       if (open && (RegExp(r'^[a-z]').hasMatch(b) || midSentence)) {
         prevF!.text = '$prev $b';
       } else {
@@ -583,6 +595,19 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
     }
   }
   flat.addAll(waiting);
+  // Slips that only the whole book shows: "Herny" where "Henry" is on every
+  // page, "Dori an" for "Dorian".
+  if (isWord != null) {
+    final texts = [
+      for (final f in flat)
+        if (f.kind != 'i') f.text,
+    ];
+    final fixed = fixWithBookWords(texts, isWord);
+    var j = 0;
+    for (final f in flat) {
+      if (f.kind != 'i') f.text = fixed[j++];
+    }
+  }
 
   // 3. headings and chapters
   final tocKeys = {for (final t in toc) _key(t): t};

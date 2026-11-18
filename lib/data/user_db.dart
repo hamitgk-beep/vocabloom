@@ -446,6 +446,24 @@ class UserDb {
   /// A picture's file on this device.
   File imageFile(Para para) => File(p.join(dir, para.text));
 
+  /// The book's cover: a picture at the very start of the book (most books
+  /// open with their cover), when its file is there. Null otherwise.
+  File? coverFile(int bookId) {
+    final r = db.select(
+      "SELECT text, meta FROM paras WHERE book_id=? AND kind='i' AND chapter=(SELECT MIN(chapter) FROM paras WHERE book_id=?) "
+      'AND idx < 4 ORDER BY idx LIMIT 1',
+      [bookId, bookId],
+    );
+    if (r.isEmpty) return null;
+    final meta = r.first['meta'] == null ? const {} : jsonDecode(r.first['meta'] as String) as Map;
+    // A PDF's picture must be on its first page; a small icon is no cover.
+    if ((meta['pg'] as int? ?? 0) > 0) return null;
+    final ar = (meta['ar'] as num?)?.toDouble();
+    if (ar != null && (ar < 0.45 || ar > 1.1)) return null;
+    final f = File(p.join(dir, r.first['text'] as String));
+    return f.existsSync() ? f : null;
+  }
+
   void saveProgress(int bookId, int chapter, int para, {int page = 0}) =>
       db.execute('UPDATE books SET last_chapter=?, last_para=?, last_page=? WHERE id=?', [chapter, para, page, bookId]);
 

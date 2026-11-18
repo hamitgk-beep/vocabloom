@@ -258,6 +258,10 @@ class AppState extends ChangeNotifier {
   /// Reader page in day mode: 'white' or 'sepia'.
   String paper = 'white';
   double lineHeight = 1.6;
+
+  /// Shade of each reading theme, 0..1: white to off-white, light to dark
+  /// sepia, and at night white to grey letters.
+  Map<String, double> tone = {'white': 0.3, 'sepia': 0.3, 'night': 0};
   ThemeMode themeMode = ThemeMode.light;
   int _wordsVersion = 0;
   late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
@@ -312,6 +316,12 @@ class AppState extends ChangeNotifier {
     fontSize = (s['font'] as num?)?.toDouble() ?? 19;
     paper = s['paper'] as String? ?? 'white';
     lineHeight = (s['lh'] as num?)?.toDouble() ?? 1.6;
+    final t = s['tone'];
+    if (t is Map) {
+      for (final e in t.entries) {
+        if (e.value is num) tone[e.key as String] = (e.value as num).toDouble().clamp(0, 1);
+      }
+    }
     themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
     uiEnglish = s['ui'] == 'en';
   }
@@ -333,7 +343,7 @@ class AppState extends ChangeNotifier {
   int get wordsVersion => _wordsVersion;
 
   void _save() =>
-      user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight});
+      user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight, 'tone': tone});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);
@@ -358,6 +368,12 @@ class AppState extends ChangeNotifier {
     showTr = tr ?? showTr;
     showEn = en ?? showEn;
     if (!showTr && !showEn) showTr = true;
+    _save();
+    notifyListeners();
+  }
+
+  void setTone(String theme, double v) {
+    tone[theme] = v.clamp(0, 1);
     _save();
     notifyListeners();
   }

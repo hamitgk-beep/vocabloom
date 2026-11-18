@@ -2,6 +2,18 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "picture-books",
+      "area": "reader",
+      "tr": "Resimli kitaplar: PDF, EPUB, Word, ODT ve FB2 kitaplarındaki resimler yerinde, altlarındaki açıklamalarla görünüyor; açıklamalar artık cümlelerin arasına karışmıyor. PDF'nin her sayfası okuyucuda bir sayfa, başlıklar büyük ve ortalı. Sesli okuma sayfayı kendisi çeviriyor, kitap kaldığın sayfada açılıyor. Taranmış PDF'lerde büyük ilk harfler (\"In the garden\"), boşluklu kelimeler (\"tre e\") ve simge sanılan harfler (\"sho\\ivs\") düzeltiliyor. Kitabın ilk sayfasındaki kapak resmi Kitaplığım'da kapak oluyor.",
+      "en": "Illustrated books: pictures in PDF, EPUB, Word, ODT and FB2 books show where the book has them, with their captions, and captions no longer get mixed into sentences. Each PDF page is a page in the reader, with titles large and centred. Reading aloud turns the page by itself, and a book opens on the page where you stopped. In scanned PDFs, large first letters (\"In the garden\"), words cut by spaces (\"tre e\") and letters read as symbols are repaired. The cover picture on a book's first page becomes its cover in My library."
+    },
+    {
+      "id": "reader-look",
+      "area": "reader",
+      "tr": "Okuma görünümünde her arka plan için bir ton ayarı: beyazdan kırık beyaza, açık sepyadan koyu sepyaya, gecede beyaz harflerden griye. Önceki/Sonraki düğmeleri ekranın altında sabit. Telefonda Ücretsiz kütüphane ve İstatistik alt menüde; menü sağa sola kayıyor.",
+      "en": "Reading view has a shade slider for each background: white to off-white, light to dark sepia, and white to grey letters at night. The Previous/Next buttons stay at the bottom of the screen. On phones Free library and Stats are in the bottom bar, which scrolls sideways."
+    },
+    {
       "id": "journey-dashboard",
       "area": "app",
       "tr": "İstatistiklerim: okuma süren, okuduğun kelimeler, sözlük kullanımın, tekrarların ve gramer alıştırmaların tek ekranda. Son 14 günün grafikleri var, bölümler tıklayınca açılıp kapanıyor. Geniş ekranda Ücretsiz kütüphane ve İstatistiklerim yeni sol menüde. Cümle analizinde dinleme düğmeleri cümlenin altına taşındı. Linux sürümü de yayında.",

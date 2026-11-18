@@ -128,7 +128,7 @@ void main() {
     await tester.pump();
     expect(find.byKey(const ValueKey('free-library')), findsOneWidget);
     await shot(tester, 'library_empty');
-    await tester.tap(find.text('Ücretsiz kütüphane'));
+    await tester.tap(find.byKey(const ValueKey('free-library')));
     await tester.pumpAndSettle();
     expect(find.byType(FreeLibraryPage), findsOneWidget);
     await tester.pump();

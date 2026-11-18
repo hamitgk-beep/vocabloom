@@ -119,6 +119,32 @@ String fixOcrSlips(String s, bool Function(String word) isWord) {
   s = s.replaceAllMapped(RegExp(r"(?<=[A-Za-z,] )m(?= [A-Za-z])"), (m) => 'in');
   // "didn 't", "Abanazar 's ring": a space before the ending of a contraction.
   s = s.replaceAllMapped(RegExp(r"(?<=[A-Za-z]) (['’](?:s|t|ll|re|ve))(?=[\s.,;:!?]|$)"), (m) => m.group(1)!);
+  // "flowers .", "beautiful. '", "that' s": spaces text recognition put
+  // before punctuation, a closing quote or the ending of a contraction.
+  s = s.replaceAllMapped(RegExp(r'''(?<=[A-Za-z]) ([.!?])(?=['’"”)]?(?:\s|$))(?!\s*\.)'''), (m) => m.group(1)!);
+  s = s.replaceAllMapped(RegExp(r"(?<=[.,!?]) (['’])(?=\s|$)"), (m) => m.group(1)!);
+  s = s.replaceAllMapped(RegExp(r"(?<=[A-Za-z])(['’]) (s|t|ll|re|ve|d|m)(?=[\s.,;:!?]|$)"), (m) => '${m[1]}${m[2]}');
+  // "sho\ivs", "l\/Ir", "ho1ne": letters text recognition read as symbols.
+  s = s.replaceAllMapped(RegExp(r'''[A-Za-z\\/|!1"'’]*[\\/|!1"][A-Za-z\\/|!1"'’]*'''), (m) {
+    final t = m.group(0)!;
+    final lead = RegExp(r'''^['’"]*''').firstMatch(t)!.group(0)!;
+    final rest = t.substring(lead.length);
+    final trail = RegExp(r'''['’"!]*$''').firstMatch(rest)!.group(0)!;
+    final core = rest.substring(0, rest.length - trail.length);
+    if (core.length < 2 || !RegExp(r'[A-Za-z]').hasMatch(core) || !RegExp(r'''[\\/|!1"]''').hasMatch('$lead$core')) return t;
+    // A word already ("veiled sounds" in quotes), or capitals with digits
+    // ("C16H10", "vitamin A1"): no slip.
+    if (RegExp(r'^[A-Za-z]+$').hasMatch(core) && isWord(core.toLowerCase())) return t;
+    if (!RegExp(r'[a-z]').hasMatch(core)) return t;
+    // A quote mark in front is a misread letter only when it opens no quotation ('"valking').
+    final stray = lead == '"' && '"'.allMatches(s).length.isOdd;
+    for (final c in [if (stray) ..._symbolReadings('$lead$core').map((r) => (r, '')), ..._symbolReadings(core).map((r) => (r, lead))]) {
+      final (word, before) = c;
+      if (RegExp(r'^[A-Za-z]+$').hasMatch(word) && (isWord(word.toLowerCase()) || word == 'Mr' || word == 'Mrs'))
+        return '$before$word$trail';
+    }
+    return t;
+  });
   // "bo�tom": a letter the file could not name.
   s = s.replaceAllMapped(RegExp('[A-Za-z]*�[A-Za-z]*'), (m) {
     final w = m.group(0)!;
@@ -189,6 +215,230 @@ String fixOcrSlips(String s, bool Function(String word) isWord) {
 
     return w;
   });
+}
+
+/// Symbols text recognition reads for letters, longest first.
+const _symbolSlips = [
+  (r'l\/I', 'M'),
+  (r'l\/l', 'M'),
+  (r'I\/I', 'M'),
+  (r'l\1', 'M'),
+  (r'l\!l', 'M'),
+  (r'\iV', 'w'),
+  (r'\iv', 'w'),
+  (r'\V', 'W'),
+  (r'\v', 'w'),
+  ("'1v", 'w'),
+  ('"v', 'w'),
+  ('1v', 'w'),
+  ('1n', 'm'),
+  ('11', 'u'),
+  ('1', 'l'),
+  ('!', 'l'),
+  ('|', 'l'),
+];
+
+/// Ways to read [core] with the symbols in it taken for letters: all slips
+/// at once, then each one alone.
+Iterable<String> _symbolReadings(String core) sync* {
+  var all = core;
+  for (final (from, to) in _symbolSlips) {
+    all = all.replaceAll(from, to);
+  }
+  yield all;
+  for (final (from, to) in _symbolSlips) {
+    if (core.contains(from)) yield core.replaceAll(from, to);
+  }
+}
+
+/// Letters text recognition mixes up inside a word ("evety", "seivant").
+const _letterSlips = [
+  ('t', 'r'),
+  ('i', 'r'),
+  ('r', 't'),
+  ('n', 'u'),
+  ('u', 'n'),
+  ('c', 'e'),
+  ('e', 'c'),
+  ('c', 'a'),
+  ('l', 'i'),
+  ('i', 'l'),
+  ('lr', 'h'),
+  ('li', 'h'),
+  ('rn', 'm'),
+  ('ni', 'n'),
+];
+
+/// Pairs of letters text recognition mixes up: what it read, what was printed.
+const _mixedUp = {
+  'tr',
+  'ir',
+  'rt',
+  'nu',
+  'un',
+  'ce',
+  'ec',
+  'ca',
+  'li',
+  'il',
+  'Il',
+  'lI',
+  'hb',
+  'bh',
+  'oe',
+  'eo',
+  'ao',
+  'vy',
+  'Tr',
+  'TG',
+  'VU',
+  'CG',
+  'nr',
+  'rn',
+  'ft',
+};
+
+/// Words of grammar the dictionary may not list.
+const _smallWords = {
+  'myself',
+  'yourself',
+  'himself',
+  'herself',
+  'itself',
+  'ourselves',
+  'yourselves',
+  'themselves',
+  'into',
+  'onto',
+  'upon',
+  'within',
+  'without',
+  'because',
+  'before',
+  'after',
+  'about',
+  'above',
+  'below',
+  'between',
+  'through',
+  'something',
+  'anything',
+  'nothing',
+  'everything',
+  'someone',
+  'anyone',
+  'everyone',
+  'nobody',
+  'somebody',
+  'everybody',
+};
+
+/// Repairs that need the whole book: a misread word ("Herny") becomes the
+/// word the book uses many times ("Henry") when it is one letter or one swap
+/// away, or the only word one mixed-up letter away ("evety" -> "every"); a
+/// word cut in two ("Dori an", "mys elf", "H ow") is joined when the halves
+/// are not both words and the whole is a word or a name the book uses.
+List<String> fixWithBookWords(List<String> paras, bool Function(String word) isWord) {
+  final tok = RegExp(r'[A-Za-z]+');
+  final count = <String, int>{};
+  for (final p in paras) {
+    for (final m in tok.allMatches(p)) {
+      count[m.group(0)!] = (count[m.group(0)!] ?? 0) + 1;
+    }
+  }
+  bool capital(String w) => w[0] != w[0].toLowerCase();
+  // Words the dictionary leaves out (it has no pronouns) count when the book uses them.
+  bool known(String w) => isWord(w.toLowerCase()) || _smallWords.contains(w.toLowerCase()) || (count[w] ?? 0) >= 3;
+  bool single(String w) => w.length == 1 ? (w == 'a' || w == 'A' || w == 'I') : isWord(w.toLowerCase());
+  final byLen = <int, List<String>>{};
+  for (final e in count.entries) {
+    if (e.value >= 3 && e.key.length >= 4 && (capital(e.key) || isWord(e.key))) (byLen[e.key.length] ??= []).add(e.key);
+  }
+  bool oneAway(String a, String b) {
+    final diff = <int>[];
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) diff.add(i);
+      if (diff.length > 2) return false;
+    }
+    // One letter that text recognition mixes up ("Henty"; not "Kong" for "King").
+    if (diff.length == 1) return _mixedUp.contains('${a[diff[0]]}${b[diff[0]]}');
+    // Two letters swapped: "Herny".
+    return diff.length == 2 && diff[1] == diff[0] + 1 && a[diff[0]] == b[diff[1]] && a[diff[1]] == b[diff[0]];
+  }
+
+  final fixes = <String, String?>{};
+  String? better(String w) {
+    if (fixes.containsKey(w)) return fixes[w];
+    String? found;
+    if (w.length >= 4 && !isWord(w.toLowerCase()) && (count[w] ?? 0) <= 2) {
+      final hits = <String>{
+        for (final c in byLen[w.length] ?? const <String>[])
+          if (c != w && capital(c) == capital(w) && oneAway(w, c)) c,
+      };
+      // Only a word the book also has, so that a loose dictionary match
+      // ("acttes") does not win.
+      if (hits.isEmpty && w == w.toLowerCase()) {
+        for (final (from, to) in _letterSlips) {
+          var i = w.indexOf(from);
+          while (i >= 0) {
+            final c = '${w.substring(0, i)}$to${w.substring(i + from.length)}';
+            if ((count[c] ?? 0) >= 1 && isWord(c)) hits.add(c);
+            i = w.indexOf(from, i + 1);
+          }
+        }
+      }
+      if (hits.length == 1) found = hits.first;
+    }
+    fixes[w] = found;
+    return found;
+  }
+
+  // Joins "a b" where a is a word piece and b one in small letters, looking
+  // at every pair in turn ("of mys elf" tries "of mys", then "mys elf").
+  final piece = RegExp(r"(?<![A-Za-z'’])[A-Za-z]+(?![A-Za-z'’])");
+  String joinHalves(String p) {
+    final ms = piece.allMatches(p).toList();
+    final out = StringBuffer();
+    var at = 0;
+    for (var i = 0; i + 1 < ms.length; i++) {
+      final m = ms[i], n = ms[i + 1];
+      if (n.start != m.end + 1 || p[m.end] != ' ' || m.start < at) continue;
+      final a = m.group(0)!, b = n.group(0)!, j = '$a$b';
+      if (b != b.toLowerCase()) continue;
+      // Both are words: they are joined only into a word the book uses often,
+      // when one half is rare in the book ("Hall ward", "mys elf"; never "in to").
+      final rare = (count[a] ?? 0) <= 2 || (count[b] ?? 0) <= 2;
+      // A name cut in two ("Dori an") is joined only into a name the book has ("Dar es Salaam" stays).
+      final join = single(a) && single(b)
+          ? rare && (count[j] ?? 0) >= 3
+          : capital(a) && a.length > 1
+          ? (count[j] ?? 0) >= 2 || (b.length == 1 && known(j))
+          : known(j) || (count[j] ?? 0) >= 2;
+      if (!join) continue;
+      out
+        ..write(p.substring(at, m.start))
+        ..write(j);
+      at = n.end;
+      i++;
+    }
+    out.write(p.substring(at));
+    return out.toString();
+  }
+
+  return [
+    for (final p in paras)
+      joinHalves(
+        p.replaceAllMapped(tok, (m) {
+          // Part of a longer token ("bett.er", an address): leave it.
+          final before = m.start > 0 ? p[m.start - 1] : ' ', after = m.end < p.length ? p[m.end] : ' ';
+          final next = m.end + 1 < p.length ? p[m.end + 1] : ' ';
+          if (RegExp(r'[.,@/_\-]').hasMatch(before) || (RegExp(r'[.,@/_\-]').hasMatch(after) && RegExp(r'[A-Za-z]').hasMatch(next))) {
+            return m.group(0)!;
+          }
+          return better(m.group(0)!) ?? m.group(0)!;
+        }),
+      ),
+  ];
 }
 
 /// A block of a PDF page cut where a bullet starts a new item: list items that
