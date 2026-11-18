@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "journey-dashboard",
+      "area": "app",
+      "tr": "İstatistiklerim: okuma süren, okuduğun kelimeler, sözlük kullanımın, tekrarların ve gramer alıştırmaların tek ekranda. Son 14 günün grafikleri var, bölümler tıklayınca açılıp kapanıyor. Geniş ekranda Ücretsiz kütüphane ve İstatistiklerim yeni sol menüde. Cümle analizinde dinleme düğmeleri cümlenin altına taşındı. Linux sürümü de yayında.",
+      "en": "My stats: your reading time, words read, dictionary use, reviews and grammar practice on one screen, with charts for the last 14 days and sections that fold open and shut. On wide screens Free library and My stats are in the new side menu. In sentence analysis the listen buttons moved under the sentence. A Linux build is now published too."
+    },
+    {
       "id": "free-library",
       "area": "app",
       "tr": "Ücretsiz kütüphane: A1–C1 seviyelerinde 310 kısa hikâye (Pratham Books / StoryWeaver, uygulamanın içinde) ve 30 klasik kitap (Alice, Sherlock Holmes, Pride and Prejudice …, dokununca indirilir). Kitaplığım sayfasındaki \"Ücretsiz kütüphane\" kartından seviye seçip okumaya başla.",

@@ -145,12 +145,19 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
   }
 
   /// The dictionary's own plain explanation of the sense, offline.
+  /// No written explanation: say plainly what the word means here, from the chosen Turkish.
+  String _fromMeaning(List<String> tr) => tr.isEmpty
+      ? L('Bu anlamın kısa açıklaması sözlükte yok. İstersen yapay zekâya sorabilirsin.',
+          'No short explanation for this meaning. You can ask the AI.')
+      : L('Bu cümlede “${r.headword}”, “${tr.first}” anlamında kullanılmış. Sözlükte daha uzun bir açıklama yok; istersen yapay zekâya sorabilirsin.',
+          'Here “${r.headword}” means “${tr.first}”. The dictionary has no longer explanation; you can ask the AI.');
+
   Widget _plainExplanation(ThemeData theme) {
     final b = r.best;
     final text = b == null
         ? L('Bu cümle için sözlükte bir açıklama yok. İstersen yapay zekâya sorabilirsin.',
             'The dictionary has no explanation for this sentence. You can ask the AI.')
-        : (b.explainTr ?? b.note ?? b.explainEn ?? L('Bu anlamın kısa açıklaması sözlükte yok.', 'No short explanation for this meaning.'));
+        : (b.explainTr ?? b.note ?? b.explainEn ?? _fromMeaning(b.tr));
     final ex = b != null && b.examples.isNotEmpty ? b.examples.first : null;
     final exTr = b != null && b.examplesTr.isNotEmpty ? b.examplesTr.first : null;
     return Padding(

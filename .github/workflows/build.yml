@@ -90,6 +90,24 @@ jobs:
           name: VocaBloom-Android
           path: build/app/outputs/flutter-apk/app-release.apk
 
+  linux:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # GTK for the window, GStreamer for audioplayers, a JDK for the jni plugin.
+      - name: Linux build tools
+        run: sudo apt-get update -q && sudo apt-get install -yq ninja-build libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter build linux --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VocaBloom-Linux
+          path: build/linux/x64/release/bundle
+
   ios:
     needs: test
     runs-on: macos-latest
@@ -129,7 +147,7 @@ jobs:
           path: build/macos/Build/Products/Release/VocaBloom.app
 
   release:
-    needs: [test, voice, windows, android, ios, macos]
+    needs: [test, voice, windows, linux, android, ios, macos]
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
@@ -165,6 +183,7 @@ jobs:
           cp VocaBloom-Android/app-release.apk VocaBloom-Android.apk
           cp VocaBloom-iOS/VocaBloom-unsigned.ipa VocaBloom-iOS-unsigned.ipa
           (cd VocaBloom-macOS && zip -qry ../VocaBloom-macOS.zip .)
+          tar -czf VocaBloom-Linux.tar.gz -C VocaBloom-Linux .
       - name: Publish 'latest' release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -174,4 +193,4 @@ jobs:
           gh release create latest --prerelease --target "$GITHUB_SHA" \
             --title "VocaBloom ${{ needs.test.outputs.version }}" \
             --notes-file body.md \
-            dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip
+            dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip dist/VocaBloom-Linux.tar.gz

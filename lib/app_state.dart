@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/dict_db.dart';
 import 'nlp/context_sense.dart';
 import 'data/review.dart';
+import 'data/stats.dart';
 import 'data/user_db.dart';
 import 'ai/local_ai.dart';
 import 'nlp/grammar.dart';
@@ -261,6 +262,7 @@ class AppState extends ChangeNotifier {
   int _wordsVersion = 0;
   late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
   late final ReviewStore review = ReviewStore(user);
+  late final StatsStore stats = StatsStore(user);
 
   /// Chooses the meaning a word has in the sentence being read (offline).
   late final SenseEngine senses = SenseEngine(dict);

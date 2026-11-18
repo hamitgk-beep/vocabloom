@@ -137,6 +137,7 @@ class _ReviewPageState extends State<ReviewPage> {
   void _answer(ReviewAnswer a) {
     final c = queue[pos];
     final g = app.review.answer(c.word.lemma, c.box, a);
+    app.stats.logReview(c.word.lemma, a.name, g);
     if (g) {
       graduated++;
       app.setWord(c.word.lemma, WordStatus.learned);

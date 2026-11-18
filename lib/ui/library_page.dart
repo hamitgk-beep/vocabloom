@@ -15,6 +15,7 @@ import '../l10n.dart';
 import 'free_library_page.dart';
 import 'reader_page.dart';
 import 'review_page.dart';
+import 'journey_page.dart';
 import 'theme.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -135,6 +136,7 @@ class _LibraryPageState extends State<LibraryPage> {
         ),
       );
       if (ok == true) {
+        widget.app.stats.forgetBook(b.id);
         widget.app.user.deleteBook(b.id);
         setState(() {});
       }
@@ -192,7 +194,21 @@ class _LibraryPageState extends State<LibraryPage> {
                   const SizedBox(height: 18),
                   _StatsStrip(books: books.length, learning: learning, learned: learned),
                   const SizedBox(height: 12),
+                  // On a wide window both are in the side menu.
+                  if (width < 720) ...[
                   _FreeLibraryBanner(onTap: _openFreeLibrary),
+                  const SizedBox(height: 12),
+                  _FreeLibraryBanner.link(
+                    onTap: () async {
+                      await JourneyPage.open(context, widget.app);
+                      if (mounted) setState(() {});
+                    },
+                    keyName: 'journey',
+                    icon: Icons.insights_rounded,
+                    title: L('İstatistiklerim', 'My stats'),
+                    subtitle: L('Okuma süren, kelimelerin ve gramer sonuçların', 'Your reading time, words and grammar results'),
+                  ),
+                  ],
                   if (learning > 0) ...[
                     const SizedBox(height: 12),
                     ReviewBanner(app: widget.app),
@@ -243,14 +259,21 @@ class _LibraryPageState extends State<LibraryPage> {
 /// Opens the free library (stories and classics by level).
 class _FreeLibraryBanner extends StatelessWidget {
   final VoidCallback onTap;
-  const _FreeLibraryBanner({required this.onTap});
+  final String keyName, title, subtitle;
+  final IconData icon;
+  const _FreeLibraryBanner({required this.onTap})
+      : keyName = 'free-library',
+        icon = Icons.local_library_rounded,
+        title = '',
+        subtitle = '';
+  const _FreeLibraryBanner.link({required this.onTap, required this.keyName, required this.icon, required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
     final cs = t.colorScheme;
     return Material(
-      key: const ValueKey('free-library'),
+      key: ValueKey(keyName),
       color: cs.primaryContainer.withValues(alpha: t.brightness == Brightness.dark ? 0.35 : 0.6),
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
@@ -263,14 +286,14 @@ class _FreeLibraryBanner extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: BoxDecoration(color: cs.primary.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(12)),
-              child: Icon(Icons.local_library_rounded, color: cs.primary, size: 22),
+              child: Icon(icon, color: cs.primary, size: 22),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(L('Ücretsiz kütüphane', 'Free library'), style: t.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                Text(title.isEmpty ? L('Ücretsiz kütüphane', 'Free library') : title, style: t.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
                 const SizedBox(height: 2),
-                Text(L('A1–C1 seviyelerinde telifsiz hikâye ve klasikler', 'Free stories and classics, levels A1–C1'),
+                Text(subtitle.isEmpty ? L('A1–C1 seviyelerinde telifsiz hikâye ve klasikler', 'Free stories and classics, levels A1–C1') : subtitle,
                     style: t.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant)),
               ]),
             ),

@@ -73,6 +73,7 @@ String? _assetForPlatform() {
   if (Platform.isWindows) return 'VocaBloom-Windows.zip';
   if (Platform.isMacOS) return 'VocaBloom-macOS.zip';
   if (Platform.isIOS) return 'VocaBloom-iOS-unsigned.ipa';
+  if (Platform.isLinux) return 'VocaBloom-Linux.tar.gz';
   return null;
 }
 
