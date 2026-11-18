@@ -30,7 +30,7 @@ jobs:
           if [ -f out/results.jsonl.gz ]; then gunzip -kf out/results.jsonl.gz; fi
           touch out/results.jsonl
           gunzip -kf items.json.gz
-          python3 run_fill.py items.json out --batch 10 --max-requests 150 --max-minutes 240 || true
+          python3 run_fill.py items.json out --batch 10 --max-requests 10 --max-minutes 240 || true
           cat out/summary.json || true
       - name: Save results and commit
         if: always()
