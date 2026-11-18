@@ -1,0 +1,13 @@
+headword	kind	verdict	note
+accouterments	word	valid_rare	Valid spelling variant of "accoutrements"; needs a meaning, not deletion
+babunbaby	word	invalid	Not an English word
+capapie	word	invalid	Misspelling of "cap-a-pie"
+diagnotor	word	invalid	Not an English word
+dieselise	word	valid_rare	British spelling of "dieselize"
+rindish	word	invalid	Not a standard English word
+ringster	word	uncertain	Rare word, meaning unclear; check manually
+dollar out	expr	invalid	Not a standard expression
+dollar up	expr	invalid	Not a standard expression
+doodie up	expr	invalid	Not a standard expression
+monar'chical	word	typo	Source typo for "monarchical"; fix headword, then translate
+nonagression	word	typo	Misspelling of "nonaggression"; fix headword, then translate

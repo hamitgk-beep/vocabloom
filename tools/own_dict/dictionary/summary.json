@@ -1,0 +1,21 @@
+{
+ "total_items": 33491,
+ "by_kind_and_action": {
+  "expr/add_new": 7856,
+  "expr/skip_existing_turkish": 1318,
+  "expr/wait_for_approval": 3,
+  "word/replaces_source_tr": 24305,
+  "word/wait_for_approval": 9
+ },
+ "with_qc_flag": 266,
+ "qc_categories": {
+  "duplicate_sense": 93,
+  "example_missing_word": 86,
+  "english_in_turkish": 16,
+  "english_in_example_tr": 53,
+  "empty_example": 15,
+  "empty_senses": 12,
+  "empty_tr": 1
+ },
+ "invalid_candidates": 12
+}

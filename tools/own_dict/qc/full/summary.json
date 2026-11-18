@@ -1,0 +1,17 @@
+{
+ "entries": 33259,
+ "entries_with_high_or_medium_flag": 263,
+ "flags_by_severity_and_category": {
+  "high/empty_example": 15,
+  "high/empty_senses": 10,
+  "high/empty_tr": 1,
+  "high/english_in_turkish": 16,
+  "low/format": 10,
+  "low/literal_risk": 1694,
+  "low/many_senses": 44,
+  "low/register": 926,
+  "medium/duplicate_sense": 96,
+  "medium/english_in_example_tr": 54,
+  "medium/example_missing_word": 102
+ }
+}

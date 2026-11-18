@@ -1,0 +1,265 @@
+önem	sorun	kelime	tür	mevcut_anlam	önerilen_düzeltme
+yüksek	empty_example	banking	word	bankacılık; banka işlemleri; banka ile çalışmak	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	bending	word	eğilme, bükülme; kıvrım, eğim; eğen, büken	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	blacky	word	siyah hayvan, karaca; siyahi kişi	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	bridging	word	köprü kurmak	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	chimp	word	şempanze; şempanze gibi	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	dike	word	set, bent, baraj; sete almak, çevirmek; erkek gibi lezbiyen	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	dres-coat	word	kaban, pardösü	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	drowsiess	word	uyku hali, uykusuzluk	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	hurt people hurt people	expr	incinen incitir acı çeken acıtır	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	lug	word	kulp, tutamak; kulak, çıkıntı; ağır taşımak; sürüklemek, zorla taşımak; engellemek, tıkamak; kum solucanı	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	milli-	word	milyon, bin	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	quim	word	kaba argo, kadın cinsel organı	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	shatter	word	parçalamak, kırmak; yıkmak, altüst etmek; paramparça etmek; 	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	speak of the devil and he appears	expr	quoted 	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_example	winchbeck	word	Winchbeck kelimesi için tanım bulunamadı	örnek cümleyi yeniden yaz (API, onay sonrası)
+yüksek	empty_tr	shatter	word	parçalamak, kırmak; yıkmak, altüst etmek; paramparça etmek; 	yeniden çeviri (API, onay sonrası)
+yüksek	english_in_turkish	ah	word	ah, of	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	alack and alas	expr	eyvah, of, vah vah	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	bah	word	hah, boş ver, of	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	beeston with bittering	expr	Beeston with Bittering	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	drum and bass	expr	drum and bass müziği	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	elephant and castle	expr	Elephant and Castle (Londra'da bir kavşak ve semt)	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	flasby with winterburn	expr	Flasby with Winterburn köyü	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	for crying out loud	expr	Yahu, of, Allah Allah	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	hen and chicken islands	expr	Hen and Chicken Adaları	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	hit-and-run	word	hit-and-run tarzı, ani saldırı; kaçma, sürücüsü kaçan	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	oof	word	of, ah	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	ovarian	word	yumurtalıkla ilgili, over	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	pah	word	Of, hah	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	phew	word	uf, of, ohh; off, pöh	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	shoot the gold	expr	hit the gold ile aynı anlamda, büyük başarı kazanmak	Türkçe anlamı yeniden çevir (API, onay sonrası)
+yüksek	english_in_turkish	square and compass	expr	Square and Compass köyü	Türkçe anlamı yeniden çevir (API, onay sonrası)
+orta	duplicate_sense	abkhazian	word	Abhaz; Abhaz; Abhazca	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	acrylic	word	akrilik; akrilik boya; akrilik kumaş, akrilik elyaf; akrilik	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	alfresco	word	açık havada; açık havada	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	ampule	word	ampul; ampul	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	anti-semite	word	Yahudi düşmanı; Yahudi düşmanı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	ascetic	word	çileci, zahit; sade, keyfe düşkün olmayan; çileci, zahit	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	bamboo ceiling	expr	görünmez engel, cam tavan; görünmez engel, cam tavan	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	bareheaded	word	başı açık; başı açık	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	baritone	word	bariton; bariton; baritoncu, bariton ses	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	biweekly	word	iki haftada bir; haftada iki kez; iki haftada bir; iki haftada bir çıkan dergi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	cainozoic	word	Senozoik, Yeni Yaşam Çağı; Senozoik, Yeni Yaşam Çağı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	centralist	word	merkeziyetçi; merkeziyetçi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	cerise	word	kiraz kırmızısı; kiraz kırmızısı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	cerulean	word	gök mavisi; gök mavisi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	chlorite	word	klorit; klorit	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	cirassian	word	Çerkes; Çerkes	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	columbia	word	Columbia Nehri; Columbia; Columbia; Columbia; Columbia Üniversitesi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	contralto	word	kontralto; kontralto	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	counterclockwise	word	saat yönünün tersine; saat yönünün tersine	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	counterrevolutionary	word	karşı devrimci; devrim karşıtı; karşı devrimci	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	cross-border	word	sınır ötesi, sınır aşan; sınır ötesi, sınır aşan	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	descriptivism	word	betimselcilik; betimselcilik	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	dielectric	word	yalıtkan, dielektrik; yalıtkan, dielektrik	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	distributionalist	word	dağılımcı; dağılımcı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	dram	word	dram, az miktarda içki; dram; dram	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	enate	word	anne tarafından akraba; anne tarafından akraba	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	ethene	word	etilen; etilen	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	expansionist	word	yayılmacı; yayılmacı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	expressionism	word	dışavurumculuk; dışavurumculuk	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	febrifuge	word	ateş düşürücü; ateş düşürücü	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	foreground	word	ön plan; ön plan; öne çıkarmak, vurgulamak	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	fourscore	word	seksen; seksen	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	fox and geese	expr	tilki ve kazlar; tilki ve kazlar	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	freehand	word	serbest el ile; serbest el ile	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	freshwater	word	tatlı su; tatlı su	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	gnostic	word	gnostik; sezgisel, esoterik bilgili; gnostik	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	golden rule	expr	altın kural; altın kural	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	hastings	word	Hastings; Hastings Savaşı; Hastings	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	head-on	word	kafa kafaya, doğrudan; doğrudan karşı, açık; kafa kafaya, doğrudan; yüzleşerek, doğrudan	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	input-output	word	girdi-çıktı; girdi-çıktı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	interpretation	word	yorum, yorumlama; yorum, yorumlama; açıklama, anlam; tercüme, çeviri	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	isobar	word	izobar; izobar	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	least	word	en az; en az; en az, en küçük; önemsiz şey	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	lengthways	word	boyuna, uzunlamasına; boyuna, uzunlamasına	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	less	word	daha az; daha az; daha az; daha düşük, daha aşağı; eksi, -siz; -sız, -siz	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	math	word	matematik; matematik	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	maxwell	word	maxwell; Maxwell	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	mazarine	word	koyu mavi; koyu mavi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	mercantilist	word	merkantilist; merkantilist	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	middleweight	word	orta siklet; orta siklet	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	mildness	word	ılımlılık, yumuşaklık; ılımlılık, yumuşaklık; merhametlilik, hoşgörü	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	monarchist	word	monarşist, krallık yanlısı; monarşist, krallık yanlısı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	neither	word	ikisinden hiçbiri; ikisinden hiçbiri; ne ... ne de; ne de, -de değil	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	omelet	word	omlet; omlet	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	one-to-one	word	birebir; birebir eşleşen; birebir	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	overland	word	kara yoluyla; kara yoluyla	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	pair and share	expr	ikili çalışma ve paylaşım; ikili çalışma ve paylaşım	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	poltroon	word	korkak, yüreksiz; korkak, yüreksiz	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	presto	word	çok hızlı, presto; çok hızlı, presto	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	protestant	word	Protestan; Protestan; protesto eden, itiraz eden	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	puce	word	koyu kızılımsı kahverengi; koyu kızılımsı kahverengi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	push-pull	word	itme-çekme; itme-çekme	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	quart	word	kuart; kuart	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	racialist	word	ırkçı; ırkçı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	recreant	word	hain, sadakatsiz; korkak; hain, dönek; korkak	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	roentgen	word	röntgen; röntgen	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	seaward	word	denize doğru; denizden esen; denize doğru; deniz yönü	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	secessionist	word	ayrılıkçı; ayrılıkçı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	selenite	word	selenit; selenit	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	semiautomatic	word	yarı otomatik; yarı otomatik; yarı otomatik tabanca	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	seminomad	word	yarı göçebe; yarı göçebe	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	shilling	word	şilin; şilin	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	southeastward	word	güneydoğuya doğru; güneydoğu yönü; güneydoğuya doğru	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	southerly	word	güneyden esen; güneye doğru; güney rüzgârı; güneye doğru	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	southpaw	word	solak; solak	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	structuralism	word	yapısalcılık; yapısalcılık; yapısalcılık	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	structuralist	word	yapısalcı; yapısalcı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	surrealist	word	sürrealist, gerçeküstücü; sürrealist, gerçeküstücü	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	sustained	word	sürekli, kesintisiz; sürekli, kesintisiz	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	symmetry	word	simetri; denge, uyum; simetri	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	tangerine	word	mandalina; koyu turuncu, mandalina rengi; koyu turuncu, mandalina rengi	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	tarantula	word	tarantula; tarantula	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	terrier	word	teriyer; teriyer	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	tonight	word	bu gece; bu gece	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	transformationalist	word	dönüşümselci; dönüşümselci	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	transitivity	word	geçişlilik; geçişlilik	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	twosome	word	ikili, çift; ikili, çift	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	underglaze	word	sır altı; sır altı	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	untimely	word	zamansız, vaktinden önce; uygunsuz, yersiz; zamansız, vaktinden önce	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	wellington	word	lastik çizme; Wellington; Wellington	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	westerly	word	batıdan esen, batı yönlü; batıya doğru; batı rüzgârı; batıya doğru	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	westward	word	batıya doğru; batıya doğru; batı yönü	tekrar eden anlamı kaldır (API gerekmez)
+orta	duplicate_sense	yankee	word	Kuzeyli, Yankee; Yeni İngiltere'li; Amerikalı; Kuzeyli, Yankee	tekrar eden anlamı kaldır (API gerekmez)
+düşük	english_in_example_tr	antecedent	word	önceki, önce gelen; ata, ecdat; önceki durum, neden; öncül, gönderilen sözcük	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	bah	word	hah, boş ver, of	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	beeston with bittering	expr	Beeston with Bittering	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	boy in the boat	expr	klitoris	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	boys and girls	expr	Dutchman's breeches bitkisi	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	carouse	word	içki âlemi yapmak, sarhoş eğlenmek; içki âlemi, eğlence	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	chirbury with brompton	expr	Chirbury ile Brompton	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	chopped and screwed	expr	hızı düşürüp parçalayarak remikslenmiş hip-hop	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	click and collect	expr	online al, mağazadan teslim al	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	colloquial	word	konuşma diline ait, günlük dile özgü	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	condor	word	kondor	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	coordinative	word	bağlayıcı, eşgüdümlü	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	definite	word	kesin, belirgin; kesin, emin; belirli	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	determiner	word	belirleyici sözcük; belirleyici, etken; kesin kanıt, karar verici delil	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	disjunctive	word	ayırıcı, bölücü	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	drum and bass	expr	drum and bass müziği	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	elephant and castle	expr	Elephant and Castle (Londra'da bir kavşak ve semt)	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	entitled	word	hakkı olan, yetkili; başlıklı, adı ... olan; haklı görünen, ayrıcalıklı	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	expletive	word	küfür, sövgü; dolgu sözcük, boş ifade	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	exton and horn	expr	Exton ve Horn	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	feal and divot	expr	çim ve kesek hakkı	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	flasby with winterburn	expr	Flasby with Winterburn köyü	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	hen and chicken islands	expr	Hen and Chicken Adaları	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	indian boys and girls	expr	Dutchman's breeches bitkisi	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	junctive	word	bağlayıcı, birleştirici	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	marks and sparks	expr	Marks & Spencer	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	oof	word	of, ah	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	ormesby st margaret with scratby	expr	Ormesby St Margaret ve Scratby	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	pah	word	Of, hah	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	partitive	word	bölümsel, kısmi; bölen, ayıran; bölümsel sözcük	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	pernod and black	expr	Pernod ve karayemiş likörlü içki	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	pick and pop	expr	açık pozisyona koşup şut atmak	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	polysyndeton	word	çoksöz bağlama	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	radishes and gooseberries	expr	Radisson ve Des Groseilliers (17. yy Fransız-Kanadalı kaşifler)	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	razor and blades	expr	ucuz ürünle tüketimi artırma stratejisi	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	redcar and cleveland	expr	Kuzey Yorkshire'da bir ilçe ve yerel yönetim birimi	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	reds and yellows	expr	bilardo oyununda kırmızı ve sarı toplar; blackball oyunu	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	rest and vest	expr	hisse senetlerinin hak kazanmasını beklerken az çalışmak	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	rhythm and blues	expr	caz ve bluesun karışımı, ritmik bir müzik türü	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	rhythm and grime	expr	ritim ve grime	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	rip and dip	expr	simidi koparıp sosa batırmak	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	spit in the ocean	expr	damla damla, çok az, önemsiz miktar; poker varyantı	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	square and compass	expr	Square and Compass köyü	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	stamp and go	expr	tuzlu balıklı Jamaika yemeği	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	syllepsis	word	sillepsis, çift bağlama	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	syntagm	word	sözdizimsel birim, dizim	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	tick and flick	expr	hesap aktarım hizmeti	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	ts and blues	expr	uyuşturucu karışımı	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	ts and bs	expr	uyuşturucu karışımı	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	tyne and wear	expr	Tyne ve Wear	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	uppies and downies	expr	Workington'a özgü geleneksel top oyunu	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	urim and thummim	expr	kehanet taşları, kutsal kâhin araçları; ilahi vahyi anlama araçları	örnek çeviriyi kontrol et
+düşük	english_in_example_tr	vi and bot	expr	Vilma Santos ile Edgar Mortiz'in ikilisi	örnek çeviriyi kontrol et
+düşük	example_missing_word	adressee	word	alıcı, muhatap	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	agressive	word	saldırgan, agresif	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	aneshesiologist	word	anestezi uzmanı, anestezist	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	autihistamine	word	antihistamin, alerji ilacı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	bainsmarie	word	su banyosu kabı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	befall	word	başına gelmek, uğramak; olmak, meydana gelmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	bioclimatalogy	word	biyoiklimbilim	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	bye-pass	word	bypass, yan yol; yan yoldan geçmek, atlatmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	causecelebre	word	tartışmalı dava, ünlü dava	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	chow	word	yemek, yiyecek; çau çau, Çin kökenli köpek cinsi; Chou hanedanı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	cite	word	alıntılamak, referans vermek; anmak, söz etmek; övmek, takdir etmek; örnek göstermek, kanıt olarak sunmak; alıntı notu, atıf	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	coon	word	rakun; sakar köylü, kaba adam; ırkçı hakaret	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	creep	word	sürünmek, emekleyerek ilerlemek; yavaş yavaş ilerlemek, sinsice gitmek; ürpertmek, tüylerini diken diken etmek; ürkütücü tip, tuhaf adam; yavaş kayma, deformasyon; küçük hayvan bölmesi, çit	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	cule	word	kıç, alt kısım	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	daghistan	word	Dağıstan	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	diphtongisation	word	çift sesli hale getirme	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	distal	word	uzak, dıştaki; orta hattan uzak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	douche	word	duş, sprey tipi yıkama; vajinal yıkama aleti; yıkamak, duşla temizlemek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	ebullioscopy	word	kaynama noktası ölçümü	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	eddy	word	girdap, anafor; girdap oluşturmak, dönerek akmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	enlightment	word	aydınlanma, bilgilenme	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	enwind	word	sarmak, dolamak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	espy	word	gözüne ilişmek, fark etmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	fabeceae	word	baklagiller familyası	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	faggot	word	odun demeti; eşcinsel erkek; demetlemek, bağlamak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	fanny	word	popo, kalça; kadın cinsel organı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	fete	word	şenlik, festival; gösteri, etkinlik dizisi; onurlandırmak, kutlamak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	filiariasis	word	filarya hastalığı, filaryaz	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	fling	word	kısa deneme, denemek; kısa macera, geçici ilişki; eğlence, çılgınlık; fırlatmak, savurmak; atılmak, savrulmak; kendini bırakmak, sefa sürmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	forgo	word	vazgeçmek, feragat etmek; önce gelmek, öncesinde olmak; hakkını kaybetmek, yitirmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	frigid	word	buz gibi, dondurucu; soğuk, mesafeli; cinsel isteksiz	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	gazalle	word	ceylan	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	gaze	word	bakış, dikkatli bakış; dikkatle bakmak, dalıp bakmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	geosscience	word	yer bilimi, jeoloji bilimi	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	greaser	word	aşağılayıcı: Meksika kökenli kişi; makine yağlayıcısı, yağcı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	guerilla	word	gerilla; gerilla, gayrinizamî	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	hard-on	word	sert erkeklik, ereksiyon	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	hopomythumb	word	tanınmayan sözcük	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	humus	word	humus, toprak çürüntüsü; humus, nohut ezmesi	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	hypothenuse	word	hipotenüs	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	inspiraional	word	ilham verici	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	intellingibility	word	anlaşılırlık, okunabilirlik	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	knocker	word	kapı tokmağı; kapı çalan kişi; küçümseyen kişi, eleştirmen; meme, göğüs; kibirli adam, büyükbaba taslayan	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	laze	word	boş boş oturmak, tembellik etmek; hiçbir şey yapmadan durmak, vakit geçirmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	mamilla	word	meme ucu, meme başı; küçük çıkıntı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	maraud	word	yağma etmek, talan etmek; ganimet aramak, dolaşmak; ani saldırı, baskın	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	mohammedan	word	Hz. Muhammed'e ait, İslami; Müslüman	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	mope	word	somurtmak, kederlenmek; aylak aylak dolaşmak; asık suratlı kimse, somurtkan	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	mu	word	mü (Yunan alfabesinin on ikinci harfi)	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	muhammadan	word	Muhammed'e ait, İslami; Müslüman	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	muller	word	öğütücü, ezici; Müller (soyadı)	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	omophalic	word	göbekle ilgili, göbeğe ait	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	omophalocele	word	göbek fıtığı, omfalosel	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	para	word	para, sayı; para; paraşütçü; Para (Brezilya); Belém	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	pecker	word	ağaçkakan; gaga, goncaya benzer çıkıntı; penis; cesaret, moral	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	peritonaeum	word	karın zarı, periton	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	picaninny	word	siyah çocuk için ırkçı hakaret	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	ply	word	kat, tabaka, iplik teli; sağlamak, tedarik etmek; çalışmak, uğraşmak; düzenli sefer yapmak, gidip gelmek; birleştirmek, örmek, bükmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	remarrriage	word	yeniden evlenme	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	rend	word	yırtmak, parçalamak; yaralamak, bölmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	reproducable	word	yeniden üretilebilir	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	resell	word	yeniden satmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	retell	word	yeniden anlatmak, aktarmak; yeniden yazmak, uyarlamak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	shake	word	sallamak, silkelemek; titremek, sarsılmak; sarsmak, derin etki yapmak; sarsıntı, titreme; el sıkışma, tokalaşma; milkshake, süt kokteyli	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	sheeny	word	parlak, ışıltılı; Yahudi (aşağılayıcı)	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	shrive	word	günahını bağışlamak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	slay	word	öldürmek; katletmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	slink	word	sinsice sıvışmak, süzülmek; gizlice uzaklaşmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	slowtness	word	yavaşlık, ağırlık	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	sod	word	çim kaplı toprak, çim örtüsü; süperoksit dismutaz; eşcinsel erkek, ibne; herif, adam; çimle kaplamak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	strive	word	çabalamak, uğraşmak; gayret göstermek, emek vermek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	sufragan	word	yardımcı piskopos	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	sufrage	word	oy verme hakkı, seçme hakkı; dua, şefaat	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	sup	word	yudum, az miktar içecek; yudumlamak, yavaş yavaş içmek; kaşıkla yemek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	temptation	word	ayartma, cazibe; ayartı, baştan çıkarma; arzu, istek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	tit	word	baştankara; meme, göğüs; meme ucu	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	transfinite	word	sonlu olmayan, sonsuz	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	tread	word	adım, basış sesi; lastik dişi, yüzey; basamak tahtası; basmak, adım atmak; ezmek, çiğnemek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	uigur	word	Uygur, Uygur Türkü; Uygurca; Uygur alfabesi, Uygur yazısı	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	unbind	word	çözmek, açmak; serbest bırakmak, özgürleştirmek	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	unobstrusive	word	göze batmayan, sessiz	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	uphold	word	sürdürmek, korumak; savunmak, desteklemek; desteklemek, ayakta tutmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	uranalysis	word	idrar analizi	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	vapourization	word	buharlaştırma, buharlaşma	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	vary	word	değişmek, farklılaşmak; çeşitlendirmek, değiştirmek; uymamak, ayrılmak	örnek cümlede kelimeyi kontrol et
+düşük	example_missing_word	wring	word	sıkmak, burmak; ellerini ovuşturmak, kıvranmak; zorla almak, koparmak	örnek cümlede kelimeyi kontrol et
