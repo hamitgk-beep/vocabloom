@@ -24,13 +24,16 @@ jobs:
         env:
           GEMINI_API_KEY_FOR_DICTIONARY: ${{ secrets.GEMINI_API_KEY_FOR_DICTIONARY }}
           GROQ_API_KEY_FOR_DICTIONARY: ${{ secrets.GROQ_API_KEY_FOR_DICTIONARY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           cd tools/own_dict/fill2
           mkdir -p out
           if [ -f out/results.jsonl.gz ]; then gunzip -kf out/results.jsonl.gz; fi
           touch out/results.jsonl
           gunzip -kf items.json.gz
-          python3 run_fill.py items.json out --batch 10 --max-requests 4 --max-minutes 240 || true
+          PROVIDERS=$(tr -d ' \n' < PROVIDERS)
+          BUDGET=$(tr -d ' \n' < BUDGET_USD)
+          python3 run_fill.py items.json out --batch 10 --max-requests 400 --max-minutes 240 --providers "$PROVIDERS" --budget-usd "$BUDGET" || true
           cat out/summary.json || true
       - name: Save results and commit
         if: always()

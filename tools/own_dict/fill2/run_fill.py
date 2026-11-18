@@ -68,7 +68,37 @@ def gemini_model(key):
     raise Fatal("no compatible Gemini model")
 
 
+HAIKU_PRICE = (0.10, 0.50)  # USD per million input / output tokens
+
+
+def ask_haiku(state, batch_prompt):
+    key = os.environ.get("ANTHROPIC_API_KEY", "")
+    if not key:
+        raise Fatal("missing Anthropic secret")
+    body = {"model": os.environ.get("HAIKU_MODEL", "claude-haiku-5-5"), "max_tokens": 4000,
+            "system": SYSTEM, "messages": [{"role": "user", "content": batch_prompt}]}
+    for attempt in range(3):
+        try:
+            res = post("https://api.anthropic.com/v1/messages",
+                       {"Content-Type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01"}, body)
+            break
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < 2:
+                time.sleep(60)
+                continue
+            if e.code in (500, 502, 503, 529) and attempt < 2:
+                time.sleep(20)
+                continue
+            if e.code == 429:
+                raise Quota("HTTP 429 (rate limit)")
+            raise Fatal("HTTP %s" % e.code)
+    state["usage"] = res.get("usage", {})
+    return "".join(b.get("text", "") for b in res.get("content", []) if b.get("type") == "text")
+
+
 def ask(provider, state, batch_prompt):
+    if provider == "haiku":
+        return ask_haiku(state, batch_prompt)
     if provider == "gemini":
         key = os.environ.get("GEMINI_API_KEY_FOR_DICTIONARY", "")
         if not key:
@@ -139,6 +169,8 @@ def main():
     ap.add_argument("--batch", type=int, default=10)
     ap.add_argument("--max-requests", type=int, default=150)
     ap.add_argument("--max-minutes", type=float, default=60)
+    ap.add_argument("--providers", default="gemini,groq")
+    ap.add_argument("--budget-usd", type=float, default=0.0, help="stop before paid spend would exceed this; 0 = free tiers only")
     a = ap.parse_args()
     t0 = time.time()
     items = json.load(open(a.items, encoding="utf-8"))
@@ -153,7 +185,8 @@ def main():
             except (ValueError, KeyError):
                 pass
     todo = [i for i in items if i["key"] not in done]
-    providers = ["gemini", "groq"]
+    providers = [p for p in a.providers.split(",") if p]
+    cost = {"usd": 0.0, "in": 0, "out": 0}
     state = {"gemini_model": None}
     stats = {"requests": 0, "ok_items": 0, "failed_requests": 0, "quota_switch": [], "stop": ""}
     pos = 0
@@ -169,6 +202,10 @@ def main():
             prompt = "Headwords:\n" + "\n".join(
                 "%d. %s (%s%s)" % (n + 1, i["text"], "word" if i["kind"] == "word" else "expression",
                                    (", " + i["cat"]) if i["cat"] else "") for n, i in enumerate(part))
+            if providers[0] == "haiku" and a.budget_usd <= 0:
+                stats["stop"] = "paid_provider_without_budget"; break
+            if providers[0] == "haiku" and cost["usd"] + 0.002 > a.budget_usd:
+                stats["stop"] = "budget_reached"; break
             stats["requests"] += 1
             try:
                 raw = None
@@ -210,7 +247,8 @@ def main():
                 if isinstance(e, Fatal) or stats["failed_requests"] >= 5:
                     stats["stop"] = "fatal"; break
                 pos += len(part)  # skip this batch, it stays unfinished and is retried on the next run only if key missing
-    stats.update({"items_total": len(items), "items_done_total": len(done) + stats["ok_items"],
+    stats.update({"paid_usage": {"input_tokens": cost["in"], "output_tokens": cost["out"], "usd_estimate": round(cost["usd"], 4)},
+                  "items_total": len(items), "items_done_total": len(done) + stats["ok_items"],
                   "seconds": round(time.time() - t0), "pending_after_run": len(todo) - pos})
     (out / "summary.json").write_text(json.dumps(stats, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(stats, ensure_ascii=False))
