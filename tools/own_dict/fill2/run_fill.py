@@ -90,7 +90,7 @@ def ask_haiku(state, batch_prompt):
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
         raise Fatal("missing Anthropic secret")
-    body = {"model": os.environ.get("HAIKU_MODEL", "claude-haiku-5-5"), "max_tokens": 4000,
+    body = {"model": os.environ.get("HAIKU_MODEL", "claude-haiku-5-5"), "max_tokens": 8000,
             "system": SYSTEM, "messages": [{"role": "user", "content": batch_prompt}]}
     for attempt in range(3):
         try:
@@ -205,6 +205,7 @@ def main():
     state = {"gemini_model": None}
     stats = {"requests": 0, "ok_items": 0, "failed_requests": 0, "quota_switch": [], "stop": ""}
     pos = 0
+    consecutive_failed = 0
     with resf.open("a", encoding="utf-8") as f:
         while pos < len(todo):
             if stats["requests"] >= a.max_requests:
@@ -261,14 +262,16 @@ def main():
                     if rec["senses"]:
                         stats["ok_items"] += 1
                 f.flush()
+                consecutive_failed = 0
                 pos += len(part)
             except Quota as q:
                 stats["quota_switch"].append({"provider": providers[0], "at": pos, "why": str(q)})
                 providers.pop(0)
             except Exception as e:  # network timeouts, bad JSON, missing keys: count it and go on
                 stats["failed_requests"] += 1
+                consecutive_failed += 1
                 stats["last_error"] = type(e).__name__ + ": " + str(e)[:150]
-                if isinstance(e, Fatal) or stats["failed_requests"] >= 5:
+                if isinstance(e, Fatal) or consecutive_failed >= 3:
                     stats["stop"] = "fatal"; break
                 pos += len(part)  # skip this batch, it stays unfinished and is retried on the next run only if key missing
     stats.update({"paid_usage": {"input_tokens": cost["in"], "output_tokens": cost["out"], "usd_estimate": round(cost["usd"], 4)},
