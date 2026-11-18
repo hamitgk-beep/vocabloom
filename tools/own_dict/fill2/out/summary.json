@@ -1,12 +1,17 @@
 {
- "requests": 4,
- "ok_items": 30,
- "failed_requests": 1,
+ "requests": 11,
+ "ok_items": 60,
+ "failed_requests": 5,
  "quota_switch": [],
- "stop": "request_budget",
- "last_error": "AttributeError: 'list' object has no attribute 'get'",
+ "stop": "fatal",
+ "last_error": "JSONDecodeError: Extra data: line 1 column 1880 (char 1879)",
+ "paid_usage": {
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "usd_estimate": 0.0
+ },
  "items_total": 15137,
- "items_done_total": 90,
- "seconds": 12,
- "pending_after_run": 15037
+ "items_done_total": 150,
+ "seconds": 158,
+ "pending_after_run": 14947
 }
