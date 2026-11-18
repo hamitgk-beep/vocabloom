@@ -45,3 +45,52 @@
 {"w": "shoot the gold", "kind": "expr", "change": "english_token_removed", "before": "hit the gold ile aynı anlamda, büyük başarı kazanmak", "after": "büyük başarı kazanmak"}
 {"w": "monar'chical", "kind": "word", "change": "typo_headword", "before": "monar'chical", "after": "monarchical"}
 {"w": "nonagression", "kind": "word", "change": "typo_headword", "before": "nonagression", "after": "nonaggression"}
+{"w": "banking", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["bankacılık", "banka işlemleri", "banka ile çalışmak"], "kept_old_senses": []}
+{"w": "dike", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["set, bent, baraj", "sete almak, çevirmek", "erkek gibi lezbiyen"], "kept_old_senses": []}
+{"w": "bending", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["eğilme, bükülme", "kıvrım, eğim", "eğen, büken"], "kept_old_senses": []}
+{"w": "lug", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["kulp, tutamak", "kulak, çıkıntı", "ağır taşımak", "sürüklemek, zorla taşımak"], "kept_old_senses": ["engellemek, tıkamak", "kum solucanı"]}
+{"w": "blacky", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["siyah hayvan, karaca", "siyahi kişi"], "kept_old_senses": []}
+{"w": "bridging", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["köprü kurmak"], "kept_old_senses": []}
+{"w": "chimp", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["şempanze", "şempanze gibi"], "kept_old_senses": []}
+{"w": "dres-coat", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["kaban, pardösü"], "kept_old_senses": []}
+{"w": "drowsiess", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["uyku hali, uykusuzluk"], "kept_old_senses": []}
+{"w": "hit-and-run", "kind": "word", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["hit-and-run tarzı, ani saldırı", "kaçma, sürücüsü kaçan"]}
+{"w": "milli-", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["milyon, bin"], "kept_old_senses": []}
+{"w": "nonaggression", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["saldırmazlık, saldırmama"], "kept_old_senses": []}
+{"w": "quim", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["kaba argo, kadın cinsel organı"], "kept_old_senses": []}
+{"w": "shatter", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["parçalamak, kırmak", "yıkmak, altüst etmek", "paramparça etmek", ""], "kept_old_senses": []}
+{"w": "winchbeck", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["Winchbeck kelimesi için tanım bulunamadı"], "kept_old_senses": []}
+{"w": "beeston with bittering", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": ["Beeston with Bittering"], "kept_old_senses": []}
+{"w": "drum and bass", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["drum and bass müziği"]}
+{"w": "elephant and castle", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Elephant and Castle (Londra'da bir kavşak ve semt)"]}
+{"w": "flasby with winterburn", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Flasby with Winterburn köyü"]}
+{"w": "hen and chicken islands", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Hen and Chicken Adaları"]}
+{"w": "square and compass", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Square and Compass köyü"]}
+{"w": "hurt people hurt people", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": ["incinen incitir acı çeken acıtır"], "kept_old_senses": []}
+{"w": "speak of the devil and he appears", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": ["quoted "], "kept_old_senses": []}
+{"w": "monar'chical", "kind": "word", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": []}
+{"w": "nonagression", "kind": "word", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": []}
+{"w": "banking", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["bankacılık", "banka işlemleri", "banka ile çalışmak"], "kept_old_senses": []}
+{"w": "dike", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["set, bent, baraj", "sete almak, çevirmek", "erkek gibi lezbiyen"], "kept_old_senses": []}
+{"w": "bending", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["eğilme, bükülme", "kıvrım, eğim", "eğen, büken"], "kept_old_senses": []}
+{"w": "lug", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["kulp, tutamak", "kulak, çıkıntı", "ağır taşımak", "sürüklemek, zorla taşımak"], "kept_old_senses": ["engellemek, tıkamak", "kum solucanı"]}
+{"w": "blacky", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["siyah hayvan, karaca", "siyahi kişi"], "kept_old_senses": []}
+{"w": "bridging", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["köprü kurmak"], "kept_old_senses": []}
+{"w": "chimp", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["şempanze", "şempanze gibi"], "kept_old_senses": []}
+{"w": "dres-coat", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["kaban, pardösü"], "kept_old_senses": []}
+{"w": "drowsiess", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["uyku hali, uykusuzluk"], "kept_old_senses": []}
+{"w": "hit-and-run", "kind": "word", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["hit-and-run tarzı, ani saldırı", "kaçma, sürücüsü kaçan"]}
+{"w": "milli-", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["milyon, bin"], "kept_old_senses": []}
+{"w": "quim", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["kaba argo, kadın cinsel organı"], "kept_old_senses": []}
+{"w": "shatter", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["parçalamak, kırmak", "yıkmak, altüst etmek", "paramparça etmek", ""], "kept_old_senses": []}
+{"w": "winchbeck", "kind": "word", "change": "api_retranslated", "dropped_old_senses": ["Winchbeck kelimesi için tanım bulunamadı"], "kept_old_senses": []}
+{"w": "beeston with bittering", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": ["Beeston with Bittering"], "kept_old_senses": []}
+{"w": "drum and bass", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["drum and bass müziği"]}
+{"w": "elephant and castle", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Elephant and Castle (Londra'da bir kavşak ve semt)"]}
+{"w": "flasby with winterburn", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Flasby with Winterburn köyü"]}
+{"w": "hen and chicken islands", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Hen and Chicken Adaları"]}
+{"w": "square and compass", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": ["Square and Compass köyü"]}
+{"w": "hurt people hurt people", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": ["incinen incitir acı çeken acıtır"], "kept_old_senses": []}
+{"w": "speak of the devil and he appears", "kind": "expr", "change": "api_retranslated", "dropped_old_senses": ["quoted "], "kept_old_senses": []}
+{"w": "monar'chical", "kind": "word", "change": "api_retranslated", "dropped_old_senses": [], "kept_old_senses": []}
+{"w": "nonagression", "kind": "word", "change": "typo_duplicate", "corrected": "nonaggression"}
