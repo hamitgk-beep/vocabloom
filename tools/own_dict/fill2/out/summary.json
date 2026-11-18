@@ -1,17 +1,17 @@
 {
- "requests": 41,
- "ok_items": 314,
- "failed_requests": 5,
+ "requests": 400,
+ "ok_items": 3360,
+ "failed_requests": 1,
  "quota_switch": [],
- "stop": "fatal",
- "last_error": "JSONDecodeError: Unterminated string starting at: line 1 column 5026 (char 5025)",
+ "stop": "request_budget",
+ "last_error": "JSONDecodeError: Expecting ':' delimiter: line 1 column 2908 (char 2907)",
  "paid_usage": {
-  "input_tokens": 19827,
-  "output_tokens": 132156,
-  "usd_estimate": 0.0681
+  "input_tokens": 197574,
+  "output_tokens": 1241932,
+  "usd_estimate": 0.6407
  },
  "items_total": 15137,
- "items_done_total": 464,
- "seconds": 623,
- "pending_after_run": 14587
+ "items_done_total": 3870,
+ "seconds": 5846,
+ "pending_after_run": 10627
 }
