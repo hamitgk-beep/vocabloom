@@ -19,17 +19,41 @@ class ParaAnalysis {
   /// grammar filter needs them.
   List<GMark> grammar(AppState app) => _grammar ??= app.grammar.mark(text, tokens);
 
-  /// The highlight that colours token [i]: an enabled expression first (in
-  /// display order), then an enabled grammar structure. Returns the
-  /// expression category or the grammar mark.
-  ({String? cat, GMark? mark}) shownAt(AppState app, int i) {
-    String? best;
+  final Map<Match, bool> _literal = {};
+
+  /// Whether [m] is used literally here ("lived in Kansas"), computed once.
+  bool _isLiteral(AppState app, Match m) => _literal.putIfAbsent(m, () {
+        // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
+        // or collocation found in its own words is the expression.
+        if (m.expr.cat != 'phrasal_verbs') return false;
+        try {
+          return app.senses.isLiteral(m.expr, tokens, m.tokens);
+        } catch (_) {
+          return false;
+        }
+      });
+
+  /// The expressions that cover token [i] and are on in the filters, not
+  /// used literally, the longest first (then in filter order). One rule for
+  /// the underline, the tap and the panel, so they always agree.
+  List<Match> expressionsAt(AppState app, int i) {
     final order = _catOrder;
-    for (final m in matches) {
-      if (!app.enabledCats.contains(m.expr.cat) || !m.tokens.contains(i)) continue;
-      if (best == null || order[m.expr.cat]! < order[best]!) best = m.expr.cat;
-    }
-    if (best != null) return (cat: best, mark: null);
+    return [
+      for (final m in matches)
+        if (app.enabledCats.contains(m.expr.cat) && m.tokens.contains(i) && !_isLiteral(app, m)) m,
+    ]..sort((x, y) {
+        final byLen = y.tokens.length.compareTo(x.tokens.length);
+        return byLen != 0 ? byLen : order[x.expr.cat]!.compareTo(order[y.expr.cat]!);
+      });
+  }
+
+  /// The highlight that colours token [i]: the expression [expressionsAt]
+  /// picks, else an enabled grammar structure. Returns the expression
+  /// category or the grammar mark.
+  ({String? cat, GMark? mark}) shownAt(AppState app, int i) {
+    final e = expressionsAt(app, i);
+    if (e.isNotEmpty) return (cat: e.first.expr.cat, mark: null);
+    final order = _catOrder;
     if (!app.enabledCats.any(grammarCatIds.contains)) return (cat: null, mark: null);
     GMark? g;
     for (final m in grammar(app)) {
@@ -64,7 +88,7 @@ ParaAnalysis analyze(AppState app, String text) {
   final c = _cache[text];
   if (c != null) return c;
   final toks = tokenize(text);
-  final a = ParaAnalysis(text, toks, app.dict.matcher.match(toks));
+  final a = ParaAnalysis(text, toks, app.dict.matcher.match(toks, text: text));
   if (_cache.length > 3000) _cache.clear();
   _cache[text] = a;
   return a;

@@ -9,11 +9,13 @@ import '../tts/voice_ui.dart';
 import 'expr_sheet.dart';
 import 'grammar_mark_sheet.dart';
 import 'paragraph_view.dart';
+import 'phrase_choice.dart';
 import 'sentence_sheet.dart';
 import 'reading_sheet.dart';
 import 'theme.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
+import '../nlp/text.dart' as nlp;
 
 class ReaderPage extends StatefulWidget {
   final AppState app;
@@ -193,15 +195,28 @@ class _ReaderPageState extends State<ReaderPage> {
   Future<void> _openWord(Para p, ParaAnalysis a, int i) async {
     if (!mounted) return;
     final ctx = buildContext(app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
-    // A tap anywhere on an underlined multi-word expression opens the whole expression.
-    final shown = a.matches.where((m) => m.tokens.contains(i) && m.tokens.length > 1 && app.enabledCats.contains(m.expr.cat)).toList()..sort((x, y) => y.tokens.length.compareTo(x.tokens.length));
-    if (shown.isNotEmpty) {
-      final m = shown.first;
-      await showExprSheet(context, app, m.expr, ctx, [for (final t in m.tokens) a.tokens[t].text]);
+    // The expression the tap belongs to (the same one the underline shows).
+    final multi = a.expressionsAt(app, i).where((m) => m.tokens.length > 1).toList();
+    if (multi.isEmpty) {
+      await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
       if (mounted) setState(() {});
       return;
     }
-    await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
+    var chosen = multi.first;
+    final overlapping = multi.any((m) => m.tokens.join(',') != chosen.tokens.join(','));
+    if (overlapping) {
+      // Expressions that share the word ("make up" / "make up one's mind"):
+      // the reader asks which one is meant, and allows the single word.
+      final pick = await showPhraseChoice(context, [for (final m in multi) nlp.displayPhrase(m.expr.phrase)], a.tokens[i].text);
+      if (!mounted || pick == null) return;
+      if (pick < 0) {
+        await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
+        if (mounted) setState(() {});
+        return;
+      }
+      chosen = multi[pick];
+    }
+    await showExprSheet(context, app, chosen.expr, ctx, [for (final t in chosen.tokens) a.tokens[t].text]);
     if (mounted) setState(() {});
   }
 

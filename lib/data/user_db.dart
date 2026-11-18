@@ -89,7 +89,16 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS missing_tr(lemma TEXT, syn INTEGER, gloss TEXT, reported INTEGER DEFAULT 0,
         PRIMARY KEY(lemma, syn));
       CREATE TABLE IF NOT EXISTS ctx_ai(lemma TEXT, sentence TEXT, tr TEXT, PRIMARY KEY(lemma, sentence));
+      CREATE TABLE IF NOT EXISTS sense_feedback(id INTEGER PRIMARY KEY, created INTEGER, word TEXT, sentence TEXT,
+        sense_id TEXT, shown_tr TEXT, confidence TEXT, dict_version TEXT, engine_version TEXT, book TEXT);
+      CREATE TABLE IF NOT EXISTS ai_meaning(id INTEGER PRIMARY KEY, created INTEGER, phrase TEXT, cat TEXT, lemma TEXT,
+        sentence TEXT, tr TEXT, model TEXT, status TEXT DEFAULT 'draft', dict_version TEXT, engine_version TEXT,
+        UNIQUE(sentence, phrase, cat));
+      CREATE TABLE IF NOT EXISTS sense_help(word TEXT, sentence TEXT, created INTEGER, PRIMARY KEY(word, sentence));
     ''');
+    // Older databases have no withdrawn flag on the reports: add it, keep every row.
+    final fb = u.db.select('PRAGMA table_info(sense_feedback)').map((r) => r['name']).toSet();
+    if (!fb.contains('withdrawn')) u.db.execute('ALTER TABLE sense_feedback ADD COLUMN withdrawn INTEGER DEFAULT 0');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
     if (!cols.contains('source')) u.db.execute('ALTER TABLE books ADD COLUMN source TEXT');
@@ -116,6 +125,76 @@ class UserDb {
 
   void setContextAi(String lemma, String sentence, String tr) =>
       db.execute('INSERT OR REPLACE INTO ctx_ai(lemma, sentence, tr) VALUES (?,?,?)', [lemma, sentence, tr]);
+
+  // ---- "wrong meaning" reports on the meaning chosen for a sentence. Kept
+  // apart from everything else: adding or exporting them never touches the
+  // word list, the reviews or the reading progress.
+  /// Records a "wrong meaning" report and returns its id. A report for the same
+  /// word in the same sentence that is still active is not added twice.
+  int addSenseFeedback({required String word, required String sentence, String? senseId, String? shownTr,
+      String? confidence, required String dictVersion, required String engineVersion, String? book}) {
+    final active = activeSenseFeedbackId(word, sentence);
+    if (active != null) return active;
+    db.execute(
+        'INSERT INTO sense_feedback(created, word, sentence, sense_id, shown_tr, confidence, dict_version, engine_version, book, withdrawn) '
+        'VALUES (?,?,?,?,?,?,?,?,?,0)',
+        [DateTime.now().millisecondsSinceEpoch, word, sentence, senseId, shownTr, confidence, dictVersion, engineVersion, book]);
+    return db.select('SELECT last_insert_rowid() AS id').first['id'] as int;
+  }
+
+  /// The active (not withdrawn) report for this word and sentence, if any.
+  int? activeSenseFeedbackId(String word, String sentence) {
+    final r = db.select('SELECT id FROM sense_feedback WHERE word=? AND sentence=? AND withdrawn=0 ORDER BY id DESC LIMIT 1',
+        [word, sentence]);
+    return r.isEmpty ? null : r.first['id'] as int;
+  }
+
+  /// Takes a report back: the row stays (the export shows it as withdrawn).
+  void withdrawSenseFeedback(int id) => db.execute('UPDATE sense_feedback SET withdrawn=1 WHERE id=?', [id]);
+
+  int senseFeedbackCount() => db.select('SELECT COUNT(*) AS n FROM sense_feedback').first['n'] as int;
+
+  // ---- "Anlamı anlamadım": the learner asked for the simple explanation (not a wrong report)
+  bool senseHelpShown(String word, String sentence) =>
+      db.select('SELECT 1 FROM sense_help WHERE word=? AND sentence=?', [word, sentence]).isNotEmpty;
+
+  void markSenseHelp(String word, String sentence) => db.execute(
+      'INSERT OR IGNORE INTO sense_help(word, sentence, created) VALUES (?,?,?)', [word, sentence, DateTime.now().millisecondsSinceEpoch]);
+
+  // ---- AI meanings kept on the device, per sentence. They are drafts until checked.
+  /// The saved AI draft for this phrase in this sentence, unless it was flagged as wrong.
+  String? aiMeaning(String sentence, String phrase, String cat) {
+    final r = db.select("SELECT tr FROM ai_meaning WHERE sentence=? AND phrase=? AND cat=? AND status='draft'", [sentence, phrase, cat]);
+    return r.isEmpty ? null : r.first['tr'] as String;
+  }
+
+  void saveAiMeaning({required String sentence, required String phrase, required String cat, required String lemma,
+      required String tr, String? model, required String dictVersion, required String engineVersion}) {
+    if (tr.trim().isEmpty) return; // an empty answer is never kept as a meaning
+    db.execute(
+        'INSERT OR REPLACE INTO ai_meaning(created, phrase, cat, lemma, sentence, tr, model, status, dict_version, engine_version) '
+        "VALUES (?,?,?,?,?,?,?, 'draft', ?, ?)",
+        [DateTime.now().millisecondsSinceEpoch, phrase, cat, lemma, sentence, tr.trim(), model, dictVersion, engineVersion]);
+  }
+
+  /// A word reported as wrong: its AI drafts in that sentence are no longer offered.
+  void flagAiMeanings(String lemma, String sentence) =>
+      db.execute("UPDATE ai_meaning SET status='flagged' WHERE lemma=? AND sentence=?", [lemma, sentence]);
+
+  /// All reports as tab-separated text with a header line, for quality checks.
+  String senseFeedbackTsv() {
+    String clean(Object? v) => '${v ?? ''}'.replaceAll(RegExp(r'[\t\r\n]+'), ' ');
+    final out = StringBuffer('time\tword\tsentence\tsense_id\tshown_tr\tconfidence\tdict_version\tengine_version\tbook\twithdrawn\n');
+    for (final r in db.select('SELECT * FROM sense_feedback ORDER BY id')) {
+      out.writeln([
+        DateTime.fromMillisecondsSinceEpoch(r['created'] as int).toIso8601String(),
+        for (final k in ['word', 'sentence', 'sense_id', 'shown_tr', 'confidence', 'dict_version', 'engine_version', 'book']) clean(r[k]),
+        // A withdrawn report is not an active error; the export says so.
+        (r['withdrawn'] == 1 ? 'geri alındı' : 'aktif'),
+      ].join('\t'));
+    }
+    return out.toString();
+  }
 
   // ---- words the dictionary has no exact Turkish for (reported to the developer)
   void addMissing(String lemma, int? syn, String? gloss) => db.execute(
