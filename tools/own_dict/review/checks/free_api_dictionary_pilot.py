@@ -44,7 +44,7 @@ def choose_gemini_model(key):
     models = [m["name"].split("/")[-1] for m in data.get("models", [])
               if "generateContent" in m.get("supportedGenerationMethods", [])]
     candidates = ([preferred] if preferred else []) + [
-        "gemini-2.5-flash-lite", "gemini-2.5-flash", "gemini-2.0-flash-lite"]
+        "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.6-flash"]
     for name in candidates:
         if name and name in models:
             print("Gemini model selected: " + name)
