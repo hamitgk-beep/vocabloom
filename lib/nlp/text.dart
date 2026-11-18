@@ -201,7 +201,45 @@ class PhraseMatcher {
     return idx;
   }
 
-  List<Match> match(List<Token> toks) {
+  /// Particles that can stand after the object of a phrasal verb
+  /// ("turn the light off", "look the word up").
+  static const _sepParticles = {'up', 'down', 'off', 'out', 'away', 'back', 'on', 'over', 'in', 'around', 'about'};
+
+  /// Words that may follow the particle when it closes the clause
+  /// ("turn the light off and leave").
+  static const _afterParticle = {'and', 'but', 'or', 'then', 'again', 'now', 'too', 'quickly', 'completely', 'first'};
+
+  /// A two-word phrasal verb split by a short noun object: verb at [i], a
+  /// determiner or possessive at i+1, at most two more words, then the
+  /// particle, which must end the clause (end of text, punctuation, or a word
+  /// like "and"). "put the book on the table" is not "put on": "on" is
+  /// followed by its own object there. Needs [text] to see punctuation.
+  void _separableNoun(List<Token> toks, int i, String text, List<Match> out) {
+    if (i + 2 >= toks.length || !_det.contains(toks[i + 1].lower) || _objPron.contains(toks[i + 1].lower)) return;
+    final lemmas = {toks[i].lower, ...lem.lemmas(toks[i].lower)};
+    for (var k = i + 2; k < toks.length && k <= i + 4; k++) {
+      final p = toks[k].lower;
+      if (!_sepParticles.contains(p)) {
+        if (stopWords.contains(p)) return; // "the book on the table", "the dog that …"
+        continue;
+      }
+      if (k == i + 2) return; // "the up": the object needs a noun
+      final closes = k + 1 >= toks.length ||
+          RegExp(r'[.,;:!?)"”]').hasMatch(text.substring(toks[k].end, toks[k + 1].start)) ||
+          _afterParticle.contains(toks[k + 1].lower);
+      if (!closes) return;
+      for (final l in lemmas) {
+        for (final e in _byFirst[l] ?? const <Expr>[]) {
+          if (e.cat == 'phrasal_verbs' && e.pattern.length == 2 && e.pattern[1] == p) out.add(Match(e, [i, k]));
+        }
+      }
+      return;
+    }
+  }
+
+  /// All expressions in a tokenized paragraph. With [text] (the paragraph the
+  /// tokens come from) phrasal verbs split by a noun object are found too.
+  List<Match> match(List<Token> toks, {String? text}) {
     final out = <Match>[];
     for (var i = 0; i < toks.length; i++) {
       final t = toks[i];
@@ -219,6 +257,7 @@ class PhraseMatcher {
       for (final e in _byForm[t.lower] ?? const <Expr>[]) {
         out.add(Match(e, [i]));
       }
+      if (text != null && (i == 0 || !_det.contains(toks[i - 1].lower))) _separableNoun(toks, i, text, out);
     }
     return out;
   }
