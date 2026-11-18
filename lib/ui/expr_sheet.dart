@@ -12,8 +12,6 @@ import 'tap_text.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
 import 'ai/ai_ask_box.dart';
-import 'context_sense_card.dart';
-import '../nlp/context_sense.dart';
 
 /// Opens the whole expression (phrasal verb, idiom, collocation ...) that the
 /// tapped word belongs to.
@@ -37,9 +35,6 @@ class ExprPanel extends StatefulWidget {
 
 class _ExprPanelState extends State<ExprPanel> {
   List<ExprSense>? senses;
-
-  /// The meaning chosen for the book's sentence.
-  ContextSense? sense;
   bool fromAi = false;
   bool loading = false;
   String? error;
@@ -60,14 +55,6 @@ class _ExprPanelState extends State<ExprPanel> {
       senses = [for (final s in (jsonDecode(js) as List)) ExprSense.fromJson((s as Map).cast<String, dynamic>())];
       fromAi = cached != null;
     }
-    if (widget.ctx != null) sense = ContextSenseCard.resolveExpr(app, widget.ctx!, expr);
-  }
-
-  /// Index of the built-in sense the card chose ("ex:phrase|cat#1" → 1).
-  int? get _chosen {
-    final id = sense?.best?.id;
-    if (sense?.shown != true || fromAi || id == null || !id.startsWith('ex:${expr.phrase}|${expr.cat}#')) return null;
-    return int.tryParse(id.substring(id.lastIndexOf('#') + 1));
   }
 
   Future<void> _load() async {
@@ -153,17 +140,9 @@ class _ExprPanelState extends State<ExprPanel> {
         ),
         LangToggles(app: app, onChanged: () => setState(() {})),
       ]),
-      if (widget.ctx != null && sense != null)
-        ContextSenseCard(
-          key: ValueKey('ctx-e-${expr.phrase}-${widget.ctx!.sentence.hashCode}'),
-          app: app,
-          result: sense!,
-          ctx: widget.ctx!,
-          highlight: widget.words.map((w) => w.toLowerCase()).toSet(),
-        ),
-      if (widget.ctx != null && (sense == null || (tr && widget.ctx!.sentenceTr != null))) ...[
+      if (widget.ctx != null) ...[
         section(L('Bu cümlede', 'In this sentence')),
-        if (sense == null) SentenceText(widget.ctx!.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
+        SentenceText(widget.ctx!.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
         if (tr && widget.ctx!.sentenceTr != null) ...[
           const SizedBox(height: 6),
           Text(widget.ctx!.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
@@ -180,20 +159,17 @@ class _ExprPanelState extends State<ExprPanel> {
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             border: Border(left: BorderSide(color: color, width: 4)),
-            color: s.inSentence || _chosen == i ? c.color.withValues(alpha: 0.12) : theme.colorScheme.surfaceContainerLow,
+            color: s.inSentence ? c.color.withValues(alpha: 0.12) : theme.colorScheme.surfaceContainerLow,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('${i + 1}. ${en ? s.titleEn : s.titleTr}',
                 style: (en ? enStyle(theme) : trStyle(theme)).copyWith(fontWeight: FontWeight.w700, fontSize: 16)),
             if (en && tr) Text(s.titleTr, style: trStyle(theme, const TextStyle(fontSize: 16))),
-            if (s.inSentence || _chosen == i)
+            if (s.inSentence)
               Padding(
                 padding: const EdgeInsets.only(top: 2),
-                child: Text(
-                    !s.inSentence && sense?.confidence == SenseConfidence.likely
-                        ? L('Bu cümledeki olası anlamı', 'Possible meaning in this sentence')
-                        : L('Bu cümledeki anlamı', 'Meaning in this sentence'),
+                child: Text(L('Bu cümledeki anlamı', 'Meaning in this sentence'),
                     style: theme.textTheme.labelSmall?.copyWith(color: color)),
               ),
             const SizedBox(height: 4),

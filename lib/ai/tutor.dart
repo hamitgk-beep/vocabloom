@@ -260,41 +260,6 @@ class Tutor {
     return ai.generate(_wordSystem(), [('user', user)], maxTokens: 260, temperature: 0.2);
   }
 
-  /// "Yapay zekâya sor" on the meaning chosen for a sentence: what the word
-  /// or expression means here and why, the sentence in Turkish, a grammar
-  /// note when needed and how it differs from the word's other meanings.
-  /// The dictionary meanings go with the request, so the answer stays close
-  /// to them; the answer is never written into the dictionary.
-  Stream<String> contextMeaning(String word,
-      {required String sentence, String? prev, String? next, List<String> meanings = const [], String? chosen, String? level}) {
-    final user = 'İfade: $word\n'
-        'Cümle: "$sentence"\n'
-        '${prev == null || prev.isEmpty ? '' : 'Önceki cümle: "$prev"\n'}'
-        '${next == null || next.isEmpty ? '' : 'Sonraki cümle: "$next"\n'}'
-        '${meanings.isEmpty ? '' : 'Sözlükteki anlamları:\n${meanings.map((m) => '- $m').join('\n')}\n'}'
-        '${chosen == null ? '' : 'Uygulamanın bu cümle için seçtiği anlam (yanlış olabilir): $chosen\n'}'
-        '${level == null ? '' : 'Öğrencinin seviyesi: $level\n'}'
-        '\nBu cümlede ne anlama geldiğini açıkla.';
-    return ai.generate(_contextSystem(), [('user', user)], maxTokens: 420, temperature: 0.2);
-  }
-
-  static String _contextSystem() => '$_teacher\n\n'
-      'Görev: Öğrenci kitapta okuduğu cümledeki bir kelimenin ya da kalıbın o cümledeki anlamını soruyor. Yanıtın şu '
-      'bölümlerden oluşur: **Bu cümlede:** (bu cümledeki Türkçe anlamı, 1-4 kelime), **Neden:** (cümlede bu anlama neyin '
-      'işaret ettiği, 1-2 cümle), **Çeviri:** (cümlenin doğal Türkçe çevirisi), gerekirse **Dil bilgisi:** (1 madde), '
-      '**Diğer anlamlar:** (en yaygın 1-3 başka anlamıyla kısa karşılaştırma). Sözlükteki anlamlardan biri uyuyorsa onu '
-      'kullan; uygulamanın seçtiği anlam yanlışsa bunu açıkça söyle. Emin olmadığın bir anlam uydurma.\n\n'
-      'Örnek:\n'
-      'İfade: run through\n'
-      'Cümle: "Cracks run through the wall."\n'
-      'Örnek yanıt:\n'
-      '**Bu cümlede:** içinden geçmek, boyunca uzanmak\n'
-      '**Neden:** Özne bir şey (çatlaklar); "run through" burada hareket değil, duvarın içinde uzanan bir çizgiyi anlatır.\n'
-      '**Çeviri:** Duvarın içinden çatlaklar geçiyor.\n'
-      '**Diğer anlamlar:**\n'
-      '- run through the plan: planı gözden geçirmek\n'
-      '- run through the scene: sahneyi prova etmek';
-
   static String _wordSystem() => '$_teacher\n\n'
       'Görev: Öğrenci okuduğu İngilizce metinde bir kelimeyi bilmiyor. Kelimeyi Türkçe olarak kısaca (en fazla 80 '
       'kelime) açıkla. Yanıtın şu bölümlerden oluşur: **Türkçesi:** (1-3 Türkçe karşılık, bu cümledeki anlamı önce), '

@@ -21,13 +21,6 @@ import xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.dirname(__file__))
 from categories import CATEGORIES  # noqa: E402
 import expr_fixes  # noqa: E402
-from qa.audit_dict import english_words  # noqa: E402
-
-
-def turkish_ok(tr):
-    """A model's short Turkish meaning is used only when no English slipped into it
-    ("tek gecelik ilişki, pump and dump"); the dictionary audit counts those as bugs."""
-    return bool(tr) and not english_words(tr)
 
 RAW = sys.argv[1]
 OUT = sys.argv[2]
@@ -473,7 +466,7 @@ def load_exd(db, exprs):
         seen.add(key)
         db.execute('INSERT OR REPLACE INTO exd VALUES (?,?,?)', (j['p'], j['c'], json.dumps(j['s'], ensure_ascii=False)))
         n += 1
-        if not exprs[key][0] and turkish_ok(j.get('tr')):
+        if not exprs[key][0] and j.get('tr'):
             exprs[key][0] = j['tr']
             filled += 1
     print('exd senses', n, 'turkish meanings filled', filled)
@@ -609,8 +602,7 @@ def load_gloss(db):
         if j is None:
             continue
         seen.add(key)
-        tr = j.get('tr') if turkish_ok(j.get('tr')) else None
-        db.execute("UPDATE expr SET tr=? WHERE phrase=? AND cat=? AND (tr IS NULL OR tr='')", (tr, *key))
+        db.execute("UPDATE expr SET tr=? WHERE phrase=? AND cat=? AND (tr IS NULL OR tr='')", (j.get('tr') or None, *key))
         filled += db.execute('UPDATE expr SET entr=?, extr=? WHERE phrase=? AND cat=?',
                              (j.get('d') or None, j.get('x') or None, *key)).rowcount
     print('short Turkish meanings', filled)

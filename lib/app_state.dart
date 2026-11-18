@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'data/dict_db.dart';
-import 'nlp/context_sense.dart';
 import 'data/review.dart';
 import 'data/user_db.dart';
 import 'ai/local_ai.dart';
@@ -261,9 +260,6 @@ class AppState extends ChangeNotifier {
   int _wordsVersion = 0;
   late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
   late final ReviewStore review = ReviewStore(user);
-
-  /// Chooses the meaning a word has in the sentence being read (offline).
-  late final SenseEngine senses = SenseEngine(dict);
 
   /// Offline AI tutor ("Yapay Zekâ" section). Set in main() before the UI starts.
   late final LocalAi localAi;

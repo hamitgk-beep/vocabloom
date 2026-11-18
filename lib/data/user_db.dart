@@ -89,8 +89,6 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS missing_tr(lemma TEXT, syn INTEGER, gloss TEXT, reported INTEGER DEFAULT 0,
         PRIMARY KEY(lemma, syn));
       CREATE TABLE IF NOT EXISTS ctx_ai(lemma TEXT, sentence TEXT, tr TEXT, PRIMARY KEY(lemma, sentence));
-      CREATE TABLE IF NOT EXISTS sense_feedback(id INTEGER PRIMARY KEY, created INTEGER, word TEXT, sentence TEXT,
-        sense_id TEXT, shown_tr TEXT, confidence TEXT, dict_version TEXT, engine_version TEXT, book TEXT);
     ''');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
@@ -118,31 +116,6 @@ class UserDb {
 
   void setContextAi(String lemma, String sentence, String tr) =>
       db.execute('INSERT OR REPLACE INTO ctx_ai(lemma, sentence, tr) VALUES (?,?,?)', [lemma, sentence, tr]);
-
-  // ---- "wrong meaning" reports on the meaning chosen for a sentence. Kept
-  // apart from everything else: adding or exporting them never touches the
-  // word list, the reviews or the reading progress.
-  void addSenseFeedback({required String word, required String sentence, String? senseId, String? shownTr,
-          String? confidence, required String dictVersion, required String engineVersion, String? book}) =>
-      db.execute(
-          'INSERT INTO sense_feedback(created, word, sentence, sense_id, shown_tr, confidence, dict_version, engine_version, book) '
-          'VALUES (?,?,?,?,?,?,?,?,?)',
-          [DateTime.now().millisecondsSinceEpoch, word, sentence, senseId, shownTr, confidence, dictVersion, engineVersion, book]);
-
-  int senseFeedbackCount() => db.select('SELECT COUNT(*) AS n FROM sense_feedback').first['n'] as int;
-
-  /// All reports as tab-separated text with a header line, for quality checks.
-  String senseFeedbackTsv() {
-    String clean(Object? v) => '${v ?? ''}'.replaceAll(RegExp(r'[\t\r\n]+'), ' ');
-    final out = StringBuffer('time\tword\tsentence\tsense_id\tshown_tr\tconfidence\tdict_version\tengine_version\tbook\n');
-    for (final r in db.select('SELECT * FROM sense_feedback ORDER BY id')) {
-      out.writeln([
-        DateTime.fromMillisecondsSinceEpoch(r['created'] as int).toIso8601String(),
-        for (final k in ['word', 'sentence', 'sense_id', 'shown_tr', 'confidence', 'dict_version', 'engine_version', 'book']) clean(r[k]),
-      ].join('\t'));
-    }
-    return out.toString();
-  }
 
   // ---- words the dictionary has no exact Turkish for (reported to the developer)
   void addMissing(String lemma, int? syn, String? gloss) => db.execute(
