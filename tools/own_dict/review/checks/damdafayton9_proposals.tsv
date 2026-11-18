@@ -1,0 +1,10 @@
+kelime	durum	önerilen_hedef	önerilen_anlam	not	silme
+accouterments	geçerli yazım değil (ana yazım accoutrements)	accoutrements	donatı, teçhizat, gereçler	yeni başlık olacak; mevcut kayıt silinmeyecek. Anlamı insan incelemesi gerek	yok
+capapie	bitişik yazım hatası, geçerli biçim cap-a-pie	cap-a-pie	baştan ayağa, tepeden tırnağa, tam donanımlı	WordNet'te cap-a-pie var; yeni başlık olur, mevcut kayıt silinmez	yok
+dieselise	İngiliz yazımı, dieselize ile aynı kelime	dieselize	(mevcut dieselize anlamı)	yeni kayıt açılmaz; dieselize kaydının takma adı olur	yok
+monar'chical	kesme işareti hatası, monarchical ile aynı	monarchical	(mevcut monarchical anlamı)	yeni kayıt açılmaz; monarchical kaydının takma adı olur	yok
+nonagression	yazım hatası, nonaggression ile aynı	nonaggression	(mevcut nonaggression anlamı)	nonaggression zaten ft ve own_word'de var; yeni kayıt açılmaz	yok
+babunbaby	geçerli İngilizce kelime olduğu doğrulanamadı	-	-	WordNet'te yok; anlamı belirsiz. Karar: kaldırmak mı, yazım düzeltmesi mi	yok
+diagnotor	geçerli kelime olduğu doğrulanamadı	belirsiz (diagnostor değil)	-	WordNet'te yok; kaynak sözlükte de doğrulanmalı	yok
+rindish	geçerli kelime olduğu doğrulanamadı	-	-	WordNet'te yok; belirsiz	yok
+ringster	geçerli kelime olduğu doğrulanamadı (argo olabilir)	-	-	WordNet'te yok; argo mu, yazım mı belirsiz	yok
