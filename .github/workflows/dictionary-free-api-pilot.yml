@@ -1,0 +1,38 @@
+name: Vocabloom dictionary draft pilot (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: "Use one provider only; no automatic paid fallback"
+        required: true
+        type: choice
+        options: [gemini, groq]
+        default: gemini
+      offset:
+        description: "Index in 26 missing words (0, 10, 20)"
+        required: true
+        default: "0"
+      count:
+        description: "Maximum 10 words per run"
+        required: true
+        default: "10"
+permissions:
+  contents: read
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate original Turkish draft meanings
+        env:
+          GEMINI_API_KEY_FOR_DICTIONARY: ${{ secrets.GEMINI_API_KEY_FOR_DICTIONARY }}
+          GROQ_API_KEY_FOR_DICTIONARY: ${{ secrets.GROQ_API_KEY_FOR_DICTIONARY }}
+        run: python3 tools/own_dict/review/checks/free_api_dictionary_pilot.py --provider "${{ inputs.provider }}" --offset "${{ inputs.offset }}" --count "${{ inputs.count }}"
+      - name: Archive unreviewed drafts (never modify DB)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dictionary-drafts-${{ inputs.provider }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/vocabloom_dictionary_pilot/
+          if-no-files-found: warn
