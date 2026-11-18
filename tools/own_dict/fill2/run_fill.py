@@ -219,7 +219,11 @@ def main():
                 if raw is None:
                     raise RuntimeError("transient errors after retries")
                 obj = json.loads(raw)
-                by = {x.get("w", "").lower(): x for x in obj.get("items", []) if isinstance(x, dict)}
+                if isinstance(obj, list):  # some models return the bare list
+                    obj = {"items": obj}
+                if not isinstance(obj, dict):
+                    raise ValueError("unexpected JSON shape")
+                by = {str(x.get("w", "")).lower(): x for x in obj.get("items", []) if isinstance(x, dict)}
                 for i in part:
                     x = by.get(i["text"].lower())
                     if not x or not isinstance(x.get("senses"), list) or not x["senses"]:
