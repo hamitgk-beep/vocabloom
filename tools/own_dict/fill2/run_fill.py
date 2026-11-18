@@ -40,10 +40,16 @@ class Fatal(Exception):
     pass
 
 
+class Transient(Exception):
+    pass
+
+
 def http_error(e):
     code = e.code
     if code == 429:
         raise Quota("HTTP 429")
+    if code in (500, 502, 503, 504):
+        raise Transient("HTTP %s" % code)
     raise Fatal("HTTP %s" % code)
 
 
@@ -117,7 +123,12 @@ def qc(rec, item):
         raw_old = ", ".join(json.loads(raw_old))
     old = toks(raw_old)
     if new and old and new == old:
-        flags.append(("high", "copy_risk_exact_match"))
+        if len(new) >= 2:
+            flags.append(("high", "copy_risk_exact_match"))
+        else:
+            flags.append(("info", "same_single_gloss_as_existing"))
+    elif len(new) >= 3 and old and len(new & old) / len(new | old) >= 0.8:
+        flags.append(("medium", "copy_risk_near_match"))
     return flags
 
 
@@ -160,7 +171,16 @@ def main():
                                    (", " + i["cat"]) if i["cat"] else "") for n, i in enumerate(part))
             stats["requests"] += 1
             try:
-                raw = ask(providers[0], state, prompt)
+                raw = None
+                for wait in (0, 15, 45, 90):
+                    try:
+                        time.sleep(wait)
+                        raw = ask(providers[0], state, prompt)
+                        break
+                    except (Transient, urllib.error.URLError, TimeoutError):
+                        continue
+                if raw is None:
+                    raise RuntimeError("transient errors after retries")
                 obj = json.loads(raw)
                 by = {x.get("w", "").lower(): x for x in obj.get("items", []) if isinstance(x, dict)}
                 for i in part:
