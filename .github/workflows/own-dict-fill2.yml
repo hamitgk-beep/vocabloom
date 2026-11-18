@@ -45,6 +45,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd "$GITHUB_WORKSPACE"
-          git add -A tools/own_dict/fill2/out
-          git commit -m "Own dictionary: free-tier fill run results [skip ci]" || exit 0
-          for i in 1 2 3 4; do git push && break; git pull --rebase -q; sleep 5; done
+          # Keep this run's output, then rebuild on the branch's latest state and merge (never overwrite).
+          mkdir -p "$RUNNER_TEMP/run_out"
+          cp tools/own_dict/fill2/out/* "$RUNNER_TEMP/run_out/" || true
+          for i in 1 2 3 4 5; do
+            git fetch -q origin "$GITHUB_REF_NAME"
+            git reset -q --hard "origin/$GITHUB_REF_NAME"
+            python3 tools/own_dict/fill2/merge_run.py "$RUNNER_TEMP/run_out" tools/own_dict/fill2/out || break
+            git add -A tools/own_dict/fill2/out
+            git commit -q -m "Own dictionary: free-tier fill run results [skip ci]" || break
+            git push -q origin "HEAD:$GITHUB_REF_NAME" && break
+            sleep $((i * 5))
+          done

@@ -279,6 +279,7 @@ def main():
                     stats["stop"] = "fatal"; break
                 pos += len(part)  # skip this batch, it stays unfinished and is retried on the next run only if key missing
     stats.update({"paid_usage": {"input_tokens": cost["in"], "output_tokens": cost["out"], "usd_estimate": round(cost["usd"], 4)},
+                  "run_usd": round(cost["usd"] - cost["base"], 4),
                   "items_total": len(items), "items_done_total": len(done) + stats["ok_items"],
                   "seconds": round(time.time() - t0), "pending_after_run": len(todo) - pos})
     spend_file.write_text(json.dumps({"usd": round(cost["usd"], 4)}), encoding="utf-8")
