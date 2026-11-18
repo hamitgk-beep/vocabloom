@@ -6,3 +6,4 @@ haiku run (max_tokens 8000) 2026-11-18T09:59:14Z
 haiku run (cross-run cap) 2026-11-18T11:39:25Z
 haiku run (continue, spend carried) 2026-11-18T13:33:03Z
 haiku run (all remaining, budget 10) 2026-11-18T14:24:15Z
+haiku run (budget 8.5) 2026-11-18T14:31:38Z
