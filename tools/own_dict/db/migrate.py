@@ -2,7 +2,8 @@
 
 usage: python3 tools/own_dict/db/migrate.py SOURCE_DB OUT_DB ENTRIES.jsonl.gz
 
-  own_word(word PRIMARY KEY, senses JSON, status, reviewed, action, source, note)
+  own_word(word PRIMARY KEY, senses JSON, keep_tr JSON, status, reviewed, action, source, note)
+  keep_tr: Turkish meanings that stay (the Wiktionary part); the app shows keep_tr first, then the senses.
   own_expr(phrase, cat, senses JSON, status, reviewed, action, source, note, PRIMARY KEY(phrase, cat))
   od: view with the (word, json) shape that the context-sense reader expects, reading own_word.
 
@@ -16,7 +17,7 @@ shutil.copyfile(src, out)
 db = sqlite3.connect(out)
 db.executescript('''
 CREATE TABLE IF NOT EXISTS own_word(
-  word TEXT PRIMARY KEY, senses TEXT NOT NULL, status TEXT NOT NULL, reviewed INTEGER NOT NULL DEFAULT 0,
+  word TEXT PRIMARY KEY, senses TEXT NOT NULL, keep_tr TEXT NOT NULL DEFAULT '[]', status TEXT NOT NULL, reviewed INTEGER NOT NULL DEFAULT 0,
   action TEXT, source TEXT, note TEXT);
 CREATE TABLE IF NOT EXISTS own_expr(
   phrase TEXT NOT NULL, cat TEXT NOT NULL DEFAULT '', senses TEXT NOT NULL, status TEXT NOT NULL,
@@ -33,8 +34,9 @@ with gzip.open(entries, 'rt', encoding='utf-8') as f:
             continue
         senses = json.dumps(r['senses'], ensure_ascii=False)
         if r['kind'] == 'word':
-            cur = db.execute('INSERT OR IGNORE INTO own_word VALUES (?,?,?,?,?,?,?)',
-                             (r['w'], senses, r['status'], 0, r.get('action'), r.get('source'), r.get('note')))
+            cur = db.execute('INSERT OR IGNORE INTO own_word VALUES (?,?,?,?,?,?,?,?)',
+                             (r['w'], senses, json.dumps(r.get('keep_tr', []), ensure_ascii=False), r['status'], 0,
+                              r.get('action'), r.get('source'), r.get('note')))
             n_w += cur.rowcount
         else:
             cur = db.execute('INSERT OR IGNORE INTO own_expr VALUES (?,?,?,?,?,?,?,?)',

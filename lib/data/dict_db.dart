@@ -122,12 +122,14 @@ class DictDb {
       .isNotEmpty;
 
   WordInfo lookup(String lemma) {
-    // Own meanings first; if there is no own row for this word, fall back to the current table (ft).
+    // Own meanings first (keep_tr = the part that stays, then the new senses); if there is no own row
+    // for this word, fall back to the current table (ft).
     var tr = <String>[];
     if (useOwnDictionary && _hasOwnWord) {
-      final own = db.select('SELECT senses FROM own_word WHERE word = ?', [lemma]);
+      final own = db.select('SELECT senses, keep_tr FROM own_word WHERE word = ?', [lemma]);
       if (own.isNotEmpty) {
         tr = [
+          ...(jsonDecode(own.first.columnAt(1) as String) as List).cast<String>(),
           for (final s in jsonDecode(own.first.columnAt(0) as String) as List)
             (s as Map)['tr'] as String,
         ];
