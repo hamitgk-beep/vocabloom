@@ -1,17 +1,17 @@
 {
- "requests": 11,
- "ok_items": 60,
+ "requests": 41,
+ "ok_items": 314,
  "failed_requests": 5,
  "quota_switch": [],
  "stop": "fatal",
- "last_error": "JSONDecodeError: Extra data: line 1 column 1880 (char 1879)",
+ "last_error": "JSONDecodeError: Unterminated string starting at: line 1 column 5026 (char 5025)",
  "paid_usage": {
-  "input_tokens": 0,
-  "output_tokens": 0,
-  "usd_estimate": 0.0
+  "input_tokens": 19827,
+  "output_tokens": 132156,
+  "usd_estimate": 0.0681
  },
  "items_total": 15137,
- "items_done_total": 150,
- "seconds": 158,
- "pending_after_run": 14947
+ "items_done_total": 464,
+ "seconds": 623,
+ "pending_after_run": 14587
 }
