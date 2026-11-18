@@ -71,6 +71,21 @@ def gemini_model(key):
 HAIKU_PRICE = (0.10, 0.50)  # USD per million input / output tokens
 
 
+def parse_model_json(raw):
+    """Return the first JSON value in a model reply. Tolerates code fences and trailing text."""
+    txt = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", raw.strip())
+    m = re.search(r"[\[{]", txt)
+    if not m:
+        raise ValueError("no JSON in model reply")
+    obj, _ = json.JSONDecoder().raw_decode(txt, m.start())
+    return obj
+
+
+# Estimated Haiku list prices per token (USD). The cap is enforced on these estimates.
+PRICE_IN = 0.10 / 1_000_000
+PRICE_OUT = 0.50 / 1_000_000
+
+
 def ask_haiku(state, batch_prompt):
     key = os.environ.get("ANTHROPIC_API_KEY", "")
     if not key:
@@ -218,7 +233,12 @@ def main():
                         continue
                 if raw is None:
                     raise RuntimeError("transient errors after retries")
-                obj = json.loads(raw)
+                u = state.pop("usage", None) or {}
+                if u:
+                    cost["in"] += int(u.get("input_tokens", 0) or 0)
+                    cost["out"] += int(u.get("output_tokens", 0) or 0)
+                    cost["usd"] = cost["in"] * PRICE_IN + cost["out"] * PRICE_OUT
+                obj = parse_model_json(raw)
                 if isinstance(obj, list):  # some models return the bare list
                     obj = {"items": obj}
                 if not isinstance(obj, dict):
