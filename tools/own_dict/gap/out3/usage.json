@@ -1,0 +1,11 @@
+{
+ "model": "claude-haiku-5-5",
+ "effort": "low",
+ "items": 2418,
+ "requests": 242,
+ "input_tokens": 408327,
+ "output_tokens": 525102,
+ "cost_usd": 0.3034,
+ "cost_usd_batch": 0.1517,
+ "seconds": 429
+}
