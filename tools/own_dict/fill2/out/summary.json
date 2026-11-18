@@ -1,0 +1,12 @@
+{
+ "requests": 7,
+ "ok_items": 60,
+ "failed_requests": 1,
+ "quota_switch": [],
+ "stop": "fatal",
+ "last_error": "Fatal: HTTP 503",
+ "items_total": 15137,
+ "items_done_total": 60,
+ "seconds": 17,
+ "pending_after_run": 15077
+}
