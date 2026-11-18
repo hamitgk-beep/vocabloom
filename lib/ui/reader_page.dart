@@ -9,6 +9,7 @@ import '../tts/voice_ui.dart';
 import 'expr_sheet.dart';
 import 'grammar_mark_sheet.dart';
 import 'paragraph_view.dart';
+import 'phrase_choice.dart';
 import 'sentence_sheet.dart';
 import 'reading_sheet.dart';
 import 'theme.dart';
@@ -206,7 +207,7 @@ class _ReaderPageState extends State<ReaderPage> {
     if (overlapping) {
       // Expressions that share the word ("make up" / "make up one's mind"):
       // the reader asks which one is meant, and allows the single word.
-      final pick = await _pickPhrase([for (final m in multi) nlp.displayPhrase(m.expr.phrase)], a.tokens[i].text);
+      final pick = await showPhraseChoice(context, [for (final m in multi) nlp.displayPhrase(m.expr.phrase)], a.tokens[i].text);
       if (!mounted || pick == null) return;
       if (pick < 0) {
         await showWordSheet(context, app, a.tokens[i].text, ctx: ctx);
@@ -218,28 +219,6 @@ class _ReaderPageState extends State<ReaderPage> {
     await showExprSheet(context, app, chosen.expr, ctx, [for (final t in chosen.tokens) a.tokens[t].text]);
     if (mounted) setState(() {});
   }
-
-  /// "Bunu mu demek istedin?": the phrases that share a word, and the word alone (-1).
-  Future<int?> _pickPhrase(List<String> phrases, String word) => showModalBottomSheet<int>(
-        context: context,
-        showDragHandle: true,
-        builder: (c) => SafeArea(
-          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-              child: Text(L('Bunu mu demek istedin?', 'Did you mean?'), style: Theme.of(c).textTheme.titleMedium),
-            ),
-            for (var k = 0; k < phrases.length; k++)
-              ListTile(key: ValueKey('phrase-choice-$k'), title: Text(phrases[k]), onTap: () => Navigator.pop(c, k)),
-            ListTile(
-              key: const ValueKey('phrase-choice-word'),
-              leading: const Icon(Icons.text_fields_rounded),
-              title: Text(L("Sadece '$word' kelimesi", "Only the word '$word'")),
-              onTap: () => Navigator.pop(c, -1),
-            ),
-          ]),
-        ),
-      );
 
   void _onSentence(Para p, ParaAnalysis a, int i) async {
     await showSentenceSheet(context, app, p, a, i, bookId: widget.book.id, bookTitle: widget.book.title);
