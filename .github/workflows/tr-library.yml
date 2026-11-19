@@ -16,7 +16,9 @@ jobs:
         run: |
           set -e
           curl -sSfL -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
-          python3 tools/library_tr/build_library_tr.py tr_full.txt assets/library > tools/library_tr/report.md
+          curl -sSfL -A "python-urllib/3 (library build)" -o trws.xml.bz2 https://dumps.wikimedia.org/trwikisource/latest/trwikisource-latest-pages-articles.xml.bz2
+          ls -la trws.xml.bz2
+          python3 tools/library_tr/build_library_tr.py tr_full.txt assets/library trws.xml.bz2 > tools/library_tr/report.md
           head -5 tools/library_tr/report.md
           ls -la assets/library
       - name: Commit

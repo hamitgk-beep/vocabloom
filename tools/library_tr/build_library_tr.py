@@ -1,6 +1,7 @@
 """Builds the Turkish part of the free library from public-domain texts.
 
-Sources: Turkish Wikisource (tr.wikisource.org). Only authors who died in 1955
+Sources: Turkish Wikisource (tr.wikisource.org), read from its public
+database dump (no requests to the live site). Only authors who died in 1955
 or earlier are taken: in Turkey a work is protected for 70 years after its
 author's death, so their works are in the public domain. Folk tales
 (Nasreddin Hoca) have no author.
@@ -9,7 +10,7 @@ Each short work (a story, tale or anecdote) becomes one story of the library.
 Its level (A2 … C1) is estimated from how common its words are (OpenSubtitles
 word list, FrequencyWords) and how long its sentences are.
 
-  python3 tools/library_tr/build_library_tr.py tr_full.txt assets/library
+  python3 tools/library_tr/build_library_tr.py tr_full.txt assets/library trwikisource-pages-articles.xml.bz2
 
 writes catalog_tr.json and stories_tr.json.gz, and prints a report.
 """
@@ -17,15 +18,11 @@ import gzip
 import json
 import re
 import sys
-import time
 import urllib.parse
-import urllib.request
-from html.parser import HTMLParser
 
-API = 'https://tr.wikisource.org/w/api.php'
-UA = 'LibraryBuilder/1.0 (open-source reading app; python-urllib)'
+DUMP_NOTE = 'trwikisource-latest-pages-articles.xml(.bz2) from dumps.wikimedia.org'
 
-# (name on Wikisource, year of death). Everyone here died in 1955 or earlier.
+# (name on Wikisource, year of death). Only those who died in 1955 or earlier are used.
 AUTHORS = [
     ('Ömer Seyfettin', 1920),
     ('Sait Faik Abasıyanık', 1954),
@@ -39,121 +36,131 @@ AUTHORS = [
     ('Mehmet Rauf', 1931),
     ('Nabizade Nazım', 1893),
     ('Samipaşazade Sezai', 1936),
-    ('Refik Halit Karay', 1965),  # left out below: protected until 2035
     ('Fatma Aliye Topuz', 1936),
     ('Emine Semiye', 1944),
-    ('Musahipzade Celal', 1959),  # left out below
+    ('Yakup Kadri Karaosmanoğlu', 1974),
+    ('Refik Halit Karay', 1965),
+    ('Reşat Nuri Güntekin', 1956),
 ]
 FOLK = ['Nasreddin Hoca']
 LAST_DEATH = 1955
 MIN_WORDS, MAX_WORDS = 120, 9000
-PER_AUTHOR = 40
+PER_AUTHOR = 60
 
 
-def api(**params):
-    params.update(format='json', formatversion='2')
-    url = API + '?' + urllib.parse.urlencode(params)
-    for i in range(4):
+def read_dump(path):
+    """(main pages: title -> wikitext, Page-namespace pages: title -> wikitext)."""
+    import bz2
+    import xml.etree.ElementTree as ET
+    opener = bz2.open if path.endswith('.bz2') else open
+    main, pages = {}, {}
+    ns_page = set()
+    with opener(path, 'rb') as f:
+        title = ns = None
+        for ev, el in ET.iterparse(f, events=('end',)):
+            tag = el.tag.rsplit('}', 1)[-1]
+            if tag == 'namespace':
+                if (el.text or '').strip() in ('Sayfa', 'Page'):
+                    ns_page.add(el.get('key'))
+            elif tag == 'title':
+                title = el.text
+            elif tag == 'ns':
+                ns = el.text
+            elif tag == 'text':
+                text = el.text or ''
+                if ns == '0' and not text.lstrip().lower().startswith('#yönlendir') and not text.lstrip().lower().startswith('#redirect'):
+                    main[title] = text
+                elif ns in ns_page:
+                    pages[title.split(':', 1)[1]] = text
+            elif tag == 'page':
+                el.clear()
+    return main, pages
+
+
+_KEEP = {'center', 'c', 'ortala', 'büyük', 'küçük', 'kalın', 'smaller', 'larger', 'big', 'small', 'sc', 'nowrap', 'ortalı', 'blok ortala'}
+
+
+def _templates(t):
+    # Innermost first; formatting templates keep their text.
+    rx = re.compile(r'\{\{([^{}]*)\}\}')
+    for _ in range(12):
+        def rep(m):
+            parts = m.group(1).split('|')
+            name = parts[0].strip().lower()
+            if name in _KEEP and len(parts) > 1:
+                return parts[-1].split('=', 1)[-1] if '=' in parts[-1] and len(parts[-1].split('=', 1)[0]) < 12 else parts[-1]
+            return ''
+        n = rx.sub(rep, t)
+        if n == t:
+            break
+        t = n
+    return t
+
+
+def header_author(wt):
+    m = re.search(r'\|\s*(?:yazar|author)\s*=\s*((?:\[\[[^\]]*\]\]|[^|}\n])*)', wt, re.I)
+    if not m:
+        return ''
+    a = re.sub(r'\[\[(?:[^|\]]*\|)?([^\]]*)\]\]', r'\1', m.group(1))
+    return a.replace('Yazar:', '').strip()
+
+
+def resolve_pages(wt, pages):
+    def rep(m):
+        attrs = dict(re.findall(r'(\w+)\s*=\s*"?([^"\s/>]+)"?', m.group(0)))
+        idx = attrs.get('index')
+        if not idx:
+            return ''
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': UA})
-            with urllib.request.urlopen(req, timeout=60) as r:
-                data = json.loads(r.read().decode('utf-8'))
-            time.sleep(0.25)
-            return data
-        except Exception as e:  # noqa: BLE001
-            print(f'  retry {i + 1}: {e}', file=sys.stderr)
-            time.sleep(3 * (i + 1))
-    return {}
+            a, b = int(attrs.get('from', 1)), int(attrs.get('to', attrs.get('from', 1)))
+        except ValueError:
+            return ''
+        out = []
+        for n in range(a, min(b, a + 400) + 1):
+            pt = pages.get(f'{idx}/{n}', '')
+            pt = re.sub(r'<noinclude>.*?</noinclude>', '', pt, flags=re.S)
+            out.append(pt)
+        return '\n'.join(out)
+    return re.sub(r'<pages\b[^>]*/?>', rep, wt, flags=re.I)
 
 
-def links_of(title):
-    """Main-namespace pages linked from [title], in page order."""
-    out = []
-    d = api(action='parse', page=title, prop='links', redirects=1)
-    for l in d.get('parse', {}).get('links', []):
-        if l.get('ns') == 0 and l.get('exists'):
-            out.append(l['title'])
-    return out
+def wikitext_paras(wt, pages):
+    t = resolve_pages(wt, pages)
+    t = re.sub(r'<!--.*?-->', '', t, flags=re.S)
+    t = re.sub(r'<ref[^>/]*/>', '', t, flags=re.I)
+    t = re.sub(r'<ref[^>]*>.*?</ref>', '', t, flags=re.S | re.I)
+    t = re.sub(r'<noinclude>.*?</noinclude>', '', t, flags=re.S)
+    t = re.sub(r'\{\|.*?\|\}', '', t, flags=re.S)
+    t = _templates(t)
+    t = re.sub(r'\[\[(?:Dosya|File|Resim|Image|Kategori|Category)[^\]]*\]\]', '', t, flags=re.I)
+    t = re.sub(r'\[\[(?:[^|\]]*\|)?([^\]]*)\]\]', r'\1', t)
+    t = re.sub(r'\[https?://\S+\s+([^\]]*)\]', r'\1', t)
+    t = re.sub(r'\[https?://\S+\]', '', t)
+    t = re.sub(r"'{2,}", '', t)
+    t = re.sub(r'<br\s*/?>', '\n', t, flags=re.I)
+    t = re.sub(r'</?(?:poem|div|span|center|p|small|big|font|sup|sub|u|i|b|s|blockquote|section)[^>]*>', '\n', t, flags=re.I)
+    t = re.sub(r'<[^>]+>', '', t)
+    t = html_unescape(t)
+    paras = []
+    for block in re.split(r'\n\s*\n', t):
+        lines = [l.strip() for l in block.split('\n')]
+        lines = [l for l in lines if l and not l.startswith(('__', '{{', '}}', '|', '!'))]
+        if not lines:
+            continue
+        h = re.fullmatch(r'=+\s*(.*?)\s*=+', lines[0])
+        if h and len(lines) == 1:
+            paras.append('\u0000' + h.group(1))
+            continue
+        lines = [re.sub(r'^[:*#;]+\s*', '', l) for l in lines]
+        # Prose wraps freely; a poem keeps its lines.
+        short = sum(len(l) < 60 for l in lines) > len(lines) * 0.6 and len(lines) > 2
+        paras.append('\n'.join(lines) if short else ' '.join(lines))
+    return paras
 
 
-def category_members(cat):
-    out, cont = [], {}
-    while True:
-        d = api(action='query', list='categorymembers', cmtitle=cat, cmlimit='500', cmnamespace='0', **cont)
-        out += [m['title'] for m in d.get('query', {}).get('categorymembers', [])]
-        if 'continue' not in d:
-            return out
-        cont = {'cmcontinue': d['continue']['cmcontinue']}
-
-
-def search(text, limit=100):
-    d = api(action='query', list='search', srsearch=text, srnamespace='0', srlimit=str(limit))
-    return [s['title'] for s in d.get('query', {}).get('search', [])]
-
-
-SKIP_CLASSES = ('header', 'noprint', 'ws-noexport', 'licenseContainer', 'navbox', 'mw-editsection', 'reference',
-                'toc', 'metadata', 'mw-references', 'ambox', 'catlinks', 'footer', 'mw-heading')
-
-
-class Paras(HTMLParser):
-    """Paragraph texts of a parsed Wikisource page, without its header,
-    notes and navigation."""
-
-    def __init__(self):
-        super().__init__(convert_charrefs=True)
-        self.paras, self.cur, self.skip, self.stack, self.links = [], None, 0, [], 0
-        self.headings = []
-
-    def handle_starttag(self, tag, attrs):
-        a = dict(attrs)
-        cls = a.get('class') or ''
-        skip = tag in ('table', 'style', 'script', 'sup', 'ol', 'ul') or any(c in cls for c in SKIP_CLASSES) or a.get('id') == 'toc'
-        if tag in ('br',):
-            if self.cur is not None and not self.skip:
-                self.cur.append('\n')
-            return
-        if tag in ('img', 'hr', 'meta', 'link', 'input', 'wbr'):
-            return
-        self.stack.append((tag, skip))
-        if skip:
-            self.skip += 1
-        if self.skip:
-            return
-        if tag in ('p', 'dd', 'h2', 'h3', 'h4', 'center', 'blockquote') and self.cur is None:
-            self.cur = []
-            self.kind = 'h' if tag.startswith('h') else 'p'
-        if tag == 'a':
-            self.links += 1
-
-    def handle_endtag(self, tag):
-        while self.stack:
-            t, skip = self.stack.pop()
-            if skip:
-                self.skip -= 1
-            if t == tag:
-                break
-        if tag in ('p', 'dd', 'h2', 'h3', 'h4', 'center', 'blockquote') and self.cur is not None and not self.skip:
-            text = re.sub(r'[ \t ]+', ' ', ''.join(self.cur))
-            text = '\n'.join(l.strip() for l in text.split('\n')).strip()
-            if text:
-                (self.headings if self.kind == 'h' else self.paras).append(text)
-                if self.kind == 'h':
-                    self.paras.append('\u0000' + text)
-            self.cur = None
-
-    def handle_data(self, data):
-        if self.cur is not None and not self.skip:
-            self.cur.append(data)
-
-
-def page_text(title):
-    d = api(action='parse', page=title, prop='text|displaytitle', redirects=1, disableeditsection=1)
-    p = d.get('parse')
-    if not p:
-        return None, None, 0
-    h = Paras()
-    h.feed(p.get('text', ''))
-    return p.get('title', title), h.paras, len(re.findall(r'<a ', p.get('text', '')))
+def html_unescape(t):
+    import html
+    return html.unescape(t)
 
 
 TR_LETTERS = set('çğıöşüÇĞİÖŞÜâîûÂÎÛ')
@@ -228,32 +235,32 @@ def markdown(title, paras):
     return f'# {title}\n\n' + '\n\n'.join(body) + '\n'
 
 
-def candidates(name):
-    seen, out = set(), []
-    for t in links_of(f'Yazar:{name}') + category_members(f'Kategori:{name}') + category_members(f'Kategori:{name} eserleri'):
-        if t not in seen and not t.startswith(('Yazar:', 'Kategori:')):
-            seen.add(t)
-            out.append(t)
-    return out
-
-
 def main():
     load_ranks(sys.argv[1])
     out_dir = sys.argv[2]
+    main_pages, page_ns = read_dump(sys.argv[3])
     items, texts = [], {}
-    report = []
+    report = [f'dump: {len(main_pages)} main pages, {len(page_ns)} scan pages']
     seen_text = set()
+    by_author = {}
+    allowed = {a: d for a, d in AUTHORS}
+    for title, wt in main_pages.items():
+        a = header_author(wt)
+        al = lower(a)
+        for name, died in AUTHORS:
+            if lower(name.split()[-1]) in al and lower(name.split()[0]) in al:
+                by_author.setdefault(name, []).append(title)
+                break
+        else:
+            if any(lower(f) in al or lower(f) in lower(title) for f in FOLK):
+                by_author.setdefault(FOLK[0], []).append(title)
 
-    def take(title, author, folk=False):
-        t, paras, nlinks = page_text(title)
-        if not paras:
-            return 'empty'
-        paras = clean(paras, t)
+    def take(t, author, folk=False):
+        paras = clean(wikitext_paras(main_pages[t], page_ns), t)
         text = '\n'.join(p for p in paras if not p.startswith('\u0000'))
         words = len(re.findall(r'\w+', text))
         if words < MIN_WORDS:
-            # An index of a book's parts or of anecdotes: look one level down.
-            return f'short ({words} words, {nlinks} links)'
+            return f'short ({words} words)'
         if words > MAX_WORDS:
             return f'long ({words} words)'
         if not looks_turkish(text):
@@ -268,7 +275,7 @@ def main():
         while sid in texts:
             sid = f'{base}-{k}'
             k += 1
-        display = t.split('/')[-1].strip()
+        display = t.split('/')[-1].strip() if '/' in t and len(t.split('/')[-1]) > 3 else t
         items.append({
             'id': sid, 'kind': 'story', 'title': display, 'author': None if folk else author, 'level': None,
             'words': total, 'license': 'Public domain',
@@ -279,35 +286,19 @@ def main():
         texts[sid] = markdown(display, paras)
         return f'ok {total} words, rare {rare:.1f}%, sentence {msl:.1f}'
 
-    for name, died in AUTHORS:
-        if died > LAST_DEATH:
-            report.append(f'## {name} (d. {died}): left out, not yet public domain')
+    for name in [a for a, _ in AUTHORS] + FOLK:
+        died = allowed.get(name)
+        titles = sorted(by_author.get(name, []))
+        if died is not None and died > LAST_DEATH:
+            report.append(f'## {name} (d. {died}): {len(titles)} pages, left out (not yet public domain)')
             continue
-        cands = candidates(name)
-        report.append(f'## {name} (d. {died}): {len(cands)} pages')
+        report.append(f'## {name}' + (f' (d. {died})' if died else ' (folk)') + f': {len(titles)} pages')
         n = 0
-        for c in cands:
+        for t in titles:
             if n >= PER_AUTHOR:
                 break
-            r = take(c, name)
-            report.append(f'- {c}: {r}')
-            if r.startswith('ok'):
-                n += 1
-            elif r.startswith('short') and n < PER_AUTHOR:
-                # A collection: its own pages are the stories.
-                for sub in [x for x in links_of(c) if x.startswith(c + '/')][:PER_AUTHOR - n]:
-                    r2 = take(sub, name)
-                    report.append(f'  - {sub}: {r2}')
-                    n += r2.startswith('ok')
-    for name in FOLK:
-        cands = candidates(name) + [t for t in search(f'{name} fıkra', 50)]
-        report.append(f'## {name} (folk): {len(cands)} pages')
-        n = 0
-        for c in dict.fromkeys(cands):
-            if n >= PER_AUTHOR:
-                break
-            r = take(c, name, folk=True)
-            report.append(f'- {c}: {r}')
+            r = take(t, name, folk=died is None)
+            report.append(f'- {t}: {r}')
             n += r.startswith('ok')
 
     # Levels: the easiest quarter B1 (the shortest, plainest anecdotes A2),
@@ -332,6 +323,11 @@ def main():
     with gzip.open(f'{out_dir}/stories_tr.json.gz', 'wt', encoding='utf-8') as f:
         json.dump(texts, f, ensure_ascii=False)
     print('\n'.join(report))
+    print('\n# Samples\n')
+    for c in items[:: max(1, len(items) // 6)][:6]:
+        print(f'## {c["title"]} ({c["level"]})\n')
+        print(texts[c['id']][:1500])
+        print()
 
 
 if __name__ == '__main__':
