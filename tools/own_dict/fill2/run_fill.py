@@ -17,10 +17,12 @@ SYSTEM = (
     "For each headword give the important distinct meanings a reader meets, most common first, with the "
     "part of speech. Each sense: pos (noun, verb, adjective, adverb, phrase or expression), tr (short Turkish "
     "meaning, comma-separated synonyms allowed), note (usage label in Turkish if needed: argo, kaba, aşağılayıcı, "
-    "tarihsel, bölgesel, cinsel, resmî, gayriresmî, teknik, eufemistik; else empty), en (one short English example "
-    "sentence containing the headword or expression), ex_tr (Turkish translation of that example). "
+    "tarihsel, bölgesel, cinsel, resmî, gayriresmî, teknik, eufemistik; else empty), en (short English definition of "
+    "this sense, 3 to 10 words), ex (one short English example sentence containing the headword or expression), "
+    "ex_tr (Turkish translation of ex). "
+    "Each sense also needs en: a short English definition of that sense (3 to 10 words, not a sentence). "
     "Do not invent meanings. If unsure, add a sentence in uncertainty. Return ONLY JSON: "
-    '{"items":[{"w":"<headword exactly as given>","senses":[{"pos":"","tr":"","note":"","en":"","ex_tr":""}],"uncertainty":""}]}'
+    '{"items":[{"w":"<headword exactly as given>","senses":[{"pos":"","tr":"","note":"","en":"","ex":"","ex_tr":""}],"uncertainty":""}]}'
 )
 ROOT = pathlib.Path(__file__).resolve().parent
 
@@ -157,10 +159,12 @@ def qc(rec, item):
     for s in senses:
         if english_words(s.get("tr")):
             flags.append(("high", "english_in_turkish"))
-        if not (s.get("en") or "").strip() or not (s.get("ex_tr") or "").strip():
+        if not (s.get("en") or "").strip():
+            flags.append(("medium", "gloss_missing"))
+        if not (s.get("ex") or "").strip() or not (s.get("ex_tr") or "").strip():
             flags.append(("medium", "example_missing"))
-        if item["kind"] == "word" and item["text"].lower() not in (s.get("en") or "").lower().replace("-", "") and \
-                item["text"].lower()[:max(4, len(item["text"]) - 3)] not in (s.get("en") or "").lower():
+        if item["kind"] == "word" and item["text"].lower() not in (s.get("ex") or "").lower().replace("-", "") and \
+                item["text"].lower()[:max(4, len(item["text"]) - 3)] not in (s.get("ex") or "").lower():
             flags.append(("medium", "headword_not_in_example"))
     new = set().union(*[toks(s.get("tr")) for s in senses]) if senses else set()
     raw_old = item.get("old_tr") or ""
@@ -255,7 +259,7 @@ def main():
                         rec = {"key": i["key"], "w": i["text"], "kind": i["kind"], "senses": [], "flags": [["high", "missing_or_empty"]]}
                     else:
                         rec = {"key": i["key"], "w": i["text"], "kind": i["kind"], "cat": i["cat"],
-                               "senses": [{k: str(s.get(k, "") or "").strip() for k in ("pos", "tr", "note", "en", "ex_tr")} for s in x["senses"] if isinstance(s, dict)],
+                               "senses": [{k: str(s.get(k, "") or "").strip() for k in ("pos", "tr", "note", "en", "ex", "ex_tr")} for s in x["senses"] if isinstance(s, dict)],
                                "uncertainty": str(x.get("uncertainty", ""))[:300]}
                         rec["flags"] = qc(rec, i)
                     rec["provider"] = providers[0]
