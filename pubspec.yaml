@@ -71,6 +71,8 @@ flutter:
   assets:
     - assets/dict.db
     - assets/brand/logo.png
+    - assets/brand/intro.webp
+    - assets/brand/intro.mp3
     - assets/grammar/lessons.json
     - assets/grammar/lessons_en.json
     - assets/library/catalog.json
@@ -158,7 +160,7 @@ flutter_native_splash:
   android_12:
     color: "#FAF6EE"
     color_dark: "#17130F"
-    image: assets/brand/icon-adaptive-fg.png
-    icon_background_color: "#F1E2C2"
-    icon_background_color_dark: "#2A2117"
+    image: assets/brand/splash-android12.png
+    icon_background_color: "#7A5532"
+    icon_background_color_dark: "#4A3220"
   web: false
