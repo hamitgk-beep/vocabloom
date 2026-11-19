@@ -105,12 +105,9 @@ examples = collections.defaultdict(list)
 pairs = []
 for line in open(pairs_path, encoding='utf-8'):
     p = line.rstrip('\n').split('\t')
-    # At least three words on both sides: one-word lines ("Gülümseyin." -> "Say cheese.")
-    # are often free translations that mislead a learner.
-    if len(p) >= 3 and 12 <= len(p[1]) <= 80 and len(p[1].split()) >= 3 and len(p[2].split()) >= 3:
+    if len(p) >= 3 and 8 <= len(p[1]) <= 80:
         pairs.append(p)
-# Middle-length sentences first: short enough to read at a glance, long enough to show use.
-pairs.sort(key=lambda p: (abs(len(p[1].split()) - 6), len(p[1])))
+pairs.sort(key=lambda p: len(p[1]))
 seen_tr = set()
 for sid, tr, en in pairs:
     if tr in seen_tr:
