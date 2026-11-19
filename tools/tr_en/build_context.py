@@ -95,8 +95,8 @@ def _suffix(w):
 
 
 STOP = set('''to a an the of in on at for with by from into onto up down out off over be being become one someone something
-somebody anyone anything oneself someone's one's or and as not no that this which who whom whose it its make do have get go
-take put give set very more most much many some any all other such than so too also just only usually especially
+somebody anyone anything oneself someone's one's or and as not no that this which who whom whose it its
+very more most much many some any all other such than so too also just only usually especially
 figuratively literally colloquial dated archaic slang informal formal transitive intransitive e.g i.e etc used way
 thing kind sort'''.split())
 

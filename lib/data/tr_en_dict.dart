@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -10,7 +11,8 @@ import 'package:sqlite3/sqlite3.dart';
 /// Kaikki.org / English Wiktionary (CC BY-SA 4.0), FrequencyWords (CC BY-SA
 /// 4.0, ranking only) and Tatoeba sentence pairs (CC BY 2.0 FR).
 class TrEnDict {
-  static const _version = '1';
+  // Bump when assets/tr_en.db changes, so devices copy the new one.
+  static const _version = '2';
   final Database db;
   TrEnDict(this.db);
 
@@ -141,6 +143,42 @@ class TrEnDict {
           for (final s in (jsonDecode(r.columnAt(0) as String) as List).take(1))
             if (((s as Map)['g'] as List).isNotEmpty) '${(s['g'] as List).first}',
       ];
+
+  bool? _hasCtx;
+
+  /// The meaning [lemma] has next to the words [context] (their base words),
+  /// from Tatoeba sentences where the English showed the meaning: an index
+  /// into all its glosses counted in order, or null when the words around it
+  /// say nothing (then the first meaning stands).
+  int? meaningInContext(String lemma, Iterable<String> context) {
+    _hasCtx ??= db.select("SELECT 1 FROM sqlite_master WHERE name='ctxn'").isNotEmpty;
+    if (!_hasCtx!) return null;
+    final prior = {for (final r in db.select('SELECT g, n FROM ctxn WHERE lemma=?', [lemma])) r['g'] as int: (r['n'] as int).toDouble()};
+    if (prior.length < 2) return null;
+    final words = context.where((w) => w != lemma).toSet().toList();
+    if (words.isEmpty) return null;
+    final total = prior.values.fold<double>(0, (a, b) => a + b);
+    final score = {for (final e in prior.entries) e.key: math.log(e.value / total)};
+    var evidence = false;
+    final q = 'SELECT g, word, n FROM ctx WHERE lemma=? AND word IN (${List.filled(words.length, '?').join(',')})';
+    final byWord = <String, Map<int, int>>{};
+    for (final r in db.select(q, [lemma, ...words])) {
+      (byWord[r['word'] as String] ??= {})[r['g'] as int] = r['n'] as int;
+    }
+    for (final counts in byWord.values) {
+      final nc = counts.values.fold<int>(0, (a, b) => a + b);
+      for (final g in prior.keys) {
+        final pg = prior[g]! / total;
+        // P(meaning | word), smoothed toward how common the meaning is.
+        final pgc = ((counts[g] ?? 0) + pg) / (nc + 1);
+        score[g] = score[g]! + math.log(pgc) - math.log(pg);
+      }
+      evidence = true;
+    }
+    if (!evidence) return null;
+    final best = score.entries.reduce((a, b) => b.value > a.value ? b : a);
+    return best.key;
+  }
 
   /// The most common words, most common first (the dictionary's word list).
   List<String> commonWords({int limit = 100}) => [

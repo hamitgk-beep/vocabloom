@@ -32,4 +32,19 @@ void main() {
     expect(e.senses.first.glosses.first.toLowerCase(), contains('book'));
     expect(e.examples, isNotEmpty);
   });
+
+  test('an English meaning finds the Turkish word', () {
+    expect(d.searchEnglish('dog').map((e) => e.$1).take(5), contains('köpek'));
+    expect(d.searchEnglish('book').first.$1, 'kitap');
+  });
+
+  test('the word list starts with the most common words', () {
+    expect(d.commonWords(limit: 50), containsAll(['bir', 've']));
+    expect(d.search('kit').first, 'kitap');
+  });
+
+  test('wrong options for a review quiz are English meanings', () {
+    final g = d.randomGlosses(limit: 50);
+    expect(g.length, greaterThan(20));
+  });
 }

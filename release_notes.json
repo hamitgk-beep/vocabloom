@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "learn-lang-separate-content",
+      "area": "app",
+      "tr": "Öğrenilen dil Türkçe olunca uygulamanın her bölümü Türkçeye geçiyor: Sözlük Türkçe kelime arıyor (İngilizce anlamdan da bulabilirsin: \"dog\" → köpek), Kelimelerim ve tekrar kartları her dil için ayrı tutuluyor, kitaplığında yalnız o dildeki kitaplar görünüyor ve Ücretsiz kütüphanede telifsiz Türkçe öyküler var. İngilizceye döndüğünde İngilizce kelimelerin ve kitapların olduğu gibi duruyor.",
+      "en": "With Turkish as the language you learn, every part of the app switches to Turkish: the Dictionary searches Turkish words (or finds them from an English meaning: \"dog\" → köpek), My words and review cards are kept apart for each language, your library shows only books in that language, and the Free library has public-domain Turkish stories. Switch back to English and your English words and books are all still there."
+    },
+    {
       "id": "native-learn-language-tr-en",
       "area": "app",
       "tr": "Ayarlar'da artık Ana dil ve Öğrenilen dil seçiliyor. Öğrenilen dil Türkçe olunca Türkçe kitaplar okunabiliyor: kelimeye dokununca kökü (Evlerimizden → ev), İngilizce anlamları, örnek cümleler ve Türkçe telaffuz çıkıyor. Türkçe → İngilizce sözlük ücretsiz açık kaynaklardan (Vikisözlük, Tatoeba) hazırlandı; 25 binden fazla kelime içeriyor.",
