@@ -188,7 +188,7 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                 Text(
                   tr
                       ? L('Ücretsiz Türkçe metinler: başlangıç için yazılmış kısa öyküler, Nasreddin Hoca fıkraları ve Ömer Seyfettin gibi yazarların telifsiz öyküleri. Seviyeni seç, dokun ve oku.',
-                          'Free Turkish texts: short stories written for beginners, Nasreddin Hoca anecdotes and public-domain stories by writers such as Ömer Seyfettin. Pick your level, tap and read.')
+                          'Free Turkish texts: short stories written for beginners, Nasreddin Hoca anecdotes and public-domain stories by classic Turkish writers. Pick your level, tap and read.')
                       : L('Telifsiz kısa hikâyeler ve klasik kitaplar. Seviyeni seç, dokun ve oku. Hikâyeler uygulamanın içinde; kitaplar ilk açılışta indirilir.',
                           'Free short stories and classic books. Pick your level, tap and read. Stories come with the app; books are downloaded the first time you open them.'),
                   style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant, height: 1.45),
