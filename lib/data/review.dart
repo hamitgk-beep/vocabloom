@@ -41,7 +41,7 @@ class ReviewStore {
     final st = _state();
     final out = <(int, ReviewCard)>[];
     for (final w in user.words(WordStatus.learning).reversed) {
-      final s = st[w.lemma];
+      final s = st[user.key(w.lemma)];
       final due = s?.$2 ?? w.added.millisecondsSinceEpoch;
       if (due <= t) out.add((due, ReviewCard(w, s?.$1 ?? 0)));
     }
@@ -72,12 +72,12 @@ class ReviewStore {
     user.db.execute('''
       INSERT INTO review(lemma, box, due, reps, lapses) VALUES (?,?,?,1,?)
       ON CONFLICT(lemma) DO UPDATE SET box=excluded.box, due=excluded.due, reps=reps+1, lapses=lapses+excluded.lapses
-    ''', [lemma, nb, due.millisecondsSinceEpoch, a == ReviewAnswer.again ? 1 : 0]);
+    ''', [user.key(lemma), nb, due.millisecondsSinceEpoch, a == ReviewAnswer.again ? 1 : 0]);
     user.db.execute('''
       INSERT INTO activity(day, reviewed) VALUES (?,1)
       ON CONFLICT(day) DO UPDATE SET reviewed=reviewed+1
     ''', [dayKey(n)]);
-    if (graduated) user.db.execute('DELETE FROM review WHERE lemma=?', [lemma]);
+    if (graduated) user.db.execute('DELETE FROM review WHERE lemma=?', [user.key(lemma)]);
     return graduated;
   }
 

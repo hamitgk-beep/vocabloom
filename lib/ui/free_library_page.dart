@@ -161,10 +161,15 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     final l = lib;
     final have = widget.app.user.booksBySource();
     final q = query.trim().toLowerCase();
+    // Only texts in the language being learned.
+    final lang = widget.app.user.lang;
+    final tr = lang == 'tr';
+    final hasBooks = l?.items.any((it) => it.lang == lang && it.isBook) ?? false;
     final shown = l == null
         ? <LibraryItem>[]
         : l.items
             .where((it) =>
+                it.lang == lang &&
                 (level == null || it.level == level) &&
                 (kind == 'all' || it.kind == kind) &&
                 (q.isEmpty || it.title.toLowerCase().contains(q) || (it.author ?? '').toLowerCase().contains(q)))
@@ -181,8 +186,11 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
               padding: EdgeInsets.fromLTRB(pad, 4, pad, 40),
               children: [
                 Text(
-                  L('Telifsiz kısa hikâyeler ve klasik kitaplar. Seviyeni seç, dokun ve oku. Hikâyeler uygulamanın içinde; kitaplar ilk açılışta indirilir.',
-                      'Free short stories and classic books. Pick your level, tap and read. Stories come with the app; books are downloaded the first time you open them.'),
+                  tr
+                      ? L('Telifsiz Türkçe öyküler ve masallar: yazarları 70 yıldan uzun süre önce ölmüş, eserleri kamu malı. Seviyeni seç, dokun ve oku.',
+                          'Free Turkish stories and tales by authors who died more than 70 years ago, so their works are in the public domain. Pick your level, tap and read.')
+                      : L('Telifsiz kısa hikâyeler ve klasik kitaplar. Seviyeni seç, dokun ve oku. Hikâyeler uygulamanın içinde; kitaplar ilk açılışta indirilir.',
+                          'Free short stories and classic books. Pick your level, tap and read. Stories come with the app; books are downloaded the first time you open them.'),
                   style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant, height: 1.45),
                 ),
                 const SizedBox(height: 14),
@@ -210,11 +218,11 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                 if (level != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text('${level!} · ${_levelName(level!)}: ${_levelNote(level!)}',
+                    child: Text('${level!} · ${_levelName(level!)}: ${_levelNote(level!, tr)}',
                         style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant, height: 1.4)),
                   ),
                 const SizedBox(height: 12),
-                Row(children: [
+                if (hasBooks) Row(children: [
                   Expanded(
                     child: SegmentedButton<String>(
                       showSelectedIcon: false,
@@ -241,7 +249,7 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40),
                     child: Text(
-                      level == 'B2' || level == 'C1'
+                      hasBooks && (level == 'B2' || level == 'C1')
                           ? L('Bu seviyede kısa hikâye yok; Kitaplar\'a bak.', 'No short stories at this level; see Books.')
                           : L('Eşleşen bir şey yok.', 'Nothing matches.'),
                       textAlign: TextAlign.center,
@@ -266,8 +274,11 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                 ],
                 const SizedBox(height: 20),
                 Text(
-                  L('Hikâyeler: Pratham Books / StoryWeaver (CC BY 4.0), yalnız metin. Kitaplar: Project Gutenberg\'deki kamu malı eserler.',
-                      'Stories: Pratham Books / StoryWeaver (CC BY 4.0), text only. Books: public-domain works from Project Gutenberg.'),
+                  tr
+                      ? L('Metinler: Vikikaynak (tr.wikisource.org) ve Project Gutenberg\'deki kamu malı eserler. Seviye, kelimelerin ne kadar yaygın olduğuna ve cümle uzunluğuna göre tahmin edildi.',
+                          'Texts: public-domain works from Wikisource (tr.wikisource.org) and Project Gutenberg. The level is estimated from how common the words are and how long the sentences are.')
+                      : L('Hikâyeler: Pratham Books / StoryWeaver (CC BY 4.0), yalnız metin. Kitaplar: Project Gutenberg\'deki kamu malı eserler.',
+                          'Stories: Pratham Books / StoryWeaver (CC BY 4.0), text only. Books: public-domain works from Project Gutenberg.'),
                   style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant, height: 1.4),
                 ),
               ],
@@ -294,12 +305,19 @@ String _levelName(String l) => switch (l) {
       _ => L('İleri', 'Advanced'),
     };
 
-String _levelNote(String l) => switch (l) {
+String _levelNote(String l, [bool tr = false]) => tr ? _levelNoteTr(l) : switch (l) {
       'A1' => L('çok kısa cümleler, en sık kelimeler.', 'very short sentences, the most common words.'),
       'A2' => L('kısa hikâyeler, günlük kelimeler.', 'short stories, everyday words.'),
       'B1' => L('daha uzun hikâyeler ve kolay klasikler.', 'longer stories and easy classics.'),
       'B2' => L('klasik romanlar ve öyküler.', 'classic novels and stories.'),
       _ => L('eski üsluplu, uzun ve zengin dilli romanlar.', 'long novels in older, richer English.'),
+    };
+
+String _levelNoteTr(String l) => switch (l) {
+      'A1' || 'A2' => L('kısa, sade metinler; günlük kelimeler.', 'short, plain texts; everyday words.'),
+      'B1' => L('kısa öyküler, sık kelimeler.', 'short stories, common words.'),
+      'B2' => L('öyküler; yer yer eski kelimeler.', 'stories with some older words.'),
+      _ => L('eski üsluplu, Osmanlıca kelimeli metinler.', 'texts in an older style, with Ottoman words.'),
     };
 
 class _Group extends StatelessWidget {

@@ -129,6 +129,52 @@ class TrEnDict {
     return TrEntry(lemma, senses, ex);
   }
 
+  /// First English meanings of [lemma], short (lists and review cards).
+  String? shortMeaning(String lemma) {
+    final s = entry(lemma)?.senses;
+    return s == null || s.isEmpty ? null : s.first.glosses.take(2).join('; ');
+  }
+
+  /// English meanings of random common words (wrong options in a review quiz).
+  List<String> randomGlosses({int limit = 300}) => [
+        for (final r in db.select('SELECT senses FROM lemma WHERE rank < 8000 ORDER BY random() LIMIT ?', [limit]))
+          for (final s in (jsonDecode(r.columnAt(0) as String) as List).take(1))
+            if (((s as Map)['g'] as List).isNotEmpty) '${(s['g'] as List).first}',
+      ];
+
+  /// The most common words, most common first (the dictionary's word list).
+  List<String> commonWords({int limit = 100}) => [
+        for (final r in db.select('SELECT word FROM lemma ORDER BY rank LIMIT ?', [limit])) r.columnAt(0) as String,
+      ];
+
+  /// Turkish words with an English meaning that starts with [en] ("dog" → köpek),
+  /// whole-meaning matches first, then by how common the word is.
+  List<(String, String)> searchEnglish(String en, {int limit = 40}) {
+    final q = en.trim().toLowerCase().replaceAll('"', '');
+    if (q.length < 2) return const [];
+    final rows = db.select('SELECT word, senses FROM lemma WHERE senses LIKE ? ORDER BY rank LIMIT 400', ['%"$q%']);
+    final out = <(String, String, int)>[];
+    for (final r in rows) {
+      final senses = jsonDecode(r['senses'] as String) as List;
+      var best = 3;
+      String? hit;
+      for (final s in senses) {
+        for (final g in (s as Map)['g'] as List) {
+          final l = '$g'.toLowerCase();
+          final score = l == q ? 0 : (l.startsWith('$q ') || l.startsWith('$q,') ? 1 : (l.startsWith(q) ? 2 : 3));
+          if (score < best) {
+            best = score;
+            hit = '$g';
+          }
+        }
+      }
+      if (hit != null) out.add((r['word'] as String, hit, best));
+    }
+    // Stable: equal scores keep the frequency order.
+    final sorted = [for (var i = 0; i < out.length; i++) (i, out[i])]..sort((a, b) => a.$2.$3 != b.$2.$3 ? a.$2.$3.compareTo(b.$2.$3) : a.$1.compareTo(b.$1));
+    return [for (final (_, (w, m, _)) in sorted.take(limit)) (w, m)];
+  }
+
   /// Words that start with [prefix], most common first (dictionary search).
   List<String> search(String prefix, {int limit = 40}) {
     final w = lower(prefix.trim());

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'dict_db.dart';
+import 'tr_en_dict.dart';
 import 'user_db.dart';
 
 /// The right answer of a review card: what the saved word means in the
@@ -42,7 +43,12 @@ class ReviewQuiz {
   final DictDb dict;
   final UserDb user;
   final Random rnd;
-  ReviewQuiz(this.dict, this.user, {Random? rnd}) : rnd = rnd ?? Random();
+  /// Turkish dictionary, for review cards while learning Turkish.
+  final TrEnDict? trEn;
+  ReviewQuiz(this.dict, this.user, {Random? rnd, this.trEn}) : rnd = rnd ?? Random();
+
+  /// Learning Turkish: the answers are English meanings.
+  bool get _tr => user.lang == 'tr' && trEn != null;
 
   final _answers = <String, QuizAnswer>{};
 
@@ -56,6 +62,10 @@ class ReviewQuiz {
 
   QuizAnswer _answerFor(SavedWord w) {
     final lemma = w.lemma;
+    if (_tr) {
+      final m = w.meaning ?? trEn!.shortMeaning(lemma);
+      return QuizAnswer(m == null || m.trim().isEmpty ? null : DictDb.shortTr(m), null, null);
+    }
     if (lemma.contains(' ')) {
       // An expression: its own dictionary meaning, otherwise what was saved.
       final e = dict.exprs.where((e) => e.phrase == lemma).firstOrNull;
@@ -87,7 +97,7 @@ class ReviewQuiz {
     final verb = a.pos == 'v' || (a.pos == null && DictDb.isTrVerb(rightShort));
     // Meanings of this word itself are never wrong answers: "ders, kurs" is
     // also "course", so it must not be offered as the mistake.
-    final own = w.lemma.contains(' ') ? <String>{} : dict.trWordsOf(w.lemma);
+    final own = w.lemma.contains(' ') || _tr ? <String>{} : dict.trWordsOf(w.lemma);
     final rightParts = rightShort.toLowerCase().split(_split).map((e) => e.trim()).toSet();
     final rightWords = rightShort.toLowerCase().split(_wordSplit).where((x) => x.length > 2).toSet();
     final seen = <String>{rightShort.toLowerCase()};
@@ -95,12 +105,13 @@ class ReviewQuiz {
 
     // Same part of speech: by the dictionary when it knows it, otherwise by
     // the shape of the Turkish ("-mak/-mek" verbs).
-    var checkVerb = a.pos == null;
+    var checkVerb = a.pos == null && !_tr;
     bool take(String m) {
       if (wrong.length == 3) return true;
       final s = DictDb.shortTr(m);
       final k = s.toLowerCase();
-      if (DictDb.badOption(s) || !seen.add(k)) return false;
+      final bad = _tr ? s.isEmpty || s.length > 40 || RegExp(r'\d').hasMatch(s) : DictDb.badOption(s);
+      if (bad || !seen.add(k)) return false;
       if (checkVerb && DictDb.isTrVerb(s) != verb) return false;
       final parts = k.split(_split).map((e) => e.trim());
       if (parts.any((p) => own.contains(p) || rightParts.contains(p))) return false;
@@ -118,15 +129,21 @@ class ReviewQuiz {
       if (a.pos != null && oa.pos != a.pos) continue;
       if (oa.tr != null && take(oa.tr!)) break;
     }
+    // 2. Learning Turkish: English meanings of other common Turkish words.
+    if (_tr && wrong.length < 3) {
+      for (final m in _senseTr.putIfAbsent('tr', () => trEn!.randomGlosses())..shuffle(rnd)) {
+        if (take(m)) break;
+      }
+    }
     // 2. Dictionary meanings of the same part of speech.
-    if (wrong.length < 3) {
+    if (!_tr && wrong.length < 3) {
       final p = a.pos ?? (verb ? 'v' : 'n');
       for (final m in _senseTr.putIfAbsent(p, () => dict.randomSenseTr(p))..shuffle(rnd)) {
         if (take(m)) break;
       }
     }
     // 3. Anything else of the same kind.
-    if (wrong.length < 3) {
+    if (!_tr && wrong.length < 3) {
       checkVerb = true;
       for (final m in _senseTr.putIfAbsent(null, () => dict.randomSenseTr(null, limit: 400))..shuffle(rnd)) {
         if (take(m)) break;

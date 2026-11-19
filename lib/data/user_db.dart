@@ -109,7 +109,33 @@ class UserDb {
 
   /// The app folder: the database and the books' pictures (`books/<id>/`).
   late final String dir;
+  /// Saved words of the language being learned, by lemma. Turkish words are
+  /// stored with a `tr:` key so the two languages never mix.
   final Map<String, WordStatus> statuses = {};
+
+  /// The language being learned: 'en' or 'tr'.
+  String get lang => _lang;
+  String _lang = 'en';
+  set lang(String v) {
+    if (v == _lang) return;
+    _lang = v;
+    _loadStatuses();
+  }
+
+  String get _prefix => _lang == 'en' ? '' : '$_lang:';
+
+  /// The stored key of [lemma] in the language being learned.
+  String key(String lemma) => '$_prefix$lemma';
+
+  String get _langWhere => _lang == 'en' ? "lemma NOT LIKE 'tr:%'" : "lemma LIKE '$_prefix%'";
+
+  void _loadStatuses() {
+    statuses.clear();
+    for (final r in db.select('SELECT lemma, status FROM words WHERE $_langWhere')) {
+      final k = r['lemma'] as String;
+      statuses[k.substring(_prefix.length)] = WordStatus.values[r['status'] as int];
+    }
+  }
 
   static UserDb open(Directory dir) {
     final u = UserDb();
@@ -148,11 +174,11 @@ class UserDb {
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
     if (!cols.contains('source')) u.db.execute('ALTER TABLE books ADD COLUMN source TEXT');
     if (!cols.contains('last_page')) u.db.execute('ALTER TABLE books ADD COLUMN last_page INTEGER DEFAULT 0');
+    // The language of the book's text ('en', 'tr'): each language shows its own books.
+    if (!cols.contains('lang')) u.db.execute("ALTER TABLE books ADD COLUMN lang TEXT DEFAULT 'en'");
     final pc = u.db.select('PRAGMA table_info(paras)').map((r) => r['name']).toSet();
     if (!pc.contains('meta')) u.db.execute('ALTER TABLE paras ADD COLUMN meta TEXT');
-    for (final r in u.db.select('SELECT lemma, status FROM words')) {
-      u.statuses[r['lemma'] as String] = WordStatus.values[r['status'] as int];
-    }
+    u._loadStatuses();
     return u;
   }
 
@@ -373,11 +399,35 @@ class UserDb {
   void setJson(String key, Map<String, dynamic> v) => setSetting(key, jsonEncode(v));
 
   // ---- books
-  int insertBook(ImportedBook b, {String? source}) {
+  /// The language of a book's text: 'tr' when Turkish letters are common in
+  /// it (ç ğ ı ö ş ü), otherwise 'en'.
+  static String textLang(ImportedBook b) {
+    var letters = 0, tr = 0;
+    for (final c in b.chapters) {
+      for (final (kind, text) in c.paragraphs) {
+        if (kind == 'i') continue;
+        for (final r in text.runes) {
+          if (_trLetters.contains(r)) {
+            tr++;
+            letters++;
+          } else if (r >= 65 && r <= 90 || r >= 97 && r <= 122) {
+            letters++;
+          }
+        }
+        if (letters > 20000) break;
+      }
+      if (letters > 20000) break;
+    }
+    return letters > 0 && tr / letters > 0.01 ? 'tr' : 'en';
+  }
+
+  static final _trLetters = 'çğıöşüÇĞİÖŞÜ'.runes.toSet();
+
+  int insertBook(ImportedBook b, {String? source, String? lang}) {
     db.execute('BEGIN');
     try {
-      db.execute('INSERT INTO books(title, author, format, chapters, added, source) VALUES (?,?,?,?,?,?)',
-          [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch, source]);
+      db.execute('INSERT INTO books(title, author, format, chapters, added, source, lang) VALUES (?,?,?,?,?,?,?)',
+          [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch, source, lang ?? textLang(b)]);
       final id = db.lastInsertRowId;
       // Pictures go to books/<id>/ in the app folder.
       final imgDir = p.join('books', '$id');
@@ -411,8 +461,9 @@ class UserDb {
     }
   }
 
-  List<Book> books() => [
-        for (final r in db.select('SELECT * FROM books ORDER BY added DESC'))
+  /// Books in [lang], by default the language being learned.
+  List<Book> books({String? lang}) => [
+        for (final r in db.select("SELECT * FROM books WHERE coalesce(lang, 'en')=? ORDER BY added DESC", [lang ?? _lang]))
           Book(r['id'] as int, r['title'] as String, r['author'] as String?, r['format'] as String,
               r['chapters'] as int, r['last_chapter'] as int, r['last_para'] as int,
               DateTime.fromMillisecondsSinceEpoch(r['added'] as int),
@@ -552,24 +603,26 @@ class UserDb {
 
   // ---- words
   void setWord(String lemma, WordStatus status, {String? context, String? book, String? meaning}) {
+    final k = key(lemma);
     if (status == WordStatus.none) {
-      db.execute('DELETE FROM words WHERE lemma=?', [lemma]);
+      db.execute('DELETE FROM words WHERE lemma=?', [k]);
       statuses.remove(lemma);
       return;
     }
-    final exists = db.select('SELECT 1 FROM words WHERE lemma=?', [lemma]).isNotEmpty;
+    final exists = db.select('SELECT 1 FROM words WHERE lemma=?', [k]).isNotEmpty;
     if (exists) {
-      db.execute('UPDATE words SET status=? WHERE lemma=?', [status.index, lemma]);
+      db.execute('UPDATE words SET status=? WHERE lemma=?', [status.index, k]);
     } else {
       db.execute('INSERT INTO words VALUES (?,?,?,?,?,?)',
-          [lemma, status.index, context, book, meaning, DateTime.now().millisecondsSinceEpoch]);
+          [k, status.index, context, book, meaning, DateTime.now().millisecondsSinceEpoch]);
     }
     statuses[lemma] = status;
   }
 
+  /// Saved words of the language being learned.
   List<SavedWord> words(WordStatus status) => [
-        for (final r in db.select('SELECT * FROM words WHERE status=? ORDER BY added DESC', [status.index]))
-          SavedWord(r['lemma'] as String, status, r['context'] as String?, r['book'] as String?,
+        for (final r in db.select('SELECT * FROM words WHERE status=? AND ($_langWhere) ORDER BY added DESC', [status.index]))
+          SavedWord((r['lemma'] as String).substring(_prefix.length), status, r['context'] as String?, r['book'] as String?,
               r['meaning'] as String?, DateTime.fromMillisecondsSinceEpoch(r['added'] as int))
       ];
 }

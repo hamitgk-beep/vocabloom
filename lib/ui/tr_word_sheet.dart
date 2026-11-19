@@ -61,11 +61,7 @@ class _TrWordPanelState extends State<TrWordPanel> {
         entry = widget.app.trEn!.entry(l);
       });
 
-  String? get _meaning {
-    final s = entry?.senses;
-    if (s == null || s.isEmpty) return null;
-    return s.first.glosses.take(2).join('; ');
-  }
+  String? get _meaning => widget.app.trEn!.shortMeaning(lemma);
 
   void _set(WordStatus st) {
     widget.app.setWord(lemma, st, context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: _meaning);

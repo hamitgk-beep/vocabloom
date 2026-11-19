@@ -15,6 +15,9 @@ const libraryLevels = ['A1', 'A2', 'B1', 'B2', 'C1'];
 
 class LibraryItem {
   final String id, kind, title, level, license, credit, source;
+
+  /// Language of the text: 'en' or 'tr'.
+  final String lang;
   final String? author;
   final int words;
   final int? chapters, size;
@@ -36,6 +39,7 @@ class LibraryItem {
     this.size,
     this.pics = 0,
     this.picsSize,
+    this.lang = 'en',
   });
 
   bool get isBook => kind == 'book';
@@ -59,6 +63,7 @@ class LibraryItem {
         size: j['size'] as int?,
         pics: j['pics'] as int? ?? 0,
         picsSize: j['picsSize'] as int?,
+        lang: j['lang'] as String? ?? 'en',
       );
 }
 
@@ -74,10 +79,23 @@ class FreeLibrary {
 
   static Future<FreeLibrary> load() async {
     if (_cached != null) return _cached!;
-    final cat = jsonDecode(await rootBundle.loadString('assets/library/catalog.json')) as List;
-    final gz = await rootBundle.load('assets/library/stories.json.gz');
-    final stories = (jsonDecode(utf8.decode(gzip.decode(gz.buffer.asUint8List()))) as Map).cast<String, String>();
-    return _cached = FreeLibrary([for (final j in cat) LibraryItem.fromJson(j as Map<String, dynamic>)], stories);
+    final items = <LibraryItem>[];
+    final stories = <String, String>{};
+    // English, then Turkish (tools/library_tr/build_library_tr.py).
+    for (final (cat, texts) in [
+      ('assets/library/catalog.json', 'assets/library/stories.json.gz'),
+      ('assets/library/catalog_tr.json', 'assets/library/stories_tr.json.gz'),
+    ]) {
+      try {
+        final list = jsonDecode(await rootBundle.loadString(cat)) as List;
+        final gz = await rootBundle.load(texts);
+        stories.addAll((jsonDecode(utf8.decode(gzip.decode(gz.buffer.asUint8List()))) as Map).cast<String, String>());
+        items.addAll([for (final j in list) LibraryItem.fromJson(j as Map<String, dynamic>)]);
+      } catch (_) {
+        if (cat.endsWith('catalog.json')) rethrow;
+      }
+    }
+    return _cached = FreeLibrary(items, stories);
   }
 
   /// Tests set this to read pictures from local copies instead of downloading.
@@ -163,8 +181,8 @@ Future<Book> addLibraryItem(UserDb db, FreeLibrary lib, LibraryItem it, {void Fu
   final have = db.booksBySource()[it.id];
   if (have != null) return have;
   final book = await lib.fetch(it, onProgress: onProgress);
-  final id = db.insertBook(book, source: it.id);
-  return db.books().firstWhere((b) => b.id == id);
+  final id = db.insertBook(book, source: it.id, lang: it.lang);
+  return db.books(lang: it.lang).firstWhere((b) => b.id == id);
 }
 
 /// Whether [it] was added before the library had its pictures: the book in
@@ -179,10 +197,10 @@ bool lacksPictures(UserDb db, LibraryItem it) {
 Future<Book> replaceLibraryItem(UserDb db, FreeLibrary lib, LibraryItem it, {void Function(double? p)? onProgress}) async {
   final old = db.booksBySource()[it.id];
   final book = await lib.fetch(it, onProgress: onProgress);
-  final id = db.insertBook(book, source: it.id);
+  final id = db.insertBook(book, source: it.id, lang: it.lang);
   if (old != null) {
     if (old.lastChapter > 0 && old.lastChapter < book.chapters.length) db.saveProgress(id, old.lastChapter, 0);
     db.deleteBook(old.id);
   }
-  return db.books().firstWhere((b) => b.id == id);
+  return db.books(lang: it.lang).firstWhere((b) => b.id == id);
 }

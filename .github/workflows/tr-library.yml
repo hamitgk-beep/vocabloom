@@ -1,0 +1,29 @@
+name: tr-library
+# Builds the Turkish free-library texts (public-domain works from Turkish Wikisource) and commits them.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-9n9060]
+    paths: [tools/library_tr/build_library_tr.py, .github/workflows/tr-library.yml]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          set -e
+          curl -sSfL -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
+          python3 tools/library_tr/build_library_tr.py tr_full.txt assets/library > tools/library_tr/report.md
+          head -5 tools/library_tr/report.md
+          ls -la assets/library
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add assets/library/catalog_tr.json assets/library/stories_tr.json.gz tools/library_tr/report.md
+          git commit -m "Turkish free-library texts (Turkish Wikisource, public domain)" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -q origin "$GITHUB_REF_NAME" && git push && exit 0; sleep 10; done
+          exit 1

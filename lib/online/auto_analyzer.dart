@@ -51,7 +51,7 @@ class AutoAnalyzer {
     _running = true;
     try {
       if (!await svc.reachable()) return;
-      final books = db.books().where((b) => onlyBook == null || b.id == onlyBook);
+      final books = db.books(lang: 'en').where((b) => onlyBook == null || b.id == onlyBook);
       for (final b in books) {
         if (db.parasMissingTranslation(b.id).isEmpty) continue;
         _set(b.id, L('Çevrimiçi analiz başlıyor…', 'Starting online analysis…'));
@@ -80,7 +80,7 @@ class AutoAnalyzer {
   Future<void> _scanBooks() async {
     final d = dict;
     if (d == null) return;
-    for (final b in db.books()) {
+    for (final b in db.books(lang: 'en')) {
       if (!_scannedBooks.add(b.id)) continue;
       for (final ch in db.chapters(b.id)) {
         await Future<void>.delayed(Duration.zero); // keep the UI responsive

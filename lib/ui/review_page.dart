@@ -48,7 +48,7 @@ class _ReviewPageState extends State<ReviewPage> {
   /// Multiple-choice state per card position (null: a plain flashcard).
   final _choices = <int, QuizChoice?>{};
   int? picked;
-  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user);
+  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user, trEn: app.trEn);
 
   /// Cards whose meaning in their sentence is being asked from the AI service.
   final _asking = <String>{};
@@ -67,6 +67,7 @@ class _ReviewPageState extends State<ReviewPage> {
     final w = queue[i].word;
     // A guessed meaning: the AI service (when set up) gives the exact one.
     final ans = _quiz.answerFor(w);
+    if (app.learnTurkish) return _choices[i] = _quiz.choiceFor(w);
     if (!ans.sure && _askAi(w)) return null;
     final ch = _quiz.choiceFor(w);
     if (ch == null && _askAi(w)) return null; // ask again when the answer arrives
@@ -238,7 +239,7 @@ class _ReviewPageState extends State<ReviewPage> {
                 constraints: BoxConstraints(minHeight: box.maxHeight),
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const SizedBox(height: 16),
-                  Text(displayPhrase(w.lemma), style: enStyle(theme, theme.textTheme.headlineLarge).copyWith(fontWeight: FontWeight.w800)),
+                  Text(displayPhrase(w.lemma), style: (app.learnTurkish ? trStyle : enStyle)(theme, theme.textTheme.headlineLarge).copyWith(fontWeight: FontWeight.w800)),
                   if (w.context != null) ...[
                     const SizedBox(height: 16),
                     DefaultTextStyle.merge(
@@ -255,13 +256,15 @@ class _ReviewPageState extends State<ReviewPage> {
                         : !reveal
                         ? Text(
                             ch != null
-                                ? L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.')
+                                ? (app.learnTurkish
+                                    ? L('Doğru İngilizce anlamı seç.', 'Pick the right English meaning.')
+                                    : L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.'))
                                 : L('Anlamını hatırlıyor musun? Görmek için dokun.', 'Do you remember the meaning? Tap to see it.'),
                             key: const ValueKey(0), style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant))
                         : Column(key: const ValueKey(1), crossAxisAlignment: CrossAxisAlignment.start, children: [
                             const Divider(height: 1),
                             const SizedBox(height: 20),
-                            if (meaning != null && app.showTr) Text(meaning, style: trStyle(theme, theme.textTheme.titleLarge)),
+                            if (meaning != null && (app.showTr || app.learnTurkish)) Text(meaning, style: (app.learnTurkish ? enStyle : trStyle)(theme, theme.textTheme.titleLarge)),
                             // With no Turkish for this sense the English definition is the answer.
                             if (gloss != null && (app.showEn || meaning == null)) ...[
                               const SizedBox(height: 8),
@@ -369,7 +372,7 @@ class _ReviewPageState extends State<ReviewPage> {
     final out = {words.first};
     if (w.context == null) return out;
     for (final t in tokenize(w.context!)) {
-      final ls = app.dict.lemmatizer.lemmas(t.lower);
+      final ls = app.learnTurkish ? app.trEn!.lemmas(t.lower) : app.dict.lemmatizer.lemmas(t.lower);
       if (words.length == 1 ? (t.lower == w.lemma || ls.contains(w.lemma)) : words.any((x) => x.length > 2 && (t.lower == x || ls.contains(x)))) {
         out.add(t.lower);
       }
