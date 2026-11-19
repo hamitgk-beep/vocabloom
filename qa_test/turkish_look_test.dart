@@ -15,6 +15,7 @@ import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/l10n.dart';
+import 'package:kelime_okur/nlp/text.dart';
 import 'package:kelime_okur/ui/dictionary_page.dart';
 import 'package:kelime_okur/ui/free_library_page.dart';
 import 'package:kelime_okur/ui/library_page.dart';
@@ -110,6 +111,16 @@ void main() {
         Navigator.of(home).pop();
         await tester.pump(const Duration(milliseconds: 600));
       }
+      // The meaning the sentence points to.
+      const sentence = 'İlk bölümü 1988 tarihinde yayınlanan program yaklaşık on yıl sürmüştür.';
+      final toks = tokenize(sentence);
+      final i = toks.indexWhere((t) => t.lower == 'sürmüştür');
+      showWordSheet(home, app, 'sürmüştür', ctx: WordContext(sentence, toks, i, const [], null, bk.id, bk.title));
+      await tester.pump(const Duration(milliseconds: 600));
+      await shot(tester, 'panel_surmustur_context_${b.name}');
+      expect(find.byKey(const ValueKey('tr-in-context')), findsOneWidget);
+      Navigator.of(home).pop();
+      await tester.pump(const Duration(milliseconds: 600));
       await tester.pumpWidget(const SizedBox());
       await tester.pump(const Duration(seconds: 3));
     });
@@ -120,7 +131,8 @@ void main() {
     app.themeMode = ThemeMode.light;
     app.setLanguages(native: 'tr', learn: 'en');
     app.setWord('house', WordStatus.learning, meaning: 'ev');
-    app.user.insertBook(await importFile('test/fixtures/sample.txt', isWord: app.isWord));
+    final en = (await tester.runAsync(() => importFile('test/fixtures/sample.txt', isWord: app.isWord)))!;
+    app.user.insertBook(en);
     app.setLanguages(native: 'en', learn: 'tr');
     for (final w in ['kitap', 'ev', 'gülümsemek', 'köpek']) {
       app.setWord(w, WordStatus.learning, meaning: app.trEn!.shortMeaning(w));

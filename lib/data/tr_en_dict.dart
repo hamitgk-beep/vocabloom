@@ -134,7 +134,9 @@ class TrEnDict {
   /// First English meanings of [lemma], short (lists and review cards).
   String? shortMeaning(String lemma) {
     final s = entry(lemma)?.senses;
-    return s == null || s.isEmpty ? null : s.first.glosses.take(2).join('; ');
+    if (s == null || s.isEmpty || s.first.glosses.isEmpty) return null;
+    final two = s.first.glosses.take(2).join('; ');
+    return two.length <= 50 ? two : s.first.glosses.first;
   }
 
   /// English meanings of random common words (wrong options in a review quiz).

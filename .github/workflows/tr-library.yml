@@ -16,7 +16,10 @@ jobs:
         run: |
           set -e
           curl -sSfL -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
-          curl -sSfL -A "python-urllib/3 (library build)" -o trws.xml.bz2 https://dumps.wikimedia.org/trwikisource/latest/trwikisource-latest-pages-articles.xml.bz2
+          f=trwikisource-latest-pages-articles.xml.bz2
+          curl -sSfL -o trws.xml.bz2 https://dumps.wikimedia.org/trwikisource/latest/$f \
+            || curl -sSfL -o trws.xml.bz2 https://mirror.accum.se/mirror/wikimedia.org/dumps/trwikisource/latest/$f \
+            || curl -sSfL -o trws.xml.bz2 https://wikimedia.bringyour.com/trwikisource/latest/$f
           ls -la trws.xml.bz2
           python3 tools/library_tr/build_library_tr.py tr_full.txt assets/library trws.xml.bz2 > tools/library_tr/report.md
           head -5 tools/library_tr/report.md
