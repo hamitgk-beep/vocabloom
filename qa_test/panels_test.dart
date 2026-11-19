@@ -227,7 +227,7 @@ void collectExceptions(WidgetTester tester, String where, String mode) {
 
 /// The open panel (bottom sheet or dialog) must fit on the screen.
 void checkFits(WidgetTester tester, String where, String mode, Size screen) {
-  for (final f in [find.byType(BottomSheet), find.byType(Dialog)]) {
+  for (final f in [find.byType(BottomSheet), find.byType(Dialog), find.byKey(const ValueKey('side-panel'))]) {
     for (final e in f.evaluate()) {
       final box = e.renderObject as RenderBox?;
       if (box == null || !box.hasSize) continue;
