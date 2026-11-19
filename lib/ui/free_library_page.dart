@@ -63,6 +63,21 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     }
   }
 
+  /// Replaces a text added before the library had pictures with the illustrated one.
+  Future<void> _refresh(LibraryItem it) async {
+    if (busy.containsKey(it.id)) return;
+    final m = ScaffoldMessenger.of(context);
+    setState(() => busy[it.id] = null);
+    try {
+      await replaceLibraryItem(widget.app.user, lib!, it, onProgress: (p) => mounted ? setState(() => busy[it.id] = p) : null);
+      if (mounted) setState(() => busy.remove(it.id));
+      m.showSnackBar(SnackBar(content: Text(L('Resimli sürüm kitaplığında.', 'The illustrated edition is in your library.'))));
+    } catch (e) {
+      if (mounted) setState(() => busy.remove(it.id));
+      m.showSnackBar(SnackBar(content: Text(L('İndirilemedi: ${errorText(e)}', 'Could not download: ${errorText(e)}'))));
+    }
+  }
+
   void _info(LibraryItem it) {
     final t = Theme.of(context);
     showModalBottomSheet(
@@ -80,7 +95,21 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
             _InfoRow(L('Uzunluk', 'Length'), _length(it)),
             _InfoRow(L('Lisans', 'License'), it.license == 'Public domain' ? L('Kamu malı (telifsiz)', 'Public domain') : it.license),
             _InfoRow(L('Emeği geçenler', 'Credits'), it.credit),
-            if (it.isBook && it.size != null) _InfoRow(L('İndirme', 'Download'), '${(it.size! / 1024).round()} KB'),
+            if (it.pics > 0) _InfoRow(L('Resimler', 'Pictures'), L('${it.pics} resim (kitaptaki gibi)', '${it.pics} pictures (as in the book)')),
+            if (it.isBook && it.size != null) _InfoRow(L('İndirme', 'Download'), _size((it.size ?? 0) + (it.picsSize ?? 0))),
+            if (lacksPictures(widget.app.user, it))
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: FilledButton.tonalIcon(
+                  key: const ValueKey('lib-refresh'),
+                  onPressed: () {
+                    Navigator.pop(c);
+                    _refresh(it);
+                  },
+                  icon: const Icon(Icons.image_outlined),
+                  label: Text(L('Resimli sürümle yenile', 'Get the illustrated edition')),
+                ),
+              ),
             const SizedBox(height: 6),
             Text(
               it.isBook
@@ -102,10 +131,15 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     );
   }
 
-  /// For the list: stories by words, books by chapters.
-  String _short(LibraryItem it) => it.isBook
-      ? '${L('${it.chapters} bölüm', '${it.chapters} chapters')} · ${_time(it)}'
-      : '${L('${_thousands(it.words)} kelime', '${_thousands(it.words)} words')} · ${_time(it)}';
+  String _size(int bytes) => bytes < 1024 * 1024 ? '${(bytes / 1024).round()} KB' : '${(bytes / 1024 / 1024).toStringAsFixed(1)} MB';
+
+  /// For the list: stories by words, books by chapters; illustrated ones say so.
+  String _short(LibraryItem it) {
+    final base = it.isBook
+        ? '${L('${it.chapters} bölüm', '${it.chapters} chapters')} · ${_time(it)}'
+        : '${L('${_thousands(it.words)} kelime', '${_thousands(it.words)} words')} · ${_time(it)}';
+    return it.pics > 1 ? '$base · ${L('resimli', 'illustrated')}' : base;
+  }
 
   String _time(LibraryItem it) {
     final mins = it.minutes;

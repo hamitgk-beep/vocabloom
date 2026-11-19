@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "free-library-pictures",
+      "area": "reader",
+      "tr": "Ücretsiz kütüphane yenilendi: hikâyeler ve kitaplar artık resimleriyle geliyor; resimli hikâyelerde her sayfa kitaptaki gibi kendi resmiyle açılıyor. Kütüphaneye A1'den C1'e 61 yeni telifsiz kitap eklendi (Beatrix Potter masalları, McGuffey okuma kitapları, Twins dizisi, Uncle Wiggily, Küçük Prenses, Yeşilin Kızı Anne, Büyük Umutlar, İki Şehrin Hikâyesi ve daha fazlası). Daha önce eklediğin bir kitabın bilgi sayfasındaki \"Resimli sürümle yenile\" düğmesi resimli sürümünü getirir, kaldığın bölüm korunur.",
+      "en": "The free library is renewed: stories and books now come with their pictures, and in picture stories each page opens with its own picture, as in the book. 61 new copyright-free books from A1 to C1 were added (Beatrix Potter's tales, McGuffey readers, the Twins series, Uncle Wiggily, A Little Princess, Anne of Green Gables, Great Expectations, A Tale of Two Cities and more). For a book you added before, \"Get the illustrated edition\" on its info sheet brings the illustrated edition and keeps your place."
+    },
+    {
       "id": "picture-books",
       "area": "reader",
       "tr": "Resimli kitaplar: PDF, EPUB, Word, ODT ve FB2 kitaplarındaki resimler yerinde, altlarındaki açıklamalarla görünüyor; açıklamalar artık cümlelerin arasına karışmıyor. PDF'nin her sayfası okuyucuda bir sayfa, başlıklar büyük ve ortalı. Sesli okuma sayfayı kendisi çeviriyor, kitap kaldığın sayfada açılıyor. Taranmış PDF'lerde büyük ilk harfler (\"In the garden\"), boşluklu kelimeler (\"tre e\") ve simge sanılan harfler (\"sho\\ivs\") düzeltiliyor. Kitabın ilk sayfasındaki kapak resmi Kitaplığım'da kapak oluyor.",

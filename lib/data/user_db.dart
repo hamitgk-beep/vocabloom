@@ -420,6 +420,9 @@ class UserDb {
       ];
 
   /// Free-library item id → the book made from it.
+  /// How many pictures the book has.
+  int pictureCount(int bookId) => db.select("SELECT COUNT(*) AS n FROM paras WHERE book_id=? AND kind='i'", [bookId]).first['n'] as int;
+
   Map<String, Book> booksBySource() => {for (final b in books()) if (b.source != null) b.source!: b};
 
   void deleteBook(int id) {

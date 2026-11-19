@@ -26,7 +26,12 @@ Usage
   (books missing from --books-cache are downloaded from raw.githubusercontent.com)
 """
 import argparse
+import glob
 import gzip
+import hashlib
+import html
+import io
+from html.parser import HTMLParser
 import json
 import math
 import os
@@ -150,17 +155,19 @@ def read_story(path):
         lic = 'Public domain'
     else:
         return None
-    paras = []
+    out = []
     for pg in pages:
+        paras = []
         for p in re.split(r'\n\s*\n', pg.strip()):
             p = ' '.join(p.split())
             p = re.sub(r'[*_]+', '', p)
             if p:
                 paras.append(p)
-    if not title or not paras:
+        out.append(paras)
+    if not title or not any(out):
         return None
     credit = '; '.join(f'{k}: {info[k].strip()}' for k in ('Text', 'Illustration', 'Translation') if info.get(k, '').strip())
-    return title, paras, lic, credit
+    return title, out, lic, credit
 
 
 # --------------------------------------------------------------- Gutenberg books
@@ -223,7 +230,7 @@ def book_markdown(raw, title, author, how='auto'):
     """Gutenberg plain text → app Markdown. [how] picks the chapter headings:
     auto (CHAPTER/STAVE/ADVENTURE/LETTER lines, else Roman numerals), caps
     (lines in capitals), toc (the titles listed under CONTENTS), none, or
-    re:<regex>. PART/BOOK lines become sub-headings inside the next chapter."""
+    re:<regex> (re2:<regex> also takes two-line headings). PART/BOOK lines become sub-headings inside the next chapter."""
     body = gutenberg_body(raw)
     blocks = [b.strip() for b in re.split(r'\n\s*\n', body)]
     blocks = [b for b in blocks if b]
@@ -247,6 +254,11 @@ def book_markdown(raw, title, author, how='auto'):
                  and _norm(re.sub(r'^([IVXLC]+|\d+)\.\s+', '', ' '.join(b.split()))) in toc]
     elif how == 'none':
         heads = []
+    elif how.startswith('re2:'):
+        # like re:, for headings with the chapter name on a second line
+        rx = re.compile(how[4:])
+        heads = [i for i, b in enumerate(blocks)
+                 if len(b) < 80 and b.count('\n') <= 1 and rx.match(' '.join(b.split()))]
     else:
         heads = find(re.compile(how[3:]))
     hs = set(heads)
@@ -345,6 +357,14 @@ def fetch_book(cache, gid, repo, fname):
     if os.path.exists(path):
         return open(path, encoding='utf-8', errors='replace').read()
     for f in [fname, f'{gid}.txt', f'{gid}-0.txt', f'{gid}-8.txt']:
+        clone = os.path.join(cache, gid, f)
+        if f != '?' and os.path.exists(clone):
+            data = open(clone, 'rb').read()
+            try:
+                return data.decode('utf-8')
+            except UnicodeDecodeError:
+                return data.decode('latin-1')
+    for f in [fname, f'{gid}.txt', f'{gid}-0.txt', f'{gid}-8.txt']:
         if f == '?':
             continue
         try:
@@ -357,14 +377,214 @@ def fetch_book(cache, gid, repo, fname):
     raise SystemExit(f'could not download Gutenberg #{gid}')
 
 
+
+# --------------------------------------------------------------- pictures
+# A picture in the app's Markdown: ![description](address "caption"). Short
+# addresses keep the bundled stories small; the app expands them:
+#   pb:0002/03.jpg  -> the Pratham Books image bank (CC BY 4.0, per story page)
+#   lib:pg-120/7.jpg -> library/images in this repository (recompressed copies
+#                      of a Gutenberg book's illustrations)
+PB_IMAGES = 'https://raw.githubusercontent.com/global-asp/pb-imagebank/master/medium/'
+
+
+def story_pictures(imagebank, sid):
+    """File names of a story's pictures in pb-imagebank/medium (01 = cover)."""
+    d = os.path.join(imagebank, 'medium', sid)
+    if not os.path.isdir(d):
+        return []
+    return sorted(f for f in os.listdir(d) if f.endswith('.jpg'))
+
+
+def story_pictures_from_list(listing, sid):
+    return sorted(listing.get(sid, []))
+
+
+_BLOCK = {'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br', 'hr', 'tr', 'td', 'li', 'blockquote', 'pre', 'table', 'dd', 'dt'}
+_HEAD = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
+
+
+class _Html(HTMLParser):
+    """A Gutenberg HTML book as blank-line separated blocks (like the plain
+    text), with each picture as a block of its own: @@imgN@@."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.out = []
+        self.buf = []
+        self.pics = []  # (src, href, caption)
+        self.skip = 0
+        self.caption = None  # depth of an element with class "caption"
+        self.cap_text = []
+        self.depth = 0
+        self.href = None
+        self.pre = False
+
+    def flush(self):
+        # (U+2028 marks a line break kept inside a block)
+        t = '\u2028'.join(' '.join(x.split()) for x in ''.join(self.buf).split('\u2028'))
+        t = t.strip('\u2028 ')
+        if t:
+            self.out.append(t.replace('\u2028', '\n'))
+        self.buf = []
+
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        self.depth += 1
+        if tag in ('script', 'style', 'head'):
+            self.skip += 1
+        if tag == 'a':
+            self.href = a.get('href')
+        if self.caption is None and 'caption' in (a.get('class') or ''):
+            self.caption = self.depth
+            self.cap_text = []
+        if tag == 'img':
+            src = a.get('src') or ''
+            alt = (a.get('alt') or '').strip()
+            # A large first letter drawn as a picture: the letter is the text.
+            if len(alt) == 1 and alt.isalpha():
+                self.buf.append(alt)
+                return
+            self.flush()
+            self.pics.append([src, self.href, ''])
+            self.out.append(f'@@img{len(self.pics) - 1}@@')
+            return
+        if tag in _BLOCK:
+            if tag in _HEAD or tag in ('p', 'div', 'hr', 'blockquote', 'table', 'pre', 'tr', 'li'):
+                self.flush()
+            elif tag == 'br':
+                self.buf.append('\u2028')
+        if tag == 'pre':
+            self.pre = True
+
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style', 'head'):
+            self.skip = max(0, self.skip - 1)
+        if tag == 'pre':
+            self.pre = False
+        if tag == 'a':
+            self.href = None
+        if self.caption is not None and self.depth <= self.caption:
+            cap = ' '.join(''.join(self.cap_text).split())
+            if cap and self.pics and not self.pics[-1][2]:
+                self.pics[-1][2] = cap
+            self.caption = None
+        self.depth -= 1
+        if tag in _HEAD or tag in ('p', 'div', 'blockquote', 'table', 'pre', 'tr', 'li', 'td'):
+            self.flush()
+
+    def handle_data(self, data):
+        if self.skip:
+            return
+        if self.caption is not None:
+            self.cap_text.append(data)
+            return
+        self.buf.append(data.replace('\n', '\u2028') if self.pre else data)
+
+
+def html_book(path):
+    """(text, pictures) of a Gutenberg HTML book: the text in the shape of the
+    plain-text edition, with @@imgN@@ blocks where its pictures are."""
+    p = _Html()
+    p.feed(open(path, encoding='utf-8', errors='replace').read())
+    p.flush()
+    blocks = []
+    for b in p.out:
+        # <br> inside a block: lines of a poem or a list stay lines; the
+        # lines of <pre> (the Gutenberg header) become blocks of their own
+        ls = [x.strip() for x in b.split('\n') if x.strip()]
+        if any(re.match(r'^\*\*\* ?(START|END) OF', x) for x in ls):
+            blocks.extend(ls)
+        else:
+            blocks.append('\n'.join(ls))
+    return '\n\n'.join(blocks), p.pics
+
+
+def keep_book_pictures(folder, pics, bid, out_dir):
+    """Recompresses the pictures worth showing into out_dir/<bid>/ and returns
+    {index: (short address, caption)}. Left out: icons used again and again
+    ("enlarge"), ornaments, and anything tiny."""
+    from PIL import Image
+    used = {}
+    for src, href, cap in pics:
+        used[src] = used.get(src, 0) + 1
+    keep = {}
+    dest = os.path.join(out_dir, bid)
+    os.makedirs(dest, exist_ok=True)
+    n = 0
+    for i, (src, href, cap) in enumerate(pics):
+        if used[src] >= 3:
+            continue
+        cands = [src]
+        if href and re.search(r'\.(jpe?g|png|gif)$', href, re.I):
+            cands.insert(0, href)
+        img = None
+        for c in cands:
+            f = os.path.join(folder, html.unescape(c))
+            if os.path.exists(f):
+                try:
+                    img = Image.open(f)
+                    img.load()
+                    break
+                except Exception:
+                    img = None
+        # (decorated first letters are about 150 pixels square: left out too)
+        if img is None or min(img.size) < 80 or max(img.size) < 165:
+            continue
+        if img.mode in ('P', 'LA', 'RGBA', 'PA'):
+            bg = Image.new('RGB', img.size, 'white')
+            rgba = img.convert('RGBA')
+            bg.paste(rgba, mask=rgba.split()[3])
+            img = bg
+        img = img.convert('RGB')
+        px = list(img.resize((32, 32)).getdata())
+        if all(abs(r - g) < 12 and abs(g - b) < 12 for r, g, b in px):
+            img = img.convert('L')
+        if img.size[0] > 640:
+            img = img.resize((640, round(img.size[1] * 640 / img.size[0])), Image.LANCZOS)
+        n += 1
+        name = f'{n}.jpg'
+        img.save(os.path.join(dest, name), 'JPEG', quality=64, optimize=True, progressive=True)
+        keep[i] = (f'lib:{bid}/{name}', cap)
+    if not keep:
+        os.rmdir(dest)
+    return keep
+
+
 # --------------------------------------------------------------- main
+def _story_markdown(title, pages, pics, sid):
+    """A picture book in the app's Markdown: the cover, then each page with
+    its picture. Pictures go with pages only when the image bank has exactly
+    one per page (and the cover); otherwise only the cover is shown."""
+    out = [f'# {title}']
+    if pics:
+        out.append(f'![](pb:{sid}/{pics[0]})')
+    per_page = len(pics) == len(pages) + 1
+    for k, pg in enumerate(pages):
+        out.append('---')
+        if per_page:
+            out.append(f'![](pb:{sid}/{pics[k + 1]})')
+        out.extend(pg)
+    return '\n\n'.join(out) + '\n', (len(pics) if per_page else min(1, len(pics)))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--stories', required=True, help='pb-source/en folder')
-    ap.add_argument('--books-cache', required=True)
+    ap.add_argument('--imagebank', help='a clone of pb-imagebank (only the file list is read)')
+    ap.add_argument('--books-cache', required=True,
+                    help='folder with Gutenberg books: <id>.txt, or a GITenberg clone in <id>/ (its HTML edition gives the pictures)')
     a = ap.parse_args()
     load_ranks()
     load_vocab()
+    bank = {}
+    if a.imagebank:
+        import subprocess
+        names = subprocess.run(['git', '-C', a.imagebank, 'ls-tree', '-r', '--name-only', 'HEAD', 'medium'],
+                               capture_output=True, text=True, check=True).stdout.split()
+        for n in names:
+            parts = n.split('/')
+            if len(parts) == 3 and parts[2].endswith('.jpg'):
+                bank.setdefault(parts[1], []).append(parts[2])
     skipped = []
     catalog = []
     texts = {}
@@ -374,51 +594,161 @@ def main():
         s = read_story(os.path.join(a.stories, f))
         if s is None:
             continue
-        title, paras, lic, credit = s
-        md = f'# {title}\n\n' + '\n\n'.join(paras) + '\n'
-        score, _, _, words = stats(md)
+        title, pages, lic, credit = s
+        paras = [p for pg in pages for p in pg]
+        plain = f'# {title}\n\n' + '\n\n'.join(paras) + '\n'
+        score, _, _, words = stats(plain)
         if words < 60:
             continue
-        bad = unknown_words(md)
-        lower = len(re.findall(r"\b[a-z][a-z']*", md))
+        bad = unknown_words(plain)
+        lower = len(re.findall(r"\b[a-z][a-z']*", plain))
         if len(bad) >= 4 or len(bad) >= 0.015 * lower:
             skipped.append(f'{f}: {", ".join(bad)}')
             continue
         sid = 'pb-' + f[:4]
+        md, npics = _story_markdown(title, pages, story_pictures_from_list(bank, f[:4]), f[:4])
         texts[sid] = md
-        catalog.append({
+        item = {
             'id': sid, 'kind': 'story', 'title': title, 'author': None, 'level': story_level(score),
             'words': words, 'license': lic, 'credit': f'{credit}. Pratham Books, StoryWeaver.',
             'source': f'https://github.com/global-asp/pb-source/blob/master/en/{f}',
-        })
+        }
+        if npics:
+            item['pics'] = npics
+        catalog.append(item)
     out_books = os.path.join(ROOT, 'library', 'books')
+    out_images = os.path.join(ROOT, 'library', 'images')
     os.makedirs(out_books, exist_ok=True)
     for gid, repo, fname, title, author, lvl, how in read_books_tsv():
-        md, chapters = book_markdown(fetch_book(a.books_cache, gid, repo, fname), title, author, how)
-        score, rare, msl, words = stats(md)
         bid = f'pg-{gid}'
+        raw = fetch_book(a.books_cache, gid, repo, fname)
+        md, chapters = book_markdown(raw, title, author, how)
+        pics = {}
+        htm = sorted(glob.glob(os.path.join(a.books_cache, gid, f'{gid}-h', '*.htm*')))
+        if os.path.isdir(os.path.join(out_images, bid)):
+            for old in os.listdir(os.path.join(out_images, bid)):
+                os.remove(os.path.join(out_images, bid, old))
+        if htm:
+            text, found = html_book(htm[0])
+            if found:
+                pics = keep_book_pictures(os.path.dirname(htm[0]), found, bid, out_images)
+                md, placed = _insert_pictures(md, text, pics)
+                for k in set(pics) - placed:
+                    os.remove(os.path.join(out_images, bid, pics[k][0].split('/')[-1]))
+                    del pics[k]
+                if not pics and os.path.isdir(os.path.join(out_images, bid)):
+                    os.rmdir(os.path.join(out_images, bid))
+        score, rare, msl, words = stats(re.sub(r'^!\[.*$', '', md, flags=re.M))
         data = gzip.compress(md.encode('utf-8'), 9, mtime=0)
         open(os.path.join(out_books, f'{bid}.md.gz'), 'wb').write(data)
-        catalog.append({
+        pic_bytes = sum(os.path.getsize(os.path.join(out_images, bid, f)) for f in os.listdir(os.path.join(out_images, bid))) if pics else 0
+        item = {
             'id': bid, 'kind': 'book', 'title': title, 'author': author, 'level': lvl,
             'words': words, 'chapters': chapters, 'size': len(data), 'license': 'Public domain',
             'credit': 'Project Gutenberg', 'source': f'https://www.gutenberg.org/ebooks/{gid}',
-        })
-        print(f'{bid:10} {lvl} (formula {level(score)}) rare={rare:4.1f} sl={msl:4.1f} ch={chapters:3} words={words:6} {len(data)//1024}KB {title}',
-              file=sys.stderr)
+        }
+        if pics:
+            item['pics'] = len(pics)
+            item['picsSize'] = pic_bytes
+        catalog.append(item)
+        print(f'{bid:10} {lvl} (formula {level(score)}) rare={rare:4.1f} sl={msl:4.1f} ch={chapters:3} words={words:6} '
+              f'{len(data)//1024}KB pics={len(pics)} {pic_bytes//1024}KB {title}', file=sys.stderr)
     print(f'{len(skipped)} stories left out (misspellings or many non-English words):', file=sys.stderr)
     for x in skipped:
         print('  ' + x, file=sys.stderr)
-    lv = {l: 0 for l in LEVELS}
+    lv = {l: [0, 0] for l in LEVELS}
     for c in catalog:
-        lv[c['level']] += 1
-    print('levels:', lv, file=sys.stderr)
+        lv[c['level']][c['kind'] == 'book'] += 1
+    print('levels (stories, books):', lv, file=sys.stderr)
     assets = os.path.join(ROOT, 'assets', 'library')
     os.makedirs(assets, exist_ok=True)
     catalog.sort(key=lambda c: (LEVELS.index(c['level']), c['kind'] != 'book', c['words']))
     json.dump(catalog, open(os.path.join(assets, 'catalog.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
     open(os.path.join(assets, 'stories.json.gz'), 'wb').write(
         gzip.compress(json.dumps(texts, ensure_ascii=False).encode('utf-8'), 9, mtime=0))
+
+
+def _norm_words(t):
+    return re.findall(r"[a-z0-9]+", t.lower().replace("'", ''))
+
+
+def _insert_pictures(md, text, pics):
+    """Puts each kept picture of the HTML edition into the book's Markdown
+    (made from the plain text, so the text is the same as without pictures):
+    before the paragraph that follows the picture in the HTML edition, found
+    by its first words; a picture with no text after it goes after the
+    paragraph before it. Returns the Markdown and the pictures placed."""
+    blocks = [b for b in text.split('\n\n') if b.strip()]
+    paras = md.split('\n\n')
+    keys = [' '.join(_norm_words(p)) for p in paras]
+    joined = ''
+    starts = []
+    for k in keys:
+        starts.append(len(joined))
+        joined += k + ' | '
+
+    def para_at(pos):
+        lo, hi = 0, len(starts) - 1
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if starts[mid] <= pos:
+                lo = mid
+            else:
+                hi = mid - 1
+        return lo
+
+    before = {}  # paragraph index -> pictures to put before it
+    after = {}
+    placed = set()
+    cursor = 0
+    for i, b in enumerate(blocks):
+        m = re.fullmatch(r'@@img(\d+)@@', b.strip())
+        if not m or int(m.group(1)) not in pics:
+            continue
+        k = int(m.group(1))
+        # the first text after the picture, then the last text before it
+        nxt = next((x for x in blocks[i + 1:i + 8] if not x.startswith('@@img') and len(_norm_words(x)) >= 4), None)
+        prv = next((x for x in reversed(blocks[max(0, i - 8):i]) if not x.startswith('@@img') and len(_norm_words(x)) >= 4), None)
+        hit = None
+        for cand, where in ((nxt, 'before'), (prv, 'after')):
+            if not cand:
+                continue
+            w = _norm_words(cand)
+            for n in (8, 6, 4):
+                key = ' '.join(w[:n]) if where == 'before' else ' '.join(w[-n:])
+                pos = joined.find(key, cursor)
+                if pos >= 0:
+                    hit = (para_at(pos), where)
+                    break
+            if hit:
+                break
+        if not hit:
+            continue
+        idx, where = hit
+        cursor = starts[idx]
+        (before if where == 'before' else after).setdefault(idx, []).append(k)
+        placed.add(k)
+
+    def pic(k):
+        addr, cap = pics[k]
+        cap = cap.replace('"', "'")
+        return f'![]({addr} "{cap}")' if cap else f'![]({addr})'
+
+    out = []
+    for i, p in enumerate(paras):
+        ks = before.get(i, [])
+        if p.startswith('# ') and ks:
+            # a picture just before a chapter heading goes under the heading
+            out.append(p)
+            out.extend(pic(k) for k in ks)
+        else:
+            out.extend(pic(k) for k in ks)
+            out.append(p)
+        out.extend(pic(k) for k in after.get(i, []))
+    res = '\n\n'.join(out)
+    if not res.endswith('\n'):
+        res += '\n'
+    return res, placed
 
 
 if __name__ == '__main__':
