@@ -28,6 +28,22 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   void initState() {
     super.initState();
     if (mt.ready(widget.app.user)) result = mt.translate(widget.app.user, widget.text);
+    mt.downloading.addListener(_changed);
+  }
+
+  /// The package was being prepared in the background: show the translation
+  /// as soon as it is ready.
+  void _changed() {
+    if (!mounted) return;
+    setState(() {
+      if (result == null && mt.ready(widget.app.user)) result = mt.translate(widget.app.user, widget.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    mt.downloading.removeListener(_changed);
+    super.dispose();
   }
 
   Future<void> _download() async {
@@ -54,38 +70,58 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   Widget build(BuildContext context) {
     if (!DeviceTranslate.supported) return const SizedBox.shrink();
     final theme = Theme.of(context);
+    if (result == null && mt.downloading.value) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: Row(
+          children: [
+            const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2)),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(L('Türkçe çeviri hazırlanıyor…', 'Getting the Turkish translation ready…'), style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+            ),
+          ],
+        ),
+      );
+    }
     if (result == null) {
       return Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          OutlinedButton.icon(
-            onPressed: downloading ? null : _download,
-            icon: downloading
-                ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                : const Icon(Icons.g_translate_rounded, size: 18),
-            label: Text(downloading
-                ? L('Çeviri paketi indiriliyor…', 'Downloading the translation package…')
-                : L('Anında Türkçe çeviri: paketi indir (~30 MB, bir kez)', 'Instant Turkish translation: download (~30 MB, once)')),
-          ),
-          if (error != null) Text(error!, style: TextStyle(color: theme.colorScheme.error, fontSize: 13)),
-        ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            OutlinedButton.icon(
+              onPressed: downloading ? null : _download,
+              icon: downloading ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.g_translate_rounded, size: 18),
+              label: Text(
+                downloading ? L('Çeviri paketi indiriliyor…', 'Downloading the translation package…') : L('Türkçe çeviriyi indir (~30 MB, bir kez)', 'Download the Turkish translation (~30 MB, once)'),
+              ),
+            ),
+            if (error != null) Text(error!, style: TextStyle(color: theme.colorScheme.error, fontSize: 13)),
+          ],
+        ),
       );
     }
     return FutureBuilder<String?>(
       future: result,
       builder: (c, s) {
         if (s.connectionState != ConnectionState.done) {
-          return const Padding(padding: EdgeInsets.only(top: 6), child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)));
+          return const Padding(
+            padding: EdgeInsets.only(top: 6),
+            child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+          );
         }
         final t = s.data;
         if (t == null) return const SizedBox.shrink();
         return Padding(
           padding: const EdgeInsets.only(top: 4),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SelectableText(t, style: trStyle(theme, widget.style)),
-            Text(L('Cihaz içi anında çeviri (makine çevirisi)', 'Instant on-device translation (machine translation)'),
-                style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-          ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SelectableText(t, style: trStyle(theme, widget.style)),
+              Text(L('Cihaz içi anında çeviri (makine çevirisi)', 'Instant on-device translation (machine translation)'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+            ],
+          ),
         );
       },
     );

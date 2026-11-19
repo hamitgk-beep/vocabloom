@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'ai/key_ai.dart';
 import 'app_state.dart';
+import 'ai/device_translate.dart';
 import 'data/dict_db.dart';
 import 'data/user_db.dart';
 import 'import/importers.dart' show looksGeneratedTitle, titleFromContent;
@@ -65,6 +66,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       Future.delayed(const Duration(seconds: 3), Speech.instance.warmUp);
       // All voices come with the app: fetch the packs that are missing.
       if (override == null) Future.delayed(const Duration(seconds: 2), Speech.instance.downloadAll);
+      // The instant Turkish translation package (phones and tablets) comes the same way.
+      if (override == null) Future.delayed(const Duration(seconds: 4), () => DeviceTranslate.instance.prepare(user));
       try {
         user.repairJoinedWordsOnce((t) => splitJoinedWords(t, a.isWord));
       } catch (e) {

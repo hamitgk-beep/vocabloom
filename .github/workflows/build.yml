@@ -127,6 +127,14 @@ jobs:
         run: |
           mkdir -p Payload
           cp -R build/ios/iphoneos/Runner.app Payload/
+          # ML Kit is linked into the app itself, so it looks for its resource
+          # bundles (the translation model list, MLKitTranslate_resource) in
+          # the app folder, not inside its framework: without them the
+          # translation download closes the app.
+          for b in Payload/Runner.app/Frameworks/*.framework/*.bundle; do
+            [ -d "$b" ] && cp -R "$b" Payload/Runner.app/ && echo "copied $(basename "$b")"
+          done
+          test -d Payload/Runner.app/MLKitTranslate_resource.bundle
           zip -qr VocaBloom-unsigned.ipa Payload
       - uses: actions/upload-artifact@v4
         with:
