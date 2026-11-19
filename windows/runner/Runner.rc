@@ -92,9 +92,9 @@ BEGIN
             VALUE "CompanyName", "Hamit GOK" "\0"
             VALUE "FileDescription", "Storilex" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "VocaBloom" "\0"
+            VALUE "InternalName", "Storilex" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 Hamit GOK" "\0"
-            VALUE "OriginalFilename", "VocaBloom.exe" "\0"
+            VALUE "OriginalFilename", "Storilex.exe" "\0"
             VALUE "ProductName", "Storilex" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

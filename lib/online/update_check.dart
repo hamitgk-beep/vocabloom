@@ -69,11 +69,11 @@ List<ReleaseNote> parseReleaseNotes(String body, {int sinceBuild = 0}) {
 }
 
 String? _assetForPlatform() {
-  if (Platform.isAndroid) return 'VocaBloom-Android.apk';
-  if (Platform.isWindows) return 'VocaBloom-Windows.zip';
-  if (Platform.isMacOS) return 'VocaBloom-macOS.zip';
-  if (Platform.isIOS) return 'VocaBloom-iOS-unsigned.ipa';
-  if (Platform.isLinux) return 'VocaBloom-Linux.tar.gz';
+  if (Platform.isAndroid) return 'Storilex-Android.apk';
+  if (Platform.isWindows) return 'Storilex-Windows.zip';
+  if (Platform.isMacOS) return 'Storilex-macOS.zip';
+  if (Platform.isIOS) return 'Storilex-iOS-unsigned.ipa';
+  if (Platform.isLinux) return 'Storilex-Linux.tar.gz';
   return null;
 }
 

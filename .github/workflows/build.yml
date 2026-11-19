@@ -49,7 +49,7 @@ jobs:
       - run: flutter build windows --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-Windows
+          name: Storilex-Windows
           path: build/windows/x64/runner/Release
 
   android:
@@ -87,7 +87,7 @@ jobs:
       - run: flutter build apk --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-Android
+          name: Storilex-Android
           path: build/app/outputs/flutter-apk/app-release.apk
 
   linux:
@@ -105,7 +105,7 @@ jobs:
       - run: flutter build linux --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-Linux
+          name: Storilex-Linux
           path: build/linux/x64/release/bundle
 
   ios:
@@ -135,11 +135,11 @@ jobs:
             [ -d "$b" ] && cp -R "$b" Payload/Runner.app/ && echo "copied $(basename "$b")"
           done
           test -d Payload/Runner.app/MLKitTranslate_resource.bundle
-          zip -qr VocaBloom-unsigned.ipa Payload
+          zip -qr Storilex-unsigned.ipa Payload
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-iOS
-          path: VocaBloom-unsigned.ipa
+          name: Storilex-iOS
+          path: Storilex-unsigned.ipa
 
   macos:
     needs: test
@@ -151,7 +151,7 @@ jobs:
       - run: flutter build macos --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-macOS
+          name: Storilex-macOS
           path: build/macos/Build/Products/Release/Storilex.app
 
   release:
@@ -187,11 +187,22 @@ jobs:
       - name: Package files
         run: |
           cd dist
-          (cd VocaBloom-Windows && zip -qr ../VocaBloom-Windows.zip .)
-          cp VocaBloom-Android/app-release.apk VocaBloom-Android.apk
-          cp VocaBloom-iOS/VocaBloom-unsigned.ipa VocaBloom-iOS-unsigned.ipa
-          (cd VocaBloom-macOS && zip -qry ../VocaBloom-macOS.zip .)
-          tar -czf VocaBloom-Linux.tar.gz -C VocaBloom-Linux .
+          (cd Storilex-Windows && zip -qr ../Storilex-Windows.zip .)
+          cp Storilex-Android/app-release.apk Storilex-Android.apk
+          cp Storilex-iOS/Storilex-unsigned.ipa Storilex-iOS-unsigned.ipa
+          (cd Storilex-macOS && zip -qry ../Storilex-macOS.zip .)
+          tar -czf Storilex-Linux.tar.gz -C Storilex-Linux .
+          # Apps from before the rename look for the VocaBloom files, and on
+          # Windows they restart VocaBloom.exe after the update: their zip
+          # carries a copy under that name. The new app then moves the user's
+          # shortcuts to Storilex.exe, and the next update removes the copy.
+          cp -r Storilex-Windows legacy-windows
+          cp legacy-windows/Storilex.exe legacy-windows/VocaBloom.exe
+          (cd legacy-windows && zip -qr ../VocaBloom-Windows.zip .)
+          cp Storilex-Android.apk VocaBloom-Android.apk
+          cp Storilex-iOS-unsigned.ipa VocaBloom-iOS-unsigned.ipa
+          cp Storilex-macOS.zip VocaBloom-macOS.zip
+          cp Storilex-Linux.tar.gz VocaBloom-Linux.tar.gz
       - name: Publish 'latest' release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -201,4 +212,5 @@ jobs:
           gh release create latest --prerelease --target "$GITHUB_SHA" \
             --title "Storilex ${{ needs.test.outputs.version }}" \
             --notes-file body.md \
+            dist/Storilex-Windows.zip dist/Storilex-Android.apk dist/Storilex-iOS-unsigned.ipa dist/Storilex-macOS.zip dist/Storilex-Linux.tar.gz \
             dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip dist/VocaBloom-Linux.tar.gz

@@ -31,7 +31,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
         ::MessageBoxW(nullptr,
                       (L"Gerekli dosya bulunamad\u0131:\n" + dir + n +
                        L"\n\nZip dosyas\u0131n\u0131 \u00f6nce sa\u011f t\u0131k > \"T\u00fcm\u00fcn\u00fc ay\u0131kla\" ile bir klas\u00f6re \u00e7\u0131kar\u0131n, "
-                       L"sonra o klas\u00f6rdeki VocaBloom.exe'yi \u00e7al\u0131\u015ft\u0131r\u0131n.")
+                       L"sonra o klas\u00f6rdeki Storilex.exe'yi \u00e7al\u0131\u015ft\u0131r\u0131n.")
                           .c_str(),
                       L"Storilex", MB_OK | MB_ICONERROR);
         return EXIT_FAILURE;

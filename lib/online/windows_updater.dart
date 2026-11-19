@@ -9,9 +9,15 @@ import 'native_fetch.dart';
 
 /// Updates the Windows app in place: downloads the release zip, unpacks it
 /// next to the app, then a small script waits for the app to close, copies
-/// the new files over the old ones and starts VocaBloom again.
+/// the new files over the old ones and starts Storilex again.
 /// Books and words live in the user's AppData folder, so they are kept.
 class WindowsUpdater {
+  /// The app's program file. Before the rename it was [legacyExeName]; an
+  /// update from such a version brings both, and the next update (or the
+  /// start-up clean-up) leaves only this one.
+  static const exeName = 'Storilex.exe';
+  static const legacyExeName = 'VocaBloom.exe';
+
   /// Downloads and unpacks [url]. [onProgress] gets 0..1 (or null when the
   /// size is unknown). Returns the folder that holds the new files.
   static Future<Directory> prepare(String url, void Function(double? p) onProgress, {int? expectedSize}) async {
@@ -30,8 +36,8 @@ class WindowsUpdater {
         input.closeSync();
       }
     });
-    if (!File(p.join(out.path, 'VocaBloom.exe')).existsSync()) {
-      throw const FileSystemException('VocaBloom.exe is missing from the update');
+    if (!File(p.join(out.path, exeName)).existsSync()) {
+      throw const FileSystemException('$exeName is missing from the update');
     }
     return out;
   }
@@ -42,13 +48,27 @@ class WindowsUpdater {
   /// Starts the copy script and closes the app.
   static Future<void> installAndRestart(Directory newFiles) async {
     final appDir = File(Platform.resolvedExecutable).parent.path;
-    final exe = p.join(appDir, p.basename(Platform.resolvedExecutable));
+    final running = p.basename(Platform.resolvedExecutable);
+    // The new files always start as Storilex.exe, even when this is still
+    // the VocaBloom.exe copy an update from before the rename left behind.
+    final exe = p.join(appDir, exeName);
     final script = File(p.join(newFiles.parent.path, 'install.cmd'));
     await script.writeAsString(installScript(pid));
     try {
       File(resultPath).deleteSync();
     } catch (_) {}
-    await launchScript(script.path, installEnv(newFiles: newFiles.path, appDir: appDir, exe: exe, cleanup: newFiles.parent.path, result: resultPath));
+    await launchScript(
+      script.path,
+      installEnv(
+        newFiles: newFiles.path,
+        appDir: appDir,
+        exe: exe,
+        appName: running,
+        cleanup: newFiles.parent.path,
+        result: resultPath,
+        remove: p.join(appDir, legacyExeName),
+      ),
+    );
     // Ends the process at once. A normal exit can hang while native audio
     // and ONNX threads shut down, and then the app's DLLs stay locked.
     Process.killPid(pid, ProcessSignal.sigkill);
@@ -72,6 +92,7 @@ class WindowsUpdater {
     required String cleanup,
     required String result,
     String? appName,
+    String? remove,
     String? log,
     int killAfter = 10,
     int giveUpAfter = 40,
@@ -85,6 +106,7 @@ class WindowsUpdater {
     'VB_RESULT': result,
     'VB_KILL': '$killAfter',
     'VB_GIVEUP': '$giveUpAfter',
+    if (remove != null) 'VB_REMOVE': remove,
   };
 
   /// The batch file (ASCII only). It waits until no .exe or .dll in %VB_APP%
@@ -133,6 +155,8 @@ class WindowsUpdater {
     '  > "%VB_RESULT%" echo ok',
     '  set CLEAN=1',
     ')',
+    // The old program file from before the rename, once the copy worked.
+    'if defined CLEAN if defined VB_REMOVE if exist "%VB_REMOVE%" del /F /Q "%VB_REMOVE%" >> %LOG% 2>&1',
     ':start',
     'start "" "%VB_EXE%"',
     'if not defined CLEAN exit /b 0',

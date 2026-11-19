@@ -17,7 +17,7 @@ class FetchException implements Exception {
   String toString() => attempts.join(' | ');
 }
 
-const _agent = 'VocaBloom';
+const _agent = 'Storilex';
 
 /// Tests set this to skip package:http and use only the Windows fallbacks.
 bool debugSkipDartHttp = false;

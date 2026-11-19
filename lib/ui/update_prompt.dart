@@ -17,7 +17,7 @@ class UpdatePrompt {
   /// with what to do. The old app was left as it was unless copying broke
   /// off midway ("fail copy").
   static void showInstallFailed(BuildContext context, String reason) {
-    const zip = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/VocaBloom-Windows.zip';
+    const zip = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/Storilex-Windows.zip';
     final m = ScaffoldMessenger.of(context);
     m.hideCurrentMaterialBanner();
     m.showMaterialBanner(

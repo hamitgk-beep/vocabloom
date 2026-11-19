@@ -18,6 +18,7 @@ import 'ui/journey_page.dart';
 import 'ui/library_page.dart';
 import 'online/update_check.dart';
 import 'online/windows_updater.dart';
+import 'online/rename_migration.dart';
 import 'ui/other_pages.dart';
 import 'ui/settings_page.dart';
 import 'ui/update_prompt.dart';
@@ -56,7 +57,13 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
   Future<void> _init() async {
     try {
       final override = Platform.environment['KELIME_OKUR_DATA'];
-      final dir = override != null ? Directory(override) : await getApplicationSupportDirectory();
+      var dir = override != null ? Directory(override) : await getApplicationSupportDirectory();
+      // Windows names the data folder after the product: books and words
+      // from the VocaBloom days move to the Storilex folder.
+      if (override == null && Platform.isWindows) {
+        dir = RenameMigration.dataFolder(dir);
+        unawaited(RenameMigration.moveShortcuts());
+      }
       await dir.create(recursive: true);
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
