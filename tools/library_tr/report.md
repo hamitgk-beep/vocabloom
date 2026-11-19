@@ -2,7 +2,9 @@
 
 levels: {"A1": 0, "A2": 1, "B1": 1, "B2": 3, "C1": 2}
 
-dump: 11587 main pages, 9154 scan pages
+dump: 11587 main pages, 9154 scan pages, 0 author pages
+authors with a known year of death: 17, public domain: 14
+most common authors with no year of death: (no author) 10659, mustafa kemal atatürk 407, orhan veli kanık 143, yunus emre 94, bâkî 15, millet ittifakı 15, şah hatayi 14, recep tayyip erdoğan 13, kemal kılıçdaroğlu 11, neyzen tevfik 11, kanuni sultan süleyman 9, abdurrahman yalçınkaya 8, süleyman çelebi 7, nazım hikmet 6, ıı. mehmed 6, celâl sahir erozan 6, namık kemal 5, kul himmet 5, ismet inönü 5, turgut özal 5, abdülhak hamit tarhan 5, anonim 4, vladimir ilyiç lenin 4, çin halk cumhuriyeti ankara büyükelçiliği 4, eşrefoğlu rumî 4, seyyid nesimi 4, kul nesimi 3, ı. murat 3, ahmet necdet sezer 3, yavuz sultan selim 3, ıı. bayezid 3, selahattin demirtaş 3, vladimir putin 3, birleşmiş milletler 2, bursalı âşık yunus 2, abraham lincoln 2, ilker başbuğ 2, ı. mahmud 2, ıı. mahmud 2, ıı. selim 2
 ## Ömer Seyfettin (d. 1920): 9 pages
 - Bir Refikin Defter-i İhtisasatından: ok 399 words, rare 47.3%, sentence 23.5
 - Buse-i Mader: ok 143 words, rare 46.8%, sentence 14.3
@@ -13,25 +15,10 @@ dump: 11587 main pages, 9154 scan pages
 - Tenezzüh (hikâye): short (94 words)
 - Vire: ok 2531 words, rare 47.4%, sentence 6.7
 - İlkbahar: ok 345 words, rare 50.9%, sentence 17.2
-## Sait Faik Abasıyanık (d. 1954): 0 pages
-## Sabahattin Ali (d. 1948): 1 pages
-- Kürk Mantolu Madonna: short (0 words)
-## Memduh Şevket Esendal (d. 1952): 0 pages
-## Hüseyin Rahmi Gürpınar (d. 1944): 0 pages
-## Halit Ziya Uşaklıgil (d. 1945): 0 pages
-## Ahmet Rasim (d. 1932): 0 pages
-## Ahmet Hikmet Müftüoğlu (d. 1927): 0 pages
-## Ahmet Mithat Efendi (d. 1912): 0 pages
-## Mehmet Rauf (d. 1931): 0 pages
-## Nabizade Nazım (d. 1893): 0 pages
-## Samipaşazade Sezai (d. 1936): 0 pages
-## Fatma Aliye Topuz (d. 1936): 0 pages
-## Emine Semiye (d. 1944): 0 pages
-## Yakup Kadri Karaosmanoğlu (d. 1974): 0 pages, left out (not yet public domain)
-## Refik Halit Karay (d. 1965): 0 pages, left out (not yet public domain)
-## Reşat Nuri Güntekin (d. 1956): 0 pages, left out (not yet public domain)
 ## Nasreddin Hoca (folk): 1 pages
 - Riyakâr (Nasreddin Hoca fıkrası): short (86 words)
+## Sabahattin Ali (d. 1948): 1 pages
+- Kürk Mantolu Madonna: short (0 words)
 A2   464 rare=35.6 sl=10.5 Hediye... (Ömer Seyfettin)
 B1   129 rare=40.2 sl=9.9 Pembe Menekşe (Ömer Seyfettin)
 B2   143 rare=46.8 sl=14.3 Buse-i Mader (Ömer Seyfettin)
