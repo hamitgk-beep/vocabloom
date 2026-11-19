@@ -501,6 +501,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                 onPressed: () => _scaffold.currentState!.openDrawer(),
               ),
             ],
+            if (!app.learnTurkish)
             IconButton(
               key: const ValueKey('reader-filters'),
               tooltip: wide && filtersOpen ? L('Filtreleri kapat', 'Close filters') : L('Filtreler', 'Filters'),
@@ -692,7 +693,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                         ),
                       ),
                     ),
-                    if (wide && filtersOpen) ...[
+                    if (wide && filtersOpen && !app.learnTurkish) ...[
                       const VerticalDivider(width: 1),
                       SizedBox(
                         width: 320,

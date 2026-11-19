@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [claude/project-thread-9n9060]
-    paths: [tools/tr_en/build_tr_en.py, .github/workflows/tr-en-data.yml]
+    paths: [tools/tr_en/build_tr_en.py, tools/tr_en/tatoeba_pairs.py, .github/workflows/tr-en-data.yml]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,4 +32,5 @@ jobs:
           git config user.email "github-actions@users.noreply.github.com"
           git add assets/tr_en.db tools/tr_en/report.md
           git commit -m "tr-en dictionary data (Kaikki, FrequencyWords, Tatoeba)" || exit 0
-          git push
+          for i in 1 2 3 4; do git pull --rebase -q origin "$GITHUB_REF_NAME" && git push && exit 0; sleep 10; done
+          exit 1
