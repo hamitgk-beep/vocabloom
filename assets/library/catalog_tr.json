@@ -1,1 +1,93 @@
-[]
+[
+{
+"id": "trws-hediye",
+"kind": "story",
+"title": "Hediye...",
+"author": "Ömer Seyfettin",
+"level": "A2",
+"words": 464,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/Hediye...",
+"pics": 0,
+"lang": "tr"
+},
+{
+"id": "trws-pembe-menekse",
+"kind": "story",
+"title": "Pembe Menekşe",
+"author": "Ömer Seyfettin",
+"level": "B1",
+"words": 129,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/Pembe_Menek%C5%9Fe",
+"pics": 0,
+"lang": "tr"
+},
+{
+"id": "trws-buse-i-mader",
+"kind": "story",
+"title": "Buse-i Mader",
+"author": "Ömer Seyfettin",
+"level": "B2",
+"words": 143,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/Buse-i_Mader",
+"pics": 0,
+"lang": "tr"
+},
+{
+"id": "trws-cimnastige-dair-2",
+"kind": "story",
+"title": "Cimnastiğe Dair - 2",
+"author": "Ömer Seyfettin",
+"level": "B2",
+"words": 1829,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/Cimnasti%C4%9Fe_Dair_-_2",
+"pics": 0,
+"lang": "tr"
+},
+{
+"id": "trws-vire",
+"kind": "story",
+"title": "Vire",
+"author": "Ömer Seyfettin",
+"level": "B2",
+"words": 2531,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/Vire",
+"pics": 0,
+"lang": "tr"
+},
+{
+"id": "trws-ilkbahar",
+"kind": "story",
+"title": "İlkbahar",
+"author": "Ömer Seyfettin",
+"level": "C1",
+"words": 345,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/%C4%B0lkbahar",
+"pics": 0,
+"lang": "tr"
+},
+{
+"id": "trws-bir-refikin-defter-i-ihtisasatindan",
+"kind": "story",
+"title": "Bir Refikin Defter-i İhtisasatından",
+"author": "Ömer Seyfettin",
+"level": "C1",
+"words": 399,
+"license": "Public domain",
+"credit": "Ömer Seyfettin. Vikikaynak (tr.wikisource.org)",
+"source": "https://tr.wikisource.org/wiki/Bir_Refikin_Defter-i_%C4%B0htisasat%C4%B1ndan",
+"pics": 0,
+"lang": "tr"
+}
+]
