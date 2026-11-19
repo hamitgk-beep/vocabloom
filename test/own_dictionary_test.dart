@@ -2,6 +2,7 @@
 // it reads today (ft); with ownEnabled true, own_word comes first and ft is used whenever there is
 // no own meaning or the table is missing. The released default is on (useOwnDictionary = true).
 // The bundled database is never written to; every test works on a temporary copy.
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -85,5 +86,25 @@ void main() {
     final before = File(_asset).lengthSync();
     _open(_asset).lookup('book', ownEnabled: true);
     expect(File(_asset).lengthSync(), before);
+  });
+
+  test('own expression meaning is the gloss when on, the old one when off', () {
+    final db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+    final row = db.select("SELECT senses FROM own_expr WHERE phrase = 'a dime a dozen' AND cat = 'idioms'");
+    db.dispose();
+    expect(row, isNotEmpty);
+    final ownFirst = (jsonDecode(row.first.columnAt(0) as String) as List).first as Map;
+
+    final on = DictDb();
+    on.db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+    on.load(ownEnabled: true);
+    final off = DictDb();
+    off.db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+    off.load(ownEnabled: false);
+
+    final e1 = on.exprs.firstWhere((e) => e.phrase == 'a dime a dozen' && e.cat == 'idioms');
+    final e2 = off.exprs.firstWhere((e) => e.phrase == 'a dime a dozen' && e.cat == 'idioms');
+    expect(e1.tr, contains(ownFirst['tr'] as String));
+    expect(e2.tr, isNot(contains(ownFirst['tr'] as String)));
   });
 }

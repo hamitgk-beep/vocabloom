@@ -40,7 +40,7 @@ with gzip.open(entries, 'rt', encoding='utf-8') as f:
             n_w += cur.rowcount
         else:
             cur = db.execute('INSERT OR IGNORE INTO own_expr VALUES (?,?,?,?,?,?,?,?)',
-                             (r['w'], '', senses, r['status'], 0, r.get('action'), r.get('source'), r.get('note')))
+                             (r['w'], r.get('cat', ''), senses, r['status'], 0, r.get('action'), r.get('source'), r.get('note')))
             n_e += cur.rowcount
 db.commit()
 print(json.dumps({'own_word_rows': n_w, 'own_expr_rows': n_e, 'skipped': skipped}))

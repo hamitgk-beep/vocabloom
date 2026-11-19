@@ -78,7 +78,7 @@ class DictDb {
   /// V2/V3 form -> base forms of the irregular verbs it belongs to ("found" -> find).
   final Map<String, List<String>> irregularOf = {};
 
-  void load() {
+  void load({bool ownEnabled = useOwnDictionary}) {
     irregular.clear();
     irregularOf.clear();
     final known = <String>{};
@@ -97,8 +97,22 @@ class DictDb {
     final forms = <int, List<String>>{};
     final cols = {for (final r in db.select('PRAGMA table_info(expr)')) r['name'] as String};
     final hasEx = cols.contains('ex'), hasEnTr = cols.contains('entr');
+    // Own expression meanings (own_expr) replace the Turkish gloss when the flag is on and a row exists.
+    final ownExpr = <String, String>{};
+    if (ownEnabled && db.select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_expr'").isNotEmpty) {
+      for (final r in db.select('SELECT phrase, cat, senses FROM own_expr')) {
+        ownExpr['${r.columnAt(0)}|${r.columnAt(1)}'] = r.columnAt(2) as String;
+      }
+    }
     for (final r in db.select('SELECT id, phrase, cat, tr, en, forms${hasEx ? ', ex' : ''}${hasEnTr ? ', entr, extr' : ''} FROM expr')) {
-      final e = Expr(r['id'] as int, r['phrase'] as String, r['cat'] as String, r['tr'] as String?,
+      var trOwn = r['tr'] as String?;
+      final own = ownExpr['${r['phrase']}|${r['cat']}'];
+      if (own != null) {
+        final senses = (jsonDecode(own) as List).cast<Map>();
+        final t = [for (final x in senses) (x['tr'] as String? ?? '').trim()].where((x) => x.isNotEmpty).toList();
+        if (t.isNotEmpty) trOwn = t.join(', ');
+      }
+      final e = Expr(r['id'] as int, r['phrase'] as String, r['cat'] as String, trOwn,
           r['en'] as String?, patternOf(r['phrase'] as String),
           ex: hasEx ? r['ex'] as String? : null, enTr: hasEnTr ? r['entr'] as String? : null, exTr: hasEnTr ? r['extr'] as String? : null);
       if (e.pattern.isEmpty) continue;

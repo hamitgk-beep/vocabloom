@@ -24,6 +24,27 @@ POS_RULES = [  # checked in order on the lower-cased label
 ]
 
 
+GROUP_CAT = {
+    'idioms': 'idioms', 'phrasal verbs': 'phrasal_verbs', 'prepositional phrases': 'prepositional_phrases',
+    'binomials': 'binomials', 'proverbs & sayings': 'proverbs', 'proverbs': 'proverbs',
+    'collocations': 'collocations', 'chunks': 'chunks', 'irregular verbs': 'irregular_verbs',
+    'discourse markers': 'discourse_markers', 'conjunctions': 'conjunctions',
+}
+
+
+def expr_cat(r):
+    """Category of an expression, the same value the app's expr table uses (idioms, phrasal_verbs, ...)."""
+    if r.get('kind') != 'expr':
+        return ''
+    if r.get('cat'):
+        return r['cat']
+    key = r.get('key') or ''
+    if '|' in key:
+        return key.rsplit('|', 1)[1]
+    g = (r.get('group') or '').strip().lower()
+    return GROUP_CAT.get(g, g.replace(' ', '_'))
+
+
 def pos_tr(label):
     s = (label or '').lower()
     for key, tr in POS_RULES:
@@ -56,7 +77,7 @@ def main(src, out, review=None):
             drop('missing_en_or_example', r); continue
         for s in senses:
             s['pos'] = pos_tr(s.get('pos', ''))
-        kept.append({'w': r['w'], 'kind': r['kind'], 'senses': senses, 'status': 'ai_draft_unreviewed',
+        kept.append({'w': r['w'], 'kind': r['kind'], 'cat': expr_cat(r), 'senses': senses, 'status': 'ai_draft_unreviewed',
                      'source': 'ai_generated', 'provider': r.get('provider', ''),
                      'reviewed_by_ai': True, 'reviewed_by_human': False})
     with gzip.open(out, 'wt', encoding='utf-8') as f:
