@@ -8,7 +8,7 @@ import '../../ai/local_ai.dart';
 import '../../ai/tutor.dart';
 
 enum AiTool {
-  explain(Icons.lightbulb_outline_rounded, Color(0xFF5B3FD9)),
+  explain(Icons.lightbulb_outline_rounded, Color(0xFFA9792F)),
   correct(Icons.spellcheck_rounded, Color(0xFF0E9F6E)),
   chat(Icons.forum_outlined, Color(0xFF2563EB)),
   quiz(Icons.quiz_outlined, Color(0xFFE0752D));

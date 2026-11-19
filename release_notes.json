@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "gold-look",
+      "area": "app",
+      "tr": "Yeni görünüm: gündüz krem ve altın, gece sıcak koyu kahve ve altın tonları. Yuvarlak kartlar, hap şeklinde altın butonlar ve yeni altın uygulama simgesi. Kitaplık'ta haftalık özet kartı (bugün, bu hafta, seri), yana kayan \"Okumaya devam et\" kartları ve büyük kapaklı kitap ızgarası var. Telefonda alt menü sadeleşti: ortadaki altın düğme son okuduğun kitabı açar; Ücretsiz kütüphane, İstatistik ve Ayarlar Kitaplık'ın üst kısmında.",
+      "en": "A new look: cream and gold by day, warm dark brown and gold at night, with rounded cards, gold pill buttons and a new gold app icon. My library has a weekly summary card (today, this week, streak), sideways \"Continue reading\" cards and a grid of big covers. On phones the bottom bar is simpler: the gold button in the middle opens the book you read last; Free library, Stats and Settings are at the top of My library."
+    },
+    {
       "id": "free-library-pictures",
       "area": "reader",
       "tr": "Ücretsiz kütüphane yenilendi: hikâyeler ve kitaplar artık resimleriyle geliyor; resimli hikâyelerde her sayfa kitaptaki gibi kendi resmiyle açılıyor. Kütüphaneye A1'den C1'e 61 yeni telifsiz kitap eklendi (Beatrix Potter masalları, McGuffey okuma kitapları, Twins dizisi, Uncle Wiggily, Küçük Prenses, Yeşilin Kızı Anne, Büyük Umutlar, İki Şehrin Hikâyesi ve daha fazlası). Daha önce eklediğin bir kitabın bilgi sayfasındaki \"Resimli sürümle yenile\" düğmesi resimli sürümünü getirir, kaldığın bölüm korunur.",

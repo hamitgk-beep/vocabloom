@@ -393,7 +393,7 @@ class _ReviewPageState extends State<ReviewPage> {
           const SizedBox(width: 10),
           _Stat(icon: Icons.check_circle_rounded, color: learnedColor, value: '$known', label: L('biliyordun', 'known')),
           const SizedBox(width: 10),
-          _Stat(icon: Icons.verified_rounded, color: Brand.violet, value: '$graduated', label: L('öğrenildi', 'learned')),
+          _Stat(icon: Icons.verified_rounded, color: Brand.gold, value: '$graduated', label: L('öğrenildi', 'learned')),
         ]),
         const SizedBox(height: 32),
         if (_missing.isNotEmpty) ...[

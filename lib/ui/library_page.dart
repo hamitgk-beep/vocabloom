@@ -17,9 +17,22 @@ import 'reader_page.dart';
 import 'review_page.dart';
 import 'theme.dart';
 
+/// Books in the order to continue them: those read most recently first, then
+/// the rest as they were added.
+List<Book> recentBooks(AppState app) {
+  final books = app.user.books();
+  final order = {for (final (i, id) in app.stats.recentBookIds().indexed) id: i};
+  final read = books.where((b) => order.containsKey(b.id)).toList()..sort((a, b) => order[a.id]!.compareTo(order[b.id]!));
+  return [...read, ...books.where((b) => !order.containsKey(b.id))];
+}
+
 class LibraryPage extends StatefulWidget {
   final AppState app;
-  const LibraryPage({super.key, required this.app});
+
+  /// On phones: opens another page of the app (4 free library, 5 stats, 6 settings)
+  /// from the buttons on the top bar. Null on wide screens, where the side menu has them.
+  final ValueChanged<int>? onTab;
+  const LibraryPage({super.key, required this.app, this.onTab});
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
@@ -60,10 +73,7 @@ class _LibraryPageState extends State<LibraryPage> {
       widget.app.analyzer.tick(onlyBook: id);
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(
-          content: Text(L('İçe aktarılamadı: ${errorText(e)}', 'Could not import: ${errorText(e)}')),
-          duration: const Duration(seconds: 8),
-        ),
+        SnackBar(content: Text(L('İçe aktarılamadı: ${errorText(e)}', 'Could not import: ${errorText(e)}')), duration: const Duration(seconds: 8)),
       );
     } finally {
       if (mounted) {
@@ -80,17 +90,12 @@ class _LibraryPageState extends State<LibraryPage> {
       final svc = AiService.fromSettings(widget.app.user);
       final m = ScaffoldMessenger.of(context);
       if (svc == null) {
-        m.showSnackBar(
-          SnackBar(content: Text(L('Önce Ayarlar\'dan bir yapay zekâ servisi bağlayın.', 'First connect an AI service in Settings.'))),
-        );
+        m.showSnackBar(SnackBar(content: Text(L('Önce Ayarlar\'dan bir yapay zekâ servisi bağlayın.', 'First connect an AI service in Settings.'))));
       } else if (!await svc.reachable()) {
         m.showSnackBar(
           SnackBar(
             content: Text(
-              L(
-                'İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.',
-                'No internet. The analysis starts by itself when you are back online.',
-              ),
+              L('İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.', 'No internet. The analysis starts by itself when you are back online.'),
             ),
           ),
         );
@@ -115,19 +120,14 @@ class _LibraryPageState extends State<LibraryPage> {
         // No save dialog on this device: the text goes to the clipboard instead.
         await Clipboard.setData(ClipboardData(text: text));
         m.showSnackBar(
-          SnackBar(
-            content: Text(
-              L('Dosya kaydedilemedi; metin panoya kopyalandı.', 'Could not save a file; the text was copied to the clipboard.'),
-            ),
-          ),
+          SnackBar(content: Text(L('Dosya kaydedilemedi; metin panoya kopyalandı.', 'Could not save a file; the text was copied to the clipboard.'))),
         );
       }
     } else if (v == 'copy') {
       await Clipboard.setData(ClipboardData(text: widget.app.user.bookText(b.id)));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(L('Kitabın tüm metni panoya kopyalandı.', 'The whole book text was copied to the clipboard.'))),
-        );
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(L('Kitabın tüm metni panoya kopyalandı.', 'The whole book text was copied to the clipboard.'))));
       }
     } else if (v == 'delete') {
       final ok = await showDialog<bool>(
@@ -135,10 +135,7 @@ class _LibraryPageState extends State<LibraryPage> {
         builder: (c) => AlertDialog(
           title: Text(L('Kitap silinsin mi?', 'Delete this book?')),
           content: Text(
-            L(
-              '"${b.title}" kitaplıktan kaldırılacak. Kelime listen korunur.',
-              '"${b.title}" will be removed from the library. Your word list is kept.',
-            ),
+            L('"${b.title}" kitaplıktan kaldırılacak. Kelime listen korunur.', '"${b.title}" will be removed from the library. Your word list is kept.'),
           ),
           actions: [
             TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L('Vazgeç', 'Cancel'))),
@@ -175,24 +172,60 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   Widget build(BuildContext context) {
     final books = widget.app.user.books();
+    final recent = recentBooks(widget.app);
     final theme = Theme.of(context);
+    final cs = theme.colorScheme;
     final st = widget.app.user.statuses.values;
     final learning = st.where((s) => s == WordStatus.learning).length;
     final learned = st.where((s) => s == WordStatus.learned).length;
     final width = MediaQuery.sizeOf(context).width;
-    final cols = width >= 1200
-        ? 3
-        : width >= 820
-        ? 2
-        : 1;
+    final phone = width < 720;
+    final pad = phone ? 20.0 : 32.0;
+    final addButton = phone
+        ? RoundIconButton(
+            key: const ValueKey('add-book'),
+            icon: importing ? Icons.hourglass_top_rounded : Icons.add_rounded,
+            gold: true,
+            tooltip: L('Kitap ekle', 'Add book'),
+            onPressed: importing ? null : _import,
+          )
+        : GoldButton(
+            key: const ValueKey('add-book'),
+            label: importing ? L('Dönüştürülüyor…', 'Converting…') : L('Kitap ekle', 'Add book'),
+            icon: Icons.add_rounded,
+            height: 46,
+            onPressed: importing ? null : _import,
+          );
+    final hero = _HeroCard(app: widget.app, books: books.length, learning: learning, learned: learned, wide: !phone);
+    // Up to five books to pick up again: the ones read last, or simply the newest.
+    final cont = recent.where((b) => _progress(b) > 0 || b.lastPage > 0).take(5).toList();
+    if (cont.isEmpty && recent.isNotEmpty) cont.add(recent.first);
+    final continueList = cont.isEmpty
+        ? null
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _SectionTitle(L('Okumaya devam et', 'Continue reading')),
+              if (phone)
+                SizedBox(
+                  height: 178,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    clipBehavior: Clip.none,
+                    itemCount: cont.length,
+                    separatorBuilder: (_, _) => const SizedBox(width: 12),
+                    itemBuilder: (_, i) => _ContinueCard(book: cont[i], cover: _cover(cont[i]), onTap: () => _open(cont[i])),
+                  ),
+                )
+              else
+                for (final b in cont.take(2))
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _ContinueRow(book: b, cover: _cover(b), onTap: () => _open(b)),
+                  ),
+            ],
+          );
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: importing ? null : _import,
-        icon: importing
-            ? SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: theme.colorScheme.onPrimary))
-            : const Icon(Icons.add_rounded),
-        label: Text(importing ? L('Dönüştürülüyor…', 'Converting…') : L('Kitap ekle', 'Add book')),
-      ),
       body: SafeArea(
         bottom: false,
         child: ValueListenableBuilder(
@@ -200,31 +233,71 @@ class _LibraryPageState extends State<LibraryPage> {
           builder: (context, progress, _) => CustomScrollView(
             slivers: [
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                padding: EdgeInsets.fromLTRB(pad, phone ? 12 : 24, pad, 0),
                 sliver: SliverToBoxAdapter(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (width < 720) ...[
+                      if (phone)
                         Row(
                           children: [
-                            const BrandMark(),
+                            const BrandMark(size: 36),
                             const SizedBox(width: 10),
-                            Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                            Expanded(
+                              child: Text(
+                                'VocaBloom',
+                                style: theme.textTheme.titleLarge?.copyWith(fontFamily: readingFont, fontWeight: FontWeight.w600, fontSize: 22),
+                              ),
+                            ),
+                            if (widget.onTab != null) ...[
+                              RoundIconButton(
+                                key: const ValueKey('nav_5'),
+                                icon: Icons.insights_rounded,
+                                tooltip: L('İstatistiklerim', 'My stats'),
+                                onPressed: () => widget.onTab!(5),
+                              ),
+                              const SizedBox(width: 8),
+                              RoundIconButton(
+                                key: const ValueKey('nav_6'),
+                                icon: Icons.tune_rounded,
+                                tooltip: L('Ayarlar', 'Settings'),
+                                onPressed: () => widget.onTab!(6),
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                            addButton,
+                          ],
+                        )
+                      else
+                        Row(
+                          children: [
+                            Expanded(child: Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium)),
+                            addButton,
                           ],
                         ),
-                        const SizedBox(height: 18),
-                      ],
-                      Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium),
                       const SizedBox(height: 4),
                       Text(
                         L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
-                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
                       ),
-                      const SizedBox(height: 18),
-                      _StatsStrip(books: books.length, learning: learning, learned: learned),
-                      const SizedBox(height: 12),
-                      if (learning > 0) ...[const SizedBox(height: 12), ReviewBanner(app: widget.app)],
+                      const SizedBox(height: 16),
+                      if (!phone && continueList != null && width >= 1100)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(flex: 5, child: hero),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              flex: 4,
+                              child: Transform.translate(offset: const Offset(0, -14), child: continueList),
+                            ),
+                          ],
+                        )
+                      else ...[
+                        hero,
+                        if (continueList != null) ...[const SizedBox(height: 8), continueList],
+                      ],
+                      if (learning > 0) ...[const SizedBox(height: 16), ReviewBanner(app: widget.app)],
                       if (importStatus != null) ...[
                         const SizedBox(height: 14),
                         Panel(
@@ -236,43 +309,38 @@ class _LibraryPageState extends State<LibraryPage> {
                         ),
                       ],
                       if (books.isNotEmpty) ...[
-                        SectionLabel(L('Okumaya devam et', 'Continue reading'), padding: const EdgeInsets.fromLTRB(2, 24, 2, 10)),
-                        _ContinueCard(book: books.first, cover: _cover(books.first), onTap: () => _open(books.first)),
-                        if (books.length > 1) SectionLabel(L('Tüm kitaplar', 'All books'), padding: const EdgeInsets.fromLTRB(2, 24, 2, 6)),
+                        const SizedBox(height: 16),
+                        _DiscoverCard(
+                          key: ValueKey(widget.onTab != null ? 'nav_4' : 'free-library-card'),
+                          onTap: widget.onTab != null ? () => widget.onTab!(4) : _openFreeLibrary,
+                        ),
+                        _SectionTitle(L('Tüm kitaplar', 'All books'), trailing: '${books.length}'),
                       ],
                     ],
                   ),
                 ),
               ),
               if (books.isEmpty)
-                SliverFillRemaining(
-                  hasScrollBody: false,
+                // Below the summary card; scrolls when the window is short.
+                SliverToBoxAdapter(
                   child: _EmptyLibrary(onAdd: importing ? null : _import, onFree: _openFreeLibrary),
                 )
-              else if (books.length > 1)
+              else
                 SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 110),
+                  padding: EdgeInsets.fromLTRB(pad, 0, pad, phone ? 130 : 40),
                   sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: cols,
-                      mainAxisExtent: 128,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 2,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: phone ? 200 : 210,
+                      childAspectRatio: 0.56,
+                      crossAxisSpacing: 14,
+                      mainAxisSpacing: 14,
                     ),
                     delegate: SliverChildBuilderDelegate((c, i) {
-                      final b = books[i + 1];
-                      return _BookCard(
-                        book: b,
-                        cover: _cover(b),
-                        status: progress[b.id],
-                        onTap: () => _open(b),
-                        onMenu: (v) => _onMenu(b, v),
-                      );
-                    }, childCount: books.length - 1),
+                      final b = books[i];
+                      return _BookCard(book: b, cover: _cover(b), status: progress[b.id], onTap: () => _open(b), onMenu: (v) => _onMenu(b, v));
+                    }, childCount: books.length),
                   ),
-                )
-              else
-                const SliverToBoxAdapter(child: SizedBox(height: 110)),
+                ),
             ],
           ),
         ),
@@ -281,104 +349,372 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 }
 
-class _StatsStrip extends StatelessWidget {
-  final int books, learning, learned;
-  const _StatsStrip({required this.books, required this.learning, required this.learned});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _StatCard(value: books, label: L('Kitap', 'Books'), icon: Icons.auto_stories_rounded, color: Brand.violet, keyName: 'stat-books'),
-        const SizedBox(width: 10),
-        _StatCard(
-          value: learning,
-          label: L('Öğreneceğim', 'To learn'),
-          icon: Icons.bookmark_rounded,
-          color: learningColor,
-          keyName: 'stat-learning',
-        ),
-        const SizedBox(width: 10),
-        _StatCard(
-          value: learned,
-          label: L('Öğrendim', 'Learned'),
-          icon: Icons.check_circle_rounded,
-          color: learnedColor,
-          keyName: 'stat-learned',
-        ),
-      ],
-    );
-  }
-}
-
-/// One library number: icon, value and label, all centered.
-class _StatCard extends StatelessWidget {
-  final int value;
-  final String label, keyName;
-  final IconData icon;
-  final Color color;
-  const _StatCard({required this.value, required this.label, required this.icon, required this.color, required this.keyName});
+class _SectionTitle extends StatelessWidget {
+  final String text;
+  final String? trailing;
+  const _SectionTitle(this.text, {this.trailing});
 
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
     final dark = t.brightness == Brightness.dark;
-    return Expanded(
-      key: ValueKey(keyName),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-        decoration: BoxDecoration(
-          color: t.colorScheme.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: t.colorScheme.outlineVariant),
-          boxShadow: [
-            BoxShadow(
-              color: color.withValues(alpha: dark ? 0.10 : 0.08),
-              blurRadius: 14,
-              offset: const Offset(0, 6),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(2, 22, 2, 12),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(text, style: t.textTheme.titleMedium?.copyWith(fontSize: 17, color: dark ? const Color(0xFFCDBB98) : t.colorScheme.onSurface)),
+          ),
+          if (trailing != null) Text(trailing!, style: t.textTheme.labelLarge?.copyWith(color: t.colorScheme.primary)),
+        ],
+      ),
+    );
+  }
+}
+
+/// The cream summary card at the top: reading time, streak and word counts,
+/// with a drawn open book.
+class _HeroCard extends StatelessWidget {
+  final AppState app;
+  final int books, learning, learned;
+  final bool wide;
+  const _HeroCard({required this.app, required this.books, required this.learning, required this.learned, required this.wide});
+
+  static String _time(int secs) {
+    final m = (secs / 60).round();
+    if (m < 60) return L('$m dk', '$m min');
+    return L('${m ~/ 60} sa ${m % 60} dk', '${m ~/ 60} h ${m % 60} min');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final dark = t.brightness == Brightness.dark;
+    const ink = Color(0xFF231C12);
+    final muted = dark ? const Color(0xFF6E6453) : const Color(0xFF7D6E55);
+    final line = dark ? Colors.black.withValues(alpha: 0.09) : const Color(0x1F503714);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final week = app.stats.readingByDay(7);
+    final todaySecs = week.last.$2;
+    final weekSecs = week.fold<int>(0, (a, d) => a + d.$2);
+    final streak = app.stats.readingStreak();
+    final title = weekSecs == 0
+        ? L('Okumaya başla', 'Start reading')
+        : streak >= 3
+        ? L('Harika gidiyorsun!', 'You\'re doing great!')
+        : L('Güzel ilerliyorsun', 'Nice progress');
+    Widget stat(String value, String label, {Key? key}) => Expanded(
+      key: key,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.centerLeft,
+            child: Text(
+              value,
+              style: t.textTheme.titleMedium?.copyWith(color: ink, fontWeight: FontWeight.w700, fontSize: 18),
             ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 34,
-              height: 34,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: dark ? 0.22 : 0.13),
-                shape: BoxShape.circle,
+          ),
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: t.textTheme.labelSmall?.copyWith(color: muted, fontWeight: FontWeight.w500),
+          ),
+        ],
+      ),
+    );
+    Widget sep() => Container(width: 1, height: 34, margin: const EdgeInsets.symmetric(horizontal: 10), color: line);
+    final maxDay = week.fold<int>(1, (a, d) => d.$2 > a ? d.$2 : a);
+    return Container(
+      decoration: BoxDecoration(
+        gradient: dark ? Brand.heroDark : Brand.heroLight,
+        borderRadius: BorderRadius.circular(26),
+        boxShadow: [BoxShadow(color: dark ? Colors.black.withValues(alpha: 0.35) : const Color(0x1A785A28), blurRadius: 24, offset: const Offset(0, 6))],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        children: [
+          Positioned(
+            right: wide ? 18 : -4,
+            top: wide ? 8 : 2,
+            child: CustomPaint(size: wide ? const Size(210, 158) : const Size(112, 84), painter: _OpenBookPainter()),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(wide ? 26 : 18, wide ? 22 : 16, wide ? 26 : 18, wide ? 20 : 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(L('Bu hafta', 'This week'), style: t.textTheme.bodySmall?.copyWith(color: muted)),
+                const SizedBox(height: 2),
+                Padding(
+                  padding: EdgeInsets.only(right: wide ? 220 : 96),
+                  child: Text(
+                    title,
+                    style: TextStyle(fontFamily: readingFont, fontWeight: FontWeight.w700, fontSize: wide ? 30 : 22, height: 1.15, color: ink),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  key: const ValueKey('stat-books'),
+                  L('$books kitap · $learning öğreneceğim · $learned öğrendim', '$books books · $learning to learn · $learned learned'),
+                  style: t.textTheme.bodySmall?.copyWith(color: muted, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 14),
+                Container(
+                  height: 1,
+                  color: line,
+                  constraints: BoxConstraints(maxWidth: wide ? 440 : double.infinity),
+                ),
+                const SizedBox(height: 12),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: wide ? 440 : double.infinity),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        stat(_time(todaySecs), L('Bugün', 'Today')),
+                        sep(),
+                        stat(_time(weekSecs), L('Bu hafta', 'This week')),
+                        sep(),
+                        stat(L('$streak gün', '$streak days'), L('Seri', 'Streak')),
+                      ],
+                    ),
+                  ),
+                ),
+                if (wide) ...[
+                  const SizedBox(height: 22),
+                  SizedBox(
+                    height: 78,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        for (final (i, d) in week.indexed)
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    height: 8 + 44 * d.$2 / maxDay,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.vertical(top: Radius.circular(8), bottom: Radius.circular(4)),
+                                      color: i == week.length - 1 ? null : line,
+                                      gradient: i == week.length - 1 ? Brand.goldGradient : null,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    _dayName(d.$1, today),
+                                    style: t.textTheme.labelSmall?.copyWith(color: muted, fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static String _dayName(DateTime d, DateTime today) {
+    const tr = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
+    const en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return L(tr[d.weekday - 1], en[d.weekday - 1]);
+  }
+}
+
+/// An open book with a gold ribbon, drawn for the summary card.
+class _OpenBookPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final s = size.width / 200;
+    canvas.save();
+    canvas.scale(s);
+    canvas.translate(100, 80);
+    canvas.rotate(-0.17);
+    canvas.translate(-100, -80);
+    Path page(bool left) {
+      final x = left ? 24.0 : 176.0, q = left ? 62.0 : 138.0;
+      return Path()
+        ..moveTo(x, 44)
+        ..quadraticBezierTo(q, 26, 100, 46)
+        ..lineTo(100, 124)
+        ..quadraticBezierTo(q, 104, x, 122)
+        ..close();
+    }
+
+    final coverPath = Path()
+      ..moveTo(18, 50)
+      ..quadraticBezierTo(60, 30, 100, 52)
+      ..quadraticBezierTo(140, 30, 184, 50)
+      ..lineTo(184, 128)
+      ..quadraticBezierTo(140, 108, 100, 130)
+      ..quadraticBezierTo(60, 108, 18, 128)
+      ..close();
+    canvas.drawShadow(coverPath, Colors.black, 6, false);
+    canvas.drawPath(
+      coverPath,
+      Paint()..shader = const LinearGradient(colors: [Color(0xFF7A4A22), Color(0xFF4E2D12)]).createShader(const Rect.fromLTWH(18, 30, 166, 100)),
+    );
+    final paper = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFFFFF9EC), Color(0xFFEADFC6)],
+      ).createShader(const Rect.fromLTWH(0, 26, 200, 100));
+    final edge = Paint()
+      ..color = const Color(0xFFD9CBAA)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.8;
+    for (final l in [true, false]) {
+      canvas.drawPath(page(l), paper);
+      canvas.drawPath(page(l), edge);
+    }
+    final lines = Paint()
+      ..color = const Color(0xCCCBBB98)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
+    for (var i = 0; i < 4; i++) {
+      final y = 56.0 + i * 10;
+      canvas.drawPath(
+        Path()
+          ..moveTo(36, y)
+          ..quadraticBezierTo(64, y - 12, i == 3 ? 84 : 90, y + 2),
+        lines,
+      );
+      if (i < 3)
+        canvas.drawPath(
+          Path()
+            ..moveTo(110, y + 2)
+            ..quadraticBezierTo(136, y - 12, 164, y),
+          lines,
+        );
+    }
+    canvas.drawPath(
+      Path()
+        ..moveTo(120, 46)
+        ..lineTo(120, 86)
+        ..lineTo(126, 80)
+        ..lineTo(132, 86)
+        ..lineTo(132, 42)
+        ..close(),
+      Paint()..color = const Color(0xFFB8863A),
+    );
+    canvas.drawLine(
+      const Offset(100, 46),
+      const Offset(100, 124),
+      Paint()
+        ..color = const Color(0xFFBFAE88)
+        ..strokeWidth = 1.4,
+    );
+    canvas.restore();
+    final dot = Paint()..color = const Color(0xFFD6B16C);
+    canvas.drawCircle(Offset(40 * s, 18 * s), 2.5 * s, dot);
+    canvas.drawCircle(Offset(176 * s, 14 * s), 1.8 * s, dot);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+double _progress(Book b) => b.chapterCount <= 1 ? 0.0 : b.lastChapter / (b.chapterCount - 1);
+
+String _where(Book b) => b.chapterCount <= 1
+    ? (b.lastPage > 0 ? L('Sayfa ${b.lastPage + 1}', 'Page ${b.lastPage + 1}') : L('Başlangıç', 'Start'))
+    : L('Bölüm ${b.lastChapter + 1} / ${b.chapterCount}', 'Chapter ${b.lastChapter + 1} / ${b.chapterCount}');
+
+/// Phone: a card in the sideways "Continue reading" row.
+class _ContinueCard extends StatelessWidget {
+  final Book book;
+  final File? cover;
+  final VoidCallback onTap;
+  const _ContinueCard({required this.book, required this.cover, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final dark = theme.brightness == Brightness.dark;
+    final pct = _progress(book);
+    return SizedBox(
+      width: 236,
+      child: Material(
+        color: Colors.transparent,
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            border: Border.all(color: cs.outlineVariant),
+            color: dark ? null : cs.surface,
+            gradient: dark ? const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFF2A221A), Color(0xFF33291C)]) : null,
+            boxShadow: dark ? null : [const BoxShadow(color: Color(0x14785A28), blurRadius: 18, offset: Offset(0, 6))],
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(22),
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      BookCover(title: book.title, format: book.format, width: 46, image: cover),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(book.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleSmall?.copyWith(fontSize: 15)),
+                            const SizedBox(height: 3),
+                            Text(_where(book), maxLines: 1, style: theme.textTheme.labelSmall?.copyWith(color: cs.onSurfaceVariant)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  LinearProgressIndicator(value: pct, minHeight: 4),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      onPressed: onTap,
+                      style: OutlinedButton.styleFrom(minimumSize: const Size(0, 38), padding: const EdgeInsets.symmetric(horizontal: 14)),
+                      child: Row(
+                        children: [
+                          Expanded(child: Text(L('Devam et', 'Continue'))),
+                          const Icon(Icons.chevron_right_rounded, size: 20),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              child: Icon(icon, size: 19, color: dark ? Color.lerp(color, Colors.white, 0.25) : color),
             ),
-            const SizedBox(height: 8),
-            Text(
-              '$value',
-              textAlign: TextAlign.center,
-              style: t.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800, height: 1.1),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: t.textTheme.labelMedium?.copyWith(color: t.colorScheme.onSurfaceVariant),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-double _progress(Book b) => b.chapterCount <= 1 ? 0.0 : b.lastChapter / (b.chapterCount - 1);
-
-class _ContinueCard extends StatelessWidget {
+/// Wide screens: one row per book next to the summary card.
+class _ContinueRow extends StatelessWidget {
   final Book book;
   final File? cover;
   final VoidCallback onTap;
-  const _ContinueCard({required this.book, required this.cover, required this.onTap});
+  const _ContinueRow({required this.book, required this.cover, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -389,51 +725,28 @@ class _ContinueCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              BookCover(title: book.title, format: book.format, width: 70, image: cover),
-              const SizedBox(width: 16),
+              BookCover(title: book.title, format: book.format, width: 54, image: cover),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(book.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleSmall?.copyWith(fontSize: 15)),
+                    const SizedBox(height: 3),
                     Text(
-                      book.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleLarge?.copyWith(fontSize: 19),
+                      '${_where(book)} · ${percent((pct * 100).round())}',
+                      style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
                     ),
-                    if (book.author != null) ...[
-                      const SizedBox(height: 2),
-                      Text(
-                        book.author!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-                      ),
-                    ],
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(child: LinearProgressIndicator(value: pct)),
-                        const SizedBox(width: 10),
-                        Text(
-                          percent((pct * 100).round()),
-                          style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    FilledButton.icon(
-                      onPressed: onTap,
-                      style: FilledButton.styleFrom(minimumSize: const Size(0, 40)),
-                      icon: const Icon(Icons.auto_stories_rounded, size: 18),
-                      label: Text(L('Bölüm ${book.lastChapter + 1} · Devam et', 'Chapter ${book.lastChapter + 1} · Continue')),
-                    ),
+                    const SizedBox(height: 8),
+                    LinearProgressIndicator(value: pct, minHeight: 4),
                   ],
                 ),
               ),
+              const SizedBox(width: 14),
+              GoldButton(label: L('Devam et', 'Continue'), icon: Icons.chevron_right_rounded, trailingIcon: true, height: 40, onPressed: onTap),
             ],
           ),
         ),
@@ -442,6 +755,49 @@ class _ContinueCard extends StatelessWidget {
   }
 }
 
+/// The way into the free library from a library that already has books.
+class _DiscoverCard extends StatelessWidget {
+  final VoidCallback onTap;
+  const _DiscoverCard({super.key, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    return Card(
+      margin: EdgeInsets.zero,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
+          child: Row(
+            children: [
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(color: goldSoft(t), borderRadius: BorderRadius.circular(14)),
+                child: Icon(Icons.explore_rounded, color: t.colorScheme.primary),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(L('Ücretsiz kütüphaneyi keşfet', 'Explore the free library'), style: t.textTheme.titleSmall?.copyWith(fontSize: 15)),
+                    const SizedBox(height: 2),
+                    Text(L('A1–C1 seviyelerinde hikâyeler ve klasik kitaplar', 'Stories and classic books from A1 to C1'), style: t.textTheme.bodySmall),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right_rounded, color: t.colorScheme.onSurfaceVariant),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A book in the grid: a big cover, then its title, author and progress.
 class _BookCard extends StatelessWidget {
   final Book book;
   final File? cover;
@@ -456,91 +812,94 @@ class _BookCard extends StatelessWidget {
     final b = book;
     final pct = _progress(b);
     return Card(
+      margin: EdgeInsets.zero,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 12, 4, 12),
-          child: Row(
+          padding: const EdgeInsets.all(9),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BookCover(title: b.title, format: b.format, width: 58, image: cover),
-              const SizedBox(width: 14),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    Text(b.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleMedium),
-                    const SizedBox(height: 2),
-                    Text(
-                      [if (b.author != null) b.author!, L('${b.chapterCount} bölüm', '${b.chapterCount} chapters')].join(' · '),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodySmall,
+                    Positioned.fill(
+                      child: LayoutBuilder(
+                        builder: (_, c) => BookCover(title: b.title, format: b.format, width: c.maxWidth, height: c.maxHeight, image: cover),
+                      ),
                     ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(child: LinearProgressIndicator(value: pct, minHeight: 5)),
-                        const SizedBox(width: 8),
-                        Text(
-                          percent((pct * 100).round()),
-                          style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-                        ),
-                      ],
-                    ),
-                    if (status != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 4),
-                        child: Text(
-                          status!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.primary),
+                    Positioned(
+                      top: 4,
+                      right: 4,
+                      child: Material(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        shape: const CircleBorder(),
+                        child: SizedBox(
+                          width: 32,
+                          height: 32,
+                          child: PopupMenuButton<String>(
+                            padding: EdgeInsets.zero,
+                            iconSize: 18,
+                            icon: const Icon(Icons.more_horiz_rounded, color: Color(0xFF6B5A3E)),
+                            onSelected: onMenu,
+                            itemBuilder: (_) => [
+                              PopupMenuItem(
+                                value: 'analyze',
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: const Icon(Icons.auto_awesome_outlined),
+                                  title: Text(L('Çevrimiçi analiz et', 'Analyze online')),
+                                  subtitle: Text(L('Çeviri + bölüm özetleri', 'Translation + chapter summaries')),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'export',
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: const Icon(Icons.save_alt_rounded),
+                                  title: Text(L('Metni kaydet (.txt)', 'Save text (.txt)')),
+                                  subtitle: Text(L('Kitabın uygulamadaki hali', 'The book as the app shows it')),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'copy',
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: const Icon(Icons.copy_all_rounded),
+                                  title: Text(L('Metni kopyala', 'Copy text')),
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Icon(Icons.delete_outline_rounded, color: theme.colorScheme.error),
+                                  title: Text(L('Sil', 'Delete'), style: TextStyle(color: theme.colorScheme.error)),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                    ),
                   ],
                 ),
               ),
-              PopupMenuButton<String>(
-                icon: Icon(Icons.more_vert_rounded, color: theme.colorScheme.onSurfaceVariant),
-                onSelected: onMenu,
-                itemBuilder: (_) => [
-                  PopupMenuItem(
-                    value: 'analyze',
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.auto_awesome_outlined),
-                      title: Text(L('Çevrimiçi analiz et', 'Analyze online')),
-                      subtitle: Text(L('Çeviri + bölüm özetleri', 'Translation + chapter summaries')),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'export',
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.save_alt_rounded),
-                      title: Text(L('Metni kaydet (.txt)', 'Save text (.txt)')),
-                      subtitle: Text(L('Kitabın uygulamadaki hali', 'The book as the app shows it')),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'copy',
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.copy_all_rounded),
-                      title: Text(L('Metni kopyala', 'Copy text')),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(Icons.delete_outline_rounded, color: theme.colorScheme.error),
-                      title: Text(L('Sil', 'Delete'), style: TextStyle(color: theme.colorScheme.error)),
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 9),
+              Text(b.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleSmall),
+              Text(
+                [if (b.author != null) b.author!, percent((pct * 100).round())].join(' · '),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodySmall,
               ),
+              if (status != null)
+                Text(
+                  status!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.primary),
+                ),
             ],
           ),
         ),
@@ -558,9 +917,9 @@ class _EmptyLibrary extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(32, 24, 32, 120),
+      padding: const EdgeInsets.fromLTRB(32, 28, 32, 140),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: 88,

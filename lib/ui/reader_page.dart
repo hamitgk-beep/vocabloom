@@ -639,7 +639,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                       const VerticalDivider(width: 1),
                       SizedBox(
                         width: 320,
-                        child: ColoredBox(color: theme.colorScheme.surface, child: filters),
+                        child: Material(color: theme.colorScheme.surface, child: filters),
                       ),
                     ],
                   ],
