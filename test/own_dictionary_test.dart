@@ -107,4 +107,24 @@ void main() {
     expect(e1.tr, contains(ownFirst['tr'] as String));
     expect(e2.tr, isNot(contains(ownFirst['tr'] as String)));
   });
+
+  test('expression sheet: own senses first when on, the built-in library when off, and back again', () {
+    final db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+    final row = db.select("SELECT senses FROM own_expr WHERE phrase = 'a dime a dozen' AND cat = 'idioms'");
+    db.dispose();
+    final ownFirst = (jsonDecode(row.first.columnAt(0) as String) as List).first as Map;
+
+    final on = DictDb();
+    on.db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+    on.load(ownEnabled: true);
+    final detailOn = jsonDecode(on.exprDetail('a dime a dozen', 'idioms')!) as List;
+    expect((detailOn.first as Map)['title_tr'], ownFirst['tr']);
+    expect((detailOn.first as Map)['explain_tr'], '');
+
+    final off = DictDb();
+    off.db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+    off.load(ownEnabled: false);
+    final detailOff = off.exprDetail('a dime a dozen', 'idioms');
+    expect(detailOff == null || (jsonDecode(detailOff) as List).first['title_tr'] != ownFirst['tr'], isTrue);
+  });
 }

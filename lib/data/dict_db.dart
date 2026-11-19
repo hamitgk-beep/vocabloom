@@ -79,6 +79,7 @@ class DictDb {
   final Map<String, List<String>> irregularOf = {};
 
   void load({bool ownEnabled = useOwnDictionary}) {
+    _ownOn = ownEnabled;
     irregular.clear();
     irregularOf.clear();
     final known = <String>{};
@@ -187,10 +188,48 @@ class DictDb {
   late final bool _hasExd =
       db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='exd'").isNotEmpty;
 
+  bool _ownOn = useOwnDictionary;
+  late final bool _hasOwnExpr =
+      db.select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_expr'").isNotEmpty;
+
+  /// Own senses as the expression sheet reads them. An own sense has a Turkish meaning, a Turkish
+  /// usage note and an English example with its translation. When the row has the newer shape
+  /// (ex = English example, en = short English definition) the definition is shown; otherwise the
+  /// old shape (en = example) gives only the example. Nothing is invented: missing parts stay empty.
+  String _ownExprDetail(String raw) {
+    final out = <Map<String, Object>>[];
+    for (final x in jsonDecode(raw) as List) {
+      final m = (x as Map).cast<String, dynamic>();
+      final tr = (m['tr'] as String? ?? '').trim();
+      if (tr.isEmpty) continue;
+      final ex = (m['ex'] as String? ?? '').trim();
+      final en = (m['en'] as String? ?? '').trim();
+      final hasEx = ex.isNotEmpty;
+      final definition = hasEx ? en : '';
+      final example = hasEx ? ex : en;
+      out.add({
+        'title_en': definition.isNotEmpty ? definition : tr,
+        'title_tr': tr,
+        'explain_en': '',
+        'explain_tr': '',
+        'in_sentence': false,
+        'examples': [
+          if (example.isNotEmpty) {'en': example, 'tr': (m['ex_tr'] as String? ?? '').trim()},
+        ],
+      });
+    }
+    return jsonEncode(out);
+  }
+
   /// Built-in senses of an expression (Turkish + English, with translated
   /// examples), as JSON in the same shape the AI service returns. Null when
   /// this dictionary has none for it.
   String? exprDetail(String phrase, String cat) {
+    // Own meanings first (own_expr), in the same shape as the built-in library.
+    if (_ownOn && _hasOwnExpr) {
+      final own = db.select('SELECT senses FROM own_expr WHERE phrase=? AND cat=?', [phrase, cat]);
+      if (own.isNotEmpty) return _ownExprDetail(own.first.columnAt(0) as String);
+    }
     if (!_hasExd) return null;
     final r = db.select('SELECT json FROM exd WHERE phrase=? AND cat=?', [phrase, cat]);
     return r.isEmpty ? null : r.first.columnAt(0) as String;
