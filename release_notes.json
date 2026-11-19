@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "tr-en-reverse-words-examples",
+      "area": "dictionary",
+      "tr": "Türkçe → İngilizce sözlük büyüdü: 29 bin yeni kelimeyle 55 bini aştı (KeNet Türkçe WordNet ve FreeDict'ten). Çevirili örnek cümle sayısı 29 binden 83 bine çıktı, kelime başına 10 örneğe kadar. Cümledeki anlamı seçilen kelime sayısı 4 bini geçti.",
+      "en": "The Turkish → English dictionary grew by 29,000 words to more than 55,000 (from KeNet Turkish WordNet and FreeDict). Translated example sentences went from 29,000 to 83,000, up to 10 for each word, and more than 4,000 words now get the meaning of their sentence."
+    },
+    {
       "id": "learn-lang-separate-content",
       "area": "app",
       "tr": "Öğrenilen dil Türkçe olunca uygulamanın her bölümü Türkçeye geçiyor: Sözlük Türkçe kelime arıyor (İngilizce anlamdan da bulabilirsin: \"dog\" → köpek), Kelimelerim ve tekrar kartları her dil için ayrı tutuluyor, kitaplığında yalnız o dildeki kitaplar görünüyor Ücretsiz kütüphanede her seviyeden 100 Türkçe metin var (Ömer Seyfettin öyküleri, Nasreddin Hoca fıkraları, başlangıç için yeni yazılmış kısa öyküler). Türkçe kelimeye dokununca artık kelimenin ekleri (sür-müş-tür) ve her ekin görevi çıkıyor; kelimenin o cümledeki anlamı da en üstte gösteriliyor. İngilizceye döndüğünde İngilizce kelimelerin ve kitapların olduğu gibi duruyor.",
