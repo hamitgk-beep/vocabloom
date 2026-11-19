@@ -59,6 +59,25 @@ class StatsStore {
     return r.first['s'] as int;
   }
 
+  /// Books by when they were last read, the latest first (only books with reading time).
+  List<int> recentBookIds() => [
+        for (final r in user.db.select('SELECT book_id FROM reading_time GROUP BY book_id ORDER BY MAX(day) DESC, SUM(seconds) DESC'))
+          r['book_id'] as int,
+      ];
+
+  /// Days in a row with some reading, up to today (today may still be empty).
+  int readingStreak({DateTime? now}) {
+    final days = readingByDay(60, now: now);
+    var i = days.length - 1;
+    if (days[i].$2 == 0) i--;
+    var n = 0;
+    while (i >= 0 && days[i].$2 > 0) {
+      n++;
+      i--;
+    }
+    return n;
+  }
+
   /// Seconds read on each of the last [days] days, oldest first, ending [now].
   List<(DateTime, int)> readingByDay(int days, {DateTime? now}) {
     final n = now ?? DateTime.now();

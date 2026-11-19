@@ -107,7 +107,7 @@ class SettingsPage extends StatelessWidget {
             SettingsGroup(title: L('Hakkında', 'About'), children: [
               SettingsNavTile(
                 icon: Icons.local_florist_rounded,
-                color: Brand.violet,
+                color: Brand.gold,
                 title: 'VocaBloom',
                 subtitle: _versionLabel(),
                 onTap: () => _push(context, const AboutPage()),
@@ -178,7 +178,7 @@ class SettingsGroup extends StatelessWidget {
       SectionLabel(title),
       Material(
         color: cs.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18), side: BorderSide(color: cs.outlineVariant)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22), side: BorderSide(color: cs.outlineVariant)),
         clipBehavior: Clip.antiAlias,
         child: Column(children: [
           for (final (i, c) in children.indexed) ...[
@@ -196,13 +196,17 @@ class _IconBadge extends StatelessWidget {
   final Color color;
   const _IconBadge(this.icon, this.color);
 
+  // One calm gold badge for every row; [color] is kept for callers.
   @override
-  Widget build(BuildContext context) => Container(
-        width: 34,
-        height: 34,
-        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(10)),
-        child: Icon(icon, color: Colors.white, size: 19),
-      );
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    return Container(
+      width: 38,
+      height: 38,
+      decoration: BoxDecoration(color: goldSoft(t), borderRadius: BorderRadius.circular(13)),
+      child: Icon(icon, color: t.colorScheme.primary, size: 19),
+    );
+  }
 }
 
 class _Row extends StatelessWidget {

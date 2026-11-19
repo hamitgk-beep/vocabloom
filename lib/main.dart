@@ -21,6 +21,7 @@ import 'ui/other_pages.dart';
 import 'ui/settings_page.dart';
 import 'ui/update_prompt.dart';
 import 'ui/onboarding.dart';
+import 'ui/reader_page.dart';
 import 'ui/grammar/grammar_page.dart';
 import 'ui/theme.dart';
 import 'tts/speech.dart';
@@ -111,7 +112,10 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
                 body: Center(
                   child: error != null
                       ? Padding(padding: const EdgeInsets.all(24), child: Text(L('Başlatılamadı: $error', 'Could not start: $error')))
-                      : Column(mainAxisSize: MainAxisSize.min, children: [CircularProgressIndicator(), SizedBox(height: 16), Text(L('Sözlük hazırlanıyor…', 'Preparing the dictionary…'))]),
+                      : Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [CircularProgressIndicator(), SizedBox(height: 16), Text(L('Sözlük hazırlanıyor…', 'Preparing the dictionary…'))],
+                        ),
                 ),
               ),
       ),
@@ -162,13 +166,32 @@ class _HomePageState extends State<HomePage> {
     UpdatePrompt.showBanner(context, u);
   }
 
+  /// The phone's center button: back into the book read last, or the free
+  /// library when there is no book yet.
+  Future<void> _continueReading() async {
+    final b = recentBooks(widget.app).firstOrNull;
+    if (b == null) {
+      setState(() => tab = 4);
+      return;
+    }
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ReaderPage(app: widget.app, book: b),
+      ),
+    );
+    if (mounted) setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final wide = MediaQuery.sizeOf(context).width >= 720;
-    // The free library and the journey have their own place in the side menu,
-    // and in the phone's bottom bar (which scrolls sideways when it is full).
+    final theme = Theme.of(context);
+    void go(int i) => setState(() => tab = i);
+    // On phones the free library, stats and settings open from the library's
+    // top bar; on wide screens they have their own place in the side menu.
     final pages = [
-      LibraryPage(app: widget.app),
+      LibraryPage(app: widget.app, onTab: wide ? null : go),
       WordsPage(app: widget.app),
       DictionaryPage(app: widget.app),
       GrammarPage(app: widget.app),
@@ -178,46 +201,46 @@ class _HomePageState extends State<HomePage> {
       SettingsPage(app: widget.app),
     ];
     final dests = [
-      (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
-      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimeler', 'My words')),
-      (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
+      (Icons.home_outlined, Icons.home_rounded, L('Kitaplık', 'Library')),
+      (Icons.layers_outlined, Icons.layers_rounded, L('Kelimeler', 'My words')),
+      (Icons.menu_book_outlined, Icons.menu_book_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
-      (Icons.local_library_outlined, Icons.local_library_rounded, L('Ücretsiz kütüphane', 'Free library')),
+      (Icons.explore_outlined, Icons.explore_rounded, L('Ücretsiz kütüphane', 'Free library')),
       (Icons.insights_outlined, Icons.insights_rounded, L('İstatistiklerim', 'My stats')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
     if (tab >= pages.length) tab = pages.length - 1;
-    final body = IndexedStack(index: tab, children: pages);
+    // The tab pages sit on one shared background: cream by day, a warm glow by night.
+    final body = Theme(
+      data: theme.copyWith(
+        scaffoldBackgroundColor: Colors.transparent,
+        appBarTheme: theme.appBarTheme.copyWith(backgroundColor: Colors.transparent),
+      ),
+      child: IndexedStack(index: tab, children: pages),
+    );
     if (wide) {
       return Scaffold(
-        body: Row(
-          children: [
-            _SideMenu(
-              selected: tab,
-              items: dests,
-              full: MediaQuery.sizeOf(context).width >= 1000,
-              onSelect: (i) => setState(() => tab = i),
-            ),
-            const VerticalDivider(width: 1),
-            Expanded(child: body),
-          ],
+        body: DecoratedBox(
+          decoration: pageBackground(theme),
+          child: Row(
+            children: [
+              _SideMenu(selected: tab, items: dests, full: MediaQuery.sizeOf(context).width >= 1000, onSelect: go),
+              Expanded(child: body),
+            ],
+          ),
         ),
       );
     }
-    return Scaffold(
-      body: body,
-      bottomNavigationBar: _BottomNav(
-        selected: tab,
-        // Short names where the bar is narrow.
-        items: [
-          for (final (i, d) in dests.indexed)
-            i == 4
-                ? (d.$1, d.$2, L('Ücretsiz', 'Free books'))
-                : i == 5
-                ? (d.$1, d.$2, L('İstatistik', 'Stats'))
-                : d,
-        ],
-        onSelect: (i) => setState(() => tab = i),
+    return PopScope(
+      // Back on a phone first returns to the library.
+      canPop: tab == 0,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) go(0);
+      },
+      child: Scaffold(
+        extendBody: true,
+        body: DecoratedBox(decoration: pageBackground(theme), child: body),
+        bottomNavigationBar: _BottomNav(selected: tab, items: dests.sublist(0, 4), onSelect: go, onCenter: _continueReading),
       ),
     );
   }
@@ -240,28 +263,42 @@ class _SideMenu extends StatelessWidget {
     Widget item(int i) {
       final d = items[i];
       final on = i == selected;
-      final color = on ? cs.primary : cs.onSurfaceVariant;
+      final color = on ? onGold(theme) : cs.onSurfaceVariant;
       final tile = Material(
-        color: on ? cs.primary.withValues(alpha: 0.14) : Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          key: ValueKey('side-menu-$i'),
-          borderRadius: BorderRadius.circular(12),
-          onTap: () => onSelect(i),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: full ? 14 : 0, vertical: 11),
-            child: Row(mainAxisAlignment: full ? MainAxisAlignment.start : MainAxisAlignment.center, children: [
-              Icon(on ? d.$2 : d.$1, size: 22, color: color),
-              if (full) ...[
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(d.$3,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 14.5, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: on ? cs.primary : cs.onSurface)),
-                ),
-              ],
-            ]),
+        color: Colors.transparent,
+        shape: const StadiumBorder(),
+        child: Ink(
+          decoration: on
+              ? BoxDecoration(
+                  gradient: Brand.goldGradient,
+                  borderRadius: BorderRadius.circular(24),
+                  boxShadow: [BoxShadow(color: const Color(0xFFA67D3A).withValues(alpha: 0.28), blurRadius: 14, offset: const Offset(0, 5))],
+                )
+              : null,
+          child: InkWell(
+            key: ValueKey('side-menu-$i'),
+            customBorder: const StadiumBorder(),
+            onTap: () => onSelect(i),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: full ? 14 : 0, vertical: 11),
+              child: Row(
+                mainAxisAlignment: full ? MainAxisAlignment.start : MainAxisAlignment.center,
+                children: [
+                  Icon(on ? d.$2 : d.$1, size: 22, color: color),
+                  if (full) ...[
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Text(
+                        d.$3,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 14.5, fontWeight: on ? FontWeight.w700 : FontWeight.w500, color: on ? color : cs.onSurface),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
           ),
         ),
       );
@@ -280,132 +317,47 @@ class _SideMenu extends StatelessWidget {
         right: false,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: full ? 12 : 10, vertical: 12),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Padding(
-              padding: EdgeInsets.only(left: full ? 6 : 0, top: 4, bottom: 22),
-              child: Row(mainAxisAlignment: full ? MainAxisAlignment.start : MainAxisAlignment.center, children: [
-                const BrandMark(size: 36),
-                if (full) ...[
-                  const SizedBox(width: 12),
-                  Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-                ],
-              ]),
-            ),
-            Expanded(
-              child: ListView(padding: EdgeInsets.zero, children: [
-                ...main,
-                if (extra.isNotEmpty) ...[
-                  Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: Divider(height: 1, indent: full ? 8 : 6, endIndent: full ? 8 : 6)),
-                  ...extra,
-                ],
-              ]),
-            ),
-            item(last),
-          ]),
-        ),
-      ),
-    );
-  }
-}
-
-/// Phone bottom bar. Every tab shows its label on one line: a label that
-/// does not fit (six tabs, large system font) is scaled down, never wrapped.
-class _BottomNav extends StatelessWidget {
-  final int selected;
-  final List<(IconData, IconData, String)> items;
-  final ValueChanged<int> onSelect;
-  const _BottomNav({required this.selected, required this.items, required this.onSelect});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final cs = theme.colorScheme;
-    final mq = MediaQuery.of(context);
-    // Keep the bar readable but bounded when the system font is very large.
-    final scaler = mq.textScaler.clamp(maxScaleFactor: 1.15);
-    // One font size for every label: the largest at which the longest label
-    // still fits its tab, so no label looks smaller than its neighbours.
-    final base = theme.textTheme.labelSmall?.copyWith(fontSize: 11.5, letterSpacing: 0, fontWeight: FontWeight.w700) ?? const TextStyle(fontSize: 11.5);
-    // Each tab gets at least [minSlot]; when they do not all fit, the bar scrolls sideways.
-    const minSlot = 78.0;
-    final scrolls = mq.size.width / items.length < minSlot;
-    final slot = (scrolls ? minSlot : mq.size.width / items.length) - 6;
-    var widest = 0.0;
-    for (final d in items) {
-      final tp = TextPainter(
-        text: TextSpan(text: d.$3, style: base),
-        textDirection: TextDirection.ltr,
-        textScaler: scaler,
-        maxLines: 1,
-      )..layout();
-      if (tp.width > widest) widest = tp.width;
-      tp.dispose();
-    }
-    final fontSize = widest > slot ? 11.5 * slot / widest : 11.5;
-    return Container(
-      decoration: BoxDecoration(
-        color: cs.surface,
-        border: Border(top: BorderSide(color: cs.outlineVariant)),
-      ),
-      child: SafeArea(
-        top: false,
-        child: MediaQuery(
-          data: mq.copyWith(textScaler: scaler),
-          child: SizedBox(
-            height: 66,
-            child: _BarRow(
-              scrolls: scrolls,
-              width: minSlot,
-              selected: selected,
-              children: [
-                for (final (i, d) in items.indexed)
-                  KeyedSubtree(
-                    key: ValueKey('nav_$i'),
-                    child: Semantics(
-                      selected: i == selected,
-                      button: true,
-                      label: d.$3,
-                      excludeSemantics: true,
-                      child: InkResponse(
-                        onTap: () => onSelect(i),
-                        radius: 36,
-                        highlightShape: BoxShape.rectangle,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              curve: Curves.easeOut,
-                              width: i == selected ? 52 : 40,
-                              height: 30,
-                              decoration: BoxDecoration(color: i == selected ? cs.primaryContainer : Colors.transparent, borderRadius: BorderRadius.circular(12)),
-                              child: Icon(i == selected ? d.$2 : d.$1, size: 23, color: i == selected ? cs.primary : cs.onSurfaceVariant),
-                            ),
-                            const SizedBox(height: 4),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 2),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  d.$3,
-                                  maxLines: 1,
-                                  softWrap: false,
-                                  style: theme.textTheme.labelSmall?.copyWith(
-                                    fontSize: fontSize,
-                                    letterSpacing: 0,
-                                    color: i == selected ? cs.primary : cs.onSurfaceVariant,
-                                    fontWeight: i == selected ? FontWeight.w700 : FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: full ? 6 : 0, top: 4, bottom: 22),
+                child: Row(
+                  mainAxisAlignment: full ? MainAxisAlignment.start : MainAxisAlignment.center,
+                  children: [
+                    const BrandMark(size: 36),
+                    if (full) ...[
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Text(
+                          'VocaBloom',
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
+                          style: theme.textTheme.titleLarge?.copyWith(fontFamily: readingFont, fontWeight: FontWeight.w600),
                         ),
                       ),
-                    ),
-                  ),
-              ],
-            ),
+                    ],
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    ...main,
+                    if (extra.isNotEmpty) ...[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Divider(height: 1, indent: full ? 8 : 6, endIndent: full ? 8 : 6),
+                      ),
+                      ...extra,
+                    ],
+                  ],
+                ),
+              ),
+              item(last),
+            ],
           ),
         ),
       ),
@@ -413,53 +365,129 @@ class _BottomNav extends StatelessWidget {
   }
 }
 
-/// The tabs of the bottom bar: side by side over the whole width, or in a
-/// row that scrolls sideways (each [width] wide) when they do not fit. The
-/// selected tab is scrolled into view.
-class _BarRow extends StatefulWidget {
-  final bool scrolls;
-  final double width;
+/// Phone bottom bar: a floating rounded bar with the four main pages and a
+/// round gold button in the middle that opens the book read last. Labels
+/// never wrap: a label that does not fit is scaled down.
+class _BottomNav extends StatelessWidget {
   final int selected;
-  final List<Widget> children;
-  const _BarRow({required this.scrolls, required this.width, required this.selected, required this.children});
-
-  @override
-  State<_BarRow> createState() => _BarRowState();
-}
-
-class _BarRowState extends State<_BarRow> {
-  final _scroll = ScrollController();
-
-  @override
-  void didUpdateWidget(_BarRow old) {
-    super.didUpdateWidget(old);
-    if (widget.scrolls && old.selected != widget.selected) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (!_scroll.hasClients) return;
-        final view = _scroll.position.viewportDimension;
-        final target = (widget.selected + 0.5) * widget.width - view / 2;
-        _scroll.animateTo(
-          target.clamp(0, _scroll.position.maxScrollExtent),
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.easeOut,
-        );
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _scroll.dispose();
-    super.dispose();
-  }
+  final List<(IconData, IconData, String)> items;
+  final ValueChanged<int> onSelect;
+  final VoidCallback onCenter;
+  const _BottomNav({required this.selected, required this.items, required this.onSelect, required this.onCenter});
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.scrolls) return Row(children: [for (final c in widget.children) Expanded(child: c)]);
-    return ListView(
-      controller: _scroll,
-      scrollDirection: Axis.horizontal,
-      children: [for (final c in widget.children) SizedBox(width: widget.width, child: c)],
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final dark = theme.brightness == Brightness.dark;
+    final mq = MediaQuery.of(context);
+    // Keep the bar readable but bounded when the system font is very large.
+    final scaler = mq.textScaler.clamp(maxScaleFactor: 1.15);
+    Widget tab(int i) {
+      final d = items[i];
+      final on = i == selected;
+      final color = on ? cs.primary : cs.onSurfaceVariant;
+      return Expanded(
+        child: KeyedSubtree(
+          key: ValueKey('nav_$i'),
+          child: Semantics(
+            selected: on,
+            button: true,
+            label: d.$3,
+            excludeSemantics: true,
+            child: InkResponse(
+              onTap: () => onSelect(i),
+              radius: 34,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(on ? d.$2 : d.$1, size: 24, color: color),
+                  const SizedBox(height: 3),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        d.$3,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          fontSize: 11,
+                          letterSpacing: 0,
+                          color: color,
+                          fontWeight: on ? FontWeight.w700 : FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    final center = Semantics(
+      button: true,
+      label: L('Okumaya devam et', 'Continue reading'),
+      excludeSemantics: true,
+      child: Tooltip(
+        message: L('Okumaya devam et', 'Continue reading'),
+        child: GestureDetector(
+          key: const ValueKey('nav-continue'),
+          onTap: onCenter,
+          child: Container(
+            width: 62,
+            height: 62,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: Brand.goldGradient,
+              border: Border.all(color: dark ? Brand.dBg : Brand.lBg, width: 4),
+              boxShadow: [BoxShadow(color: const Color(0xFFA67D3A).withValues(alpha: 0.45), blurRadius: 18, offset: const Offset(0, 6))],
+            ),
+            child: Icon(Icons.auto_stories_rounded, size: 26, color: onGold(theme)),
+          ),
+        ),
+      ),
+    );
+
+    return SafeArea(
+      top: false,
+      minimum: const EdgeInsets.only(bottom: 10),
+      child: MediaQuery(
+        data: mq.copyWith(textScaler: scaler),
+        child: SizedBox(
+          height: 94,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Positioned(
+                left: 14,
+                right: 14,
+                bottom: 0,
+                height: 68,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: dark ? const Color(0xF22B231A) : Colors.white,
+                    borderRadius: BorderRadius.circular(34),
+                    border: Border.all(color: dark ? const Color(0x24FFE6BE) : Brand.lBorder),
+                    boxShadow: [
+                      BoxShadow(
+                        color: dark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFF785A28).withValues(alpha: 0.14),
+                        blurRadius: 24,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Row(children: [tab(0), tab(1), const SizedBox(width: 70), tab(2), tab(3)]),
+                ),
+              ),
+              Positioned(top: 0, child: center),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
