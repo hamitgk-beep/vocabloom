@@ -11,3 +11,4 @@ haiku run (remaining items, merge-safe save) 2026-11-18T19:09:19Z
 haiku run (retry empty entries) 2026-11-18T20:27:08Z
 haiku run (second retry, empty entries) 2026-11-18T21:31:21Z
 haiku run (v2 schema, full re-run with English gloss) 2026-11-19T03:31:20Z
+haiku run (v2 continue, spend carried) 2026-11-19T08:17:02Z
