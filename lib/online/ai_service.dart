@@ -379,24 +379,50 @@ class AiService {
   }
 
   /// Translates numbered sentences; also returns a short Turkish summary.
+  /// Each translation comes back with its sentence's number, so a model that
+  /// joins or splits sentences cannot shift the Turkish onto the wrong ones:
+  /// a sentence it left out stays empty.
   Future<({List<String> translations, String summary})> translateChunk(List<String> sentences) async {
     final numbered = [for (var i = 0; i < sentences.length; i++) '[$i] ${sentences[i]}'].join('\n');
     final r = await _json(
       'Below are ${sentences.length} consecutive sentences from a book, numbered from 0. '
-      'Return JSON {"translations": [...], "summary": "..."} where "translations" has exactly ${sentences.length} '
-      'Turkish translations in the same order, one per number (translate headings too), and "summary" is 2-4 Turkish '
-      'sentences that summarise what this passage tells.\n\n$numbered',
+      'Return JSON {"translations": [{"i": 0, "tr": "..."}, ...], "summary": "..."}: one item per number, with "i" the '
+      'sentence number and "tr" the Turkish translation of exactly that sentence (translate headings too; never join or '
+      'split sentences), and "summary" is 2-4 Turkish sentences that summarise what this passage tells.\n\n$numbered',
       {
         'type': 'object',
         'properties': {
-          'translations': {'type': 'array', 'items': {'type': 'string'}},
+          'translations': {
+            'type': 'array',
+            'items': {
+              'type': 'object',
+              'properties': {
+                'i': {'type': 'integer'},
+                'tr': {'type': 'string'},
+              },
+              'required': ['i', 'tr'],
+              'additionalProperties': false,
+            },
+          },
           'summary': {'type': 'string'},
         },
         'required': ['translations', 'summary'],
         'additionalProperties': false,
       },
     );
-    return (translations: (r['translations'] as List).map((e) => '$e').toList(), summary: '${r['summary'] ?? ''}');
+    final out = List.filled(sentences.length, '');
+    final list = r['translations'] as List? ?? const [];
+    for (var k = 0; k < list.length; k++) {
+      final e = list[k];
+      if (e is Map) {
+        final i = e['i'] is num ? (e['i'] as num).toInt() : int.tryParse('${e['i']}');
+        if (i != null && i >= 0 && i < out.length) out[i] = '${e['tr'] ?? ''}'.trim();
+      } else if (e is String && list.length == out.length) {
+        // A plain list (older answer shape): trusted only when the count matches.
+        out[k] = e;
+      }
+    }
+    return (translations: out, summary: '${r['summary'] ?? ''}');
   }
 
   /// Turkish meanings for dictionary expressions that only have English

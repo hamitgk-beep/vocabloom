@@ -251,32 +251,6 @@ class _LibraryPageState extends State<LibraryPage> {
                                 style: theme.textTheme.titleLarge?.copyWith(fontFamily: readingFont, fontWeight: FontWeight.w600, fontSize: 21),
                               ),
                             ),
-                            if (widget.onTab != null) ...[
-                              RoundIconButton(
-                                key: const ValueKey('nav_4'),
-                                size: 38,
-                                icon: Icons.explore_rounded,
-                                tooltip: L('Ücretsiz kütüphane', 'Free library'),
-                                onPressed: () => widget.onTab!(4),
-                              ),
-                              const SizedBox(width: 6),
-                              RoundIconButton(
-                                key: const ValueKey('nav_5'),
-                                size: 38,
-                                icon: Icons.insights_rounded,
-                                tooltip: L('İstatistiklerim', 'My stats'),
-                                onPressed: () => widget.onTab!(5),
-                              ),
-                              const SizedBox(width: 6),
-                              RoundIconButton(
-                                key: const ValueKey('nav_6'),
-                                size: 38,
-                                icon: Icons.tune_rounded,
-                                tooltip: L('Ayarlar', 'Settings'),
-                                onPressed: () => widget.onTab!(6),
-                              ),
-                              const SizedBox(width: 8),
-                            ],
                             addButton,
                           ],
                         )

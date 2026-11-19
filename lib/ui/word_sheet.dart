@@ -61,9 +61,22 @@ WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? 
   final matches = a.matches.where((m) => m.tokens.contains(ti)).toList();
   final tr = app.user.paraTranslation(para.id);
   String? at(int k) => k >= 0 && k < ranges.length ? para.text.substring(ranges[k].$1, ranges[k].$2).trim() : null;
-  return WordContext(para.text.substring(r.$1, r.$2).trim(), sentTokens, idx < 0 ? 0 : idx, matches,
-      tr != null && sIdx < tr.length ? [tr[sIdx]] : null, bookId, bookTitle,
+  final sentence = para.text.substring(r.$1, r.$2).trim();
+  final sTr = tr != null && sIdx < tr.length && plausibleTranslation(sentence, tr[sIdx]) ? [tr[sIdx]] : null;
+  return WordContext(sentence, sentTokens, idx < 0 ? 0 : idx, matches,
+      sTr, bookId, bookTitle,
       paraId: para.id, prevSentence: at(sIdx - 1), nextSentence: at(sIdx + 1));
+}
+
+/// Whether a saved Turkish translation can belong to [en]: translations saved
+/// by older versions could slip onto a neighbouring sentence when the AI
+/// joined two sentences, and then are far longer or shorter than the English.
+bool plausibleTranslation(String en, String tr) {
+  if (tr.trim().isEmpty) return false;
+  final a = en.trim().length, b = tr.trim().length;
+  if (a < 12) return true;
+  final ratio = b / a;
+  return ratio >= 0.45 && ratio <= 2.2;
 }
 
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
@@ -446,10 +459,10 @@ class _WordPanelState extends State<WordPanel> {
     children.add(Padding(
       padding: const EdgeInsets.only(top: 14),
       child: Material(
-        color: theme.brightness == Brightness.dark ? const Color(0x0EFFECCD) : Colors.white,
+        color: theme.brightness == Brightness.dark ? const Color(0x0EFFECCD) : Color.lerp(theme.colorScheme.surfaceContainerLowest, Colors.white, 0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: theme.brightness == Brightness.dark ? const Color(0x1CFFE6BE) : const Color(0xFFEDE3D0)),
+          side: BorderSide(color: theme.brightness == Brightness.dark ? const Color(0x1CFFE6BE) : theme.colorScheme.outlineVariant),
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(

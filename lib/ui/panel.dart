@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../l10n.dart';
+import 'reading_sheet.dart';
 
 /// Shows a detail panel (word, sentence, expression). On wide screens it
 /// slides in as a tall card on the right, so the book stays readable beside
@@ -8,6 +9,9 @@ import '../l10n.dart';
 /// is a tall bottom sheet.
 Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext context, ScrollController? scroll) builder, {bool left = false}) {
   final size = MediaQuery.sizeOf(context);
+  // Opened from the reader: the panel takes the page's colours (sepia stays sepia).
+  final pt = readingPanelTheme;
+  Widget themed(BuildContext c, ScrollController? sc) => pt == null ? builder(c, sc) : Theme(data: pt, child: Builder(builder: (c2) => builder(c2, sc)));
   if (size.width >= 720) {
     final width = (size.width * 0.42).clamp(380.0, 480.0);
     return showGeneralDialog<T>(
@@ -17,7 +21,7 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
       barrierColor: Colors.black.withValues(alpha: 0.12),
       transitionDuration: const Duration(milliseconds: 220),
       pageBuilder: (c, _, _) {
-        final t = Theme.of(c);
+        final t = pt ?? Theme.of(c);
         final dark = t.brightness == Brightness.dark;
         return SafeArea(
           child: Align(
@@ -26,19 +30,19 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
               padding: left ? const EdgeInsets.fromLTRB(16, 14, 0, 16) : const EdgeInsets.fromLTRB(0, 14, 16, 16),
               child: Material(
                 key: ValueKey(left ? 'side-panel-left' : 'side-panel'),
-                color: dark ? const Color(0xFF241D16) : const Color(0xFFFFFDF8),
+                color: dark ? const Color(0xFF241D16) : (pt != null ? pt.colorScheme.surfaceContainerLowest : const Color(0xFFFFFDF8)),
                 elevation: 12,
                 shadowColor: Colors.black.withValues(alpha: dark ? 0.5 : 0.18),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(28),
-                  side: BorderSide(color: dark ? const Color(0x24FFE6BE) : const Color(0xFFEDE3D0)),
+                  side: BorderSide(color: dark ? const Color(0x24FFE6BE) : (pt != null ? pt.colorScheme.outlineVariant : const Color(0xFFEDE3D0))),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: SizedBox(
                   width: width,
                   height: double.infinity,
                   child: Stack(children: [
-                    Padding(padding: const EdgeInsets.only(top: 22), child: builder(c, null)),
+                    Padding(padding: const EdgeInsets.only(top: 22), child: themed(c, null)),
                     Positioned(
                       right: 6,
                       top: 6,
@@ -62,6 +66,7 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
   }
   return showModalBottomSheet<T>(
     context: context,
+    backgroundColor: pt?.colorScheme.surfaceContainerLowest,
     isScrollControlled: true,
     showDragHandle: true,
     useSafeArea: true,
@@ -70,7 +75,7 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
       initialChildSize: 0.9,
       minChildSize: 0.4,
       maxChildSize: 1,
-      builder: (c, sc) => builder(c, sc),
+      builder: (c, sc) => themed(c, sc),
     ),
   );
 }

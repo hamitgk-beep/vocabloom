@@ -118,6 +118,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     _save();
     app.removeListener(_onApp);
     reader.dispose();
+    readingPanelTheme = null;
     scroll.dispose();
     _focus.dispose();
     super.dispose();
@@ -436,8 +437,14 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final wide = MediaQuery.sizeOf(context).width > 1000;
     final filters = FilterPanel(app: app);
     final paper = pageColor(app, theme);
+    final rt = readerTheme(app, theme);
+    // Panels opened from the book take the page's colours.
+    readingPanelTheme = rt;
+    final dark = theme.brightness == Brightness.dark;
+    final compact = MediaQuery.sizeOf(context).width < 600;
+    void setDark(bool v) => app.setTheme(v ? ThemeMode.dark : ThemeMode.light);
     return Theme(
-      data: readerTheme(app, theme),
+      data: rt,
       child: Scaffold(
         key: _scaffold,
         backgroundColor: paper,
@@ -466,7 +473,12 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             ),
           ),
           actions: [
-            if (Speech.supported)
+            if (!compact) ...[
+              DayNightToggle(dark: dark, onChanged: setDark),
+              const SizedBox(width: 8),
+            ] else
+              DayNightToggle(dark: dark, onChanged: setDark, compact: true),
+            if (Speech.supported && !compact)
               IconButton(
                 tooltip: reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud'),
                 icon: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
@@ -477,16 +489,18 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
               icon: const Icon(Icons.text_fields_rounded),
               onPressed: () => showReadingSheet(context, app),
             ),
-            IconButton(
-              tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'),
-              icon: const Icon(Icons.copy_all_rounded),
-              onPressed: _copyChapter,
-            ),
-            IconButton(
-              tooltip: L('Bölümler', 'Chapters'),
-              icon: const Icon(Icons.list),
-              onPressed: () => _scaffold.currentState!.openDrawer(),
-            ),
+            if (!compact) ...[
+              IconButton(
+                tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'),
+                icon: const Icon(Icons.copy_all_rounded),
+                onPressed: _copyChapter,
+              ),
+              IconButton(
+                tooltip: L('Bölümler', 'Chapters'),
+                icon: const Icon(Icons.list),
+                onPressed: () => _scaffold.currentState!.openDrawer(),
+              ),
+            ],
             IconButton(
               key: const ValueKey('reader-filters'),
               tooltip: wide && filtersOpen ? L('Filtreleri kapat', 'Close filters') : L('Filtreler', 'Filters'),
@@ -498,6 +512,35 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
               ),
               onPressed: () => _toggleFilters(wide),
             ),
+            if (compact)
+              PopupMenuButton<String>(
+                key: const ValueKey('reader-more'),
+                tooltip: L('Diğer', 'More'),
+                icon: const Icon(Icons.more_horiz_rounded),
+                onSelected: (v) {
+                  switch (v) {
+                    case 'aloud':
+                      _toggleReadAloud();
+                    case 'chapters':
+                      _scaffold.currentState!.openDrawer();
+                    case 'copy':
+                      _copyChapter();
+                  }
+                },
+                itemBuilder: (_) => [
+                  if (Speech.supported)
+                    PopupMenuItem(
+                      value: 'aloud',
+                      child: ListTile(
+                        leading: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
+                        title: Text(reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud')),
+                      ),
+                    ),
+                  PopupMenuItem(value: 'chapters', child: ListTile(leading: const Icon(Icons.list), title: Text(L('Bölümler', 'Chapters')))),
+                  PopupMenuItem(value: 'copy', child: ListTile(leading: const Icon(Icons.copy_all_rounded), title: Text(L('Bölümü kopyala', 'Copy the chapter')))),
+                ],
+              ),
+            const SizedBox(width: 4),
           ],
         ),
         drawer: Drawer(
@@ -653,7 +696,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                       const VerticalDivider(width: 1),
                       SizedBox(
                         width: 320,
-                        child: Material(color: theme.colorScheme.surface, child: filters),
+                        child: Material(color: rt.colorScheme.surface, child: filters),
                       ),
                     ],
                   ],

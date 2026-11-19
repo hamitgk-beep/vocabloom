@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -5,6 +7,7 @@ import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/grammar_marks.dart';
 import '../nlp/text.dart';
+import 'hover_meaning.dart';
 import 'theme.dart';
 
 class ParaAnalysis {
@@ -23,15 +26,15 @@ class ParaAnalysis {
 
   /// Whether [m] is used literally here ("lived in Kansas"), computed once.
   bool _isLiteral(AppState app, Match m) => _literal.putIfAbsent(m, () {
-        // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
-        // or collocation found in its own words is the expression.
-        if (m.expr.cat != 'phrasal_verbs') return false;
-        try {
-          return app.senses.isLiteral(m.expr, tokens, m.tokens);
-        } catch (_) {
-          return false;
-        }
-      });
+    // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
+    // or collocation found in its own words is the expression.
+    if (m.expr.cat != 'phrasal_verbs') return false;
+    try {
+      return app.senses.isLiteral(m.expr, tokens, m.tokens);
+    } catch (_) {
+      return false;
+    }
+  });
 
   /// The expressions that cover token [i] and are on in the filters, not
   /// used literally, the longest first (then in filter order). One rule for
@@ -42,16 +45,14 @@ class ParaAnalysis {
       for (final m in matches)
         if (app.enabledCats.contains(m.expr.cat) && m.tokens.contains(i) && !_isLiteral(app, m)) m,
     ]..sort((x, y) {
-        final byLen = y.tokens.length.compareTo(x.tokens.length);
-        return byLen != 0 ? byLen : order[x.expr.cat]!.compareTo(order[y.expr.cat]!);
-      });
+      final byLen = y.tokens.length.compareTo(x.tokens.length);
+      return byLen != 0 ? byLen : order[x.expr.cat]!.compareTo(order[y.expr.cat]!);
+    });
   }
 
   /// The expression category underlined on each token: the expression a tap
   /// on that token opens ([expressionsAt]), or null.
-  List<String?> expressionCats(AppState app) => [
-        for (var i = 0; i < tokens.length; i++) expressionsAt(app, i).firstOrNull?.expr.cat,
-      ];
+  List<String?> expressionCats(AppState app) => [for (var i = 0; i < tokens.length; i++) expressionsAt(app, i).firstOrNull?.expr.cat];
 
   /// The highlight that colours token [i]: the expression [expressionsAt]
   /// picks, else an enabled grammar structure. Returns the expression
@@ -119,6 +120,65 @@ class ParagraphView extends StatefulWidget {
 
 class _ParagraphViewState extends State<ParagraphView> {
   final _key = GlobalKey();
+
+  // ---------------------------------------------------------------- mouse
+  // Pointing at a word with the mouse shows its first meaning in a small
+  // bubble above it, without a click; a click opens the full panel.
+  OverlayEntry? _bubble;
+  int? _hoverToken;
+  Timer? _hoverTimer;
+
+  void _hover(Offset local, ParaAnalysis a) {
+    final i = _tokenAt(local, a);
+    if (i == _hoverToken) return;
+    _hideBubble();
+    _hoverToken = i;
+    if (i == null) return;
+    _hoverTimer = Timer(const Duration(milliseconds: 120), () => _showBubble(a, i));
+  }
+
+  void _showBubble(ParaAnalysis a, int i) {
+    final ro = _key.currentContext?.findRenderObject();
+    if (!mounted || ro is! RenderParagraph || !ro.attached) return;
+    final m = hoverMeaning(widget.app, a.tokens, a.matches, i);
+    if (m == null) return;
+    final t = a.tokens[i];
+    final boxes = ro.getBoxesForSelection(TextSelection(baseOffset: t.start, extentOffset: t.end));
+    if (boxes.isEmpty) return;
+    final overlay = Overlay.maybeOf(context);
+    final ob = overlay?.context.findRenderObject();
+    if (overlay == null || ob is! RenderBox) return;
+    final word = boxes.first.toRect();
+    final topLeft = ro.localToGlobal(word.topLeft, ancestor: ob);
+    final theme = Theme.of(context);
+    final size = ob.size;
+    _bubble = OverlayEntry(
+      builder: (_) => Positioned(
+        left: (topLeft.dx - 14).clamp(8.0, (size.width - 308).clamp(8.0, double.infinity)),
+        bottom: size.height - topLeft.dy + 6,
+        child: IgnorePointer(
+          child: Theme(
+            data: theme,
+            child: HoverBubble(m: m),
+          ),
+        ),
+      ),
+    );
+    overlay.insert(_bubble!);
+  }
+
+  void _hideBubble() {
+    _hoverTimer?.cancel();
+    _hoverTimer = null;
+    _bubble?.remove();
+    _bubble = null;
+  }
+
+  @override
+  void dispose() {
+    _hideBubble();
+    super.dispose();
+  }
 
   @override
   void didUpdateWidget(ParagraphView old) {
@@ -244,7 +304,12 @@ class _ParagraphViewState extends State<ParagraphView> {
         spans.add(
           TextSpan(
             text: text.substring(pos, t.start),
-            style: TextStyle(decoration: gc == null ? null : TextDecoration.underline, decorationColor: gc, decorationThickness: 2.2, backgroundColor: inSpeech(pos, t.start) ? speakBg : null),
+            style: TextStyle(
+              decoration: gc == null ? null : TextDecoration.underline,
+              decorationColor: gc,
+              decorationThickness: 2.2,
+              backgroundColor: inSpeech(pos, t.start) ? speakBg : null,
+            ),
           ),
         );
       }
@@ -283,21 +348,29 @@ class _ParagraphViewState extends State<ParagraphView> {
     final toc = para.meta['toc'] != null;
     return Padding(
       padding: EdgeInsets.only(bottom: toc ? 4 : (heading ? 14 : 12), top: heading ? 12 : 0),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTapUp: (d) {
-          final i = _tokenAt(d.localPosition, a);
-          if (i != null) widget.onWord(widget.para, a, i);
+      child: MouseRegion(
+        onHover: (e) => _hover(e.localPosition, a),
+        onExit: (_) {
+          _hideBubble();
+          _hoverToken = null;
         },
-        onLongPressStart: (d) {
-          final i = _tokenAt(d.localPosition, a);
-          if (i != null) widget.onSentence(widget.para, a, i);
-        },
-        child: RichText(
-          key: _key,
-          textAlign: align,
-          text: TextSpan(style: base, children: spans),
-          textScaler: MediaQuery.textScalerOf(context),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTapUp: (d) {
+            _hideBubble();
+            final i = _tokenAt(d.localPosition, a);
+            if (i != null) widget.onWord(widget.para, a, i);
+          },
+          onLongPressStart: (d) {
+            final i = _tokenAt(d.localPosition, a);
+            if (i != null) widget.onSentence(widget.para, a, i);
+          },
+          child: RichText(
+            key: _key,
+            textAlign: align,
+            text: TextSpan(style: base, children: spans),
+            textScaler: MediaQuery.textScalerOf(context),
+          ),
         ),
       ),
     );
