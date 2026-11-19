@@ -1,6 +1,6 @@
 # Turkish library: 102 texts
 
-levels: {"A1": 4, "A2": 4, "B1": 4, "B2": 45, "C1": 45}
+levels: {"A1": 4, "A2": 4, "B1": 19, "B2": 45, "C1": 30}
 
 dump: 11587 main pages, 9154 scan pages, 0 author pages
 authors with a known year of death: 17, public domain: 14
@@ -274,87 +274,88 @@ B1   192 original: Eski Saat
 B1   170 original: İş Görüşmesi
 B1   201 original: Köprünün Öbür Yakası
 B1   178 original: Martılar ve Simitçi
-B2   120 rare=40.2 sl=6.0 Işığı Gören Dışarı Çıkıyor (folk)
-B2   122 rare=36.3 sl=8.1 Bu Mümkün Değil (folk)
-B2   123 rare=33.3 sl=10.2 Peşin Parayı Gördün Ya (folk)
-B2   125 rare=37.0 sl=9.6 Atınca Uzarmış (folk)
-B2   126 rare=35.1 sl=10.5 Çömlek Hesabı (folk)
-B2   127 rare=36.9 sl=10.6 Hoca Kabaktan Bıkınca (folk)
-B2   129 rare=28.3 sl=16.1 Balık Başı (folk)
+B1   120 rare=40.2 sl=6.0 Işığı Gören Dışarı Çıkıyor (folk)
+B1   122 rare=36.3 sl=8.1 Bu Mümkün Değil (folk)
+B1   123 rare=33.3 sl=10.2 Peşin Parayı Gördün Ya (folk)
+B1   125 rare=37.0 sl=9.6 Atınca Uzarmış (folk)
+B1   126 rare=35.1 sl=10.5 Çömlek Hesabı (folk)
+B1   127 rare=36.9 sl=10.6 Hoca Kabaktan Bıkınca (folk)
+B1   129 rare=28.3 sl=16.1 Balık Başı (folk)
+B1   131 rare=36.1 sl=5.0 Hiç Hakkı (folk)
+B1   131 rare=38.1 sl=7.7 Allah Taksimi mi Kul Taksimi mi (folk)
+B1   132 rare=31.9 sl=12.0 Üç Nesne (folk)
+B1   134 rare=24.4 sl=8.9 Lütfun da Hoş Kahrın da (folk)
+B1   146 rare=39.4 sl=5.8 Tavşanın Suyunun Suyu (folk)
+B1   166 rare=39.7 sl=6.1 Al Elimi (folk)
+B1   379 rare=38.8 sl=7.3 İncircinin dediği (folk)
+B1   646 rare=36.0 sl=10.9 Keloğlan ve Padişah (folk)
 B2   129 rare=40.2 sl=9.9 Pembe Menekşe (Ömer Seyfettin)
-B2   131 rare=36.1 sl=5.0 Hiç Hakkı (folk)
-B2   131 rare=38.1 sl=7.7 Allah Taksimi mi Kul Taksimi mi (folk)
-B2   132 rare=31.9 sl=12.0 Üç Nesne (folk)
-B2   134 rare=24.4 sl=8.9 Lütfun da Hoş Kahrın da (folk)
+B2   129 rare=48.4 sl=11.7 Bindiği Dalı Kesmek (folk)
 B2   134 rare=39.8 sl=8.4 Baba Sözü Dinleyeceği Tutmuş (folk)
-B2   146 rare=39.4 sl=5.8 Tavşanın Suyunun Suyu (folk)
 B2   151 rare=41.4 sl=8.4 Tartılan Et mi Kedi mi (folk)
 B2   164 rare=37.4 sl=11.7 Fincancı Katırları (folk)
-B2   166 rare=39.7 sl=6.1 Al Elimi (folk)
+B2   184 rare=53.7 sl=9.2 Allah'ın Hikmeti (folk)
 B2   188 rare=40.2 sl=7.5 Sudan Gelen Sele Gider (folk)
 B2   196 rare=39.9 sl=7.0 Herkesi Memnun Edemezsin (folk)
+B2   197 rare=52.6 sl=10.4 İnanmazsan Say (folk)
 B2   252 rare=40.9 sl=8.1 Tembel Kız (folk)
 B2   281 rare=42.2 sl=8.5 Bozukluk Çömlekte (folk)
-B2   379 rare=38.8 sl=7.3 İncircinin dediği (folk)
+B2   281 rare=44.1 sl=7.8 Kıymetli Tuz (folk)
 B2   464 rare=35.6 sl=10.5 Hediye... (Ömer Seyfettin)
+B2   478 rare=40.9 sl=10.9 Karanan ile Tilki (folk)
 B2   487 rare=43.7 sl=5.7 Rüşvet (Ömer Seyfettin)
 B2   528 rare=39.0 sl=5.7 Bir Kayışın Tesiri (Ömer Seyfettin)
 B2   611 rare=42.4 sl=5.1 Antiseptik (Ömer Seyfettin)
-B2   646 rare=36.0 sl=10.9 Keloğlan ve Padişah (folk)
+B2   661 rare=45.0 sl=6.5 Nasıl Kurtarmış? (Ömer Seyfettin)
 B2   675 rare=40.1 sl=5.1 Terakki (Ömer Seyfettin)
 B2   725 rare=42.4 sl=7.5 Kuyruksuz Tilki (folk)
+B2   839 rare=44.6 sl=5.5 Kurumuş Ağaçlar (Ömer Seyfettin)
+B2   846 rare=45.7 sl=5.7 Namus (Ömer Seyfettin)
 B2   856 rare=41.1 sl=4.9 Kaşağı (Ömer Seyfettin)
 B2   942 rare=38.8 sl=9.0 Külden Eşek (folk)
 B2   989 rare=41.4 sl=7.0 Aşk ve Ayak Parmakları (Ömer Seyfettin)
+B2  1010 rare=56.5 sl=7.2 On iki gardaş meseli (folk)
 B2  1065 rare=43.8 sl=5.4 Dünyanın Düzeni (Ömer Seyfettin)
 B2  1109 rare=38.8 sl=5.1 Yeni Bir Hediye (Ömer Seyfettin)
 B2  1132 rare=38.7 sl=6.5 Bir Temiz Havlu Uğruna (Ömer Seyfettin)
+B2  1241 rare=43.3 sl=7.0 Yalnız Efe (Ömer Seyfettin)
 B2  1331 rare=39.9 sl=5.8 Velinimet (Ömer Seyfettin)
 B2  1388 rare=38.1 sl=5.6 Pireler (Ömer Seyfettin)
+B2  1477 rare=45.7 sl=6.4 Kızıl Elma Neresi? (Ömer Seyfettin)
+B2  1545 rare=45.8 sl=5.6 Teke Tek (Ömer Seyfettin)
 B2  1644 rare=41.8 sl=5.9 Kıskançlık (Ömer Seyfettin)
 B2  1659 rare=43.0 sl=6.1 Gizli Mâbed (Ömer Seyfettin)
-B2  1829 rare=40.4 sl=5.3 Balkon (hikâye) (Ömer Seyfettin)
+B2  1829 rare=40.4 sl=5.3 Balkon (Ömer Seyfettin)
+B2  1961 rare=44.2 sl=6.0 Külah (Ömer Seyfettin)
 B2  2152 rare=41.5 sl=5.8 Niçin Zengin Olmamış? (Ömer Seyfettin)
+B2  2340 rare=44.6 sl=6.5 Diyet (Ömer Seyfettin)
 B2  2735 rare=40.1 sl=6.9 Piç (Ömer Seyfettin)
 B2  3063 rare=40.2 sl=6.5 Fon Sadriştayn’ın Karısı (Ömer Seyfettin)
 B2  4323 rare=42.7 sl=6.1 Bomba (Ömer Seyfettin)
 B2  4365 rare=43.7 sl=5.8 Aleko (Ömer Seyfettin)
-C1   129 rare=48.4 sl=11.7 Bindiği Dalı Kesmek (folk)
+B2  5800 rare=44.0 sl=7.6 Tarih Ezeli Bir Tekerrürdür (Ömer Seyfettin)
 C1   143 rare=46.8 sl=14.3 Buse-i Mader (Ömer Seyfettin)
-C1   184 rare=53.7 sl=9.2 Allah'ın Hikmeti (folk)
-C1   197 rare=52.6 sl=10.4 İnanmazsan Say (folk)
-C1   281 rare=44.1 sl=7.8 Kıymetli Tuz (folk)
 C1   399 rare=47.3 sl=23.5 Bir Refikin Defter-i İhtisasatından (Ömer Seyfettin)
-C1   478 rare=40.9 sl=10.9 Karanan ile Tilki (folk)
 C1   507 rare=48.2 sl=5.8 Kerâmet (Ömer Seyfettin)
 C1   514 rare=45.4 sl=10.3 Elma (Ömer Seyfettin)
-C1   661 rare=45.0 sl=6.5 Nasıl Kurtarmış? (Ömer Seyfettin)
 C1   676 rare=46.7 sl=6.6 Müjde (Ömer Seyfettin)
-C1   839 rare=44.6 sl=5.5 Kurumuş Ağaçlar (Ömer Seyfettin)
-C1   846 rare=45.7 sl=5.7 Namus (Ömer Seyfettin)
 C1   864 rare=47.1 sl=6.8 Havyar (Ömer Seyfettin)
 C1   886 rare=46.7 sl=5.6 Korkunç Bir Ceza (Ömer Seyfettin)
-C1  1010 rare=56.5 sl=7.2 On iki gardaş meseli (folk)
 C1  1068 rare=48.5 sl=5.6 Forsa (Ömer Seyfettin)
 C1  1189 rare=50.3 sl=7.4 Nâdan (Ömer Seyfettin)
 C1  1201 rare=46.3 sl=6.9 Bir Hatıra (Ömer Seyfettin)
-C1  1241 rare=43.3 sl=7.0 Yalnız Efe (Ömer Seyfettin)
 C1  1389 rare=48.1 sl=7.8 Binecek Şey (Ömer Seyfettin)
 C1  1397 rare=50.4 sl=6.4 Topuz (Ömer Seyfettin)
 C1  1405 rare=47.8 sl=6.2 Kurbağa Duası (Ömer Seyfettin)
-C1  1477 rare=45.7 sl=6.4 Kızıl Elma Neresi? (Ömer Seyfettin)
 C1  1504 rare=46.0 sl=6.1 Perili Köşk (Ömer Seyfettin)
-C1  1545 rare=45.8 sl=5.6 Teke Tek (Ömer Seyfettin)
 C1  1562 rare=43.9 sl=10.6 Primo Türk Çocuğu (Ömer Seyfettin)
 C1  1673 rare=45.4 sl=9.3 Mehdi (Ömer Seyfettin)
 C1  1723 rare=49.2 sl=6.8 Teselli (Ömer Seyfettin)
 C1  1747 rare=48.2 sl=7.0 Büyücü (Ömer Seyfettin)
 C1  1829 rare=46.9 sl=15.6 Cimnastiğe Dair - 2 (Ömer Seyfettin)
-C1  1961 rare=44.2 sl=6.0 Külah (Ömer Seyfettin)
 C1  1987 rare=47.8 sl=7.9 Tos (Ömer Seyfettin)
 C1  1998 rare=48.7 sl=8.4 And (Ömer Seyfettin)
 C1  2168 rare=45.2 sl=7.9 Hürriyet Bayrakları (Ömer Seyfettin)
-C1  2340 rare=44.6 sl=6.5 Diyet (Ömer Seyfettin)
 C1  2359 rare=46.4 sl=6.3 Başını Vermeyen Şehit (Ömer Seyfettin)
 C1  2531 rare=47.4 sl=6.7 Vire (Ömer Seyfettin)
 C1  2611 rare=46.8 sl=10.3 Aşk Dalgası (Ömer Seyfettin)
@@ -363,7 +364,6 @@ C1  2698 rare=47.7 sl=9.9 Bahar ve Kelebekler (Ömer Seyfettin)
 C1  2837 rare=48.5 sl=6.5 Ferman (Ömer Seyfettin)
 C1  3075 rare=47.2 sl=7.0 Fon Sadriştayn’ın Oğlu (Ömer Seyfettin)
 C1  4311 rare=48.9 sl=7.1 Kütük (Ömer Seyfettin)
-C1  5800 rare=44.0 sl=7.6 Tarih Ezeli Bir Tekerrürdür (Ömer Seyfettin)
 
 # Samples
 
@@ -384,87 +384,103 @@ Ali bir simit alır. Simidin yarısını kendisi yer, küçük bir parçasını 
 Öğleden sonra eve dönerler. Ali yorgun ama mutlu. Pamuk hemen uyur. Ali gülümser: "Güzel bir pazar günü."
 
 
-## Hoca Kabaktan Bıkınca (B2)
+## Üç Nesne (B1)
 
-# Hoca Kabaktan Bıkınca
+# Üç Nesne
 
-Nasreddin Hoca, bir Ramazanda civar köylerden birine gitmiş. Daha ilk gün, vaaz sırasında kabaktan “cennet yemeğidir” diye bahsetmiş. Mevsim de kabak mevsimi olduğundan köylüler artık Hoca‟ya her akşam kabak yemeği göndermeye başlamışlar. Bir gün, iki gün, beş gün, yedi gün derken, Hoca‟ya kabak yemekten bıkkınlık gelmiş. Köylüye kabağın cennet yiyeceği olduğunu söylediğine bin defa pişman olmuş. Ama ok bir defa yaydan çıkmış olduğu için, yapacak bir şey de yokmuş. Canı da müthiş tavuk istiyormuş. Nihayet, bir ikindi vakti vaaza başlayınca, sözü döndürüp dolaştırıp yine yemek bahsine getirmiş. Kabağın cennet yiyeceği olduğunu tekrarlamış. Ancak arkasından da:
+Sarı Saltuk, Nasreddin'e Akşehir'de rastlar. Nasreddin, Saltuk'a altın, gümüş tabaklar içinde yiyecek ikram eder. Bu debdebe karşısında Sarı Saltuk, kendi kendine sorar:
 
-– Sizin şu fukara hocaya, her gün cennet yiyeceğini layık görmeniz, onu gurura sevk edebilir. Onun için, arada bir ayağı çamurlu bir tavuk da gönderirseniz, tevazu yönünden daha uygun olur! deyivermiş.
+-Bu adam acaba bu kadar serveti babasından miras mı aldı yoksa kendisi mi kazandı?
+
+Misafirinin aklından geçenleri sezen Nasreddin der ki:
+
+-Bütün bunlar babamdan kaldı. Benim, bu dünyaya gelirken getirdiğim ve bir gün dünyayı terk ederken de götüreceğim üç nesnedir.
+
+Saltuk sorar:
+
+-Bu üç nesne nedir? -Bir sikimle iki taşağım.
+
+Bu kaba sözler garibine gider ama düşüncesini yüksek sesle anlatmaya cesaret edemez, kendi kendine: "Böyle bilge bir adam manasız şeyler söylemez, her halde sözlerinin gizli bir manası vardır. Acaba ne demek istedi?" der. Nasreddin misafirinin aklından geçenleri sezer ve der ki:
+
+-Kafanı boş yere yorma, söyleyeyim; bu üç şeyden maksadım: Birincisi iman, ikincisi amel, üçüncüsü de ihlâstır.
 
 
-## Hediye... (B2)
+## Herkesi Memnun Edemezsin (B2)
 
-# Hediye...
+# Herkesi Memnun Edemezsin
 
-Üç gündür içimde öyle bir heyecan-ı arzu var ki bunu ve sebebini bir türlü tefsir edemiyordum.
+Hoca merhum, oğlu ile bir köye gidiyormuş. Oğlunu eşeğe bindirmiş. Bazı kimseler görüp:
 
-Teskin-i asabiyete muvaffak olamıyordum. En nihayet –zevcimin is’âf-ı hevesime mazhar olamamaktan tevellüt edecek hüzün ve kederi iyice bildiğim halde– karar verdim. O akşam memuru bulunduğu bankadan her vakitki gibi, yine yorgun ve ter içinde geldiği zaman mutat olan buse-i muhabbetimi takdim etmeden “Bir gül!” diye haykırıverdim.
+— Hey gidi zamane gençleri, ağzının ilmiyle şu ihtiyar babasını yayan yürütüyor da kendisi rahat rahat eşeğe binip gidiyor, demişler.
 
-O şaşkın, ve istizahkâr yüzüme bakıyordu: “Bir gül, bir gül.. o kadar ihtiyacım var ki bir gül, bir bahar çiçeği...”
+Çocuk:
 
-Ve artık anlattım. O başını müteessirâne sallayarak diyordu ki: “Bir köyden... kışın bir gül...”
+— Bak baba! sana ısrar etmedim mi? Haydi artık daha ziyade inat etme, şu eşeğe bin, demiş.
 
-Ben o kadar ısrar ediyordum ki o akşam hemen darılıvermiştim ve gül gelinceye kadar söz söylemeden ısrar ediyordum.
+Hoca eşeğe binmiş. Biraz gitmişler. Bir kaç kişi tesadüf edip:
 
-Nihayet gülerek ve istihzakârane muvafakat etti: “Paris’teki dostumuz Vikont (K.)’a yazalım. Belki buraya kadar solmadan gelir...”
+— Ayol senin kemiğin kartlaşmış, hem işte geldin işte gidiyorsun. Bu taze fidanı bu kadar zahmete koşup da kavurmak layık mı? derler.
 
-Biz kadınlar tuhafız. Bu muvafakate karşı yine gelinceye kadar olacak dargınlıkta devam edeceğimi aht etmiştim. Gözüm her gün posta arabasına ma’tûf idi.
+Hoca tutar, çocuğu da arkasına bindirir. Birkaç adım gider gitmez, bir bölük herze-vekile daha tesadüf ederler. Bunlar da bakıp:
 
-Tuhaf arzu... Öyle zannediyordum ki bu bir gül bana bir bahar-ı zevk olacak. Fakat bir hafta olduğu halde el’ân bir haber gelmemişti. Artık karşıda bir hiddet ve garez hissediyordum. Tabiî bir keyifsizlik ve bir meşgale bir hafta kadar asabiyetimi teskin etmek üzere iken gözümü ilk dakika-i ıstıraptan sonra açtığım vakit kalbimdeki ilk darbenin bir gül ihtiyacından ibaret olduğunu hissettim. Dargınlığımız el’ân devam ediyordu. Fakat
+— Amma insafsızlık ha! Bir eşekçiğe iki kişi birden biner de uzun yola gider mi? Bakın şu herife, hoca da olacak! derler.
 
-## Balkon (hikâye) (B2)
+Hoca artık kızıp eşekten kendi de oğlu da inerler. Önlerine katarlar. Çok geçmez bittesadüf birkaç adama rast gelirler.
 
-# Balkon (hikâye)
+— Allah Allah! Bu ne budalalık. Eşek önlerinde bomboş hoplaya sıçraya koşsun da kendileri bu sıcakta toza toprağa bulanarak kan ter içinde yayan yürüsünler. Dünyada ne şaşkın adamlar var!
 
-Muhsin Bey sofradan kalkınca, büyük ceviz büfeye dayanmış, kendilerini gülümseyerek dinleyen hizmetçiye:  
-— Eleni, nargilemi kameriyeye getir, kahveden evvel... Haydi çabuk, dedi.  
-Sonra sofradakilere döndü:  
-— Çocuklar! Siz de oraya gelin!  
-Hamdune Hanım; —narin, süzgün, yaşlı bir kadın— elmasını soyuyordu. Gözlerini kaldırmadan itiraz etti:  
-— Daha mehtaba bir saat var. Karanlıkta ne yapacağız?  
-— Burası cehennem be!  
-— Orası cennet mi?  
-— İsterseniz gelin. Ben burada yanamam.  
-— Uğurlar olsun.  
-Bu, şişman bir adamdı; ihtiyar bir şişman! Sallana sallana kapıdan çıktı. Tekâüt olduktan sonra doktorlara inat, oburluğa, nargileye bir nihayet vermemişti. Kır sakalının, daha dökülmemiş kır saçlarının altında kıpkırmızı, şiş yanakları onda yalancı bir sıhhatin daimi sevincini alevlendirirdi. Halbuki on senedir iyi olmaz bir kalp hastalığından mustaripti. Maddî ıstırabı, manevî neşesini bozmamıştı. Hamdune Hanım, kocasının aksi, çok küskün bir kadındı. Her an sebepsiz bir elem, bir sıkıntı içinde yaşardı. Meçhul bir matem sanki ruhunu ebediyyen karartmıştı. Daima sinirli, az güler, hep heyecan içinde... Köşkün kapısından kazara postacı geçse sapsarı kesilirdi. Gece gündüz bir felaket haberi bekler gibiydi. Sağındaki oğluna:  
-— Maşallah, hepimizden genç, dedi.  
-— Genç değil, içi ferah!  
-— Ya yemek yemesine ne dersin?  
-— Fena. Ama ne yapalım?.. "Allah sekizde verdiğini dokuzda almazmış!" Böyle rahat felsefeye dayandıktan sonra...  
-Delikanlının karşıs
+Dediklerini işitince Hoca oğluna dönerek demiş ki:
 
-## Kurumuş Ağaçlar (C1)
+— Lakin yahu! Bu halkın dilinden kurtulabilen varsa ona aşkolsun. Ne yaparsan yap, herkesi memnun edemezsin. Sen yalnızca Allah'ı memnun etmeye bak.
 
-# Kurumuş Ağaçlar
 
-Deli Murat, memleketin en azılı bir derebeyi idi! Fakat yaşlandıkça aklı başına geldi. İyinin, kötünün farkına varmaya başladı. Artık en küçük bir fenalık bile onun vicdanında sönmez bir azap cehennemi tutuşturuyordu. Elli yaşına girmişti. Hacca gitmek niyetindeydi. Lâkin hangi yüzle?.. Uzun kış geceleri, vahşî bir saraya benzeyen kulesinin tenha odasında, ocağın alevlerine dalarak yaptıklarını düşünürdü. Tam otuz sene... Etmediği kalmamıştı. Soyduğu kervanları, kaldırdığı kızları, vurduğu postaları, yaktığı köyleri, yıktığı hanları, bastığı şehirleri hep birden hatırladı. Hele öldürdüğü insanlar... Bunları unutabilmek imkanı yoktu. Vâkıa çoğunu kendi nefsini kurtarmak için öldürmüştü. Fakat ne olursa olsun, yine kandı! Evet, kırk kan!...
+## Aşk ve Ayak Parmakları (B2)
 
-Bir gece sabaha kadar uyuyamadı. Daha şafak sökmeden atlarını hazırlattı. Kasabaya doludizgin koştu. Sabah namazını henüz bitiren Karababa'yı seccadesinde buldu. Bu Şeyh, devrinin en büyük erenlerindendi. Tekkesi ümitsizlerin mâbediydi. Deli Murat'ı görünce gülümsedi:  
-— Hoş geldin. Seni bekliyordum, dedi.  
-— Beni mi?  
-— Evet.  
-— Niçin?  
-— Hacca gitmek istiyorsun, değil mi?  
-— ....  
-Deli Murat, bu her şeyi bilen, her şeyi gören, gaipten haberdar, mübarek ihtiyarın eline sarıldı. Öptü:  
-— Fakat yüzüm yok, babacığım, dedi.  
-— Allah her şeyi affeder.  
-— Benim kabahatim çok. Günahlarım çok büyük...  
-— ......  
-Seccadenin kenarına diz çöktü. Ağlaya ağlaya mazisini anlattı. Bunlar hatırında durdukça, peygamberin meza
+# Aşk ve Ayak Parmakları
 
-## Teselli (C1)
+Âsıme Hanımefendi'den Hasan'a mektup
 
-# Teselli
+Evvela beni sen sevdin, yalvardın, yakardın, benim aşkım âdeta senin galeyanına sönük bir cevaptı. Sonunda beni aldın. Ben zengindim. Atım, arabam vardı. Bütün bugünün gençleri beni istiyorlardı. Herkesin isteğine sen nail oldun. Mesuttun. Ben sana sadıktım. Sonra nasıl oldu, birdenbire döndün. Benden soğudun. Beni görmekten kaçtın, yine sonunda beni boşadın... Bu mektubumu alınca sanma ki, sana yalvarıyorum. Fakat merak ediyorum! Niçin beni istemeyesin? Benim neyim var? Yahut neyim eksik? Daha bu sene Kadıköy kadınları arasındaki güzellik müsabakasında birinci geldim. Tahsilim birinci derecede... Zenginim de. O hâlde niçin beni istemeyesin? Benden güzelini bulsan bile, eminim ki benden zenginini bulamayacaksın. O hâlde niçin, niçin beni istemeyesin?
 
-Batıdan gelen büyük düz yolun tâ ağzındaki taş konak, zairsiz bir türbe gibi sakindi. Yeşil boyalı demir kapısının aralığına yaslanmış ak sakallı, garip, meyus bir kethüdâ; yere, karmakarışık serseri izlere bakarak düşünüyordu. Kapakları örtülü ıssız pencerelerin arkasında sanki derin, duyulmaz bir matem feryadı gizliydi. Beş hafta evvelki bozgunun şehri dolduran yaralıları, kuskunsuz atlar, aç katırlar, kırık arabalar, topallayan askerler, kalkansız süvariler, tolgasız yeniçeriler, mızraksız sipâhîler; yüksek, beyaz duvarlara, geçici bir gölge kabusu halinde, mahzun akislerini bir an sürüyorlar, sonra titreyerek, siliniveriyorlardı.
+Hasan'dan Âsıme Hanımefendi'ye mektup
 
-Bu türbede yatan ölü, Erzurum kumandanı İskender Paşa idi. Haftalardan beri, tozlu bir sanduka içi gibi karanlık odasında, dizlerini acıtan seccadeye kapanmış, yapayalnız oturuyordu. Mihânikî bir huzur ile "Salâtü selam" çekerek beklediği, geç kalan Azrail'di. İşte tam otuz gün... Daima kulağında bir ayak sesi işitir gibi olur, genç kahyasını çağırırdı:  
-— Fâzıl!  
-— Efendim.  
-— Bir gelen mi var?  
-— Hayır efendim.  
-— ....  
-Sadık genç, araladığı kapıyı çekince, yine birden kararan sanduka sükunu içinde, İskender Paşa, galeyansız ibadetine başlardı. Artık dünyaya dair hiçbir ümidi kalmamıştı. İstediği yalnız bir iman selametiydi. Vâkıa korkak bir adam değildi. Ama, muhakkak bir ölümü her gün, her saat, her dakika, hatta her saniye beklemek... Onun cesaretini kırmış, sinirlerini zayıflatmıştı. Evet, ya kafası kesilecek, ya boğulacak
+Evet güzel kadın, ben sevmiştim. Fakat sevmek nedir? Bunu biliyor musun?.. Sevmek herkes için başka bir şeydir. Tabiî mizaçların, tecessüslerin başka başka olması gibi... Kimi kaşa göze, kimi cilde, kimi ellere ayaklara, kimi şişmanlığa, kimi boya, kimi kalçaya bakar. Hâlbuki ben... Profile bakarım. Daha okuldan beri âdetimdir, birisiyle konuşurken onda ne profili olduğunu ararım. Mesela küçük profilli bir adamla konuşurken onun laflarını havlamaya benzetirim. Dünyada ne kadar adam varsa, hepsinde bir hayvan profili vardır. Köprü'den geçerken, önü kalabalık bir gazinoda otururken, herkesin yüzüne dikkat ederim. Daha bir profils
+
+## Fon Sadriştayn’ın Karısı (B2)
+
+# Fon Sadriştayn’ın Karısı
+
+O gün İstanbul'da kalsam bile hiçbir iş yapamayacaktım. Müthiş, acı, anlatılmaz bir sinir nöbeti yine beni kıvrandırıyordu. Bu korkunç hali bilmeyenler ne kadar mesutturlar! İnsanın birdenbire bütün ümitleri, bütün zevki, bütün neşesi kaybolur. Gözünün önünde hayat, hava, ufuk, her şey kararır. Dostlar düşman görünür. Sevgililerden nefret edilir... Ben işte bu sinir denilen ateşsiz cehennemin içine düşünce kendimi kırlara atarım. Tenha korular, sevinçli mazilere benzeyen gölgeli yollar, dallarda geçmiş bir saadetin canlı hâtıraları gibi uçuşan kuşlar bana ilâhi bir teselli füsunuyla tesir eder; hafiflerim. Beynimdeki ağırlık yumuşar. Şakaklarımın ateşi söner.
+
+O gün yine böyle perişan bir haldeydim. Hafiflemek, beynimdeki granit ağırlığı yumuşatmak, başımın kaynayan hararetlerini söndürmek için bir Boğaziçi vapuruna atladım. İlkbahardı. Tatlı bir rüzgâr esiyor... Vapur ilerledikçe aklım başıma geliyor gibi oluyordu.
+
+Açılıyordum...
+
+Güvertedeydim; görülmemiş kuşlara mahsus beyaz, pembe, mor yalılara, yeşil korulara, mavi tepelere bakıyordum. Gözlerimdeki kırmızı karanlık silindikçe kulağım da işitmeye başladı. Dizlerimde, bileklerimde, omuzlarımda yorgun ağrılar hissediyor, geniş geniş gerinmek istiyordum. Biraz doğruldum. Başımı sağa çevirdim; müthiş, iri, kıpkırmızı bir Alman yanıma oturmuş, gayet beyaz bir keten mendille terini siliyordu. Birbiri üzerine attığı bacaklarına, kalın dizlerine, dokunulsa kan fışkıracak sanılan tombul ellerine baktım
+
+## Perili Köşk (C1)
+
+# Perili Köşk
+
+Sermet Bey döndü, arkasındaki bekçiye:  
+— İşte bir boş köşk daha...  
+Dedi.
+
+Küçük bir çam ormanının önünde beyaz, şık bir bina. Mermerdenmiş gibi göz kamaştıracak derecede parlıyordu. Tarhlarını yabanî otlar bürümüş. Bahçesinin demir kapısında büyük bir "Kiralıktır" levhası asılıydı. Bekçi başını salladı:  
+— Geç efendim, geç!... Orası size gelmez.  
+— Niçin canım?  
+— Demin gösterdiğim evi tutunuz. Küçük ama çok uğurludur. Kim oturursa erkek çocuğu dünyaya gelir.  
+— On iki kişi nasıl sığarız beş odaya! Buraya bakalım, buraya... Tam bize göre...  
+Bekçi tekrar, katî bir işaretle:  
+— Buraya oturamazsınız efendim...  
+Dedi.
+
+Sermet Bey, gözünü köşkten alamıyordu. Her tarafında geniş balkonları vardı. Temellerinin üzerine yaslanmış sanılacaktı. Kuluçka yatan beyaz bir Nemse tavuğu gibi yayvandı. Yirmi senedir, çoluğa çocuğa kavuşalıdan beri, hep böyle bir yuva tahayyül ederdi. Asabî bir isticâl ile:  
+— Niçin oturamayız? diye sordu.  
+— Efendim, bu köşkte peri vardır.  
+— Ne perisi?  
+— Bayağı peri! Gece çıkar. Evdekilere rahat vermez.  
+Sermet Bey, gözüyle gördüğüne, kulağıyla işittiğine inananlardan değildi. Eliyle sıkı sıkıya tutup hissetmeyince bir şeyin varlığına hükmetmezdi. Gözle kulak onca birer yalan kovuğuydu. Yalanla hep bize bu dört kapıdan girerdi. Fakat el... Fakat lâmise, hiç dolma yutmazdı. Bütün hurafeler, bâtıl itikatlar dimağımıza hücum için gözle kulağa koşardı. Güldü.  
+— Perinin bize zararı dokunmaz!  
+Dedi. Bekçi bir küfür işitmiş gibi S
 
