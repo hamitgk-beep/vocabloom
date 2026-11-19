@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "dictionary-ai-meanings",
+      "area": "dictionary",
+      "tr": "Sözlük: 8.996 kelime ve deyim için yeni Türkçe anlamlar ve İngilizce örnek cümleler (Türkçe çevirileriyle) eklendi. Bu anlamlar yapay zekâ ile yazıldı ve henüz bir insan tarafından kontrol edilmedi; hatalı görürseniz bildirin.",
+      "en": "Dictionary: new Turkish meanings and English example sentences, with Turkish translations, for 8,996 words and phrases. These were written by AI and have not yet been checked by a person; tell us if you see a mistake."
+    },
+    {
       "id": "gold-look",
       "area": "app",
       "tr": "Yeni görünüm: gündüz krem ve altın, gece sıcak koyu kahve ve altın tonları. Yuvarlak kartlar, hap şeklinde altın butonlar ve yeni altın uygulama simgesi. Kitaplık'ta haftalık özet kartı (bugün, bu hafta, seri), yana kayan \"Okumaya devam et\" kartları ve büyük kapaklı kitap ızgarası var. Telefonda alt menü sadeleşti: ortadaki altın düğme son okuduğun kitabı açar; Ücretsiz kütüphane, İstatistik ve Ayarlar Kitaplık'ın üst kısmında.",
