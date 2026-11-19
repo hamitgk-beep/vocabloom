@@ -43,7 +43,7 @@ AUTHORS = [
     ('Refik Halit Karay', 1965),
     ('Reşat Nuri Güntekin', 1956),
 ]
-FOLK = ['Nasreddin Hoca']
+FOLK = ['Nasreddin Hoca']  # also anonymous folk tales and anecdotes (masal, fıkra)
 LAST_DEATH = 1955
 MIN_WORDS, MAX_WORDS = 120, 9000
 PER_AUTHOR = 60
@@ -269,6 +269,7 @@ def main():
     keys = {name: lower(name) for name in allowed}
     by_author = {}
     unknown = Counter()
+    cat_count = Counter()
     for title, wt in main_pages.items():
         a = lower(header_author(wt))
         linked = {lower(m) for m in re.findall(r'\[\[\s*(?:Yazar|Author)\s*:\s*([^|\]]+)', wt)}
@@ -277,12 +278,18 @@ def main():
             if (a and (k in a or a in k and len(a) > 5)) or k in linked:
                 hit = name
                 break
+        cats = [lower(c) for c in re.findall(r'\[\[\s*(?:Kategori|Category)\s*:\s*([^|\]]+)', wt)]
         if hit:
             by_author.setdefault(hit, []).append(title)
-        elif any(lower(f) in a or lower(f) in lower(title) for f in FOLK):
+        elif any(lower(f) in a or lower(f) in lower(title) for f in FOLK) or (not a and any(
+                w in c for c in cats for w in ('masal', 'fıkra', 'halk hikâye', 'halk hikaye', 'nasreddin'))):
             by_author.setdefault(FOLK[0], []).append(title)
         else:
             unknown[a or '(no author)'] += 1
+            if not a:
+                for c in cats:
+                    cat_count[c] += 1
+    report.append('categories of pages with no author: ' + ', '.join(f'{k} {n}' for k, n in cat_count.most_common(60)))
     report.append('most common authors with no year of death: ' + ', '.join(f'{k} {n}' for k, n in unknown.most_common(40)))
 
     def take(t, author, folk=False):
@@ -309,7 +316,7 @@ def main():
         items.append({
             'id': sid, 'kind': 'story', 'title': display, 'author': None if folk else author, 'level': None,
             'words': total, 'license': 'Public domain',
-            'credit': (f'{author}. ' if not folk else 'Halk anlatısı. ') + 'Vikikaynak (tr.wikisource.org)',
+            'credit': (f'{author}. ' if not folk else 'Halk anlatısı (anonim). ') + 'Vikikaynak (tr.wikisource.org)',
             'source': 'https://tr.wikisource.org/wiki/' + urllib.parse.quote(t.replace(' ', '_')),
             'pics': 0, 'lang': 'tr', '_score': score, '_rare': rare, '_msl': msl,
         })
