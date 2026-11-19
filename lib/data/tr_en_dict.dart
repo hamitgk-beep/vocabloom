@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
@@ -10,7 +11,8 @@ import 'package:sqlite3/sqlite3.dart';
 /// Kaikki.org / English Wiktionary (CC BY-SA 4.0), FrequencyWords (CC BY-SA
 /// 4.0, ranking only) and Tatoeba sentence pairs (CC BY 2.0 FR).
 class TrEnDict {
-  static const _version = '1';
+  // Bump when assets/tr_en.db changes, so devices copy the new one.
+  static const _version = '2';
   final Database db;
   TrEnDict(this.db);
 
@@ -127,6 +129,90 @@ class TrEnDict {
       for (final e in db.select('SELECT tr, en, id FROM ex WHERE lemma=?', [lemma])) TrExample(e['tr'] as String, e['en'] as String, e['id'] as int?),
     ];
     return TrEntry(lemma, senses, ex);
+  }
+
+  /// First English meanings of [lemma], short (lists and review cards).
+  String? shortMeaning(String lemma) {
+    final s = entry(lemma)?.senses;
+    if (s == null || s.isEmpty || s.first.glosses.isEmpty) return null;
+    final two = s.first.glosses.take(2).join('; ');
+    return two.length <= 50 ? two : s.first.glosses.first;
+  }
+
+  /// English meanings of random common words (wrong options in a review quiz).
+  List<String> randomGlosses({int limit = 300}) => [
+        for (final r in db.select('SELECT senses FROM lemma WHERE rank < 8000 ORDER BY random() LIMIT ?', [limit]))
+          for (final s in (jsonDecode(r.columnAt(0) as String) as List).take(1))
+            if (((s as Map)['g'] as List).isNotEmpty) '${(s['g'] as List).first}',
+      ];
+
+  bool? _hasCtx;
+
+  /// The meaning [lemma] has next to the words [context] (their base words),
+  /// from Tatoeba sentences where the English showed the meaning: an index
+  /// into all its glosses counted in order, or null when the words around it
+  /// say nothing (then the first meaning stands).
+  int? meaningInContext(String lemma, Iterable<String> context) {
+    _hasCtx ??= db.select("SELECT 1 FROM sqlite_master WHERE name='ctxn'").isNotEmpty;
+    if (!_hasCtx!) return null;
+    final prior = {for (final r in db.select('SELECT g, n FROM ctxn WHERE lemma=?', [lemma])) r['g'] as int: (r['n'] as int).toDouble()};
+    if (prior.length < 2) return null;
+    final words = context.where((w) => w != lemma).toSet().toList();
+    if (words.isEmpty) return null;
+    final total = prior.values.fold<double>(0, (a, b) => a + b);
+    final score = {for (final e in prior.entries) e.key: math.log(e.value / total)};
+    var evidence = false;
+    final q = 'SELECT g, word, n FROM ctx WHERE lemma=? AND word IN (${List.filled(words.length, '?').join(',')})';
+    final byWord = <String, Map<int, int>>{};
+    for (final r in db.select(q, [lemma, ...words])) {
+      (byWord[r['word'] as String] ??= {})[r['g'] as int] = r['n'] as int;
+    }
+    for (final counts in byWord.values) {
+      final nc = counts.values.fold<int>(0, (a, b) => a + b);
+      for (final g in prior.keys) {
+        final pg = prior[g]! / total;
+        // P(meaning | word), smoothed toward how common the meaning is.
+        final pgc = ((counts[g] ?? 0) + pg) / (nc + 1);
+        score[g] = score[g]! + math.log(pgc) - math.log(pg);
+      }
+      evidence = true;
+    }
+    if (!evidence) return null;
+    final best = score.entries.reduce((a, b) => b.value > a.value ? b : a);
+    return best.key;
+  }
+
+  /// The most common words, most common first (the dictionary's word list).
+  List<String> commonWords({int limit = 100}) => [
+        for (final r in db.select('SELECT word FROM lemma ORDER BY rank LIMIT ?', [limit])) r.columnAt(0) as String,
+      ];
+
+  /// Turkish words with an English meaning that starts with [en] ("dog" → köpek),
+  /// whole-meaning matches first, then by how common the word is.
+  List<(String, String)> searchEnglish(String en, {int limit = 40}) {
+    final q = en.trim().toLowerCase().replaceAll('"', '');
+    if (q.length < 2) return const [];
+    final rows = db.select('SELECT word, senses FROM lemma WHERE senses LIKE ? ORDER BY rank LIMIT 400', ['%"$q%']);
+    final out = <(String, String, int)>[];
+    for (final r in rows) {
+      final senses = jsonDecode(r['senses'] as String) as List;
+      var best = 3;
+      String? hit;
+      for (final s in senses) {
+        for (final g in (s as Map)['g'] as List) {
+          final l = '$g'.toLowerCase();
+          final score = l == q ? 0 : (l.startsWith('$q ') || l.startsWith('$q,') ? 1 : (l.startsWith(q) ? 2 : 3));
+          if (score < best) {
+            best = score;
+            hit = '$g';
+          }
+        }
+      }
+      if (hit != null) out.add((r['word'] as String, hit, best));
+    }
+    // Stable: equal scores keep the frequency order.
+    final sorted = [for (var i = 0; i < out.length; i++) (i, out[i])]..sort((a, b) => a.$2.$3 != b.$2.$3 ? a.$2.$3.compareTo(b.$2.$3) : a.$1.compareTo(b.$1));
+    return [for (final (_, (w, m, _)) in sorted.take(limit)) (w, m)];
   }
 
   /// Words that start with [prefix], most common first (dictionary search).

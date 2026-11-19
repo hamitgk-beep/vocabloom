@@ -110,9 +110,14 @@ void main() {
       expect(lib.items.where((it) => it.isBook && it.level == l), isNotEmpty, reason: l);
     }
     expect(lib.items.map((it) => it.id).toSet().length, lib.items.length);
+    // Turkish texts for every level, the easy ones written for the app.
+    for (final l in libraryLevels) {
+      expect(lib.items.where((it) => it.lang == 'tr' && it.level == l), isNotEmpty, reason: 'tr $l');
+    }
     for (final it in lib.items) {
       // Only licences that allow use in a free app with ads.
-      expect(['CC BY 4.0', 'Public domain'], contains(it.license), reason: it.id);
+      // (Storilex: stories written for the app.)
+      expect(['CC BY 4.0', 'Public domain', 'Storilex'], contains(it.license), reason: it.id);
       if (it.isBook) {
         expect(File('library/books/${it.id}.md.gz').existsSync(), isTrue, reason: it.id);
         expect(it.chapters, greaterThan(0), reason: it.id);

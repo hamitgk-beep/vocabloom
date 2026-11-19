@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../data/tr_en_dict.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
 import 'expr_sheet.dart';
@@ -37,11 +38,15 @@ class _DictionaryPageState extends State<DictionaryPage> {
   String? _listKey;
 
   List<String> get _browse {
-    final key = '${letter ?? ''}:$shown';
+    final tr = widget.app.learnTurkish;
+    final key = '$tr:${letter ?? ''}:$shown';
     if (_listKey != key) {
       _listKey = key;
       // One more than shown tells whether "Show more" has anything to add.
-      _list = letter == null
+      final d = widget.app.trEn;
+      _list = tr
+          ? (letter == null ? d!.commonWords(limit: shown + 1) : d!.search(letter!, limit: shown + 1))
+          : letter == null
           ? widget.app.dict.commonWords(limit: shown + 1)
           : widget.app.dict.searchWords(letter!, limit: shown + 1);
     }
@@ -58,6 +63,14 @@ class _DictionaryPageState extends State<DictionaryPage> {
   void _lookup(String text) {
     final t = text.trim().toLowerCase();
     if (t.isEmpty) return;
+    if (widget.app.learnTurkish) {
+      // Learning Turkish: a Turkish word (any form), otherwise an English meaning.
+      final d = widget.app.trEn!;
+      final l = d.lemmas(TrEnDict.lower(text.trim()));
+      final en = l.isEmpty ? d.searchEnglish(t, limit: 1) : const <(String, String)>[];
+      if (l.isNotEmpty || en.isNotEmpty) _open(l.isNotEmpty ? l.first : en.first.$1);
+      return;
+    }
     if (t.contains(' ')) {
       final e = widget.app.dict.exprs.where((e) => e.phrase == t).firstOrNull;
       if (e != null) {
@@ -78,7 +91,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
     _open(t);
   }
 
-  static const _recentKey = 'dictionary_recent';
+  String get _recentKey => widget.app.learnTurkish ? 'dictionary_recent_tr' : 'dictionary_recent';
 
   /// Words opened from this page, newest first.
   List<String> get _recent {
@@ -95,19 +108,39 @@ class _DictionaryPageState extends State<DictionaryPage> {
     if (mounted) setState(() {});
   }
 
+  /// Turkish letters a word can start with (no word starts with Ğ).
+  static const _trLetters = ['A', 'B', 'C', 'Ç', 'D', 'E', 'F', 'G', 'H', 'I', 'İ', 'J', 'K', 'L', 'M', 'N', 'O', 'Ö', 'P', 'R', 'S', 'Ş', 'T', 'U', 'Ü', 'V', 'Y', 'Z'];
+
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
+    // The word itself is in the language being learned.
+    TextStyle wordStyle(TextStyle? s) => (app.learnTurkish ? trStyle : enStyle)(Theme.of(context), s);
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     final typing = q.trim().isNotEmpty;
     final t = q.trim().toLowerCase();
-    final en = typing ? app.dict.searchWords(q, limit: 40) : const <String>[];
-    final trScored = typing ? app.dict.searchTurkishScored(q, limit: 40) : const <(String, String, int)>[];
-    final tr = [for (final (w, m, _) in trScored) (w, m)];
-    // The direction that fits the text best goes first: Turkish only when it
-    // is a whole Turkish meaning ("ev" → home) and not an English word too.
-    final enFirst = en.isNotEmpty && (en.first == t || trScored.isEmpty || trScored.first.$3 > 1);
+    final learnTr = app.learnTurkish;
+    final List<String> en;
+    final List<(String, String?)> tr;
+    final bool enFirst;
+    if (learnTr) {
+      // Learning Turkish: Turkish words first, then Turkish words for an English meaning.
+      final d = app.trEn!;
+      final key = TrEnDict.lower(q.trim());
+      final direct = typing ? d.search(key, limit: 40) : const <String>[];
+      final forms = typing && direct.isEmpty ? d.lemmas(key) : const <String>[];
+      en = [...direct, ...forms.where((f) => !direct.contains(f))];
+      tr = typing ? [for (final (w, m) in d.searchEnglish(t, limit: 40)) (w, m)] : const [];
+      enFirst = en.isNotEmpty && (en.first == key || tr.isEmpty || tr.first.$2?.toLowerCase() != t);
+    } else {
+      en = typing ? app.dict.searchWords(q, limit: 40) : const <String>[];
+      final trScored = typing ? app.dict.searchTurkishScored(q, limit: 40) : const <(String, String, int)>[];
+      tr = [for (final (w, m, _) in trScored) (w, m)];
+      // The direction that fits the text best goes first: Turkish only when it
+      // is a whole Turkish meaning ("ev" → home) and not an English word too.
+      enFirst = en.isNotEmpty && (en.first == t || trScored.isEmpty || trScored.first.$3 > 1);
+    }
     final browse = typing ? const <String>[] : _browse;
     final recent = typing ? const <String>[] : _recent;
     // Rows of the list below the search box: a section heading (String) or a
@@ -115,7 +148,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
     final rows = <Object>[];
     void addEn() {
       if (en.isEmpty) return;
-      rows.add(L('İngilizce → Türkçe', 'English → Turkish'));
+      rows.add(learnTr ? L('Türkçe kelimeler', 'Turkish words') : L('İngilizce → Türkçe', 'English → Turkish'));
       for (final w in en) {
         rows.add((w, null));
       }
@@ -123,7 +156,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
 
     void addTr() {
       if (tr.isEmpty) return;
-      rows.add(L('Türkçe → İngilizce', 'Turkish → English'));
+      rows.add(learnTr ? L('İngilizce anlamdan', 'From an English meaning') : L('Türkçe → İngilizce', 'Turkish → English'));
       rows.addAll(tr);
     }
 
@@ -157,7 +190,9 @@ class _DictionaryPageState extends State<DictionaryPage> {
                     autocorrect: false,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.search_rounded),
-                      hintText: L('İngilizce ya da Türkçe kelime ara', 'Search an English or Turkish word'),
+                      hintText: learnTr
+                          ? L('Türkçe kelime ya da İngilizce anlam ara', 'Search a Turkish word or an English meaning')
+                          : L('İngilizce ya da Türkçe kelime ara', 'Search an English or Turkish word'),
                       suffixIcon: q.isEmpty
                           ? null
                           : IconButton(
@@ -172,7 +207,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                     onChanged: (v) => setState(() => q = v),
                     onSubmitted: _lookup,
                   ),
-                  if (!typing)
+                  if (!typing && !learnTr)
                     Container(
                       margin: const EdgeInsets.only(top: 12),
                       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
@@ -207,22 +242,22 @@ class _DictionaryPageState extends State<DictionaryPage> {
                     if (recent.isNotEmpty) ...[
                       SectionLabel(L('Son baktıkların', 'Recently looked up')),
                       Wrap(spacing: 8, runSpacing: 8, children: [
-                        for (final w in recent) ActionChip(label: Text(w, style: enStyle(theme, theme.textTheme.bodyMedium)), onPressed: () => _open(w)),
+                        for (final w in recent) ActionChip(label: Text(w, style: wordStyle(theme.textTheme.bodyMedium)), onPressed: () => _open(w)),
                       ]),
                     ],
                     SectionLabel(letter == null ? L('En sık kullanılan kelimeler', 'Most common words') : L('$letter harfiyle başlayanlar', 'Words starting with $letter')),
                     SizedBox(
                       height: 40,
                       child: ListView(scrollDirection: Axis.horizontal, children: [
-                        for (final l in [null, for (var c = 0; c < 26; c++) String.fromCharCode(65 + c)])
+                        for (final l in [null, ...(learnTr ? _trLetters : [for (var c = 0; c < 26; c++) String.fromCharCode(65 + c)])])
                           Padding(
                             padding: const EdgeInsets.only(right: 6),
                             child: ChoiceChip(
                               label: Text(l ?? L('Sık kullanılanlar', 'Most common')),
-                              selected: letter == l?.toLowerCase(),
+                              selected: letter == (l == null ? null : TrEnDict.lower(l)),
                               showCheckmark: false,
                               onSelected: (_) => setState(() {
-                                letter = l?.toLowerCase();
+                                letter = l == null ? null : (learnTr ? TrEnDict.lower(l) : l.toLowerCase());
                                 shown = _page;
                               }),
                             ),
@@ -246,10 +281,10 @@ class _DictionaryPageState extends State<DictionaryPage> {
                   return Column(mainAxisSize: MainAxisSize.min, children: [
                     if (i > 0 && rows[i - 1] is! String) const Divider(height: 1, indent: 16, endIndent: 16),
                     ListTile(
-                      title: Text(w, style: enStyle(theme, theme.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w700)),
+                      title: Text(w, style: wordStyle(theme.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w700)),
                       subtitle: meaning == null
                           ? null
-                          : Text(meaning, maxLines: 2, overflow: TextOverflow.ellipsis, style: trStyle(theme, theme.textTheme.bodyMedium)),
+                          : Text(meaning, maxLines: 2, overflow: TextOverflow.ellipsis, style: (learnTr ? enStyle : trStyle)(theme, theme.textTheme.bodyMedium)),
                       trailing: st == null ? null : Icon(Icons.circle, size: 12, color: st == WordStatus.learning ? learningColor : learnedColor),
                       onTap: () => _open(w),
                     ),

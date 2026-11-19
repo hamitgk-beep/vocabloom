@@ -15,7 +15,13 @@ import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/l10n.dart';
+import 'package:kelime_okur/nlp/text.dart';
+import 'package:kelime_okur/ui/dictionary_page.dart';
+import 'package:kelime_okur/ui/free_library_page.dart';
+import 'package:kelime_okur/ui/library_page.dart';
+import 'package:kelime_okur/ui/other_pages.dart';
 import 'package:kelime_okur/ui/reader_page.dart';
+import 'package:kelime_okur/ui/review_page.dart';
 import 'package:kelime_okur/ui/settings_page.dart';
 import 'package:kelime_okur/ui/theme.dart';
 import 'package:kelime_okur/ui/word_sheet.dart';
@@ -105,8 +111,61 @@ void main() {
         Navigator.of(home).pop();
         await tester.pump(const Duration(milliseconds: 600));
       }
+      // The meaning the sentence points to.
+      const sentence = 'İlk bölümü 1988 tarihinde yayınlanan program yaklaşık on yıl sürmüştür.';
+      final toks = tokenize(sentence);
+      final i = toks.indexWhere((t) => t.lower == 'sürmüştür');
+      showWordSheet(home, app, 'sürmüştür', ctx: WordContext(sentence, toks, i, const [], null, bk.id, bk.title));
+      await tester.pump(const Duration(milliseconds: 600));
+      await shot(tester, 'panel_surmustur_context_${b.name}');
+      expect(find.byKey(const ValueKey('tr-in-context')), findsOneWidget);
+      Navigator.of(home).pop();
+      await tester.pump(const Duration(milliseconds: 600));
       await tester.pumpWidget(const SizedBox());
       await tester.pump(const Duration(seconds: 3));
     });
   }
+
+  testWidgets('learning Turkish: every menu shows Turkish content only', (tester) async {
+    await phone(tester);
+    app.themeMode = ThemeMode.light;
+    app.setLanguages(native: 'tr', learn: 'en');
+    app.setWord('house', WordStatus.learning, meaning: 'ev');
+    final en = (await tester.runAsync(() => importFile('test/fixtures/sample.txt', isWord: app.isWord)))!;
+    app.user.insertBook(en);
+    app.setLanguages(native: 'en', learn: 'tr');
+    for (final w in ['kitap', 'ev', 'gülümsemek', 'köpek']) {
+      app.setWord(w, WordStatus.learning, meaning: app.trEn!.shortMeaning(w));
+    }
+    app.setWord('su', WordStatus.learned, meaning: app.trEn!.shortMeaning('su'));
+    await tester.pumpWidget(shell(WordsPage(app: app), app, Brightness.light));
+    await shot(tester, 'mywords_learn_tr');
+    expect(find.text('house'), findsNothing);
+    expect(find.text('kitap'), findsOneWidget);
+
+    await tester.pumpWidget(shell(DictionaryPage(app: app), app, Brightness.light));
+    await shot(tester, 'dictionary_learn_tr');
+    await tester.enterText(find.byType(TextField), 'kitab');
+    await tester.pump();
+    await shot(tester, 'dictionary_search_kitab');
+    await tester.enterText(find.byType(TextField), 'dog');
+    await tester.pump();
+    await shot(tester, 'dictionary_search_dog');
+    expect(find.text('köpek'), findsWidgets);
+
+    await tester.pumpWidget(shell(LibraryPage(app: app), app, Brightness.light));
+    await shot(tester, 'library_learn_tr');
+    expect(app.user.books().every((b) => b.title != 'sample_en'), isTrue);
+
+    await tester.pumpWidget(shell(FreeLibraryPage(app: app), app, Brightness.light));
+    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 800)));
+    await shot(tester, 'free_library_learn_tr');
+
+    final cards = app.review.due();
+    expect(cards.map((c) => c.word.lemma), isNot(contains('house')));
+    await tester.pumpWidget(shell(ReviewPage(app: app, cards: cards), app, Brightness.light));
+    await shot(tester, 'review_learn_tr');
+    await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 3));
+  });
 }

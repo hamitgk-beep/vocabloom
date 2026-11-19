@@ -75,6 +75,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final a = AppState(dict, user);
       a.trEn = await TrEnDict.open(dir);
       Speech.instance.bookLang = a.learnTurkish ? 'tr' : 'en';
+      user.lang = a.learnTurkish ? 'tr' : 'en';
       a.localAi = KeyAi(user);
       Speech.instance.init(dir, user);
       // Load the voice model early so the first tap on a speaker is quick.

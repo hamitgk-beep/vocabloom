@@ -77,6 +77,8 @@ flutter:
     - assets/grammar/lessons_en.json
     - assets/library/catalog.json
     - assets/library/stories.json.gz
+    - assets/library/catalog_tr.json
+    - assets/library/stories_tr.json.gz
 
   fonts:
     - family: Inter

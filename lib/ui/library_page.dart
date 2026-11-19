@@ -57,19 +57,27 @@ class _LibraryPageState extends State<LibraryPage> {
     try {
       final ocr = await OcrEngine.best(ai: AiService.fromSettings(widget.app.user));
       final book = await importFile(path, ocr: ocr, isWord: widget.app.isWord, onProgress: (m) => setState(() => importStatus = m));
-      final id = widget.app.user.insertBook(book);
+      final lang = UserDb.textLang(book);
+      final id = widget.app.user.insertBook(book, lang: lang);
       final words = book.chapters.fold<int>(0, (s, c) => s + c.paragraphs.fold<int>(0, (s2, p) => s2 + p.$2.split(' ').length));
+      // A book in the other language goes to that language's library.
+      final other = lang != widget.app.user.lang;
+      final otherName = lang == 'tr' ? L('Türkçe', 'Turkish') : L('İngilizce', 'English');
       messenger.showSnackBar(
         SnackBar(
+          duration: Duration(seconds: other ? 8 : 4),
           content: Text(
-            L(
-              '"${book.title}" eklendi: ${book.chapters.length} bölüm, ~$words kelime.',
-              '"${book.title}" added: ${book.chapters.length} chapters, ~$words words.',
-            ),
+            other
+                ? L('"${book.title}" $otherName bir kitap. Ayarlar\'da öğrenilen dili $otherName yaptığında kitaplığında görünür.',
+                    '"${book.title}" is in $otherName. It shows in your library when $otherName is the language you learn (Settings).')
+                : L(
+                    '"${book.title}" eklendi: ${book.chapters.length} bölüm, ~$words kelime.',
+                    '"${book.title}" added: ${book.chapters.length} chapters, ~$words words.',
+                  ),
           ),
         ),
       );
-      widget.app.analyzer.tick(onlyBook: id);
+      if (lang == 'en') widget.app.analyzer.tick(onlyBook: id);
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(content: Text(L('İçe aktarılamadı: ${errorText(e)}', 'Could not import: ${errorText(e)}')), duration: const Duration(seconds: 8)),

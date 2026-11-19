@@ -116,7 +116,7 @@ class _WordList extends StatelessWidget {
         return Card(
           child: InkWell(
             onTap: () {
-              final isPhrase = w.lemma.contains(' ');
+              final isPhrase = w.lemma.contains(' ') && !app.learnTurkish;
               if (isPhrase) {
                 final e = app.dict.exprs.where((e) => e.phrase == w.lemma).firstOrNull;
                 if (e != null) {
@@ -133,11 +133,11 @@ class _WordList extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(14, 12, 4, 12),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(displayPhrase(w.lemma), style: enStyle(theme, theme.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w700)),
+                      Text(displayPhrase(w.lemma), style: (app.learnTurkish ? trStyle : enStyle)(theme, theme.textTheme.titleMedium).copyWith(fontWeight: FontWeight.w700)),
                       if (meaning != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 2),
-                          child: Text(meaning, maxLines: 2, overflow: TextOverflow.ellipsis, style: trStyle(theme, theme.textTheme.bodyMedium)),
+                          child: Text(meaning, maxLines: 2, overflow: TextOverflow.ellipsis, style: (app.learnTurkish ? enStyle : trStyle)(theme, theme.textTheme.bodyMedium)),
                         ),
                       if (w.context != null)
                         Padding(

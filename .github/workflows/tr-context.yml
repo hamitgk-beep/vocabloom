@@ -1,0 +1,34 @@
+name: tr-context
+# Adds the context tables (which meaning a Turkish word has next to which words) to assets/tr_en.db, from Tatoeba.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-9n9060]
+    paths: [tools/tr_en/build_context.py, .github/workflows/tr-context.yml]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Tatoeba
+        run: |
+          set -e
+          curl -sSfL -o tur.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/tur/tur_sentences.tsv.bz2
+          curl -sSfL -o eng.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2
+          curl -sSfL -o links.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/tur/tur-eng_links.tsv.bz2
+          bunzip2 tur.tsv.bz2 eng.tsv.bz2 links.tsv.bz2
+          python3 tools/tr_en/tatoeba_pairs.py tur.tsv eng.tsv links.tsv pairs.tsv
+          wc -l pairs.tsv
+      - name: Build context tables
+        run: python3 tools/tr_en/build_context.py pairs.tsv assets/tr_en.db | tee tools/tr_en/context_report.md
+      - name: Commit
+        run: |
+          ls -la assets/tr_en.db
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add assets/tr_en.db tools/tr_en/context_report.md
+          git commit -m "tr-en context tables (Tatoeba)" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -q origin "$GITHUB_REF_NAME" && git push && exit 0; sleep 10; done
+          exit 1

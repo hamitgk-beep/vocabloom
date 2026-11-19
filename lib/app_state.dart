@@ -289,6 +289,8 @@ class AppState extends ChangeNotifier {
       showTr = true;
     }
     Speech.instance.bookLang = learnTurkish ? 'tr' : 'en';
+    user.lang = learnTurkish ? 'tr' : 'en';
+    _wordsVersion++;
     _save();
     notifyListeners();
   }
@@ -436,11 +438,14 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  final _trLemmas = <String, List<String>>{};
+
   /// Status of a token, looking at all its base-form candidates.
   WordStatus statusOf(Token t) {
     if (user.statuses.isEmpty) return WordStatus.none;
     var st = WordStatus.none;
-    for (final l in dict.lemmatizer.lemmas(t.lower)) {
+    final cands = learnTurkish ? (_trLemmas[t.lower] ??= trEn!.lemmas(t.lower)) : dict.lemmatizer.lemmas(t.lower);
+    for (final l in cands) {
       final s = user.statuses[l];
       if (s == WordStatus.learning) return s!;
       if (s == WordStatus.learned) st = s!;
@@ -458,6 +463,7 @@ class AppState extends ChangeNotifier {
 
   /// Short Turkish meaning used in lists.
   String? shortMeaning(String lemma) {
+    if (learnTurkish) return trEn!.shortMeaning(lemma);
     final info = dict.lookup(lemma);
     if (info.trFreeDict.isNotEmpty) return info.trFreeDict.first;
     for (final s in info.senses) {
