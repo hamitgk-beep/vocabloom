@@ -12,7 +12,7 @@ import 'package:sqlite3/sqlite3.dart';
 /// 4.0, ranking only) and Tatoeba sentence pairs (CC BY 2.0 FR).
 class TrEnDict {
   // Bump when assets/tr_en.db changes, so devices copy the new one.
-  static const _version = '2';
+  static const _version = '3';
   final Database db;
   TrEnDict(this.db);
 
@@ -123,7 +123,7 @@ class TrEnDict {
     if (r.isEmpty) return null;
     final senses = [
       for (final s in jsonDecode(r.first['senses'] as String) as List)
-        TrSense((s as Map)['p'] as String? ?? '', [for (final g in s['g'] as List) '$g']),
+        TrSense((s as Map)['p'] as String? ?? '', [for (final g in s['g'] as List) '$g'], s['s'] as String?),
     ];
     final ex = [
       for (final e in db.select('SELECT tr, en, id FROM ex WHERE lemma=?', [lemma])) TrExample(e['tr'] as String, e['en'] as String, e['id'] as int?),
@@ -233,7 +233,10 @@ class TrEnDict {
 class TrSense {
   final String pos;
   final List<String> glosses;
-  const TrSense(this.pos, this.glosses);
+
+  /// Where the meaning comes from when not Wiktionary: 'wn' (KeNet / WordNet), 'fd' (FreeDict).
+  final String? source;
+  const TrSense(this.pos, this.glosses, [this.source]);
 }
 
 class TrExample {
