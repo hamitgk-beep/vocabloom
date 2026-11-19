@@ -131,7 +131,7 @@ class FreeLibrary {
     } else {
       md = _stories[it.id] ?? (throw StateError('missing story ${it.id}'));
       // CC BY: name the authors and the illustrators.
-      md = '$md\n\n— ${it.credit} ${it.license}.\n';
+      md = '$md\n\n— ${it.credit}${it.license == 'Storilex' ? '' : ' ${it.license}'}.\n';
     }
     addresses.addAll(libraryPictures(md));
     final pictures = await _pictures(addresses, (done) {
