@@ -224,7 +224,14 @@ class _HomePageState extends State<HomePage> {
           decoration: pageBackground(theme),
           child: Row(
             children: [
-              _SideMenu(selected: tab, items: dests, full: MediaQuery.sizeOf(context).width >= 1000, onSelect: go),
+              _SideMenu(
+                selected: tab,
+                items: [for (final (i, d) in dests.indexed) i == 1 ? (d.$1, d.$2, L('Kelimelerim', 'My words')) : d],
+                full: MediaQuery.sizeOf(context).width >= 1000,
+                onSelect: go,
+                todaySeconds: widget.app.stats.readingSeconds(from: DateTime.now()),
+                onContinue: _continueReading,
+              ),
               Expanded(child: body),
             ],
           ),
@@ -254,7 +261,43 @@ class _SideMenu extends StatelessWidget {
   final List<(IconData, IconData, String)> items;
   final bool full;
   final ValueChanged<int> onSelect;
-  const _SideMenu({required this.selected, required this.items, required this.full, required this.onSelect});
+  final int todaySeconds;
+  final VoidCallback onContinue;
+  const _SideMenu({
+    required this.selected,
+    required this.items,
+    required this.full,
+    required this.onSelect,
+    required this.todaySeconds,
+    required this.onContinue,
+  });
+
+  /// Daily reading goal shown in the side menu, in minutes.
+  static const goalMinutes = 25;
+
+  /// Today's reading against the goal, with a button back into the last book.
+  Widget _goalCard(ThemeData theme) {
+    final cs = theme.colorScheme;
+    final mins = (todaySeconds / 60).floor();
+    return Container(
+      key: const ValueKey('side-goal'),
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+      decoration: BoxDecoration(
+        color: cs.surface,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: cs.outlineVariant),
+      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(L('Bugünkü hedef', 'Today\'s goal'), style: theme.textTheme.labelMedium?.copyWith(color: cs.onSurfaceVariant, fontWeight: FontWeight.w500)),
+        const SizedBox(height: 2),
+        Text(L('$mins / $goalMinutes dk', '$mins / $goalMinutes min'), style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+        const SizedBox(height: 8),
+        LinearProgressIndicator(value: (mins / goalMinutes).clamp(0.0, 1.0), minHeight: 4),
+        const SizedBox(height: 12),
+        GoldButton(label: L('Okumaya devam', 'Continue reading'), height: 40, onPressed: onContinue),
+      ]),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -356,6 +399,14 @@ class _SideMenu extends StatelessWidget {
                   ],
                 ),
               ),
+              if (full) ...[_goalCard(theme), const SizedBox(height: 10)]
+              else
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Center(
+                    child: RoundIconButton(icon: Icons.auto_stories_rounded, gold: true, tooltip: L('Okumaya devam', 'Continue reading'), onPressed: onContinue),
+                  ),
+                ),
               item(last),
             ],
           ),
