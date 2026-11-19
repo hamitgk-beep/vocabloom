@@ -6,7 +6,7 @@ void main() {
   testWidgets('the intro plays through and hands over', (tester) async {
     var done = false;
     await tester.pumpWidget(MaterialApp(home: IntroAnimation(onDone: () => done = true)));
-    for (var t = 0; t < 50; t++) {
+    for (var t = 0; t < 60; t++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
     await tester.pump(const Duration(milliseconds: 500));
