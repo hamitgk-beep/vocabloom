@@ -122,7 +122,7 @@ class ReadAloud extends ChangeNotifier {
 
   /// [urgent]: the listener waits for this piece now.
   Future<String> _future(int i, {bool urgent = false}) => _pending.putIfAbsent(i, () {
-    final f = speech.synth(_text(_items[i]), urgent: urgent);
+    final f = speech.synth(_text(_items[i]), v: speech.voiceFor(speech.bookLang), urgent: urgent);
     f.ignore();
     return f;
   });

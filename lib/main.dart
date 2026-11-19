@@ -8,6 +8,7 @@ import 'ai/key_ai.dart';
 import 'app_state.dart';
 import 'ai/device_translate.dart';
 import 'data/dict_db.dart';
+import 'data/tr_en_dict.dart';
 import 'data/user_db.dart';
 import 'import/importers.dart' show looksGeneratedTitle, titleFromContent;
 import 'import/text_repair.dart';
@@ -72,6 +73,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final dict = await DictDb.open(dir);
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
+      a.trEn = await TrEnDict.open(dir);
+      Speech.instance.bookLang = a.learnTurkish ? 'tr' : 'en';
       a.localAi = KeyAi(user);
       Speech.instance.init(dir, user);
       // Load the voice model early so the first tap on a speaker is quick.

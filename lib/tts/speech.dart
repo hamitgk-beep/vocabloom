@@ -164,6 +164,10 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     notifyListeners();
   }
 
+  /// Language of the books being read ('en' or 'tr'): read-aloud and the
+  /// word panel's speaker use a voice of this language.
+  String bookLang = 'en';
+
   Voice voiceFor(String lang) => lang == 'tr' ? trVoice : voice;
 
   /// Reading speed (1.0 = normal).

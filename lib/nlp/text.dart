@@ -11,7 +11,8 @@ class Token {
 
 String _norm(String s) => s.toLowerCase().replaceAll('’', "'");
 
-final RegExp _wordRe = RegExp(r"[A-Za-z]+(?:['’][A-Za-z]+)*(?:-[A-Za-z]+)*");
+// Turkish letters too, so Turkish books split into whole words.
+final RegExp _wordRe = RegExp(r"[A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+(?:['’][A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)*(?:-[A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)*");
 
 List<Token> tokenize(String text) => [
       for (final m in _wordRe.allMatches(text)) Token(m.start, m.end, m.group(0)!)

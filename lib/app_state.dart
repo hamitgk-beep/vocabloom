@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'data/dict_db.dart';
+import 'data/tr_en_dict.dart';
+import 'tts/speech.dart';
 import 'nlp/context_sense.dart';
 import 'data/review.dart';
 import 'data/stats.dart';
@@ -250,7 +252,47 @@ class AppState extends ChangeNotifier {
 
   /// Grammar highlights in the reader (tenses, conditionals …).
   late final GrammarMarker grammar;
-  Set<String> enabledCats = {};
+  Set<String> _cats = {};
+
+  /// Filters switched on in the reader. They are English patterns and
+  /// grammar, so none apply while the learner reads Turkish.
+  Set<String> get enabledCats => learnTurkish ? <String>{} : _cats;
+  set enabledCats(Set<String> v) => _cats = v;
+
+  /// Turkish -> English dictionary (assets/tr_en.db); null if it could not be opened.
+  TrEnDict? trEn;
+
+  /// The language the learner reads and learns: 'en' (English books, the
+  /// meanings in Turkish or English) or 'tr' (Turkish books, English meanings).
+  String learnLang = 'en';
+  bool get learnTurkish => learnLang == 'tr' && trEn != null;
+
+  /// The learner's own language: the interface and the meanings follow it.
+  String get nativeLang => uiEnglish ? 'en' : 'tr';
+
+  /// Sets the native and the learned language together; they are never the same.
+  void setLanguages({String? native, String? learn}) {
+    var n = native ?? nativeLang, l = learn ?? learnLang;
+    if (n == l) {
+      if (native != null) {
+        l = n == 'tr' ? 'en' : 'tr';
+      } else {
+        n = l == 'tr' ? 'en' : 'tr';
+      }
+    }
+    uiEnglish = n == 'en';
+    learnLang = l;
+    if (l == 'tr') {
+      showEn = true;
+      showTr = false;
+    } else if (!showTr && !showEn || n == 'tr' && !showTr) {
+      showTr = true;
+    }
+    Speech.instance.bookLang = learnTurkish ? 'tr' : 'en';
+    _save();
+    notifyListeners();
+  }
+
   bool showTr = true;
   bool showEn = true;
   double fontSize = 19;
@@ -324,15 +366,12 @@ class AppState extends ChangeNotifier {
     }
     themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
     uiEnglish = s['ui'] == 'en';
+    learnLang = s['learn'] == 'tr' ? 'tr' : 'en';
   }
 
   bool get englishUi => uiEnglish;
 
-  void setUiEnglish(bool v) {
-    uiEnglish = v;
-    _save();
-    notifyListeners();
-  }
+  void setUiEnglish(bool v) => setLanguages(native: v ? 'en' : 'tr');
 
   void setTheme(ThemeMode m) {
     themeMode = m;
@@ -343,7 +382,7 @@ class AppState extends ChangeNotifier {
   int get wordsVersion => _wordsVersion;
 
   void _save() =>
-      user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight, 'tone': tone});
+      user.setJson('prefs', {'cats': _cats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight, 'tone': tone, 'learn': learnLang});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);

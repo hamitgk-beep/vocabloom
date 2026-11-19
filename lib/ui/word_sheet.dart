@@ -22,6 +22,7 @@ import '../l10n.dart';
 import 'paragraph_view.dart';
 import 'meaning_parts.dart';
 import 'theme.dart';
+import 'tr_word_sheet.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 
@@ -79,6 +80,9 @@ bool plausibleTranslation(String en, String tr) {
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
   panelApp = app;
   app.stats.logLookup('word', lemma ?? surface);
+  if (app.learnTurkish) {
+    return showPanel(context, (c, sc) => TrWordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
+  }
   return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
 }
 

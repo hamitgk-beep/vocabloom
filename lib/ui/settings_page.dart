@@ -37,15 +37,27 @@ class SettingsPage extends StatelessWidget {
           appBar: AppBar(toolbarHeight: 68, title: Text(L('Ayarlar', 'Settings'), style: theme.textTheme.headlineSmall)),
           body: _SettingsList(children: [
             SettingsGroup(title: L('Genel', 'General'), children: [
-              SettingsDropdownTile<bool>(
+              SettingsDropdownTile<String>(
+                key: const ValueKey('setting-native'),
                 icon: Icons.language_rounded,
                 color: const Color(0xFF2563EB),
-                title: L('Uygulama dili', 'App language'),
-                subtitle: L('Menüler ve açıklamalar', 'Menus and explanations'),
-                value: app.englishUi,
-                items: const {false: 'Türkçe', true: 'English'},
-                onChanged: app.setUiEnglish,
+                title: L('Ana dil', 'Native language'),
+                subtitle: L('Menüler, açıklamalar ve anlamlar', 'Menus, explanations and meanings'),
+                value: app.nativeLang,
+                items: const {'tr': 'Türkçe', 'en': 'English'},
+                onChanged: (v) => app.setLanguages(native: v),
               ),
+              if (app.trEn != null)
+                SettingsDropdownTile<String>(
+                  key: const ValueKey('setting-learn'),
+                  icon: Icons.school_rounded,
+                  color: const Color(0xFFDB2777),
+                  title: L('Öğrenilen dil', 'Language you learn'),
+                  subtitle: L('Okuduğun kitapların dili', 'The language of your books'),
+                  value: app.learnLang,
+                  items: {'en': L('İngilizce', 'English'), 'tr': L('Türkçe', 'Turkish')},
+                  onChanged: (v) => app.setLanguages(learn: v),
+                ),
               SettingsDropdownTile<ThemeMode>(
                 icon: Icons.contrast_rounded,
                 color: const Color(0xFF7C3AED),
@@ -54,6 +66,7 @@ class SettingsPage extends StatelessWidget {
                 items: {ThemeMode.light: L('Gündüz', 'Day'), ThemeMode.dark: L('Gece', 'Night'), ThemeMode.system: L('Sistem', 'System')},
                 onChanged: app.setTheme,
               ),
+              if (!app.learnTurkish)
               SettingsDropdownTile<String>(
                 icon: Icons.translate_rounded,
                 color: const Color(0xFF0E9F6E),
@@ -421,6 +434,8 @@ class LicensesPage extends StatelessWidget {
         item(L('Çevirili örnek cümleler: Tatoeba (CC BY 2.0 FR)', 'Example sentences with translations: Tatoeba (CC BY 2.0 FR)')),
         item(L('Ücretsiz kütüphane: Pratham Books / StoryWeaver hikâyeleri (CC BY 4.0, yalnız metin, global-asp/pb-source üzerinden); Project Gutenberg kamu malı kitaplar',
             'Free library: Pratham Books / StoryWeaver stories (CC BY 4.0, text only, via global-asp/pb-source); public-domain books from Project Gutenberg')),
+        item(L('Türkçe → İngilizce sözlük: İngilizce Vikisözlük\'teki Türkçe kelimeler, kaikki.org üzerinden (CC BY-SA 4.0); kelime sıklığı: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); örnek cümleler: Tatoeba katkıcıları (CC BY 2.0 FR)',
+            'Turkish → English dictionary: Turkish entries of the English Wiktionary via kaikki.org (CC BY-SA 4.0); word frequency: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); example sentences: Tatoeba contributors (CC BY 2.0 FR)')),
         item(L('Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0)', 'Category lists written for this app (CC BY-SA 4.0)')),
         item(L('Uygulamadaki sözlük veritabanı bu kaynaklardan uyarlanmıştır ve aynı lisansla (CC BY-SA 4.0) paylaşılır. Lisans metinleri: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0',
             'The dictionary database in the app is adapted from these sources and shared under the same licence (CC BY-SA 4.0). Licence texts: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0')),

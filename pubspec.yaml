@@ -70,6 +70,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/dict.db
+    - assets/tr_en.db
     - assets/brand/logo.png
     - assets/brand/intro.webp
     - assets/brand/intro.mp3

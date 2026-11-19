@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "native-learn-language-tr-en",
+      "area": "app",
+      "tr": "Ayarlar'da artık Ana dil ve Öğrenilen dil seçiliyor. Öğrenilen dil Türkçe olunca Türkçe kitaplar okunabiliyor: kelimeye dokununca kökü (Evlerimizden → ev), İngilizce anlamları, örnek cümleler ve Türkçe telaffuz çıkıyor. Türkçe → İngilizce sözlük ücretsiz açık kaynaklardan (Vikisözlük, Tatoeba) hazırlandı; 25 binden fazla kelime içeriyor.",
+      "en": "Settings now has a Native language and a Language you learn. With Turkish as the language you learn you can read Turkish books: tap a word to see its base word (Evlerimizden → ev), its English meanings, example sentences and the Turkish pronunciation. The Turkish → English dictionary is built from free, open sources (Wiktionary, Tatoeba) and has more than 25,000 words."
+    },
+    {
       "id": "sentence-panel-ipad-translation",
       "area": "reader",
       "tr": "Güncellemeden sonra yeni sözlüğümüz cihazlara kopyalanmıyordu; bu yüzden bazı kelimelerde eski, yanlış anlamlar (\"well\" için \"kuyu\" gibi) ve Türkçesiz İngilizce tanımlar çıkıyordu. Artık yeni sözlük kullanılıyor. Cümle başında virgülle gelen \"Well,\" \"So,\" gibi kelimeler \"peki, şey\" gibi ünlem anlamıyla gösteriliyor. Cümle analizi paneli kelime paneliyle aynı görünümde: cümle ve Türkçesi EN/TR etiketli kartta, kalıplarda ve kelimelerde önce Türkçe. iPad ve iPhone'da Türkçe çeviri paketini indirirken uygulamanın kapanması düzeltildi; paket artık uygulama açılınca kendiliğinden iniyor.",

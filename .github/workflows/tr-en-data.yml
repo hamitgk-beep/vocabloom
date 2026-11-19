@@ -1,0 +1,36 @@
+name: tr-en-data
+# Builds assets/tr_en.db (Turkish words with English meanings) from open data and commits it.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-9n9060]
+    paths: [tools/tr_en/build_tr_en.py, tools/tr_en/tatoeba_pairs.py, .github/workflows/tr-en-data.yml]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download open data
+        run: |
+          set -e
+          curl -sSfL -o tr.jsonl https://kaikki.org/dictionary/Turkish/kaikki.org-dictionary-Turkish.jsonl
+          curl -sSfL -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
+          curl -sSfL -o tur.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/tur/tur_sentences.tsv.bz2
+          curl -sSfL -o eng.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2
+          curl -sSfL -o links.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/tur/tur-eng_links.tsv.bz2
+          bunzip2 tur.tsv.bz2 eng.tsv.bz2 links.tsv.bz2
+          python3 tools/tr_en/tatoeba_pairs.py tur.tsv eng.tsv links.tsv pairs.tsv
+          wc -l pairs.tsv
+      - name: Build dictionary
+        run: python3 tools/tr_en/build_tr_en.py tr.jsonl tr_full.txt pairs.tsv assets/tr_en.db | tee tools/tr_en/report.md
+      - name: Commit
+        run: |
+          ls -la assets/tr_en.db
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add assets/tr_en.db tools/tr_en/report.md
+          git commit -m "tr-en dictionary data (Kaikki, FrequencyWords, Tatoeba)" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -q origin "$GITHUB_REF_NAME" && git push && exit 0; sleep 10; done
+          exit 1
