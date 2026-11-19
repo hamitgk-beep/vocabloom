@@ -1,6 +1,8 @@
 """Builds the import file for the app from the translation run's results.
 
-usage: python3 tools/own_dict/import/build_entries.py RESULTS.jsonl.gz OUT.jsonl.gz
+usage: python3 tools/own_dict/import/build_entries.py RESULTS.jsonl.gz OUT.jsonl.gz [REVIEW.tsv]
+
+REVIEW.tsv lists every entry that was left out, with the reason, so a person can check or fix it.
 
 Keeps only entries that are safe to show in a Turkish interface:
   * no empty meaning, and no meaning equal to the headword
@@ -30,26 +32,28 @@ def pos_tr(label):
     return 'diğer'
 
 
-def main(src, out):
+def main(src, out, review=None):
     rows = [json.loads(l) for l in gzip.open(src, 'rt', encoding='utf-8') if l.strip()]
-    kept, dropped = [], {}
+    kept, dropped, left = [], {}, []
 
-    def drop(why):
+    def drop(why, r=None):
         dropped[why] = dropped.get(why, 0) + 1
+        if r is not None:
+            left.append((r['w'], r['kind'], why))
 
     for r in rows:
         fl = {f[1] for f in r.get('flags', [])}
         senses = r.get('senses') or []
         if not senses:
-            drop('empty'); continue
+            drop('empty', r); continue
         if fl & {'copy_risk_exact_match', 'copy_risk_near_match'}:
-            drop('copy_risk'); continue
+            drop('copy_risk', r); continue
         if 'english_in_turkish' in fl:
-            drop('english_in_turkish'); continue
+            drop('english_in_turkish', r); continue
         if any(not s.get('tr', '').strip() or s.get('tr', '').strip().lower() == r['w'].lower() for s in senses):
-            drop('empty_or_same_tr'); continue
+            drop('empty_or_same_tr', r); continue
         if any(not s.get('en', '').strip() or not s.get('ex_tr', '').strip() for s in senses):
-            drop('missing_en_or_example'); continue
+            drop('missing_en_or_example', r); continue
         for s in senses:
             s['pos'] = pos_tr(s.get('pos', ''))
         kept.append({'w': r['w'], 'kind': r['kind'], 'senses': senses, 'status': 'ai_draft_unreviewed',
@@ -58,8 +62,13 @@ def main(src, out):
     with gzip.open(out, 'wt', encoding='utf-8') as f:
         for r in kept:
             f.write(json.dumps(r, ensure_ascii=False) + '\n')
+    if review:
+        with open(review, 'w', encoding='utf-8') as f:
+            f.write('word\tkind\treason\n')
+            for w, k, why in left:
+                f.write(f'{w}\t{k}\t{why}\n')
     print(json.dumps({'kept': len(kept), 'dropped': dropped}, ensure_ascii=False))
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], sys.argv[3] if len(sys.argv) > 3 else None)
