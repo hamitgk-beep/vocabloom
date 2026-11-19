@@ -17,7 +17,7 @@ class UpdatePrompt {
   /// with what to do. The old app was left as it was unless copying broke
   /// off midway ("fail copy").
   static void showInstallFailed(BuildContext context, String reason) {
-    const zip = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/VocaBloom-Windows.zip';
+    const zip = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/Storilex-Windows.zip';
     final m = ScaffoldMessenger.of(context);
     m.hideCurrentMaterialBanner();
     m.showMaterialBanner(
@@ -25,8 +25,8 @@ class UpdatePrompt {
         leading: const Icon(Icons.error_outline),
         content: Text(
           L(
-            'Son güncelleme kurulamadı ($reason). VocaBloom\'u kapat, yeni sürümün zip\'ini indirip aç ve içindekileri VocaBloom klasörünün üstüne kopyala ("Hedefteki dosyaları değiştir"). Kitapların ve kelimelerin korunur.',
-            'The last update could not be installed ($reason). Close VocaBloom, download and open the new version\'s zip, and copy its contents over the VocaBloom folder ("Replace the files in the destination"). Your books and words are kept.',
+            'Son güncelleme kurulamadı ($reason). Storilex\'i kapat, yeni sürümün zip\'ini indirip aç ve içindekileri Storilex klasörünün üstüne kopyala ("Hedefteki dosyaları değiştir"). Kitapların ve kelimelerin korunur.',
+            'The last update could not be installed ($reason). Close Storilex, download and open the new version\'s zip, and copy its contents over the Storilex folder ("Replace the files in the destination"). Your books and words are kept.',
           ),
         ),
         actions: [
@@ -60,15 +60,15 @@ class UpdatePrompt {
             Text(
               Platform.isAndroid
                   ? L(
-                      'VocaBloom\'un yeni sürümü var$v. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.',
-                      'A new version of VocaBloom is available$v. Download and open it to install over the current app; your books and words are kept.',
+                      'Storilex\'in yeni sürümü var$v. İndirip açınca mevcut uygulamanın üstüne kurulur; kitapların ve kelimelerin korunur.',
+                      'A new version of Storilex is available$v. Download and open it to install over the current app; your books and words are kept.',
                     )
                   : Platform.isWindows
                   ? L(
-                      'VocaBloom\'un yeni sürümü var$v. Güncelle\'ye basınca indirilip kurulur ve uygulama yeniden açılır; kitapların ve kelimelerin korunur.',
-                      'A new version of VocaBloom is available$v. Press Update to download and install it; the app restarts and your books and words are kept.',
+                      'Storilex\'in yeni sürümü var$v. Güncelle\'ye basınca indirilip kurulur ve uygulama yeniden açılır; kitapların ve kelimelerin korunur.',
+                      'A new version of Storilex is available$v. Press Update to download and install it; the app restarts and your books and words are kept.',
                     )
-                  : L('VocaBloom\'un yeni sürümü var$v.', 'A new version of VocaBloom is available$v.'),
+                  : L('Storilex\'in yeni sürümü var$v.', 'A new version of Storilex is available$v.'),
             ),
             if (u.notes.isNotEmpty) ...[const SizedBox(height: 6), Text(L('Yenilikler: ', "What's new: ") + _areas(u.notes), style: const TextStyle(fontWeight: FontWeight.w600))],
           ],
@@ -179,7 +179,7 @@ class UpdatePrompt {
                 Text(
                   v == null || v < 1
                       ? L('Yeni sürüm indiriliyor…', 'Downloading the new version…')
-                      : L('Kuruluyor, VocaBloom birazdan yeniden açılacak…', 'Installing, VocaBloom will reopen in a moment…'),
+                      : L('Kuruluyor, Storilex birazdan yeniden açılacak…', 'Installing, Storilex will reopen in a moment…'),
                 ),
                 const SizedBox(height: 16),
                 LinearProgressIndicator(value: v),
@@ -201,8 +201,8 @@ class UpdatePrompt {
           duration: const Duration(seconds: 12),
           content: Text(
             L(
-              'Güncelleme uygulama içinden kurulamadı, tarayıcıda indiriliyor. İnen zip\'i aç ve içindekileri VocaBloom klasörünün üstüne kopyala. (${errorText(e)})',
-              'The update could not be installed from the app, so it is downloading in the browser. Open the zip and copy its contents over the VocaBloom folder. (${errorText(e)})',
+              'Güncelleme uygulama içinden kurulamadı, tarayıcıda indiriliyor. İnen zip\'i aç ve içindekileri Storilex klasörünün üstüne kopyala. (${errorText(e)})',
+              'The update could not be installed from the app, so it is downloading in the browser. Open the zip and copy its contents over the Storilex folder. (${errorText(e)})',
             ),
           ),
         ),

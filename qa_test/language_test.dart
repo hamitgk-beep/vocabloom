@@ -124,7 +124,7 @@ const _enWords = {
 };
 /// Names, brands and terms that are written the same in both languages.
 final _sameInBoth = <RegExp>[
-  RegExp(r'^VocaBloom'), RegExp(r'^(Türkçe|English)$'), RegExp(r'^[A-C][12]$'), RegExp(r'^(BETA|OK|PDF|EPUB|API)$'),
+  RegExp(r'^(VocaBloom|Storilex)'), RegExp(r'^(Türkçe|English)$'), RegExp(r'^[A-C][12]$'), RegExp(r'^(BETA|OK|PDF|EPUB|API)$'),
   RegExp(r'^(Anthropic|OpenAI|Google|Microsoft|DeepSeek|Mistral|xAI|Groq|OpenRouter|Ollama)\b'),
   RegExp(r'^(Kokoro|Piper|Fahrettin|Fettah|Supertonic)\b'),
   RegExp(r'^Qwen'), RegExp(r'^Aa$'), RegExp(r'^A$'),

@@ -68,7 +68,7 @@ def build_body(version, build, prev_body, subjects, notes):
     entries.sort(key=lambda e: -int(e.get('build') or 0))
     entries = entries[:KEEP]
 
-    lines = ['Sürüm %s · Build: %d. Windows: zip\'i aç, VocaBloom.exe\'yi çalıştır. Android: APK\'yı kur. '
+    lines = ['Sürüm %s · Build: %d. Windows: Storilex-Windows.zip\'i aç, Storilex.exe\'yi çalıştır. Android: APK\'yı kur. '
              'iOS: imzasız IPA, Sideloadly/AltStore ile yükle.' % (version, build), '']
     new = [e for e in entries if e['build'] == build]
     if new:

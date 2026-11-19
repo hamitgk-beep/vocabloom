@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../l10n.dart';
 
-/// VocaBloom design system: colors, type and component styles in one place.
+/// Storilex design system: colors, type and component styles in one place.
 ///
 /// A warm "reading lamp" look: cream paper and gold accents by day, dark
 /// brown with soft glassy cards and gold by night. Gold never gets confused
