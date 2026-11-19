@@ -22,7 +22,7 @@ Future<void> showSentenceSheet(BuildContext context, AppState app, Para para, Pa
   final first = ctx.sentenceTokens.isEmpty ? 0 : a.tokens.indexWhere((t) => t.start == ctx.sentenceTokens.first.start);
   final last = first + ctx.sentenceTokens.length - 1;
   final matches = a.matches.where((m) => m.tokens.every((t) => t >= first && t <= last)).toList();
-  return showPanel(context, (c, sc) => SentencePanel(app: app, ctx: ctx, para: para, matches: matches, scroll: sc));
+  return showPanel(context, (c, sc) => SentencePanel(app: app, ctx: ctx, para: para, matches: matches, scroll: sc), left: true);
 }
 
 class SentencePanel extends StatefulWidget {

@@ -3,8 +3,10 @@ import '../l10n.dart';
 
 /// Shows a detail panel (word, sentence, expression). On wide screens it
 /// slides in as a tall card on the right, so the book stays readable beside
-/// it; a tap on the book closes it. On phones it is a tall bottom sheet.
-Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext context, ScrollController? scroll) builder) {
+/// it; a tap on the book closes it. [left] puts it on the left instead (the
+/// sentence panel, so it does not cover the word panel's place). On phones it
+/// is a tall bottom sheet.
+Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext context, ScrollController? scroll) builder, {bool left = false}) {
   final size = MediaQuery.sizeOf(context);
   if (size.width >= 720) {
     final width = (size.width * 0.42).clamp(380.0, 480.0);
@@ -19,11 +21,11 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
         final dark = t.brightness == Brightness.dark;
         return SafeArea(
           child: Align(
-            alignment: Alignment.centerRight,
+            alignment: left ? Alignment.centerLeft : Alignment.centerRight,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 14, 16, 16),
+              padding: left ? const EdgeInsets.fromLTRB(16, 14, 0, 16) : const EdgeInsets.fromLTRB(0, 14, 16, 16),
               child: Material(
-                key: const ValueKey('side-panel'),
+                key: ValueKey(left ? 'side-panel-left' : 'side-panel'),
                 color: dark ? const Color(0xFF241D16) : const Color(0xFFFFFDF8),
                 elevation: 12,
                 shadowColor: Colors.black.withValues(alpha: dark ? 0.5 : 0.18),
@@ -52,7 +54,7 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
       transitionBuilder: (c, a, _, child) {
         final curve = CurvedAnimation(parent: a, curve: Curves.easeOutCubic);
         return SlideTransition(
-          position: Tween(begin: const Offset(0.25, 0), end: Offset.zero).animate(curve),
+          position: Tween(begin: Offset(left ? -0.25 : 0.25, 0), end: Offset.zero).animate(curve),
           child: FadeTransition(opacity: curve, child: child),
         );
       },

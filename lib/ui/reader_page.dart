@@ -35,6 +35,19 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   late int chapter;
   List<Para> paras = [];
 
+  /// The filter panel beside the book on wide screens: opened and closed with
+  /// the filter button, closed until the learner opens it (kept across visits).
+  late bool filtersOpen = widget.app.user.getSetting('reader_filters_open') == '1';
+
+  void _toggleFilters(bool wide) {
+    if (!wide) {
+      _scaffold.currentState!.openEndDrawer();
+      return;
+    }
+    setState(() => filtersOpen = !filtersOpen);
+    widget.app.user.setSetting('reader_filters_open', filtersOpen ? '1' : '0');
+  }
+
   /// The chapter's pages ([pagesOf]) and the one on screen.
   List<(int, int)> pages = const [(0, 0)];
   int page = 0;
@@ -474,16 +487,17 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
               icon: const Icon(Icons.list),
               onPressed: () => _scaffold.currentState!.openDrawer(),
             ),
-            if (!wide)
-              IconButton(
-                tooltip: L('Filtreler', 'Filters'),
-                icon: Badge(
-                  isLabelVisible: app.enabledCats.isNotEmpty,
-                  label: Text('${app.enabledCats.length}'),
-                  child: const Icon(Icons.filter_alt_outlined),
-                ),
-                onPressed: () => _scaffold.currentState!.openEndDrawer(),
+            IconButton(
+              key: const ValueKey('reader-filters'),
+              tooltip: wide && filtersOpen ? L('Filtreleri kapat', 'Close filters') : L('Filtreler', 'Filters'),
+              isSelected: wide && filtersOpen,
+              icon: Badge(
+                isLabelVisible: app.enabledCats.isNotEmpty,
+                label: Text('${app.enabledCats.length}'),
+                child: Icon(wide && filtersOpen ? Icons.filter_alt_rounded : Icons.filter_alt_outlined),
               ),
+              onPressed: () => _toggleFilters(wide),
+            ),
           ],
         ),
         drawer: Drawer(
@@ -635,7 +649,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                         ),
                       ),
                     ),
-                    if (wide) ...[
+                    if (wide && filtersOpen) ...[
                       const VerticalDivider(width: 1),
                       SizedBox(
                         width: 320,
