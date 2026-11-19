@@ -34,6 +34,8 @@ void main() {
     ('She looked up at the sky.', 'looked up', ['yukarı bakmak'], null),
     ('The bank approved the loan.', 'bank', ['banka'], null),
     ('They sat on the river bank.', 'bank', ['kıyı'], 'slop|water'),
+    // WordNet's only sense of "why" has no Turkish; the own dictionary has it.
+    ("Why do you think Danny isn't sure about changing his last name?", 'why', ['neden', 'niçin'], null),
   ];
 
   group('request table', () {

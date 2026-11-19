@@ -14,7 +14,6 @@ import '../online/ai_service.dart';
 import '../l10n.dart';
 import 'free_library_page.dart';
 import 'reader_page.dart';
-import 'review_page.dart';
 import 'theme.dart';
 
 /// Books in the order to continue them: those read most recently first, then
@@ -246,19 +245,32 @@ class _LibraryPageState extends State<LibraryPage> {
                             Expanded(
                               child: Text(
                                 'VocaBloom',
-                                style: theme.textTheme.titleLarge?.copyWith(fontFamily: readingFont, fontWeight: FontWeight.w600, fontSize: 22),
+                                maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.fade,
+                                style: theme.textTheme.titleLarge?.copyWith(fontFamily: readingFont, fontWeight: FontWeight.w600, fontSize: 21),
                               ),
                             ),
                             if (widget.onTab != null) ...[
                               RoundIconButton(
+                                key: const ValueKey('nav_4'),
+                                size: 38,
+                                icon: Icons.explore_rounded,
+                                tooltip: L('Ücretsiz kütüphane', 'Free library'),
+                                onPressed: () => widget.onTab!(4),
+                              ),
+                              const SizedBox(width: 6),
+                              RoundIconButton(
                                 key: const ValueKey('nav_5'),
+                                size: 38,
                                 icon: Icons.insights_rounded,
                                 tooltip: L('İstatistiklerim', 'My stats'),
                                 onPressed: () => widget.onTab!(5),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 6),
                               RoundIconButton(
                                 key: const ValueKey('nav_6'),
+                                size: 38,
                                 icon: Icons.tune_rounded,
                                 tooltip: L('Ayarlar', 'Settings'),
                                 onPressed: () => widget.onTab!(6),
@@ -297,7 +309,6 @@ class _LibraryPageState extends State<LibraryPage> {
                         hero,
                         if (continueList != null) ...[const SizedBox(height: 8), continueList],
                       ],
-                      if (learning > 0) ...[const SizedBox(height: 16), ReviewBanner(app: widget.app)],
                       if (importStatus != null) ...[
                         const SizedBox(height: 14),
                         Panel(
@@ -310,10 +321,6 @@ class _LibraryPageState extends State<LibraryPage> {
                       ],
                       if (books.isNotEmpty) ...[
                         const SizedBox(height: 16),
-                        _DiscoverCard(
-                          key: ValueKey(widget.onTab != null ? 'nav_4' : 'free-library-card'),
-                          onTap: widget.onTab != null ? () => widget.onTab!(4) : _openFreeLibrary,
-                        ),
                         _SectionTitle(L('Tüm kitaplar', 'All books'), trailing: '${books.length}'),
                       ],
                     ],
@@ -747,48 +754,6 @@ class _ContinueRow extends StatelessWidget {
               ),
               const SizedBox(width: 14),
               GoldButton(label: L('Devam et', 'Continue'), icon: Icons.chevron_right_rounded, trailingIcon: true, height: 40, onPressed: onTap),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// The way into the free library from a library that already has books.
-class _DiscoverCard extends StatelessWidget {
-  final VoidCallback onTap;
-  const _DiscoverCard({super.key, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final t = Theme.of(context);
-    return Card(
-      margin: EdgeInsets.zero,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
-          child: Row(
-            children: [
-              Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(color: goldSoft(t), borderRadius: BorderRadius.circular(14)),
-                child: Icon(Icons.explore_rounded, color: t.colorScheme.primary),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(L('Ücretsiz kütüphaneyi keşfet', 'Explore the free library'), style: t.textTheme.titleSmall?.copyWith(fontSize: 15)),
-                    const SizedBox(height: 2),
-                    Text(L('A1–C1 seviyelerinde hikâyeler ve klasik kitaplar', 'Stories and classic books from A1 to C1'), style: t.textTheme.bodySmall),
-                  ],
-                ),
-              ),
-              Icon(Icons.chevron_right_rounded, color: t.colorScheme.onSurfaceVariant),
             ],
           ),
         ),

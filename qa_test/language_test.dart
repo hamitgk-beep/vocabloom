@@ -595,6 +595,10 @@ void main() {
       for (final t in [...info.trFreeDict, for (final s in info.senses) ...s.tr]) {
         content.addAll([t, ...t.split(',').map((x) => x.trim())]);
       }
+      // The own dictionary's senses: Turkish meaning, note, definition, example and its Turkish.
+      for (final o in d.ownSenses(w)) {
+        content.addAll([o.tr, ...o.tr.split(',').map((x) => x.trim()), o.note, o.en, o.ex, o.exTr, o.pos, [o.pos, o.note].join(' · ')]);
+      }
     }
     // Titles and authors of the free library's books.
     for (final it in (await FreeLibrary.load()).items) {

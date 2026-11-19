@@ -92,11 +92,12 @@ void main() {
     expect(find.byKey(const ValueKey('ctx-sense-card')), findsOneWidget);
     expect(find.text('BU CÜMLEDEKİ ANLAMI'), findsOneWidget);
     expect(find.text('banka'), findsWidgets);
-    expect(find.text('DİĞER SÖZLÜK ANLAMLARI'), findsOneWidget);
+    expect(find.text('DİĞER ANLAMLARI'), findsOneWidget);
     expect(find.byKey(const ValueKey('ctx-sense-wrong')), findsOneWidget);
     expect(find.byKey(const ValueKey('ctx-sense-ai')), findsOneWidget);
     // The rest of the panel is still there.
     expect(find.text('Öğreneceğim'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Kelime ailesi'), 300);
     expect(find.text('Kelime ailesi'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -220,6 +221,13 @@ void main() {
     await shot(tester, 'tr_cracks_yok', WordPanel(app: app, surface: 'run', ctx: ctxFor('Cracks run through the wall.', 'run')));
     await shot(tester, 'tr_lived_in_dark', WordPanel(app: app, surface: 'lived', ctx: ctxFor('Dorothy lived in Kansas.', 'lived')),
         b: Brightness.dark);
+    const why = "Why do you think Danny isn't sure about changing his last name?";
+    final wc = ctxFor(why, 'why');
+    final wctx = WordContext(wc.sentence, wc.sentenceTokens, wc.indexInSentence, wc.matches,
+        const ['Sence Danny neden soyadını değiştirmekten emin değil?'], 1, 'Test book', paraId: 7);
+    await shot(tester, 'tr_why_light', WordPanel(app: app, surface: 'Why', ctx: wctx), height: 1600);
+    await shot(tester, 'tr_why_dark', WordPanel(app: app, surface: 'Why', ctx: wctx), b: Brightness.dark, height: 1600);
+    await shot(tester, 'tr_why_list', WordPanel(app: app, surface: 'why', lemma: 'why'), height: 1300);
     uiEnglish = true;
     await shot(tester, 'en_looked_up_sky', expr('She looked up at the sky.', 'look up', const ['looked', 'up'], 'looked'));
     uiEnglish = false;

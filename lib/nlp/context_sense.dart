@@ -271,6 +271,17 @@ class SenseEngine {
     try {
       computed++;
       r = q.expr != null ? _resolvePhrase(q) : _resolveWord(q);
+      // No Turkish for the meaning chosen here: choose again among the own
+      // dictionary's senses, which all have Turkish ("why" -> neden, niçin).
+      if (q.expr == null && !r.shown && r.reason != 'grammar word' && _hasOwnWord) {
+        _ownOnly = true;
+        try {
+          final o = _resolveWord(q);
+          if (o.shown) r = o;
+        } finally {
+          _ownOnly = false;
+        }
+      }
     } catch (e) {
       r = ContextSense(headword: q.index >= 0 && q.index < q.tokens.length ? q.tokens[q.index].lower : '', confidence: SenseConfidence.none, reason: 'error: $e');
     }
@@ -402,6 +413,14 @@ class SenseEngine {
 
   late final bool _hasOwn = dict.db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='od'").isNotEmpty;
 
+  /// The own dictionary (own_word: Turkish meaning, English definition and a
+  /// translated example per sense), used when the app turns it on.
+  late final bool _hasOwnWord = DictDb.useOwnDictionary &&
+      dict.db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='own_word'").isNotEmpty;
+
+  /// While true, words are judged on the own dictionary's senses alone.
+  bool _ownOnly = false;
+
   /// Main Turkish meanings of [lemma] (ft), cross references left out.
   List<String> mainTr(String lemma) => _mainTrCache.putIfAbsent(lemma, () {
         final r = dict.db.select('SELECT tr FROM ft WHERE word=?', [lemma]);
@@ -421,6 +440,7 @@ class SenseEngine {
   /// dictionary's senses when the dictionary has them, and the main Turkish
   /// meanings when there is nothing else.
   List<SenseCandidate> _wordCandidates(String lemma, {int rankOffset = 0}) {
+    if (_ownOnly) return _ownWordCandidates(lemma, rankOffset);
     final out = <SenseCandidate>[];
     final rankByPos = <String, int>{};
     for (final s in dict.lookup(lemma).senses) {
@@ -474,6 +494,43 @@ class SenseEngine {
           note: (s['note'] as String?)?.trim().isEmpty ?? true ? null : s['note'] as String,
           examples: [if ('${s['en'] ?? ''}'.isNotEmpty) '${s['en']}'],
           examplesTr: [if ('${s['ex_tr'] ?? ''}'.isNotEmpty) '${s['ex_tr']}'],
+          rank: i + rankOffset,
+        ));
+      }
+    } catch (_) {}
+    return out;
+  }
+
+  static const _trPos = {'isim': 'n', 'özel isim': 'n', 'fiil': 'v', 'deyimsel fiil': 'v', 'sıfat': 'a', 'zarf': 'r'};
+
+  /// Senses of the own dictionary (own_word), with their English definition
+  /// and translated example, so a meaning WordNet has no Turkish for still
+  /// gets one ("why" in "Why do you think ...?": neden, niçin).
+  List<SenseCandidate> _ownWordCandidates(String lemma, int rankOffset) {
+    final r = dict.db.select('SELECT senses FROM own_word WHERE word=?', [lemma]);
+    if (r.isEmpty) return const [];
+    final out = <SenseCandidate>[];
+    try {
+      final list = jsonDecode(r.first.columnAt(0) as String) as List;
+      for (var i = 0; i < list.length; i++) {
+        final s = (list[i] as Map).cast<String, dynamic>();
+        final tr = _split('${s['tr'] ?? ''}');
+        if (tr.isEmpty) continue;
+        final note = '${s['note'] ?? ''}'.trim();
+        // Older rows have no "ex": their "en" is the example, not a definition.
+        final en0 = '${s['en'] ?? ''}'.trim();
+        final hasEx = '${s['ex'] ?? ''}'.trim().isNotEmpty;
+        final ex = hasEx ? '${s['ex']}'.trim() : en0, exTr = '${s['ex_tr'] ?? ''}'.trim();
+        out.add(SenseCandidate(
+          id: 'ow:$lemma#$i',
+          source: 'own',
+          lemma: lemma,
+          pos: _trPos['${s['pos']}'],
+          en: hasEx && en0.isNotEmpty ? en0 : null,
+          tr: tr,
+          note: note.isEmpty ? null : note,
+          examples: [if (ex.isNotEmpty) ex],
+          examplesTr: [if (ex.isNotEmpty) exTr],
           rank: i + rankOffset,
         ));
       }

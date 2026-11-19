@@ -162,7 +162,7 @@ class _ExprPanelState extends State<ExprPanel> {
           ctx: widget.ctx!,
           highlight: widget.words.map((w) => w.toLowerCase()).toSet(),
         ),
-      if (widget.ctx != null && (sense == null || (tr && widget.ctx!.sentenceTr != null))) ...[
+      if (widget.ctx != null && sense == null) ...[
         section(L('Bu cümlede', 'In this sentence')),
         if (sense == null) SentenceText(widget.ctx!.sentence, null, highlight: widget.words.map((w) => w.toLowerCase()).toSet()),
         if (tr && widget.ctx!.sentenceTr != null) ...[

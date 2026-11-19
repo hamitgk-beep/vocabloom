@@ -181,6 +181,30 @@ class DictDb {
     return WordInfo(lemma, tr, senses);
   }
 
+  /// The own dictionary's senses of [lemma] in its order: part of speech
+  /// (Turkish label: isim, fiil …), Turkish meaning, usage note, English
+  /// definition (empty on older rows) and an example with its Turkish.
+  /// Empty when it has none.
+  List<OwnSense> ownSenses(String lemma) {
+    if (!useOwnDictionary || !_hasOwnWord) return const [];
+    final r = db.select('SELECT senses FROM own_word WHERE word = ?', [lemma]);
+    if (r.isEmpty) return const [];
+    try {
+      return [
+        for (final x in jsonDecode(r.first.columnAt(0) as String) as List)
+          if ('${(x as Map)['tr'] ?? ''}'.trim().isNotEmpty)
+            // Older rows have no "ex": their "en" is the example, not a definition.
+            '${x['ex'] ?? ''}'.trim().isEmpty
+                ? OwnSense('${x['pos'] ?? ''}'.trim(), '${x['tr']}'.trim(), '${x['note'] ?? ''}'.trim(), '',
+                    '${x['en'] ?? ''}'.trim(), '${x['ex_tr'] ?? ''}'.trim())
+                : OwnSense('${x['pos'] ?? ''}'.trim(), '${x['tr']}'.trim(), '${x['note'] ?? ''}'.trim(),
+                    '${x['en'] ?? ''}'.trim(), '${x['ex']}'.trim(), '${x['ex_tr'] ?? ''}'.trim()),
+      ];
+    } catch (_) {
+      return const [];
+    }
+  }
+
   /// Lesk-style choice of the sense that best fits the sentence.
   final Map<String, Set<String>> _posCache = {};
 
@@ -720,4 +744,10 @@ class DictDb {
 
   List<Expr> byCategory(String cat) => exprs.where((e) => e.cat == cat).toList()
     ..sort((a, b) => a.phrase.compareTo(b.phrase));
+}
+
+/// One sense of the own dictionary (see [DictDb.ownSenses]).
+class OwnSense {
+  final String pos, tr, note, en, ex, exTr;
+  const OwnSense(this.pos, this.tr, this.note, this.en, this.ex, this.exTr);
 }

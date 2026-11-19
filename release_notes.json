@@ -2,6 +2,18 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "simple-word-panel",
+      "area": "reader",
+      "tr": "Kelime paneli sadeleşti: en üstte altın kutuda kelimenin bu cümledeki Türkçe anlamı, hemen altında kitaptaki cümle ve Türkçesi var. Diğer anlamlar önce Türkçe, sonra İngilizce tanım ve Türkçesiyle örnek cümleyle listeleniyor. İngilizce satırlar küçük ve mavi, yanlarında EN etiketi; Türkçe satırlar kalın, TR etiketli. Sözlükte Türkçesi olmayan anlamlar için artık yeni sözlüğümüzün Türkçesi kullanılıyor. Bilgisayarda cümle paneli ekranın solunda açılıyor; okuyucudaki filtre menüsü üstteki filtre düğmesiyle açılıp kapanıyor.",
+      "en": "The word panel is simpler: a gold box at the top gives the word's Turkish meaning in this sentence, with the book's sentence and its Turkish right below. Other meanings come Turkish first, then the English definition and an example with its Turkish. English lines are small and blue with an EN tag; Turkish lines are bold with a TR tag. Meanings the dictionary had no Turkish for now use our new dictionary's Turkish. On computers the sentence panel opens on the left, and the reader's filter menu opens and closes with the filter button at the top."
+    },
+    {
+      "id": "simpler-library-home",
+      "area": "app",
+      "tr": "Kitaplık sadeleşti: tekrar bekleyen kelimeler kartı ve \"Ücretsiz kütüphaneyi keşfet\" kartı kaldırıldı. Tekrar, Kelimelerim sayfasından; Ücretsiz kütüphane telefonda üstteki pusula düğmesinden, bilgisayarda sol menüden açılır.",
+      "en": "My library is simpler: the words-to-review card and the \"Explore the free library\" card are gone. Review from My words; open the free library from the compass button at the top on phones, or the side menu on computers."
+    },
+    {
       "id": "dictionary-ai-meanings",
       "area": "dictionary",
       "tr": "Sözlük: 41.177 kelime ve 10.807 deyim için yeni Türkçe anlamlar ve İngilizce örnek cümleler (Türkçe çevirileriyle) eklendi. Bu anlamlar yapay zekâ ile yazıldı ve henüz bir insan tarafından kontrol edilmedi; hatalı görürseniz bildirin.",
