@@ -121,9 +121,33 @@ class DictDb {
 
   late final bool _hasExTr = db.select('PRAGMA table_info(syn)').any((r) => r['name'] == 'extr');
 
-  WordInfo lookup(String lemma) {
-    final ft = db.select('SELECT tr FROM ft WHERE word = ?', [lemma]);
-    final tr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
+  /// Off until the own-dictionary tables have been checked on a copy of the database.
+  /// While it is off, the app shows exactly the meanings it shows today.
+  static const bool useOwnDictionary = false;
+
+  late final bool _hasOwnWord = db
+      .select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_word'")
+      .isNotEmpty;
+
+  /// [ownEnabled] defaults to [useOwnDictionary] (false in the app). Only tests pass it.
+  WordInfo lookup(String lemma, {bool ownEnabled = useOwnDictionary}) {
+    // Own meanings first: keep_tr (the Wiktionary part that stays), then the new senses.
+    // No own row, or an empty one, falls back to the current table (ft).
+    var tr = <String>[];
+    if (ownEnabled && _hasOwnWord) {
+      final own = db.select('SELECT senses, keep_tr FROM own_word WHERE word = ?', [lemma]);
+      if (own.isNotEmpty) {
+        tr = [
+          ...(jsonDecode(own.first.columnAt(1) as String) as List).cast<String>(),
+          for (final s in jsonDecode(own.first.columnAt(0) as String) as List)
+            (s as Map)['tr'] as String,
+        ];
+      }
+    }
+    if (tr.isEmpty) {
+      final ft = db.select('SELECT tr FROM ft WHERE word = ?', [lemma]);
+      tr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
+    }
     final senses = <Sense>[];
     for (final r in db.select(
         'SELECT s.id, s.pos, s.gloss, s.examples, s.words, s.tr${_hasExTr ? ', s.extr' : ''} FROM sense x JOIN syn s ON s.id = x.syn_id '
