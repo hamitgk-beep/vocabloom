@@ -1,0 +1,41 @@
+name: tr-en-pilot
+on:
+  push:
+    branches: [claude/project-thread-9n9060]
+    paths: [tools/tr_en_pilot/**, .github/workflows/tr-en-pilot.yml]
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download open data
+        run: |
+          curl -sSfL -o tr.jsonl https://kaikki.org/dictionary/Turkish/kaikki.org-dictionary-Turkish.jsonl
+          curl -sSfL -o tr_50k.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_50k.txt
+          # Tatoeba Turkish-English pairs (optional)
+          ( curl -sSfL -o tur.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/tur/tur_sentences.tsv.bz2 &&
+            curl -sSfL -o eng.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2 &&
+            curl -sSfL -o links.tsv.bz2 https://downloads.tatoeba.org/exports/per_language/tur/tur-eng_links.tsv.bz2 &&
+            bunzip2 tur.tsv.bz2 eng.tsv.bz2 links.tsv.bz2 &&
+            python3 - <<'P'
+          tur = {l.split('\t')[0]: l.rstrip('\n').split('\t')[2] for l in open('tur.tsv', encoding='utf-8')}
+          eng = {l.split('\t')[0]: l.rstrip('\n').split('\t')[2] for l in open('eng.tsv', encoding='utf-8')}
+          with open('pairs.tsv', 'w', encoding='utf-8') as f:
+              for l in open('links.tsv', encoding='utf-8'):
+                  a, b = l.split()[:2]
+                  if a in tur and b in eng:
+                      f.write(tur[a] + '\t' + eng[b] + '\n')
+          P
+          ) || echo "Tatoeba skipped"
+          ls -la
+      - name: Build sample
+        run: python3 tools/tr_en_pilot/sample.py tr.jsonl tr_50k.txt tools/tr_en_pilot/out pairs.tsv
+      - name: Commit result
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add tools/tr_en_pilot/out
+          git commit -m "tr-en pilot: sample output" || exit 0
+          git push
