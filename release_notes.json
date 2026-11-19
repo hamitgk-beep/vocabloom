@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "simpler-library-home",
+      "area": "app",
+      "tr": "Kitaplık sadeleşti: tekrar bekleyen kelimeler kartı ve \"Ücretsiz kütüphaneyi keşfet\" kartı kaldırıldı. Tekrar, Kelimelerim sayfasından; Ücretsiz kütüphane telefonda üstteki pusula düğmesinden, bilgisayarda sol menüden açılır.",
+      "en": "My library is simpler: the words-to-review card and the \"Explore the free library\" card are gone. Review from My words; open the free library from the compass button at the top on phones, or the side menu on computers."
+    },
+    {
       "id": "dictionary-ai-meanings",
       "area": "dictionary",
       "tr": "Sözlük: 41.177 kelime ve 10.807 deyim için yeni Türkçe anlamlar ve İngilizce örnek cümleler (Türkçe çevirileriyle) eklendi. Bu anlamlar yapay zekâ ile yazıldı ve henüz bir insan tarafından kontrol edilmedi; hatalı görürseniz bildirin.",
