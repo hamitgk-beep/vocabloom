@@ -11,6 +11,8 @@ words around a tapped word.
 
   python3 tools/tr_en/build_context.py pairs.tsv assets/tr_en.db
 
+It also adds translated examples, up to 10 for each word.
+
 pairs.tsv: id <TAB> turkish <TAB> english (tatoeba_pairs.py). Tables written:
   ctx(lemma, g, word, n)  how often [word] was in a sentence where [lemma] had
                           meaning [g] (meanings counted in order over all senses)
@@ -116,6 +118,12 @@ for w, kws in gloss_kw.items():
 n_g = Counter()
 n_gc = defaultdict(Counter)
 seen = 0
+# More translated examples per word: up to MAX_EX, short everyday sentences first.
+MAX_EX = 10
+have_ex = defaultdict(set)
+for l, tr_s in db.execute('SELECT lemma, tr FROM ex'):
+    have_ex[l].add(tr_s)
+ex_cand = defaultdict(list)
 for line in open(pairs_path, encoding='utf-8'):
     p = line.rstrip('\n').split('\t')
     if len(p) < 3:
@@ -124,6 +132,10 @@ for line in open(pairs_path, encoding='utf-8'):
     toks = re.findall(r"[a-zçğıöşüâîû]+", low(tr))
     lemmas = [lemma_of(t) for t in toks]
     lemmas = [l for l in lemmas if l]
+    if 3 <= len(toks) <= 12:
+        for l in set(lemmas):
+            if tr not in have_ex[l] and len(ex_cand[l]) < 60:
+                ex_cand[l].append((abs(len(toks) - 6), tr, en, int(p[0]) if p[0].isdigit() else None))
     if len(lemmas) < 2:
         continue
     en_stems = {stem(w) for w in re.findall(r"[A-Za-z][A-Za-z'-]*", en)}
@@ -170,13 +182,21 @@ for L, gs in by_lemma.items():
         for _, c, n in sorted(kept, reverse=True)[:60]:
             db.execute('INSERT INTO ctx VALUES (?,?,?,?)', (L, g, c, n))
             rows += 1
+ex_added = 0
+for l, cands in ex_cand.items():
+    room = MAX_EX - len(have_ex[l])
+    if room <= 0:
+        continue
+    for _, tr_s, en_s, sid in sorted(cands)[:room]:
+        db.execute('INSERT INTO ex(lemma, tr, en, id) VALUES (?,?,?,?)', (l, tr_s, en_s, sid))
+        ex_added += 1
 db.execute('CREATE INDEX ctx_lemma ON ctx(lemma, word)')
 db.execute('CREATE INDEX ctxn_lemma ON ctxn(lemma)')
 db.execute("INSERT OR REPLACE INTO meta VALUES ('ctx', ?)", (f'{seen} Tatoeba sentences, {rows} context rows',))
 db.commit()
 db.execute('VACUUM')
 
-print(f'# Context data\n\n{seen} sentences, {len(n_g)} (word, meaning) pairs, {rows} context rows\n')
+print(f'# Context data\n\n{seen} sentences, {len(n_g)} (word, meaning) pairs, {rows} context rows, {ex_added} examples added\n')
 for L in ['sürmek', 'çekmek', 'tutmak', 'geçmek', 'çıkmak', 'almak', 'yüz', 'kurmak', 'açmak', 'düşmek']:
     if L not in senses:
         continue

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [claude/project-thread-9n9060]
-    paths: [tools/tr_en/build_tr_en.py, tools/tr_en/tatoeba_pairs.py, .github/workflows/tr-en-data.yml]
+    paths: [tools/tr_en/build_tr_en.py, tools/tr_en/tatoeba_pairs.py]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,13 +24,18 @@ jobs:
           python3 tools/tr_en/tatoeba_pairs.py tur.tsv eng.tsv links.tsv pairs.tsv
           wc -l pairs.tsv
       - name: Build dictionary
-        run: python3 tools/tr_en/build_tr_en.py tr.jsonl tr_full.txt pairs.tsv assets/tr_en.db | tee tools/tr_en/report.md
+        run: |
+          python3 tools/tr_en/build_tr_en.py tr.jsonl tr_full.txt pairs.tsv assets/tr_en.db | tee tools/tr_en/report.md
+          # Words the Wiktionary data lacks, from the app's English -> Turkish data (KeNet, FreeDict).
+          python3 tools/tr_en/add_reverse.py assets/dict.db assets/tr_en.db | tee tools/tr_en/reverse_report.md
+          # Meaning in context and more examples, from Tatoeba.
+          python3 tools/tr_en/build_context.py pairs.tsv assets/tr_en.db | tee tools/tr_en/context_report.md
       - name: Commit
         run: |
           ls -la assets/tr_en.db
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
-          git add assets/tr_en.db tools/tr_en/report.md
+          git add assets/tr_en.db tools/tr_en/report.md tools/tr_en/reverse_report.md tools/tr_en/context_report.md
           git commit -m "tr-en dictionary data (Kaikki, FrequencyWords, Tatoeba)" || exit 0
           for i in 1 2 3 4; do git pull --rebase -q origin "$GITHUB_REF_NAME" && git push && exit 0; sleep 10; done
           exit 1

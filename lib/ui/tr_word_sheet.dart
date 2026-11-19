@@ -47,6 +47,8 @@ class _TrWordPanelState extends State<TrWordPanel> {
   late String lemma;
   TrEntry? entry;
 
+  bool _allExamples = false;
+
   /// The meaning (index over all glosses) the words around the tapped word
   /// point to, or null.
   int? inContext;
@@ -186,6 +188,12 @@ class _TrWordPanelState extends State<TrWordPanel> {
         children.add(Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            if (s.source != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(s.source == 'wn' ? L('Kaynak: KeNet / WordNet', 'Source: KeNet / WordNet') : L('Kaynak: FreeDict', 'Source: FreeDict'),
+                    style: TextStyle(fontSize: 11.5, color: theme.hintColor)),
+              ),
             if (s.pos.isNotEmpty)
               Container(
                 margin: const EdgeInsets.only(bottom: 6),
@@ -212,7 +220,8 @@ class _TrWordPanelState extends State<TrWordPanel> {
           padding: const EdgeInsets.only(top: 4, bottom: 6),
           child: Text(L('Örnek cümleler', 'Example sentences'), style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
         ));
-        for (final x in e.examples) {
+        final shownEx = _allExamples ? e.examples : e.examples.take(3);
+        for (final x in shownEx) {
           children.add(Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
@@ -227,6 +236,17 @@ class _TrWordPanelState extends State<TrWordPanel> {
               ),
               if (Speech.supported) SpeakButton(x.tr, lang: 'tr', size: 20, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
             ]),
+          ));
+        }
+        if (!_allExamples && e.examples.length > 3) {
+          children.add(Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              key: const ValueKey('tr-more-examples'),
+              icon: const Icon(Icons.expand_more_rounded),
+              label: Text(L('${e.examples.length - 3} örnek daha', '${e.examples.length - 3} more examples')),
+              onPressed: () => setState(() => _allExamples = true),
+            ),
           ));
         }
         children.add(Text(L('Örnekler: Tatoeba (CC BY 2.0 FR)', 'Examples: Tatoeba (CC BY 2.0 FR)'), style: TextStyle(fontSize: 11.5, color: theme.hintColor)));
