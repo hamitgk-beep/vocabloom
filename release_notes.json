@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "dictionary-ai-meanings",
+      "area": "dictionary",
+      "tr": "Sözlük: 41.177 kelime ve 10.807 deyim için yeni Türkçe anlamlar ve İngilizce örnek cümleler (Türkçe çevirileriyle) eklendi. Bu anlamlar yapay zekâ ile yazıldı ve henüz bir insan tarafından kontrol edilmedi; hatalı görürseniz bildirin.",
+      "en": "Dictionary: new Turkish meanings and English example sentences, with Turkish translations, for 41,177 words and 10,807 phrases. These were written by AI and have not yet been checked by a person; tell us if you see a mistake."
+    },
+    {
       "id": "side-word-panel",
       "area": "reader",
       "tr": "Bilgisayarda kelime, cümle ve kalıp panelleri artık ekranın sağında açılıyor; kitabın metni yanında okunur kalıyor, metne dokununca panel kapanıyor. Sol menünün altında bugünkü okuma hedefin ve \"Okumaya devam\" düğmesi var.",

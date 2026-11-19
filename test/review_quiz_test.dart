@@ -40,12 +40,12 @@ void main() {
     expect(ch2.options.toSet().length, 4);
   });
 
-  test('simply in "simply by reason of" is "sadece", with four choices', () {
+  test('simply in "simply by reason of" is "sadece, yalnızca", with four choices', () {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     const s = 'How often does some crime come to light simply by reason of a bit of unmitigated bungling, '
         'and each tune one asks oneself the question: If this hadn\'t been bungled, would anyone ever have known?';
     final ch = ReviewQuiz(d, u, rnd: Random(2)).choiceFor(saved('simply', s))!;
-    expect(ch.right, 'sadece');
+    expect(ch.right, 'sadece, yalnızca');
     expect(ch.options.toSet().length, 4);
   });
 

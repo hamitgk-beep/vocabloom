@@ -78,7 +78,8 @@ class DictDb {
   /// V2/V3 form -> base forms of the irregular verbs it belongs to ("found" -> find).
   final Map<String, List<String>> irregularOf = {};
 
-  void load() {
+  void load({bool ownEnabled = useOwnDictionary}) {
+    _ownOn = ownEnabled;
     irregular.clear();
     irregularOf.clear();
     final known = <String>{};
@@ -97,8 +98,22 @@ class DictDb {
     final forms = <int, List<String>>{};
     final cols = {for (final r in db.select('PRAGMA table_info(expr)')) r['name'] as String};
     final hasEx = cols.contains('ex'), hasEnTr = cols.contains('entr');
+    // Own expression meanings (own_expr) replace the Turkish gloss when the flag is on and a row exists.
+    final ownExpr = <String, String>{};
+    if (ownEnabled && db.select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_expr'").isNotEmpty) {
+      for (final r in db.select('SELECT phrase, cat, senses FROM own_expr')) {
+        ownExpr['${r.columnAt(0)}|${r.columnAt(1)}'] = r.columnAt(2) as String;
+      }
+    }
     for (final r in db.select('SELECT id, phrase, cat, tr, en, forms${hasEx ? ', ex' : ''}${hasEnTr ? ', entr, extr' : ''} FROM expr')) {
-      final e = Expr(r['id'] as int, r['phrase'] as String, r['cat'] as String, r['tr'] as String?,
+      var trOwn = r['tr'] as String?;
+      final own = ownExpr['${r['phrase']}|${r['cat']}'];
+      if (own != null) {
+        final senses = (jsonDecode(own) as List).cast<Map>();
+        final t = [for (final x in senses) (x['tr'] as String? ?? '').trim()].where((x) => x.isNotEmpty).toList();
+        if (t.isNotEmpty) trOwn = t.join(', ');
+      }
+      final e = Expr(r['id'] as int, r['phrase'] as String, r['cat'] as String, trOwn,
           r['en'] as String?, patternOf(r['phrase'] as String),
           ex: hasEx ? r['ex'] as String? : null, enTr: hasEnTr ? r['entr'] as String? : null, exTr: hasEnTr ? r['extr'] as String? : null);
       if (e.pattern.isEmpty) continue;
@@ -121,9 +136,33 @@ class DictDb {
 
   late final bool _hasExTr = db.select('PRAGMA table_info(syn)').any((r) => r['name'] == 'extr');
 
-  WordInfo lookup(String lemma) {
-    final ft = db.select('SELECT tr FROM ft WHERE word = ?', [lemma]);
-    final tr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
+  /// Off until the own-dictionary tables have been checked on a copy of the database.
+  /// While it is off, the app shows exactly the meanings it shows today.
+  static const bool useOwnDictionary = true;
+
+  late final bool _hasOwnWord = db
+      .select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_word'")
+      .isNotEmpty;
+
+  /// [ownEnabled] defaults to [useOwnDictionary] (false in the app). Only tests pass it.
+  WordInfo lookup(String lemma, {bool ownEnabled = useOwnDictionary}) {
+    // Own meanings first: keep_tr (the Wiktionary part that stays), then the new senses.
+    // No own row, or an empty one, falls back to the current table (ft).
+    var tr = <String>[];
+    if (ownEnabled && _hasOwnWord) {
+      final own = db.select('SELECT senses, keep_tr FROM own_word WHERE word = ?', [lemma]);
+      if (own.isNotEmpty) {
+        tr = [
+          ...(jsonDecode(own.first.columnAt(1) as String) as List).cast<String>(),
+          for (final s in jsonDecode(own.first.columnAt(0) as String) as List)
+            (s as Map)['tr'] as String,
+        ];
+      }
+    }
+    if (tr.isEmpty) {
+      final ft = db.select('SELECT tr FROM ft WHERE word = ?', [lemma]);
+      tr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
+    }
     final senses = <Sense>[];
     for (final r in db.select(
         'SELECT s.id, s.pos, s.gloss, s.examples, s.words, s.tr${_hasExTr ? ', s.extr' : ''} FROM sense x JOIN syn s ON s.id = x.syn_id '
@@ -149,10 +188,48 @@ class DictDb {
   late final bool _hasExd =
       db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='exd'").isNotEmpty;
 
+  bool _ownOn = useOwnDictionary;
+  late final bool _hasOwnExpr =
+      db.select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_expr'").isNotEmpty;
+
+  /// Own senses as the expression sheet reads them. An own sense has a Turkish meaning, a Turkish
+  /// usage note and an English example with its translation. When the row has the newer shape
+  /// (ex = English example, en = short English definition) the definition is shown; otherwise the
+  /// old shape (en = example) gives only the example. Nothing is invented: missing parts stay empty.
+  String _ownExprDetail(String raw) {
+    final out = <Map<String, Object>>[];
+    for (final x in jsonDecode(raw) as List) {
+      final m = (x as Map).cast<String, dynamic>();
+      final tr = (m['tr'] as String? ?? '').trim();
+      if (tr.isEmpty) continue;
+      final ex = (m['ex'] as String? ?? '').trim();
+      final en = (m['en'] as String? ?? '').trim();
+      final hasEx = ex.isNotEmpty;
+      final definition = hasEx ? en : '';
+      final example = hasEx ? ex : en;
+      out.add({
+        'title_en': definition.isNotEmpty ? definition : tr,
+        'title_tr': tr,
+        'explain_en': '',
+        'explain_tr': '',
+        'in_sentence': false,
+        'examples': [
+          if (example.isNotEmpty) {'en': example, 'tr': (m['ex_tr'] as String? ?? '').trim()},
+        ],
+      });
+    }
+    return jsonEncode(out);
+  }
+
   /// Built-in senses of an expression (Turkish + English, with translated
   /// examples), as JSON in the same shape the AI service returns. Null when
   /// this dictionary has none for it.
   String? exprDetail(String phrase, String cat) {
+    // Own meanings first (own_expr), in the same shape as the built-in library.
+    if (_ownOn && _hasOwnExpr) {
+      final own = db.select('SELECT senses FROM own_expr WHERE phrase=? AND cat=?', [phrase, cat]);
+      if (own.isNotEmpty) return _ownExprDetail(own.first.columnAt(0) as String);
+    }
     if (!_hasExd) return null;
     final r = db.select('SELECT json FROM exd WHERE phrase=? AND cat=?', [phrase, cat]);
     return r.isEmpty ? null : r.first.columnAt(0) as String;
