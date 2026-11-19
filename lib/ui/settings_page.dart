@@ -108,7 +108,7 @@ class SettingsPage extends StatelessWidget {
               SettingsNavTile(
                 icon: Icons.local_florist_rounded,
                 color: Brand.gold,
-                title: 'VocaBloom',
+                title: 'Storilex',
                 subtitle: _versionLabel(),
                 onTap: () => _push(context, const AboutPage()),
               ),
@@ -365,15 +365,15 @@ class AboutPage extends StatelessWidget {
           const SizedBox(width: 14),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('VocaBloom', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
+              Text('Storilex', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800)),
               Text(_versionLabel(), style: theme.textTheme.bodySmall),
             ]),
           ),
         ]),
         const SizedBox(height: 14),
         Text(
-          L('VocaBloom ile okuduğun her kitap bir İngilizce dersine dönüşür: bilinmeyen kelimeler anında açıklanır, tekrar sistemiyle kalıcı hale gelir. VocaBloom, dil öğrenenlerin gelişimini desteklemek amacıyla tasarlanmış ve geliştirilmiştir.',
-              'With VocaBloom, every book you read becomes an English lesson: unknown words are explained instantly and made permanent through spaced review. VocaBloom is designed and built to support language learners\' progress.'),
+          L('Storilex ile okuduğun her kitap bir İngilizce dersine dönüşür: bilinmeyen kelimeler anında açıklanır, tekrar sistemiyle kalıcı hale gelir. Storilex, dil öğrenenlerin gelişimini desteklemek amacıyla tasarlanmış ve geliştirilmiştir.',
+              'With Storilex, every book you read becomes an English lesson: unknown words are explained instantly and made permanent through spaced review. Storilex is designed and built to support language learners\' progress.'),
           style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
         ),
         const SizedBox(height: 12),
@@ -432,13 +432,13 @@ class LicensesPage extends StatelessWidget {
       ]),
       SectionLabel(L('Yazılım', 'Software')),
       Panel(children: [
-        item(L('VocaBloom açık kaynaklıdır (GPL-3.0): github.com/hamitgk-beep/vocabloom', 'VocaBloom is open source (GPL-3.0): github.com/hamitgk-beep/vocabloom')),
+        item(L('Storilex açık kaynaklıdır (GPL-3.0): github.com/hamitgk-beep/vocabloom', 'Storilex is open source (GPL-3.0): github.com/hamitgk-beep/vocabloom')),
         Align(
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
             icon: const Icon(Icons.description_outlined, size: 18),
             label: Text(L('Kullanılan kütüphanelerin lisansları', 'Licences of the libraries used')),
-            onPressed: () => showLicensePage(context: context, applicationName: 'VocaBloom'),
+            onPressed: () => showLicensePage(context: context, applicationName: 'Storilex'),
           ),
         ),
       ]),

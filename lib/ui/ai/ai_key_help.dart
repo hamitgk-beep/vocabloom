@@ -51,8 +51,8 @@ Future<bool> showAiKeyHelp(BuildContext context, AppState app) async {
             ]),
             const SizedBox(height: 12),
             Text(
-              L('VocaBloom ücretsizdir; yapay zekâ cevapları senin kendi API anahtarınla gelir. Google Gemini\'nin ücretsiz planı yeterli.',
-                  'VocaBloom is free; AI answers come with your own API key. Google Gemini\'s free plan is enough.'),
+              L('Storilex ücretsizdir; yapay zekâ cevapları senin kendi API anahtarınla gelir. Google Gemini\'nin ücretsiz planı yeterli.',
+                  'Storilex is free; AI answers come with your own API key. Google Gemini\'s free plan is enough.'),
               style: theme.textTheme.bodyMedium?.copyWith(height: 1.5, color: cs.onSurfaceVariant),
             ),
             step(1, L('aistudio.google.com adresinde "Get API key" ile anahtar al.', 'Get a key with "Get API key" at aistudio.google.com.')),

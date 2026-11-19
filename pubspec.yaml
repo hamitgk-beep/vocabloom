@@ -159,6 +159,6 @@ flutter_native_splash:
     color: "#FAF6EE"
     color_dark: "#17130F"
     image: assets/brand/icon-adaptive-fg.png
-    icon_background_color: "#2A2117"
+    icon_background_color: "#F1E2C2"
     icon_background_color_dark: "#2A2117"
   web: false

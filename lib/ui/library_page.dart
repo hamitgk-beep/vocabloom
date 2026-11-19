@@ -244,7 +244,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                'VocaBloom',
+                                'Storilex',
                                 maxLines: 1,
                                 softWrap: false,
                                 overflow: TextOverflow.fade,
@@ -416,13 +416,22 @@ class _HeroCard extends StatelessWidget {
         boxShadow: [BoxShadow(color: dark ? Colors.black.withValues(alpha: 0.35) : const Color(0x1A785A28), blurRadius: 24, offset: const Offset(0, 6))],
       ),
       clipBehavior: Clip.antiAlias,
-      child: Stack(
+      child: LayoutBuilder(builder: (context, c) {
+      // The book takes only the room left beside the text: it shrinks as the
+      // card narrows and hides when too small, so it never covers the text.
+      final padH = wide ? 26.0 : 18.0;
+      final bookW = (c.maxWidth - padH * 2 - (wide ? 300.0 : 190.0)).clamp(0.0, wide ? 210.0 : 112.0);
+      final showBook = bookW >= (wide ? 110 : 76);
+      final reserve = showBook ? bookW + (wide ? 10 : 0) : 0.0;
+      final textMax = (c.maxWidth - padH * 2 - reserve).clamp(0.0, wide ? 440.0 : double.infinity);
+      return Stack(
         children: [
-          Positioned(
-            right: wide ? 18 : -4,
-            top: wide ? 8 : 2,
-            child: CustomPaint(size: wide ? const Size(210, 158) : const Size(112, 84), painter: _OpenBookPainter()),
-          ),
+          if (showBook)
+            Positioned(
+              right: wide ? 18 : -4,
+              top: wide ? 8 : 2,
+              child: CustomPaint(size: Size(bookW, bookW * 0.75), painter: _OpenBookPainter()),
+            ),
           Padding(
             padding: EdgeInsets.fromLTRB(wide ? 26 : 18, wide ? 22 : 16, wide ? 26 : 18, wide ? 20 : 14),
             child: Column(
@@ -431,27 +440,30 @@ class _HeroCard extends StatelessWidget {
                 Text(L('Bu hafta', 'This week'), style: t.textTheme.bodySmall?.copyWith(color: muted)),
                 const SizedBox(height: 2),
                 Padding(
-                  padding: EdgeInsets.only(right: wide ? 220 : 96),
+                  padding: EdgeInsets.only(right: reserve),
                   child: Text(
                     title,
                     style: TextStyle(fontFamily: readingFont, fontWeight: FontWeight.w700, fontSize: wide ? 30 : 22, height: 1.15, color: ink),
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
+                Padding(
+                  padding: EdgeInsets.only(right: reserve),
+                  child: Text(
                   key: const ValueKey('stat-books'),
                   L('$books kitap · $learning öğreneceğim · $learned öğrendim', '$books books · $learning to learn · $learned learned'),
                   style: t.textTheme.bodySmall?.copyWith(color: muted, fontWeight: FontWeight.w600),
+                  ),
                 ),
                 const SizedBox(height: 14),
                 Container(
                   height: 1,
                   color: line,
-                  constraints: BoxConstraints(maxWidth: wide ? 440 : double.infinity),
+                  constraints: BoxConstraints(maxWidth: textMax),
                 ),
                 const SizedBox(height: 12),
                 ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: wide ? 440 : double.infinity),
+                  constraints: BoxConstraints(maxWidth: textMax),
                   child: IntrinsicHeight(
                     child: Row(
                       children: [
@@ -503,7 +515,8 @@ class _HeroCard extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      );
+      }),
     );
   }
 

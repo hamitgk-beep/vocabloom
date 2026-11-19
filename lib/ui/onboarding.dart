@@ -56,7 +56,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: Row(children: [
                   const BrandMark(),
                   const SizedBox(width: 10),
-                  Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                  Text('Storilex', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
                   const Spacer(),
                   // Interface language right on the first screen.
                   TextButton(

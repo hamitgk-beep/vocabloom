@@ -2,7 +2,7 @@
     <!-- Voice pack download, AI services and update check. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="VocaBloom"
+        android:label="Storilex"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

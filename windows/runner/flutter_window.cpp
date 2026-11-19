@@ -1,8 +1,21 @@
 #include "flutter_window.h"
 
+#include <flutter/standard_method_codec.h>
+
 #include <optional>
 
 #include "flutter/generated_plugin_registrant.h"
+
+namespace {
+
+// Screen position of the mouse, packed the way WM_NCLBUTTONDOWN wants it.
+LPARAM CursorLParam() {
+  POINT pt;
+  ::GetCursorPos(&pt);
+  return MAKELPARAM(pt.x, pt.y);
+}
+
+}  // namespace
 
 FlutterWindow::FlutterWindow(const flutter::DartProject& project)
     : project_(project) {}
@@ -26,6 +39,11 @@ bool FlutterWindow::OnCreate() {
   }
   RegisterPlugins(flutter_controller_->engine());
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
+  SetUpWindowChannel();
+  // Recalculate the frame now that WM_NCCALCSIZE drops the system title bar.
+  ::SetWindowPos(GetHandle(), nullptr, 0, 0, 0, 0,
+                 SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER |
+                     SWP_NOACTIVATE);
 
   flutter_controller_->engine()->SetNextFrameCallback([&]() {
     this->Show();
@@ -39,7 +57,48 @@ bool FlutterWindow::OnCreate() {
   return true;
 }
 
+void FlutterWindow::SetUpWindowChannel() {
+  window_channel_ =
+      std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
+          flutter_controller_->engine()->messenger(), "storilex/window",
+          &flutter::StandardMethodCodec::GetInstance());
+  window_channel_->SetMethodCallHandler(
+      [this](const flutter::MethodCall<flutter::EncodableValue>& call,
+             std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+                 result) {
+        HWND hwnd = GetHandle();
+        const std::string& name = call.method_name();
+        if (hwnd == nullptr) {
+          result->Error("no_window");
+          return;
+        }
+        if (name == "minimize") {
+          ::ShowWindow(hwnd, SW_MINIMIZE);
+          result->Success();
+        } else if (name == "toggleMaximize") {
+          ::ShowWindow(hwnd, ::IsZoomed(hwnd) ? SW_RESTORE : SW_MAXIMIZE);
+          result->Success(flutter::EncodableValue(::IsZoomed(hwnd) != 0));
+        } else if (name == "isMaximized") {
+          result->Success(flutter::EncodableValue(::IsZoomed(hwnd) != 0));
+        } else if (name == "close") {
+          ::PostMessage(hwnd, WM_CLOSE, 0, 0);
+          result->Success();
+        } else if (name == "startDrag" || name == "startResizeTop") {
+          // Hand the press to Windows as if it were on the title bar (or the
+          // top edge): moving, snapping and resizing work as usual.
+          result->Success();
+          ::ReleaseCapture();
+          ::PostMessage(hwnd, WM_NCLBUTTONDOWN,
+                        name == "startDrag" ? HTCAPTION : HTTOP,
+                        CursorLParam());
+        } else {
+          result->NotImplemented();
+        }
+      });
+}
+
 void FlutterWindow::OnDestroy() {
+  window_channel_ = nullptr;
   if (flutter_controller_) {
     flutter_controller_ = nullptr;
   }
@@ -64,6 +123,30 @@ FlutterWindow::MessageHandler(HWND hwnd, UINT const message,
   switch (message) {
     case WM_FONTCHANGE:
       flutter_controller_->engine()->ReloadSystemFonts();
+      break;
+    case WM_NCCALCSIZE:
+      if (wparam == TRUE) {
+        // No system title bar: keep the resize borders on the sides and the
+        // bottom, and start the app at the very top of the window.
+        auto params = reinterpret_cast<NCCALCSIZE_PARAMS*>(lparam);
+        const LONG top = params->rgrc[0].top;
+        ::DefWindowProc(hwnd, message, wparam, lparam);
+        params->rgrc[0].top = top;
+        if (::IsZoomed(hwnd)) {
+          // A maximized window hangs over the screen edge by its frame.
+          const UINT dpi = ::GetDpiForWindow(hwnd);
+          params->rgrc[0].top += ::GetSystemMetricsForDpi(SM_CYFRAME, dpi) +
+                                 ::GetSystemMetricsForDpi(SM_CXPADDEDBORDER, dpi);
+        }
+        return 0;
+      }
+      break;
+    case WM_SIZE:
+      if (window_channel_) {
+        window_channel_->InvokeMethod(
+            "maximized",
+            std::make_unique<flutter::EncodableValue>(wparam == SIZE_MAXIMIZED));
+      }
       break;
   }
 

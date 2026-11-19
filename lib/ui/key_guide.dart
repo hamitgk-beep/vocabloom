@@ -38,13 +38,13 @@ const keyGuides = <String, KeyGuide>{
     'Has a free tier, no card needed. Very fast, but cannot read image PDFs.',
     [
       '"Siteyi aç"a bas, Google hesabınla ya da e-postanla giriş yap.',
-      '"Create API Key" düğmesine bas, bir isim yaz (ör. VocaBloom) ve "Submit" de.',
+      '"Create API Key" düğmesine bas, bir isim yaz (ör. Storilex) ve "Submit" de.',
       'Anahtar yalnızca bir kez gösterilir (gsk_ ile başlar), hemen kopyala.',
       'Buraya dönüp "API anahtarı" kutusuna yapıştır ve "Bağlantıyı dene"ye bas.',
     ],
     [
       'Press "Open site", sign in with Google or your email.',
-      'Press "Create API Key", type a name (e.g. VocaBloom) and press "Submit".',
+      'Press "Create API Key", type a name (e.g. Storilex) and press "Submit".',
       'The key (starts with gsk_) is shown only once, copy it right away.',
       'Come back, paste it into "API key" and press "Test connection".',
     ],

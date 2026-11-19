@@ -152,7 +152,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: VocaBloom-macOS
-          path: build/macos/Build/Products/Release/VocaBloom.app
+          path: build/macos/Build/Products/Release/Storilex.app
 
   release:
     needs: [test, voice, windows, linux, android, ios, macos]
@@ -199,6 +199,6 @@ jobs:
         run: |
           gh release delete latest --yes --cleanup-tag || true
           gh release create latest --prerelease --target "$GITHUB_SHA" \
-            --title "VocaBloom ${{ needs.test.outputs.version }}" \
+            --title "Storilex ${{ needs.test.outputs.version }}" \
             --notes-file body.md \
             dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip dist/VocaBloom-Linux.tar.gz

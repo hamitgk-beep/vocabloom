@@ -25,6 +25,7 @@ import 'ui/onboarding.dart';
 import 'ui/reader_page.dart';
 import 'ui/grammar/grammar_page.dart';
 import 'ui/theme.dart';
+import 'ui/window_frame.dart';
 import 'tts/speech.dart';
 
 import 'l10n.dart';
@@ -101,7 +102,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
     return ListenableBuilder(
       listenable: a ?? ValueNotifier(0),
       builder: (context, _) => MaterialApp(
-        title: 'VocaBloom',
+        title: 'Storilex',
         debugShowCheckedModeBanner: false,
         locale: uiLocale,
         supportedLocales: uiLocales,
@@ -109,6 +110,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         themeMode: a?.themeMode ?? ThemeMode.light,
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
+        builder: (context, child) => WindowFrame(child: child ?? const SizedBox.shrink()),
         home: app != null
             ? (OnboardingPage.needed(app!) ? OnboardingPage(app: app!, onDone: () => setState(() {})) : HomePage(app: app!))
             : Scaffold(
@@ -217,7 +219,7 @@ class _HomePageState extends State<HomePage> {
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
       (Icons.explore_outlined, Icons.explore_rounded, L('Ücretsiz kütüphane', 'Free library')),
       (Icons.insights_outlined, Icons.insights_rounded, L('İstatistiklerim', 'My stats')),
-      (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
+      (Icons.settings_outlined, Icons.settings_rounded, L('Ayarlar', 'Settings')),
     ];
     if (tab >= pages.length) tab = pages.length - 1;
     // The tab pages sit on one shared background: cream by day, a warm glow by night.
@@ -410,7 +412,7 @@ class _SideMenu extends StatelessWidget {
                       const SizedBox(width: 12),
                       Flexible(
                         child: Text(
-                          'VocaBloom',
+                          'Storilex',
                           maxLines: 1,
                           overflow: TextOverflow.fade,
                           softWrap: false,
