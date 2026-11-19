@@ -1,5 +1,5 @@
-
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
@@ -15,7 +15,6 @@ import '../l10n.dart';
 import 'free_library_page.dart';
 import 'reader_page.dart';
 import 'review_page.dart';
-import 'journey_page.dart';
 import 'theme.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -31,10 +30,7 @@ class _LibraryPageState extends State<LibraryPage> {
   String? importStatus;
 
   Future<void> _import() async {
-    final res = await FilePicker.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: supportedExtensions,
-    );
+    final res = await FilePicker.pickFiles(type: FileType.custom, allowedExtensions: supportedExtensions);
     final path = res.isEmpty ? null : res.first.path;
     if (path == null) return;
     await importPath(path);
@@ -47,26 +43,17 @@ class _LibraryPageState extends State<LibraryPage> {
       importStatus = null;
     });
     try {
-      final ocr = await OcrEngine.best(
-        ai: AiService.fromSettings(widget.app.user),
-      );
-      final book = await importFile(
-        path,
-        ocr: ocr,
-        isWord: widget.app.isWord,
-        onProgress: (m) => setState(() => importStatus = m),
-      );
+      final ocr = await OcrEngine.best(ai: AiService.fromSettings(widget.app.user));
+      final book = await importFile(path, ocr: ocr, isWord: widget.app.isWord, onProgress: (m) => setState(() => importStatus = m));
       final id = widget.app.user.insertBook(book);
-      final words = book.chapters.fold<int>(
-        0,
-        (s, c) =>
-            s +
-            c.paragraphs.fold<int>(0, (s2, p) => s2 + p.$2.split(' ').length),
-      );
+      final words = book.chapters.fold<int>(0, (s, c) => s + c.paragraphs.fold<int>(0, (s2, p) => s2 + p.$2.split(' ').length));
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            L('"${book.title}" eklendi: ${book.chapters.length} bölüm, ~$words kelime.', '"${book.title}" added: ${book.chapters.length} chapters, ~$words words.'),
+            L(
+              '"${book.title}" eklendi: ${book.chapters.length} bölüm, ~$words kelime.',
+              '"${book.title}" added: ${book.chapters.length} chapters, ~$words words.',
+            ),
           ),
         ),
       );
@@ -93,9 +80,20 @@ class _LibraryPageState extends State<LibraryPage> {
       final svc = AiService.fromSettings(widget.app.user);
       final m = ScaffoldMessenger.of(context);
       if (svc == null) {
-        m.showSnackBar(SnackBar(content: Text(L('Önce Ayarlar\'dan bir yapay zekâ servisi bağlayın.', 'First connect an AI service in Settings.'))));
+        m.showSnackBar(
+          SnackBar(content: Text(L('Önce Ayarlar\'dan bir yapay zekâ servisi bağlayın.', 'First connect an AI service in Settings.'))),
+        );
       } else if (!await svc.reachable()) {
-        m.showSnackBar(SnackBar(content: Text(L('İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.', 'No internet. The analysis starts by itself when you are back online.'))));
+        m.showSnackBar(
+          SnackBar(
+            content: Text(
+              L(
+                'İnternet yok. Bağlantı gelince analiz kendiliğinden başlar.',
+                'No internet. The analysis starts by itself when you are back online.',
+              ),
+            ),
+          ),
+        );
       } else {
         widget.app.analyzer.tick(force: true, onlyBook: b.id);
       }
@@ -116,19 +114,32 @@ class _LibraryPageState extends State<LibraryPage> {
       } catch (e) {
         // No save dialog on this device: the text goes to the clipboard instead.
         await Clipboard.setData(ClipboardData(text: text));
-        m.showSnackBar(SnackBar(content: Text(L('Dosya kaydedilemedi; metin panoya kopyalandı.', 'Could not save a file; the text was copied to the clipboard.'))));
+        m.showSnackBar(
+          SnackBar(
+            content: Text(
+              L('Dosya kaydedilemedi; metin panoya kopyalandı.', 'Could not save a file; the text was copied to the clipboard.'),
+            ),
+          ),
+        );
       }
     } else if (v == 'copy') {
       await Clipboard.setData(ClipboardData(text: widget.app.user.bookText(b.id)));
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L('Kitabın tüm metni panoya kopyalandı.', 'The whole book text was copied to the clipboard.'))));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(L('Kitabın tüm metni panoya kopyalandı.', 'The whole book text was copied to the clipboard.'))),
+        );
       }
     } else if (v == 'delete') {
       final ok = await showDialog<bool>(
         context: context,
         builder: (c) => AlertDialog(
           title: Text(L('Kitap silinsin mi?', 'Delete this book?')),
-          content: Text(L('"${b.title}" kitaplıktan kaldırılacak. Kelime listen korunur.', '"${b.title}" will be removed from the library. Your word list is kept.')),
+          content: Text(
+            L(
+              '"${b.title}" kitaplıktan kaldırılacak. Kelime listen korunur.',
+              '"${b.title}" will be removed from the library. Your word list is kept.',
+            ),
+          ),
           actions: [
             TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L('Vazgeç', 'Cancel'))),
             FilledButton(onPressed: () => Navigator.pop(c, true), child: Text(L('Sil', 'Delete'))),
@@ -143,13 +154,21 @@ class _LibraryPageState extends State<LibraryPage> {
     }
   }
 
+  /// The book's cover picture, if it has one.
+  File? _cover(Book b) => widget.app.user.coverFile(b.id);
+
   Future<void> _openFreeLibrary() async {
     await Navigator.push(context, MaterialPageRoute(builder: (_) => FreeLibraryPage(app: widget.app)));
     setState(() {});
   }
 
   Future<void> _open(Book b) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (_) => ReaderPage(app: widget.app, book: b)));
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ReaderPage(app: widget.app, book: b),
+      ),
+    );
     setState(() {});
   }
 
@@ -161,7 +180,11 @@ class _LibraryPageState extends State<LibraryPage> {
     final learning = st.where((s) => s == WordStatus.learning).length;
     final learned = st.where((s) => s == WordStatus.learned).length;
     final width = MediaQuery.sizeOf(context).width;
-    final cols = width >= 1200 ? 3 : width >= 820 ? 2 : 1;
+    final cols = width >= 1200
+        ? 3
+        : width >= 820
+        ? 2
+        : 1;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: importing ? null : _import,
@@ -174,131 +197,84 @@ class _LibraryPageState extends State<LibraryPage> {
         bottom: false,
         child: ValueListenableBuilder(
           valueListenable: widget.app.analyzer.status,
-          builder: (context, progress, _) => CustomScrollView(slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              sliver: SliverToBoxAdapter(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  if (width < 720) ...[
-                    Row(children: [
-                      const BrandMark(),
-                      const SizedBox(width: 10),
-                      Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
-                    ]),
-                    const SizedBox(height: 18),
-                  ],
-                  Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium),
-                  const SizedBox(height: 4),
-                  Text(L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
-                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-                  const SizedBox(height: 18),
-                  _StatsStrip(books: books.length, learning: learning, learned: learned),
-                  const SizedBox(height: 12),
-                  // On a wide window both are in the side menu.
-                  if (width < 720) ...[
-                  _FreeLibraryBanner(onTap: _openFreeLibrary),
-                  const SizedBox(height: 12),
-                  _FreeLibraryBanner.link(
-                    onTap: () async {
-                      await JourneyPage.open(context, widget.app);
-                      if (mounted) setState(() {});
-                    },
-                    keyName: 'journey',
-                    icon: Icons.insights_rounded,
-                    title: L('İstatistiklerim', 'My stats'),
-                    subtitle: L('Okuma süren, kelimelerin ve gramer sonuçların', 'Your reading time, words and grammar results'),
-                  ),
-                  ],
-                  if (learning > 0) ...[
-                    const SizedBox(height: 12),
-                    ReviewBanner(app: widget.app),
-                  ],
-                  if (importStatus != null) ...[
-                    const SizedBox(height: 14),
-                    Panel(children: [
-                      Text(importStatus!, style: theme.textTheme.bodyMedium),
-                      const SizedBox(height: 10),
-                      const LinearProgressIndicator(),
-                    ]),
-                  ],
-                  if (books.isNotEmpty) ...[
-                    SectionLabel(L('Okumaya devam et', 'Continue reading'), padding: const EdgeInsets.fromLTRB(2, 24, 2, 10)),
-                    _ContinueCard(book: books.first, onTap: () => _open(books.first)),
-                    if (books.length > 1)
-                      SectionLabel(L('Tüm kitaplar', 'All books'), padding: const EdgeInsets.fromLTRB(2, 24, 2, 6)),
-                  ],
-                ]),
-              ),
-            ),
-            if (books.isEmpty)
-              SliverFillRemaining(hasScrollBody: false, child: _EmptyLibrary(onAdd: importing ? null : _import, onFree: _openFreeLibrary))
-            else if (books.length > 1)
+          builder: (context, progress, _) => CustomScrollView(
+            slivers: [
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 110),
-                sliver: SliverGrid(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: cols, mainAxisExtent: 128, crossAxisSpacing: 12, mainAxisSpacing: 2),
-                  delegate: SliverChildBuilderDelegate(
-                    (c, i) {
-                      final b = books[i + 1];
-                      return _BookCard(book: b, status: progress[b.id], onTap: () => _open(b), onMenu: (v) => _onMenu(b, v));
-                    },
-                    childCount: books.length - 1,
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                sliver: SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (width < 720) ...[
+                        Row(
+                          children: [
+                            const BrandMark(),
+                            const SizedBox(width: 10),
+                            Text('VocaBloom', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                          ],
+                        ),
+                        const SizedBox(height: 18),
+                      ],
+                      Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium),
+                      const SizedBox(height: 4),
+                      Text(
+                        L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                      ),
+                      const SizedBox(height: 18),
+                      _StatsStrip(books: books.length, learning: learning, learned: learned),
+                      const SizedBox(height: 12),
+                      if (learning > 0) ...[const SizedBox(height: 12), ReviewBanner(app: widget.app)],
+                      if (importStatus != null) ...[
+                        const SizedBox(height: 14),
+                        Panel(
+                          children: [
+                            Text(importStatus!, style: theme.textTheme.bodyMedium),
+                            const SizedBox(height: 10),
+                            const LinearProgressIndicator(),
+                          ],
+                        ),
+                      ],
+                      if (books.isNotEmpty) ...[
+                        SectionLabel(L('Okumaya devam et', 'Continue reading'), padding: const EdgeInsets.fromLTRB(2, 24, 2, 10)),
+                        _ContinueCard(book: books.first, cover: _cover(books.first), onTap: () => _open(books.first)),
+                        if (books.length > 1) SectionLabel(L('Tüm kitaplar', 'All books'), padding: const EdgeInsets.fromLTRB(2, 24, 2, 6)),
+                      ],
+                    ],
                   ),
                 ),
-              )
-            else
-              const SliverToBoxAdapter(child: SizedBox(height: 110)),
-          ]),
-        ),
-      ),
-    );
-  }
-}
-
-/// Opens the free library (stories and classics by level).
-class _FreeLibraryBanner extends StatelessWidget {
-  final VoidCallback onTap;
-  final String keyName, title, subtitle;
-  final IconData icon;
-  const _FreeLibraryBanner({required this.onTap})
-      : keyName = 'free-library',
-        icon = Icons.local_library_rounded,
-        title = '',
-        subtitle = '';
-  const _FreeLibraryBanner.link({required this.onTap, required this.keyName, required this.icon, required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    final t = Theme.of(context);
-    final cs = t.colorScheme;
-    return Material(
-      key: ValueKey(keyName),
-      color: cs.primaryContainer.withValues(alpha: t.brightness == Brightness.dark ? 0.35 : 0.6),
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
-          child: Row(children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(color: cs.primary.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(12)),
-              child: Icon(icon, color: cs.primary, size: 22),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(title.isEmpty ? L('Ücretsiz kütüphane', 'Free library') : title, style: t.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: 2),
-                Text(subtitle.isEmpty ? L('A1–C1 seviyelerinde telifsiz hikâye ve klasikler', 'Free stories and classics, levels A1–C1') : subtitle,
-                    style: t.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant)),
-              ]),
-            ),
-            Icon(Icons.chevron_right_rounded, color: cs.onSurfaceVariant),
-          ]),
+              ),
+              if (books.isEmpty)
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _EmptyLibrary(onAdd: importing ? null : _import, onFree: _openFreeLibrary),
+                )
+              else if (books.length > 1)
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 110),
+                  sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: cols,
+                      mainAxisExtent: 128,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 2,
+                    ),
+                    delegate: SliverChildBuilderDelegate((c, i) {
+                      final b = books[i + 1];
+                      return _BookCard(
+                        book: b,
+                        cover: _cover(b),
+                        status: progress[b.id],
+                        onTap: () => _open(b),
+                        onMenu: (v) => _onMenu(b, v),
+                      );
+                    }, childCount: books.length - 1),
+                  ),
+                )
+              else
+                const SliverToBoxAdapter(child: SizedBox(height: 110)),
+            ],
+          ),
         ),
       ),
     );
@@ -311,13 +287,27 @@ class _StatsStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      _StatCard(value: books, label: L('Kitap', 'Books'), icon: Icons.auto_stories_rounded, color: Brand.violet, keyName: 'stat-books'),
-      const SizedBox(width: 10),
-      _StatCard(value: learning, label: L('Öğreneceğim', 'To learn'), icon: Icons.bookmark_rounded, color: learningColor, keyName: 'stat-learning'),
-      const SizedBox(width: 10),
-      _StatCard(value: learned, label: L('Öğrendim', 'Learned'), icon: Icons.check_circle_rounded, color: learnedColor, keyName: 'stat-learned'),
-    ]);
+    return Row(
+      children: [
+        _StatCard(value: books, label: L('Kitap', 'Books'), icon: Icons.auto_stories_rounded, color: Brand.violet, keyName: 'stat-books'),
+        const SizedBox(width: 10),
+        _StatCard(
+          value: learning,
+          label: L('Öğreneceğim', 'To learn'),
+          icon: Icons.bookmark_rounded,
+          color: learningColor,
+          keyName: 'stat-learning',
+        ),
+        const SizedBox(width: 10),
+        _StatCard(
+          value: learned,
+          label: L('Öğrendim', 'Learned'),
+          icon: Icons.check_circle_rounded,
+          color: learnedColor,
+          keyName: 'stat-learned',
+        ),
+      ],
+    );
   }
 }
 
@@ -341,24 +331,42 @@ class _StatCard extends StatelessWidget {
           color: t.colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: t.colorScheme.outlineVariant),
-          boxShadow: [BoxShadow(color: color.withValues(alpha: dark ? 0.10 : 0.08), blurRadius: 14, offset: const Offset(0, 6))],
+          boxShadow: [
+            BoxShadow(
+              color: color.withValues(alpha: dark ? 0.10 : 0.08),
+              blurRadius: 14,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Container(
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(color: color.withValues(alpha: dark ? 0.22 : 0.13), shape: BoxShape.circle),
-            child: Icon(icon, size: 19, color: dark ? Color.lerp(color, Colors.white, 0.25) : color),
-          ),
-          const SizedBox(height: 8),
-          Text('$value', textAlign: TextAlign.center, style: t.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800, height: 1.1)),
-          const SizedBox(height: 2),
-          Text(label,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 34,
+              height: 34,
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: dark ? 0.22 : 0.13),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, size: 19, color: dark ? Color.lerp(color, Colors.white, 0.25) : color),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '$value',
+              textAlign: TextAlign.center,
+              style: t.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800, height: 1.1),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              label,
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: t.textTheme.labelMedium?.copyWith(color: t.colorScheme.onSurfaceVariant)),
-        ]),
+              style: t.textTheme.labelMedium?.copyWith(color: t.colorScheme.onSurfaceVariant),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -368,8 +376,9 @@ double _progress(Book b) => b.chapterCount <= 1 ? 0.0 : b.lastChapter / (b.chapt
 
 class _ContinueCard extends StatelessWidget {
   final Book book;
+  final File? cover;
   final VoidCallback onTap;
-  const _ContinueCard({required this.book, required this.onTap});
+  const _ContinueCard({required this.book, required this.cover, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -381,32 +390,52 @@ class _ContinueCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Row(children: [
-            BookCover(title: book.title, format: book.format, width: 70),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(book.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleLarge?.copyWith(fontSize: 19)),
-                if (book.author != null) ...[
-                  const SizedBox(height: 2),
-                  Text(book.author!, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-                ],
-                const SizedBox(height: 12),
-                Row(children: [
-                  Expanded(child: LinearProgressIndicator(value: pct)),
-                  const SizedBox(width: 10),
-                  Text(percent((pct * 100).round()), style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-                ]),
-                const SizedBox(height: 12),
-                FilledButton.icon(
-                  onPressed: onTap,
-                  style: FilledButton.styleFrom(minimumSize: const Size(0, 40)),
-                  icon: const Icon(Icons.auto_stories_rounded, size: 18),
-                  label: Text(L('Bölüm ${book.lastChapter + 1} · Devam et', 'Chapter ${book.lastChapter + 1} · Continue')),
+          child: Row(
+            children: [
+              BookCover(title: book.title, format: book.format, width: 70, image: cover),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      book.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleLarge?.copyWith(fontSize: 19),
+                    ),
+                    if (book.author != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        book.author!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                      ),
+                    ],
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(child: LinearProgressIndicator(value: pct)),
+                        const SizedBox(width: 10),
+                        Text(
+                          percent((pct * 100).round()),
+                          style: theme.textTheme.labelMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    FilledButton.icon(
+                      onPressed: onTap,
+                      style: FilledButton.styleFrom(minimumSize: const Size(0, 40)),
+                      icon: const Icon(Icons.auto_stories_rounded, size: 18),
+                      label: Text(L('Bölüm ${book.lastChapter + 1} · Devam et', 'Chapter ${book.lastChapter + 1} · Continue')),
+                    ),
+                  ],
                 ),
-              ]),
-            ),
-          ]),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -415,10 +444,11 @@ class _ContinueCard extends StatelessWidget {
 
 class _BookCard extends StatelessWidget {
   final Book book;
+  final File? cover;
   final String? status;
   final VoidCallback onTap;
   final ValueChanged<String> onMenu;
-  const _BookCard({required this.book, required this.status, required this.onTap, required this.onMenu});
+  const _BookCard({required this.book, required this.cover, required this.status, required this.onTap, required this.onMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -430,69 +460,89 @@ class _BookCard extends StatelessWidget {
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(14, 12, 4, 12),
-          child: Row(children: [
-            BookCover(title: b.title, format: b.format, width: 58),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(b.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleMedium),
-                const SizedBox(height: 2),
-                Text([if (b.author != null) b.author!, L('${b.chapterCount} bölüm', '${b.chapterCount} chapters')].join(' · '),
-                    maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodySmall),
-                const SizedBox(height: 8),
-                Row(children: [
-                  Expanded(child: LinearProgressIndicator(value: pct, minHeight: 5)),
-                  const SizedBox(width: 8),
-                  Text(percent((pct * 100).round()), style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-                ]),
-                if (status != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(status!, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.primary)),
-                  ),
-              ]),
-            ),
-            PopupMenuButton<String>(
-              icon: Icon(Icons.more_vert_rounded, color: theme.colorScheme.onSurfaceVariant),
-              onSelected: onMenu,
-              itemBuilder: (_) => [
-                PopupMenuItem(
-                  value: 'analyze',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.auto_awesome_outlined),
-                    title: Text(L('Çevrimiçi analiz et', 'Analyze online')),
-                    subtitle: Text(L('Çeviri + bölüm özetleri', 'Translation + chapter summaries')),
-                  ),
+          child: Row(
+            children: [
+              BookCover(title: b.title, format: b.format, width: 58, image: cover),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(b.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 2),
+                    Text(
+                      [if (b.author != null) b.author!, L('${b.chapterCount} bölüm', '${b.chapterCount} chapters')].join(' · '),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodySmall,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(child: LinearProgressIndicator(value: pct, minHeight: 5)),
+                        const SizedBox(width: 8),
+                        Text(
+                          percent((pct * 100).round()),
+                          style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                        ),
+                      ],
+                    ),
+                    if (status != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          status!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.primary),
+                        ),
+                      ),
+                  ],
                 ),
-                PopupMenuItem(
-                  value: 'export',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.save_alt_rounded),
-                    title: Text(L('Metni kaydet (.txt)', 'Save text (.txt)')),
-                    subtitle: Text(L('Kitabın uygulamadaki hali', 'The book as the app shows it')),
+              ),
+              PopupMenuButton<String>(
+                icon: Icon(Icons.more_vert_rounded, color: theme.colorScheme.onSurfaceVariant),
+                onSelected: onMenu,
+                itemBuilder: (_) => [
+                  PopupMenuItem(
+                    value: 'analyze',
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.auto_awesome_outlined),
+                      title: Text(L('Çevrimiçi analiz et', 'Analyze online')),
+                      subtitle: Text(L('Çeviri + bölüm özetleri', 'Translation + chapter summaries')),
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: 'copy',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.copy_all_rounded),
-                    title: Text(L('Metni kopyala', 'Copy text')),
+                  PopupMenuItem(
+                    value: 'export',
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.save_alt_rounded),
+                      title: Text(L('Metni kaydet (.txt)', 'Save text (.txt)')),
+                      subtitle: Text(L('Kitabın uygulamadaki hali', 'The book as the app shows it')),
+                    ),
                   ),
-                ),
-                PopupMenuItem(
-                  value: 'delete',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(Icons.delete_outline_rounded, color: theme.colorScheme.error),
-                    title: Text(L('Sil', 'Delete'), style: TextStyle(color: theme.colorScheme.error)),
+                  PopupMenuItem(
+                    value: 'copy',
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: const Icon(Icons.copy_all_rounded),
+                      title: Text(L('Metni kopyala', 'Copy text')),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ]),
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(Icons.delete_outline_rounded, color: theme.colorScheme.error),
+                      title: Text(L('Sil', 'Delete'), style: TextStyle(color: theme.colorScheme.error)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -509,33 +559,40 @@ class _EmptyLibrary extends StatelessWidget {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 24, 32, 120),
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
-          width: 88,
-          height: 88,
-          decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(28)),
-          child: Icon(Icons.menu_book_rounded, size: 42, color: theme.colorScheme.primary),
-        ),
-        const SizedBox(height: 20),
-        Text(L('İlk kitabını ekle', 'Add your first book'), style: theme.textTheme.titleLarge),
-        const SizedBox(height: 8),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 420),
-          child: Text(
-            L('EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF veya Markdown dosyası ekle. Kitap uygulamanın kendi formatına çevrilir ve cihazında saklanır.', 'Add an EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF or Markdown file. The book is converted to the app\'s own format and stored on your device.'),
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 88,
+            height: 88,
+            decoration: BoxDecoration(color: theme.colorScheme.primaryContainer, borderRadius: BorderRadius.circular(28)),
+            child: Icon(Icons.menu_book_rounded, size: 42, color: theme.colorScheme.primary),
           ),
-        ),
-        const SizedBox(height: 20),
-        FilledButton.icon(onPressed: onAdd, icon: const Icon(Icons.add_rounded), label: Text(L('Kitap seç', 'Choose a book'))),
-        const SizedBox(height: 10),
-        OutlinedButton.icon(
-          onPressed: onFree,
-          icon: const Icon(Icons.local_library_outlined),
-          label: Text(L('Ücretsiz hikâye ve kitaplar', 'Free stories and books')),
-        ),
-      ]),
+          const SizedBox(height: 20),
+          Text(L('İlk kitabını ekle', 'Add your first book'), style: theme.textTheme.titleLarge),
+          const SizedBox(height: 8),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 420),
+            child: Text(
+              L(
+                'EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF veya Markdown dosyası ekle. Kitap uygulamanın kendi formatına çevrilir ve cihazında saklanır.',
+                'Add an EPUB, PDF, TXT, DOCX, ODT, HTML, FB2, RTF or Markdown file. The book is converted to the app\'s own format and stored on your device.',
+              ),
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.5),
+            ),
+          ),
+          const SizedBox(height: 20),
+          FilledButton.icon(onPressed: onAdd, icon: const Icon(Icons.add_rounded), label: Text(L('Kitap seç', 'Choose a book'))),
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            key: const ValueKey('free-library'),
+            onPressed: onFree,
+            icon: const Icon(Icons.local_library_outlined),
+            label: Text(L('Ücretsiz hikâye ve kitaplar', 'Free stories and books')),
+          ),
+        ],
+      ),
     );
   }
 }

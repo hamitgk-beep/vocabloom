@@ -231,12 +231,68 @@ ImportedBook _fromPlain(String text, String title, String format, {required bool
   return _chunk(ImportedBook(title, null, format, chapters));
 }
 
-/// A text from the free library: Markdown made by tools/library/build_library.py,
-/// where `# Title` starts a chapter. [format] is shown on the cover (the level).
-ImportedBook importLibraryMarkdown(String md, String title, String? author, String format) {
-  final b = _fromPlain(md, title, format, markdown: true);
-  return ImportedBook(title, author, format, b.chapters);
+/// A text from the free library: Markdown made by tools/library/build_library.py.
+/// `# Title` starts a chapter, `### Title` is a heading inside it, a block
+/// that is only `![description](address "caption")` is a picture (with its
+/// caption when the book prints one), and a line `---` turns the page: a
+/// picture book keeps its pages, one picture and its text on each.
+/// [pictures] has the pictures' files by address; a picture that is not
+/// there is left out with its caption. [format] is shown on the cover (the level).
+ImportedBook importLibraryMarkdown(String md, String title, String? author, String format,
+    {Map<String, List<int>> pictures = const {}}) {
+  final images = <String, List<int>>{}, names = <String, String>{};
+  final paged = RegExp(r'^---\s*$', multiLine: true).hasMatch(md);
+  final chapters = <ImportedChapter>[];
+  var cur = ImportedChapter('', []);
+  var page = 0;
+  final picture = RegExp(r'^!\[([^\]]*)\]\(\s*(\S+?)(?:\s+"([^"]*)")?\s*\)$');
+  for (var b in md.replaceAll('\r\n', '\n').split(RegExp(r'\n\s*\n'))) {
+    b = b.trim();
+    if (b.isEmpty) continue;
+    Map<String, Object?>? meta() => paged ? {'pg': page} : null;
+    if (RegExp(r'^---$').hasMatch(b)) {
+      if (cur.paragraphs.isNotEmpty) page++;
+      continue;
+    }
+    final h = RegExp(r'^(#{1,6})\s+(.*)$').firstMatch(b);
+    if (h != null && h.group(1)!.length <= 2) {
+      if (cur.paragraphs.isNotEmpty) chapters.add(cur);
+      cur = ImportedChapter(_clean(h.group(2)!), []);
+      cur.add('h', _clean(h.group(2)!), meta());
+      continue;
+    }
+    if (h != null) {
+      cur.add('h', _clean(h.group(2)!), meta());
+      continue;
+    }
+    final pic = picture.firstMatch(b);
+    if (pic != null) {
+      final bytes = pictures[pic.group(2)!];
+      final name = keepPicture(images, names, pic.group(2)!, bytes);
+      if (name == null) continue;
+      final m = <String, Object?>{...?meta()};
+      final info = im.findDecoderForData(Uint8List.fromList(bytes!))?.startDecode(Uint8List.fromList(bytes));
+      if (info != null && info.height > 0) {
+        m['ar'] = (info.width / info.height * 1000).round() / 1000;
+        // A small drawing (an ornament, a vignette) stays small.
+        m['wr'] = (info.width / 640).clamp(0.3, 1.0);
+      }
+      cur.add('i', name, m);
+      final cap = _clean(pic.group(3) ?? '');
+      if (cap.isNotEmpty) cur.add('c', cap, {...?meta(), 'al': 'c'});
+      continue;
+    }
+    final t = _clean(b.replaceAllMapped(RegExp(r'\[([^\]]*)\]\([^)]*\)'), (m) => m.group(1)!).replaceAll(RegExp(r'[*_`>]+'), ''));
+    if (t.isNotEmpty) cur.add('p', t, meta());
+  }
+  if (cur.paragraphs.isNotEmpty) chapters.add(cur);
+  return _chunk(ImportedBook(title, author, format, chapters, images));
 }
+
+/// The addresses of the pictures in a free-library text, in order.
+List<String> libraryPictures(String md) => [
+  for (final m in RegExp(r'^!\[[^\]]*\]\(\s*(\S+?)(?:\s+"[^"]*")?\s*\)\s*$', multiLine: true).allMatches(md)) m.group(1)!,
+];
 
 /// Splits very long chapters so the reader stays fast; names unnamed chapters.
 ImportedBook _chunk(ImportedBook b, {int size = 80}) {
@@ -247,14 +303,15 @@ ImportedBook _chunk(ImportedBook b, {int size = 80}) {
       continue;
     }
     for (var i = 0; i < c.paragraphs.length; i += size) {
-      final part = c.paragraphs.sublist(i, (i + size).clamp(0, c.paragraphs.length));
-      out.add(ImportedChapter(c.title.isEmpty ? '' : '${c.title} (${i ~/ size + 1})', part));
+      final end = (i + size).clamp(0, c.paragraphs.length);
+      final part = c.paragraphs.sublist(i, end);
+      out.add(ImportedChapter(c.title.isEmpty ? '' : '${c.title} (${i ~/ size + 1})', part, [for (var k = i; k < end; k++) c.metaAt(k)]));
     }
   }
   for (var i = 0; i < out.length; i++) {
     if (out[i].title.isEmpty) {
       final h = out[i].paragraphs.where((x) => x.$1 == 'h').map((x) => x.$2).firstOrNull;
-      out[i] = ImportedChapter(h ?? L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), out[i].paragraphs);
+      out[i] = ImportedChapter(h ?? L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), out[i].paragraphs, out[i].meta);
     }
   }
   return ImportedBook(b.title, b.author, b.format, out, b.images);

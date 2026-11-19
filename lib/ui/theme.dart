@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 /// VocaBloom design system: colors, type and component styles in one place.
@@ -294,11 +296,31 @@ class BookCover extends StatelessWidget {
   final String format;
   final double width;
   final List<Color>? colors;
-  const BookCover({super.key, required this.title, required this.format, this.width = 56, this.colors});
+
+  /// The book's own cover picture, shown instead of the drawn cover.
+  final File? image;
+  const BookCover({super.key, required this.title, required this.format, this.width = 56, this.colors, this.image});
 
   @override
   Widget build(BuildContext context) {
     final c = colors ?? Brand.coverFor(title);
+    if (image != null) {
+      return Container(
+        width: width,
+        height: width * 1.42,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 10, offset: const Offset(0, 4))],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Image.file(
+          image!,
+          fit: BoxFit.cover,
+          cacheWidth: (width * 3).round(),
+          errorBuilder: (_, _, _) => BookCover(title: title, format: format, width: width, colors: colors),
+        ),
+      );
+    }
     final initials = title.trim().isEmpty ? '?' : title.trim().characters.first.toUpperCase();
     return Container(
       width: width,

@@ -26,6 +26,7 @@ import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
+import 'package:kelime_okur/data/free_library.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
@@ -332,7 +333,7 @@ Future<void> allScreens(WidgetTester tester) async {
   app.user.setSetting('ai_tab', '1');
   await tester.pumpWidget(shell(HomePage(app: app)));
   await capture(tester, 'tab_library');
-  final names = ['library', 'my_words', 'dictionary', 'grammar', 'ai', 'settings'];
+  final names = ['library', 'my_words', 'dictionary', 'grammar', 'free_library', 'stats', 'ai', 'settings'];
   for (var i = 1; i < names.length && find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty; i++) {
     await tester.tap(find.byKey(ValueKey('nav_$i')));
     await capture(tester, 'tab_${names[i]}');
@@ -594,6 +595,10 @@ void main() {
       for (final t in [...info.trFreeDict, for (final s in info.senses) ...s.tr]) {
         content.addAll([t, ...t.split(',').map((x) => x.trim())]);
       }
+    }
+    // Titles and authors of the free library's books.
+    for (final it in (await FreeLibrary.load()).items) {
+      content.addAll([it.title, if (it.author != null) it.author!]);
     }
     // The English name of a grammar structure is shown under its Turkish title.
     for (final t in lessons) {

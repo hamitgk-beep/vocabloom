@@ -8,10 +8,12 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart' as im;
 import 'package:kelime_okur/ai/key_ai.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/free_library.dart';
+import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/ui/free_library_page.dart';
@@ -24,6 +26,21 @@ late AppState app;
 final shots = Platform.environment['LIB_SHOTS'];
 
 Future<String> localBook(LibraryItem it) async => utf8.decode(gzip.decode(File('library/books/${it.id}.md.gz').readAsBytesSync()));
+
+/// A Gutenberg book's pictures are in library/images; the stories' pictures
+/// come from a local pb-imagebank clone when PB_IMAGEBANK names one, and are
+/// a plain picture otherwise (the tests run offline).
+Future<List<int>?> localPicture(String address) async {
+  if (address.startsWith('lib:')) return File('library/images/${address.substring(4)}').readAsBytesSync();
+  final bank = Platform.environment['PB_IMAGEBANK'];
+  if (bank != null) {
+    final f = File('$bank/medium/${address.substring(3)}');
+    if (f.existsSync()) return f.readAsBytesSync();
+  }
+  final img = im.Image(width: 480, height: 400);
+  im.fill(img, color: im.ColorRgb8(200, 220, 240));
+  return im.encodeJpg(img);
+}
 
 Future<void> loadFonts() async {
   Future<void> family(String name, List<String> files) async {
@@ -75,6 +92,7 @@ void main() {
     final u = UserDb.open(Directory.systemTemp.createTempSync('vb_lib'));
     app = AppState(d, u)..localAi = KeyAi(u);
     FreeLibrary.debugBookText = localBook;
+    FreeLibrary.debugPicture = localPicture;
     lib = await FreeLibrary.load();
     if (shots != null) await loadFonts();
   });
@@ -86,7 +104,11 @@ void main() {
       expect(lib.items.where((it) => it.level == l), isNotEmpty, reason: l);
     }
     expect(lib.items.where((it) => !it.isBook).length, greaterThan(250));
-    expect(lib.items.where((it) => it.isBook).length, greaterThanOrEqualTo(25));
+    expect(lib.items.where((it) => it.isBook).length, greaterThanOrEqualTo(80));
+    // Every level has books, A1 too.
+    for (final l in libraryLevels) {
+      expect(lib.items.where((it) => it.isBook && it.level == l), isNotEmpty, reason: l);
+    }
     expect(lib.items.map((it) => it.id).toSet().length, lib.items.length);
     for (final it in lib.items) {
       // Only licences that allow use in a free app with ads.
@@ -94,6 +116,12 @@ void main() {
       if (it.isBook) {
         expect(File('library/books/${it.id}.md.gz').existsSync(), isTrue, reason: it.id);
         expect(it.chapters, greaterThan(0), reason: it.id);
+        // Every picture the text names is in library/images.
+        final pics = libraryPictures(await localBook(it));
+        expect(pics.length, it.pics, reason: it.id);
+        for (final a in pics) {
+          expect(File('library/images/${a.substring(4)}').existsSync(), isTrue, reason: a);
+        }
       }
     }
   });
@@ -128,7 +156,7 @@ void main() {
     await tester.pump();
     expect(find.byKey(const ValueKey('free-library')), findsOneWidget);
     await shot(tester, 'library_empty');
-    await tester.tap(find.text('Ücretsiz kütüphane'));
+    await tester.tap(find.byKey(const ValueKey('free-library')));
     await tester.pumpAndSettle();
     expect(find.byType(FreeLibraryPage), findsOneWidget);
     await tester.pump();
@@ -139,6 +167,8 @@ void main() {
     expect(find.textContaining('A1 · Başlangıç'), findsOneWidget);
     await shot(tester, 'free_library_a1');
     final first = lib.items.firstWhere((it) => it.level == 'A1' && !it.isBook);
+    await tester.ensureVisible(find.byKey(ValueKey('lib-${first.id}')));
+    await tester.pump();
     await tester.tap(find.byKey(ValueKey('lib-${first.id}')));
     for (var i = 0; i < 20 && find.byType(ReaderPage).evaluate().isEmpty; i++) {
       await tester.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
@@ -175,5 +205,51 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Kamu malı (telifsiz)'), findsOneWidget);
     await shot(tester, 'free_library_info_dark');
+  });
+
+  test('a picture book keeps its pages and pictures; an illustrated classic its illustrations', () async {
+    final story = lib.items.firstWhere((it) => it.id == 'pb-0002'); // Fat King Thin Dog
+    expect(story.pics, 8);
+    final s = await lib.fetch(story);
+    final ch = s.chapters.single;
+    final kinds = ch.paragraphs.map((p) => p.$1).toList();
+    // The title and the cover, then a picture on each page with its text.
+    expect(kinds.take(3), ['h', 'i', 'i']);
+    expect(kinds.where((k) => k == 'i').length, 8);
+    expect(s.images.length, 8);
+    expect(ch.metaAt(1)?['pg'], 0);
+    expect(ch.metaAt(2)?['pg'], 1);
+    expect(ch.paragraphs[3].$2, 'This is a fat king.');
+    expect(ch.metaAt(3)?['pg'], 1);
+    expect(ch.paragraphs.last.$2, contains('CC BY 4.0'));
+    expect(ch.paragraphs.last.$2, isNot(contains('not included')));
+
+    final rabbit = lib.items.firstWhere((it) => it.id == 'pg-14838');
+    expect(rabbit.pics, greaterThan(20));
+    final b = await lib.fetch(rabbit);
+    final ps = b.chapters.expand((c) => c.paragraphs).toList();
+    expect(ps.where((p) => p.$1 == 'i').length, rabbit.pics);
+    expect(b.images.length, rabbit.pics);
+    // The pictures sit between the paragraphs of the story, not in a heap.
+    final firstText = ps.indexWhere((p) => p.$1 == 'p' && p.$2.startsWith('Once upon a time'));
+    expect(firstText, greaterThan(0));
+    expect(ps.sublist(firstText).where((p) => p.$1 == 'i').length, greaterThan(15));
+  });
+
+  test('a story added before the pictures can be replaced by the illustrated one', () async {
+    final it = lib.items.firstWhere((x) => x.id == 'pb-0003');
+    final u = UserDb.open(Directory.systemTemp.createTempSync('vb_lib_old'));
+    // As the library added it before: text only.
+    final plain = await lib.fetch(it);
+    final textOnly = ImportedBook(plain.title, plain.author, plain.format, [
+      for (final c in plain.chapters) ImportedChapter(c.title, c.paragraphs.where((p) => p.$1 != 'i').toList()),
+    ]);
+    final old = u.insertBook(textOnly, source: it.id);
+    expect(lacksPictures(u, it), isTrue);
+    final b = await replaceLibraryItem(u, lib, it);
+    expect(b.id, isNot(old));
+    expect(u.books().length, 1);
+    expect(u.pictureCount(b.id), it.pics);
+    expect(lacksPictures(u, it), isFalse);
   });
 }

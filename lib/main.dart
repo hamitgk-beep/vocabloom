@@ -129,7 +129,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int tab = 0;
-  bool _wasWide = false;
 
   Timer? _updateTimer;
 
@@ -166,16 +165,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final wide = MediaQuery.sizeOf(context).width >= 720;
-    // The free library and the journey get their own place in the side menu;
-    // on a phone they stay as cards on the library page (the bar has no room).
+    // The free library and the journey have their own place in the side menu,
+    // and in the phone's bottom bar (which scrolls sideways when it is full).
     final pages = [
       LibraryPage(app: widget.app),
       WordsPage(app: widget.app),
       DictionaryPage(app: widget.app),
       GrammarPage(app: widget.app),
       // Built only while shown: the catalog loads when opened, the numbers are current.
-      if (wide) tab == 4 ? FreeLibraryPage(app: widget.app) : const SizedBox.shrink(),
-      if (wide) tab == 5 ? JourneyPage(app: widget.app) : const SizedBox.shrink(),
+      tab == 4 ? FreeLibraryPage(app: widget.app) : const SizedBox.shrink(),
+      tab == 5 ? JourneyPage(app: widget.app) : const SizedBox.shrink(),
       SettingsPage(app: widget.app),
     ];
     final dests = [
@@ -183,19 +182,10 @@ class _HomePageState extends State<HomePage> {
       (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimeler', 'My words')),
       (Icons.search_rounded, Icons.manage_search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
-      if (wide) (Icons.local_library_outlined, Icons.local_library_rounded, L('Ücretsiz kütüphane', 'Free library')),
-      if (wide) (Icons.insights_outlined, Icons.insights_rounded, L('İstatistiklerim', 'My stats')),
+      (Icons.local_library_outlined, Icons.local_library_rounded, L('Ücretsiz kütüphane', 'Free library')),
+      (Icons.insights_outlined, Icons.insights_rounded, L('İstatistiklerim', 'My stats')),
       (Icons.tune_outlined, Icons.tune_rounded, L('Ayarlar', 'Settings')),
     ];
-    // Settings is last in both layouts: keep it selected when the window changes width.
-    if (wide != _wasWide) {
-      if (tab == (_wasWide ? 6 : 4)) {
-        tab = wide ? 6 : 4;
-      } else if (!wide && tab >= 4) {
-        tab = 0;
-      }
-      _wasWide = wide;
-    }
     if (tab >= pages.length) tab = pages.length - 1;
     final body = IndexedStack(index: tab, children: pages);
     if (wide) {
@@ -216,7 +206,19 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       body: body,
-      bottomNavigationBar: _BottomNav(selected: tab, items: dests, onSelect: (i) => setState(() => tab = i)),
+      bottomNavigationBar: _BottomNav(
+        selected: tab,
+        // Short names where the bar is narrow.
+        items: [
+          for (final (i, d) in dests.indexed)
+            i == 4
+                ? (d.$1, d.$2, L('Ücretsiz', 'Free books'))
+                : i == 5
+                ? (d.$1, d.$2, L('İstatistik', 'Stats'))
+                : d,
+        ],
+        onSelect: (i) => setState(() => tab = i),
+      ),
     );
   }
 }
@@ -324,7 +326,10 @@ class _BottomNav extends StatelessWidget {
     // One font size for every label: the largest at which the longest label
     // still fits its tab, so no label looks smaller than its neighbours.
     final base = theme.textTheme.labelSmall?.copyWith(fontSize: 11.5, letterSpacing: 0, fontWeight: FontWeight.w700) ?? const TextStyle(fontSize: 11.5);
-    final slot = mq.size.width / items.length - 6;
+    // Each tab gets at least [minSlot]; when they do not all fit, the bar scrolls sideways.
+    const minSlot = 78.0;
+    final scrolls = mq.size.width / items.length < minSlot;
+    final slot = (scrolls ? minSlot : mq.size.width / items.length) - 6;
     var widest = 0.0;
     for (final d in items) {
       final tp = TextPainter(
@@ -348,10 +353,13 @@ class _BottomNav extends StatelessWidget {
           data: mq.copyWith(textScaler: scaler),
           child: SizedBox(
             height: 66,
-            child: Row(
+            child: _BarRow(
+              scrolls: scrolls,
+              width: minSlot,
+              selected: selected,
               children: [
                 for (final (i, d) in items.indexed)
-                  Expanded(
+                  KeyedSubtree(
                     key: ValueKey('nav_$i'),
                     child: Semantics(
                       selected: i == selected,
@@ -401,6 +409,57 @@ class _BottomNav extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// The tabs of the bottom bar: side by side over the whole width, or in a
+/// row that scrolls sideways (each [width] wide) when they do not fit. The
+/// selected tab is scrolled into view.
+class _BarRow extends StatefulWidget {
+  final bool scrolls;
+  final double width;
+  final int selected;
+  final List<Widget> children;
+  const _BarRow({required this.scrolls, required this.width, required this.selected, required this.children});
+
+  @override
+  State<_BarRow> createState() => _BarRowState();
+}
+
+class _BarRowState extends State<_BarRow> {
+  final _scroll = ScrollController();
+
+  @override
+  void didUpdateWidget(_BarRow old) {
+    super.didUpdateWidget(old);
+    if (widget.scrolls && old.selected != widget.selected) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_scroll.hasClients) return;
+        final view = _scroll.position.viewportDimension;
+        final target = (widget.selected + 0.5) * widget.width - view / 2;
+        _scroll.animateTo(
+          target.clamp(0, _scroll.position.maxScrollExtent),
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOut,
+        );
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.scrolls) return Row(children: [for (final c in widget.children) Expanded(child: c)]);
+    return ListView(
+      controller: _scroll,
+      scrollDirection: Axis.horizontal,
+      children: [for (final c in widget.children) SizedBox(width: widget.width, child: c)],
     );
   }
 }
