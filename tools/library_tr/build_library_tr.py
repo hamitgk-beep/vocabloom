@@ -273,12 +273,13 @@ def main():
     for title, wt in main_pages.items():
         a = lower(header_author(wt))
         linked = {lower(m) for m in re.findall(r'\[\[\s*(?:Yazar|Author)\s*:\s*([^|\]]+)', wt)}
+        cats = [lower(c) for c in re.findall(r'\[\[\s*(?:Kategori|Category)\s*:\s*([^|\]]+)', wt)]
         hit = None
         for name, k in keys.items():
-            if (a and (k in a or a in k and len(a) > 5)) or k in linked:
+            # "Ömer Seyfettin hikayeleri" names the author too.
+            if (a and (k in a or a in k and len(a) > 5)) or k in linked or (not a and any(k in c for c in cats)):
                 hit = name
                 break
-        cats = [lower(c) for c in re.findall(r'\[\[\s*(?:Kategori|Category)\s*:\s*([^|\]]+)', wt)]
         if hit:
             by_author.setdefault(hit, []).append(title)
         elif any(lower(f) in a or lower(f) in lower(title) for f in FOLK) or (not a and any(
@@ -339,20 +340,40 @@ def main():
             report.append(f'- {t}: {r}')
             n += r.startswith('ok')
 
-    # Levels: the easiest quarter B1 (the shortest, plainest anecdotes A2),
-    # the hardest quarter C1, the rest B2. These are literary texts for adults.
+    # Levels: the easier half B2, the harder half C1 (literary texts for adults).
     items.sort(key=lambda c: c['_score'])
     n = len(items)
     for i, c in enumerate(items):
         q = i / max(1, n - 1)
-        c['level'] = 'B1' if q < 0.25 else ('C1' if q >= 0.75 else 'B2')
-        if c['words'] < 600 and c['_score'] < (items[n // 4]['_score'] if n else 0):
-            c['level'] = 'A2'
+        # Classics in older Turkish: never easier than B2.
+        c['level'] = 'B2' if q < 0.5 else 'C1'
+    # Graded stories written for the app (A1 to B1): Wikisource has almost no
+    # easy prose, and these belong to the app, so there is no copyright question.
+    import glob
+    import os
+    for path in sorted(glob.glob(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'original', '*.md'))):
+        raw = open(path, encoding='utf-8').read()
+        m = re.match(r'level:\s*(\w\d)\s*\n', raw)
+        md = raw[m.end():].lstrip() if m else raw
+        title = re.match(r'#\s*(.+)', md).group(1).strip()
+        body = re.sub(r'^#.*$', '', md, flags=re.M)
+        sid = 'tro-' + os.path.basename(path)[:-3]
+        texts[sid] = md
+        items.append({
+            'id': sid, 'kind': 'story', 'title': title, 'author': None, 'level': m.group(1) if m else 'A2',
+            'words': len(re.findall(r'\w+', body)), 'license': 'Storilex',
+            'credit': 'Uygulama için yazılmış özgün öykü / An original story written for the app',
+            'source': 'https://github.com/hamitgk-beep/vocabloom/tree/main/tools/library_tr/original', 'pics': 0, 'lang': 'tr',
+        })
+        n += 1
+        report.append(f'{items[-1]["level"]} {items[-1]["words"]:5} original: {title}')
     levels = ['A1', 'A2', 'B1', 'B2', 'C1']
     items.sort(key=lambda c: (levels.index(c['level']), c['words']))
     report.insert(0, f'# Turkish library: {n} texts\n')
     report.insert(1, 'levels: ' + json.dumps({l: sum(c["level"] == l for c in items) for l in levels}) + '\n')
     for c in items:
+        if '_score' not in c:
+            continue
         report.append(f'{c["level"]} {c["words"]:5} rare={c["_rare"]:.1f} sl={c["_msl"]:.1f} {c["title"]} ({c["author"] or "folk"})')
         for k in ('_score', '_rare', '_msl'):
             c.pop(k)
