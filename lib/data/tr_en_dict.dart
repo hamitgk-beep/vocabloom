@@ -66,8 +66,47 @@ class TrEnDict {
         if (r.isNotEmpty) return r;
       }
     }
+    // Verb forms the tables leave out ("olduğumu", "yaptığını", "alabilir"):
+    // cut a verb ending and look for the infinitive (ol -> olmak).
+    for (final end in _verbEndings) {
+      if (w.length >= end.length + 2 && w.endsWith(end)) {
+        var stem = w.substring(0, w.length - end.length);
+        for (final st in {stem, if (stem.endsWith('d')) '${stem.substring(0, stem.length - 1)}t'}) {
+          for (final inf in ['${st}mak', '${st}mek']) {
+            if (_has(inf)) return [inf];
+          }
+        }
+      }
+    }
     return const [];
   }
+
+  static final List<String> _verbEndings = () {
+    final out = <String>{};
+    const tails = ['', 'ı', 'i', 'u', 'ü', 'ını', 'ini', 'unu', 'ünü', 'ımı', 'imi', 'umu', 'ümü', 'ımızı', 'imizi', 'umuzu', 'ümüzü',
+      'ında', 'inde', 'unda', 'ünde', 'ına', 'ine', 'una', 'üne', 'ından', 'inden', 'undan', 'ünden', 'ım', 'im', 'um', 'üm', 'ımız', 'imiz', 'umuz', 'ümüz'];
+    for (final b in ['dığ', 'diğ', 'duğ', 'düğ', 'tığ', 'tiğ', 'tuğ', 'tüğ', 'acağ', 'eceğ', 'yacağ', 'yeceğ']) {
+      for (final t in tails) {
+        if (t.isNotEmpty) out.add('$b$t');
+      }
+    }
+    for (final b in ['ma', 'me']) {
+      for (final t in ['sı', 'si', 'sını', 'sini', 'sında', 'sinde', 'sına', 'sine', 'yı', 'yi', 'dan', 'den', 'k', 'z', 'm', 'n', 'nız', 'niz', 'mız', 'miz']) {
+        out.add('$b$t');
+      }
+    }
+    out.addAll([
+      'abilir', 'ebilir', 'abilirim', 'ebilirim', 'abilirsin', 'ebilirsin', 'abiliriz', 'ebiliriz', 'abilirler', 'ebilirler', 'yabilir', 'yebilir',
+      'acak', 'ecek', 'yacak', 'yecek', 'arak', 'erek', 'yarak', 'yerek', 'ınca', 'ince', 'unca', 'ünce', 'yınca', 'yince',
+      'mış', 'miş', 'muş', 'müş', 'mıştı', 'mişti', 'muştu', 'müştü', 'dı', 'di', 'du', 'dü', 'tı', 'ti', 'tu', 'tü',
+      'dım', 'dim', 'dum', 'düm', 'tım', 'tim', 'tum', 'tüm', 'dın', 'din', 'dun', 'dün', 'dık', 'dik', 'duk', 'dük', 'dılar', 'diler', 'dular', 'düler',
+      'ıyor', 'iyor', 'uyor', 'üyor', 'yor', 'ıyorum', 'iyorum', 'uyorum', 'üyorum', 'yorum', 'ıyorsun', 'iyorsun', 'uyorsun', 'üyorsun', 'yorsun',
+      'ıyordu', 'iyordu', 'uyordu', 'üyordu', 'yordu', 'ıyoruz', 'iyoruz', 'uyoruz', 'üyoruz', 'yoruz', 'ıyorlar', 'iyorlar', 'uyorlar', 'üyorlar', 'yorlar',
+      'malı', 'meli', 'malıyım', 'meliyim', 'malısın', 'melisin', 'malıyız', 'meliyiz', 'sa', 'se', 'saydı', 'seydi', 'alım', 'elim', 'ayım', 'eyim',
+    ]);
+    final list = out.toList()..sort((a, b) => b.length.compareTo(a.length));
+    return list;
+  }();
 
   // Clitics and endings that are written on the word but are not in the
   // inflection tables, longest first.

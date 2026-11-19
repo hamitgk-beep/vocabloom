@@ -164,7 +164,7 @@ class _TrWordPanelState extends State<TrWordPanel> {
             ]),
           ));
         }
-        children.add(Text('Tatoeba (CC BY 2.0 FR)', style: TextStyle(fontSize: 11.5, color: theme.hintColor)));
+        children.add(Text(L('Örnekler: Tatoeba (CC BY 2.0 FR)', 'Examples: Tatoeba (CC BY 2.0 FR)'), style: TextStyle(fontSize: 11.5, color: theme.hintColor)));
       }
     }
 
