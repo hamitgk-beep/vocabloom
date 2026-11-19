@@ -18,6 +18,7 @@ import gzip
 import json
 import re
 import sys
+from collections import Counter
 import urllib.parse
 
 DUMP_NOTE = 'trwikisource-latest-pages-articles.xml(.bz2) from dumps.wikimedia.org'
@@ -53,8 +54,8 @@ def read_dump(path):
     import bz2
     import xml.etree.ElementTree as ET
     opener = bz2.open if path.endswith('.bz2') else open
-    main, pages = {}, {}
-    ns_page = set()
+    main, pages, authors = {}, {}, {}
+    ns_page, ns_author = set(), set()
     with opener(path, 'rb') as f:
         title = ns = None
         for ev, el in ET.iterparse(f, events=('end',)):
@@ -62,6 +63,8 @@ def read_dump(path):
             if tag == 'namespace':
                 if (el.text or '').strip() in ('Sayfa', 'Page'):
                     ns_page.add(el.get('key'))
+                if (el.text or '').strip() in ('Yazar', 'Author'):
+                    ns_author.add(el.get('key'))
             elif tag == 'title':
                 title = el.text
             elif tag == 'ns':
@@ -72,9 +75,21 @@ def read_dump(path):
                     main[title] = text
                 elif ns in ns_page:
                     pages[title.split(':', 1)[1]] = text
+                elif ns in ns_author:
+                    authors[title.split(':', 1)[1]] = text
             elif tag == 'page':
                 el.clear()
-    return main, pages
+    return main, pages, authors
+
+
+def death_year(wt):
+    """The year an author died, from their Wikisource page, or None."""
+    for rx in (r'ölüm[ _]?(?:yılı|tarihi|yıl)?\s*=\s*\[*(\d{3,4})', r'(?:deathyear|death_year|death)\s*=\s*\[*(\d{3,4})',
+               r'Kategori:(\d{3,4})[^\]]*(?:ölen|vefat)', r'\(\s*\d{3,4}\s*[-–—]\s*(\d{3,4})\s*\)'):
+        m = re.search(rx, wt, re.I)
+        if m:
+            return int(m.group(1))
+    return None
 
 
 _KEEP = {'center', 'c', 'ortala', 'büyük', 'küçük', 'kalın', 'smaller', 'larger', 'big', 'small', 'sc', 'nowrap', 'ortalı', 'blok ortala'}
@@ -238,22 +253,37 @@ def markdown(title, paras):
 def main():
     load_ranks(sys.argv[1])
     out_dir = sys.argv[2]
-    main_pages, page_ns = read_dump(sys.argv[3])
+    main_pages, page_ns, author_pages = read_dump(sys.argv[3])
     items, texts = [], {}
-    report = [f'dump: {len(main_pages)} main pages, {len(page_ns)} scan pages']
+    report = [f'dump: {len(main_pages)} main pages, {len(page_ns)} scan pages, {len(author_pages)} author pages']
     seen_text = set()
-    by_author = {}
+    # Every author with a known year of death: from the list above, otherwise
+    # from their Wikisource author page.
     allowed = {a: d for a, d in AUTHORS}
+    for name, wt in author_pages.items():
+        if name not in allowed:
+            d = death_year(wt)
+            if d:
+                allowed[name] = d
+    report.append(f'authors with a known year of death: {len(allowed)}, public domain: {sum(d <= LAST_DEATH for d in allowed.values())}')
+    keys = {name: lower(name) for name in allowed}
+    by_author = {}
+    unknown = Counter()
     for title, wt in main_pages.items():
-        a = header_author(wt)
-        al = lower(a)
-        for name, died in AUTHORS:
-            if lower(name.split()[-1]) in al and lower(name.split()[0]) in al:
-                by_author.setdefault(name, []).append(title)
+        a = lower(header_author(wt))
+        linked = {lower(m) for m in re.findall(r'\[\[\s*(?:Yazar|Author)\s*:\s*([^|\]]+)', wt)}
+        hit = None
+        for name, k in keys.items():
+            if (a and (k in a or a in k and len(a) > 5)) or k in linked:
+                hit = name
                 break
+        if hit:
+            by_author.setdefault(hit, []).append(title)
+        elif any(lower(f) in a or lower(f) in lower(title) for f in FOLK):
+            by_author.setdefault(FOLK[0], []).append(title)
         else:
-            if any(lower(f) in al or lower(f) in lower(title) for f in FOLK):
-                by_author.setdefault(FOLK[0], []).append(title)
+            unknown[a or '(no author)'] += 1
+    report.append('most common authors with no year of death: ' + ', '.join(f'{k} {n}' for k, n in unknown.most_common(40)))
 
     def take(t, author, folk=False):
         paras = clean(wikitext_paras(main_pages[t], page_ns), t)
@@ -286,7 +316,8 @@ def main():
         texts[sid] = markdown(display, paras)
         return f'ok {total} words, rare {rare:.1f}%, sentence {msl:.1f}'
 
-    for name in [a for a, _ in AUTHORS] + FOLK:
+    order = sorted(by_author, key=lambda n: -len(by_author[n]))
+    for name in order:
         died = allowed.get(name)
         titles = sorted(by_author.get(name, []))
         if died is not None and died > LAST_DEATH:
