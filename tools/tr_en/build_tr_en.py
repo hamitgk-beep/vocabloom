@@ -119,10 +119,6 @@ for sid, tr, en in pairs:
     for tok in set(re.findall(r"[a-zçğıöşüâîû]+", low(tr))):
         r = resolve(tok)
         if r and len(examples[r[0]]) < 3:
-            # Skip near copies of an example already chosen ("O gülümsedi ..." / "Tom gülümsedi ...").
-            ws = set(re.findall(r"[a-zçğıöşüâîû]+", low(tr)))
-            if any(len(ws & set(re.findall(r"[a-zçğıöşüâîû]+", low(x[0])))) * 2 > len(ws) for x in examples[r[0]]):
-                continue
             examples[r[0]].append((tr, en, int(sid) if sid.isdigit() else None))
 for l, xs in examples.items():
     for tr, en, sid in xs:
