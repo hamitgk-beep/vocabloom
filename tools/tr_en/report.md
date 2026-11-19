@@ -3,7 +3,7 @@
  "sources": "Kaikki.org / English Wiktionary (CC BY-SA 4.0); FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); Tatoeba (CC BY 2.0 FR)",
  "lemmas": "25662",
  "forms": "398718",
- "examples_lemmas": "10979"
+ "examples_lemmas": "11114"
 }
 | top N | covered |
 |---|---|
