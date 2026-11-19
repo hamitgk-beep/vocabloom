@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "reader-colours-menu",
+      "area": "reader",
+      "tr": "Filtre menüsü, kelime ve cümle panelleri artık okuma sayfasının rengini alıyor: sepya ya da başka bir ton seçince onlar da aynı renkte. Okuyucunun üstüne güneş/ay düğmesi geldi, tek dokunuşla gündüz ve gece modu arasında geçebilirsin. Telefonda üst menüdeki düğmeler alt menüye taşındı: sağdaki Menü düğmesine dokununca alt çubuk yukarı açılıyor; gece/gündüz modu, Gramer, Ücretsiz kütüphane, İstatistiklerim ve Ayarlar orada. Bilgisayarda faresiyle bir kelimenin üzerine gelince küçük bir baloncukta ilk Türkçe anlamı hemen görünüyor; ayrıntı için tıkla. Kitaptaki cümlenin altında bazen başka bir cümlenin Türkçesi çıkıyordu, bu düzeltildi.",
+      "en": "The filter menu and the word and sentence panels now take the reading page's colour: pick sepia or another shade and they match it. A sun/moon button at the top of the reader switches day and night mode in one tap. On phones the top bar's buttons moved to the bottom bar: tap Menu on the right and the bar opens upward with night/day mode, Grammar, Free library, Stats and Settings. On computers, hovering over a word shows its first Turkish meaning in a small bubble right away; click for details. The Turkish under the book's sentence sometimes belonged to another sentence; this is fixed."
+    },
+    {
       "id": "simple-word-panel",
       "area": "reader",
       "tr": "Kelime paneli sadeleşti: en üstte altın kutuda kelimenin bu cümledeki Türkçe anlamı, hemen altında kitaptaki cümle ve Türkçesi var. Diğer anlamlar önce Türkçe, sonra İngilizce tanım ve Türkçesiyle örnek cümleyle listeleniyor. İngilizce satırlar küçük ve mavi, yanlarında EN etiketi; Türkçe satırlar kalın, TR etiketli. Sözlükte Türkçesi olmayan anlamlar için artık yeni sözlüğümüzün Türkçesi kullanılıyor. Bilgisayarda cümle paneli ekranın solunda açılıyor; okuyucudaki filtre menüsü üstteki filtre düğmesiyle açılıp kapanıyor.",

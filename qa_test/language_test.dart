@@ -334,7 +334,14 @@ Future<void> allScreens(WidgetTester tester) async {
   await tester.pumpWidget(shell(HomePage(app: app)));
   await capture(tester, 'tab_library');
   final names = ['library', 'my_words', 'dictionary', 'grammar', 'free_library', 'stats', 'ai', 'settings'];
-  for (var i = 1; i < names.length && find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty; i++) {
+  bool has(int i) => find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty;
+  for (var i = 1; i < names.length; i++) {
+    // On a phone the later pages are in the bottom bar's menu.
+    if (!has(i) && find.byKey(const ValueKey('nav-menu')).evaluate().isNotEmpty) {
+      await tester.tap(find.byKey(const ValueKey('nav-menu')));
+      await _settle(tester);
+    }
+    if (!has(i)) break;
     await tester.tap(find.byKey(ValueKey('nav_$i')));
     await capture(tester, 'tab_${names[i]}');
   }
@@ -390,6 +397,11 @@ Future<void> allScreens(WidgetTester tester) async {
   await tapIcon(tester, Icons.text_fields_rounded);
   await capture(tester, 'reader_reading_settings');
   await reader();
+  // On a phone the chapters are in the "more" menu of the top bar.
+  if (find.byIcon(Icons.list).evaluate().isEmpty && find.byKey(const ValueKey('reader-more')).evaluate().isNotEmpty) {
+    await tester.tap(find.byKey(const ValueKey('reader-more')));
+    await capture(tester, 'reader_more_menu');
+  }
   await tapIcon(tester, Icons.list);
   await capture(tester, 'reader_chapters');
   await reader();

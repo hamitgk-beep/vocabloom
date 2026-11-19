@@ -88,9 +88,9 @@ class PanelCard extends StatelessWidget {
       width: double.infinity,
       padding: padding,
       decoration: BoxDecoration(
-        color: dark ? const Color(0x0EFFECCD) : Colors.white,
+        color: dark ? const Color(0x0EFFECCD) : Color.lerp(t.colorScheme.surfaceContainerLowest, Colors.white, 0.5),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: dark ? const Color(0x1CFFE6BE) : const Color(0xFFEDE3D0)),
+        border: Border.all(color: dark ? const Color(0x1CFFE6BE) : t.colorScheme.outlineVariant),
       ),
       child: child,
     );

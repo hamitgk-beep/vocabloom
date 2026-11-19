@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import '../l10n.dart';
 
 /// VocaBloom design system: colors, type and component styles in one place.
 ///
@@ -545,4 +546,58 @@ class BrandMark extends StatelessWidget {
     borderRadius: BorderRadius.circular(size * 0.28),
     child: Image.asset('assets/brand/logo.png', width: size, height: size, filterQuality: FilterQuality.medium),
   );
+}
+
+/// Day / night switch: a sun and a moon side by side (wide screens) or one
+/// round button that shows the mode it switches to (phones). Follows the
+/// app's theme setting; "system" counts as whatever is on screen now.
+class DayNightToggle extends StatelessWidget {
+  final bool dark;
+  final ValueChanged<bool> onChanged;
+  final bool compact;
+  const DayNightToggle({super.key, required this.dark, required this.onChanged, this.compact = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = Theme.of(context);
+    final cs = t.colorScheme;
+    if (compact) {
+      return IconButton(
+        key: const ValueKey('day-night'),
+        tooltip: dark ? L('Gündüz moduna geç', 'Switch to day mode') : L('Gece moduna geç', 'Switch to night mode'),
+        style: IconButton.styleFrom(backgroundColor: goldSoft(t), foregroundColor: cs.primary),
+        icon: Icon(dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
+        onPressed: () => onChanged(!dark),
+      );
+    }
+    Widget half(bool night) {
+      final on = night == dark;
+      return Tooltip(
+        message: night ? L('Gece modu', 'Night mode') : L('Gündüz modu', 'Day mode'),
+        child: InkWell(
+          key: ValueKey(night ? 'mode-night' : 'mode-day'),
+          borderRadius: BorderRadius.circular(17),
+          onTap: on ? null : () => onChanged(night),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            width: 38,
+            height: 34,
+            decoration: BoxDecoration(gradient: on ? Brand.goldGradient : null, borderRadius: BorderRadius.circular(17)),
+            child: Icon(night ? Icons.dark_mode_rounded : Icons.light_mode_rounded, size: 20, color: on ? onGold(t) : cs.onSurfaceVariant),
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      key: const ValueKey('day-night'),
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: cs.surfaceContainerLowest,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: cs.outlineVariant),
+      ),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [half(false), const SizedBox(width: 2), half(true)]),
+    );
+  }
 }

@@ -5,6 +5,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -18,6 +19,7 @@ import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
 import 'package:kelime_okur/ui/paragraph_view.dart';
 import 'package:kelime_okur/ui/reader_page.dart';
+import 'package:kelime_okur/ui/sentence_sheet.dart';
 import 'package:kelime_okur/ui/theme.dart';
 import 'package:kelime_okur/ui/word_sheet.dart';
 
@@ -84,7 +86,13 @@ void main() {
         await shot(tester, '${pre}_1_library');
         final phone = dev == 'phone';
         Future<void> go(int i, String name) async {
-          await tester.tap(find.byKey(ValueKey(phone ? (i == 6 || i == 5 || i == 4 ? 'nav_$i' : 'nav_$i') : 'side-menu-$i')));
+          if (phone && i >= 3) {
+            // Grammar, free library, stats and settings live in the bottom bar's menu.
+            await tester.tap(find.byKey(const ValueKey('nav-menu')));
+            await tester.pump(const Duration(milliseconds: 400));
+            if (i == 3) await shot(tester, '${pre}_menu_open');
+          }
+          await tester.tap(find.byKey(ValueKey(phone ? 'nav_$i' : 'side-menu-$i')));
           await tester.pump(const Duration(milliseconds: 400));
           await shot(tester, '${pre}_$name');
           if (phone && i >= 4) {
@@ -114,6 +122,35 @@ void main() {
         showWordSheet(tester.element(find.byType(ReaderPage)), app, 'thought', ctx: buildContext(app, para, a, ti));
         await tester.pump(const Duration(milliseconds: 600));
         await shot(tester, '${pre}_9_word_panel');
+
+        // Sepia page: the filter menu, the panels and the mouse bubble take its colour.
+        if (b == Brightness.light) {
+          final paper0 = app.paper;
+          app.setReading(paper: 'sepia');
+          app.setTone('sepia', 0.7);
+          await tester.pumpWidget(shell(ReaderPage(app: app, book: bk), b));
+          await tester.pump(const Duration(milliseconds: 500));
+          if (!phone) {
+            await tester.tap(find.byKey(const ValueKey('reader-filters')));
+            await tester.pump(const Duration(milliseconds: 400));
+          }
+          await shot(tester, '${pre}_10_sepia_filters');
+          final pv = find.byType(ParagraphView);
+          final word = pv.at(pv.evaluate().length > 2 ? 2 : pv.evaluate().length - 1);
+          final mouse = await tester.createGesture(kind: PointerDeviceKind.mouse);
+          await mouse.addPointer(location: Offset.zero);
+          addTearDown(mouse.removePointer);
+          final box = tester.getRect(word);
+          await mouse.moveTo(box.topLeft + const Offset(40, 14));
+          await tester.pump(const Duration(milliseconds: 300));
+          await shot(tester, '${pre}_11_sepia_hover');
+          await mouse.moveTo(Offset.zero);
+          await tester.pump(const Duration(milliseconds: 100));
+          showSentenceSheet(tester.element(find.byType(ReaderPage)), app, para, a, ti, bookId: bk.id, bookTitle: bk.title);
+          await tester.pump(const Duration(milliseconds: 600));
+          await shot(tester, '${pre}_12_sepia_sentence');
+          app.setReading(paper: paper0);
+        }
         await tester.pumpWidget(const SizedBox());
         await tester.pump(const Duration(seconds: 5));
       });

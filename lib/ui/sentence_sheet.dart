@@ -11,13 +11,13 @@ import 'ai/device_translation.dart';
 import 'panel.dart';
 import 'paragraph_view.dart';
 import '../l10n.dart';
+import 'theme.dart';
 import 'word_sheet.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 
 /// Sentence breakdown: translation, tenses, expressions and word meanings.
-Future<void> showSentenceSheet(BuildContext context, AppState app, Para para, ParaAnalysis a, int ti,
-    {int? bookId, String? bookTitle}) {
+Future<void> showSentenceSheet(BuildContext context, AppState app, Para para, ParaAnalysis a, int ti, {int? bookId, String? bookTitle}) {
   final ctx = buildContext(app, para, a, ti, bookId: bookId, bookTitle: bookTitle);
   final first = ctx.sentenceTokens.isEmpty ? 0 : a.tokens.indexWhere((t) => t.start == ctx.sentenceTokens.first.start);
   final last = first + ctx.sentenceTokens.length - 1;
@@ -95,9 +95,9 @@ class _SentencePanelState extends State<SentencePanel> {
     final showTr = app.showTr, showEn = app.showEn;
 
     Widget section(String t) => Padding(
-          padding: const EdgeInsets.only(top: 18, bottom: 6),
-          child: Text(t.toUpperCase(), style: theme.textTheme.labelMedium?.copyWith(letterSpacing: 1.1, color: theme.hintColor)),
-        );
+      padding: const EdgeInsets.only(top: 18, bottom: 6),
+      child: Text(t.toUpperCase(), style: theme.textTheme.labelMedium?.copyWith(letterSpacing: 1.1, color: theme.hintColor)),
+    );
 
     // group expressions by category
     final byCat = <String, List<Match>>{};
@@ -113,134 +113,155 @@ class _SentencePanelState extends State<SentencePanel> {
       if (seenW.add(app.primaryLemma(t.lower))) contentWords.add(t);
     }
 
-    return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
-      // The title row stays free: the close button sits in that corner.
-      Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-      const SizedBox(height: 10),
-      SelectableText(ctx.sentence, style: const TextStyle(fontSize: 18, height: 1.5, fontFamily: 'serif')),
-      if (Speech.supported)
-        Padding(
-          key: const ValueKey('sentence-listen'),
-          padding: const EdgeInsets.only(top: 6),
-          child: Wrap(spacing: 8, runSpacing: 6, children: [
-            SpeakButton(ctx.sentence, label: L('Dinle', 'Listen'), tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
-            SpeakButton(ctx.sentence, speed: 0.75, label: L('Yavaş dinle', 'Listen slowly')),
-          ]),
-        ),
-      // Full Turkish translation right under the English sentence.
-      if (tr != null && showTr)
-        Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(child: SelectableText(tr, style: trStyle(theme, const TextStyle(fontSize: 17, height: 1.45)))),
-            if (Speech.supported) SpeakButton(tr, lang: 'tr', size: 20),
-          ]),
-        ),
-      if (tr == null && showTr && !loading) DeviceTranslation(key: ValueKey('mt-${ctx.sentence}'), app: app, text: ctx.sentence, style: const TextStyle(fontSize: 17, height: 1.45)),
-      if (tr == null && loading)
-        Padding(
-          padding: EdgeInsets.only(top: 8),
-          child: Row(children: [
-            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
-            SizedBox(width: 10),
-            Text(L('Cümle çevriliyor…', 'Translating the sentence…')),
-          ]),
-        ),
-      const SizedBox(height: 10),
-      LangToggles(app: app, onChanged: () => setState(() {})),
-      if (tr == null && !loading && AiService.fromSettings(app.user) == null)
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Text(
-              L('Tam cümle çevirisi ve açıklama için Ayarlar\'dan kendi yapay zekâ anahtarını ekle (Gemini ücretsiz). Aşağıdaki parça parça analiz internetsiz çalışır.', 'For a full translation and explanation, add your own AI key in Settings (Gemini is free). The step-by-step analysis below works offline.'),
-              style: TextStyle(color: theme.hintColor, fontSize: 13)),
-        ),
-      if (error != null) ...[
-        Padding(padding: const EdgeInsets.only(top: 6), child: Text(error!, style: TextStyle(color: theme.colorScheme.error))),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton.icon(onPressed: loading ? null : _explain, icon: const Icon(Icons.refresh), label: Text(L('Tekrar dene', 'Try again'))),
-        ),
-      ],
-      if ((showEn && onlineExplainEn != null) || (showTr && onlineExplain != null)) ...[
-        section(L('Açıklama', 'Explanation')),
-        if (showEn && onlineExplainEn != null) SelectableText(onlineExplainEn!, style: enStyle(theme)),
-        if (showEn && onlineExplainEn != null && showTr && onlineExplain != null) const SizedBox(height: 8),
-        if (showTr && onlineExplain != null) SelectableText(onlineExplain!, style: trStyle(theme)),
-      ],
-      if (tr != null && onlineExplain == null && !loading && AiService.fromSettings(app.user) != null)
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: FilledButton.tonalIcon(onPressed: _explain, icon: const Icon(Icons.auto_awesome), label: Text(L('Ayrıntılı açıkla', 'Explain in detail'))),
-          ),
-        ),
-      AiAskBox(
-        key: ValueKey('ai-ask-s-${ctx.sentence}'),
-        app: app,
-        title: L('Bu cümleyi yapay zekâya sor', 'Ask the AI about this sentence'),
-        suggestions: [
-          L('Cümleyi Türkçeye çevir ve açıkla', 'Translate and explain the sentence'),
-          L('Gramer yapısını anlat', 'Explain its grammar'),
-          L('Benzer bir örnek ver', 'Give a similar example'),
-        ],
-        about: 'Cümle: "${ctx.sentence}"${tr == null ? '' : '\nTürkçesi: $tr'}${ctx.bookTitle == null ? '' : '\nKitap: ${ctx.bookTitle}'}',
-      ),
-      section(L('Zaman ve yapı', 'Tense and structure')),
-      if (tenses.isEmpty) Text(L('Belirgin bir fiil yapısı bulunamadı.', 'No clear verb structure was found.'), style: TextStyle(color: theme.hintColor)),
-      for (final h in tenses)
-        Card(
-          margin: const EdgeInsets.only(bottom: 8),
-          child: ListTile(
-            title: Text(showTr ? (showEn ? '${h.en} · ${h.tr}' : '${h.tr} (${h.en})') : h.en,
-                style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: Text(showTr || uiEnglish ? '"${h.words}"  ${h.explain}' : '"${h.words}"'),
-          ),
-        ),
-      section(L('Kalıplar ve kategoriler', 'Expressions and categories')),
-      if (byCat.isEmpty) Text(L('Bu cümlede listelerimizdeki bir kalıp bulunamadı.', 'No expression from our lists was found in this sentence.'), style: TextStyle(color: theme.hintColor)),
-      for (final e in byCat.entries) ...[
-        for (final m in e.value) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
-      ],
-      section(L('Kelimeler', 'Words')),
-      for (final t in contentWords)
-        Builder(builder: (context) {
-          final lemma = app.primaryLemma(t.lower);
-          final trM = showTr ? app.shortMeaning(lemma) : null;
-          final enM = showEn ? app.dict.lookup(lemma).senses.firstOrNull?.gloss : null;
-          final m = [?enM, if (trM != enM) ?trM].join('\n');
-          final st = app.statusOf(t);
-          return ListTile(
-            dense: true,
-            contentPadding: EdgeInsets.zero,
-            leading: CircleAvatar(
-              radius: 6,
-              backgroundColor: switch (st) {
-                WordStatus.learning => learningColor,
-                WordStatus.learned => learnedColor,
-                _ => theme.dividerColor,
-              },
+    return ListView(
+      controller: widget.scroll,
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+      children: [
+        // The title row stays free: the close button sits in that corner.
+        Text(L('Cümle analizi', 'Sentence analysis'), style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+        const SizedBox(height: 10),
+        SelectableText(ctx.sentence, style: const TextStyle(fontSize: 18, height: 1.5, fontFamily: readingFont)),
+        if (Speech.supported)
+          Padding(
+            key: const ValueKey('sentence-listen'),
+            padding: const EdgeInsets.only(top: 6),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 6,
+              children: [
+                SpeakButton(ctx.sentence, label: L('Dinle', 'Listen'), tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
+                SpeakButton(ctx.sentence, speed: 0.75, label: L('Yavaş dinle', 'Listen slowly')),
+              ],
             ),
-            title: Text(lemma == t.lower ? t.text : '${t.text}  →  $lemma', style: const TextStyle(fontWeight: FontWeight.w600)),
-            subtitle: m.isEmpty
-                ? null
-                : Text.rich(
-                    TextSpan(children: [
-                      if (enM != null) TextSpan(text: enM, style: enStyle(theme, null, false)),
-                      if (enM != null && trM != null && trM != enM) const TextSpan(text: '\n'),
-                      if (trM != null && trM != enM) TextSpan(text: trM, style: trStyle(theme)),
-                    ]),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis),
-            onTap: () async {
-              final i = ctx.sentenceTokens.indexOf(t);
-              await showWordSheet(context, app, t.text,
-                  ctx: WordContext(ctx.sentence, ctx.sentenceTokens, i, const [], ctx.sentenceTr, ctx.bookId, ctx.bookTitle));
-              setState(() {});
+          ),
+        // Full Turkish translation right under the English sentence.
+        if (tr != null && showTr)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: SelectableText(tr, style: trStyle(theme, const TextStyle(fontSize: 17, height: 1.45)))),
+                if (Speech.supported) SpeakButton(tr, lang: 'tr', size: 20),
+              ],
+            ),
+          ),
+        if (tr == null && showTr && !loading) DeviceTranslation(key: ValueKey('mt-${ctx.sentence}'), app: app, text: ctx.sentence, style: const TextStyle(fontSize: 17, height: 1.45)),
+        if (tr == null && loading)
+          Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Row(
+              children: [
+                SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+                SizedBox(width: 10),
+                Text(L('Cümle çevriliyor…', 'Translating the sentence…')),
+              ],
+            ),
+          ),
+        const SizedBox(height: 10),
+        LangToggles(app: app, onChanged: () => setState(() {})),
+        if (tr == null && !loading && AiService.fromSettings(app.user) == null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              L(
+                'Tam cümle çevirisi ve açıklama için Ayarlar\'dan kendi yapay zekâ anahtarını ekle (Gemini ücretsiz). Aşağıdaki parça parça analiz internetsiz çalışır.',
+                'For a full translation and explanation, add your own AI key in Settings (Gemini is free). The step-by-step analysis below works offline.',
+              ),
+              style: TextStyle(color: theme.hintColor, fontSize: 13),
+            ),
+          ),
+        if (error != null) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Text(error!, style: TextStyle(color: theme.colorScheme.error)),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(onPressed: loading ? null : _explain, icon: const Icon(Icons.refresh), label: Text(L('Tekrar dene', 'Try again'))),
+          ),
+        ],
+        if ((showEn && onlineExplainEn != null) || (showTr && onlineExplain != null)) ...[
+          section(L('Açıklama', 'Explanation')),
+          if (showEn && onlineExplainEn != null) SelectableText(onlineExplainEn!, style: enStyle(theme)),
+          if (showEn && onlineExplainEn != null && showTr && onlineExplain != null) const SizedBox(height: 8),
+          if (showTr && onlineExplain != null) SelectableText(onlineExplain!, style: trStyle(theme)),
+        ],
+        if (tr != null && onlineExplain == null && !loading && AiService.fromSettings(app.user) != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: FilledButton.tonalIcon(onPressed: _explain, icon: const Icon(Icons.auto_awesome), label: Text(L('Ayrıntılı açıkla', 'Explain in detail'))),
+            ),
+          ),
+        AiAskBox(
+          key: ValueKey('ai-ask-s-${ctx.sentence}'),
+          app: app,
+          title: L('Bu cümleyi yapay zekâya sor', 'Ask the AI about this sentence'),
+          suggestions: [
+            L('Cümleyi Türkçeye çevir ve açıkla', 'Translate and explain the sentence'),
+            L('Gramer yapısını anlat', 'Explain its grammar'),
+            L('Benzer bir örnek ver', 'Give a similar example'),
+          ],
+          about: 'Cümle: "${ctx.sentence}"${tr == null ? '' : '\nTürkçesi: $tr'}${ctx.bookTitle == null ? '' : '\nKitap: ${ctx.bookTitle}'}',
+        ),
+        section(L('Zaman ve yapı', 'Tense and structure')),
+        if (tenses.isEmpty) Text(L('Belirgin bir fiil yapısı bulunamadı.', 'No clear verb structure was found.'), style: TextStyle(color: theme.hintColor)),
+        for (final h in tenses)
+          Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            child: ListTile(
+              title: Text(showTr ? (showEn ? '${h.en} · ${h.tr}' : '${h.tr} (${h.en})') : h.en, style: const TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(showTr || uiEnglish ? '"${h.words}"  ${h.explain}' : '"${h.words}"'),
+            ),
+          ),
+        section(L('Kalıplar ve kategoriler', 'Expressions and categories')),
+        if (byCat.isEmpty) Text(L('Bu cümlede listelerimizdeki bir kalıp bulunamadı.', 'No expression from our lists was found in this sentence.'), style: TextStyle(color: theme.hintColor)),
+        for (final e in byCat.entries) ...[for (final m in e.value) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {}))],
+        section(L('Kelimeler', 'Words')),
+        for (final t in contentWords)
+          Builder(
+            builder: (context) {
+              final lemma = app.primaryLemma(t.lower);
+              final trM = showTr ? app.shortMeaning(lemma) : null;
+              final enM = showEn ? app.dict.lookup(lemma).senses.firstOrNull?.gloss : null;
+              final m = [?enM, if (trM != enM) ?trM].join('\n');
+              final st = app.statusOf(t);
+              return ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.zero,
+                leading: CircleAvatar(
+                  radius: 6,
+                  backgroundColor: switch (st) {
+                    WordStatus.learning => learningColor,
+                    WordStatus.learned => learnedColor,
+                    _ => theme.dividerColor,
+                  },
+                ),
+                title: Text(lemma == t.lower ? t.text : '${t.text}  →  $lemma', style: const TextStyle(fontWeight: FontWeight.w600)),
+                subtitle: m.isEmpty
+                    ? null
+                    : Text.rich(
+                        TextSpan(
+                          children: [
+                            if (enM != null) TextSpan(text: enM, style: enStyle(theme, null, false)),
+                            if (enM != null && trM != null && trM != enM) const TextSpan(text: '\n'),
+                            if (trM != null && trM != enM) TextSpan(text: trM, style: trStyle(theme)),
+                          ],
+                        ),
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                onTap: () async {
+                  final i = ctx.sentenceTokens.indexOf(t);
+                  await showWordSheet(context, app, t.text, ctx: WordContext(ctx.sentence, ctx.sentenceTokens, i, const [], ctx.sentenceTr, ctx.bookId, ctx.bookTitle));
+                  setState(() {});
+                },
+              );
             },
-          );
-        }),
-    ]);
+          ),
+      ],
+    );
   }
 }

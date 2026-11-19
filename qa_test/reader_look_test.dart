@@ -77,7 +77,9 @@ void main() {
     addTearDown(tester.view.reset);
     await tester.pumpWidget(shell(HomePage(app: app), app));
     await shot(tester, 'library');
-    // The bar scrolls to show the last tabs.
+    // The free library opens from the bottom bar's menu.
+    await tester.tap(find.byKey(const ValueKey('nav-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('nav_4')));
     await shot(tester, 'free_library_tab');
 

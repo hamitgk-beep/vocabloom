@@ -134,6 +134,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int tab = 0;
 
+  /// The phone's bottom menu is raised (grammar, free library, stats,
+  /// settings and day / night).
+  bool menuOpen = false;
+
   Timer? _updateTimer;
 
   @override
@@ -187,9 +191,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final wide = MediaQuery.sizeOf(context).width >= 720;
     final theme = Theme.of(context);
-    void go(int i) => setState(() => tab = i);
-    // On phones the free library, stats and settings open from the library's
-    // top bar; on wide screens they have their own place in the side menu.
+    void go(int i) => setState(() {
+          tab = i;
+          menuOpen = false;
+        });
+    // On phones grammar, the free library, stats and settings open from the
+    // bottom bar's menu; on wide screens they have their own place in the side menu.
     final pages = [
       LibraryPage(app: widget.app, onTab: wide ? null : go),
       WordsPage(app: widget.app),
@@ -240,14 +247,41 @@ class _HomePageState extends State<HomePage> {
     }
     return PopScope(
       // Back on a phone first returns to the library.
-      canPop: tab == 0,
+      canPop: tab == 0 && !menuOpen,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) go(0);
+        if (didPop) return;
+        menuOpen ? setState(() => menuOpen = false) : go(0);
       },
       child: Scaffold(
         extendBody: true,
-        body: DecoratedBox(decoration: pageBackground(theme), child: body),
-        bottomNavigationBar: _BottomNav(selected: tab, items: dests.sublist(0, 4), onSelect: go, onCenter: _continueReading),
+        body: Stack(children: [
+          Positioned.fill(child: DecoratedBox(decoration: pageBackground(theme), child: body)),
+          // A tap anywhere outside the raised menu closes it.
+          Positioned.fill(
+            child: IgnorePointer(
+              ignoring: !menuOpen,
+              child: GestureDetector(
+                key: const ValueKey('menu-barrier'),
+                onTap: () => setState(() => menuOpen = false),
+                child: AnimatedOpacity(
+                  opacity: menuOpen ? 1 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: ColoredBox(color: Colors.black.withValues(alpha: theme.brightness == Brightness.dark ? 0.45 : 0.22)),
+                ),
+              ),
+            ),
+          ),
+        ]),
+        bottomNavigationBar: _BottomNav(
+          selected: tab,
+          items: dests,
+          onSelect: go,
+          onCenter: _continueReading,
+          menuOpen: menuOpen,
+          onMenu: () => setState(() => menuOpen = !menuOpen),
+          dark: theme.brightness == Brightness.dark,
+          onDark: (v) => widget.app.setTheme(v ? ThemeMode.dark : ThemeMode.light),
+        ),
       ),
     );
   }
@@ -416,44 +450,66 @@ class _SideMenu extends StatelessWidget {
   }
 }
 
-/// Phone bottom bar: a floating rounded bar with the four main pages and a
-/// round gold button in the middle that opens the book read last. Labels
+/// Phone bottom bar: a floating rounded bar with Library, My words,
+/// Dictionary and Menu, and a round gold button in the middle that opens the
+/// book read last. Menu raises the bar like a phone's quick settings: day /
+/// night on top, then Grammar, Free library, Stats and Settings. Labels
 /// never wrap: a label that does not fit is scaled down.
 class _BottomNav extends StatelessWidget {
   final int selected;
+
+  /// All pages: 0-2 in the bar, 3-6 in the menu.
   final List<(IconData, IconData, String)> items;
   final ValueChanged<int> onSelect;
   final VoidCallback onCenter;
-  const _BottomNav({required this.selected, required this.items, required this.onSelect, required this.onCenter});
+  final bool menuOpen;
+  final VoidCallback onMenu;
+  final bool dark;
+  final ValueChanged<bool> onDark;
+  const _BottomNav({
+    required this.selected,
+    required this.items,
+    required this.onSelect,
+    required this.onCenter,
+    required this.menuOpen,
+    required this.onMenu,
+    required this.dark,
+    required this.onDark,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
-    final dark = theme.brightness == Brightness.dark;
     final mq = MediaQuery.of(context);
     // Keep the bar readable but bounded when the system font is very large.
     final scaler = mq.textScaler.clamp(maxScaleFactor: 1.15);
-    Widget tab(int i) {
-      final d = items[i];
-      final on = i == selected;
+    Widget tab(int i, {bool menu = false}) {
+      final d = menu ? (Icons.grid_view_outlined, Icons.grid_view_rounded, L('Menü', 'Menu')) : items[i];
+      final on = menu ? menuOpen || selected >= 3 : i == selected && !menuOpen;
       final color = on ? cs.primary : cs.onSurfaceVariant;
       return Expanded(
         child: KeyedSubtree(
-          key: ValueKey('nav_$i'),
+          key: ValueKey(menu ? 'nav-menu' : 'nav_$i'),
           child: Semantics(
             selected: on,
             button: true,
             label: d.$3,
             excludeSemantics: true,
             child: InkResponse(
-              onTap: () => onSelect(i),
+              onTap: menu ? onMenu : () => onSelect(i),
               radius: 34,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(on ? d.$2 : d.$1, size: 24, color: color),
-                  const SizedBox(height: 3),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 180),
+                    width: 40,
+                    height: 28,
+                    decoration: BoxDecoration(color: menu && menuOpen ? goldSoft(theme) : null, borderRadius: BorderRadius.circular(14)),
+                    child: Icon(on ? d.$2 : d.$1, size: 24, color: color),
+                  ),
+                  const SizedBox(height: 2),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 2),
                     child: FittedBox(
@@ -503,40 +559,128 @@ class _BottomNav extends StatelessWidget {
       ),
     );
 
+    // Day / night, then the pages that live in the menu.
+    Widget mode(bool night) {
+      final on = night == dark;
+      final fg = on ? onGold(theme) : cs.onSurface;
+      return Expanded(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            key: ValueKey(night ? 'menu-night' : 'menu-day'),
+            borderRadius: BorderRadius.circular(22),
+            onTap: () => onDark(night),
+            child: Ink(
+              height: 58,
+              decoration: BoxDecoration(
+                gradient: on ? Brand.goldGradient : null,
+                color: on ? null : cs.surfaceContainerHigh,
+                borderRadius: BorderRadius.circular(22),
+              ),
+              child: Row(children: [
+                const SizedBox(width: 11),
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: on ? Colors.white.withValues(alpha: 0.22) : goldSoft(theme)),
+                  child: Icon(night ? Icons.dark_mode_rounded : Icons.light_mode_rounded, size: 20, color: on ? fg : cs.primary),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: Text(
+                    night ? L('Gece modu', 'Night mode') : L('Gündüz modu', 'Day mode'),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: fg),
+                  ),
+                ),
+              ]),
+            ),
+          ),
+        ),
+      );
+    }
+
+    Widget tile(int i) {
+      final d = items[i];
+      final on = i == selected;
+      return Expanded(
+        child: InkWell(
+          key: ValueKey('nav_$i'),
+          borderRadius: BorderRadius.circular(18),
+          onTap: () => onSelect(i),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Container(
+                width: 54,
+                height: 54,
+                decoration: BoxDecoration(color: on ? goldSoft(theme) : cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(19)),
+                child: Icon(on ? d.$2 : d.$1, color: cs.primary),
+              ),
+              const SizedBox(height: 6),
+              Text(d.$3,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 11.5, height: 1.2, fontWeight: FontWeight.w600, color: on ? cs.primary : cs.onSurface)),
+            ]),
+          ),
+        ),
+      );
+    }
+
+    final panel = Padding(
+      key: const ValueKey('nav-menu-panel'),
+      padding: const EdgeInsets.fromLTRB(14, 12, 14, 30),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        Container(width: 38, height: 4, decoration: BoxDecoration(color: cs.outline, borderRadius: BorderRadius.circular(2))),
+        const SizedBox(height: 12),
+        Row(children: [mode(true), const SizedBox(width: 10), mode(false)]),
+        const SizedBox(height: 10),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [for (final i in [3, 4, 5, 6]) tile(i)]),
+      ]),
+    );
+
     return SafeArea(
       top: false,
       minimum: const EdgeInsets.only(bottom: 10),
       child: MediaQuery(
         data: mq.copyWith(textScaler: scaler),
-        child: SizedBox(
-          height: 94,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Positioned(
-                left: 14,
-                right: 14,
-                bottom: 0,
-                height: 68,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: dark ? const Color(0xF22B231A) : Colors.white,
-                    borderRadius: BorderRadius.circular(34),
-                    border: Border.all(color: dark ? const Color(0x24FFE6BE) : Brand.lBorder),
-                    boxShadow: [
-                      BoxShadow(
-                        color: dark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFF785A28).withValues(alpha: 0.14),
-                        blurRadius: 24,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Row(children: [tab(0), tab(1), const SizedBox(width: 70), tab(2), tab(3)]),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(14, 26, 14, 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: dark ? const Color(0xF22B231A) : Colors.white,
+                  borderRadius: BorderRadius.circular(34),
+                  border: Border.all(color: dark ? const Color(0x24FFE6BE) : Brand.lBorder),
+                  boxShadow: [
+                    BoxShadow(
+                      color: dark ? Colors.black.withValues(alpha: 0.35) : const Color(0xFF785A28).withValues(alpha: 0.14),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  AnimatedSize(
+                    duration: const Duration(milliseconds: 220),
+                    curve: Curves.easeOutCubic,
+                    alignment: Alignment.bottomCenter,
+                    child: menuOpen ? panel : const SizedBox(width: double.infinity),
+                  ),
+                  SizedBox(
+                    height: 68,
+                    child: Row(children: [tab(0), tab(1), const SizedBox(width: 70), tab(2), tab(3, menu: true)]),
+                  ),
+                ]),
               ),
-              Positioned(top: 0, child: center),
-            ],
-          ),
+            ),
+            // The gold button stays on the bar's row, half above it.
+            Positioned(left: 0, right: 0, bottom: 32, child: Center(child: center)),
+          ],
         ),
       ),
     );

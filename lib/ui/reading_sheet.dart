@@ -23,7 +23,9 @@ Color pageColor(AppState app, ThemeData t) => t.brightness == Brightness.dark
     ? readerPaper(t)
     : (app.paper == 'sepia' ? sepiaShade(app.tone['sepia'] ?? 0.3) : whitePaper(app.tone['white'] ?? 0.3));
 
-/// Theme used inside the reader, so sepia (and the night shade) also change the text color.
+/// Theme used inside the reader, so sepia (and the night shade) also change
+/// the text color, and the filter menu, drawers and panels take the page's
+/// colour (a sepia page gets sepia panels, a shade change moves them too).
 ThemeData readerTheme(AppState app, ThemeData t) {
   if (t.brightness == Brightness.dark) {
     final ink = nightInk(app.tone['night'] ?? 0);
@@ -32,12 +34,37 @@ ThemeData readerTheme(AppState app, ThemeData t) {
       textTheme: t.textTheme.apply(bodyColor: ink, displayColor: ink),
     );
   }
-  if (app.paper != 'sepia') return t;
+  final paper = pageColor(app, t);
+  const brown = Color(0xFF6B4A1E);
+  final card = Color.lerp(paper, Colors.white, 0.45)!;
+  final deep = Color.lerp(paper, brown, 0.05)!;
+  final high = Color.lerp(paper, brown, 0.10)!;
+  final line = Color.lerp(paper, brown, 0.20)!;
+  final sepia = app.paper == 'sepia';
+  final ink = sepia ? sepiaInk : t.colorScheme.onSurface;
   return t.copyWith(
-    colorScheme: t.colorScheme.copyWith(onSurface: sepiaInk),
-    textTheme: t.textTheme.apply(bodyColor: sepiaInk, displayColor: sepiaInk),
+    scaffoldBackgroundColor: paper,
+    canvasColor: paper,
+    colorScheme: t.colorScheme.copyWith(
+      surface: deep,
+      onSurface: ink,
+      surfaceContainerLowest: card,
+      surfaceContainerLow: deep,
+      surfaceContainer: deep,
+      surfaceContainerHigh: high,
+      surfaceContainerHighest: high,
+      outlineVariant: line,
+    ),
+    cardTheme: t.cardTheme.copyWith(color: card),
+    drawerTheme: t.drawerTheme.copyWith(backgroundColor: deep),
+    bottomSheetTheme: t.bottomSheetTheme.copyWith(backgroundColor: card, modalBackgroundColor: card),
+    textTheme: sepia ? t.textTheme.apply(bodyColor: ink, displayColor: ink) : t.textTheme,
   );
 }
+
+/// The reader's theme while a book is open, so the word, sentence and
+/// expression panels it opens match the page (null elsewhere).
+ThemeData? readingPanelTheme;
 
 /// Font size, line spacing and page color for the reader.
 Future<void> showReadingSheet(BuildContext context, AppState app) => showModalBottomSheet(
