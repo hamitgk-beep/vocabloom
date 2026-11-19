@@ -230,7 +230,7 @@ def clean(paras, title):
             if h and lower(h) != lower(title) and len(h) < 80:
                 out.append('\u0000' + h)
             continue
-        p = re.sub(r'\[\d+\]', '', p).strip()
+        p = re.sub(r'\[\d+\]', '', p).replace('‟', '’').strip()
         if not p or re.fullmatch(r'[\W\d_]+', p):
             continue
         out.append(p)
@@ -314,6 +314,8 @@ def main():
             sid = f'{base}-{k}'
             k += 1
         display = t.split('/')[-1].strip() if '/' in t and len(t.split('/')[-1]) > 3 else t
+        # "Balkon (hikâye)", "Dağlar (Sabahattin Ali)": the page name's note is not part of the title.
+        display = re.sub(r'\s*\([^)]*\)\s*$', '', display) or display
         items.append({
             'id': sid, 'kind': 'story', 'title': display, 'author': None if folk else author, 'level': None,
             'words': total, 'license': 'Public domain',
@@ -340,13 +342,14 @@ def main():
             report.append(f'- {t}: {r}')
             n += r.startswith('ok')
 
-    # Levels: the easier half B2, the harder half C1 (literary texts for adults).
     items.sort(key=lambda c: c['_score'])
     n = len(items)
-    for i, c in enumerate(items):
-        q = i / max(1, n - 1)
-        # Classics in older Turkish: never easier than B2.
-        c['level'] = 'B2' if q < 0.5 else 'C1'
+    # Classics in older Turkish: the easier half B2, the rest C1. Folk anecdotes
+    # and tales are plainer: the easier half B1, the rest B2.
+    for group, (lo, hi) in ((False, ('B2', 'C1')), (True, ('B1', 'B2'))):
+        g = [c for c in items if (c['author'] is None) == group]
+        for i, c in enumerate(g):
+            c['level'] = lo if i / max(1, len(g) - 1) < 0.5 else hi
     # Graded stories written for the app (A1 to B1): Wikisource has almost no
     # easy prose, and these belong to the app, so there is no copyright question.
     import glob
