@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -13,17 +11,13 @@ import 'package:flutter/widgets.dart';
 /// lights up, the camera flies into the cover and the panel inside its gold
 /// frame opens into the app. A tap jumps to that last step.
 ///
-/// The film is an animated WebP (Flutter decodes it on every platform with
-/// no video plugin) and its sound a separate MP3.
+/// The film is a silent animated WebP: Flutter decodes it on every
+/// platform with no video plugin.
 class IntroAnimation extends StatefulWidget {
   final VoidCallback onDone;
   const IntroAnimation({super.key, required this.onDone});
 
   static String film = 'assets/brand/intro.webp';
-  static String sound = 'brand/intro.mp3';
-
-  /// Widget tests switch it off: they have no audio plugin.
-  static bool playSound = !kIsWeb;
 
   /// How long the app takes to come out of the book.
   static const reveal = Duration(milliseconds: 1200);
@@ -41,7 +35,6 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
   Color _edge = const Color(0xFF1B120C);
   late final Ticker _ticker = createTicker(_tick);
   late final AnimationController _out = AnimationController(vsync: this, duration: IntroAnimation.reveal);
-  AudioPlayer? _player;
   bool _decoding = false, _ended = false, _done = false;
 
   @override
@@ -71,7 +64,6 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
       });
       _prefetch();
       _ticker.start();
-      _startSound();
     } catch (_) {
       // No film (or it cannot be decoded): straight into the app.
       if (mounted && !_done) {
@@ -94,17 +86,6 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
       n++;
     }
     return Color.fromARGB(255, r ~/ n, g ~/ n, bl ~/ n);
-  }
-
-  Future<void> _startSound() async {
-    if (!IntroAnimation.playSound) return;
-    try {
-      final p = _player = AudioPlayer();
-      await p.setReleaseMode(ReleaseMode.stop);
-      await p.play(AssetSource(IntroAnimation.sound), volume: 0.9);
-    } catch (_) {
-      // A missing audio backend only costs the sound.
-    }
   }
 
   Future<void> _prefetch() async {
@@ -150,10 +131,9 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
     if (_ended && now - _shownAt >= _frameLength) _startReveal();
   }
 
-  void _startReveal({bool skipped = false}) {
+  void _startReveal() {
     if (_out.isAnimating || _out.isCompleted) return;
     _ticker.stop();
-    if (skipped) unawaited(_player?.stop());
     _out.forward();
   }
 
@@ -164,8 +144,6 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
     _frame?.dispose();
     _next?.image.dispose();
     _codec?.dispose();
-    final p = _player;
-    if (p != null) unawaited(p.stop().whenComplete(p.dispose).catchError((_) {}));
     super.dispose();
   }
 
@@ -176,7 +154,7 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
       behavior: HitTestBehavior.opaque,
       onTap: () {
         if (_frame == null) return;
-        _startReveal(skipped: true);
+        _startReveal();
       },
       child: AnimatedBuilder(
         animation: _out,

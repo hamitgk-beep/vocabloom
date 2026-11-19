@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/ui/intro_animation.dart';
 
 void main() {
-  setUp(() => IntroAnimation.playSound = false);
   tearDown(() => IntroAnimation.film = 'assets/brand/intro.webp');
 
   Future<void> settleDecoding(WidgetTester tester) async {
