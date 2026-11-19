@@ -13,7 +13,10 @@ typedef HoverMeaning = ({String head, String? pos, String tr});
 /// (one whose filter is on) first, otherwise the word's own dictionary
 /// meaning, otherwise its main Turkish meaning. Null when nothing Turkish is
 /// known, so no bubble with English only appears.
-HoverMeaning? hoverMeaning(AppState app, List<Token> tokens, List<Match> matches, int i) {
+///
+/// With [text] (the text the tokens' offsets point into), a word that opens
+/// a sentence before a comma ("Well, my boy") gets its interjection meaning.
+HoverMeaning? hoverMeaning(AppState app, List<Token> tokens, List<Match> matches, int i, {String? text}) {
   Match? best;
   for (final m in matches) {
     if (m.tokens.length < 2 || !m.tokens.contains(i) || !app.enabledCats.contains(m.expr.cat) || m.expr.trShown == null) continue;
@@ -29,9 +32,12 @@ HoverMeaning? hoverMeaning(AppState app, List<Token> tokens, List<Match> matches
     cands.remove(lower);
     cands.insert(0, lower);
   }
+  final opens = text != null && opensSentence(text, tokens[i]);
   for (final c in cands) {
     final own = dict.ownSenses(c);
-    if (own.isNotEmpty) return (head: c, pos: own.first.pos, tr: own.first.tr);
+    if (own.isEmpty) continue;
+    final o = opens ? own.firstWhere((o) => o.pos == 'ünlem', orElse: () => own.first) : own.first;
+    return (head: c, pos: posLabel(o.pos), tr: o.tr);
   }
   for (final c in cands) {
     final info = dict.lookup(c);
@@ -98,4 +104,13 @@ class HoverBubble extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Whether token [t] opens a sentence of [text] and a comma follows it
+/// ("'Well, my boy"): such a word is used as an interjection.
+bool opensSentence(String text, Token t) {
+  if (t.start < 0 || t.end > text.length) return false;
+  final before = text.substring(0, t.start).replaceAll(RegExp(r'''[\s'"‘’“”(\[—–-]+$'''), '');
+  final after = text.substring(t.end).trimLeft();
+  return after.startsWith(',') && (before.isEmpty || RegExp(r'[.!?:;]$').hasMatch(before));
 }

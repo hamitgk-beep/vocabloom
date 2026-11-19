@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "sentence-panel-ipad-translation",
+      "area": "reader",
+      "tr": "Güncellemeden sonra yeni sözlüğümüz cihazlara kopyalanmıyordu; bu yüzden bazı kelimelerde eski, yanlış anlamlar (\"well\" için \"kuyu\" gibi) ve Türkçesiz İngilizce tanımlar çıkıyordu. Artık yeni sözlük kullanılıyor. Cümle başında virgülle gelen \"Well,\" \"So,\" gibi kelimeler \"peki, şey\" gibi ünlem anlamıyla gösteriliyor. Cümle analizi paneli kelime paneliyle aynı görünümde: cümle ve Türkçesi EN/TR etiketli kartta, kalıplarda ve kelimelerde önce Türkçe. iPad ve iPhone'da Türkçe çeviri paketini indirirken uygulamanın kapanması düzeltildi; paket artık uygulama açılınca kendiliğinden iniyor.",
+      "en": "After updates our new dictionary was not copied to devices, so some words showed old, wrong meanings (\"kuyu\", a water well, for \"well\") and English definitions without Turkish. The new dictionary is used now. Words like \"Well,\" or \"So,\" at the start of a sentence before a comma get their interjection meaning (\"peki, şey\"). The sentence analysis panel matches the word panel: the sentence and its Turkish in a card with EN/TR tags, Turkish first for expressions and words. On iPad and iPhone the app no longer closes while downloading the Turkish translation package, and the package now downloads by itself when the app opens."
+    },
+    {
       "id": "reader-colours-menu",
       "area": "reader",
       "tr": "Filtre menüsü, kelime ve cümle panelleri artık okuma sayfasının rengini alıyor: sepya ya da başka bir ton seçince onlar da aynı renkte. Okuyucunun üstüne güneş/ay düğmesi geldi, tek dokunuşla gündüz ve gece modu arasında geçebilirsin. Telefonda üst menüdeki düğmeler alt menüye taşındı: sağdaki Menü düğmesine dokununca alt çubuk yukarı açılıyor; gece/gündüz modu, Gramer, Ücretsiz kütüphane, İstatistiklerim ve Ayarlar orada. Bilgisayarda faresiyle bir kelimenin üzerine gelince küçük bir baloncukta ilk Türkçe anlamı hemen görünüyor; ayrıntı için tıkla. Kitaptaki cümlenin altında bazen başka bir cümlenin Türkçesi çıkıyordu, bu düzeltildi.",

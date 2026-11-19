@@ -210,12 +210,17 @@ jobs:
           import re
           p = 'lib/data/dict_db.dart'
           s = open(p).read()
-          s = re.sub(r"_version = '(\d+)'", lambda m: f"_version = '{int(m.group(1)) + 1}'", s, count=1)
+          v = {}
+          s = re.sub(r"_version = '(\d+)'", lambda m: v.setdefault('v', f"_version = '{int(m.group(1)) + 1}'"), s, count=1)
           open(p, 'w').write(s)
+          import hashlib
+          ver = re.search(r"'(\d+)'", v['v']).group(1)
+          sha = hashlib.sha256(open('assets/dict.db', 'rb').read()).hexdigest()
+          open('test/fixtures/dict_db.stamp', 'w').write(f'{ver} {sha}\n')
           PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/dict.db lib/data/dict_db.dart
+          git add assets/dict.db lib/data/dict_db.dart test/fixtures/dict_db.stamp
           git commit -m "Dictionary: $MSG" -m "Built-in library now: $TOTAL"
           git pull --rebase origin main
           git push origin HEAD:main

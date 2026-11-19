@@ -246,6 +246,22 @@ class PanelPill extends StatelessWidget {
 String posLabel(String? pos) {
   if (pos == null) return '';
   const codes = {'n': ('isim', 'noun'), 'v': ('fiil', 'verb'), 'a': ('sıfat', 'adjective'), 's': ('sıfat', 'adjective'), 'r': ('zarf', 'adverb')};
+  // The own dictionary writes its labels in Turkish.
+  const own = {
+    'isim': 'noun',
+    'fiil': 'verb',
+    'sıfat': 'adjective',
+    'zarf': 'adverb',
+    'ünlem': 'interjection',
+    'edat': 'preposition',
+    'bağlaç': 'conjunction',
+    'zamir': 'pronoun',
+    'yardımcı fiil': 'auxiliary verb',
+    'belirteç': 'determiner',
+    'sayı': 'number',
+  };
   final c = codes[pos];
-  return c == null ? pos : L(c.$1, c.$2);
+  if (c != null) return L(c.$1, c.$2);
+  final e = own[pos];
+  return e == null ? pos : L(pos, e);
 }

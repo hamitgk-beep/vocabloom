@@ -140,7 +140,7 @@ class _ParagraphViewState extends State<ParagraphView> {
   void _showBubble(ParaAnalysis a, int i) {
     final ro = _key.currentContext?.findRenderObject();
     if (!mounted || ro is! RenderParagraph || !ro.attached) return;
-    final m = hoverMeaning(widget.app, a.tokens, a.matches, i);
+    final m = hoverMeaning(widget.app, a.tokens, a.matches, i, text: widget.para.text);
     if (m == null) return;
     final t = a.tokens[i];
     final boxes = ro.getBoxesForSelection(TextSelection(baseOffset: t.start, extentOffset: t.end));
