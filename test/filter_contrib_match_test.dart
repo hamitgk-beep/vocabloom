@@ -35,5 +35,9 @@ void main() {
     expect(found('I apologized to my neighbor for the noise.', 'dependent_prepositions'), contains('apologize to someone for'));
     expect(found('We stopped at a petrol station in England.', 'uk_us'), contains('petrol station'));
     expect(found('What is more, it is close to the station.', 'discourse_markers'), contains('what is more'));
+    // Sheets 7-10: collocations, a possessive slot, a UK word.
+    expect(found('The bright poster caught my attention.', 'collocations'), contains("catch one's attention"));
+    expect(found('We placed an order for new filters.', 'collocations'), contains('place an order'));
+    expect(found('We grilled aubergine with olive oil.', 'uk_us'), contains('aubergine'));
   });
 }

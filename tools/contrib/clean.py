@@ -18,7 +18,9 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v5.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx \
          tools/contrib/hamit_filtre2_2026-11-20.xlsx tools/contrib/hamit_filtre3_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v6.xlsx tools/contrib/hamit_filtre4_2026-11-20.xlsx tools/contrib/hamit_filtre5_2026-11-20.xlsx \
-         tools/contrib/hamit_filtre6_2026-11-20.xlsx
+         tools/contrib/hamit_filtre6_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v7.xlsx \
+         tools/contrib/hamit_2026-11-20_v8.xlsx tools/contrib/hamit_filtre7_2026-11-20.xlsx tools/contrib/hamit_filtre8_2026-11-20.xlsx \
+         tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx
 """
 import json
 import re
@@ -315,7 +317,11 @@ V6_EN_SPLIT = {
     51: [],  # mere ≠ önemsiz
 }
 
+V8_EX_FIX = {51: {'tr': 'Romanın kapağı eski bir İstanbul fotoğrafıyla süslenmişti.'}}
+
 FIXES = {
+    'hamit_2026-11-20_v8.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                     en_split={}, tr_split={}, ex_fix=V8_EX_FIX, ph_fix={}),
     'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
                                   en_split=EN_SPLIT, tr_split=TR_SPLIT, ex_fix={i: {'en': e} for i, e in EX_EN_FIX.items()},
                                   ph_fix=PH_FIX),
@@ -357,6 +363,15 @@ F4_FIX = {24: {'phrases': ['what is more', "what's more"]}}
 F5_FIX = {2: {'phrase': "keep one's chin up"}, 3: {'phrase': "wrap one's head around"}, 4: None,
           7: {'phrase': "get a taste of one's own medicine"}, 12: {'phrase': "put all one's eggs in one basket"},
           16: {'phrase': "worth one's weight in gold"}}
+# Sheets 7-10: words that mean something else in most texts (till, chips, marks, take,
+# first floor) are left out; "someone's" is a possessive.
+F7_FIX = {61: {'meaning': 'sözünü tutmamak, sözünden dönmek', 'ex_tr': 'Çocuklarına verdiği sözü asla bozmaz.'},
+          80: {'phrase': "catch one's attention"}, 225: None, 226: None, 228: None, 232: None, 237: None,
+          248: None, 250: None, 273: None}
+F8_FIX = {153: None, 154: None, 158: None,
+          194: {'meaning': 'ahlaki; kıssadan hisse (≠ Türkçe moral: morale)'}}
+F9_FIX = {31: None, 62: None, 64: None, 65: None}
+F10_FIX = {134: {'cat': 'informal_slang'}, 135: {'cat': 'informal_slang'}}
 F6_FIX = {52: {'meaning': 'olursa ve olduğunda; gerçekleşirse'}, 62: None, 136: None, 138: None}
 # Second filter sheet (hamit_filtre2_2026-11-20.xlsx).
 # False friends: the meaning in the form the filter shows, "meaning (≠ the look-alike)".
@@ -432,7 +447,9 @@ for src in srcs:
             if not cat or not ph:
                 continue
             fix = {'hamit_filtre_2026-11-20.xlsx': F1_FIX, 'hamit_filtre2_2026-11-20.xlsx': F2_FIX, 'hamit_filtre4_2026-11-20.xlsx': F4_FIX,
-                   'hamit_filtre5_2026-11-20.xlsx': F5_FIX, 'hamit_filtre6_2026-11-20.xlsx': F6_FIX}.get(name, {}).get(i, {})
+                   'hamit_filtre5_2026-11-20.xlsx': F5_FIX, 'hamit_filtre6_2026-11-20.xlsx': F6_FIX,
+                   'hamit_filtre7_2026-11-20.xlsx': F7_FIX, 'hamit_filtre8_2026-11-20.xlsx': F8_FIX,
+                   'hamit_filtre9_2026-11-20.xlsx': F9_FIX, 'hamit_filtre10_2026-11-20.xlsx': F10_FIX}.get(name, {}).get(i, {})
             if cat == 'discourse_markers' and ';' in mean:
                 # "bu arada; konu değiştirirken": the part after ";" says when it is used.
                 mean, note = [x.strip() for x in mean.split(';', 1)]
