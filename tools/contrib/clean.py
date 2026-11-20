@@ -22,7 +22,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v8.xlsx tools/contrib/hamit_filtre7_2026-11-20.xlsx tools/contrib/hamit_filtre8_2026-11-20.xlsx \
          tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
+         tools/contrib/hamit_denetim14_2026-11-20.xlsx
 """
 import json
 import re
@@ -435,6 +436,39 @@ F1_PHRASE = {"i am afraid ...": ["i am afraid", "i'm afraid"], 'may i ...?': ['m
              'i would appreciate it if ...': ['i would appreciate it if']}
 
 
+
+# --- Audit sheet 14 (hamit_denetim14_2026-11-20.xlsx) --------------------------
+# Examples: "buy to let" is used before a noun ("a buy-to-let flat").
+# The others are written so that the phrase is found in them: "does not look",
+# "she is used to", "played for love".
+D14_EX_FIX = {
+    22: {'ex': 'We decided to buy to let, so the flat now pays for itself.',
+         'ex_tr': 'Kiraya vermek için ev almaya karar verdik, daire artık kendi masrafını çıkarıyor.'},
+    23: {'ex': 'At eighty, she does not look a day over sixty.'},
+    33: {'ex': 'She is used to getting up before sunrise.', 'ex_tr': 'Güneş doğmadan kalkmaya alışkın.'},
+    57: {'ex': 'We played for love, with no money at stake.', 'ex_tr': 'Ortada para olmadan, sadece eğlencesine oynadık.'},
+}
+# Meanings and removals, checked one by one. Kept: "from can see to can't see"
+# (a real, old American saying: from dawn to dusk), "I want doesn't get" (a
+# British saying to children), "be used to" (its two senses are already
+# separate), "time of old" ("times of old" is matched through "time").
+D14_EDITS = {
+    'have a go at it': {'action': 'meaning', 'meaning': 'denemek, bir şeyi yapmaya girişmek'},
+    'for love or money': {'action': 'meaning', 'meaning': 'hiçbir şekilde, ne yapsan (olumsuz cümlede)'},
+    "i'm not the one": {'action': 'meaning', 'meaning': 'o kişi ben değilim; (argo) benimle uğraşma'},
+    # Matched in ordinary sentences with another meaning: "looked at the money",
+    # "well out of reach"; or not an English phrase ("on seen", "read the car",
+    # "for the love of me" is "for the life of me").
+    'at the money': {'action': 'delete'},
+    'well out': {'action': 'delete'},
+    'on seen': {'action': 'delete'},
+    'read the car': {'action': 'delete'},
+    'for the love of me': {'action': 'delete'},
+    'go in the out door': {'action': 'delete'},
+    'party up': {'action': 'delete'},
+}
+
+
 def lang_of(word, meaning, tr_words):
     """Turkish when the word is a known Turkish word or has Turkish letters,
     or when its meaning is written in English."""
@@ -446,7 +480,7 @@ def lang_of(word, meaning, tr_words):
 
 
 out, srcs = sys.argv[1], sys.argv[2:]
-ctx, words, examples, phrases = [], [], [], []
+ctx, words, examples, phrases, edits = [], [], [], [], []
 seen = set()  # (sheet, row contents) already read from an earlier file
 
 
@@ -466,6 +500,21 @@ for src in srcs:
     fx = FIXES.get(name) or dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                  en_split={}, tr_split={}, ex_fix={}, ph_fix={})
     wb = openpyxl.load_workbook(src, data_only=True)
+
+    if 'Örnek cümle önerileri' in wb.sheetnames:
+        # An audit sheet: examples for phrases that had none, and phrases to fix or remove.
+        for i, r in rows(wb, 'Örnek cümle önerileri'):
+            ph, cat, mean, ex, ex_tr = [str(x or '').strip() for x in (r + [''] * 5)[:5]]
+            fix = D14_EX_FIX.get(i, {})
+            if fix is None or not ph:
+                continue
+            e = {'phrase': re.sub(r'\s*…\s*', ' sb ', ph).strip(), 'lang': 'en', 'meaning': '', 'ex': ex, 'ex_tr': ex_tr}
+            e.update(fix)
+            phrases.append(e)
+        for i, r in rows(wb, 'Anlam ve silme kontrolü'):
+            if r[0] and r[0] in D14_EDITS:
+                edits.append(dict(D14_EDITS[r[0]], phrase=r[0]))
+        continue
 
     if 'Kalıplar' in wb.sheetnames and 'Cümlede anlam' not in wb.sheetnames:
         for i, r in rows(wb, 'Kalıplar'):
@@ -574,6 +623,6 @@ for src in srcs:
                         'ex': 'Be careful not to let the bathwater run over.', 'ex_tr': 'Banyo suyunun taşmamasına dikkat et.'})
 
 data = {'source': 'Storilex contributors (Hamit), ' + ', '.join(s.split('/')[-1] for s in srcs),
-        'context': ctx, 'words': words, 'examples': examples, 'phrases': phrases}
+        'context': ctx, 'words': words, 'examples': examples, 'phrases': phrases, 'phrase_edits': edits}
 json.dump(data, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print({k: len(v) for k, v in data.items() if isinstance(v, list)})

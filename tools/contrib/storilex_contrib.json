@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -56520,6 +56520,541 @@
    "ex": "The novel's hero makes several morally ambiguous choices.",
    "ex_tr": "Romanın kahramanı ahlaki açıdan belirsiz birkaç seçim yapıyor.",
    "cat": "collocations"
+  },
+  {
+   "phrase": "have a go at it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Let me have a go at it before we call a technician.",
+   "ex_tr": "Teknisyen çağırmadan önce bir de ben deneyeyim."
+  },
+  {
+   "phrase": "i don't know about that",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I don't know about that; the road looks too icy to drive on.",
+   "ex_tr": "Bundan pek emin değilim; yol araba sürmek için fazla buzlu görünüyor."
+  },
+  {
+   "phrase": "if i were you",
+   "lang": "en",
+   "meaning": "",
+   "ex": "If I were you, I'd apologize before the meeting.",
+   "ex_tr": "Senin yerinde olsam toplantıdan önce özür dilerdim."
+  },
+  {
+   "phrase": "have a good time of it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The older children had a good time of it while their parents were away.",
+   "ex_tr": "Anne babaları yokken büyük çocukların keyfi yerindeydi."
+  },
+  {
+   "phrase": "by the time",
+   "lang": "en",
+   "meaning": "",
+   "ex": "By the time we reached the station, the last train had left.",
+   "ex_tr": "İstasyona vardığımızda son tren gitmişti."
+  },
+  {
+   "phrase": "by and by",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The rain stopped, and by and by the sun came out.",
+   "ex_tr": "Yağmur dindi ve bir süre sonra güneş açtı."
+  },
+  {
+   "phrase": "i don't think so",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Do you think he'll agree? I don't think so.",
+   "ex_tr": "Sence kabul eder mi? Pek sanmıyorum."
+  },
+  {
+   "phrase": "home in on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The detective homed in on a small inconsistency in his story.",
+   "ex_tr": "Dedektif, anlattıklarındaki küçük bir tutarsızlığa odaklandı."
+  },
+  {
+   "phrase": "to the last",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She defended her decision to the last.",
+   "ex_tr": "Kararını sonuna kadar savundu."
+  },
+  {
+   "phrase": "not only that",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The room was cold. Not only that, the window wouldn't close.",
+   "ex_tr": "Oda soğuktu. Üstelik pencere de kapanmıyordu."
+  },
+  {
+   "phrase": "that's your lot",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You've had two slices of cake, and that's your lot.",
+   "ex_tr": "İki dilim pasta yedin, bu kadar yeter."
+  },
+  {
+   "phrase": "a house is not a home",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After the children moved out, she realized that a house is not a home without the people you love.",
+   "ex_tr": "Çocuklar taşındıktan sonra, sevdiğin insanlar olmadan bir evin yuva olmadığını anladı."
+  },
+  {
+   "phrase": "you only get what you give",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He made time for his friends because he believed you only get what you give.",
+   "ex_tr": "İnsan ancak verdiği kadarını alır diye düşündüğünden arkadaşlarına zaman ayırırdı."
+  },
+  {
+   "phrase": "for the love of",
+   "lang": "en",
+   "meaning": "",
+   "ex": "For the love of all that's good, please turn down the music.",
+   "ex_tr": "Allah aşkına, lütfen müziğin sesini kıs."
+  },
+  {
+   "phrase": "get what one asked for",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He ignored every warning and got what he asked for when the engine failed.",
+   "ex_tr": "Bütün uyarıları görmezden geldi ve motor bozulunca yaptığının sonucuna katlandı."
+  },
+  {
+   "phrase": "you are what you eat",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My grandfather always said, 'You are what you eat,' and cooked fresh meals every day.",
+   "ex_tr": "Dedem hep 'Ne yersen osun' der, her gün taze yemek pişirirdi."
+  },
+  {
+   "phrase": "look out on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Our bedroom windows look out on a quiet garden.",
+   "ex_tr": "Yatak odamızın pencereleri sakin bir bahçeye bakıyor."
+  },
+  {
+   "phrase": "get right into it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We have little time, so let's get right into it.",
+   "ex_tr": "Vaktimiz az, o yüzden doğrudan konuya geçelim."
+  },
+  {
+   "phrase": "that's done it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "That's done it! You've broken the only key we had.",
+   "ex_tr": "İşte şimdi oldu! Elimizdeki tek anahtarı da kırdın."
+  },
+  {
+   "phrase": "not to speak of",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The trip was exhausting, not to speak of expensive.",
+   "ex_tr": "Yolculuk yorucuydu, pahalı olmasını saymıyorum bile."
+  },
+  {
+   "phrase": "buy to let",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We decided to buy to let, so the flat now pays for itself.",
+   "ex_tr": "Kiraya vermek için ev almaya karar verdik, daire artık kendi masrafını çıkarıyor."
+  },
+  {
+   "phrase": "not look a day over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "At eighty, she does not look a day over sixty.",
+   "ex_tr": "Seksen yaşında ama altmışından bir gün bile büyük göstermiyor."
+  },
+  {
+   "phrase": "buy over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The company tried to buy over the local officials.",
+   "ex_tr": "Şirket yerel yetkilileri rüşvetle kendi tarafına çekmeye çalıştı."
+  },
+  {
+   "phrase": "look out over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The balcony looks out over the harbor.",
+   "ex_tr": "Balkon limana bakıyor."
+  },
+  {
+   "phrase": "all over the lot",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After the move, our belongings were scattered all over the lot.",
+   "ex_tr": "Taşınmadan sonra eşyalarımız her yere dağılmıştı."
+  },
+  {
+   "phrase": "over and over again",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He read the letter over and over again, hoping he'd misunderstood it.",
+   "ex_tr": "Yanlış anlamış olmayı umarak mektubu defalarca okudu."
+  },
+  {
+   "phrase": "what's done is done",
+   "lang": "en",
+   "meaning": "",
+   "ex": "What's done is done; we need to decide what happens next.",
+   "ex_tr": "Olan oldu; şimdi ne yapacağımıza karar vermeliyiz."
+  },
+  {
+   "phrase": "day or night",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You can call me day or night if you need help.",
+   "ex_tr": "Yardıma ihtiyacın olursa gece gündüz beni arayabilirsin."
+  },
+  {
+   "phrase": "i'll be here all night",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Take your time; I'll be here all night.",
+   "ex_tr": "Acele etme; bütün gece burada olacağım."
+  },
+  {
+   "phrase": "make a night of it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We booked dinner and a concert to make a night of it.",
+   "ex_tr": "Geceyi dolu dolu geçirmek için akşam yemeği ve konser ayarladık."
+  },
+  {
+   "phrase": "every day is a school day",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I had no idea owls could swim. Every day is a school day!",
+   "ex_tr": "Baykuşların yüzebildiğini bilmiyordum. İnsan her gün yeni bir şey öğreniyor!"
+  },
+  {
+   "phrase": "be used to",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She is used to getting up before sunrise.",
+   "ex_tr": "Güneş doğmadan kalkmaya alışkın."
+  },
+  {
+   "phrase": "time of old",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The villagers still tell stories from times of old.",
+   "ex_tr": "Köylüler hâlâ eski zamanlardan kalma hikâyeler anlatıyor."
+  },
+  {
+   "phrase": "everything old is new again",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Vintage cameras are popular again; everything old is new again.",
+   "ex_tr": "Eski tip fotoğraf makineleri yeniden moda oldu; eski olan her şey yeniden yeni oluyor."
+  },
+  {
+   "phrase": "speak like a book",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He speaks like a book, but his explanations are hard to follow.",
+   "ex_tr": "Kitap gibi konuşuyor ama açıklamalarını takip etmek zor."
+  },
+  {
+   "phrase": "for the first time",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She saw the ocean for the first time at the age of twenty.",
+   "ex_tr": "Denizi ilk kez yirmi yaşında gördü."
+  },
+  {
+   "phrase": "first up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "First up, we'll hear from the project manager.",
+   "ex_tr": "İlk olarak proje yöneticisini dinleyeceğiz."
+  },
+  {
+   "phrase": "from the first",
+   "lang": "en",
+   "meaning": "",
+   "ex": "From the first, I knew something was wrong.",
+   "ex_tr": "En başından beri bir şeylerin ters gittiğini biliyordum."
+  },
+  {
+   "phrase": "do a job on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The storm really did a job on the roof.",
+   "ex_tr": "Fırtına çatıya ciddi zarar verdi."
+  },
+  {
+   "phrase": "by the job",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The carpenter was paid by the job, not by the hour.",
+   "ex_tr": "Marangoza saatlik değil, iş başına ödeme yapılıyordu."
+  },
+  {
+   "phrase": "as one man",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The crowd rose as one man when the singer appeared.",
+   "ex_tr": "Şarkıcı görününce kalabalık tek vücut hâlinde ayağa kalktı."
+  },
+  {
+   "phrase": "to the last man",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The team stayed to the last man to finish the rescue.",
+   "ex_tr": "Ekip, kurtarmayı tamamlamak için son kişisine kadar orada kaldı."
+  },
+  {
+   "phrase": "there's a first time for everything",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I've never cooked for twenty people, but there's a first time for everything.",
+   "ex_tr": "Daha önce yirmi kişiye yemek yapmadım ama her şeyin bir ilki var."
+  },
+  {
+   "phrase": "where there's a will there's a way",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She kept applying for scholarships, convinced that where there's a will there's a way.",
+   "ex_tr": "İsteyince bir yol bulunacağına inanarak burs başvurularını sürdürdü."
+  },
+  {
+   "phrase": "leave things be",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The argument had ended, so I decided to leave things be.",
+   "ex_tr": "Tartışma bitmişti, ben de konuyu olduğu gibi bırakmaya karar verdim."
+  },
+  {
+   "phrase": "there's nothing like",
+   "lang": "en",
+   "meaning": "",
+   "ex": "There's nothing like a hot shower after a long hike.",
+   "ex_tr": "Uzun bir yürüyüşten sonra sıcak duş gibisi yok."
+  },
+  {
+   "phrase": "want for nothing",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Although they lived simply, the children wanted for nothing.",
+   "ex_tr": "Sade bir yaşam sürseler de çocukların hiçbir eksiği yoktu."
+  },
+  {
+   "phrase": "out of nothing",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She built a successful business out of nothing.",
+   "ex_tr": "Sıfırdan başarılı bir iş kurdu."
+  },
+  {
+   "phrase": "something is better than nothing",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We only raised a little money, but something is better than nothing.",
+   "ex_tr": "Az para topladık ama hiç yoktan iyidir."
+  },
+  {
+   "phrase": "both sb and",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Both the teacher and the students were surprised by the result.",
+   "ex_tr": "Hem öğretmen hem öğrenciler sonuca şaşırdı."
+  },
+  {
+   "phrase": "the one that got away",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Years later, he still thought of her as the one that got away.",
+   "ex_tr": "Yıllar sonra bile onu elinden kaçırdığı aşk olarak görüyordu."
+  },
+  {
+   "phrase": "out and away",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She was out and away the best runner in the race.",
+   "ex_tr": "Yarışın açık ara en iyi koşucusu oydu."
+  },
+  {
+   "phrase": "wouldn't you say",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The second ending feels more believable, wouldn't you say?",
+   "ex_tr": "İkinci son daha inandırıcı geliyor, sence de öyle değil mi?"
+  },
+  {
+   "phrase": "put a stop to",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The new rules put a stop to late-night noise.",
+   "ex_tr": "Yeni kurallar gece geç saatlerdeki gürültüye son verdi."
+  },
+  {
+   "phrase": "i'd like to see someone try",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Nobody can move that stone alone. I'd like to see someone try.",
+   "ex_tr": "O taşı kimse tek başına kaldıramaz. Deneyeni görmek isterim."
+  },
+  {
+   "phrase": "play for love",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We played for love, with no money at stake.",
+   "ex_tr": "Ortada para olmadan, sadece eğlencesine oynadık."
+  },
+  {
+   "phrase": "play with house money",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After recovering his initial investment, he felt he was playing with house money.",
+   "ex_tr": "Başlangıçtaki yatırımını geri alınca artık kazandığı parayla risk aldığını düşündü."
+  },
+  {
+   "phrase": "play hard to get",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He liked her, but he played hard to get for weeks.",
+   "ex_tr": "Ondan hoşlanıyordu ama haftalarca naz yaptı."
+  },
+  {
+   "phrase": "hard at it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "When I arrived, the volunteers were already hard at it.",
+   "ex_tr": "Ben vardığımda gönüllüler çoktan harıl harıl çalışıyordu."
+  },
+  {
+   "phrase": "over hard",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I'd like my eggs over hard, please.",
+   "ex_tr": "Yumurtalarımın iki tarafı da iyice pişmiş olsun lütfen."
+  },
+  {
+   "phrase": "i'm here all week",
+   "lang": "en",
+   "meaning": "",
+   "ex": "That was a terrible joke, I know. I'm here all week!",
+   "ex_tr": "Kötü bir şakaydı, biliyorum. Bütün hafta buradayım!"
+  },
+  {
+   "phrase": "call someone every name in the book",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The furious customer called the clerk every name in the book.",
+   "ex_tr": "Öfkeli müşteri görevliye ağzına gelen bütün hakaretleri savurdu."
+  },
+  {
+   "phrase": "in everything but name",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She was the team leader in everything but name.",
+   "ex_tr": "Unvanı olmasa da fiilen ekibin lideriydi."
+  },
+  {
+   "phrase": "in name only",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The committee existed in name only and never met.",
+   "ex_tr": "Komite sadece kâğıt üzerinde vardı ve hiç toplanmadı."
+  },
+  {
+   "phrase": "work like a dog",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He worked like a dog to pay off his debts.",
+   "ex_tr": "Borçlarını ödemek için canını dişine takarak çalıştı."
+  },
+  {
+   "phrase": "party on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The guests decided to party on after midnight.",
+   "ex_tr": "Konuklar gece yarısından sonra da eğlenmeye devam etmeye karar verdi."
+  },
+  {
+   "phrase": "have a bad time of it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The travelers had a bad time of it during the storm.",
+   "ex_tr": "Yolcular fırtına sırasında çok zor anlar yaşadı."
+  },
+  {
+   "phrase": "children should be seen and not heard",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My grandmother grew up hearing that children should be seen and not heard.",
+   "ex_tr": "Büyükannem çocukların sesini çıkarmaması gerektiği söylenerek büyütülmüş."
+  },
+  {
+   "phrase": "make it do or do without",
+   "lang": "en",
+   "meaning": "",
+   "ex": "During the shortage, families had to make it do or do without.",
+   "ex_tr": "Kıtlık sırasında aileler ellerindekilerle idare etmek ya da onsuz kalmak zorundaydı."
+  },
+  {
+   "phrase": "call together",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The mayor called together the neighborhood representatives.",
+   "ex_tr": "Belediye başkanı mahalle temsilcilerini bir araya çağırdı."
+  }
+ ],
+ "phrase_edits": [
+  {
+   "action": "meaning",
+   "meaning": "denemek, bir şeyi yapmaya girişmek",
+   "phrase": "have a go at it"
+  },
+  {
+   "action": "delete",
+   "phrase": "on seen"
+  },
+  {
+   "action": "delete",
+   "phrase": "go in the out door"
+  },
+  {
+   "action": "delete",
+   "phrase": "read the car"
+  },
+  {
+   "action": "meaning",
+   "meaning": "hiçbir şekilde, ne yapsan (olumsuz cümlede)",
+   "phrase": "for love or money"
+  },
+  {
+   "action": "delete",
+   "phrase": "at the money"
+  },
+  {
+   "action": "delete",
+   "phrase": "well out"
+  },
+  {
+   "action": "delete",
+   "phrase": "party up"
+  },
+  {
+   "action": "delete",
+   "phrase": "for the love of me"
+  },
+  {
+   "action": "meaning",
+   "meaning": "o kişi ben değilim; (argo) benimle uğraşma",
+   "phrase": "i'm not the one"
   }
  ]
 }

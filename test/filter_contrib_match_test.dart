@@ -42,5 +42,9 @@ void main() {
     // Sheet 13: an adjective + noun found after any determiner, an adverb + adjective.
     expect(found('She gave him her faint smile.', 'collocations'), contains('faint smile'));
     expect(found('I was utterly exhausted after the trip.', 'collocations'), contains('utterly exhausted'));
+    // Audit 14: a phrase that is matched in ordinary sentences with another meaning is gone.
+    expect(found('He looked at the money.', 'prepositional_phrases'), isNot(contains('at the money')));
+    expect(found('The shelf was well out of reach.', 'phrasal_verbs'), isNot(contains('well out')));
+    expect(found('Let me have a go at it first.', 'idioms'), contains('have a go at it'));
   });
 }
