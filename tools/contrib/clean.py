@@ -1,36 +1,28 @@
-"""Turns a filled-in dictionary sheet (tools/contrib/*.xlsx, the template
-sozluk-veri-sablonu.xlsx) into tools/contrib/storilex_contrib.json, which
-tools/contrib/apply.py adds to the dictionaries.
+"""Turns the filled-in dictionary sheets (tools/contrib/*.xlsx, made from the
+template sozluk-veri-sablonu.xlsx) into tools/contrib/storilex_contrib.json,
+which tools/contrib/apply.py adds to the dictionaries.
 
-The corrections found when the sheet was checked are applied here, so the
-original file stays as it was sent:
+The corrections found when a sheet was checked are applied here, so the files
+stay as they were sent (the tables below, one set a file):
   - rows that held several different meanings are split, one meaning a row;
-  - three wrong meanings are fixed (göze almak, run over, salon takımı);
-  - the "meaning in context" sentences get a translation, so they can also be
-    shown as examples.
+  - wrong meanings and unnatural sentences are fixed;
+  - the "meaning in context" sentences of the first file get a translation,
+    so they can also be shown as examples.
+A later file repeats rows of the earlier ones; a row that is the same as in an
+earlier file is read only once, with that file's corrections.
 
-usage: python3 tools/contrib/clean.py tools/contrib/hamit_2026-11-20.xlsx tools/contrib/storilex_contrib.json
+usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
+         tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx
 """
 import json
 import sys
 
 import openpyxl
 
-src, out = sys.argv[1], sys.argv[2]
-wb = openpyxl.load_workbook(src, data_only=True)
-
-
-def rows(sheet):
-    for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
-        r = ['' if v is None else str(v).strip() for v in r]
-        if any(r):
-            yield i, r
-
-
 POS = {'isim': 'noun', 'fiil': 'verb', 'sıfat': 'adj', 'zarf': 'adv', 'zamir': 'pron', 'edat': 'postp',
        'bağlaç': 'conj', 'ünlem': 'intj', 'sayı': 'num', 'deyim': 'phrase', 'kalıp': 'phrase'}
 
-# --- Meaning in context -----------------------------------------------------
+# --- First file, hamit_2026-11-20.xlsx --------------------------------------
 # Sentence fixes: row -> (sentence, form, lemma, meaning)
 CTX_FIX = {
     9: ('Korkusu yüzüne vurmuştu.', 'vurmuştu', 'vurmak', 'to show on (one\'s face)'),
@@ -147,22 +139,6 @@ CTX_TR = {
     103: 'Köşeden sağa dön ve iki sokak dümdüz yürü.',
     104: 'Teklifi kabul ederek doğru karar verdiğini düşünüyorum.',
 }
-
-ctx = []
-phrases = []
-for i, r in rows('Cümlede anlam'):
-    sent, form, lemma, lang, mean, note = (r + [''] * 6)[:6]
-    if i in CTX_TO_PHRASE:
-        phrases.append({'phrase': 'drop someone a line', 'lang': 'en', 'meaning': 'birine birkaç satır yazmak, haber vermek',
-                        'ex': sent, 'ex_tr': 'Eve sağ salim vardığında bana bir haber ver.'})
-        continue
-    if i in CTX_FIX:
-        s2, f2, l2, m2 = CTX_FIX[i]
-        sent, form, lemma, mean = s2 or sent, f2 or form, l2 or lemma, m2 or mean
-    ctx.append({'sentence': sent, 'form': form, 'lemma': lemma, 'lang': lang or ('en' if lemma.isascii() else 'tr'),
-                'meaning': mean, 'translation': CTX_TR.get(i, '')})
-
-# --- Words, both directions -------------------------------------------------
 # row -> the meanings it is split into: [(part of speech, meaning, note), ...]
 EN_SPLIT = {
     7: [('fiil', 'akmak', 'sıvı için'), ('fiil', 'çalışmak', 'makine, sistem için')],
@@ -193,58 +169,175 @@ EN_SPLIT = {
 TR_SPLIT = {
     64: [('fiil', 'to wait', 'birinin gelmesini beklemek'), ('fiil', 'to expect', 'bir şeyin olmasını ummak')],
 }
-
-words = []
-for sheet, lang, split in [('TR-EN kelimeler', 'tr', TR_SPLIT), ('EN-TR kelimeler', 'en', EN_SPLIT)]:
-    for i, r in rows(sheet):
-        w, pos, rank, mean, note, extra = (r + [''] * 6)[:6]
-        parts = split.get(i, [(pos, mean, note)])
-        for p, m, n in parts:
-            words.append({'word': w, 'lang': lang, 'pos': POS.get(p, p), 'meaning': m, 'note': n})
-
-# --- Examples ---------------------------------------------------------------
 EX_EN_FIX = {
     37: 'Our guests are coming to our place for dinner tomorrow.',
     45: 'I always read twenty pages of a book before I go to sleep.',
     80: 'The new fast train cut the journey between the two cities to two hours.',
 }
-TR_WORDS = {w['word'] for w in words if w['lang'] == 'tr'} | {c['lemma'] for c in ctx if c['lang'] == 'tr'}
-
-
-def lang_of(word, meaning):
-    """Turkish when the word is a known Turkish word or has Turkish letters,
-    or when its meaning is written in English."""
-    if word in TR_WORDS or any(c in word for c in 'çğıöşüâî'):
-        return 'tr'
-    if any(c in meaning for c in 'çğıöşüâî') or any(x.strip().endswith(('mak', 'mek')) for x in meaning.split(',')):
-        return 'en'
-    return 'tr' if meaning.startswith('to ') else 'en'
-
-
-examples = []
-for i, r in rows('Örnek cümleler'):
-    w, sense, tr, en, level = (r + [''] * 5)[:5]
-    examples.append({'word': w, 'lang': lang_of(w, sense),
-                     'meaning': sense, 'tr': tr, 'en': EX_EN_FIX.get(i, en), 'level': level})
-
-# --- Phrases ----------------------------------------------------------------
 PH_FIX = {
     10: {'meaning': 'to dare, to risk'},
     27: {'ex': 'Bu konunun üstüne düşersen kısa sürede çözersin.'},
     49: {'phrase': 'gözünü kırpmamak'},
     51: {'meaning': 'to be unable to sleep, to be wide awake'},
 }
-for i, r in rows('Deyim ve kalıplar'):
-    ph, lang, mean, ex, ex_tr = (r + [''] * 5)[:5]
-    e = {'phrase': ph, 'lang': lang, 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr}
-    e.update(PH_FIX.get(i, {}))
-    phrases.append(e)
 
-# "run over" is a phrasal verb; its context row also makes it a phrase.
-phrases.append({'phrase': 'run over', 'lang': 'en', 'meaning': 'taşmak', 'ex': 'Be careful not to let the bathwater run over.',
-                'ex_tr': 'Banyo suyunun taşmamasına dikkat et.'})
+# --- Second file, hamit_2026-11-20_v2.xlsx (600 rows a sheet) ----------------
+V2_CTX_FIX = {
+    144: ('Trafik sabah saatlerinde bile rahatça akıyordu.', None, None, 'to flow smoothly (traffic)'),
+    149: ('Satıcı fiyatta biraz daha indirim yaptı.', 'yaptı', 'yapmak', 'to give (a discount)'),
+    182: ('Yarışmacı son turda rakiplerinden birine tur bindirdi.', 'bindirdi', 'bindirmek', 'to lap (a rival in a race: tur bindirmek)'),
+    232: (None, None, 'yayılmak', None),
+    233: (None, None, 'yayılmak', None),
+    322: ('Takım son dakikada attığı golle skoru ikiye çıkardı.', 'çıkardı', 'çıkarmak', 'to bring (a score) up to'),
+    337: ('Bozuk prize dokununca elini elektrik çarptı.', None, None, None),
+    341: ('Hangisini seçtiğin fark etmez, ikisi de aynı kalitede.', 'fark etmez', None, 'to make a difference, to matter'),
+    413: (None, None, None, 'acil olmak, sıkıştırmak (zaman)'),
+    451: ('The president addressed the nation on national television.', 'nation', 'nation', 'millet, ulus'),
+    541: (None, None, None, 'üfleyerek söndürmek'),
+}
+# New sentences: (sentence, form, lemma, lang, meaning)
+V2_CTX_ADD = [
+    ('The state pays for the schools in this region.', 'state', 'state', 'en', 'devlet'),
+]
+V2_EN_SPLIT = {
+    298: [('isim', 'açı', 'geometride, köşede'), ('isim', 'bakış açısı', 'bir konuya yaklaşım')],
+    322: [('isim', 'madde', 'sözleşme, yasa maddesi'), ('isim', 'eşya, parça', 'nesne')],
+    350: [('sıfat', 'tuhaf, rahatsız edici', 'ortam, sessizlik için'), ('sıfat', 'sakar, beceriksiz', 'hareketleri için'), ('sıfat', 'mahcup', 'utanmış')],
+    352: [('isim', 'kelepir', 'uygun fiyatlı alışveriş'), ('isim', 'pazarlık, anlaşma', 'karşılıklı uzlaşma')],
+    356: [('isim', 'ışın, ışık demeti', 'ışık'), ('isim', 'kiriş', 'yapı direği')],
+    366: [('fiil', 'bağlamak', 'birleştirmek, sarmak'), ('fiil', 'ciltlemek', 'kitap için')],
+    380: [('fiil', 'rahatsız etmek', 'sıkıntı vermek'), ('fiil', 'zahmet etmek', 'uğraşmak')],
+    382: [('isim', 'dal', 'ağaç kolu'), ('isim', 'şube', 'kurum birimi')],
+    387: [('sıfat', 'harika', 'çok başarılı'), ('sıfat', 'zeki, parlak', 'insan için'), ('sıfat', 'parlak, ışıl ışıl', 'ışık için')],
+    412: [('fiil', 'iddia etmek', 'ileri sürmek'), ('fiil', 'talep etmek', 'hak istemek')],
+    421: [('isim', 'rahatlık, konfor', 'huzur'), ('isim', 'teselli', 'avuntu')],
+    493: [('isim', 'eylem, iş', 'yapılan hareket'), ('isim', 'tapu', 'mülkiyet belgesi')],
+    504: [('fiil', 'bağlı olmak', 'duruma göre değişmek'), ('fiil', 'güvenmek', 'depend on: birine güvenmek')],
+    529: [('fiil', 'görevden almak', 'işten çıkarmak'), ('fiil', 'reddetmek, önemsememek', 'bir fikri')],
+    537: [('sıfat', 'yurt içi, yerli', 'ülke içi'), ('sıfat', 'ev içi, evcil', 'ev ile ilgili')],
+    545: [('sıfat', 'sıkıcı', 'ilgi çekmeyen'), ('sıfat', 'donuk, mat', 'renk, ışık için'), ('sıfat', 'kör', 'bıçak için')],
+    568: [('fiil', 'işe almak, çalıştırmak', 'iş vermek'), ('fiil', 'kullanmak', 'yöntem, araç')],
+    574: [('fiil', 'ilgisini çekmek', 'dikkatini tutmak'), ('fiil', 'katılmak', 'engage in')],
+    597: [('fiil', 'incelemek', 'gözden geçirmek'), ('fiil', 'muayene etmek', 'doktor için')],
+    604: [('fiil', 'çok yormak, bitkin düşürmek', 'yorgunluk'), ('fiil', 'tüketmek', 'kaynağı bitirmek')],
+}
+V2_TR_SPLIT = {
+    556: [('sıfat', 'neighbouring', 'bitişik')],
+}
+# Examples: row -> the columns that change
+V2_EX_FIX = {
+    216: {'meaning': 'teşekkür etmek, emeğini anmak'},
+    255: {'meaning': 'seyirci, izleyiciler', 'tr': 'Oyun bittiğinde seyirciler oyuncuları dakikalarca alkışladı.'},
+    279: {'tr': 'Ekibimiz en zorlu teknik projeleri bile tamamlayabilecek kapasitededir.'},
+    299: {'meaning': 'teyit etmek, doğrulamak', 'tr': 'Uçuş saatini havaalanına gitmeden önce internetten teyit ettim.'},
+    392: {'en': 'The referee treated both teams fairly throughout the match.'},
+    397: {'meaning': 'yüzmek, süzülmek (su yüzeyinde)'},
+    414: {'meaning': 'belirlemek, tespit etmek'},
+    430: {'tr': 'Bu yaz tatilinde Karadeniz yaylalarını gezmeye niyetliyiz.'},
+    437: {'meaning': 'meraklı, istekli', 'tr': 'Küçük yaşlardan beri astronomiye büyük bir ilgisi vardı.'},
+    450: {'tr': 'Bu otel yüksek hizmet kalitesini yıllardır sürdürüyor.',
+          'en': 'This hotel has maintained its high quality of service for years.'},
+    465: {'tr': 'Trenin hafif hareketi uykumu getirdi.', 'en': 'The gentle motion of the train made me sleepy.'},
+    469: {'meaning': 'ana dili olarak konuşan',
+          'tr': 'Ana dili olarak konuşan biri kadar akıcı konuşabilmek için bol bol dinleme pratiği yapıyor.'},
+    474: {'en': 'I noticed in the morning that the first flowers had opened on the tree in the garden.'},
+    515: {'tr': 'Öğretmen öğrencinin yaratıcı kompozisyonunu tüm sınıfın önünde övdü.',
+          'en': "The teacher praised the student's creative essay in front of the whole class."},
+    523: {'tr': 'Düzenli bakım arızaların oluşmasını önler.', 'en': 'Regular maintenance prevents malfunctions.'},
+    528: {'tr': 'Güvenlik her zaman birinci önceliğimizdir.', 'en': 'Safety is always our first priority.'},
+    529: {'meaning': 'özel, kişisel', 'tr': 'Bu konuşma tamamen özel, lütfen kimseye anlatma.',
+          'en': "This conversation is completely private, so please don't tell anyone."},
+}
+V2_PH_FIX = {
+    312: {'meaning': 'to forgo what one is owed, to forgive wholeheartedly',
+          'ex': 'Ayrılırken komşusu ona olan bütün hakkını helal etti.',
+          'ex_tr': 'As he left, his neighbour wholeheartedly forgave anything he was owed.'},
+    334: {'ex': 'Ne kadar uyarsak da laf dinlemiyor.', 'ex_tr': "However much we warn him, he won't listen."},
+    372: {'ex_tr': 'Sınavlar gelecek hafta başlıyor, bu yüzden bu gece sıkı çalışmam gerek.'},
+    414: {'ex_tr': 'Yardım etmeye varım ama bütün ödevini yapmaya gelince sınırı çizerim.'},
+}
 
-data = {'source': 'Storilex contributors (Hamit), ' + src.split('/')[-1],
+FIXES = {
+    'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
+                                  en_split=EN_SPLIT, tr_split=TR_SPLIT, ex_fix={i: {'en': e} for i, e in EX_EN_FIX.items()},
+                                  ph_fix=PH_FIX),
+    'hamit_2026-11-20_v2.xlsx': dict(ctx_fix=V2_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=V2_CTX_ADD,
+                                     en_split=V2_EN_SPLIT, tr_split=V2_TR_SPLIT, ex_fix=V2_EX_FIX, ph_fix=V2_PH_FIX),
+}
+
+
+def lang_of(word, meaning, tr_words):
+    """Turkish when the word is a known Turkish word or has Turkish letters,
+    or when its meaning is written in English."""
+    if word in tr_words or any(c in word for c in 'çğıöşüâî'):
+        return 'tr'
+    if any(c in meaning for c in 'çğıöşüâî') or any(x.strip().endswith(('mak', 'mek')) for x in meaning.split(',')):
+        return 'en'
+    return 'tr' if meaning.startswith('to ') else 'en'
+
+
+out, srcs = sys.argv[1], sys.argv[2:]
+ctx, words, examples, phrases = [], [], [], []
+seen = set()  # (sheet, row contents) already read from an earlier file
+
+
+def rows(wb, sheet):
+    for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
+        r = ['' if v is None else str(v).strip() for v in r]
+        if any(r) and (sheet, tuple(r)) not in seen:
+            seen.add((sheet, tuple(r)))
+            yield i, r
+
+
+for src in srcs:
+    name = src.split('/')[-1]
+    fx = FIXES.get(name) or dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                 en_split={}, tr_split={}, ex_fix={}, ph_fix={})
+    wb = openpyxl.load_workbook(src, data_only=True)
+
+    # --- Meaning in context
+    for i, r in rows(wb, 'Cümlede anlam'):
+        sent, form, lemma, lang, mean, note = (r + [''] * 6)[:6]
+        if i in fx['ctx_to_phrase']:
+            phrases.append({'phrase': 'drop someone a line', 'lang': 'en', 'meaning': 'birine birkaç satır yazmak, haber vermek',
+                            'ex': sent, 'ex_tr': 'Eve sağ salim vardığında bana bir haber ver.'})
+            continue
+        if i in fx['ctx_fix']:
+            s2, f2, l2, m2 = fx['ctx_fix'][i]
+            sent, form, lemma, mean = s2 or sent, f2 or form, l2 or lemma, m2 or mean
+        ctx.append({'sentence': sent, 'form': form, 'lemma': lemma, 'lang': lang or ('en' if lemma.isascii() else 'tr'),
+                    'meaning': mean, 'translation': fx['ctx_tr'].get(i, '')})
+    for sent, form, lemma, lang, mean in fx['ctx_add']:
+        ctx.append({'sentence': sent, 'form': form, 'lemma': lemma, 'lang': lang, 'meaning': mean, 'translation': ''})
+
+    # --- Words, both directions
+    for sheet, lang, split in [('TR-EN kelimeler', 'tr', fx['tr_split']), ('EN-TR kelimeler', 'en', fx['en_split'])]:
+        for i, r in rows(wb, sheet):
+            w, pos, rank, mean, note, extra = (r + [''] * 6)[:6]
+            for p, m, n in split.get(i, [(pos, mean, note)]):
+                words.append({'word': w, 'lang': lang, 'pos': POS.get(p, p), 'meaning': m, 'note': n})
+
+    # --- Examples
+    tr_words = {w['word'] for w in words if w['lang'] == 'tr'} | {c['lemma'] for c in ctx if c['lang'] == 'tr'}
+    for i, r in rows(wb, 'Örnek cümleler'):
+        w, sense, tr, en, level = (r + [''] * 5)[:5]
+        e = {'word': w, 'lang': lang_of(w, sense, tr_words), 'meaning': sense, 'tr': tr, 'en': en, 'level': level}
+        e.update(fx['ex_fix'].get(i, {}))
+        examples.append(e)
+
+    # --- Phrases
+    for i, r in rows(wb, 'Deyim ve kalıplar'):
+        ph, lang, mean, ex, ex_tr = (r + [''] * 5)[:5]
+        e = {'phrase': ph, 'lang': lang, 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr}
+        e.update(fx['ph_fix'].get(i, {}))
+        phrases.append(e)
+
+    if name == 'hamit_2026-11-20.xlsx':
+        # "run over" is a phrasal verb; its context row also makes it a phrase.
+        phrases.append({'phrase': 'run over', 'lang': 'en', 'meaning': 'taşmak',
+                        'ex': 'Be careful not to let the bathwater run over.', 'ex_tr': 'Banyo suyunun taşmamasına dikkat et.'})
+
+data = {'source': 'Storilex contributors (Hamit), ' + ', '.join(s.split('/')[-1] for s in srcs),
         'context': ctx, 'words': words, 'examples': examples, 'phrases': phrases}
 json.dump(data, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print({k: len(v) for k, v in data.items() if isinstance(v, list)})

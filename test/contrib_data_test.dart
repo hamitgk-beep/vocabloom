@@ -40,4 +40,14 @@ void main() {
     expect(r.single['tr'], 'emek olmadan yemek olmaz');
     expect(en.examples('w:run').first.$1, 'She has been successfully running her own software company for five years.');
   });
+
+  test('Second sheet: split meanings, fixed examples, new phrases', () {
+    expect(en.ownSenses('dull').map((s) => s.tr), contains('kör'));
+    expect(en.examples('w:maintain').first.$1, 'This hotel has maintained its high quality of service for years.');
+    final r = en.db.select("SELECT tr FROM expr WHERE phrase = 'zero in on'");
+    expect(r.single['tr'], 'tam üzerine odaklanmak, hedef almak');
+    final st = tr.entry('akmak')!.senses.where((s) => s.source == 'st').expand((s) => s.glosses);
+    expect(st, contains('to flow smoothly (traffic)'));
+    expect(tr.entry('çorbada tuzu olmak'), isNotNull);
+  });
 }
