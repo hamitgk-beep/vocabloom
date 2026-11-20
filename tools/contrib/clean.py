@@ -35,7 +35,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx \
          tools/contrib/hamit_obek1_2026-11-20.xlsx tools/contrib/hamit_deyim1_2026-11-20.xlsx \
          tools/contrib/hamit_obek2_2026-11-20.xlsx tools/contrib/hamit_obek3_2026-11-20.xlsx tools/contrib/hamit_obek4_2026-11-20.xlsx \
-         tools/contrib/hamit_deyim2_2026-11-20.xlsx tools/contrib/hamit_obek5_2026-11-20.xlsx
+         tools/contrib/hamit_deyim2_2026-11-20.xlsx tools/contrib/hamit_obek5_2026-11-20.xlsx \
+         tools/contrib/hamit_deyim3_2026-11-20.xlsx
 """
 import json
 import re
@@ -1287,7 +1288,31 @@ O5_EDITS = {
     'double down': {'action': 'meaning', 'meaning': 'üstüne gitmek, kararlılığını artırmak, riski ikiye katlamak'},
 }
 
-AUDIT_FIX = {'hamit_obek5_2026-11-20.xlsx': (O5_EX_FIX, O5_EDITS),
+# --- Idiom work sheet 3 (Parti 26) ---------------------------------------------------
+Y3_EX_FIX = {
+    601: {'ex': 'Hurry up, time is ticking and the water is still rising.', 'ex_tr': 'Acele edin, zaman daralıyor ve su hâlâ yükseliyor.'},
+}
+Y3_EDITS = {
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ("burn someone's ears", "burn one's ears"), ("cancel someone's christmas", "cancel one's christmas"),
+        ("written all over someone's face", "written all over one's face"), ("answer someone's prayers", "answer one's prayers"),
+        ("rip someone's head off", "rip one's head off"), ("make someone's head spin", "make one's head spin"),
+        ("land in someone's lap", "land in one's lap"), ("dash someone's hopes", "dash one's hopes"),
+        ("clip someone's wings", "clip one's wings"), ("bane of someone's existence", "bane of one's existence"),
+        ("answer to someone's prayers", "answer to one's prayers"),
+        ('rub up the wrong way', 'rub sb up the wrong way'), ('knock down a peg', 'knock sb down a peg'),
+        ('take down a peg', 'take sb down a peg'), ('put through hoops', 'put sb through hoops'),
+        ('tear to shreds', 'tear sth to shreds'), ('pip to the post', 'pip sb to the post'),
+        ('the feathers fly', 'the feathers will fly'), ('crawl before one walks', 'crawl before you walk'),
+        ("one's fingers itch", 'fingers itch'), ('fall foul', 'fall foul of'), ('grand scheme', 'in the grand scheme of things'))},
+    **{p: {'action': 'merge', 'to': t} for p, t in (
+        ('catch napping', 'catch someone napping'), ("one's fingers are all thumbs", 'all thumbs'),
+        ('give the eye', 'give someone the eye'), ("say someone's prayers", "say one's prayers"))},
+    "say one's prayers": {'action': 'meaning', 'meaning': 'dua etmek; (tehdit) son duanı et'},
+}
+
+AUDIT_FIX = {'hamit_deyim3_2026-11-20.xlsx': (Y3_EX_FIX, Y3_EDITS),
+             'hamit_obek5_2026-11-20.xlsx': (O5_EX_FIX, O5_EDITS),
              'hamit_deyim2_2026-11-20.xlsx': (Y2_EX_FIX, Y2_EDITS),
              'hamit_obek2_2026-11-20.xlsx': (O2_EX_FIX, O2_EDITS), 'hamit_obek3_2026-11-20.xlsx': (O3_EX_FIX, {}),
              'hamit_obek4_2026-11-20.xlsx': (O4_EX_FIX, {}),
@@ -1370,7 +1395,7 @@ for src in srcs:
             e.update(fix)
             phrases.append(e)
         edits += [dict(v, phrase=k) for k, v in ph_edits.items()]
-        if name in ('hamit_deyim1_2026-11-20.xlsx', 'hamit_deyim2_2026-11-20.xlsx'):
+        if name in ('hamit_deyim1_2026-11-20.xlsx', 'hamit_deyim2_2026-11-20.xlsx', 'hamit_deyim3_2026-11-20.xlsx'):
             edits += y1_meaning_edits(wb, ph_edits)
         continue
 
