@@ -1,0 +1,1750 @@
+{
+ "version": 1,
+ "note": "Turkish grammar for English speakers: explanations in English, English sentences to translate into Turkish.",
+ "topics": [
+  {
+   "id": "tr_vowel_harmony",
+   "category": "tr_sounds",
+   "level": "A1",
+   "title_tr": "Ünlü uyumu ve çoğul eki",
+   "title_en": "Vowel harmony and the plural",
+   "explanation": "**Turkish words take endings, and the endings change their vowel to match the word.**\n- Back vowels: **a, ı, o, u**. Front vowels: **e, i, ö, ü**.\n- The plural ending is **-ler** after a front vowel and **-lar** after a back vowel: ev → evler, kitap → kitaplar.\n- The last vowel of the word decides: öğrenci → öğrenciler, kapı → kapılar.\n- After a number, the noun stays singular: iki kitap (two books), not *iki kitaplar*.",
+   "structure": [
+    "word + -ler (last vowel e, i, ö, ü)",
+    "word + -lar (last vowel a, ı, o, u)",
+    "number + singular noun"
+   ],
+   "examples": [
+    [
+     "Evler büyük.",
+     "The houses are big."
+    ],
+    [
+     "Çocuklar bahçede.",
+     "The children are in the garden."
+    ],
+    [
+     "Üç elma aldım.",
+     "I bought three apples."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_vowel_harmony-1",
+     "tr": "the books",
+     "answers": [
+      "kitaplar"
+     ],
+     "note": "kitap ends in a back vowel (a): -lar."
+    },
+    {
+     "id": "tr_vowel_harmony-2",
+     "tr": "the houses",
+     "answers": [
+      "evler"
+     ],
+     "note": "ev has a front vowel (e): -ler."
+    },
+    {
+     "id": "tr_vowel_harmony-3",
+     "tr": "the students",
+     "answers": [
+      "öğrenciler"
+     ],
+     "note": "The last vowel of öğrenci is i (front): -ler."
+    },
+    {
+     "id": "tr_vowel_harmony-4",
+     "tr": "the doors",
+     "answers": [
+      "kapılar"
+     ],
+     "note": "The last vowel of kapı is ı (back): -lar."
+    },
+    {
+     "id": "tr_vowel_harmony-5",
+     "tr": "two cats",
+     "answers": [
+      "iki kedi"
+     ],
+     "note": "After a number the noun stays singular."
+    },
+    {
+     "id": "tr_vowel_harmony-6",
+     "tr": "The children are happy.",
+     "answers": [
+      "Çocuklar mutlu.",
+      "Çocuklar mutlular."
+     ],
+     "note": "çocuk → çocuklar (u is a back vowel)."
+    }
+   ]
+  },
+  {
+   "id": "tr_to_be",
+   "category": "tr_sounds",
+   "level": "A1",
+   "title_tr": "Ek fiil: -(y)im, -sin, -dir",
+   "title_en": "To be: personal endings",
+   "explanation": "**Turkish has no separate word for \"am, is, are\". An ending on the noun or adjective does the job.**\n- ben → **-(y)Im**, sen → **-sIn**, o → (nothing or -dIr), biz → **-(y)Iz**, siz → **-sInIz**, onlar → **-lAr**.\n- The vowel follows four-way harmony: ı, i, u, ü. Öğretmenim (I am a teacher), yorgunum (I am tired).\n- After a vowel, a **y** joins the ending: hastayım, öğrenciyiz.\n- The pronoun is usually left out, because the ending already says who.",
+   "structure": [
+    "noun/adjective + -(y)ım / -(y)im / -(y)um / -(y)üm (I am)",
+    "noun/adjective + -sın / -sin / -sun / -sün (you are)",
+    "noun/adjective + -(y)ız … (we are)"
+   ],
+   "examples": [
+    [
+     "Öğretmenim.",
+     "I am a teacher."
+    ],
+    [
+     "Yorgun musun?",
+     "Are you tired?"
+    ],
+    [
+     "Biz Türk değiliz, İngiliziz.",
+     "We aren't Turkish, we are English."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_to_be-1",
+     "tr": "I am tired.",
+     "answers": [
+      "Yorgunum."
+     ],
+     "note": "yorgun + -um (last vowel u)."
+    },
+    {
+     "id": "tr_to_be-2",
+     "tr": "You are a student.",
+     "answers": [
+      "Öğrencisin."
+     ],
+     "note": "öğrenci + -sin."
+    },
+    {
+     "id": "tr_to_be-3",
+     "tr": "We are happy.",
+     "answers": [
+      "Mutluyuz."
+     ],
+     "note": "mutlu ends in a vowel: y + -uz."
+    },
+    {
+     "id": "tr_to_be-4",
+     "tr": "I am a doctor.",
+     "answers": [
+      "Doktorum."
+     ],
+     "note": "doktor + -um."
+    },
+    {
+     "id": "tr_to_be-5",
+     "tr": "You are very kind.",
+     "answers": [
+      "Çok naziksin.",
+      "Çok naziksiniz."
+     ],
+     "note": "nazik + -sin (or -siniz to be polite)."
+    },
+    {
+     "id": "tr_to_be-6",
+     "tr": "They are at home.",
+     "answers": [
+      "Evdeler.",
+      "Onlar evde."
+     ],
+     "note": "ev + -de (at) + -ler (they)."
+    }
+   ]
+  },
+  {
+   "id": "tr_var_yok",
+   "category": "tr_sentence",
+   "level": "A1",
+   "title_tr": "Var / yok",
+   "title_en": "There is / there isn't: var and yok",
+   "explanation": "**var** means \"there is / exists\", **yok** means \"there isn't\".\n- Masada bir kitap var. = There is a book on the table.\n- To say \"I have\", use the possessive: **Benim bir kardeşim var.** (literally: my sibling exists).\n- Questions: **var mı?** / **yok mu?** — Çay var mı? (Is there any tea?)",
+   "structure": [
+    "place + -de/-da + thing + var/yok",
+    "(benim) + noun + possessive ending + var/yok",
+    "... var mı?"
+   ],
+   "examples": [
+    [
+     "Burada bir market var.",
+     "There is a supermarket here."
+    ],
+    [
+     "Arabam yok.",
+     "I don't have a car."
+    ],
+    [
+     "Sorunuz var mı?",
+     "Do you have a question?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_var_yok-1",
+     "tr": "There is a cat in the garden.",
+     "answers": [
+      "Bahçede bir kedi var.",
+      "Bahçede kedi var."
+     ],
+     "note": "place-de + thing + var."
+    },
+    {
+     "id": "tr_var_yok-2",
+     "tr": "There isn't any milk.",
+     "answers": [
+      "Süt yok."
+     ],
+     "note": "yok = there is not."
+    },
+    {
+     "id": "tr_var_yok-3",
+     "tr": "I have a brother.",
+     "answers": [
+      "Bir erkek kardeşim var.",
+      "Bir kardeşim var.",
+      "Erkek kardeşim var.",
+      "Kardeşim var.",
+      "Benim bir erkek kardeşim var.",
+      "Benim bir kardeşim var."
+     ],
+     "note": "kardeş + -im (my) + var."
+    },
+    {
+     "id": "tr_var_yok-4",
+     "tr": "I don't have time.",
+     "answers": [
+      "Zamanım yok.",
+      "Vaktim yok."
+     ],
+     "note": "zaman + -ım (my) + yok."
+    },
+    {
+     "id": "tr_var_yok-5",
+     "tr": "Is there a bank near here?",
+     "answers": [
+      "Yakında banka var mı?",
+      "Buralarda banka var mı?",
+      "Yakında bir banka var mı?",
+      "Buraya yakın bir banka var mı?"
+     ],
+     "note": "var mı? asks if something exists."
+    },
+    {
+     "id": "tr_var_yok-6",
+     "tr": "Do you have a car?",
+     "answers": [
+      "Araban var mı?",
+      "Arabanız var mı?",
+      "Senin araban var mı?"
+     ],
+     "note": "araba + -n (your) + var mı?"
+    }
+   ]
+  },
+  {
+   "id": "tr_possessive",
+   "category": "tr_cases",
+   "level": "A1",
+   "title_tr": "İyelik ekleri",
+   "title_en": "Possessive endings (my, your, his…)",
+   "explanation": "**\"My, your, his\" are endings on the noun.**\n- After a consonant: ev**im** (my house), ev**in** (your), ev**i** (his/her), ev**imiz** (our), ev**iniz** (your, plural/polite), ev**leri** (their).\n- After a vowel: araba**m**, araba**n**, araba**sı**, araba**mız**, araba**nız**, araba**ları**.\n- The pronoun (benim, senin, onun…) can come before for emphasis: benim evim.\n- Some words soften their last consonant: kitap → kitabım, ağaç → ağacı.",
+   "structure": [
+    "noun + -(ı)m / -(ı)n / -(s)ı",
+    "noun + -(ı)mız / -(ı)nız / -ları"
+   ],
+   "examples": [
+    [
+     "Annem öğretmen.",
+     "My mother is a teacher."
+    ],
+    [
+     "Arabanız çok güzel.",
+     "Your car is very nice."
+    ],
+    [
+     "Kitabım nerede?",
+     "Where is my book?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_possessive-1",
+     "tr": "my house",
+     "answers": [
+      "evim",
+      "benim evim"
+     ],
+     "note": "ev + -im."
+    },
+    {
+     "id": "tr_possessive-2",
+     "tr": "your car",
+     "answers": [
+      "araban",
+      "arabanız",
+      "senin araban"
+     ],
+     "note": "araba ends in a vowel: + -n."
+    },
+    {
+     "id": "tr_possessive-3",
+     "tr": "his name",
+     "answers": [
+      "adı",
+      "ismi",
+      "onun adı",
+      "onun ismi"
+     ],
+     "note": "ad + -ı (his/her)."
+    },
+    {
+     "id": "tr_possessive-4",
+     "tr": "our teacher",
+     "answers": [
+      "öğretmenimiz",
+      "bizim öğretmenimiz"
+     ],
+     "note": "öğretmen + -imiz."
+    },
+    {
+     "id": "tr_possessive-5",
+     "tr": "Where is my book?",
+     "answers": [
+      "Kitabım nerede?"
+     ],
+     "note": "kitap softens: kitabım."
+    },
+    {
+     "id": "tr_possessive-6",
+     "tr": "Their house is big.",
+     "answers": [
+      "Evleri büyük.",
+      "Onların evi büyük."
+     ],
+     "note": "ev + -leri (their)."
+    }
+   ]
+  },
+  {
+   "id": "tr_locative_ablative",
+   "category": "tr_cases",
+   "level": "A1",
+   "title_tr": "Bulunma ve ayrılma hâli: -de, -den",
+   "title_en": "In/at (-de) and from (-den)",
+   "explanation": "**-de / -da** means in, on, at. **-den / -dan** means from.\n- Two-way harmony: e-words take -de/-den, a-words take -da/-dan: evde, okulda; evden, okuldan.\n- After **f, s, t, k, ç, ş, h, p** the d becomes **t**: kitapta, sokakta, Türkiye'den but İstanbul'da.\n- Proper names take an apostrophe: Ankara'da, Londra'dan.",
+   "structure": [
+    "noun + -de / -da / -te / -ta (in, at)",
+    "noun + -den / -dan / -ten / -tan (from)"
+   ],
+   "examples": [
+    [
+     "Annem evde.",
+     "My mother is at home."
+    ],
+    [
+     "Londra'dan geliyorum.",
+     "I'm coming from London."
+    ],
+    [
+     "Kitap çantada.",
+     "The book is in the bag."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_locative_ablative-1",
+     "tr": "at school",
+     "answers": [
+      "okulda"
+     ],
+     "note": "okul has a: -da."
+    },
+    {
+     "id": "tr_locative_ablative-2",
+     "tr": "in the house",
+     "answers": [
+      "evde"
+     ],
+     "note": "ev has e: -de."
+    },
+    {
+     "id": "tr_locative_ablative-3",
+     "tr": "from London",
+     "answers": [
+      "Londra'dan",
+      "Londradan"
+     ],
+     "note": "Names take an apostrophe: Londra'dan."
+    },
+    {
+     "id": "tr_locative_ablative-4",
+     "tr": "in the street",
+     "answers": [
+      "sokakta"
+     ],
+     "note": "After k the d becomes t: sokakta."
+    },
+    {
+     "id": "tr_locative_ablative-5",
+     "tr": "I'm at work.",
+     "answers": [
+      "İşteyim.",
+      "Ben işteyim."
+     ],
+     "note": "iş + -te (after ş) + -yim."
+    },
+    {
+     "id": "tr_locative_ablative-6",
+     "tr": "The train is coming from Ankara.",
+     "answers": [
+      "Tren Ankara'dan geliyor.",
+      "Tren Ankaradan geliyor."
+     ],
+     "note": "Ankara'dan = from Ankara."
+    }
+   ]
+  },
+  {
+   "id": "tr_dative",
+   "category": "tr_cases",
+   "level": "A1",
+   "title_tr": "Yönelme hâli: -e / -a",
+   "title_en": "To / towards: -e and -a",
+   "explanation": "**-e / -a** shows direction: to, towards, into.\n- eve (to the house), okula (to school).\n- After a vowel a **y** joins: araba**ya**, İstanbul'a but Ankara'**ya**.\n- Some verbs take this case: **bakmak** (to look at): Bana bak. **binmek** (to get on): Otobüse bindim.\n- ben → bana, sen → sana (to me, to you).",
+   "structure": [
+    "noun + -e / -a",
+    "vowel-final noun + -ye / -ya"
+   ],
+   "examples": [
+    [
+     "Okula gidiyorum.",
+     "I'm going to school."
+    ],
+    [
+     "Bana bak!",
+     "Look at me!"
+    ],
+    [
+     "Yarın İzmir'e gideceğiz.",
+     "We will go to Izmir tomorrow."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_dative-1",
+     "tr": "to school",
+     "answers": [
+      "okula"
+     ],
+     "note": "okul + -a."
+    },
+    {
+     "id": "tr_dative-2",
+     "tr": "to the house",
+     "answers": [
+      "eve"
+     ],
+     "note": "ev + -e."
+    },
+    {
+     "id": "tr_dative-3",
+     "tr": "to Ankara",
+     "answers": [
+      "Ankara'ya",
+      "Ankaraya"
+     ],
+     "note": "Ankara ends in a vowel: -ya."
+    },
+    {
+     "id": "tr_dative-4",
+     "tr": "I'm going home.",
+     "answers": [
+      "Eve gidiyorum."
+     ],
+     "note": "eve = to the house / home."
+    },
+    {
+     "id": "tr_dative-5",
+     "tr": "Look at me.",
+     "answers": [
+      "Bana bak.",
+      "Bana bakın."
+     ],
+     "note": "bakmak takes -e: bana."
+    },
+    {
+     "id": "tr_dative-6",
+     "tr": "We got on the bus.",
+     "answers": [
+      "Otobüse bindik."
+     ],
+     "note": "binmek takes -e: otobüse."
+    }
+   ]
+  },
+  {
+   "id": "tr_questions_mi",
+   "category": "tr_sentence",
+   "level": "A1",
+   "title_tr": "Soru eki: mı, mi, mu, mü",
+   "title_en": "Yes/no questions with mi",
+   "explanation": "**A yes/no question takes the little word mi** after the word you ask about.\n- It is written separately but follows vowel harmony: **mı, mi, mu, mü**.\n- Personal endings go on it: Yorgun **musun**? (Are you tired?) Hazır **mıyız**? (Are we ready?)\n- Put it after the word in focus: **Sen mi** geldin? (Was it you who came?) / Sen **geldin mi**? (Did you come?)\n- Question words (ne, nerede, kim) do not take mi.",
+   "structure": [
+    "statement + mı / mi / mu / mü?",
+    "adjective + mı + personal ending (musun, mıyım…)"
+   ],
+   "examples": [
+    [
+     "Çay ister misin?",
+     "Would you like tea?"
+    ],
+    [
+     "Bu senin kitabın mı?",
+     "Is this your book?"
+    ],
+    [
+     "Hazır mısınız?",
+     "Are you ready?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_questions_mi-1",
+     "tr": "Is it cold?",
+     "answers": [
+      "Soğuk mu?",
+      "Hava soğuk mu?"
+     ],
+     "note": "soğuk → mu (last vowel u)."
+    },
+    {
+     "id": "tr_questions_mi-2",
+     "tr": "Are you tired?",
+     "answers": [
+      "Yorgun musun?",
+      "Yorgun musunuz?"
+     ],
+     "note": "mu + -sun."
+    },
+    {
+     "id": "tr_questions_mi-3",
+     "tr": "Is this your bag?",
+     "answers": [
+      "Bu senin çantan mı?",
+      "Bu çantan mı?",
+      "Bu sizin çantanız mı?",
+      "Bu çantanız mı?"
+     ],
+     "note": "mı after çantan (last vowel a)."
+    },
+    {
+     "id": "tr_questions_mi-4",
+     "tr": "Do you speak Turkish?",
+     "answers": [
+      "Türkçe konuşuyor musun?",
+      "Türkçe konuşuyor musunuz?",
+      "Türkçe biliyor musun?",
+      "Türkçe biliyor musunuz?"
+     ],
+     "note": "konuşuyor + mu + -sun."
+    },
+    {
+     "id": "tr_questions_mi-5",
+     "tr": "Is the shop open?",
+     "answers": [
+      "Dükkan açık mı?",
+      "Dükkân açık mı?",
+      "Mağaza açık mı?"
+     ],
+     "note": "açık → mı."
+    },
+    {
+     "id": "tr_questions_mi-6",
+     "tr": "Are we late?",
+     "answers": [
+      "Geç mi kaldık?",
+      "Geciktik mi?"
+     ],
+     "note": "mi goes after the word in question."
+    }
+   ]
+  },
+  {
+   "id": "tr_present_continuous",
+   "category": "tr_verbs",
+   "level": "A1",
+   "title_tr": "Şimdiki zaman: -iyor",
+   "title_en": "Present continuous: -iyor",
+   "explanation": "**-iyor** says what is happening now, and often what you do regularly.\n- Take the verb stem (drop -mek/-mak): gel**mek** → gel. Add **-iyor** (four-way: -ıyor, -iyor, -uyor, -üyor): geliyorum.\n- A stem ending in a vowel drops it: bekle → bekl**iyor**, ara → ar**ıyor**.\n- Endings: -um, -sun, (nothing), -uz, -sunuz, -lar: geliyorum, geliyorsun, geliyor, geliyoruz, geliyorsunuz, geliyorlar.\n- Negative: **-m-** before -iyor: gelmiyorum.",
+   "structure": [
+    "verb stem + -(ı/i/u/ü)yor + personal ending",
+    "verb stem + -m(ı/i/u/ü)yor (negative)"
+   ],
+   "examples": [
+    [
+     "Şu an kitap okuyorum.",
+     "I'm reading a book right now."
+    ],
+    [
+     "Ne yapıyorsun?",
+     "What are you doing?"
+    ],
+    [
+     "Yağmur yağıyor.",
+     "It's raining."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_present_continuous-1",
+     "tr": "I'm coming.",
+     "answers": [
+      "Geliyorum."
+     ],
+     "note": "gel + -iyor + -um."
+    },
+    {
+     "id": "tr_present_continuous-2",
+     "tr": "What are you doing?",
+     "answers": [
+      "Ne yapıyorsun?",
+      "Ne yapıyorsunuz?"
+     ],
+     "note": "yap + -ıyor + -sun."
+    },
+    {
+     "id": "tr_present_continuous-3",
+     "tr": "It's raining.",
+     "answers": [
+      "Yağmur yağıyor."
+     ],
+     "note": "yağ + -ıyor."
+    },
+    {
+     "id": "tr_present_continuous-4",
+     "tr": "We're waiting for you.",
+     "answers": [
+      "Seni bekliyoruz.",
+      "Sizi bekliyoruz."
+     ],
+     "note": "bekle drops its e: bekliyoruz."
+    },
+    {
+     "id": "tr_present_continuous-5",
+     "tr": "I don't understand.",
+     "answers": [
+      "Anlamıyorum."
+     ],
+     "note": "anla + -m- + -ıyor + -um."
+    },
+    {
+     "id": "tr_present_continuous-6",
+     "tr": "She is working at home.",
+     "answers": [
+      "Evde çalışıyor.",
+      "O evde çalışıyor."
+     ],
+     "note": "çalış + -ıyor."
+    }
+   ]
+  },
+  {
+   "id": "tr_accusative",
+   "category": "tr_cases",
+   "level": "A2",
+   "title_tr": "Belirtme hâli: -(y)i",
+   "title_en": "The definite object: -(y)i",
+   "explanation": "**When the object is definite (the, this, my…) it takes -ı / -i / -u / -ü.**\n- Kitabı okudum. = I read *the* book. — Kitap okudum. = I read (a book / some books).\n- After a vowel a **y** joins: araba**yı**, kapı**yı**.\n- Pronouns: beni, seni, onu, bizi, sizi, onları.\n- Names always take it: Ahmet'i gördüm.",
+   "structure": [
+    "definite object + -ı / -i / -u / -ü",
+    "vowel-final object + -yı / -yi / -yu / -yü"
+   ],
+   "examples": [
+    [
+     "Kapıyı kapat.",
+     "Close the door."
+    ],
+    [
+     "Seni seviyorum.",
+     "I love you."
+    ],
+    [
+     "Filmi izledin mi?",
+     "Did you watch the film?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_accusative-1",
+     "tr": "Close the door.",
+     "answers": [
+      "Kapıyı kapat.",
+      "Kapıyı kapatın."
+     ],
+     "note": "kapı + -yı (definite)."
+    },
+    {
+     "id": "tr_accusative-2",
+     "tr": "I love you.",
+     "answers": [
+      "Seni seviyorum."
+     ],
+     "note": "sen → seni."
+    },
+    {
+     "id": "tr_accusative-3",
+     "tr": "I saw Ahmet.",
+     "answers": [
+      "Ahmet'i gördüm.",
+      "Ahmeti gördüm."
+     ],
+     "note": "Names take it: Ahmet'i."
+    },
+    {
+     "id": "tr_accusative-4",
+     "tr": "Did you read the book?",
+     "answers": [
+      "Kitabı okudun mu?",
+      "Kitabı okudunuz mu?"
+     ],
+     "note": "kitap → kitabı."
+    },
+    {
+     "id": "tr_accusative-5",
+     "tr": "I am drinking water.",
+     "answers": [
+      "Su içiyorum."
+     ],
+     "note": "An indefinite object takes no ending."
+    },
+    {
+     "id": "tr_accusative-6",
+     "tr": "Where did you put the keys?",
+     "answers": [
+      "Anahtarları nereye koydun?",
+      "Anahtarları nereye koydunuz?"
+     ],
+     "note": "anahtarlar + -ı."
+    }
+   ]
+  },
+  {
+   "id": "tr_past",
+   "category": "tr_verbs",
+   "level": "A2",
+   "title_tr": "Geçmiş zaman: -di",
+   "title_en": "Past tense: -di",
+   "explanation": "**-di** is the simple past: something that happened and you know it.\n- Four-way harmony: -dı, -di, -du, -dü; after f, s, t, k, ç, ş, h, p it is **-tı, -ti, -tu, -tü**.\n- Endings: -m, -n, (nothing), -k, -nız, -lar: geldim, geldin, geldi, geldik, geldiniz, geldiler.\n- Negative: gel**me**di. Question: geldin **mi**?",
+   "structure": [
+    "verb stem + -dı / -di / -du / -dü + -m, -n, -k …",
+    "after a voiceless consonant: -tı / -ti / -tu / -tü"
+   ],
+   "examples": [
+    [
+     "Dün sinemaya gittik.",
+     "We went to the cinema yesterday."
+    ],
+    [
+     "Kahvaltı yaptın mı?",
+     "Did you have breakfast?"
+    ],
+    [
+     "Onu görmedim.",
+     "I didn't see him."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_past-1",
+     "tr": "I came.",
+     "answers": [
+      "Geldim."
+     ],
+     "note": "gel + -di + -m."
+    },
+    {
+     "id": "tr_past-2",
+     "tr": "We went to the cinema yesterday.",
+     "answers": [
+      "Dün sinemaya gittik.",
+      "Biz dün sinemaya gittik."
+     ],
+     "note": "git → gittik (t stays)."
+    },
+    {
+     "id": "tr_past-3",
+     "tr": "Did you eat?",
+     "answers": [
+      "Yemek yedin mi?",
+      "Yedin mi?",
+      "Yemek yediniz mi?",
+      "Yediniz mi?"
+     ],
+     "note": "ye + -di + -n + mi."
+    },
+    {
+     "id": "tr_past-4",
+     "tr": "I didn't see him.",
+     "answers": [
+      "Onu görmedim.",
+      "Görmedim."
+     ],
+     "note": "gör + -me- + -di + -m."
+    },
+    {
+     "id": "tr_past-5",
+     "tr": "She worked a lot.",
+     "answers": [
+      "Çok çalıştı.",
+      "O çok çalıştı."
+     ],
+     "note": "çalış + -tı (after ş)."
+    },
+    {
+     "id": "tr_past-6",
+     "tr": "They bought a house.",
+     "answers": [
+      "Bir ev aldılar.",
+      "Ev aldılar.",
+      "Onlar bir ev aldılar.",
+      "Onlar bir ev aldı.",
+      "Bir ev aldı."
+     ],
+     "note": "al + -dı + -lar."
+    }
+   ]
+  },
+  {
+   "id": "tr_future",
+   "category": "tr_verbs",
+   "level": "A2",
+   "title_tr": "Gelecek zaman: -(y)ecek",
+   "title_en": "Future tense: -ecek",
+   "explanation": "**-ecek / -acak** means will / going to.\n- gel**eceğ**im, yap**acağ**ım: before a vowel ending the k softens to ğ.\n- After a vowel a **y** joins: bekle**yeceğ**im, oku**yacak**.\n- Endings: -im, -sin, (nothing), -iz, -siniz, -ler: geleceğim, geleceksin, gelecek, geleceğiz, geleceksiniz, gelecekler.\n- Negative: gel**mey**eceğim.",
+   "structure": [
+    "verb stem + -(y)ecek / -(y)acak + ending",
+    "verb stem + -meyecek / -mayacak (negative)"
+   ],
+   "examples": [
+    [
+     "Yarın arayacağım.",
+     "I'll call tomorrow."
+    ],
+    [
+     "Ne yapacaksın?",
+     "What will you do?"
+    ],
+    [
+     "Bu akşam gelmeyecek.",
+     "He won't come tonight."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_future-1",
+     "tr": "I'll call you tomorrow.",
+     "answers": [
+      "Seni yarın arayacağım.",
+      "Yarın seni arayacağım.",
+      "Sizi yarın arayacağım.",
+      "Yarın sizi arayacağım."
+     ],
+     "note": "ara + y + -acağ + -ım."
+    },
+    {
+     "id": "tr_future-2",
+     "tr": "What will you do?",
+     "answers": [
+      "Ne yapacaksın?",
+      "Ne yapacaksınız?"
+     ],
+     "note": "yap + -acak + -sın."
+    },
+    {
+     "id": "tr_future-3",
+     "tr": "We will go to Istanbul.",
+     "answers": [
+      "İstanbul'a gideceğiz.",
+      "İstanbula gideceğiz."
+     ],
+     "note": "git → gideceğiz (t → d)."
+    },
+    {
+     "id": "tr_future-4",
+     "tr": "He won't come.",
+     "answers": [
+      "Gelmeyecek.",
+      "O gelmeyecek."
+     ],
+     "note": "gel + -me- + y + -ecek."
+    },
+    {
+     "id": "tr_future-5",
+     "tr": "It will rain.",
+     "answers": [
+      "Yağmur yağacak."
+     ],
+     "note": "yağ + -acak."
+    },
+    {
+     "id": "tr_future-6",
+     "tr": "They will wait.",
+     "answers": [
+      "Bekleyecekler.",
+      "Onlar bekleyecek.",
+      "Onlar bekleyecekler."
+     ],
+     "note": "bekle + y + -ecek + -ler."
+    }
+   ]
+  },
+  {
+   "id": "tr_negation",
+   "category": "tr_sentence",
+   "level": "A2",
+   "title_tr": "Olumsuzluk: -me ve değil",
+   "title_en": "Saying no: -me and değil",
+   "explanation": "**Verbs** are made negative with **-me / -ma** right after the stem: gel**me**di, yap**ma**yacak, anla**m**ıyorum.\n- **Nouns and adjectives** use the word **değil**: Yorgun değilim. (I'm not tired.)\n- değil takes the personal endings: değilim, değilsin, değil, değiliz…\n- **yok** is the negative of var.",
+   "structure": [
+    "verb stem + -me / -ma + tense",
+    "noun/adjective + değil + ending"
+   ],
+   "examples": [
+    [
+     "Bugün çalışmıyorum.",
+     "I'm not working today."
+    ],
+    [
+     "Bu kolay değil.",
+     "This isn't easy."
+    ],
+    [
+     "Kahve içmedim.",
+     "I didn't drink coffee."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_negation-1",
+     "tr": "I'm not tired.",
+     "answers": [
+      "Yorgun değilim."
+     ],
+     "note": "Adjective + değil + -im."
+    },
+    {
+     "id": "tr_negation-2",
+     "tr": "This isn't easy.",
+     "answers": [
+      "Bu kolay değil."
+     ],
+     "note": "değil after the adjective."
+    },
+    {
+     "id": "tr_negation-3",
+     "tr": "I didn't drink coffee.",
+     "answers": [
+      "Kahve içmedim."
+     ],
+     "note": "iç + -me- + -di + -m."
+    },
+    {
+     "id": "tr_negation-4",
+     "tr": "We don't know.",
+     "answers": [
+      "Bilmiyoruz."
+     ],
+     "note": "bil + -m- + -iyor + -uz."
+    },
+    {
+     "id": "tr_negation-5",
+     "tr": "He isn't a doctor.",
+     "answers": [
+      "Doktor değil.",
+      "O doktor değil."
+     ],
+     "note": "Noun + değil."
+    },
+    {
+     "id": "tr_negation-6",
+     "tr": "Don't go!",
+     "answers": [
+      "Gitme!",
+      "Gitmeyin!"
+     ],
+     "note": "git + -me (command)."
+    }
+   ]
+  },
+  {
+   "id": "tr_ability",
+   "category": "tr_moods",
+   "level": "A2",
+   "title_tr": "Yeterlilik: -(y)ebil",
+   "title_en": "Can: -ebil",
+   "explanation": "**-ebil / -abil** adds \"can, be able to\". The tense comes after it.\n- yüz**ebil**iyorum (I can swim), gel**ebil**ir misin? (Can you come?), yap**abil**dim (I managed to do it).\n- After a vowel a **y** joins: oku**yabil**irim.\n- **Cannot** is **-eme / -ama**: gel**eme**m (I can't come), anla**yama**dım (I couldn't understand).",
+   "structure": [
+    "verb stem + -(y)ebil / -(y)abil + tense",
+    "verb stem + -(y)eme / -(y)ama + tense (cannot)"
+   ],
+   "examples": [
+    [
+     "Türkçe konuşabiliyorum.",
+     "I can speak Turkish."
+    ],
+    [
+     "Bana yardım edebilir misin?",
+     "Can you help me?"
+    ],
+    [
+     "Dün gelemedim.",
+     "I couldn't come yesterday."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_ability-1",
+     "tr": "I can swim.",
+     "answers": [
+      "Yüzebiliyorum.",
+      "Yüzebilirim."
+     ],
+     "note": "yüz + -ebil + -iyor + -um."
+    },
+    {
+     "id": "tr_ability-2",
+     "tr": "Can you help me?",
+     "answers": [
+      "Bana yardım edebilir misin?",
+      "Bana yardım edebilir misiniz?",
+      "Yardım edebilir misin?",
+      "Yardım edebilir misiniz?"
+     ],
+     "note": "et → edebilir + mi + -sin."
+    },
+    {
+     "id": "tr_ability-3",
+     "tr": "I couldn't come yesterday.",
+     "answers": [
+      "Dün gelemedim."
+     ],
+     "note": "gel + -eme + -di + -m."
+    },
+    {
+     "id": "tr_ability-4",
+     "tr": "I can't understand.",
+     "answers": [
+      "Anlayamıyorum.",
+      "Anlayamam."
+     ],
+     "note": "anla + y + -ama + -ıyor."
+    },
+    {
+     "id": "tr_ability-5",
+     "tr": "We can go tomorrow.",
+     "answers": [
+      "Yarın gidebiliriz."
+     ],
+     "note": "git → gidebiliriz."
+    },
+    {
+     "id": "tr_ability-6",
+     "tr": "Can I sit here?",
+     "answers": [
+      "Buraya oturabilir miyim?",
+      "Burada oturabilir miyim?"
+     ],
+     "note": "otur + -abil + -ir + mi + -yim."
+    }
+   ]
+  },
+  {
+   "id": "tr_genitive",
+   "category": "tr_cases",
+   "level": "A2",
+   "title_tr": "İlgi hâli ve isim tamlaması",
+   "title_en": "Of / 's: the genitive and noun compounds",
+   "explanation": "**\"The teacher's book\" is öğretmen*in* kitab*ı*: the owner takes -in, the thing owned takes his/her ending.**\n- Owner: -ın / -in / -un / -ün, after a vowel -nın / -nin…: Ali'nin, arabanın.\n- Owned: -ı / -i / -u / -ü, after a vowel -sı / -si…: kapısı, adı.\n- Without -in, the pair is a general name: **Türk kahvesi** (Turkish coffee), **otobüs durağı** (bus stop).",
+   "structure": [
+    "owner + -(n)ın + owned + -(s)ı",
+    "noun + noun + -(s)ı (general compound)"
+   ],
+   "examples": [
+    [
+     "Ali'nin arabası yeni.",
+     "Ali's car is new."
+    ],
+    [
+     "Evin kapısı açık.",
+     "The door of the house is open."
+    ],
+    [
+     "Bir Türk kahvesi lütfen.",
+     "A Turkish coffee, please."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_genitive-1",
+     "tr": "Ali's car",
+     "answers": [
+      "Ali'nin arabası",
+      "Alinin arabası"
+     ],
+     "note": "Ali + -nin, araba + -sı."
+    },
+    {
+     "id": "tr_genitive-2",
+     "tr": "the door of the house",
+     "answers": [
+      "evin kapısı"
+     ],
+     "note": "ev + -in, kapı + -sı."
+    },
+    {
+     "id": "tr_genitive-3",
+     "tr": "my friend's name",
+     "answers": [
+      "arkadaşımın adı",
+      "arkadaşımın ismi"
+     ],
+     "note": "arkadaşım + -ın, ad + -ı."
+    },
+    {
+     "id": "tr_genitive-4",
+     "tr": "a bus stop",
+     "answers": [
+      "otobüs durağı"
+     ],
+     "note": "General compound: no -in."
+    },
+    {
+     "id": "tr_genitive-5",
+     "tr": "Turkish coffee",
+     "answers": [
+      "Türk kahvesi"
+     ],
+     "note": "Türk + kahve + -si."
+    },
+    {
+     "id": "tr_genitive-6",
+     "tr": "The teacher's bag is here.",
+     "answers": [
+      "Öğretmenin çantası burada."
+     ],
+     "note": "öğretmen + -in, çanta + -sı."
+    }
+   ]
+  },
+  {
+   "id": "tr_comparison",
+   "category": "tr_sentence",
+   "level": "A2",
+   "title_tr": "Karşılaştırma: daha, en",
+   "title_en": "Comparing: daha and en",
+   "explanation": "**daha** = more, **en** = most. The adjective itself does not change.\n- daha büyük (bigger), en büyük (the biggest).\n- \"than\" is **-den / -dan** on the thing you compare with: Ankara İzmir'**den** daha soğuk.\n- daha can be left out when -den is there: Sen benden uzunsun.",
+   "structure": [
+    "A + B-den + (daha) + adjective",
+    "en + adjective + noun"
+   ],
+   "examples": [
+    [
+     "Bu ev o evden daha büyük.",
+     "This house is bigger than that house."
+    ],
+    [
+     "En sevdiğim yemek mantı.",
+     "My favourite food is manti."
+    ],
+    [
+     "Kardeşim benden uzun.",
+     "My brother is taller than me."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_comparison-1",
+     "tr": "bigger",
+     "answers": [
+      "daha büyük"
+     ],
+     "note": "daha + adjective."
+    },
+    {
+     "id": "tr_comparison-2",
+     "tr": "the biggest",
+     "answers": [
+      "en büyük"
+     ],
+     "note": "en + adjective."
+    },
+    {
+     "id": "tr_comparison-3",
+     "tr": "This car is faster than that one.",
+     "answers": [
+      "Bu araba ondan daha hızlı.",
+      "Bu araba o arabadan daha hızlı.",
+      "Bu araba ondan hızlı.",
+      "Bu araba o arabadan hızlı."
+     ],
+     "note": "than = -dan on the other one."
+    },
+    {
+     "id": "tr_comparison-4",
+     "tr": "My brother is taller than me.",
+     "answers": [
+      "Kardeşim benden uzun.",
+      "Kardeşim benden daha uzun.",
+      "Erkek kardeşim benden daha uzun.",
+      "Erkek kardeşim benden uzun.",
+      "Abim benden uzun.",
+      "Abim benden daha uzun."
+     ],
+     "note": "ben → benden."
+    },
+    {
+     "id": "tr_comparison-5",
+     "tr": "the most beautiful city",
+     "answers": [
+      "en güzel şehir",
+      "en güzel kent"
+     ],
+     "note": "en + adjective + noun."
+    },
+    {
+     "id": "tr_comparison-6",
+     "tr": "Tea is cheaper than coffee.",
+     "answers": [
+      "Çay kahveden daha ucuz.",
+      "Çay kahveden ucuz."
+     ],
+     "note": "kahve + -den."
+    }
+   ]
+  },
+  {
+   "id": "tr_aorist",
+   "category": "tr_verbs",
+   "level": "B1",
+   "title_tr": "Geniş zaman: -r, -ir, -ar",
+   "title_en": "The aorist: habits and offers",
+   "explanation": "**The aorist (geniş zaman) is for habits, general truths, offers and promises.**\n- After a vowel: **-r**: oku**r**, bekle**r**.\n- One-syllable stems mostly take **-ar / -er**: yap**ar**, gid**er**; but some take -ir: gel**ir**, al**ır**, bil**ir**, gör**ür**, ol**ur**, ver**ir**, bul**ur**, kal**ır**, san**ır**, var**ır**, dur**ur**.\n- Longer stems take **-ır / -ir / -ur / -ür**: çalış**ır**, otur**ur**.\n- Negative: **-mez / -maz**, but \"I\" is -mem, \"we\" -meyiz: gel**mem**, gel**mez**, gel**meyiz**.\n- Polite requests: Kapıyı açar mısın? (Would you open the door?)",
+   "structure": [
+    "stem + -r / -ar / -er / -ır …",
+    "stem + -mez / -maz (negative); -mem, -meyiz"
+   ],
+   "examples": [
+    [
+     "Her sabah kahve içerim.",
+     "I drink coffee every morning."
+    ],
+    [
+     "Su yüz derecede kaynar.",
+     "Water boils at a hundred degrees."
+    ],
+    [
+     "Pencereyi açar mısın?",
+     "Would you open the window?"
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_aorist-1",
+     "tr": "I drink tea every morning.",
+     "answers": [
+      "Her sabah çay içerim."
+     ],
+     "note": "iç + -er + -im."
+    },
+    {
+     "id": "tr_aorist-2",
+     "tr": "She reads a lot.",
+     "answers": [
+      "Çok okur.",
+      "O çok okur.",
+      "Çok kitap okur."
+     ],
+     "note": "oku + -r."
+    },
+    {
+     "id": "tr_aorist-3",
+     "tr": "Would you open the window?",
+     "answers": [
+      "Pencereyi açar mısın?",
+      "Pencereyi açar mısınız?"
+     ],
+     "note": "aç + -ar + mı + -sın."
+    },
+    {
+     "id": "tr_aorist-4",
+     "tr": "I don't eat meat.",
+     "answers": [
+      "Et yemem."
+     ],
+     "note": "ye + -mem (I, negative)."
+    },
+    {
+     "id": "tr_aorist-5",
+     "tr": "He never comes on time.",
+     "answers": [
+      "Asla zamanında gelmez.",
+      "Hiç zamanında gelmez.",
+      "Hiçbir zaman zamanında gelmez.",
+      "O asla zamanında gelmez."
+     ],
+     "note": "gel + -mez."
+    },
+    {
+     "id": "tr_aorist-6",
+     "tr": "We usually stay at home.",
+     "answers": [
+      "Genelde evde kalırız.",
+      "Genellikle evde kalırız.",
+      "Çoğunlukla evde kalırız."
+     ],
+     "note": "kal + -ır + -ız."
+    }
+   ]
+  },
+  {
+   "id": "tr_necessity",
+   "category": "tr_moods",
+   "level": "B1",
+   "title_tr": "Gereklilik: -meli, lazım, gerek",
+   "title_en": "Must and have to: -meli, lazım",
+   "explanation": "**-meli / -malı** = must, should.\n- gitmeliyim (I must go), dinlenmelisin (you should rest), gitmemeliyiz (we mustn't go).\n- **lazım** and **gerek** with the verb + **-mem** + possessive: Gitmem lazım. (I need to go.) Çalışmamız gerek. (We have to work.)\n- For things: Bana bir kalem lazım. (I need a pen.)",
+   "structure": [
+    "verb stem + -meli / -malı + ending",
+    "verb + -me/-ma + possessive + lazım/gerek",
+    "bana + noun + lazım"
+   ],
+   "examples": [
+    [
+     "Daha çok su içmelisin.",
+     "You should drink more water."
+    ],
+    [
+     "Eve gitmem lazım.",
+     "I need to go home."
+    ],
+    [
+     "Bana biraz para lazım.",
+     "I need some money."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_necessity-1",
+     "tr": "I must go.",
+     "answers": [
+      "Gitmeliyim.",
+      "Gitmem lazım.",
+      "Gitmem gerek.",
+      "Gitmem gerekiyor."
+     ],
+     "note": "git + -meli + -yim."
+    },
+    {
+     "id": "tr_necessity-2",
+     "tr": "You should rest.",
+     "answers": [
+      "Dinlenmelisin.",
+      "Dinlenmelisiniz."
+     ],
+     "note": "dinlen + -meli + -sin."
+    },
+    {
+     "id": "tr_necessity-3",
+     "tr": "We have to work.",
+     "answers": [
+      "Çalışmamız lazım.",
+      "Çalışmamız gerek.",
+      "Çalışmalıyız.",
+      "Çalışmamız gerekiyor."
+     ],
+     "note": "çalış + -ma + -mız + lazım."
+    },
+    {
+     "id": "tr_necessity-4",
+     "tr": "I need a pen.",
+     "answers": [
+      "Bana bir kalem lazım.",
+      "Bir kalem lazım.",
+      "Bir kaleme ihtiyacım var.",
+      "Bana kalem lazım."
+     ],
+     "note": "bana + noun + lazım."
+    },
+    {
+     "id": "tr_necessity-5",
+     "tr": "You mustn't smoke here.",
+     "answers": [
+      "Burada sigara içmemelisin.",
+      "Burada sigara içmemelisiniz."
+     ],
+     "note": "iç + -me + -meli."
+    },
+    {
+     "id": "tr_necessity-6",
+     "tr": "She should call her mother.",
+     "answers": [
+      "Annesini aramalı.",
+      "O annesini aramalı."
+     ],
+     "note": "ara + -malı."
+    }
+   ]
+  },
+  {
+   "id": "tr_conditional",
+   "category": "tr_moods",
+   "level": "B1",
+   "title_tr": "Şart: -se",
+   "title_en": "If: -se / -sa",
+   "explanation": "**-se / -sa** makes an \"if\" clause.\n- With the aorist for real conditions: Yağmur yağ**ar**sa evde kalırız. (If it rains, we'll stay home.)\n- With a noun or adjective: Yorgun**san** dinlen. (If you're tired, rest.)\n- Alone, for wishes and unreal conditions: Zengin olsam… (If I were rich…), Keşke gelsen. (I wish you'd come.)\n- **eğer** (if) can start the clause, but is optional.",
+   "structure": [
+    "verb + aorist + -se + ending, main clause",
+    "noun/adjective + -se + ending",
+    "verb stem + -se (wish / unreal)"
+   ],
+   "examples": [
+    [
+     "Vaktin olursa bizi ara.",
+     "If you have time, call us."
+    ],
+    [
+     "Zengin olsam bir ev alırdım.",
+     "If I were rich, I would buy a house."
+    ],
+    [
+     "Keşke burada olsan.",
+     "I wish you were here."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_conditional-1",
+     "tr": "If it rains, we'll stay at home.",
+     "answers": [
+      "Yağmur yağarsa evde kalırız.",
+      "Yağmur yağarsa evde kalacağız.",
+      "Eğer yağmur yağarsa evde kalırız."
+     ],
+     "note": "yağ + -ar + -sa."
+    },
+    {
+     "id": "tr_conditional-2",
+     "tr": "If you're tired, rest.",
+     "answers": [
+      "Yorgunsan dinlen.",
+      "Yorgunsanız dinlenin.",
+      "Eğer yorgunsan dinlen."
+     ],
+     "note": "yorgun + -san."
+    },
+    {
+     "id": "tr_conditional-3",
+     "tr": "If you have time, call me.",
+     "answers": [
+      "Vaktin olursa beni ara.",
+      "Zamanın olursa beni ara.",
+      "Vaktin varsa beni ara.",
+      "Zamanın varsa beni ara."
+     ],
+     "note": "ol + -ur + -sa."
+    },
+    {
+     "id": "tr_conditional-4",
+     "tr": "I wish you were here.",
+     "answers": [
+      "Keşke burada olsan.",
+      "Keşke burada olsaydın."
+     ],
+     "note": "keşke + -sa."
+    },
+    {
+     "id": "tr_conditional-5",
+     "tr": "If I were rich, I would travel.",
+     "answers": [
+      "Zengin olsam seyahat ederdim.",
+      "Zengin olsaydım seyahat ederdim.",
+      "Zengin olsam gezerdim."
+     ],
+     "note": "ol + -sa + -m, main verb + -ardı."
+    },
+    {
+     "id": "tr_conditional-6",
+     "tr": "If you don't hurry, you'll be late.",
+     "answers": [
+      "Acele etmezsen geç kalırsın.",
+      "Acele etmezsen geç kalacaksın.",
+      "Acele etmezseniz geç kalırsınız."
+     ],
+     "note": "et + -mez + -sen."
+    }
+   ]
+  },
+  {
+   "id": "tr_time_clauses",
+   "category": "tr_clauses",
+   "level": "B1",
+   "title_tr": "Zaman yan cümleleri: -ince, -ken, -dikten sonra",
+   "title_en": "When, while, after: -ince, -ken, -dikten sonra",
+   "explanation": "**Turkish joins time clauses with endings on the verb, not with separate words.**\n- **-ince / -ınca** = when, as soon as: Eve gel**ince** ara. (Call when you get home.)\n- **-ken** = while: Yemek yer**ken** televizyon izlerim. (I watch TV while eating.)\n- **-dikten sonra** = after: Kahvaltı yap**tıktan sonra** çıktık. (We went out after having breakfast.)\n- **-meden önce** = before: Yatmadan önce dişlerini fırçala. (Brush your teeth before going to bed.)",
+   "structure": [
+    "verb stem + -(y)ince, main clause",
+    "verb + aorist + -ken, main clause",
+    "verb stem + -dikten sonra / -meden önce, main clause"
+   ],
+   "examples": [
+    [
+     "Eve varınca seni ararım.",
+     "I'll call you when I get home."
+    ],
+    [
+     "Ben uyurken sen geldin.",
+     "You came while I was sleeping."
+    ],
+    [
+     "Yemekten sonra yürüyüşe çıktık.",
+     "We went for a walk after the meal."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_time_clauses-1",
+     "tr": "Call me when you get home.",
+     "answers": [
+      "Eve gelince beni ara.",
+      "Eve varınca beni ara.",
+      "Eve gelince ara.",
+      "Eve varınca ara.",
+      "Eve gelince beni arayın.",
+      "Eve varınca beni arayın."
+     ],
+     "note": "gel + -ince."
+    },
+    {
+     "id": "tr_time_clauses-2",
+     "tr": "I listen to music while I work.",
+     "answers": [
+      "Çalışırken müzik dinlerim.",
+      "Çalışırken müzik dinliyorum."
+     ],
+     "note": "çalış + -ır + -ken."
+    },
+    {
+     "id": "tr_time_clauses-3",
+     "tr": "We went out after we had breakfast.",
+     "answers": [
+      "Kahvaltı yaptıktan sonra dışarı çıktık.",
+      "Kahvaltı yaptıktan sonra çıktık.",
+      "Kahvaltıdan sonra dışarı çıktık."
+     ],
+     "note": "yap + -tık + -tan sonra."
+    },
+    {
+     "id": "tr_time_clauses-4",
+     "tr": "Wash your hands before you eat.",
+     "answers": [
+      "Yemekten önce ellerini yıka.",
+      "Yemek yemeden önce ellerini yıka.",
+      "Yemeden önce ellerini yıka."
+     ],
+     "note": "ye + -meden önce."
+    },
+    {
+     "id": "tr_time_clauses-5",
+     "tr": "He called while I was sleeping.",
+     "answers": [
+      "Ben uyurken aradı.",
+      "Uyurken aradı.",
+      "Ben uyurken o aradı."
+     ],
+     "note": "uyu + -r + -ken."
+    },
+    {
+     "id": "tr_time_clauses-6",
+     "tr": "When I saw her, I was very happy.",
+     "answers": [
+      "Onu görünce çok mutlu oldum.",
+      "Onu görünce çok sevindim."
+     ],
+     "note": "gör + -ünce."
+    }
+   ]
+  },
+  {
+   "id": "tr_reported_mis",
+   "category": "tr_verbs",
+   "level": "B1",
+   "title_tr": "Duyulan geçmiş: -miş",
+   "title_en": "The heard past: -miş",
+   "explanation": "**-miş** is a past you did not see yourself: you heard it, read it, or noticed the result.\n- Ali gel**miş**. = (I hear / it seems) Ali has come. — Ali geldi. = Ali came (I know it).\n- Four-way harmony: -mış, -miş, -muş, -müş.\n- Endings: -ım, -sın, (nothing), -ız, -sınız, -lar: gelmişim, gelmişsin, gelmiş…\n- Stories and tales use it: **Bir varmış, bir yokmuş…** (Once upon a time…)",
+   "structure": [
+    "verb stem + -mış / -miş / -muş / -müş + ending"
+   ],
+   "examples": [
+    [
+     "Dün çok yağmur yağmış.",
+     "Apparently it rained a lot yesterday."
+    ],
+    [
+     "Ahmet evlenmiş!",
+     "Ahmet has got married (I hear)!"
+    ],
+    [
+     "Bir varmış, bir yokmuş.",
+     "Once upon a time."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_reported_mis-1",
+     "tr": "Apparently he has left.",
+     "answers": [
+      "Gitmiş.",
+      "O gitmiş.",
+      "Galiba gitmiş.",
+      "Anlaşılan gitmiş."
+     ],
+     "note": "git + -miş: you did not see it."
+    },
+    {
+     "id": "tr_reported_mis-2",
+     "tr": "I hear Ayşe has got married.",
+     "answers": [
+      "Ayşe evlenmiş.",
+      "Duydum ki Ayşe evlenmiş.",
+      "Ayşe evlenmiş diye duydum."
+     ],
+     "note": "evlen + -miş."
+    },
+    {
+     "id": "tr_reported_mis-3",
+     "tr": "Once upon a time…",
+     "answers": [
+      "Bir varmış, bir yokmuş.",
+      "Bir zamanlar."
+     ],
+     "note": "The opening of tales."
+    },
+    {
+     "id": "tr_reported_mis-4",
+     "tr": "It seems it snowed last night.",
+     "answers": [
+      "Dün gece kar yağmış.",
+      "Galiba dün gece kar yağmış."
+     ],
+     "note": "yağ + -mış: you see the snow now."
+    },
+    {
+     "id": "tr_reported_mis-5",
+     "tr": "Apparently they didn't come.",
+     "answers": [
+      "Gelmemişler.",
+      "Onlar gelmemiş.",
+      "Gelmemiş."
+     ],
+     "note": "gel + -me + -miş + -ler."
+    },
+    {
+     "id": "tr_reported_mis-6",
+     "tr": "You have grown so much!",
+     "answers": [
+      "Ne kadar büyümüşsün!",
+      "Çok büyümüşsün!"
+     ],
+     "note": "büyü + -müş + -sün: noticed now."
+    }
+   ]
+  },
+  {
+   "id": "tr_participles",
+   "category": "tr_clauses",
+   "level": "B2",
+   "title_tr": "Sıfat-fiiller: -en, -dik",
+   "title_en": "Relative clauses: -en and -dik",
+   "explanation": "**Turkish puts the description before the noun, using a verb ending.**\n- When the noun does the action: **-en / -an**: kitap oku**yan** kız (the girl who is reading a book).\n- When the noun receives the action, use **-dik + possessive**: oku**duğum** kitap (the book that I read / am reading).\n- For the future: **-ecek + possessive**: gid**eceğimiz** yer (the place we will go to).",
+   "structure": [
+    "verb stem + -(y)en / -(y)an + noun (who / that does)",
+    "verb stem + -dik + possessive + noun (that I/you … do)"
+   ],
+   "examples": [
+    [
+     "Orada oturan adam benim babam.",
+     "The man sitting there is my father."
+    ],
+    [
+     "Dün izlediğimiz film çok güzeldi.",
+     "The film we watched yesterday was very good."
+    ],
+    [
+     "Türkçe bilen biri lazım.",
+     "We need someone who speaks Turkish."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "tr_participles-1",
+     "tr": "the girl who is reading a book",
+     "answers": [
+      "kitap okuyan kız"
+     ],
+     "note": "oku + y + -an."
+    },
+    {
+     "id": "tr_participles-2",
+     "tr": "the man sitting there",
+     "answers": [
+      "orada oturan adam"
+     ],
+     "note": "otur + -an."
+    },
+    {
+     "id": "tr_participles-3",
+     "tr": "the book I read",
+     "answers": [
+      "okuduğum kitap"
+     ],
+     "note": "oku + -duğ + -um."
+    },
+    {
+     "id": "tr_participles-4",
+     "tr": "the film we watched",
+     "answers": [
+      "izlediğimiz film",
+      "seyrettiğimiz film"
+     ],
+     "note": "izle + -diğ + -imiz."
+    },
+    {
+     "id": "tr_participles-5",
+     "tr": "the place we will go to",
+     "answers": [
+      "gideceğimiz yer"
+     ],
+     "note": "git + -eceğ + -imiz."
+    },
+    {
+     "id": "tr_participles-6",
+     "tr": "someone who speaks Turkish",
+     "answers": [
+      "Türkçe bilen biri",
+      "Türkçe konuşan biri",
+      "Türkçe bilen birisi",
+      "Türkçe konuşan birisi"
+     ],
+     "note": "bil + -en."
+    }
+   ]
+  }
+ ]
+}

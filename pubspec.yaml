@@ -74,6 +74,7 @@ flutter:
     - assets/brand/logo.png
     - assets/grammar/lessons.json
     - assets/grammar/lessons_en.json
+    - assets/grammar/lessons_tr.json
     - assets/library/catalog.json
     - assets/library/stories.json.gz
     - assets/library/catalog_tr.json

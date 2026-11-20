@@ -411,7 +411,7 @@ class _Grammar extends StatelessWidget {
     final answered = byTopic.values.fold(0, (a, x) => a + x.$1);
     final right = byTopic.values.fold(0, (a, x) => a + x.$2);
     return FutureBuilder<List<GrammarTopic>>(
-      future: loadGrammarTopics(),
+      future: loadAllGrammarTopics(),
       builder: (context, snap) {
         final topics = {for (final x in snap.data ?? const <GrammarTopic>[]) x.id: x};
         final progress = GrammarProgress(app.user);
