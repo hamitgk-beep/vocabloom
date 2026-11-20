@@ -62,5 +62,8 @@ void main() {
     // Audit 20: the object inside "take sb to task".
     expect(found('The editor took him to task over the sources.', 'idioms'), contains('take sb to task'));
     expect(found('Her news completely stole my thunder.', 'idioms'), contains("steal one's thunder"));
+    // Audit 21: an object before the particle; a heading in the form texts use.
+    expect(found("Don't boss the volunteers about.", 'phrasal_verbs'), contains('boss about'));
+    expect(found('The kids ran me off my feet.', 'idioms'), contains("run someone off one's feet"));
   });
 }

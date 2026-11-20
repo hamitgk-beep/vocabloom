@@ -30,7 +30,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx \
          tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
          tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v18.xlsx
+         tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx
 """
 import json
 import re
@@ -838,7 +838,30 @@ D20_EDITS = {
     'red up': {'action': 'meaning', 'meaning': '(bölgesel, "redd up") ortalığı toplamak, toparlamak'},
 }
 
-AUDIT_FIX = {'hamit_denetim20_2026-11-20.xlsx': (D20_EX_FIX, D20_EDITS),
+# --- Audit sheet 21 -------------------------------------------------------------
+# A phrasal verb takes its object before the particle ("boss the volunteers about").
+D21_EX_FIX = {
+    22: {'ex': "Don't boss the volunteers about; they're giving up their Saturday to help us."},
+    25: {'ex': '“Say uncle!” Ben shouted, pinning his brother\'s arm behind his back.',
+         'ex_tr': 'Ben kardeşinin kolunu arkasına kıvırıp “Pes de!” diye bağırdı.'},
+    52: {'ex': '“Stop fooling about with that ladder,” she warned.', 'ex_tr': '“O merdivenle oynamayı bırak,” diye uyardı.'},
+    62: {'ex': '“The back door is open,” she said in a low voice.'},
+    129: {'ex': 'The guards began to pull the frightened prisoners about before the captain intervened.'},
+    146: {'ex': 'The older boys used to push the smaller children about until a teacher intervened.'},
+    170: {'ex': 'The pharmacy may stock out of flu medicine before the next delivery arrives.',
+          'ex_tr': 'Yeni sevkiyat gelmeden eczanede grip ilacı tükenebilir.'},
+}
+D21_EDITS = {
+    # Headings in the form a text has them ("ran me off my feet", "before you can run").
+    'run someone off their feet': {'action': 'rename', 'to': "run someone off one's feet"},
+    'learn to walk before one can run': {'action': 'rename', 'to': 'learn to walk before you can run'},
+    'from where one is sitting': {'action': 'rename', 'to': "from where i'm sitting"},
+    'serious as a heart attack': {'action': 'meaning', 'meaning': 'son derece ciddi, hiç şakası yok'},
+    'stick about': {'action': 'meaning', 'meaning': 'bir süre daha kalmak, etrafta beklemek'},
+}
+
+AUDIT_FIX = {'hamit_denetim21_2026-11-20.xlsx': (D21_EX_FIX, D21_EDITS),
+             'hamit_denetim20_2026-11-20.xlsx': (D20_EX_FIX, D20_EDITS),
              'hamit_denetim19_2026-11-20.xlsx': (D19_EX_FIX, D19_EDITS),
              'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
              'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
