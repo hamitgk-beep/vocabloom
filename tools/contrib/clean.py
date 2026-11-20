@@ -33,7 +33,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx \
-         tools/contrib/hamit_obek1_2026-11-20.xlsx
+         tools/contrib/hamit_obek1_2026-11-20.xlsx tools/contrib/hamit_deyim1_2026-11-20.xlsx
 """
 import json
 import re
@@ -1065,7 +1065,107 @@ O1_EDITS = {
         ('cheese down', '(denizcilik) halatı düzenli sarmak'))},
 }
 
-AUDIT_FIX = {'hamit_obek1_2026-11-20.xlsx': (O1_EX_FIX, O1_EDITS),
+# --- Idiom work sheet 1 (Parti 24) ---------------------------------------------------
+# Headings with "someone's" are read word for word; with "one's" any owner fits, so
+# they take "one's". Verbs whose sentences put the object after the verb get "sb".
+# Plural owners ("buyers' eyes") are not read as owners, so those sentences use one.
+Y1_EX_FIX = {
+    193: {'ex': 'The leaked emails forced her hand, and the mayor finally announced an investigation.'},
+    197: {'ex': 'The director knew the blame for the failed evacuation lay at his door.',
+          'ex_tr': 'Müdür, başarısız tahliyenin suçunun kendisinde olduğunu biliyordu.'},
+    198: {'ex': 'The captain marked his card after the rookie ignored the signal a second time.'},
+    201: {'phrase': 'save face', 'ex': 'The company apologized publicly to help the manager save face after the embarrassing error.'},
+    289: {'ex': 'The accident on the icy road claimed his life only a week after his wedding.',
+          'ex_tr': 'Buzlu yoldaki kaza, düğününden yalnızca bir hafta sonra onun hayatına mal oldu.'},
+    195: {'ex': 'The general knew he would have their blood on his head if he ordered the attack.'},
+    203: {'ex': 'If the new chain opens next door, it could take the bread out of his mouth by driving away his customers.',
+          'ex_tr': 'Yeni zincir market yan tarafa açılırsa müşterilerini çekip onun ekmeğiyle oynayabilir.'},
+    204: {'ex': 'The spokesman tried to throw dust in our eyes with a pile of irrelevant statistics.'},
+    275: {'ex': 'His promises were not worth beans once the documents proved he had been lying.'},
+    364: {'ex': 'The developer tried to pull the wool over our eyes by hiding the cracks behind fresh paint.'},
+    525: {'ex': 'The choir sang outside the hospital to raise their spirits during the long winter.'},
+}
+Y1_EDITS = {
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ("bite someone's head off", "bite one's head off"), ("force someone's hand", "force one's hand"),
+        ("hang over someone's head", "hang over one's head"), ("mark someone's card", "mark one's card"),
+        ("take the bread out of someone's mouth", "take the bread out of one's mouth"),
+        ("lift someone's spirits", "lift one's spirits"), ("raise someone's spirits", "raise one's spirits"),
+        ("pull the wool over someone's eyes", "pull the wool over one's eyes"), ("lie at someone's door", "lie at one's door"),
+        ("throw dust in someone's eyes", "throw dust in one's eyes"), ("claim someone's life", "claim one's life"),
+        ("have someone's blood on one's head", "have one's blood on one's head"), ('tell its own tale', "tell one's own tale"),
+        ("call it as one sees it", "call it as sb sees it"),
+        ('deal a bad hand', 'deal sb a bad hand'), ('deal a good hand', 'deal sb a good hand'),
+        ('put on the long finger', 'put sth on the long finger'), ('call on the carpet', 'call sb on the carpet'),
+        ('leave for dust', 'leave sb for dust'), ('blow out of the water', 'blow sth out of the water'),
+        ('drop like a hot potato', 'drop sb like a hot potato'), ('throw off balance', 'throw sb off balance'),
+        ('throw to the wolves', 'throw sb to the wolves'), ('kick upstairs', 'kick sb upstairs'),
+        ('give the royal treatment', 'give sb the royal treatment'))},
+    'bring someone to their knees': {'action': 'rename', 'to': "bring sb to one's knees"},
+    # Review notes: the usual heading of the same idiom.
+    **{p: {'action': 'merge', 'to': t} for p, t in (
+        ("taste of one's own poison", "taste of one's own medicine"), ('pull the leg of', "pull one's leg"),
+        ('row in the same boat', 'in the same boat'), ('catch dust', 'gather dust'), ('pull the long bow', 'draw the long bow'),
+        ("put one's neck out", "stick one's neck out"), ('dog who caught the tire', 'dog that caught the car'),
+        ('burn the roof', 'raise the roof'))},
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ("jump in one's skin", "jump out of one's skin"), ("shake off the dust from one's feet", "shake the dust off one's feet"),
+        ('dig oneself in a hole', 'dig oneself into a hole'), ('find quarrel in a straw', 'find a quarrel in a straw'),
+        ('get a load', 'get a load of'), ('come up with snake eyes', 'come up snake eyes'),
+        ("knock someone's wind out", 'knock the wind out of sb'), ('bite of the cherry', 'another bite at the cherry'),
+        ('get the jump', 'get the jump on'))},
+    **{p: {'action': 'merge', 'to': t} for p, t in (('take someone for granted', 'take sb for granted'), ("save someone's face", 'save face'))},
+    # Notes marked "sil".
+    **{p: {'action': 'delete'} for p in (
+        'expensive drunk', 'half a head', 'keep the rent down', 'raise the line', 'three guys in a garage', 'yellow state',
+        'take the meaning', 'shoot the gold', 'turn a loss', 'center part', 'forty minutes of hell', "cut away one's soul",
+        'express elevator', 'secretary spread', 'fruit of the union', 'clear the throat', 'smoke the whole pack',
+        'forget to take one\'s medication this morning', 'cold treatment', 'fair coin', 'open the schools', 'heavy equipment',
+        'take a shit', 'take the mask off', 'baby elephant in the room', 'painting rocks', 'take roll', 'no score',
+        'know someone from eve', 'smile a thousand smiles', 'sea load', 'shed find', 'suspended congress')},
+}
+# Meanings the notes show to be wrong; renamed headings go by their new name.
+Y1_MEANING = {
+    'top oneself': '(İngiliz, argo) kendini öldürmek, intihar etmek',
+    'blow sth out of the water': '(bir iddiayı) tamamen çürütmek; açık ara geride bırakmak',
+    "wash one's dirty laundry in public": 'kirli çamaşırlarını ortaya dökmek, özel meseleleri herkesin önünde konuşmak',
+    'buy straw hats in winter': '(borsa) ucuzken alıp değerlenmesini beklemek',
+}
+# Usage and field labels from the notes ("(İngiliz, eskice); ...") go in front of the meaning.
+Y1_LABELS = {'Amerikan', 'eskice', 'İngiliz', 'argo', 'konuşma dili', 'bölgesel', 'edebî', 'hukuk', 'alaycı', 'spor',
+             'siyaset', 'mizahi', 'İrlanda', 'iş dünyası', 'Avustralya', 'denizcilik', 'beyzbol', 'internet argosu',
+             'kriket', 'dinî', 'askerî', 'finans', 'tiyatro', 'astronomi', 'tıp', 'sinema', 'resmî', 'golf', 'tenis',
+             'borsa', 'aşağılayıcı', 'kaba'}
+Y1_LABEL_MAP = {'dinsel': 'dinî', 'cinsel argo': 'kaba'}
+
+
+def y1_meaning_edits(wb, ph_edits):
+    out = []
+    ren = {k: v['to'] for k, v in ph_edits.items() if v and v['action'] == 'rename'}
+    gone = {k for k, v in ph_edits.items() if v and v['action'] in ('delete', 'merge')}
+    for r in wb['Örnek cümle önerileri'].iter_rows(min_row=2, values_only=True):
+        r = ['' if v is None else str(v).strip() for v in r]
+        ph, mean, note = r[0], r[2], (r + [''] * 6)[5]
+        if not ph or ph in gone:
+            continue
+        head = ren.get(ph, ph)
+        if head in Y1_MEANING:
+            out.append({'phrase': head, 'action': 'meaning', 'meaning': Y1_MEANING[head]})
+            continue
+        m = re.match(r'\(([^)]*)\)', note)
+        if not m or not mean or mean.startswith('('):
+            continue
+        labels = []
+        for t in re.split(r'[,/;]', m.group(1)):
+            t = Y1_LABEL_MAP.get(t.strip(), t.strip())
+            if t in Y1_LABELS and t not in labels:
+                labels.append(t)
+        if labels:
+            out.append({'phrase': head, 'action': 'meaning', 'meaning': f"({', '.join(labels)}) {mean}"})
+    return out
+
+AUDIT_FIX = {'hamit_deyim1_2026-11-20.xlsx': (Y1_EX_FIX, Y1_EDITS),
+             'hamit_obek1_2026-11-20.xlsx': (O1_EX_FIX, O1_EDITS),
              'hamit_denetim23_2026-11-20.xlsx': (D23_EX_FIX, D23_EDITS),
              'hamit_denetim22_2026-11-20.xlsx': (D22_EX_FIX, D22_EDITS),
              'hamit_denetim21_2026-11-20.xlsx': (D21_EX_FIX, D21_EDITS),
@@ -1143,6 +1243,8 @@ for src in srcs:
             e.update(fix)
             phrases.append(e)
         edits += [dict(v, phrase=k) for k, v in ph_edits.items()]
+        if name == 'hamit_deyim1_2026-11-20.xlsx':
+            edits += y1_meaning_edits(wb, ph_edits)
         continue
 
     if 'Kalıplar' in wb.sheetnames and 'Cümlede anlam' not in wb.sheetnames:
