@@ -29,7 +29,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx \
          tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
-         tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v18.xlsx
 """
 import json
 import re
@@ -520,7 +521,56 @@ V17_PH_FIX = {
          'ex_tr': 'Yarın havanın açık kalmasını umuyorum, şans dileyelim.'},
 }
 
+# --- Dictionary v18 (hamit_2026-11-20_v18.xlsx, sent as "v16") -------------------
+# Examples for meanings the dictionary has; word-for-word English rewritten
+# ("in the youth of his life", "spun the wet clay wheel", "a poem related to
+# rotation"). "hold the fort", "harp on" and "feet of clay" also go to the phrase.
+V18_EX_FIX = {
+    4: {'en': 'That young athlete achieved great success while still in the springtime of his life.'},
+    5: {'en': 'The climbers got all their safety equipment ready to climb a steep rock face.'},
+    7: {'en': 'The TV channel showed the big final match that evening as a live broadcast.'},
+    12: {'en': 'The gardener took a small cutting from the stem to propagate his favourite geranium.'},
+    16: {'en': "This transaction, made under power of attorney, cannot be used without the principal's approval."},
+    17: {'en': 'Early in the morning the old hunter walked towards the forest with his trusty double-barrelled shotgun over his shoulder.'},
+    18: {'en': 'The restless horse suddenly kicked out with both hind legs at the man standing behind it.'},
+    19: {'en': 'Thanks to this year\'s profits, the company made it a double celebration for all its employees.'},
+    23: {'en': 'Police teams patrolled the quiet neighbourhood all night to keep it safe.'},
+    24: {'en': "In literature class we read a devriye, a Bektashi poem about the soul's cycle of creation."},
+    30: {'en': 'The tailor put a little starch on the fabric so that the collars and cuffs of the shirts would stay stiff.'},
+    34: {'en': "I'll hold the fort here at the office while you go out for a quick lunch.", 'tr': 'Sen hızlıca öğle yemeğine çıkarken ben burada ofiste işlere bakarım.'},
+    36: {'tr': 'Efsanevi korsan hazinesi ıssız adanın öbür ucuna gizlice gömülmüştü.'},
+    38: {'en': 'He suffered terrible back pain last year because of a slipped disc.', 'tr': 'Geçen yıl kayan bir omurga diski yüzünden korkunç sırt ağrıları çekti.'},
+    40: {'tr': 'Yerli halk, kurak çöldeki uzun kaktüslerden tatlı hint inciri topladı.'},
+    44: {'en': 'The spring weather here is very moody; it can pour with rain and then suddenly turn sunny on the same day.'},
+    50: {'en': 'The company used a cash bonus as a carrot to motivate the struggling sales team.',
+         'tr': 'Şirket, zorlanan satış ekibini motive etmek için nakit primi bir ödül vaadi olarak kullandı.'},
+    58: {'tr': 'Karizmatik başrol oyuncusunun bütün tiyatro seyircisini anında büyüleyen çekici bir kişiliği var.'},
+    61: {'en': 'The skilled potter carefully shaped a delicate ceramic bowl on his wheel.',
+         'tr': 'Yetenekli çömlekçi, çarkında zarif bir seramik kâseyi özenle şekillendirdi.'},
+}
+V18_CTX_FIX = {i: (f['en'], None, None, None) for i, f in V18_EX_FIX.items() if 'en' in f and i >= 31}
+V18_PH_FIX = {
+    2: {'ex_tr': 'I guessed the answers to those last three very hard questions on the exam completely at random.'},
+    4: {'ex_tr': 'The weather was lovely today, so we seized the chance and went straight to the sea.'},
+    7: {'ex': 'Gençliğinde yaptığı bu büyük hata bütün hayatı boyunca kulağına küpe oldu.'},
+    11: {'ex_tr': 'Sadece yardım sözü verme; unutma, ayinesi iştir kişinin lafa bakılmaz.'},
+    12: {'ex': "She had to burn the midnight oil to finish her master's thesis on time.",
+         'ex_tr': 'Yüksek lisans tezini zamanında bitirmek için gece geç saatlere kadar çalışmak zorunda kaldı.'},
+    15: {'ex': 'Our customer support team always goes the extra mile to help users.',
+         'ex_tr': 'Müşteri destek ekibimiz kullanıcılara yardım etmek için her zaman fazladan çaba gösterir.'},
+    16: {'phrase': "steal one's thunder", 'ex': 'She announced her engagement at my birthday party and completely stole my thunder.',
+         'ex_tr': 'Doğum günü partimde nişanlandığını duyurdu ve beni tamamen gölgede bıraktı.'},
+    17: {'ex': 'He often exaggerates, so when he tells you a story, take it with a grain of salt.',
+         'ex_tr': 'Sık sık abartır; sana bir hikâye anlattığında ona ihtiyatla yaklaş.'},
+}
+
 FIXES = {
+    'hamit_2026-11-20_v18.xlsx': dict(ctx_fix=V18_CTX_FIX, ctx_to_phrase=set(), ctx_add=[],
+                                      ctx_phrase={34: 'hold the fort', 46: 'harp on', 56: 'feet of clay'},
+                                      ctx_tr={34: V18_EX_FIX[34]['tr'],
+                                              46: 'Katı patronum geçen hafta yaptığım küçük bir yazım hatasının üzerinde durmaya devam ediyor.',
+                                              56: 'En büyük tarihi kahramanların bile çoğu zaman gizli zaafları vardır ve korkunç kişisel hatalar yaparlar.'},
+                                      en_split={}, tr_split={}, ex_fix=V18_EX_FIX, ph_fix=V18_PH_FIX),
     'hamit_2026-11-20_v17.xlsx': dict(ctx_fix={i: (None, None, None, m) for i, m in V17_MEANING.items()},
                                       ctx_to_phrase=set(), ctx_add=[], ctx_tr={},
                                       en_split={}, tr_split={}, ex_fix=V17_EX_FIX, ph_fix=V17_PH_FIX),
@@ -775,6 +825,8 @@ D20_EX_FIX = {
 D20_EDITS = {
     **{p: {'action': 'delete'} for p in ('in so far', 'drive to drink', 'turn together')},
     'take to task': {'action': 'rename', 'to': 'take sb to task'},
+    # "someone's" is not a slot for "my"; "one's" is (sheet v18: "stole my thunder").
+    "steal someone's thunder": {'action': 'rename', 'to': "steal one's thunder"},
     'woman up': {'action': 'meaning', 'meaning': 'cesaretini toplamak, güçlü durmak (kadın için; "man up" gibi)'},
     'hang by a hair': {'action': 'meaning', 'meaning': 'pamuk ipliğine bağlı olmak, büyük tehlikede olmak'},
     'in at the deep end': {'action': 'meaning', 'meaning': '(throw/jump in at the deep end) hazırlıksız zor bir işin içine atılmak'},
@@ -804,7 +856,7 @@ def lang_of(word, meaning, tr_words):
 
 
 out, srcs = sys.argv[1], sys.argv[2:]
-ctx, words, examples, phrases, edits = [], [], [], [], []
+ctx, words, examples, phrases, edits, word_drops = [], [], [], [], [], []
 seen = set()  # (sheet, row contents) already read from an earlier file
 
 
@@ -947,6 +999,10 @@ for src in srcs:
     for sheet, lang, split in [('TR-EN kelimeler', 'tr', fx['tr_split']), ('EN-TR kelimeler', 'en', fx['en_split'])]:
         for i, r in rows(wb, sheet):
             w, pos, rank, mean, note, extra = (r + [''] * 6)[:6]
+            if any(re.match(r'(?i)yanl[ıi]ş\s*:', str(x or '').strip().replace('I', 'ı')) for x in (note, extra)):
+                # "yanlış:" in a note: the dictionary's meaning is wrong and is taken out.
+                word_drops.append({'word': w, 'lang': lang, 'meaning': mean})
+                continue
             for p, m, n in split.get(i, [(pos, mean, note)]):
                 words.append({'word': w, 'lang': lang, 'pos': POS.get(p, p), 'meaning': m, 'note': n})
 
@@ -972,7 +1028,14 @@ for src in srcs:
         phrases.append({'phrase': 'run over', 'lang': 'en', 'meaning': 'taşmak',
                         'ex': 'Be careful not to let the bathwater run over.', 'ex_tr': 'Banyo suyunun taşmamasına dikkat et.'})
 
+# A heading renamed by hand: rows of any sheet that use the old one go to the new one.
+_ren = {e['phrase']: e['to'] for e in edits if e['action'] == 'rename'}
+for _p in phrases:
+    if _p.get('lang') == 'en' and _p['phrase'] in _ren:
+        _p['phrase'] = _ren[_p['phrase']]
+
 data = {'source': 'Storilex contributors (Hamit), ' + ', '.join(s.split('/')[-1] for s in srcs),
-        'context': ctx, 'words': words, 'examples': examples, 'phrases': phrases, 'phrase_edits': edits}
+        'context': ctx, 'words': words, 'examples': examples, 'phrases': phrases, 'phrase_edits': edits,
+        'word_drops': word_drops}
 json.dump(data, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 print({k: len(v) for k, v in data.items() if isinstance(v, list)})

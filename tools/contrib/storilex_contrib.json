@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -9439,6 +9439,470 @@
    "lemma": "contradict",
    "lang": "en",
    "meaning": "yalanlamak, itiraz etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahar gelince tüm ağaçlar çiçek açar ve doğa canlanır.",
+   "form": "Bahar",
+   "lemma": "bahar",
+   "lang": "tr",
+   "meaning": "spring",
+   "translation": ""
+  },
+  {
+   "sentence": "Eti fırına vermeden önce üzerine biraz daha bahar katarsan çok lezzetli olur.",
+   "form": "bahar",
+   "lemma": "bahar",
+   "lang": "tr",
+   "meaning": "spice",
+   "translation": ""
+  },
+  {
+   "sentence": "O genç sporcu henüz hayatının baharında büyük bir başarıya imza attı.",
+   "form": "baharında",
+   "lemma": "bahar",
+   "lang": "tr",
+   "meaning": "youth",
+   "translation": ""
+  },
+  {
+   "sentence": "Dağcılar dik bir kayaya tırmanmak için tüm güvenlik ekipmanlarını hazırladı.",
+   "form": "kayaya",
+   "lemma": "kaya",
+   "lang": "tr",
+   "meaning": "huge rock",
+   "translation": ""
+  },
+  {
+   "sentence": "Kaya, bu şirkette çalışan en dürüst ve disiplinli mühendislerden biridir.",
+   "form": "Kaya",
+   "lemma": "kaya",
+   "lang": "tr",
+   "meaning": "male given name",
+   "translation": ""
+  },
+  {
+   "sentence": "Televizyon kanalı akşamki önemli final maçını canlı yayınla ekranlara taşıdı.",
+   "form": "yayınla",
+   "lemma": "yayın",
+   "lang": "tr",
+   "meaning": "broadcast",
+   "translation": ""
+  },
+  {
+   "sentence": "Balıkçılar nehrin derin sularında devasa bir yayın yakalayıp kıyıya çektiler.",
+   "form": "yayın",
+   "lemma": "yayın",
+   "lang": "tr",
+   "meaning": "sheatfish",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazın bu şirin sahil kasabası dünyanın her yerinden gelen turistlerle dolup taşar.",
+   "form": "Yazın",
+   "lemma": "yazın",
+   "lang": "tr",
+   "meaning": "in the summer",
+   "translation": ""
+  },
+  {
+   "sentence": "Türk yazınında bu tarihi olayı detaylıca ele alan sayısız önemli eser vardır.",
+   "form": "yazınında",
+   "lemma": "yazın",
+   "lang": "tr",
+   "meaning": "literature",
+   "translation": ""
+  },
+  {
+   "sentence": "Yüksek katlı binanın temelinde depreme son derece dayanıklı çelik kullanıldı.",
+   "form": "çelik",
+   "lemma": "çelik",
+   "lang": "tr",
+   "meaning": "steel",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahçıvan en sevdiği sardunyayı çoğaltmak için bitkinin gövdesinden küçük bir çelik aldı.",
+   "form": "çelik",
+   "lemma": "çelik",
+   "lang": "tr",
+   "meaning": "cutting of a plant",
+   "translation": ""
+  },
+  {
+   "sentence": "Doğum gününde eski okul arkadaşına sürpriz bir hediye paketi gönderdi.",
+   "form": "gönderdi",
+   "lemma": "göndermek",
+   "lang": "tr",
+   "meaning": "to send, dispatch",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazar, kitabının son bölümünde antik Yunan efsanelerine açıkça gönderiyor.",
+   "form": "gönderiyor",
+   "lemma": "göndermek",
+   "lang": "tr",
+   "meaning": "to reference",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski zamanlarda asil aileler etrafı surlarla çevrili büyük şatolarda yaşardı.",
+   "form": "asil",
+   "lemma": "asil",
+   "lang": "tr",
+   "meaning": "noble, aristocratic",
+   "translation": ""
+  },
+  {
+   "sentence": "Vekaletname ile yapılan bu işlem, asilin onayı olmadan kesinlikle kullanılamaz.",
+   "form": "asilin",
+   "lemma": "asil",
+   "lang": "tr",
+   "meaning": "principal",
+   "translation": ""
+  },
+  {
+   "sentence": "Yaşlı avcı omzuna astığı emektar çifte ile sabah erkenden ormana doğru yürüdü.",
+   "form": "çifte",
+   "lemma": "çifte",
+   "lang": "tr",
+   "meaning": "double-barrelled shotgun",
+   "translation": ""
+  },
+  {
+   "sentence": "Huysuzlanan at aniden şaha kalkıp hemen arkasında duran adama çifte attı.",
+   "form": "çifte",
+   "lemma": "çifte",
+   "lang": "tr",
+   "meaning": "a kick with two legs",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirket bu yıl elde ettiği kâr sayesinde tüm çalışanlarına çifte bayram yaşattı.",
+   "form": "çifte",
+   "lemma": "çifte",
+   "lang": "tr",
+   "meaning": "twofold, duplicate",
+   "translation": ""
+  },
+  {
+   "sentence": "Vakfa yapılan her küçük bağış, kimsesiz çocukların eğitim masrafları için kullanılıyor.",
+   "form": "bağış",
+   "lemma": "bağış",
+   "lang": "tr",
+   "meaning": "donation, grant",
+   "translation": ""
+  },
+  {
+   "sentence": "Trafik polisi, otoyolda hız sınırını büyük ölçüde aşan sürücüye ceza yazdı.",
+   "form": "sürücüye",
+   "lemma": "sürücü",
+   "lang": "tr",
+   "meaning": "driver (person)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bilgisayarın ses kartı aniden çalışmayı durdurunca internetten yeni bir sürücü yükledim.",
+   "form": "sürücü",
+   "lemma": "sürücü",
+   "lang": "tr",
+   "meaning": "driver (software)",
+   "translation": ""
+  },
+  {
+   "sentence": "Polis ekipleri güvenliği sağlamak için gece boyunca sessiz mahallede devriye gezdi.",
+   "form": "devriye",
+   "lemma": "devriye",
+   "lang": "tr",
+   "meaning": "patrol",
+   "translation": ""
+  },
+  {
+   "sentence": "Edebiyat dersinde Bektaşi şairlerin insanın yaradılışını anlattığı bir devriye okuduk.",
+   "form": "devriye",
+   "lemma": "devriye",
+   "lang": "tr",
+   "meaning": "related to rotation",
+   "translation": ""
+  },
+  {
+   "sentence": "Nisan ayında yağan hafif bahar yağmurları tarladaki ekinler için çok faydalıdır.",
+   "form": "Nisan",
+   "lemma": "nisan",
+   "lang": "tr",
+   "meaning": "April",
+   "translation": ""
+  },
+  {
+   "sentence": "Yaşar, ofisteki en tecrübeli ve herkese yardımcı olmayı seven mesai arkadaşımızdır.",
+   "form": "Yaşar",
+   "lemma": "yaşar",
+   "lang": "tr",
+   "meaning": "male given name",
+   "translation": ""
+  },
+  {
+   "sentence": "O kadar cömert bir insandır ki elindeki her şeyi hiç düşünmeden yoksullarla paylaşır.",
+   "form": "cömert",
+   "lemma": "cömert",
+   "lang": "tr",
+   "meaning": "generous",
+   "translation": ""
+  },
+  {
+   "sentence": "Uygun iklim şartları sayesinde bu yıl tarladan oldukça cömert bir hasat elde ettik.",
+   "form": "cömert",
+   "lemma": "cömert",
+   "lang": "tr",
+   "meaning": "efficient, abundant",
+   "translation": ""
+  },
+  {
+   "sentence": "Çok sıcak yaz günlerinde içi buz dolu bir bardak soğuk kola içmeyi sever.",
+   "form": "kola",
+   "lemma": "kola",
+   "lang": "tr",
+   "meaning": "cola (beverage)",
+   "translation": ""
+  },
+  {
+   "sentence": "Gömleklerin yakalarının ve manşetlerinin dik durması için terzi kumaşa biraz kola sürdü.",
+   "form": "kola",
+   "lemma": "kola",
+   "lang": "tr",
+   "meaning": "laundry starch",
+   "translation": ""
+  },
+  {
+   "sentence": "The leaning tower of Pisa attracts thousands of curious tourists from around the world every year.",
+   "form": "leaning",
+   "lemma": "leaning",
+   "lang": "en",
+   "meaning": "eğik, yana yatık",
+   "translation": ""
+  },
+  {
+   "sentence": "He has a strong leaning towards studying modern art and contemporary architecture in college.",
+   "form": "leaning",
+   "lemma": "leaning",
+   "lang": "en",
+   "meaning": "eğilim, meyil",
+   "translation": ""
+  },
+  {
+   "sentence": "The brave soldiers valiantly defended the old stone fort against the invading enemy forces.",
+   "form": "fort",
+   "lemma": "fort",
+   "lang": "en",
+   "meaning": "kale, tahkimat",
+   "translation": ""
+  },
+  {
+   "sentence": "We couldn't walk any farther into the deep forest because it was getting too dark.",
+   "form": "farther",
+   "lemma": "farther",
+   "lang": "en",
+   "meaning": "daha uzağa, daha ileriye",
+   "translation": ""
+  },
+  {
+   "sentence": "The legendary pirate treasure was secretly buried at the farther end of the remote island.",
+   "form": "farther",
+   "lemma": "farther",
+   "lang": "en",
+   "meaning": "daha uzak, öteki",
+   "translation": ""
+  },
+  {
+   "sentence": "Make sure you securely save all your important company files on an external disk.",
+   "form": "disk",
+   "lemma": "disk",
+   "lang": "en",
+   "meaning": "bilgisayar diski, veri diski",
+   "translation": ""
+  },
+  {
+   "sentence": "He suffered terrible back pain last year because of a slipped disc.",
+   "form": "disk",
+   "lemma": "disk",
+   "lang": "en",
+   "meaning": "yassı yuvarlak nesne, plaka",
+   "translation": ""
+  },
+  {
+   "sentence": "I usually make a quick and healthy salad with canned tuna for my office lunch.",
+   "form": "tuna",
+   "lemma": "tuna",
+   "lang": "en",
+   "meaning": "ton balığı",
+   "translation": ""
+  },
+  {
+   "sentence": "The indigenous locals carefully gathered sweet tuna from the tall cactus plants in the dry desert.",
+   "form": "tuna",
+   "lemma": "tuna",
+   "lang": "en",
+   "meaning": "hint incirine benzer dikenli kaktüs",
+   "translation": ""
+  },
+  {
+   "sentence": "Looking up at night, the universe seems like an endless space of bright stars and vast galaxies.",
+   "form": "endless",
+   "lemma": "endless",
+   "lang": "en",
+   "meaning": "sonsuz, bitmez tükenmez",
+   "translation": ""
+  },
+  {
+   "sentence": "She had an endless list of household chores to complete before her guests arrived for the weekend.",
+   "form": "endless",
+   "lemma": "endless",
+   "lang": "en",
+   "meaning": "sayısız, çok fazla",
+   "translation": ""
+  },
+  {
+   "sentence": "The moody teenager sat quietly in the dark corner of the room without speaking to anyone.",
+   "form": "moody",
+   "lemma": "moody",
+   "lang": "en",
+   "meaning": "somurtkan, asık suratlı",
+   "translation": ""
+  },
+  {
+   "sentence": "The spring weather here is very moody; it can pour with rain and then suddenly turn sunny on the same day.",
+   "form": "moody",
+   "lemma": "moody",
+   "lang": "en",
+   "meaning": "huysuz, değişken ruh hâlli",
+   "translation": ""
+  },
+  {
+   "sentence": "The talented musician played a beautiful and calming melody on her heavy golden harp.",
+   "form": "harp",
+   "lemma": "harp",
+   "lang": "en",
+   "meaning": "arp",
+   "translation": ""
+  },
+  {
+   "sentence": "He remained surprisingly passive during the heated argument and didn't even try to defend himself.",
+   "form": "passive",
+   "lemma": "passive",
+   "lang": "en",
+   "meaning": "pasif, edilgen, tepkisiz",
+   "translation": ""
+  },
+  {
+   "sentence": "In our advanced grammar class, we thoroughly learned how to accurately change an active sentence into the passive.",
+   "form": "passive",
+   "lemma": "passive",
+   "lang": "en",
+   "meaning": "edilgen çatı",
+   "translation": ""
+  },
+  {
+   "sentence": "You should eat a fresh crunchy carrot every day to easily get some natural vitamin A.",
+   "form": "carrot",
+   "lemma": "carrot",
+   "lang": "en",
+   "meaning": "havuç",
+   "translation": ""
+  },
+  {
+   "sentence": "The company used a cash bonus as a carrot to motivate the struggling sales team.",
+   "form": "carrot",
+   "lemma": "carrot",
+   "lang": "en",
+   "meaning": "ödül vaadi, cazip teklif",
+   "translation": ""
+  },
+  {
+   "sentence": "The intense police interrogation lasted for three grueling hours before the prime suspect finally confessed.",
+   "form": "interrogation",
+   "lemma": "interrogation",
+   "lang": "en",
+   "meaning": "sorgu, sorguya çekme",
+   "translation": ""
+  },
+  {
+   "sentence": "I faced a tough interrogation from my strict parents when I unexpectedly arrived home late last night.",
+   "form": "interrogation",
+   "lemma": "interrogation",
+   "lang": "en",
+   "meaning": "sorgulama, ardı arkası kesilmeyen soru yağmuru",
+   "translation": ""
+  },
+  {
+   "sentence": "The old hardworking miller worked tirelessly all day to grind the harvested wheat into fine white flour.",
+   "form": "miller",
+   "lemma": "miller",
+   "lang": "en",
+   "meaning": "değirmenci",
+   "translation": ""
+  },
+  {
+   "sentence": "A small white miller fluttered aimlessly around the bright porch light during the warm summer night.",
+   "form": "miller",
+   "lemma": "miller",
+   "lang": "en",
+   "meaning": "güve türü",
+   "translation": ""
+  },
+  {
+   "sentence": "The experienced potter masterfully shaped the soft wet clay into a beautiful round decorative vase.",
+   "form": "clay",
+   "lemma": "clay",
+   "lang": "en",
+   "meaning": "kil, killi toprak",
+   "translation": ""
+  },
+  {
+   "sentence": "The earth's invisible magnetic field naturally protects our planet from highly harmful solar radiation.",
+   "form": "magnetic",
+   "lemma": "magnetic",
+   "lang": "en",
+   "meaning": "manyetik, mıknatıslı",
+   "translation": ""
+  },
+  {
+   "sentence": "The charismatic lead actor has a magnetic personality that instantly charms the entire theater audience.",
+   "form": "magnetic",
+   "lemma": "magnetic",
+   "lang": "en",
+   "meaning": "çekici, büyüleyici",
+   "translation": ""
+  },
+  {
+   "sentence": "We pitched our camping tent safely in the lee of a large rock to avoid the freezing strong wind.",
+   "form": "lee",
+   "lemma": "lee",
+   "lang": "en",
+   "meaning": "siper, rüzgârdan korunan taraf",
+   "translation": ""
+  },
+  {
+   "sentence": "The wooden ship slowly sailed along the lee shore to carefully escape the raging ocean storm.",
+   "form": "lee",
+   "lemma": "lee",
+   "lang": "en",
+   "meaning": "rüzgâr altı, rüzgârdan korunan",
+   "translation": ""
+  },
+  {
+   "sentence": "The skilled potter carefully shaped a delicate ceramic bowl on his wheel.",
+   "form": "potter",
+   "lemma": "potter",
+   "lang": "en",
+   "meaning": "çömlekçi, seramikçi",
+   "translation": ""
+  },
+  {
+   "sentence": "On quiet Sunday mornings, he really likes to potter around the backyard casually planting new colorful flowers.",
+   "form": "potter",
+   "lemma": "potter",
+   "lang": "en",
+   "meaning": "oyalanmak, vakit geçirmek, işle uğraşmak",
    "translation": ""
   }
  ],
@@ -36473,6 +36937,494 @@
    "tr": "Cesur gazeteci, politikacının ifadelerini doğrudan yalanlamaktan çekinmedi.",
    "en": "The brave journalist didn't hesitate to directly contradict the politician's statements.",
    "level": "C1"
+  },
+  {
+   "word": "bahar",
+   "lang": "tr",
+   "meaning": "spring",
+   "tr": "Bahar gelince tüm ağaçlar çiçek açar ve doğa canlanır.",
+   "en": "When spring comes, all the trees blossom and nature comes alive.",
+   "level": "A1"
+  },
+  {
+   "word": "bahar",
+   "lang": "tr",
+   "meaning": "spice",
+   "tr": "Eti fırına vermeden önce üzerine biraz daha bahar katarsan çok lezzetli olur.",
+   "en": "If you add a little more spice to the meat before putting it in the oven, it will be very delicious.",
+   "level": "B1"
+  },
+  {
+   "word": "bahar",
+   "lang": "tr",
+   "meaning": "youth",
+   "tr": "O genç sporcu henüz hayatının baharında büyük bir başarıya imza attı.",
+   "en": "That young athlete achieved great success while still in the springtime of his life.",
+   "level": "C1"
+  },
+  {
+   "word": "kaya",
+   "lang": "tr",
+   "meaning": "huge rock",
+   "tr": "Dağcılar dik bir kayaya tırmanmak için tüm güvenlik ekipmanlarını hazırladı.",
+   "en": "The climbers got all their safety equipment ready to climb a steep rock face.",
+   "level": "A2"
+  },
+  {
+   "word": "kaya",
+   "lang": "tr",
+   "meaning": "male given name",
+   "tr": "Kaya, bu şirkette çalışan en dürüst ve disiplinli mühendislerden biridir.",
+   "en": "Kaya is one of the most honest and disciplined engineers working in this company.",
+   "level": "A1"
+  },
+  {
+   "word": "yayın",
+   "lang": "tr",
+   "meaning": "broadcast",
+   "tr": "Televizyon kanalı akşamki önemli final maçını canlı yayınla ekranlara taşıdı.",
+   "en": "The TV channel showed the big final match that evening as a live broadcast.",
+   "level": "B1"
+  },
+  {
+   "word": "yayın",
+   "lang": "tr",
+   "meaning": "sheatfish",
+   "tr": "Balıkçılar nehrin derin sularında devasa bir yayın yakalayıp kıyıya çektiler.",
+   "en": "The fishermen caught a massive sheatfish in the deep waters of the river and pulled it to the shore.",
+   "level": "C1"
+  },
+  {
+   "word": "yazın",
+   "lang": "tr",
+   "meaning": "in the summer",
+   "tr": "Yazın bu şirin sahil kasabası dünyanın her yerinden gelen turistlerle dolup taşar.",
+   "en": "In the summer, this cute coastal town is overflowing with tourists from all over the world.",
+   "level": "A1"
+  },
+  {
+   "word": "yazın",
+   "lang": "tr",
+   "meaning": "literature",
+   "tr": "Türk yazınında bu tarihi olayı detaylıca ele alan sayısız önemli eser vardır.",
+   "en": "There are countless important works in Turkish literature that deal with this historical event in detail.",
+   "level": "B2"
+  },
+  {
+   "word": "çelik",
+   "lang": "tr",
+   "meaning": "steel",
+   "tr": "Yüksek katlı binanın temelinde depreme son derece dayanıklı çelik kullanıldı.",
+   "en": "Highly earthquake-resistant steel was used in the foundation of the high-rise building.",
+   "level": "B1"
+  },
+  {
+   "word": "çelik",
+   "lang": "tr",
+   "meaning": "cutting of a plant",
+   "tr": "Bahçıvan en sevdiği sardunyayı çoğaltmak için bitkinin gövdesinden küçük bir çelik aldı.",
+   "en": "The gardener took a small cutting from the stem to propagate his favourite geranium.",
+   "level": "C1"
+  },
+  {
+   "word": "göndermek",
+   "lang": "tr",
+   "meaning": "to send, dispatch",
+   "tr": "Doğum gününde eski okul arkadaşına sürpriz bir hediye paketi gönderdi.",
+   "en": "She sent a surprise gift package to her old schoolmate on her birthday.",
+   "level": "A1"
+  },
+  {
+   "word": "göndermek",
+   "lang": "tr",
+   "meaning": "to reference",
+   "tr": "Yazar, kitabının son bölümünde antik Yunan efsanelerine açıkça gönderiyor.",
+   "en": "The author clearly references ancient Greek legends in the final chapter of his book.",
+   "level": "B2"
+  },
+  {
+   "word": "asil",
+   "lang": "tr",
+   "meaning": "noble, aristocratic",
+   "tr": "Eski zamanlarda asil aileler etrafı surlarla çevrili büyük şatolarda yaşardı.",
+   "en": "In ancient times, noble families lived in large castles surrounded by walls.",
+   "level": "B1"
+  },
+  {
+   "word": "asil",
+   "lang": "tr",
+   "meaning": "principal",
+   "tr": "Vekaletname ile yapılan bu işlem, asilin onayı olmadan kesinlikle kullanılamaz.",
+   "en": "This transaction, made under power of attorney, cannot be used without the principal's approval.",
+   "level": "C1"
+  },
+  {
+   "word": "çifte",
+   "lang": "tr",
+   "meaning": "double-barrelled shotgun",
+   "tr": "Yaşlı avcı omzuna astığı emektar çifte ile sabah erkenden ormana doğru yürüdü.",
+   "en": "Early in the morning the old hunter walked towards the forest with his trusty double-barrelled shotgun over his shoulder.",
+   "level": "B2"
+  },
+  {
+   "word": "çifte",
+   "lang": "tr",
+   "meaning": "a kick with two legs",
+   "tr": "Huysuzlanan at aniden şaha kalkıp hemen arkasında duran adama çifte attı.",
+   "en": "The restless horse suddenly kicked out with both hind legs at the man standing behind it.",
+   "level": "C1"
+  },
+  {
+   "word": "çifte",
+   "lang": "tr",
+   "meaning": "twofold, duplicate",
+   "tr": "Şirket bu yıl elde ettiği kâr sayesinde tüm çalışanlarına çifte bayram yaşattı.",
+   "en": "Thanks to this year's profits, the company made it a double celebration for all its employees.",
+   "level": "B2"
+  },
+  {
+   "word": "bağış",
+   "lang": "tr",
+   "meaning": "donation, grant",
+   "tr": "Vakfa yapılan her küçük bağış, kimsesiz çocukların eğitim masrafları için kullanılıyor.",
+   "en": "Every small donation made to the foundation is used for the educational expenses of orphans.",
+   "level": "B1"
+  },
+  {
+   "word": "sürücü",
+   "lang": "tr",
+   "meaning": "driver (person)",
+   "tr": "Trafik polisi, otoyolda hız sınırını büyük ölçüde aşan sürücüye ceza yazdı.",
+   "en": "The traffic police fined the driver who greatly exceeded the speed limit on the highway.",
+   "level": "A2"
+  },
+  {
+   "word": "sürücü",
+   "lang": "tr",
+   "meaning": "driver (software)",
+   "tr": "Bilgisayarın ses kartı aniden çalışmayı durdurunca internetten yeni bir sürücü yükledim.",
+   "en": "When the computer's sound card suddenly stopped working, I installed a new driver from the internet.",
+   "level": "B2"
+  },
+  {
+   "word": "devriye",
+   "lang": "tr",
+   "meaning": "patrol",
+   "tr": "Polis ekipleri güvenliği sağlamak için gece boyunca sessiz mahallede devriye gezdi.",
+   "en": "Police teams patrolled the quiet neighbourhood all night to keep it safe.",
+   "level": "B1"
+  },
+  {
+   "word": "devriye",
+   "lang": "tr",
+   "meaning": "related to rotation",
+   "tr": "Edebiyat dersinde Bektaşi şairlerin insanın yaradılışını anlattığı bir devriye okuduk.",
+   "en": "In literature class we read a devriye, a Bektashi poem about the soul's cycle of creation.",
+   "level": "C2"
+  },
+  {
+   "word": "nisan",
+   "lang": "tr",
+   "meaning": "April",
+   "tr": "Nisan ayında yağan hafif bahar yağmurları tarladaki ekinler için çok faydalıdır.",
+   "en": "The light spring rains that fall in April are very beneficial for the crops in the field.",
+   "level": "A1"
+  },
+  {
+   "word": "yaşar",
+   "lang": "tr",
+   "meaning": "male given name",
+   "tr": "Yaşar, ofisteki en tecrübeli ve herkese yardımcı olmayı seven mesai arkadaşımızdır.",
+   "en": "Yaşar is our most experienced colleague in the office who loves to help everyone.",
+   "level": "A1"
+  },
+  {
+   "word": "cömert",
+   "lang": "tr",
+   "meaning": "generous",
+   "tr": "O kadar cömert bir insandır ki elindeki her şeyi hiç düşünmeden yoksullarla paylaşır.",
+   "en": "He is such a generous person that he shares everything he has with the poor without thinking.",
+   "level": "B1"
+  },
+  {
+   "word": "cömert",
+   "lang": "tr",
+   "meaning": "efficient, abundant",
+   "tr": "Uygun iklim şartları sayesinde bu yıl tarladan oldukça cömert bir hasat elde ettik.",
+   "en": "Thanks to favorable climate conditions, we obtained quite an abundant harvest from the field this year.",
+   "level": "B2"
+  },
+  {
+   "word": "kola",
+   "lang": "tr",
+   "meaning": "cola (beverage)",
+   "tr": "Çok sıcak yaz günlerinde içi buz dolu bir bardak soğuk kola içmeyi sever.",
+   "en": "On very hot summer days, he likes to drink a glass of cold cola filled with ice.",
+   "level": "A1"
+  },
+  {
+   "word": "kola",
+   "lang": "tr",
+   "meaning": "laundry starch",
+   "tr": "Gömleklerin yakalarının ve manşetlerinin dik durması için terzi kumaşa biraz kola sürdü.",
+   "en": "The tailor put a little starch on the fabric so that the collars and cuffs of the shirts would stay stiff.",
+   "level": "C1"
+  },
+  {
+   "word": "leaning",
+   "lang": "en",
+   "meaning": "eğik, yana yatık",
+   "tr": "Pisa'nın eğik kulesi her yıl dünyanın dört bir yanından binlerce meraklı turisti kendine çekiyor.",
+   "en": "The leaning tower of Pisa attracts thousands of curious tourists from around the world every year.",
+   "level": "A2"
+  },
+  {
+   "word": "leaning",
+   "lang": "en",
+   "meaning": "eğilim, meyil",
+   "tr": "Üniversitede modern sanat ve çağdaş mimari okumaya yönelik güçlü bir eğilimi var.",
+   "en": "He has a strong leaning towards studying modern art and contemporary architecture in college.",
+   "level": "C1"
+  },
+  {
+   "word": "fort",
+   "lang": "en",
+   "meaning": "kale, tahkimat",
+   "tr": "Cesur askerler eski taş kaleyi işgalci düşman güçlerine karşı kahramanca savundu.",
+   "en": "The brave soldiers valiantly defended the old stone fort against the invading enemy forces.",
+   "level": "B1"
+  },
+  {
+   "word": "fort",
+   "lang": "en",
+   "meaning": "işi devralmak, yerine bakmak",
+   "tr": "Sen hızlıca öğle yemeğine çıkarken ben burada ofiste işlere bakarım.",
+   "en": "I'll hold the fort here at the office while you go out for a quick lunch.",
+   "level": "B2"
+  },
+  {
+   "word": "farther",
+   "lang": "en",
+   "meaning": "daha uzağa, daha ileriye",
+   "tr": "Hava çok karardığı için derin ormanın içine daha uzağa yürüyemedik.",
+   "en": "We couldn't walk any farther into the deep forest because it was getting too dark.",
+   "level": "A2"
+  },
+  {
+   "word": "farther",
+   "lang": "en",
+   "meaning": "daha uzak, öteki",
+   "tr": "Efsanevi korsan hazinesi ıssız adanın öbür ucuna gizlice gömülmüştü.",
+   "en": "The legendary pirate treasure was secretly buried at the farther end of the remote island.",
+   "level": "B2"
+  },
+  {
+   "word": "disk",
+   "lang": "en",
+   "meaning": "bilgisayar diski, veri diski",
+   "tr": "Tüm önemli şirket dosyalarınızı harici bir veri diskine güvenli bir şekilde kaydettiğinizden emin olun.",
+   "en": "Make sure you securely save all your important company files on an external disk.",
+   "level": "B1"
+  },
+  {
+   "word": "disk",
+   "lang": "en",
+   "meaning": "yassı yuvarlak nesne, plaka",
+   "tr": "Geçen yıl kayan bir omurga diski yüzünden korkunç sırt ağrıları çekti.",
+   "en": "He suffered terrible back pain last year because of a slipped disc.",
+   "level": "C1"
+  },
+  {
+   "word": "tuna",
+   "lang": "en",
+   "meaning": "ton balığı",
+   "tr": "Ofisteki öğle yemeğim için genellikle konserve ton balığı ile hızlı ve sağlıklı bir salata yaparım.",
+   "en": "I usually make a quick and healthy salad with canned tuna for my office lunch.",
+   "level": "A2"
+  },
+  {
+   "word": "tuna",
+   "lang": "en",
+   "meaning": "hint incirine benzer dikenli kaktüs",
+   "tr": "Yerli halk, kurak çöldeki uzun kaktüslerden tatlı hint inciri topladı.",
+   "en": "The indigenous locals carefully gathered sweet tuna from the tall cactus plants in the dry desert.",
+   "level": "C2"
+  },
+  {
+   "word": "endless",
+   "lang": "en",
+   "meaning": "sonsuz, bitmez tükenmez",
+   "tr": "Gece yukarı bakıldığında, evren parlak yıldızlar ve geniş galaksilerden oluşan bitmez tükenmez bir boşluk gibi görünüyor.",
+   "en": "Looking up at night, the universe seems like an endless space of bright stars and vast galaxies.",
+   "level": "B1"
+  },
+  {
+   "word": "endless",
+   "lang": "en",
+   "meaning": "sayısız, çok fazla",
+   "tr": "Hafta sonu misafirleri gelmeden önce tamamlaması gereken sayısız ev işi listesi vardı.",
+   "en": "She had an endless list of household chores to complete before her guests arrived for the weekend.",
+   "level": "B2"
+  },
+  {
+   "word": "moody",
+   "lang": "en",
+   "meaning": "somurtkan, asık suratlı",
+   "tr": "Somurtkan genç, kimseyle konuşmadan odanın karanlık köşesinde sessizce oturdu.",
+   "en": "The moody teenager sat quietly in the dark corner of the room without speaking to anyone.",
+   "level": "B1"
+  },
+  {
+   "word": "moody",
+   "lang": "en",
+   "meaning": "huysuz, değişken ruh hâlli",
+   "tr": "Buranın bahar havası çok değişkendir; aynı gün içinde hem şiddetli yağmur yağar hem de aniden güneş açar.",
+   "en": "The spring weather here is very moody; it can pour with rain and then suddenly turn sunny on the same day.",
+   "level": "B2"
+  },
+  {
+   "word": "harp",
+   "lang": "en",
+   "meaning": "arp",
+   "tr": "Yetenekli müzisyen ağır altın arpında güzel ve sakinleştirici bir melodi çaldı.",
+   "en": "The talented musician played a beautiful and calming melody on her heavy golden harp.",
+   "level": "B1"
+  },
+  {
+   "word": "harp",
+   "lang": "en",
+   "meaning": "sürekli üzerinde durmak, durmadan yinelemek",
+   "tr": "Katı patronum geçen hafta yaptığım aynı küçük yazım hatasının üzerinde durmaya devam ediyor.",
+   "en": "My strict boss continues to harp on the same minor spelling mistake I made last week.",
+   "level": "C1"
+  },
+  {
+   "word": "passive",
+   "lang": "en",
+   "meaning": "pasif, edilgen, tepkisiz",
+   "tr": "Hararetli tartışma sırasında şaşırtıcı derecede pasif kaldı ve kendini savunmaya bile çalışmadı.",
+   "en": "He remained surprisingly passive during the heated argument and didn't even try to defend himself.",
+   "level": "B2"
+  },
+  {
+   "word": "passive",
+   "lang": "en",
+   "meaning": "edilgen çatı",
+   "tr": "İleri dilbilgisi sınıfımızda, etken bir cümleyi edilgen çatıya nasıl doğru bir şekilde çevireceğimizi iyice öğrendik.",
+   "en": "In our advanced grammar class, we thoroughly learned how to accurately change an active sentence into the passive.",
+   "level": "B2"
+  },
+  {
+   "word": "carrot",
+   "lang": "en",
+   "meaning": "havuç",
+   "tr": "Biraz doğal A vitamini almak için her gün taze, çıtır bir havuç yemelisin.",
+   "en": "You should eat a fresh crunchy carrot every day to easily get some natural vitamin A.",
+   "level": "A1"
+  },
+  {
+   "word": "carrot",
+   "lang": "en",
+   "meaning": "ödül vaadi, cazip teklif",
+   "tr": "Şirket, zorlanan satış ekibini motive etmek için nakit primi bir ödül vaadi olarak kullandı.",
+   "en": "The company used a cash bonus as a carrot to motivate the struggling sales team.",
+   "level": "C1"
+  },
+  {
+   "word": "interrogation",
+   "lang": "en",
+   "meaning": "sorgu, sorguya çekme",
+   "tr": "Yoğun polis sorgusu, baş şüpheli nihayet itiraf etmeden önce üç yorucu saat sürdü.",
+   "en": "The intense police interrogation lasted for three grueling hours before the prime suspect finally confessed.",
+   "level": "B2"
+  },
+  {
+   "word": "interrogation",
+   "lang": "en",
+   "meaning": "sorgulama, ardı arkası kesilmeyen soru yağmuru",
+   "tr": "Dün gece eve beklenmedik bir şekilde geç geldiğimde katı ailemden gelen zorlu bir soru yağmuruyla karşılaştım.",
+   "en": "I faced a tough interrogation from my strict parents when I unexpectedly arrived home late last night.",
+   "level": "C1"
+  },
+  {
+   "word": "miller",
+   "lang": "en",
+   "meaning": "değirmenci",
+   "tr": "Çalışkan yaşlı değirmenci, hasat edilen buğdayı ince beyaz una öğütmek için bütün gün yorulmadan çalıştı.",
+   "en": "The old hardworking miller worked tirelessly all day to grind the harvested wheat into fine white flour.",
+   "level": "B1"
+  },
+  {
+   "word": "miller",
+   "lang": "en",
+   "meaning": "güve türü",
+   "tr": "Sıcak yaz gecesinde parlak sundurma ışığının etrafında küçük beyaz bir güve amaçsızca uçuştu.",
+   "en": "A small white miller fluttered aimlessly around the bright porch light during the warm summer night.",
+   "level": "C2"
+  },
+  {
+   "word": "clay",
+   "lang": "en",
+   "meaning": "kil, killi toprak",
+   "tr": "Deneyimli çömlekçi, yumuşak ıslak kili ustalıkla güzel yuvarlak dekoratif bir vazoya dönüştürdü.",
+   "en": "The experienced potter masterfully shaped the soft wet clay into a beautiful round decorative vase.",
+   "level": "B1"
+  },
+  {
+   "word": "clay",
+   "lang": "en",
+   "meaning": "kusurlu yan, gizli zaaf",
+   "tr": "En büyük tarihi kahramanların bile çoğu zaman gizli zaafları vardır ve korkunç kişisel hatalar yaparlar.",
+   "en": "Even the greatest historical heroes often have feet of clay and make terrible personal mistakes.",
+   "level": "C2"
+  },
+  {
+   "word": "magnetic",
+   "lang": "en",
+   "meaning": "manyetik, mıknatıslı",
+   "tr": "Dünyanın görünmez manyetik alanı gezegenimizi son derece zararlı güneş radyasyonundan doğal olarak korur.",
+   "en": "The earth's invisible magnetic field naturally protects our planet from highly harmful solar radiation.",
+   "level": "B2"
+  },
+  {
+   "word": "magnetic",
+   "lang": "en",
+   "meaning": "çekici, büyüleyici",
+   "tr": "Karizmatik başrol oyuncusunun bütün tiyatro seyircisini anında büyüleyen çekici bir kişiliği var.",
+   "en": "The charismatic lead actor has a magnetic personality that instantly charms the entire theater audience.",
+   "level": "C1"
+  },
+  {
+   "word": "lee",
+   "lang": "en",
+   "meaning": "siper, rüzgârdan korunan taraf",
+   "tr": "Dondurucu şiddetli rüzgardan kaçınmak için kamp çadırımızı büyük bir kayanın siperine güvenle kurduk.",
+   "en": "We pitched our camping tent safely in the lee of a large rock to avoid the freezing strong wind.",
+   "level": "C1"
+  },
+  {
+   "word": "lee",
+   "lang": "en",
+   "meaning": "rüzgâr altı, rüzgârdan korunan",
+   "tr": "Ahşap gemi, öfkeli okyanus fırtınasından dikkatlice kaçmak için rüzgar altı kıyısı boyunca yavaşça seyretti.",
+   "en": "The wooden ship slowly sailed along the lee shore to carefully escape the raging ocean storm.",
+   "level": "C2"
+  },
+  {
+   "word": "potter",
+   "lang": "en",
+   "meaning": "çömlekçi, seramikçi",
+   "tr": "Yetenekli çömlekçi, çarkında zarif bir seramik kâseyi özenle şekillendirdi.",
+   "en": "The skilled potter carefully shaped a delicate ceramic bowl on his wheel.",
+   "level": "B1"
+  },
+  {
+   "word": "potter",
+   "lang": "en",
+   "meaning": "oyalanmak, vakit geçirmek, işle uğraşmak",
+   "tr": "Sessiz pazar sabahları, arka bahçede yeni renkli çiçekler dikerek rahatça oyalanmayı gerçekten çok sever.",
+   "en": "On quiet Sunday mornings, he really likes to potter around the backyard casually planting new colorful flowers.",
+   "level": "C1"
   }
  ],
  "phrases": [
@@ -37135,7 +38087,7 @@
    "ex_tr": "Kara gün için bir miktar para biriktirmek her zaman akıllıcadır."
   },
   {
-   "phrase": "steal someone's thunder",
+   "phrase": "steal one's thunder",
    "lang": "en",
    "meaning": "birinin rolünü çalmak, gölgede bırakmak",
    "ex": "She announced her engagement at my party and completely stole my thunder.",
@@ -71494,6 +72446,139 @@
    "meaning": "",
    "ex": "The jury had to decide whether guilt was proven beyond a reasonable doubt.",
    "ex_tr": "Jüri suçun makul şüpheye yer bırakmayacak şekilde kanıtlanıp kanıtlanmadığına karar vermek zorundaydı."
+  },
+  {
+   "phrase": "hold the fort",
+   "lang": "en",
+   "meaning": "işi devralmak, yerine bakmak",
+   "ex": "I'll comfortably hold the fort here at the office while you go out for a quick lunch.",
+   "ex_tr": "Sen hızlıca öğle yemeğine çıkarken ben burada ofiste işlere bakarım."
+  },
+  {
+   "phrase": "harp on",
+   "lang": "en",
+   "meaning": "sürekli üzerinde durmak, durmadan yinelemek",
+   "ex": "My strict boss continues to harp on the same minor spelling mistake I made last week.",
+   "ex_tr": "Katı patronum geçen hafta yaptığım küçük bir yazım hatasının üzerinde durmaya devam ediyor."
+  },
+  {
+   "phrase": "feet of clay",
+   "lang": "en",
+   "meaning": "kusurlu yan, gizli zaaf",
+   "ex": "Even the greatest historical heroes often have feet of clay and make terrible personal mistakes.",
+   "ex_tr": "En büyük tarihi kahramanların bile çoğu zaman gizli zaafları vardır ve korkunç kişisel hatalar yaparlar."
+  },
+  {
+   "phrase": "kafadan atmak",
+   "lang": "tr",
+   "meaning": "to guess blindly, to make something up",
+   "ex": "Sınavdaki o çok zor son üç sorunun cevabını tamamen kafadan attım.",
+   "ex_tr": "I guessed the answers to those last three very hard questions on the exam completely at random."
+  },
+  {
+   "phrase": "etekleri tutuşmak",
+   "lang": "tr",
+   "meaning": "to panic, to get flustered",
+   "ex": "Müdürün aniden odaya girdiğini görünce herkesin etekleri tutuştu.",
+   "ex_tr": "When they saw the manager suddenly enter the room, everyone panicked."
+  },
+  {
+   "phrase": "fırsat bu fırsat",
+   "lang": "tr",
+   "meaning": "now is the chance, taking the opportunity",
+   "ex": "Hava bugün çok güzel, fırsat bu fırsat deyip hemen denize gittik.",
+   "ex_tr": "The weather was lovely today, so we seized the chance and went straight to the sea."
+  },
+  {
+   "phrase": "içi içine sığmamak",
+   "lang": "tr",
+   "meaning": "to be bubbling over with joy",
+   "ex": "Yarın sabah tatile gideceği için kızın sevinçten içi içine sığmıyordu.",
+   "ex_tr": "Because she was going on vacation tomorrow morning, the girl was bubbling over with joy."
+  },
+  {
+   "phrase": "kafasına dank etmek",
+   "lang": "tr",
+   "meaning": "to finally dawn on someone",
+   "ex": "Olan biten her şeyin ardındaki gerçek neden ancak yıllar sonra kafasına dank etti.",
+   "ex_tr": "The real reason behind everything that happened finally dawned on him only years later."
+  },
+  {
+   "phrase": "kulağına küpe olmak",
+   "lang": "tr",
+   "meaning": "to serve as a lesson",
+   "ex": "Gençliğinde yaptığı bu büyük hata bütün hayatı boyunca kulağına küpe oldu.",
+   "ex_tr": "This huge mistake he made in his youth served as a lesson to him for his whole life."
+  },
+  {
+   "phrase": "üzerine titremek",
+   "lang": "tr",
+   "meaning": "to dote on, to fuss over",
+   "ex": "Yeni doğan bebeğinin üzerine o kadar titriyor ki kimseyi yanına yaklaştırmıyor.",
+   "ex_tr": "She dotes on her newborn baby so much that she doesn't let anyone get close to him."
+  },
+  {
+   "phrase": "yüreği ağzına gelmek",
+   "lang": "tr",
+   "meaning": "to have one's heart in one's mouth, to be terrified",
+   "ex": "Karanlık sokakta aniden karşıma bir köpek çıkınca inan ki yüreğim ağzıma geldi.",
+   "ex_tr": "Believe me, I had my heart in my mouth when a dog suddenly appeared in front of me in the dark street."
+  },
+  {
+   "phrase": "a drop in the ocean",
+   "lang": "en",
+   "meaning": "devede kulak",
+   "ex": "The small fine they paid is just a drop in the ocean for a huge global corporation.",
+   "ex_tr": "Ödedikleri küçük para cezası devasa bir küresel şirket için sadece devede kulak kalır."
+  },
+  {
+   "phrase": "actions speak louder than words",
+   "lang": "en",
+   "meaning": "ayinesi iştir kişinin lafa bakılmaz",
+   "ex": "Don't just promise to help; remember that actions speak louder than words.",
+   "ex_tr": "Sadece yardım sözü verme; unutma, ayinesi iştir kişinin lafa bakılmaz."
+  },
+  {
+   "phrase": "burn the midnight oil",
+   "lang": "en",
+   "meaning": "gece geç saatlere kadar çalışmak",
+   "ex": "She had to burn the midnight oil to finish her master's thesis on time.",
+   "ex_tr": "Yüksek lisans tezini zamanında bitirmek için gece geç saatlere kadar çalışmak zorunda kaldı."
+  },
+  {
+   "phrase": "cry over spilled milk",
+   "lang": "en",
+   "meaning": "olup bitmiş bir şeye üzülmek",
+   "ex": "The vase is already completely broken, so there is no use crying over spilled milk now.",
+   "ex_tr": "Vazo zaten tamamen kırıldı, bu yüzden şimdi olup bitmiş bir şeye üzülmenin faydası yok."
+  },
+  {
+   "phrase": "every cloud has a silver lining",
+   "lang": "en",
+   "meaning": "her şerde bir hayır vardır",
+   "ex": "Losing that stressful job led me to a much better career; every cloud has a silver lining.",
+   "ex_tr": "O stresli işi kaybetmek beni çok daha iyi bir kariyere yöneltti; her şerde bir hayır vardır."
+  },
+  {
+   "phrase": "go the extra mile",
+   "lang": "en",
+   "meaning": "fazladan çaba göstermek, elinden gelenin fazlasını yapmak",
+   "ex": "Our customer support team always goes the extra mile to help users.",
+   "ex_tr": "Müşteri destek ekibimiz kullanıcılara yardım etmek için her zaman fazladan çaba gösterir."
+  },
+  {
+   "phrase": "steal one's thunder",
+   "lang": "en",
+   "meaning": "birinin rolünü çalmak, gölgede bırakmak",
+   "ex": "She announced her engagement at my birthday party and completely stole my thunder.",
+   "ex_tr": "Doğum günü partimde nişanlandığını duyurdu ve beni tamamen gölgede bıraktı."
+  },
+  {
+   "phrase": "take it with a grain of salt",
+   "lang": "en",
+   "meaning": "ihtiyatla yaklaşmak, tamamen inanmamak",
+   "ex": "He often exaggerates, so when he tells you a story, take it with a grain of salt.",
+   "ex_tr": "Sık sık abartır; sana bir hikâye anlattığında ona ihtiyatla yaklaş."
   }
  ],
  "phrase_edits": [
@@ -71730,6 +72815,11 @@
    "phrase": "take to task"
   },
   {
+   "action": "rename",
+   "to": "steal one's thunder",
+   "phrase": "steal someone's thunder"
+  },
+  {
    "action": "meaning",
    "meaning": "cesaretini toplamak, güçlü durmak (kadın için; \"man up\" gibi)",
    "phrase": "woman up"
@@ -71773,6 +72863,13 @@
    "action": "meaning",
    "meaning": "(bölgesel, \"redd up\") ortalığı toplamak, toparlamak",
    "phrase": "red up"
+  }
+ ],
+ "word_drops": [
+  {
+   "word": "pm",
+   "lang": "en",
+   "meaning": "gece yarısından sonra"
   }
  ]
 }

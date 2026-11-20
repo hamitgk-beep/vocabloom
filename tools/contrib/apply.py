@@ -323,6 +323,23 @@ def en_phrase(p):
 
 # ---------------------------------------------------------------- apply
 
+for w in data.get('word_drops', []):
+    # A meaning marked wrong by hand ("pm": "gece yarısından sonra") is taken out.
+    if w['lang'] == 'en':
+        senses, keep, exists = en_row(w['word'])
+        left = [s for s in senses if s.get('tr', '').strip() != w['meaning'].strip()]
+        if exists and len(left) < len(senses):
+            en_save(w['word'], left, keep, exists)
+            stats['en meanings removed'] += len(senses) - len(left)
+    else:
+        groups = tr_senses(w['word']) or []
+        for g in groups:
+            g['g'] = [x for x in g['g'] if x.strip() != w['meaning'].strip()]
+        groups = [g for g in groups if g['g']]
+        if groups:
+            tr_save(w['word'], groups, False)
+            stats['tr meanings removed'] += 1
+
 for w in data['words']:
     if w['lang'] == 'tr':
         tr_add_meaning(w['word'], w['pos'], w['meaning'])

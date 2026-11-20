@@ -61,5 +61,6 @@ void main() {
     expect(found('The box was under it.', 'prepositional_phrases'), isNot(contains('under it')));
     // Audit 20: the object inside "take sb to task".
     expect(found('The editor took him to task over the sources.', 'idioms'), contains('take sb to task'));
+    expect(found('Her news completely stole my thunder.', 'idioms'), contains("steal one's thunder"));
   });
 }
