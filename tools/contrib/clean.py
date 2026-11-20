@@ -33,7 +33,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx \
-         tools/contrib/hamit_obek1_2026-11-20.xlsx tools/contrib/hamit_deyim1_2026-11-20.xlsx
+         tools/contrib/hamit_obek1_2026-11-20.xlsx tools/contrib/hamit_deyim1_2026-11-20.xlsx \
+         tools/contrib/hamit_obek2_2026-11-20.xlsx tools/contrib/hamit_obek3_2026-11-20.xlsx tools/contrib/hamit_obek4_2026-11-20.xlsx
 """
 import json
 import re
@@ -1164,7 +1165,74 @@ def y1_meaning_edits(wb, ph_edits):
             out.append({'phrase': head, 'action': 'meaning', 'meaning': f"({', '.join(labels)}) {mean}"})
     return out
 
-AUDIT_FIX = {'hamit_deyim1_2026-11-20.xlsx': (Y1_EX_FIX, Y1_EDITS),
+# --- Phrasal verb work sheets 2-4 (rows 80-259 of the list) ---------------------------
+# Forty sentences put a long object between verb and particle ("printed a new colorful
+# brochure up for"), or end the particle with a preposition; verb and particle go side by
+# side. Rows that show another verb ("froze over" for "freeze down") go to that verb.
+O2_EX_FIX = {
+    122: {'ex': 'The technician linked in the new computer to the main office network.'},
+    139: {'ex': 'The strict teacher loaded down the students with too much homework.'},
+}
+O2_EX_FIX[138] = {'ex': 'The design is based off an ancient Greek temple.', 'ex_tr': 'Tasarım eski bir Yunan tapınağından yola çıkıyor.'}
+O3_EX_FIX = {
+    3: {'ex': 'The company printed up a new colorful brochure for the upcoming campaign.'},
+    10: {'phrase': "cast one's mind back"},
+    14: {'ex': 'From the grandstands, the excited fans rooted on their favorite team.'},
+    21: {'ex': 'These days the successful tech company is shoveling in money.'},
+    25: {'ex': 'She does pilates every morning to tone up her leg muscles.'},
+    26: {'ex': 'The sudden loud noise triggered off the sensitive car alarm.'},
+    32: {'ex': 'During the construction, the heavy trucks muddied up the dirt road.'},
+    33: {'ex': "Using the city's camera system, the police traced down the stolen vehicle."},
+    34: {'ex': 'On a large sheet of paper, the architect traced out the detailed floor plan.'},
+    41: {'ex': 'With a huge discount, the clever salesman managed to hook in the naive customer.'},
+    46: {'ex': 'On his old typewriter, the angry writer pounded out a long complaint letter.'},
+    47: {'ex': 'In a heavy stone mortar, the cook pounded up the fresh garlic cloves.'},
+    50: {'phrase': 'string along', 'ex': 'With false promises of high returns, he strung along the naive investors.'},
+    53: {'ex': 'Right outside the bank, the police officers collared up the suspect.'},
+    54: {'ex': 'To find a single piece of evidence, the forensic team combed over the crime scene.'},
+    57: {'ex': 'To mark the penalty spot, the referee paced off the short distance.'},
+}
+O4_EX_FIX = {
+    2: {'ex': 'To save money, the struggling company scaled down its operations.'},
+    3: {'ex': 'During the market dip, the clever investor scaled in his purchases.'},
+    5: {'phrase': 'sober up'},
+    15: {'ex': 'On her bedroom wall, the teenager pinned up a large colorful poster.'},
+    16: {'ex': 'Without listening, the arrogant manager waved aside my useful suggestions.'},
+    17: {'ex': 'On the empty road, the stranded driver waved down a passing car for help.'},
+    18: {'ex': 'After finishing his chores, he folded away the large ironing board.'},
+    19: {'ex': 'With solid oak wood, the carpenter framed in the new door.'},
+    22: {'phrase': 'freeze over'},
+    23: {'phrase': 'freeze out'},
+    33: {'ex': 'The loud guard dog frightened off the sneaky thieves in the backyard.'},
+    35: {'ex': 'Very carefully, the skilled tailor sewed together the torn pieces of fabric.'},
+    38: {'ex': 'The nasty fall bruised up his left knee pretty badly.'},
+    41: {'ex': 'For a quick dinner, we grilled up a few fresh spicy sausages.'},
+    46: {'ex': 'In one single gulp, the thirsty man tossed back the cold drink.'},
+    47: {'ex': 'The angry teacher tossed down the failed exam papers on the wooden desk.'},
+    48: {'ex': 'Before the unexpected guests arrived, she tossed together a quick fresh salad.'},
+    51: {'ex': 'Despite the heavy protests, the stubborn politician bulled through his controversial new law.'},
+    55: {'ex': 'With some fresh aromatic herbs, you can flavor up the bland potato soup.'},
+    60: {'ex': 'By running five miles every morning, she melted off a lot of stubborn fat.'},
+}
+O2_EDITS = {
+    'fancy up': {'action': 'rename', 'to': 'fancy oneself up'},
+    # Rows marked "sil"; "muscle into" (zorla girmek) is common and stays.
+    **{p: {'action': 'delete'} for p in ('pig off', 'pitch on', 'puzzle through', 'gay up', 'circle in', 'circle out', 'quarrel out', 'stew up', 'flute around', 'tag up', 'jerk off', 'jerk over', 'jerk up', 'hike out', 'shade off', 'shade up', 'bug up', 'rat through', 'shed out', 'freak off', 'duck off', 'harsh down', 'harsh on', 'rubber up', 'steam off', 'mug off', 'trump out', 'wire away', 'ditch out', 'hook on', 'pound off', 'range out', 'zone off', 'eagle out', 'eagle up', 'chapter out', 'grain up', 'sally out', 'chef up', 'butt on', 'butt up', 'beggar off', 'bull up', 'jog on', 'lamb down', 'melt out')},
+    **{p: {'action': 'merge', 'to': t} for p, t in (('string on', 'string along'), ('freeze off', 'freeze out'))},
+    **{p: {'action': 'meaning', 'meaning': m} for p, m in (
+        ('score out', 'üstünü çizmek, silmek'), ('scratch together', 'zar zor denkleştirmek, azar azar biriktirmek'),
+        ('screen in', 'tel örgüyle çevirmek'), ('swallow down', '(gururunu, duygusunu) yutmak, bastırmak'),
+        ('peel out', 'lastik yakarak hızla kalkmak'), ('base off', '-e dayandırmak, -den yola çıkmak'),
+        ('pill up', 'tiftiklenmek, tüylenmek'), ('hook in', 'kandırıp çekmek, tavlamak'),
+        ('collar up', 'yakalamak, ensesinden tutmak'), ('scale in', '(finans) kademeli olarak pozisyon almak'),
+        ('scale out', '(bilişim) sunucu ekleyerek genişletmek; (finans) kademeli olarak pozisyon azaltmak'),
+        ('bully off', '(hokey) oyunu başlatmak'), ('string along', 'oyalamak, boş vaatlerle kandırıp durmak'),
+        ('freeze out', 'dışlamak, aralarına almamak; (dışarısı) çok soğuk olmak'))},
+}
+
+AUDIT_FIX = {'hamit_obek2_2026-11-20.xlsx': (O2_EX_FIX, O2_EDITS), 'hamit_obek3_2026-11-20.xlsx': (O3_EX_FIX, {}),
+             'hamit_obek4_2026-11-20.xlsx': (O4_EX_FIX, {}),
+             'hamit_deyim1_2026-11-20.xlsx': (Y1_EX_FIX, Y1_EDITS),
              'hamit_obek1_2026-11-20.xlsx': (O1_EX_FIX, O1_EDITS),
              'hamit_denetim23_2026-11-20.xlsx': (D23_EX_FIX, D23_EDITS),
              'hamit_denetim22_2026-11-20.xlsx': (D22_EX_FIX, D22_EDITS),

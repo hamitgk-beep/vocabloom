@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx, hamit_denetim22_2026-11-20.xlsx, hamit_2026-11-20_v20.xlsx, hamit_denetim23_2026-11-20.xlsx, hamit_obek1_2026-11-20.xlsx, hamit_deyim1_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx, hamit_denetim22_2026-11-20.xlsx, hamit_2026-11-20_v20.xlsx, hamit_denetim23_2026-11-20.xlsx, hamit_obek1_2026-11-20.xlsx, hamit_deyim1_2026-11-20.xlsx, hamit_obek2_2026-11-20.xlsx, hamit_obek3_2026-11-20.xlsx, hamit_obek4_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -80390,6 +80390,937 @@
    "meaning": "",
    "ex": "\"I've got an early shift,\" she said, heading upstairs to hit the sheets.",
    "ex_tr": "\"Sabah erken vardiyam var,\" diyerek yatmaya çıkarken söyledi."
+  },
+  {
+   "phrase": "deliver up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The defeated commander decided to deliver up the city to the enemy forces.",
+   "ex_tr": "Yenilen komutan şehri düşman güçlerine teslim etmeye karar verdi."
+  },
+  {
+   "phrase": "roll about",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We rolled about with laughter when he told that hilarious story.",
+   "ex_tr": "O komik hikayeyi anlattığında gülmekten katıldık."
+  },
+  {
+   "phrase": "roll away",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The heavy barrel rolled away down the steep hill.",
+   "ex_tr": "Ağır fıçı dik tepeden aşağı yuvarlanıp uzaklaştı."
+  },
+  {
+   "phrase": "spell off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The security guards spell off every four hours to stay alert.",
+   "ex_tr": "Güvenlik görevlileri uyanık kalmak için her dört saatte bir nöbeti devralır."
+  },
+  {
+   "phrase": "tape up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She taped up the cardboard box before giving it to the courier.",
+   "ex_tr": "Kuryeye vermeden önce karton kutuyu bantladı."
+  },
+  {
+   "phrase": "cloud up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The bathroom mirror clouds up completely every time I take a hot shower.",
+   "ex_tr": "Ne zaman sıcak bir duş alsam banyo aynası tamamen buğulanıyor."
+  },
+  {
+   "phrase": "puzzle over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The brilliant detective puzzled over the mysterious clue for three days.",
+   "ex_tr": "Zeki dedektif üç gün boyunca gizemli ipucu üzerinde kafa yordu."
+  },
+  {
+   "phrase": "score out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The editor scored out the unnecessary sentence in the manuscript.",
+   "ex_tr": "Editör taslaktaki gereksiz cümlenin üstünü çizdi."
+  },
+  {
+   "phrase": "score through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Please score through the names of the guests who are not coming.",
+   "ex_tr": "Lütfen gelmeyecek olan misafirlerin isimlerinin üstünü çizin."
+  },
+  {
+   "phrase": "tear along",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The furious dog tore along the street chasing the postman.",
+   "ex_tr": "Öfkeli köpek postacıyı kovalayarak sokak boyunca hızla koştu."
+  },
+  {
+   "phrase": "scratch along",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The young couple scratched along on a very low income for years.",
+   "ex_tr": "Genç çift yıllarca çok düşük bir gelirle zar zor geçindi."
+  },
+  {
+   "phrase": "scratch together",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We scratched together enough money to buy a second-hand car.",
+   "ex_tr": "İkinci el bir araba alacak kadar parayı zar zor denkleştirdik."
+  },
+  {
+   "phrase": "circle up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The kindergarten teacher asked the children to circle up for story time.",
+   "ex_tr": "Anaokulu öğretmeni çocuklardan masal saati için çember oluşturmalarını istedi."
+  },
+  {
+   "phrase": "ink in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The manager inked in the important appointment on his desk calendar.",
+   "ex_tr": "Müdür masa takvimine önemli randevuyu kalemle yazdı."
+  },
+  {
+   "phrase": "ink up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The printer inked up the metal plates before starting the heavy press.",
+   "ex_tr": "Matbaacı ağır baskı makinesini çalıştırmadan önce metal plakaları mürekkepledi."
+  },
+  {
+   "phrase": "screen in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My grandfather screened in the porch to keep the annoying mosquitoes away.",
+   "ex_tr": "Büyükbabam sinir bozucu sivrisinekleri uzak tutmak için verandayı telle çevirdi."
+  },
+  {
+   "phrase": "screen out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The HR department screened out the unqualified candidates in the first round.",
+   "ex_tr": "İnsan kaynakları departmanı ilk turda niteliksiz adayları eledi."
+  },
+  {
+   "phrase": "kick about",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I found this old silver coin kicking about in the bottom drawer.",
+   "ex_tr": "Bu eski gümüş parayı en alt çekmecede ortalıkta dolaşırken buldum."
+  },
+  {
+   "phrase": "crew up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "They crewed up quickly to sail the large yacht across the ocean.",
+   "ex_tr": "Büyük yatı okyanusta yüzdürmek için hızla mürettebat oluşturdular."
+  },
+  {
+   "phrase": "slice through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The sharp knife sliced through the thick rope without any effort.",
+   "ex_tr": "Keskin bıçak kalın halatı hiç çaba harcamadan kesip geçti."
+  },
+  {
+   "phrase": "tag off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "All employees must tag off before leaving the factory building.",
+   "ex_tr": "Tüm çalışanlar fabrika binasından çıkmadan önce kart okutarak çıkış yapmalıdır."
+  },
+  {
+   "phrase": "tag out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The maintenance worker tagged out the broken machine to prevent any accidents.",
+   "ex_tr": "Bakım işçisi herhangi bir kazayı önlemek için bozuk makineyi etiketleyip devre dışı bıraktı."
+  },
+  {
+   "phrase": "mix down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The audio engineer mixed down the separate vocal tracks into a single stereo file.",
+   "ex_tr": "Ses mühendisi ayrı vokal kayıtlarını tek bir stereo dosyada birleştirerek miksajını yaptı."
+  },
+  {
+   "phrase": "mix in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You should mix in the chocolate chips gently after preparing the cake batter.",
+   "ex_tr": "Kek hamurunu hazırladıktan sonra çikolata parçalarını nazikçe karıştırmalısın."
+  },
+  {
+   "phrase": "skill up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The company organized a training workshop to skill up the new marketing team.",
+   "ex_tr": "Şirket, yeni pazarlama ekibinin becerisini geliştirmek için bir eğitim atölyesi düzenledi."
+  },
+  {
+   "phrase": "fuel up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The pilot fueled up the small plane before the long flight.",
+   "ex_tr": "Pilot uzun uçuştan önce küçük uçağın deposunu doldurdu."
+  },
+  {
+   "phrase": "link in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The technician linked in the new computer to the main office network.",
+   "ex_tr": "Teknisyen yeni bilgisayarı ana ofis ağına bağladı."
+  },
+  {
+   "phrase": "pop down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I will pop down to the bakery to buy some fresh bread.",
+   "ex_tr": "Biraz taze ekmek almak için fırına çabucak uğrayacağım."
+  },
+  {
+   "phrase": "log on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You need a secure password to log on to the banking system.",
+   "ex_tr": "Bankacılık sisteminde oturum açmak için güvenli bir şifreye ihtiyacın var."
+  },
+  {
+   "phrase": "log up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The experienced pilot logged up over five thousand hours of flight time.",
+   "ex_tr": "Deneyimli pilot beş bin saatin üzerinde uçuş süresi kaydetti."
+  },
+  {
+   "phrase": "measure off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The tailor measured off exactly two meters of the blue fabric.",
+   "ex_tr": "Terzi mavi kumaştan tam olarak iki metre ölçüp kesti."
+  },
+  {
+   "phrase": "measure out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The pharmacist measured out the liquid medicine with great care.",
+   "ex_tr": "Eczacı sıvı ilacı büyük bir özenle ölçtü."
+  },
+  {
+   "phrase": "remote in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The IT specialist remoted in to my laptop to fix the software issue.",
+   "ex_tr": "Bilgi işlem uzmanı yazılım sorununu çözmek için dizüstü bilgisayarıma uzaktan bağlandı."
+  },
+  {
+   "phrase": "block up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Thick mud completely blocked up the narrow drainage pipe during the storm.",
+   "ex_tr": "Fırtına sırasında kalın çamur dar drenaj borusunu tamamen tıkadı."
+  },
+  {
+   "phrase": "click through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Many curious users clicked through to read the full news article.",
+   "ex_tr": "Birçok meraklı kullanıcı tam haber makalesini okumak için tıklayarak bağlantıya gitti."
+  },
+  {
+   "phrase": "swallow down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He swallowed down his pride and apologized to his angry boss.",
+   "ex_tr": "Gururunu yuttu ve kızgın patronundan özür diledi."
+  },
+  {
+   "phrase": "bug in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The frightened family bugged in during the severe hurricane.",
+   "ex_tr": "Korkmuş aile şiddetli kasırga sırasında evde kapanıp bekledi."
+  },
+  {
+   "phrase": "peel out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The angry teenager peeled out of the parking lot leaving black tire marks.",
+   "ex_tr": "Kızgın genç, siyah lastik izleri bırakarak otoparktan hızla kalktı."
+  },
+  {
+   "phrase": "pepper up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The coach gave a powerful speech to pepper up the tired players.",
+   "ex_tr": "Koç, yorgun oyuncuları canlandırmak için güçlü bir konuşma yaptı."
+  },
+  {
+   "phrase": "base off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The design is based off an ancient Greek temple.",
+   "ex_tr": "Tasarım eski bir Yunan tapınağından yola çıkıyor."
+  },
+  {
+   "phrase": "load down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The strict teacher loaded down the students with too much homework.",
+   "ex_tr": "Katı öğretmen öğrencileri çok fazla ödevle yükledi."
+  },
+  {
+   "phrase": "load out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The delivery truck loaded out from the main warehouse early this morning.",
+   "ex_tr": "Teslimat kamyonu bu sabah erkenden ana depodan yükleyip yola çıktı."
+  },
+  {
+   "phrase": "print up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The company printed up a new colorful brochure for the upcoming campaign.",
+   "ex_tr": "Şirket, yaklaşan kampanya için yeni, renkli bir broşür bastırdı."
+  },
+  {
+   "phrase": "steady down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The nervous horse finally steadied down after hearing its owner's calm voice.",
+   "ex_tr": "Gergin at, sahibinin sakin sesini duyduktan sonra sonunda sakinleşti."
+  },
+  {
+   "phrase": "mount up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The unpaid bills mounted up quickly over the cold winter months.",
+   "ex_tr": "Ödenmemiş faturalar soğuk kış ayları boyunca hızla çoğaldı."
+  },
+  {
+   "phrase": "skate over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The speaker skated over the complex financial details to save time.",
+   "ex_tr": "Konuşmacı zaman kazanmak için karmaşık finansal detayları hızlıca geçiştirdi."
+  },
+  {
+   "phrase": "cast around",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The manager cast around desperately for a quick solution to the crisis.",
+   "ex_tr": "Müdür kriz için hızlı bir çözüm bulmak umuduyla telaşla çare aradı."
+  },
+  {
+   "phrase": "cast one's mind back",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The old man cast his mind back to his happy childhood days.",
+   "ex_tr": "Yaşlı adam zihnini mutlu çocukluk günlerine geri götürüp hatırladı."
+  },
+  {
+   "phrase": "horn in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I don't want to horn in on your private conversation, but I have news.",
+   "ex_tr": "Özel konuşmanıza burnumu sokmak istemiyorum ama bir haberim var."
+  },
+  {
+   "phrase": "root on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "From the grandstands, the excited fans rooted on their favorite team.",
+   "ex_tr": "Heyecanlı taraftarlar tribünlerden en sevdikleri takımı yüksek sesle tezahürat yaparak cesaretlendirdi."
+  },
+  {
+   "phrase": "root up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The gardener rooted the dead bush up completely to plant new flowers.",
+   "ex_tr": "Bahçıvan yeni çiçekler dikmek için ölü çalıyı kökünden söktü."
+  },
+  {
+   "phrase": "wink out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The small campfire eventually winked out in the middle of the dark night.",
+   "ex_tr": "Küçük kamp ateşi sonunda karanlık gecenin ortasında sönüp gitti."
+  },
+  {
+   "phrase": "ham up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The amateur actor hammed his dramatic speech up and ruined the play.",
+   "ex_tr": "Amatör aktör dramatik konuşmasını abartılı oynadı ve oyunu mahvetti."
+  },
+  {
+   "phrase": "pill up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "This cheap wool sweater pilled up completely after just one wash.",
+   "ex_tr": "Bu ucuz yün kazak sadece bir yıkamadan sonra tamamen tiftiklendi."
+  },
+  {
+   "phrase": "bow up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The tired customer finally bowed up and shouted at the rude waiter.",
+   "ex_tr": "Yorgun müşteri sonunda sabrı taşıp kaba garsona bağırdı."
+  },
+  {
+   "phrase": "shovel in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "These days the successful tech company is shoveling in money.",
+   "ex_tr": "Başarılı teknoloji şirketi şu sıralar çok para kazanıyor."
+  },
+  {
+   "phrase": "shovel out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The rescue workers shoveled the heavy snow out to clear the road.",
+   "ex_tr": "Kurtarma görevlileri yolu açmak için ağır karı kürekle temizledi."
+  },
+  {
+   "phrase": "steam ahead",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The massive train steamed ahead at full speed despite the heavy rain.",
+   "ex_tr": "Devasa tren şiddetli yağmura rağmen tam hızla ilerledi."
+  },
+  {
+   "phrase": "tone up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She does pilates every morning to tone up her leg muscles.",
+   "ex_tr": "Bacak kaslarını sıkılaştırmak için her sabah düzenli pilates egzersizleri yapıyor."
+  },
+  {
+   "phrase": "trigger off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The sudden loud noise triggered off the sensitive car alarm.",
+   "ex_tr": "Ani yüksek ses hassas araba alarmını harekete geçirdi."
+  },
+  {
+   "phrase": "fancy oneself up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She fancied herself up in a beautiful red dress for the gala dinner.",
+   "ex_tr": "Gala yemeği için güzel kırmızı bir elbiseyle şık giyindi."
+  },
+  {
+   "phrase": "stiff up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The chef chilled the melted chocolate to stiff it up.",
+   "ex_tr": "Şef, erimiş çikolatayı sertleştirmek için soğuttu."
+  },
+  {
+   "phrase": "dig around",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The investigative journalist dug around carefully to find the hidden truth.",
+   "ex_tr": "Araştırmacı gazeteci gizli gerçeği bulmak için dikkatlice araştırıp bilgi topladı."
+  },
+  {
+   "phrase": "dig over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The farmer dug the fertile soil over before planting the spring seeds.",
+   "ex_tr": "Çiftçi bahar tohumlarını ekmeden önce verimli toprağı belleyip çapaladı."
+  },
+  {
+   "phrase": "muddy up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "During the construction, the heavy trucks muddied up the dirt road.",
+   "ex_tr": "Ağır kamyonlar inşaat sırasında toprak yolu çamurlayıp kirletti."
+  },
+  {
+   "phrase": "trace down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Using the city's camera system, the police traced down the stolen vehicle.",
+   "ex_tr": "Polis, şehrin kamera sistemini kullanarak çalıntı aracın izini sürüp buldu."
+  },
+  {
+   "phrase": "trace out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On a large sheet of paper, the architect traced out the detailed floor plan.",
+   "ex_tr": "Mimar, detaylı kat planını büyük bir kağıt parçası üzerine çizdi."
+  },
+  {
+   "phrase": "wire in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The young volunteers wired in and cleaned the whole park in two hours.",
+   "ex_tr": "Genç gönüllüler hevesle işe girişti ve tüm parkı iki saatte temizledi."
+  },
+  {
+   "phrase": "gather in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The farmer gathered the ripe apples in before the heavy storm arrived.",
+   "ex_tr": "Çiftçi şiddetli fırtına gelmeden önce olgun elmaları topladı."
+  },
+  {
+   "phrase": "glove up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The careful nurse gloved up before examining the open wound.",
+   "ex_tr": "Dikkatli hemşire açık yarayı incelemeden önce eldiven giydi."
+  },
+  {
+   "phrase": "hook in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With a huge discount, the clever salesman managed to hook in the naive customer.",
+   "ex_tr": "Zeki satıcı, saf müşteriyi devasa bir indirimle kandırmayı başardı."
+  },
+  {
+   "phrase": "hook up with",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She surprisingly hooked up with her high school sweetheart last summer.",
+   "ex_tr": "Geçen yaz lise aşkıyla şaşırtıcı bir şekilde dünyaevine girdi."
+  },
+  {
+   "phrase": "bore in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The angry dog bore in aggressively, showing its sharp teeth.",
+   "ex_tr": "Kızgın köpek keskin dişlerini göstererek saldırganca üzerine yürüdü."
+  },
+  {
+   "phrase": "pound out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On his old typewriter, the angry writer pounded out a long complaint letter.",
+   "ex_tr": "Kızgın yazar eski daktilosunda hızlıca uzun bir şikayet mektubu yazdı."
+  },
+  {
+   "phrase": "pound up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "In a heavy stone mortar, the cook pounded up the fresh garlic cloves.",
+   "ex_tr": "Aşçı taze sarımsak dişlerini ağır bir taş havanda iyice ezdi."
+  },
+  {
+   "phrase": "range in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The sniper ranged in precisely on the distant wooden target.",
+   "ex_tr": "Keskin nişancı uzaktaki ahşap hedefe tam olarak nişan aldı."
+  },
+  {
+   "phrase": "string along",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With false promises of high returns, he strung along the naive investors.",
+   "ex_tr": "Saf yatırımcıları yüksek getiri yalan vaatleriyle kandırıp oyaladı."
+  },
+  {
+   "phrase": "zone in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The exhausted student zoned in completely to finish the difficult math test.",
+   "ex_tr": "Yorgun öğrenci zor matematik testini bitirmek için tamamen odaklandı."
+  },
+  {
+   "phrase": "collar up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Right outside the bank, the police officers collared up the suspect.",
+   "ex_tr": "Polis memurları şüpheliyi bankanın hemen dışında yakalayıp ensesinden tuttu."
+  },
+  {
+   "phrase": "comb over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "To find a single piece of evidence, the forensic team combed over the crime scene.",
+   "ex_tr": "Adli tıp ekibi tek bir delil parçası bulmak için olay yerini didik didik etti."
+  },
+  {
+   "phrase": "pace off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "To mark the penalty spot, the referee paced off the short distance.",
+   "ex_tr": "Hakem penaltı noktasını işaretlemek için kısa mesafeyi adımlayarak ölçtü."
+  },
+  {
+   "phrase": "stretch along",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The beautiful sandy beach stretches along the entire eastern coastline.",
+   "ex_tr": "Güzel kumlu plaj tüm doğu sahil şeridi boyunca uzanıyor."
+  },
+  {
+   "phrase": "charm up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The magician charmed the curious audience up with a spectacular card trick.",
+   "ex_tr": "Sihirbaz muhteşem bir kart numarasıyla meraklı seyircileri büyüledi."
+  },
+  {
+   "phrase": "fur up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The old water pipes completely furred up over the long years.",
+   "ex_tr": "Eski su boruları uzun yıllar içinde tamamen kireçlendi."
+  },
+  {
+   "phrase": "scale down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "To save money, the struggling company scaled down its operations.",
+   "ex_tr": "Zor durumdaki şirket para tasarrufu yapmak için operasyonlarını orantılı olarak küçülttü."
+  },
+  {
+   "phrase": "scale in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "During the market dip, the clever investor scaled in his purchases.",
+   "ex_tr": "Zeki yatırımcı piyasa düşüşü sırasında kademeli olarak pozisyon aldı."
+  },
+  {
+   "phrase": "scale out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The IT department scaled the database out to handle more traffic.",
+   "ex_tr": "Bilgi işlem departmanı daha fazla trafiği idare etmek için veritabanını sunucu ekleyerek genişletti."
+  },
+  {
+   "phrase": "sober up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He drank some strong black coffee to sober up before driving.",
+   "ex_tr": "Araba kullanmadan önce ayıklaşmak için biraz sert sade kahve içti."
+  },
+  {
+   "phrase": "damp down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The brave firefighters damped the spreading fire down quickly.",
+   "ex_tr": "Cesur itfaiyeciler yayılan ateşi hızla bastırıp söndürdü."
+  },
+  {
+   "phrase": "flash back",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The traumatized soldier flashed back to the terrible war.",
+   "ex_tr": "Travma geçirmiş asker geçmişe dönüp o korkunç savaşı hatırladı."
+  },
+  {
+   "phrase": "flash over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The leaking gas suddenly flashed over in the closed kitchen.",
+   "ex_tr": "Sızan gaz kapalı mutfakta aniden alev aldı."
+  },
+  {
+   "phrase": "fuss around",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Stop fussing around and just help me carry these heavy boxes.",
+   "ex_tr": "Gereksiz yere telaşlanmayı bırak ve şu ağır kutuları taşımama yardım et."
+  },
+  {
+   "phrase": "inch along",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The heavy morning traffic inched along during the busy rush hour.",
+   "ex_tr": "Yoğun sabah trafiği kalabalık işe gidiş saatinde adım adım ilerledi."
+  },
+  {
+   "phrase": "inch back",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The frightened cat inched back slowly from the barking dog.",
+   "ex_tr": "Korkmuş kedi havlayan köpekten yavaş yavaş geri çekildi."
+  },
+  {
+   "phrase": "inch forward",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The cautious soldiers inched forward silently in the dark forest.",
+   "ex_tr": "Tedbirli askerler karanlık ormanda sessizce ve ağır ağır ilerledi."
+  },
+  {
+   "phrase": "inch up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The price of gold slowly inched up over the last month.",
+   "ex_tr": "Altın fiyatı geçen ay boyunca azar azar yükseldi."
+  },
+  {
+   "phrase": "parcel up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The kind lady parceled the old clothes up to donate them to the charity.",
+   "ex_tr": "Kibar kadın eski kıyafetleri yardım kuruluşuna bağışlamak için paketleyip sardı."
+  },
+  {
+   "phrase": "pin up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On her bedroom wall, the teenager pinned up a large colorful poster.",
+   "ex_tr": "Genç kız yatak odasının duvarına büyük, renkli bir poster iğneleyip astı."
+  },
+  {
+   "phrase": "wave aside",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Without listening, the arrogant manager waved aside my useful suggestions.",
+   "ex_tr": "Kibirli müdür faydalı önerilerimi dinlemeden küçümseyip geçti."
+  },
+  {
+   "phrase": "wave down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On the empty road, the stranded driver waved down a passing car for help.",
+   "ex_tr": "Yolda kalan sürücü boş yolda yardım için yoldan geçen bir arabayı el sallayarak durdurdu."
+  },
+  {
+   "phrase": "fold away",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After finishing his chores, he folded away the large ironing board.",
+   "ex_tr": "Ev işlerini bitirdikten sonra büyük ütü masasını katlayıp kaldırdı."
+  },
+  {
+   "phrase": "frame in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With solid oak wood, the carpenter framed in the new door.",
+   "ex_tr": "Marangoz yeni kapıyı masif meşe ağacıyla çerçeve içine aldı."
+  },
+  {
+   "phrase": "frame out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The construction crew framed the new house out in just two days.",
+   "ex_tr": "İnşaat ekibi yeni evin iskeletini sadece iki günde kurup çattı."
+  },
+  {
+   "phrase": "frame up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The corrupt police officers framed the innocent man up for the bank robbery.",
+   "ex_tr": "Yozlaşmış polis memurları banka soygunu için masum adama kumpas kurdu."
+  },
+  {
+   "phrase": "freeze over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The large lake froze over completely during the harsh winter.",
+   "ex_tr": "Büyük göl sert kış boyunca tamamen buz tuttu."
+  },
+  {
+   "phrase": "freeze out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The jealous colleagues froze the new employee out of their secret meetings.",
+   "ex_tr": "Kıskanç meslektaşları yeni çalışanı gizli toplantılarından hor görüp dışladı."
+  },
+  {
+   "phrase": "microwave up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She microwaved the leftover pizza up for a quick and easy lunch.",
+   "ex_tr": "Hızlı ve kolay bir öğle yemeği için kalan pizzayı mikrodalgada ısıttı."
+  },
+  {
+   "phrase": "net out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After all the heavy expenses, the company netted a small profit out.",
+   "ex_tr": "Tüm ağır masraflardan sonra şirket net olarak küçük bir kâr elde etti."
+  },
+  {
+   "phrase": "numb out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He completely numbed out after hearing the sudden tragic news.",
+   "ex_tr": "Ani trajik haberi duyduktan sonra tamamen duygusuzlaşıp uyuştu."
+  },
+  {
+   "phrase": "sharpen up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You should sharpen your cooking skills up before the big chef competition.",
+   "ex_tr": "Büyük şef yarışmasından önce yemek yapma becerilerini keskinleştirmelisin."
+  },
+  {
+   "phrase": "thumb through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She thumbed through the old fashion magazine while waiting at the dental clinic.",
+   "ex_tr": "Diş kliniğinde beklerken eski moda dergisini şöyle bir karıştırdı."
+  },
+  {
+   "phrase": "chop up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The busy cook chopped the fresh vegetables up for the delicious evening soup.",
+   "ex_tr": "Meşgul aşçı lezzetli akşam çorbası için taze sebzeleri küçük parçalara ayırdı."
+  },
+  {
+   "phrase": "frighten off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The loud guard dog frightened off the sneaky thieves in the backyard.",
+   "ex_tr": "Gürültücü bekçi köpeği sinsi hırsızları arka bahçeden korkutup kaçırdı."
+  },
+  {
+   "phrase": "knit together",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The doctor said the broken leg bone would knit together in six weeks.",
+   "ex_tr": "Doktor kırık bacak kemiğinin altı hafta içinde kaynayacağını söyledi."
+  },
+  {
+   "phrase": "sew together",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Very carefully, the skilled tailor sewed together the torn pieces of fabric.",
+   "ex_tr": "Yetenekli terzi yırtık kumaş parçalarını çok dikkatli bir şekilde birbirine dikti."
+  },
+  {
+   "phrase": "sweep in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The freezing winter wind swept in through the open window.",
+   "ex_tr": "Dondurucu kış rüzgarı açık pencereden ani bir giriş yaptı."
+  },
+  {
+   "phrase": "barbecue up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My dad barbecued some delicious steaks up for the family picnic.",
+   "ex_tr": "Babam aile pikniği için mangalda birkaç lezzetli biftek pişirdi."
+  },
+  {
+   "phrase": "bruise up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The nasty fall bruised up his left knee pretty badly.",
+   "ex_tr": "Kötü düşüş sol dizini epeyce morartıp çürük bıraktı."
+  },
+  {
+   "phrase": "grill up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "For a quick dinner, we grilled up a few fresh spicy sausages.",
+   "ex_tr": "Hızlı bir akşam yemeği için birkaç taze baharatlı sosisi ızgarada kızarttık."
+  },
+  {
+   "phrase": "muscle in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The big rival corporation tried to muscle in and steal our loyal clients.",
+   "ex_tr": "Büyük rakip şirket araya zorla girip sadık müşterilerimizi çalmaya çalıştı."
+  },
+  {
+   "phrase": "rear back",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The frightened horse reared back suddenly and threw its inexperienced rider off.",
+   "ex_tr": "Korkmuş at aniden geriye doğru kalktı ve tecrübesiz binicisini yere fırlattı."
+  },
+  {
+   "phrase": "rear up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The massive bear reared up to intimidate the approaching hunters.",
+   "ex_tr": "Devasa ayı yaklaşan avcıları korkutmak için arka ayakları üzerinde yükseldi."
+  },
+  {
+   "phrase": "toss back",
+   "lang": "en",
+   "meaning": "",
+   "ex": "In one single gulp, the thirsty man tossed back the cold drink.",
+   "ex_tr": "Susamış adam soğuk içeceği tek bir yudumda kafaya dikti."
+  },
+  {
+   "phrase": "toss down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The angry teacher tossed down the failed exam papers on the wooden desk.",
+   "ex_tr": "Kızgın öğretmen başarısız sınav kağıtlarını ahşap masanın üzerine hızla attı."
+  },
+  {
+   "phrase": "toss together",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Before the unexpected guests arrived, she tossed together a quick fresh salad.",
+   "ex_tr": "Beklenmedik misafirler gelmeden önce aceleyle taze bir salata hazırladı."
+  },
+  {
+   "phrase": "toss up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The referee tossed a shiny coin up to decide who starts the final match.",
+   "ex_tr": "Hakem final maçına kimin başlayacağına karar vermek için parlak bir bozuk parayı havaya fırlatıp yazı tura attı."
+  },
+  {
+   "phrase": "bull through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Despite the heavy protests, the stubborn politician bulled through his controversial new law.",
+   "ex_tr": "İnatçı politikacı ağır protestolara rağmen tartışmalı yeni yasasını zorla ve sert bir tutumla kabul ettirdi."
+  },
+  {
+   "phrase": "bully off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The two rival players bullied off at the center line to start the hockey match.",
+   "ex_tr": "İki rakip oyuncu hokey maçını başlatmak için orta çizgide bully ile oyunu açtı."
+  },
+  {
+   "phrase": "fasten on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The desperate detective fastened on the smallest hidden clue to solve the murder.",
+   "ex_tr": "Çaresiz dedektif cinayeti çözmek için gizlenmiş en küçük ipucunu benimsedi."
+  },
+  {
+   "phrase": "flavor up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With some fresh aromatic herbs, you can flavor up the bland potato soup.",
+   "ex_tr": "Yavan patates çorbasına biraz taze aromatik otlarla tat katabilirsin."
+  },
+  {
+   "phrase": "frost over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The car windows frosted over completely during the freezing winter night.",
+   "ex_tr": "Dondurucu kış gecesi boyunca araba camları tamamen buz tuttu."
+  },
+  {
+   "phrase": "league together",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The small independent local shops leagued together to fight the big supermarket chain.",
+   "ex_tr": "Küçük bağımsız yerel dükkanlar büyük süpermarket zinciriyle savaşmak için bir araya gelip birlik oldular."
+  },
+  {
+   "phrase": "melt off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "By running five miles every morning, she melted off a lot of stubborn fat.",
+   "ex_tr": "Her sabah beş mil koşarak inatçı fazla kilolarının çoğunu verdi."
   }
  ],
  "phrase_edits": [
@@ -82759,6 +83690,275 @@
    "phrase": "iron eagle",
    "action": "meaning",
    "meaning": "(askerî) kıdemli albay"
+  },
+  {
+   "action": "rename",
+   "to": "fancy oneself up",
+   "phrase": "fancy up"
+  },
+  {
+   "action": "delete",
+   "phrase": "pig off"
+  },
+  {
+   "action": "delete",
+   "phrase": "pitch on"
+  },
+  {
+   "action": "delete",
+   "phrase": "puzzle through"
+  },
+  {
+   "action": "delete",
+   "phrase": "gay up"
+  },
+  {
+   "action": "delete",
+   "phrase": "circle in"
+  },
+  {
+   "action": "delete",
+   "phrase": "circle out"
+  },
+  {
+   "action": "delete",
+   "phrase": "quarrel out"
+  },
+  {
+   "action": "delete",
+   "phrase": "stew up"
+  },
+  {
+   "action": "delete",
+   "phrase": "flute around"
+  },
+  {
+   "action": "delete",
+   "phrase": "tag up"
+  },
+  {
+   "action": "delete",
+   "phrase": "jerk off"
+  },
+  {
+   "action": "delete",
+   "phrase": "jerk over"
+  },
+  {
+   "action": "delete",
+   "phrase": "jerk up"
+  },
+  {
+   "action": "delete",
+   "phrase": "hike out"
+  },
+  {
+   "action": "delete",
+   "phrase": "shade off"
+  },
+  {
+   "action": "delete",
+   "phrase": "shade up"
+  },
+  {
+   "action": "delete",
+   "phrase": "bug up"
+  },
+  {
+   "action": "delete",
+   "phrase": "rat through"
+  },
+  {
+   "action": "delete",
+   "phrase": "shed out"
+  },
+  {
+   "action": "delete",
+   "phrase": "freak off"
+  },
+  {
+   "action": "delete",
+   "phrase": "duck off"
+  },
+  {
+   "action": "delete",
+   "phrase": "harsh down"
+  },
+  {
+   "action": "delete",
+   "phrase": "harsh on"
+  },
+  {
+   "action": "delete",
+   "phrase": "rubber up"
+  },
+  {
+   "action": "delete",
+   "phrase": "steam off"
+  },
+  {
+   "action": "delete",
+   "phrase": "mug off"
+  },
+  {
+   "action": "delete",
+   "phrase": "trump out"
+  },
+  {
+   "action": "delete",
+   "phrase": "wire away"
+  },
+  {
+   "action": "delete",
+   "phrase": "ditch out"
+  },
+  {
+   "action": "delete",
+   "phrase": "hook on"
+  },
+  {
+   "action": "delete",
+   "phrase": "pound off"
+  },
+  {
+   "action": "delete",
+   "phrase": "range out"
+  },
+  {
+   "action": "delete",
+   "phrase": "zone off"
+  },
+  {
+   "action": "delete",
+   "phrase": "eagle out"
+  },
+  {
+   "action": "delete",
+   "phrase": "eagle up"
+  },
+  {
+   "action": "delete",
+   "phrase": "chapter out"
+  },
+  {
+   "action": "delete",
+   "phrase": "grain up"
+  },
+  {
+   "action": "delete",
+   "phrase": "sally out"
+  },
+  {
+   "action": "delete",
+   "phrase": "chef up"
+  },
+  {
+   "action": "delete",
+   "phrase": "butt on"
+  },
+  {
+   "action": "delete",
+   "phrase": "butt up"
+  },
+  {
+   "action": "delete",
+   "phrase": "beggar off"
+  },
+  {
+   "action": "delete",
+   "phrase": "bull up"
+  },
+  {
+   "action": "delete",
+   "phrase": "jog on"
+  },
+  {
+   "action": "delete",
+   "phrase": "lamb down"
+  },
+  {
+   "action": "delete",
+   "phrase": "melt out"
+  },
+  {
+   "action": "merge",
+   "to": "string along",
+   "phrase": "string on"
+  },
+  {
+   "action": "merge",
+   "to": "freeze out",
+   "phrase": "freeze off"
+  },
+  {
+   "action": "meaning",
+   "meaning": "üstünü çizmek, silmek",
+   "phrase": "score out"
+  },
+  {
+   "action": "meaning",
+   "meaning": "zar zor denkleştirmek, azar azar biriktirmek",
+   "phrase": "scratch together"
+  },
+  {
+   "action": "meaning",
+   "meaning": "tel örgüyle çevirmek",
+   "phrase": "screen in"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(gururunu, duygusunu) yutmak, bastırmak",
+   "phrase": "swallow down"
+  },
+  {
+   "action": "meaning",
+   "meaning": "lastik yakarak hızla kalkmak",
+   "phrase": "peel out"
+  },
+  {
+   "action": "meaning",
+   "meaning": "-e dayandırmak, -den yola çıkmak",
+   "phrase": "base off"
+  },
+  {
+   "action": "meaning",
+   "meaning": "tiftiklenmek, tüylenmek",
+   "phrase": "pill up"
+  },
+  {
+   "action": "meaning",
+   "meaning": "kandırıp çekmek, tavlamak",
+   "phrase": "hook in"
+  },
+  {
+   "action": "meaning",
+   "meaning": "yakalamak, ensesinden tutmak",
+   "phrase": "collar up"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(finans) kademeli olarak pozisyon almak",
+   "phrase": "scale in"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(bilişim) sunucu ekleyerek genişletmek; (finans) kademeli olarak pozisyon azaltmak",
+   "phrase": "scale out"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(hokey) oyunu başlatmak",
+   "phrase": "bully off"
+  },
+  {
+   "action": "meaning",
+   "meaning": "oyalamak, boş vaatlerle kandırıp durmak",
+   "phrase": "string along"
+  },
+  {
+   "action": "meaning",
+   "meaning": "dışlamak, aralarına almamak; (dışarısı) çok soğuk olmak",
+   "phrase": "freeze out"
   },
   {
    "action": "rename",
