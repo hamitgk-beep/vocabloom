@@ -3,6 +3,11 @@
 /// Lessons, Turkish sentences and their correct English versions are written
 /// in advance and checked (assets/grammar/lessons.json), so they are always
 /// right. The on-device model only grades the learner's answer against them.
+///
+/// Learners of Turkish get Turkish grammar instead (assets/grammar/
+/// lessons_tr.json, ids starting with "tr_"): the explanation is in English,
+/// [GrammarExercise.tr] holds the English sentence to translate and
+/// [GrammarExercise.answers] its Turkish versions.
 library;
 
 import 'dart:convert';
@@ -37,6 +42,9 @@ class GrammarExercise {
   static const gapMark = '___';
 
   bool get isGap => gap != null;
+
+  /// The language the answer is written in: 'tr' for the Turkish lessons.
+  String get target => grammarTarget(id);
 
   /// The gap sentence with the main answer filled in.
   String get gapSolved => gap?.replaceFirst(gapMark, answers.first) ?? answers.first;
@@ -98,6 +106,9 @@ class GrammarTopic {
 
   String get title => uiEnglish ? titleEn : titleTr;
 
+  /// The language the lesson teaches: 'tr' for the Turkish lessons.
+  String get target => grammarTarget(id);
+
   /// The other language's title, shown small under [title] on the Turkish
   /// interface (the English name of the structure is worth learning).
   String? get subtitle => uiEnglish ? null : titleEn;
@@ -141,8 +152,17 @@ class GrammarTopic {
   );
 }
 
+/// 'tr' for a Turkish lesson or exercise id, otherwise 'en'.
+String grammarTarget(String id) => id.startsWith('tr_') ? 'tr' : 'en';
+
 /// Category names in display order.
 const grammarCategories = <String, (String, String)>{
+  'tr_sounds': ('Ses uyumu ve "olmak"', 'Vowel harmony and "to be"'),
+  'tr_sentence': ('Cümle kuruluşu', 'Building sentences'),
+  'tr_cases': ('Hâl ekleri', 'Case endings'),
+  'tr_verbs': ('Fiil zamanları', 'Verb tenses'),
+  'tr_moods': ('Kipler', 'Moods: can, must, if'),
+  'tr_clauses': ('Yan cümleler', 'Clauses'),
   'tenses': ('Zamanlar', 'Tenses'),
   'nouns': ('İsimler ve belirleyiciler', 'Nouns and determiners'),
   'prepositions': ('Edatlar', 'Prepositions'),
@@ -205,18 +225,29 @@ const grammarCategoryAliases = <String, List<String>>{
   'mixed': [],
 };
 
-List<GrammarTopic>? _cache;
+final _cache = <String, List<GrammarTopic>>{};
 
-/// The bundled lessons.
-Future<List<GrammarTopic>> loadGrammarTopics() async {
-  if (_cache != null) return _cache!;
+/// The bundled lessons for learners of [lang]: English grammar for 'en',
+/// Turkish grammar for 'tr'.
+Future<List<GrammarTopic>> loadGrammarTopics({String lang = 'en'}) async {
+  if (lang != 'tr') lang = 'en';
+  if (_cache[lang] case final c?) return c;
+  if (lang == 'tr') {
+    return _cache[lang] = parseGrammarTopics(await rootBundle.loadString('assets/grammar/lessons_tr.json'));
+  }
   final raw = await rootBundle.loadString('assets/grammar/lessons.json');
   String? en;
   try {
     en = await rootBundle.loadString('assets/grammar/lessons_en.json');
   } catch (_) {}
-  return _cache = parseGrammarTopics(raw, en);
+  return _cache[lang] = parseGrammarTopics(raw, en);
 }
+
+/// The lessons of both languages, for progress pages.
+Future<List<GrammarTopic>> loadAllGrammarTopics() async => [
+  ...await loadGrammarTopics(),
+  ...await loadGrammarTopics(lang: 'tr').catchError((_) => const <GrammarTopic>[]),
+];
 
 /// Parses lessons.json; [rawEn] (lessons_en.json) adds the English
 /// explanations, patterns and notes by topic and exercise id.
@@ -256,6 +287,27 @@ String normalizeAnswer(String s) {
   return t.replaceAll(RegExp(r"[^a-z0-9' ]+"), ' ').replaceAll(RegExp(r'\s+'), ' ').trim();
 }
 
+/// Turkish lower case: I -> ı, İ -> i.
+String turkishLower(String s) => s.replaceAll('I', 'ı').replaceAll('İ', 'i').toLowerCase();
+
+/// Normalises a Turkish sentence for comparing answers: case, punctuation,
+/// circumflexes (â, î, û), a question particle written joined ("geliyormusun")
+/// and a leading subject pronoun ("Ben geldim" = "Geldim") do not matter.
+String normalizeTurkishAnswer(String s) {
+  var t = turkishLower(s.replaceAll(RegExp('[’‘`´]'), "'"))
+      .replaceAll('â', 'a')
+      .replaceAll('î', 'i')
+      .replaceAll('û', 'u')
+      .replaceAll("'", '')
+      .replaceAll(RegExp(r'[^\p{L}\p{N} ]+', unicode: true), ' ')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
+  // "geliyor musun" and "geliyormusun" are the same answer.
+  t = t.replaceAllMapped(RegExp(r' (m[ıiuü](?:y[ıiuü]m|s[ıiuü]n(?:[ıiuü]z)?|y[ıiuü]z|d[ıiuü]r|ydı|ydi|ydu|ydü)?)(?= |$)', unicode: true),
+      (m) => m[1]!);
+  return t.replaceFirst(RegExp(r'^(ben|sen|o|biz|siz|onlar) (?=\S)'), '');
+}
+
 /// [normalizeAnswer] of [s] with every "'d" read both as "had" and "would".
 Set<String> answerVariants(String s) {
   var out = {normalizeAnswer(s)};
@@ -270,6 +322,10 @@ Set<String> answerVariants(String s) {
 
 /// Whether [answer] is one of the exercise's correct versions.
 bool matchesReference(GrammarExercise e, String answer) {
+  if (e.target == 'tr') {
+    final a = normalizeTurkishAnswer(answer);
+    return a.isNotEmpty && e.answers.any((r) => normalizeTurkishAnswer(r) == a);
+  }
   final a = answerVariants(answer);
   if (a.every((x) => x.isEmpty)) return false;
   return e.answers.any((r) => answerVariants(r).any(a.contains));
@@ -354,7 +410,7 @@ List<GrammarExercise> grammarRound(GrammarTopic t, GrammarProgress p, {int size 
   ].take(size).toList();
 }
 
-final _edgePunct = RegExp(r"^[^A-Za-z0-9']+|[^A-Za-z0-9']+$");
+final _edgePunct = RegExp(r"^[^\p{L}\p{N}']+|[^\p{L}\p{N}']+$", unicode: true);
 
 /// The words of the main answer in a random order, for the hint button that
 /// shows one more word each time it is pressed. A one-word gap answer is

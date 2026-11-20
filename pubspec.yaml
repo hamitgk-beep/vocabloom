@@ -72,13 +72,14 @@ flutter:
     - assets/dict.db
     - assets/tr_en.db
     - assets/brand/logo.png
-    - assets/brand/intro.webp
     - assets/grammar/lessons.json
     - assets/grammar/lessons_en.json
+    - assets/grammar/lessons_tr.json
     - assets/library/catalog.json
     - assets/library/stories.json.gz
     - assets/library/catalog_tr.json
     - assets/library/stories_tr.json.gz
+    - assets/library/catalog_tr_books.json
 
   fonts:
     - family: Inter

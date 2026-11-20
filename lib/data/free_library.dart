@@ -108,9 +108,11 @@ class FreeLibrary {
     Future<List<int>> bytes(String key) async =>
         (await bundle.load(key).timeout(const Duration(seconds: 20))).buffer.asUint8List();
     // English, then Turkish (tools/library_tr/build_library_tr.py).
+    // Turkish books (tools/library_tr/build_books_tr.py) have no bundled texts.
     for (final (cat, texts) in [
       ('assets/library/catalog.json', 'assets/library/stories.json.gz'),
       ('assets/library/catalog_tr.json', 'assets/library/stories_tr.json.gz'),
+      ('assets/library/catalog_tr_books.json', null),
     ]) {
       final found = <LibraryItem>[];
       try {
@@ -128,13 +130,15 @@ class FreeLibrary {
         problems.add('$cat: $e');
         continue;
       }
-      try {
-        final text = utf8.decode(gzip.decode(await bytes(texts)), allowMalformed: true);
-        (jsonDecode(text) as Map).forEach((k, v) {
-          if (k is String && v is String) stories[k] = v;
-        });
-      } catch (e) {
-        problems.add('$texts: $e');
+      if (texts != null) {
+        try {
+          final text = utf8.decode(gzip.decode(await bytes(texts)), allowMalformed: true);
+          (jsonDecode(text) as Map).forEach((k, v) {
+            if (k is String && v is String) stories[k] = v;
+          });
+        } catch (e) {
+          problems.add('$texts: $e');
+        }
       }
       // A story without its text cannot open: show only what can.
       items.addAll(found.where((it) => it.isBook || stories.containsKey(it.id)));

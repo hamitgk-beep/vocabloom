@@ -2,6 +2,30 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "turkish-grammar-1",
+      "area": "grammar",
+      "tr": "Türkçe öğrenenler için Gramer sekmesinde artık İngilizce değil Türkçe dilbilgisi konuları var: ünlü uyumundan sıfat-fiillere 21 konu (A1-B2), İngilizce anlatım ve İngilizce cümleleri Türkçeye çevirme alıştırmaları.",
+      "en": "Learners of Turkish now get Turkish grammar in the Grammar tab instead of the English lessons: 21 topics from vowel harmony to participles (A1-B2), explained in English, with English sentences to translate into Turkish."
+    },
+    {
+      "id": "library-turkish-books-1",
+      "area": "app",
+      "tr": "Ücretsiz kütüphanede Türkçe kitaplar var ve seviye filtrelerinin üstünde Türkçe / İngilizce düğmeleri ile hangi dildeki metinlerin listeleneceğini seçebilirsin.",
+      "en": "The free library now has Turkish books, and Turkish / English buttons above the level filters choose which language's texts are listed."
+    },
+    {
+      "id": "no-intro-film",
+      "area": "app",
+      "tr": "Açılış filmi kaldırıldı; uygulama artık beklemeden açılıyor.",
+      "en": "The opening film was removed; the app now opens straight away."
+    },
+    {
+      "id": "contrib-dictionary-hamit-2",
+      "area": "dictionary",
+      "tr": "Sözlüğe ikinci büyük elle hazırlanmış veri paketi eklendi. Türkçe → İngilizce: 187 yeni anlam, 187 yeni kelime ve deyim (örneğin \"çorbada tuzu olmak\"), 309 örnek cümle; yaklaşık 200 yeni cümle kelimenin o cümledeki anlamını seçmeyi öğretiyor. İngilizce → Türkçe: 39 yeni anlam, 42 yeni deyim ve kalıp, 46 deyime yeni karşılık, 692 örnek cümle.",
+      "en": "A second large set of hand-made dictionary data was added. Turkish → English: 187 new meanings, 187 new words and idioms (e.g. \"çorbada tuzu olmak\"), 309 example sentences; about 200 new sentences teach which meaning a word has in its sentence. English → Turkish: 39 new meanings, 42 new idioms and phrases, new equivalents for 46 idioms, 692 example sentences."
+    },
+    {
       "id": "contrib-dictionary-hamit-1",
       "area": "dictionary",
       "tr": "Sözlüğe elle hazırlanıp kontrol edilmiş veri eklendi. Türkçe → İngilizce: 39 yeni anlam, 36 yeni kelime ve deyim, 154 örnek cümle; 52 cümle, kelimenin o cümledeki anlamını seçmeyi öğretiyor (örneğin \"direksiyonu sağa kırmak\": to swerve). İngilizce → Türkçe: 14 yeni anlam, 5 yeni deyim, 14 deyime yeni karşılık, 153 örnek cümle. Elle hazırlanan örnekler artık önce gösteriliyor.",

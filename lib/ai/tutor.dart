@@ -535,6 +535,29 @@ class Tutor {
       '- "I managed to finish the project on time despite my increased workload." ("managed to", "üstesinden gelerek '
       'başardım" vurgusu katar.)';
 
+  /// Grading for the Turkish lessons: the learner speaks English and
+  /// translated an English sentence into Turkish.
+  static const _gradeSystemTr = 'You are an experienced Turkish teacher in the Storilex app. Your learner speaks English. '
+      'Task: grammar practice. The learner translated the given English sentence into Turkish. Compare the answer '
+      'with the correct answers given to you and with the rule of the topic. The correct answers are certainly right; '
+      'if the learner\'s answer differs from them but is also correct Turkish with the same meaning, accept it. '
+      'Point out only real mistakes, in English, and keep Turkish words in Turkish.\n'
+      'Answer in this form:\n'
+      '1. First line: a short, encouraging assessment.\n'
+      '2. **Corrections:** a numbered item for each mistake: the rule (e.g. vowel harmony, dative case), what is '
+      'wrong and the right form.\n'
+      '3. **Other natural ways to say it:** one or two of the correct answers, each after "- ".\n'
+      'If the answer is fully correct, write only the praise line and the **Other natural ways to say it:** section.\n\n'
+      'Example:\n'
+      'English: "I am going to school."\n'
+      'Learner\'s answer: "Ben okulda gidiyorum"\n'
+      'Example reply:\n'
+      'Good try! The verb is right; only the case ending needs fixing.\n'
+      '**Corrections:**\n'
+      '1. Dative case: movement towards a place takes -(y)a / -(y)e, not the locative -da: "okula".\n'
+      '**Other natural ways to say it:**\n'
+      '- "Okula gidiyorum."';
+
   /// Whether [answer] is one of the correct versions (no model needed).
   bool isCorrectTranslation(GrammarExercise e, String answer) => matchesReference(e, answer);
 
@@ -543,9 +566,17 @@ class Tutor {
   /// correct versions and the topic's rule.
   Stream<String> checkTranslation(GrammarTopic t, GrammarExercise e, String answer) {
     if (matchesReference(e, answer)) {
-      final others = e.answers.where((a) => !matchesReference(GrammarExercise('', '', [a], ''), answer)).take(2).toList();
+      final others = e.answers.where((a) => !matchesReference(GrammarExercise(e.id, '', [a], ''), answer)).take(2).toList();
       return Stream.value('${L('Harika, tamamen doğru! 🎉', 'Great, exactly right! 🎉')}'
           '${others.isEmpty ? '' : '\n${L('**Doğru ve doğal kurulumlar:**', '**Other natural ways to say it:**')}\n${others.map((a) => '- "$a"').join('\n')}'}');
+    }
+    if (e.target == 'tr') {
+      final user = 'Topic: ${t.titleEn} (${t.titleTr})\n'
+          'Rule: ${e.noteTr.isEmpty ? t.structureTr.join(' / ') : e.noteTr}\n'
+          'English: "${e.tr}"\n'
+          'Correct answers:\n${e.answers.map((a) => '- "$a"').join('\n')}\n'
+          'Learner\'s answer: "${answer.trim()}"';
+      return ai.generate(_gradeSystemTr, [('user', user)], maxTokens: 420, temperature: 0.2);
     }
     final user = 'Konu: ${t.titleTr} (${t.titleEn})\n'
         'Kural: ${e.noteTr.isEmpty ? t.structureTr.join(' / ') : e.noteTr}\n'

@@ -69,10 +69,19 @@ class _GrammarPageState extends State<GrammarPage> {
     setState(() => level = v);
   }
 
+  /// The learned language the shown lessons are for.
+  String? _lang;
+
+  // Learners of Turkish get Turkish grammar, not the English lessons.
+  void _load() {
+    final lang = _lang = widget.app.learnLang;
+    loadGrammarTopics(lang: lang).then((t) => mounted && _lang == lang ? setState(() => topics = t) : null);
+  }
+
   @override
   void initState() {
     super.initState();
-    loadGrammarTopics().then((t) => mounted ? setState(() => topics = t) : null);
+    _load();
   }
 
   Future<void> _open(GrammarTopic t) async {
@@ -86,6 +95,7 @@ class _GrammarPageState extends State<GrammarPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (_lang != widget.app.learnLang) _load();
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     final ts = topics;
@@ -119,10 +129,15 @@ class _GrammarPageState extends State<GrammarPage> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            L(
-                              'Her konuda kısa bir Türkçe anlatım, yapı kalıpları ve örnekler var. Sonra Türkçe cümleleri İngilizceye çevirirsin; doğru mu, nasıl daha doğal söylenir, hemen görürsün.',
-                              'Each topic has a short explanation, patterns and examples. Then you translate Turkish sentences into English and see at once whether they are right and how to say them more naturally.',
-                            ),
+                            widget.app.learnLang == 'tr'
+                                ? L(
+                                    'Türkçe dilbilgisi: her konuda kısa bir anlatım, yapı kalıpları ve örnekler var. Sonra İngilizce cümleleri Türkçeye çevirirsin; doğru mu, hemen görürsün.',
+                                    'Turkish grammar: each topic has a short explanation, patterns and examples. Then you translate English sentences into Turkish and see at once whether they are right.',
+                                  )
+                                : L(
+                                    'Her konuda kısa bir Türkçe anlatım, yapı kalıpları ve örnekler var. Sonra Türkçe cümleleri İngilizceye çevirirsin; doğru mu, nasıl daha doğal söylenir, hemen görürsün.',
+                                    'Each topic has a short explanation, patterns and examples. Then you translate Turkish sentences into English and see at once whether they are right and how to say them more naturally.',
+                                  ),
                             style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white.withValues(alpha: 0.9), height: 1.45),
                           ),
                           const SizedBox(height: 14),
@@ -445,7 +460,10 @@ class _GrammarTopicPageState extends State<GrammarTopicPage> {
                   children: [
                     for (final (i, e) in t.examples.indexed) ...[
                       if (i > 0) const SizedBox(height: 12),
-                      TapText(e.$1, style: enStyle(theme, theme.textTheme.bodyLarge)),
+                      if (t.target == 'tr')
+                        SelectableText(e.$1, style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600))
+                      else
+                        TapText(e.$1, style: enStyle(theme, theme.textTheme.bodyLarge)),
                       const SizedBox(height: 2),
                       Text(e.$2, style: theme.textTheme.bodyMedium),
                     ],
@@ -727,6 +745,8 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
               Text(
                 e.isGap
                     ? L('Boşluğu doldur', 'Fill in the gap')
+                    : e.target == 'tr'
+                    ? L('Bu cümleyi Türkçeye çevir', 'Translate this sentence into Turkish')
                     : L('Bu cümleyi İngilizceye çevir', 'Translate this sentence into English'),
                 style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
               ),
@@ -777,6 +797,8 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
                 decoration: InputDecoration(
                   hintText: e.isGap
                       ? L('Boşluğa gelecek kelime(ler)…', 'The missing word(s)…')
+                      : e.target == 'tr'
+                      ? L('Türkçesini yaz…', 'Write it in Turkish…')
                       : L('İngilizcesini yaz…', 'Write it in English…'),
                 ),
               ),

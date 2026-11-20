@@ -25,6 +25,18 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
   String? failed;
   String? level;
   String kind = 'all'; // all, story, book
+
+  /// Which texts are listed: 'tr' or 'en'. Starts at the language being
+  /// learned; the learner can look at the other one too.
+  late String textLang = switch (widget.app.user.getSetting('library_lang')) {
+    final v? when v == 'tr' || v == 'en' => v,
+    _ => widget.app.user.lang,
+  };
+
+  void _setTextLang(String v) {
+    widget.app.user.setSetting('library_lang', v);
+    setState(() => textLang = v);
+  }
   String query = '';
   final Map<String, double?> busy = {};
 
@@ -72,8 +84,35 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     widget.app.user.setSetting('library_level', l);
   }
 
+  /// A text in the other language is read with that language's dictionary:
+  /// the learner switches the language they learn first.
+  Future<bool> _switchLanguageFor(LibraryItem it) async {
+    final app = widget.app;
+    if (it.lang == app.user.lang) return true;
+    if (it.lang == 'tr' && app.trEn == null) return true;
+    final name = it.lang == 'tr' ? L('Türkçe', 'Turkish') : L('İngilizce', 'English');
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: Text(L('Bu metin $name', 'This text is in $name')),
+        content: Text(L(
+          'Kelimeleri doğru sözlükle göstermek için öğrendiğin dil $name olarak değişecek. Ayarlar\'dan istediğin zaman geri alabilirsin.',
+          'To show its words with the right dictionary, the language you learn will change to $name. You can change it back in Settings at any time.',
+        )),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L('Vazgeç', 'Cancel'))),
+          FilledButton(key: const ValueKey('lib-switch-lang'), onPressed: () => Navigator.pop(c, true), child: Text(L('Değiştir ve aç', 'Change and open'))),
+        ],
+      ),
+    );
+    if (ok != true) return false;
+    app.setLanguages(learn: it.lang);
+    return true;
+  }
+
   Future<void> _open(LibraryItem it) async {
     if (busy.containsKey(it.id)) return;
+    if (!await _switchLanguageFor(it) || !mounted) return;
     final m = ScaffoldMessenger.of(context);
     final nav = Navigator.of(context);
     setState(() => busy[it.id] = null);
@@ -193,8 +232,8 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     final l = lib;
     final have = widget.app.user.booksBySource();
     final q = query.trim().toLowerCase();
-    // Only texts in the language being learned.
-    final lang = widget.app.user.lang;
+    // Texts in the language picked above (at first the one being learned).
+    final lang = textLang;
     final tr = lang == 'tr';
     final hasBooks = l?.items.any((it) => it.lang == lang && it.isBook) ?? false;
     final shown = l == null
@@ -226,6 +265,17 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                   style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant, height: 1.45),
                 ),
                 const SizedBox(height: 14),
+                SegmentedButton<String>(
+                  key: const ValueKey('lib-lang'),
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(value: 'tr', label: Text(L('Türkçe', 'Turkish'), key: const ValueKey('lib-lang-tr'))),
+                    ButtonSegment(value: 'en', label: Text(L('İngilizce', 'English'), key: const ValueKey('lib-lang-en'))),
+                  ],
+                  selected: {textLang},
+                  onSelectionChanged: (s) => _setTextLang(s.first),
+                ),
+                const SizedBox(height: 12),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: [
