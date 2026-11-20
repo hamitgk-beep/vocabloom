@@ -34,7 +34,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx \
          tools/contrib/hamit_obek1_2026-11-20.xlsx tools/contrib/hamit_deyim1_2026-11-20.xlsx \
-         tools/contrib/hamit_obek2_2026-11-20.xlsx tools/contrib/hamit_obek3_2026-11-20.xlsx tools/contrib/hamit_obek4_2026-11-20.xlsx
+         tools/contrib/hamit_obek2_2026-11-20.xlsx tools/contrib/hamit_obek3_2026-11-20.xlsx tools/contrib/hamit_obek4_2026-11-20.xlsx \
+         tools/contrib/hamit_deyim2_2026-11-20.xlsx
 """
 import json
 import re
@@ -1230,7 +1231,37 @@ O2_EDITS = {
         ('freeze out', 'dışlamak, aralarına almamak; (dışarısı) çok soğuk olmak'))},
 }
 
-AUDIT_FIX = {'hamit_obek2_2026-11-20.xlsx': (O2_EX_FIX, O2_EDITS), 'hamit_obek3_2026-11-20.xlsx': (O3_EX_FIX, {}),
+# --- Idiom work sheet 2 (Parti 25) ---------------------------------------------------
+# Same fixes as Parti 24: "someone's" headings take "one's", noun owners ("the boy's",
+# "their predecessors'") become pronouns, and object verbs get "sb".
+Y2_EX_FIX = {
+    108: {'ex': 'In the old story, the schoolmaster threatened to box his ears for speaking out.'},
+    114: {'ex': 'We stand on their shoulders: every discovery today builds on their work.',
+          'ex_tr': 'Onların omuzlarında yükseliyoruz: bugünkü her buluş onların çalışmalarına dayanıyor.'},
+    282: {'ex': 'Instead of admitting the error, Arda kept lying and dug himself into a hole.'},
+    922: {'ex': 'After reading the complaints, I would not touch that contractor with a barge pole.'},
+    952: {'ex': 'Every volunteer worked like a Trojan to reopen the library before winter.',
+          'ex_tr': 'Her gönüllü kütüphaneyi kış gelmeden açmak için canla başla çalıştı.'},
+    1368: {'ex': 'Nervous investors often zig when they should zag.',
+           'ex_tr': 'Tedirgin yatırımcılar çoğu zaman yapmaları gerekenin tam tersini yapar.'},
+}
+Y2_EDITS = {
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ("box someone's ears", "box one's ears"), ("stand on someone's shoulders", "stand on one's shoulders"),
+        ("jog someone's memory", "jog one's memory"), ("stir someone's blood", "stir one's blood"),
+        ("tread on someone's toes", "tread on one's toes"), ("yuck someone's yum", "yuck one's yum"),
+        ('praise to the skies', 'praise sb to the skies'), ('watch like a hawk', 'watch sb like a hawk'),
+        ('not touch with a barge pole', 'not touch sth with a barge pole'), ('zig when one should zag', 'zig when sb should zag'),
+        ("get one's fingers onto", "get one's fingers on"), ('weigh the anchor', 'weigh anchor'),
+        ('gift from the goddesses', 'gift from the gods'))},
+    **{p: {'action': 'merge', 'to': t} for p, t in (
+        ('sweep under the rug', 'sweep something under the rug'), ('look before one leaps', 'look before you leap'),
+        ('cloud seven', 'on cloud nine'))},
+    **{p: {'action': 'delete'} for p in ('short on looks', 'warm as life', 'marriage bed', 'english as apple pie')},
+}
+
+AUDIT_FIX = {'hamit_deyim2_2026-11-20.xlsx': (Y2_EX_FIX, Y2_EDITS),
+             'hamit_obek2_2026-11-20.xlsx': (O2_EX_FIX, O2_EDITS), 'hamit_obek3_2026-11-20.xlsx': (O3_EX_FIX, {}),
              'hamit_obek4_2026-11-20.xlsx': (O4_EX_FIX, {}),
              'hamit_deyim1_2026-11-20.xlsx': (Y1_EX_FIX, Y1_EDITS),
              'hamit_obek1_2026-11-20.xlsx': (O1_EX_FIX, O1_EDITS),
@@ -1311,7 +1342,7 @@ for src in srcs:
             e.update(fix)
             phrases.append(e)
         edits += [dict(v, phrase=k) for k, v in ph_edits.items()]
-        if name == 'hamit_deyim1_2026-11-20.xlsx':
+        if name in ('hamit_deyim1_2026-11-20.xlsx', 'hamit_deyim2_2026-11-20.xlsx'):
             edits += y1_meaning_edits(wb, ph_edits)
         continue
 
