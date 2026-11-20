@@ -21,7 +21,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_filtre6_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v7.xlsx \
          tools/contrib/hamit_2026-11-20_v8.xlsx tools/contrib/hamit_filtre7_2026-11-20.xlsx tools/contrib/hamit_filtre8_2026-11-20.xlsx \
          tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx
 """
 import json
 import re
@@ -318,10 +319,29 @@ V6_EN_SPLIT = {
     51: [],  # mere ≠ önemsiz
 }
 
+V10_CTX_FIX = {
+    8: ('Soğuk havada ince giyinince fena halde soğuk almış.', None, None, None),
+    18: ('Yeni yapılan bina birkaç yıl içinde ancak oturur.', None, None, None),
+    67: ('Both teams played defensively, and they eventually drew the match.', None, None, None),
+}
+V10_EX_FIX = {
+    5: {'en': 'When the weather got cold, we let the dog in from the yard.'},
+    8: {'tr': 'Soğuk havada ince giyinince fena halde soğuk almış.'},
+    13: {'en': 'The taxes were automatically deducted from his account.'},
+    18: {'tr': 'Yeni yapılan bina birkaç yıl içinde ancak oturur.'},
+    27: {'en': 'Someone knocked on the door again and again at the crack of dawn.'},
+    67: {'en': 'Both teams played defensively, and they eventually drew the match.'},
+    89: {'en': 'We put you to a lot of trouble by having you carry such heavy packages.'},
+}
+V10_EN_SPLIT = {16: [('fiil', 'anlamına gelmek', 'ifade etmek')], 17: [('fiil', 'kastetmek, niyetlenmek', 'öyle demek istemek')],
+                18: [('sıfat', 'cimri, kaba', 'kötü niyetli')], 19: [('isim', 'ortalama', 'matematiksel orta')],
+                23: [('fiil', 'ücret talep etmek', 'fiyat istemek')], 24: [('fiil', 'hücum etmek', 'hızla üzerine gitmek')]}
 V9_EX_FIX = {26: {'en': 'The board of directors promised they would act transparently in the hiring process.'}}
 V8_EX_FIX = {51: {'tr': 'Romanın kapağı eski bir İstanbul fotoğrafıyla süslenmişti.'}}
 
 FIXES = {
+    'hamit_2026-11-20_v10.xlsx': dict(ctx_fix=V10_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split=V10_EN_SPLIT, tr_split={}, ex_fix=V10_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v9.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                      en_split={}, tr_split={}, ex_fix=V9_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v8.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
@@ -466,6 +486,9 @@ for src in srcs:
             alts = fix.pop('phrases', None) if fix else None
             e.update(fix)
             ph = e['phrase']
+            if cat == 'collocations' and name == 'hamit_filtre13_2026-11-20.xlsx':
+                # "a faint smile" is also "her faint smile": the article is not part of it.
+                ph = re.sub(r'^(?:a|an) ', '', ph)
             if cat == 'dependent_prepositions':
                 # "blame someone for something" is matched up to its preposition.
                 ph = re.sub(r'(?: doing)? (?:something|someone|a language)$', '', ph)

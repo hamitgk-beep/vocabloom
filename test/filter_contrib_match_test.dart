@@ -39,5 +39,8 @@ void main() {
     expect(found('The bright poster caught my attention.', 'collocations'), contains("catch one's attention"));
     expect(found('We placed an order for new filters.', 'collocations'), contains('place an order'));
     expect(found('We grilled aubergine with olive oil.', 'uk_us'), contains('aubergine'));
+    // Sheet 13: an adjective + noun found after any determiner, an adverb + adjective.
+    expect(found('She gave him her faint smile.', 'collocations'), contains('faint smile'));
+    expect(found('I was utterly exhausted after the trip.', 'collocations'), contains('utterly exhausted'));
   });
 }

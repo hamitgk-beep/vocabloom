@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -6407,6 +6407,638 @@
    "lemma": "söylemek",
    "lang": "tr",
    "meaning": "to sing",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni eve taşınırken kendime rahat bir koltuk aldım.",
+   "form": "aldım",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to buy, to purchase",
+   "translation": ""
+  },
+  {
+   "sentence": "Dün kargoya verilen paketi bugün sabah aldım.",
+   "form": "aldım",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to receive, to get",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu geniş salon rahatlıkla yüz kişiyi alır.",
+   "form": "alır",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to hold, to accommodate",
+   "translation": ""
+  },
+  {
+   "sentence": "Hava soğuyunca bahçedeki köpeği içeri aldık.",
+   "form": "aldık",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to let in",
+   "translation": ""
+  },
+  {
+   "sentence": "Ordu, uzun süren bir kuşatmanın ardından kaleyi aldı.",
+   "form": "aldı",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to capture, to conquer",
+   "translation": ""
+  },
+  {
+   "sentence": "Banka, hesap işletim ücretini maaşımdan almış.",
+   "form": "almış",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to deduct",
+   "translation": ""
+  },
+  {
+   "sentence": "Soğuk havada ince giyinince fena halde soğuk almış.",
+   "form": "almış",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to catch (a cold/illness)",
+   "translation": ""
+  },
+  {
+   "sentence": "Sonbahar rüzgarıyla birlikte ağaçtaki sarı yapraklar yere düştü.",
+   "form": "düştü",
+   "lemma": "düşmek",
+   "lang": "tr",
+   "meaning": "to fall, to drop",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu zor projeyi zamanında bitirmek yine bizim ekibe düştü.",
+   "form": "düştü",
+   "lemma": "düşmek",
+   "lang": "tr",
+   "meaning": "to fall to (as a duty/share)",
+   "translation": ""
+  },
+  {
+   "sentence": "Son zamanlarda tarih kitaplarına çok düştü, sürekli okuyor.",
+   "form": "düştü",
+   "lemma": "düşmek",
+   "lang": "tr",
+   "meaning": "to become addicted/fond of",
+   "translation": ""
+  },
+  {
+   "sentence": "Yaşlı adam parktaki ahşap banka yavaşça oturdu.",
+   "form": "oturdu",
+   "lemma": "oturmak",
+   "lang": "tr",
+   "meaning": "to sit",
+   "translation": ""
+  },
+  {
+   "sentence": "Çocukluğundan beri bu tarihi mahallede oturuyor.",
+   "form": "oturuyor",
+   "lemma": "oturmak",
+   "lang": "tr",
+   "meaning": "to live, to reside",
+   "translation": ""
+  },
+  {
+   "sentence": "Terzinin diktiği yeni takım elbise üzerine tam oturdu.",
+   "form": "oturdu",
+   "lemma": "oturmak",
+   "lang": "tr",
+   "meaning": "to fit (clothes)",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni yapılan bina birkaç yıl içinde ancak oturur.",
+   "form": "oturur",
+   "lemma": "oturmak",
+   "lang": "tr",
+   "meaning": "to settle (building/ground)",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirketteki yeni çalışma düzeni nihayet yerine oturdu.",
+   "form": "oturdu",
+   "lemma": "oturmak",
+   "lang": "tr",
+   "meaning": "to become established",
+   "translation": ""
+  },
+  {
+   "sentence": "Şehirdeki ulaşım ağı saat gibi kusursuz işliyor.",
+   "form": "işliyor",
+   "lemma": "işlemek",
+   "lang": "tr",
+   "meaning": "to function, to operate",
+   "translation": ""
+  },
+  {
+   "sentence": "Genç kız, çeyizindeki örtülere renkli iplerle çiçek motifleri işledi.",
+   "form": "işledi",
+   "lemma": "işlemek",
+   "lang": "tr",
+   "meaning": "to embroider, to engrave",
+   "translation": ""
+  },
+  {
+   "sentence": "Fabrika her gün tonlarca pamuğu işleyerek iplik üretiyor.",
+   "form": "işleyerek",
+   "lemma": "işlemek",
+   "lang": "tr",
+   "meaning": "to process, to work on",
+   "translation": ""
+  },
+  {
+   "sentence": "Kışın dondurucu soğuğu ince paltosundan kemiklerine işledi.",
+   "form": "işledi",
+   "lemma": "işlemek",
+   "lang": "tr",
+   "meaning": "to penetrate, to affect deeply",
+   "translation": ""
+  },
+  {
+   "sentence": "O kadar dürüsttür ki hayatı boyunca tek bir suç işlememiştir.",
+   "form": "işlememiştir",
+   "lemma": "işlemek",
+   "lang": "tr",
+   "meaning": "to commit (a crime/sin)",
+   "translation": ""
+  },
+  {
+   "sentence": "Hırsızlar gece yarısı müzeye girip değerli tabloları çaldılar.",
+   "form": "çaldılar",
+   "lemma": "çalmak",
+   "lang": "tr",
+   "meaning": "to steal",
+   "translation": ""
+  },
+  {
+   "sentence": "Ünlü piyanist sahnede en zor klasik eserleri ustalıkla çaldı.",
+   "form": "çaldı",
+   "lemma": "çalmak",
+   "lang": "tr",
+   "meaning": "to play (an instrument)",
+   "translation": ""
+  },
+  {
+   "sentence": "Sabahın köründe kapı art arda ve şiddetle çaldı.",
+   "form": "çaldı",
+   "lemma": "çalmak",
+   "lang": "tr",
+   "meaning": "to ring, to knock",
+   "translation": ""
+  },
+  {
+   "sentence": "Aldığı yeni elbisenin rengi hafiften maviye çalıyor.",
+   "form": "çalıyor",
+   "lemma": "çalmak",
+   "lang": "tr",
+   "meaning": "to verge on (a color)",
+   "translation": ""
+  },
+  {
+   "sentence": "Düşmemek için ayakkabısının bağcıklarını sıkıca bağladı.",
+   "form": "bağladı",
+   "lemma": "bağlamak",
+   "lang": "tr",
+   "meaning": "to tie, to fasten",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni kurulan fiber optik hat, adayı ana karaya bağladı.",
+   "form": "bağladı",
+   "lemma": "bağlamak",
+   "lang": "tr",
+   "meaning": "to connect, to link",
+   "translation": ""
+  },
+  {
+   "sentence": "Samimi ve dürüst tavırlarıyla tüm müşterileri kendine bağladı.",
+   "form": "bağladı",
+   "lemma": "bağlamak",
+   "lang": "tr",
+   "meaning": "to win over, to captivate",
+   "translation": ""
+  },
+  {
+   "sentence": "Uzun süren müzakerelerin ardından konuyu nihayet bir karara bağladık.",
+   "form": "bağladık",
+   "lemma": "bağlamak",
+   "lang": "tr",
+   "meaning": "to conclude, to settle",
+   "translation": ""
+  },
+  {
+   "sentence": "Soğuk suyla yıkayınca yorgun yüzüne biraz renk geldi.",
+   "form": "yüzüne",
+   "lemma": "yüz",
+   "lang": "tr",
+   "meaning": "face",
+   "translation": ""
+  },
+  {
+   "sentence": "Gölün yüzünde yüzen sonbahar yapraklarını sessizce izledik.",
+   "form": "yüzünde",
+   "lemma": "yüz",
+   "lang": "tr",
+   "meaning": "surface",
+   "translation": ""
+  },
+  {
+   "sentence": "Kütüphaneye bu ay tam yüz yeni roman bağışlandı.",
+   "form": "yüz",
+   "lemma": "yüz",
+   "lang": "tr",
+   "meaning": "hundred",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahar temizliğinde yastıkların yüzünü değiştirip yıkadı.",
+   "form": "yüzünü",
+   "lemma": "yüz",
+   "lang": "tr",
+   "meaning": "cover, case",
+   "translation": ""
+  },
+  {
+   "sentence": "Şiddetli rüzgardan korunmak için başına yün bir bere taktı.",
+   "form": "başına",
+   "lemma": "baş",
+   "lang": "tr",
+   "meaning": "head",
+   "translation": ""
+  },
+  {
+   "sentence": "Ekibin başında oldukça tecrübeli ve disiplinli bir mühendis var.",
+   "form": "başında",
+   "lemma": "baş",
+   "lang": "tr",
+   "meaning": "leader, head, chief",
+   "translation": ""
+  },
+  {
+   "sentence": "Kitabın başından sonuna kadar merak uyandıran bir olay örgüsü var.",
+   "form": "başından",
+   "lemma": "baş",
+   "lang": "tr",
+   "meaning": "beginning, start",
+   "translation": ""
+  },
+  {
+   "sentence": "Dağın başında yılın her mevsimi kar eksik olmaz.",
+   "form": "başında",
+   "lemma": "baş",
+   "lang": "tr",
+   "meaning": "top, summit",
+   "translation": ""
+  },
+  {
+   "sentence": "Çiftlikte şu an elli baş koyun ve yirmi inek bulunuyor.",
+   "form": "baş",
+   "lemma": "baş",
+   "lang": "tr",
+   "meaning": "head (of cattle)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bütün gün bilgisayar ekranına bakmaktan gözleri çok yorulmuştu.",
+   "form": "gözleri",
+   "lemma": "göz",
+   "lang": "tr",
+   "meaning": "eye",
+   "translation": ""
+  },
+  {
+   "sentence": "Önemli evrakları çalışma masasının en alt gözünde saklıyor.",
+   "form": "gözünde",
+   "lemma": "göz",
+   "lang": "tr",
+   "meaning": "drawer, compartment",
+   "translation": ""
+  },
+  {
+   "sentence": "Dağın eteklerinde buz gibi su fışkıran bir su gözü bulduk.",
+   "form": "gözü",
+   "lemma": "göz",
+   "lang": "tr",
+   "meaning": "spring (of water)",
+   "translation": ""
+  },
+  {
+   "sentence": "Nehrin üzerindeki beş gözlü tarihi taş köprü hala ayakta.",
+   "form": "gözlü",
+   "lemma": "göz",
+   "lang": "tr",
+   "meaning": "arch (of a bridge)",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni arabasını gören komşuların gözü değmiş olmalı ki kaza yaptı.",
+   "form": "gözü",
+   "lemma": "göz",
+   "lang": "tr",
+   "meaning": "evil eye, envy",
+   "translation": ""
+  },
+  {
+   "sentence": "Çok sıcak çayı aceleyle içince ağzı yanmış, hemen su içmişti.",
+   "form": "ağzı",
+   "lemma": "ağız",
+   "lang": "tr",
+   "meaning": "mouth",
+   "translation": ""
+  },
+  {
+   "sentence": "Karadeniz yöresine özgü o tatlı ağızla konuşmayı çok seviyor.",
+   "form": "ağızla",
+   "lemma": "ağız",
+   "lang": "tr",
+   "meaning": "dialect, accent",
+   "translation": ""
+  },
+  {
+   "sentence": "Mağaranın ağzı o kadar dardı ki içeri girmekte çok zorlandılar.",
+   "form": "ağzı",
+   "lemma": "ağız",
+   "lang": "tr",
+   "meaning": "opening, entrance",
+   "translation": ""
+  },
+  {
+   "sentence": "Bıçağın ağzı iyice köreldiği için domatesleri bile kesemiyordu.",
+   "form": "ağzı",
+   "lemma": "ağız",
+   "lang": "tr",
+   "meaning": "edge (of a blade)",
+   "translation": ""
+  },
+  {
+   "sentence": "Soğuktan buz gibi olan ellerini şöminenin ateşinde ısıttı.",
+   "form": "ellerini",
+   "lemma": "el",
+   "lang": "tr",
+   "meaning": "hand",
+   "translation": ""
+  },
+  {
+   "sentence": "Elin ne dediğini umursamadan kendi inandığı yolda ilerledi.",
+   "form": "Elin",
+   "lemma": "el",
+   "lang": "tr",
+   "meaning": "stranger, others",
+   "translation": ""
+  },
+  {
+   "sentence": "Dün akşam arkadaşlarla bir el daha satranç oynamaya karar verdik.",
+   "form": "el",
+   "lemma": "el",
+   "lang": "tr",
+   "meaning": "round, game",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu değerli arazi geçen yıl devletin eline geçti.",
+   "form": "eline",
+   "lemma": "el",
+   "lang": "tr",
+   "meaning": "authority, possession",
+   "translation": ""
+  },
+  {
+   "sentence": "She held the baby gently in her arms while he slept.",
+   "form": "held",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "tutmak, kavramak",
+   "translation": ""
+  },
+  {
+   "sentence": "The new conference hall can hold up to a thousand people.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "içine almak, sığdırmak",
+   "translation": ""
+  },
+  {
+   "sentence": "We will hold a brief meeting tomorrow morning to discuss the project.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "düzenlemek",
+   "translation": ""
+  },
+  {
+   "sentence": "Please hold the door open for the passengers behind you.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "bekletmek, korumak",
+   "translation": ""
+  },
+  {
+   "sentence": "Many scientists hold that climate change is accelerating rapidly.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "savunmak, iddia etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "He carried the heavy boxes up to the third floor by himself.",
+   "form": "carried",
+   "lemma": "carry",
+   "lang": "en",
+   "meaning": "taşımak",
+   "translation": ""
+  },
+  {
+   "sentence": "Mosquitoes carry diseases like malaria in tropical regions.",
+   "form": "carry",
+   "lemma": "carry",
+   "lang": "en",
+   "meaning": "bulaştırmak",
+   "translation": ""
+  },
+  {
+   "sentence": "This kind of investment carries a significant amount of financial risk.",
+   "form": "carries",
+   "lemma": "carry",
+   "lang": "en",
+   "meaning": "içermek, risk taşımak",
+   "translation": ""
+  },
+  {
+   "sentence": "Unfortunately, our local bookstore doesn't carry that specific magazine anymore.",
+   "form": "carry",
+   "lemma": "carry",
+   "lang": "en",
+   "meaning": "satmak, bulundurmak",
+   "translation": ""
+  },
+  {
+   "sentence": "The little boy drew a beautiful picture of a house and a tree.",
+   "form": "drew",
+   "lemma": "draw",
+   "lang": "en",
+   "meaning": "çizmek",
+   "translation": ""
+  },
+  {
+   "sentence": "She drew the curtains to block out the bright morning sun.",
+   "form": "drew",
+   "lemma": "draw",
+   "lang": "en",
+   "meaning": "çekmek (perde vb.)",
+   "translation": ""
+  },
+  {
+   "sentence": "The controversial exhibition drew a lot of attention from the local media.",
+   "form": "drew",
+   "lemma": "draw",
+   "lang": "en",
+   "meaning": "ilgi çekmek",
+   "translation": ""
+  },
+  {
+   "sentence": "Both teams played defensively, and they eventually drew the match.",
+   "form": "drew",
+   "lemma": "draw",
+   "lang": "en",
+   "meaning": "berabere kalmak",
+   "translation": ""
+  },
+  {
+   "sentence": "You can pick any flavor of ice cream you want from the menu.",
+   "form": "pick",
+   "lemma": "pick",
+   "lang": "en",
+   "meaning": "seçmek",
+   "translation": ""
+  },
+  {
+   "sentence": "We spent the whole afternoon picking fresh apples in the orchard.",
+   "form": "picking",
+   "lemma": "pick",
+   "lang": "en",
+   "meaning": "toplamak, koparmak",
+   "translation": ""
+  },
+  {
+   "sentence": "The skilled thief managed to pick the lock and enter the house unnoticed.",
+   "form": "pick",
+   "lemma": "pick",
+   "lang": "en",
+   "meaning": "maymuncukla açmak",
+   "translation": ""
+  },
+  {
+   "sentence": "He is always in a bad mood and tries to pick a fight with everyone.",
+   "form": "pick a fight",
+   "lemma": "pick",
+   "lang": "en",
+   "meaning": "kavga çıkarmak",
+   "translation": ""
+  },
+  {
+   "sentence": "Does this blinking green light mean that the machine is ready?",
+   "form": "mean",
+   "lemma": "mean",
+   "lang": "en",
+   "meaning": "anlamına gelmek",
+   "translation": ""
+  },
+  {
+   "sentence": "I didn't mean to offend you with my comments earlier.",
+   "form": "mean",
+   "lemma": "mean",
+   "lang": "en",
+   "meaning": "kastetmek, niyetlenmek",
+   "translation": ""
+  },
+  {
+   "sentence": "It was very mean of him not to help the old lady with her heavy bags.",
+   "form": "mean",
+   "lemma": "mean",
+   "lang": "en",
+   "meaning": "cimri, kaba",
+   "translation": ""
+  },
+  {
+   "sentence": "The mean temperature in this region during July is thirty degrees.",
+   "form": "mean",
+   "lemma": "mean",
+   "lang": "en",
+   "meaning": "ortalama",
+   "translation": ""
+  },
+  {
+   "sentence": "He threw the ball at the basket but missed completely.",
+   "form": "missed",
+   "lemma": "miss",
+   "lang": "en",
+   "meaning": "isabet ettirememek",
+   "translation": ""
+  },
+  {
+   "sentence": "Since I moved to the city, I really miss the quiet of the countryside.",
+   "form": "miss",
+   "lemma": "miss",
+   "lang": "en",
+   "meaning": "özlemek",
+   "translation": ""
+  },
+  {
+   "sentence": "Because of the terrible traffic jam, I missed the beginning of the movie.",
+   "form": "missed",
+   "lemma": "miss",
+   "lang": "en",
+   "meaning": "kaçırmak",
+   "translation": ""
+  },
+  {
+   "sentence": "The typo was so small that the proofreader completely missed it.",
+   "form": "missed",
+   "lemma": "miss",
+   "lang": "en",
+   "meaning": "gözden kaçırmak",
+   "translation": ""
+  },
+  {
+   "sentence": "The luxury restaurant charges extra for premium bread and butter.",
+   "form": "charges",
+   "lemma": "charge",
+   "lang": "en",
+   "meaning": "ücret talep etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "Please remind me to charge my phone before we leave for the trip.",
+   "form": "charge",
+   "lemma": "charge",
+   "lang": "en",
+   "meaning": "şarj etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "The local police charged the suspect with armed robbery yesterday.",
+   "form": "charged",
+   "lemma": "charge",
+   "lang": "en",
+   "meaning": "suçlamak",
+   "translation": ""
+  },
+  {
+   "sentence": "The angry bull suddenly charged at the matador in the arena.",
+   "form": "charged",
+   "lemma": "charge",
+   "lang": "en",
+   "meaning": "hücum etmek",
    "translation": ""
   }
  ],
@@ -20823,6 +21455,699 @@
    "pos": "verb",
    "meaning": "hafifletmek",
    "note": "kötü bir etkiyi yatıştırmak"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to hold, to accommodate",
+   "note": "kapasitesi yetmek"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to let in",
+   "note": "kabul etmek"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to capture, to conquer",
+   "note": "savaşarak ele geçirmek"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to deduct",
+   "note": "hesaptan/maaştan düşmek"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to catch (a cold/illness)",
+   "note": "şifayı kapmak"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to decrease, to drop",
+   "note": "fiyat, hız veya ısının inmesi"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to fall to (as a duty/share)",
+   "note": "sorumluluğun birine kalması"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to be located",
+   "note": "bir yönde yer almak"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to be deducted",
+   "note": "toplamdan eksilmek"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to become addicted/fond of",
+   "note": "birine/bir şeye aşırı sevgi duymak"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to sit",
+   "note": "ayakta durmamak"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to live, to reside",
+   "note": "bir evde/şehirde yaşamak"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to fit (clothes)",
+   "note": "bedenine tam gelmek"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to settle (building/ground)",
+   "note": "temelin sağlamlaşması"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to become established",
+   "note": "bir düzenin oturması"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to function, to operate",
+   "note": "sistemin düzenli yürümesi"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to embroider, to engrave",
+   "note": "ince desenler yapmak"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to process, to work on",
+   "note": "hammaddeyi ürüne çevirmek"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to penetrate, to affect deeply",
+   "note": "içine kadar girmek (soğuk/acı)"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to commit (a crime/sin)",
+   "note": "kötü bir eylemde bulunmak"
+  },
+  {
+   "word": "çalmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to ring, to knock",
+   "note": "uyarı veya çağrı sesi vermek"
+  },
+  {
+   "word": "çalmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to verge on (a color)",
+   "note": "hafiften o renge benzemek"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to tie, to fasten",
+   "note": "ip veya kordonla birleştirmek"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to connect, to link",
+   "note": "iki yeri veya hattı birleştirmek"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to win over, to captivate",
+   "note": "ilgi ve sevgisini kazanmak"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to conclude, to settle",
+   "note": "bir işi bitirmek"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "surface",
+   "note": "bir şeyin dış kısmı"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "cover, case",
+   "note": "yastık veya yorgan kılıfı"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "leader, head, chief",
+   "note": "bir grubun yöneticisi"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "beginning, start",
+   "note": "bir şeyin ilk kısmı"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "top, summit",
+   "note": "dağ veya tepenin en yüksek yeri"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "head (of cattle)",
+   "note": "büyükbaş hayvan sayarken kullanılan kelime"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "drawer, compartment",
+   "note": "dolap veya masadaki bölümler"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "spring (of water)",
+   "note": "suyun topraktan çıktığı yer"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "arch (of a bridge)",
+   "note": "köprü altındaki boşluk"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "evil eye, envy",
+   "note": "kötü niyetli bakış"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "dialect, accent",
+   "note": "yöresel konuşma tarzı"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "opening, entrance",
+   "note": "mağara veya kanyon girişi"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "edge (of a blade)",
+   "note": "bıçak veya baltanın kesen tarafı"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "stranger, others",
+   "note": "tanıdık olmayan kimseler"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "round, game",
+   "note": "kağıt veya masa oyunlarında bir tur"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "authority, possession",
+   "note": "birinin kontrolü altında olma"
+  },
+  {
+   "word": "tesadüf",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "coincidence, chance",
+   "note": "rastlantı"
+  },
+  {
+   "word": "verimli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "productive, efficient",
+   "note": "çok üreten veya iyi sonuç veren"
+  },
+  {
+   "word": "zahmet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "trouble, effort",
+   "note": "sıkıntı, yorgunluk"
+  },
+  {
+   "word": "itiraz etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to object, to protest",
+   "note": "kabul etmemek, karşı çıkmak"
+  },
+  {
+   "word": "makul",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "reasonable, sensible",
+   "note": "akla yatkın, mantıklı"
+  },
+  {
+   "word": "kaynak",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "source, resource",
+   "note": "bir şeyin çıktığı yer"
+  },
+  {
+   "word": "heves",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "enthusiasm, desire",
+   "note": "istek, arzu"
+  },
+  {
+   "word": "uyarmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to warn, to caution",
+   "note": "dikkatini çekmek, ikaz etmek"
+  },
+  {
+   "word": "telaş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "rush, panic, hurry",
+   "note": "acele ve heyecan"
+  },
+  {
+   "word": "güvence",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "guarantee, assurance",
+   "note": "teminat"
+  },
+  {
+   "word": "öncelik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "priority",
+   "note": "ilk sıraya alınma"
+  },
+  {
+   "word": "kasten",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "deliberately, on purpose",
+   "note": "bilerek, isteyerek"
+  },
+  {
+   "word": "tereddüt",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "hesitation",
+   "note": "kararsızlık, duraksama"
+  },
+  {
+   "word": "teşvik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "encouragement, incentive",
+   "note": "özendirme, destek"
+  },
+  {
+   "word": "katkı",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "contribution",
+   "note": "yardım, destek"
+  },
+  {
+   "word": "vazgeçilmez",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "indispensable",
+   "note": "onsuz yapılamayan"
+  },
+  {
+   "word": "kapsam",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "scope, extent",
+   "note": "içine aldığı sınır"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "içine almak, sığdırmak",
+   "note": "kapasitesi olmak"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "düzenlemek",
+   "note": "bir araya gelip etkinlik yapmak"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "bekletmek, korumak",
+   "note": "bir durumda tutmak"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "savunmak, iddia etmek",
+   "note": "bir fikri benimsemek"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "bulaştırmak",
+   "note": "virüs veya hastalık yaymak"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "içermek, risk taşımak",
+   "note": "beraberinde getirmek"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "satmak, bulundurmak",
+   "note": "dükkanda satıyor olmak"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çekmek (perde vb.)",
+   "note": "kendine doğru hareket ettirmek"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ilgi çekmek",
+   "note": "cezbetmek"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "berabere kalmak",
+   "note": "eşit sonuçlanmak"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "seçmek",
+   "note": "karar vermek"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "toplamak, koparmak",
+   "note": "meyve veya çiçek toplamak"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "maymuncukla açmak",
+   "note": "anahtarsız kilit açmak"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kavga çıkarmak",
+   "note": "bilerek tartışma başlatmak"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "anlamına gelmek",
+   "note": "ifade etmek"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kastetmek, niyetlenmek",
+   "note": "öyle demek istemek"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "cimri, kaba",
+   "note": "kötü niyetli"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ortalama",
+   "note": "matematiksel orta"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "isabet ettirememek",
+   "note": "vurup tutamamak"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kaçırmak",
+   "note": "vaktinde yetişememek"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "gözden kaçırmak",
+   "note": "dikkatsizlik sonucu atlamak"
+  },
+  {
+   "word": "charge",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ücret talep etmek",
+   "note": "fiyat istemek"
+  },
+  {
+   "word": "charge",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "hücum etmek",
+   "note": "hızla üzerine gitmek"
+  },
+  {
+   "word": "run out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "tükenmek",
+   "note": "elindeki kalmamak"
+  },
+  {
+   "word": "run out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "süresi dolmak",
+   "note": "geçerlilik zamanı bitmek"
+  },
+  {
+   "word": "rely on",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "güvenmek, bel bağlamak",
+   "note": "birinden destek beklemek"
+  },
+  {
+   "word": "figure out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çözmek, anlamak",
+   "note": "bir sorunun nedenini bulmak"
+  },
+  {
+   "word": "catch up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "arayı kapatmak, yetişmek",
+   "note": "geride kalanı telafi etmek"
+  },
+  {
+   "word": "look forward to",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dört gözle beklemek",
+   "note": "büyük bir heyecanla beklemek"
+  },
+  {
+   "word": "turn out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sonuçlanmak, ortaya çıkmak",
+   "note": "beklenenden farklı bitmek"
+  },
+  {
+   "word": "call off",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "iptal etmek",
+   "note": "vazgeçmek (etkinlik)"
+  },
+  {
+   "word": "take place",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "meydana gelmek, gerçekleşmek",
+   "note": "bir olayın olması"
+  },
+  {
+   "word": "make up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "uydurmak",
+   "note": "bahane veya yalan bulmak"
+  },
+  {
+   "word": "give up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "pes etmek, vazgeçmek",
+   "note": "bırakmak (alışkanlık/çaba)"
+  },
+  {
+   "word": "look into",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "araştırmak, incelemek",
+   "note": "detaylara inmek"
+  },
+  {
+   "word": "set up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kurmak, ayarlamak",
+   "note": "inşa veya organize etmek"
+  },
+  {
+   "word": "show up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "gelmek, ortaya çıkmak",
+   "note": "bir yerde belirmek (beklenmedik)"
+  },
+  {
+   "word": "work out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çözülmek, işe yaramak",
+   "note": "sonuca bağlamak"
+  },
+  {
+   "word": "turn into",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dönüşmek",
+   "note": "başka bir hal almak"
+  },
+  {
+   "word": "stand out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "öne çıkmak, dikkat çekmek",
+   "note": "diğerlerinden ayrılmak"
   }
  ],
  "examples": [
@@ -27793,6 +29118,966 @@
    "tr": "Yeni yazılım güncellemesi güvenlik risklerini hafifletmek için tasarlanmıştır.",
    "en": "The new software update is designed to mitigate security risks.",
    "level": "C1"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to buy, to purchase",
+   "tr": "Yeni eve taşınırken kendime rahat bir koltuk aldım.",
+   "en": "I bought myself a comfortable armchair when moving to the new house.",
+   "level": "A1"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to receive, to get",
+   "tr": "Dün kargoya verilen paketi bugün sabah aldım.",
+   "en": "I received the package this morning that was shipped yesterday.",
+   "level": "A2"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to hold, to accommodate",
+   "tr": "Bu geniş salon rahatlıkla yüz kişiyi alır.",
+   "en": "This spacious hall can easily accommodate a hundred people.",
+   "level": "B1"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to let in",
+   "tr": "Hava soğuyunca bahçedeki köpeği içeri aldık.",
+   "en": "When the weather got cold, we let the dog in from the yard.",
+   "level": "A2"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to capture, to conquer",
+   "tr": "Ordu, uzun süren bir kuşatmanın ardından kaleyi aldı.",
+   "en": "The army captured the castle after a long siege.",
+   "level": "B2"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to deduct",
+   "tr": "Banka, hesap işletim ücretini maaşımdan almış.",
+   "en": "The bank deducted the account maintenance fee from my salary.",
+   "level": "B1"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to catch (a cold/illness)",
+   "tr": "Soğuk havada ince giyinince fena halde soğuk almış.",
+   "en": "He caught a terrible cold after dressing lightly in cold weather.",
+   "level": "B1"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to fall, to drop",
+   "tr": "Sonbahar rüzgarıyla birlikte ağaçtaki sarı yapraklar yere düştü.",
+   "en": "With the autumn wind, the yellow leaves on the tree fell to the ground.",
+   "level": "A2"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to decrease, to drop",
+   "tr": "Yeni hasat dönemiyle birlikte pazardaki sebze fiyatları düştü.",
+   "en": "With the new harvest season, vegetable prices in the market decreased.",
+   "level": "B1"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to fall to (as a duty/share)",
+   "tr": "Bu zor projeyi zamanında bitirmek yine bizim ekibe düştü.",
+   "en": "Finishing this difficult project on time fell to our team again.",
+   "level": "B2"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to be located",
+   "tr": "Yeni yapılan hastane, şehrin tam kuzeyine düşüyor.",
+   "en": "The newly built hospital is located right in the north of the city.",
+   "level": "B1"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to be deducted",
+   "tr": "Maaşından kesilen vergiler hesabından otomatik olarak düştü.",
+   "en": "The taxes were automatically deducted from his account.",
+   "level": "B2"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to become addicted/fond of",
+   "tr": "Son zamanlarda tarih kitaplarına çok düştü, sürekli okuyor.",
+   "en": "Lately, he has become very fond of history books; he reads constantly.",
+   "level": "C1"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "meaning": "to sit",
+   "tr": "Yaşlı adam parktaki ahşap banka yavaşça oturdu.",
+   "en": "The old man sat slowly on the wooden bench in the park.",
+   "level": "A1"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "meaning": "to live, to reside",
+   "tr": "Çocukluğundan beri bu tarihi mahallede oturuyor.",
+   "en": "He has been living in this historic neighborhood since his childhood.",
+   "level": "A2"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "meaning": "to fit (clothes)",
+   "tr": "Terzinin diktiği yeni takım elbise üzerine tam oturdu.",
+   "en": "The new suit the tailor made fit him perfectly.",
+   "level": "B1"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "meaning": "to settle (building/ground)",
+   "tr": "Yeni yapılan bina birkaç yıl içinde ancak oturur.",
+   "en": "A newly constructed building only settles in a few years.",
+   "level": "B2"
+  },
+  {
+   "word": "oturmak",
+   "lang": "tr",
+   "meaning": "to become established",
+   "tr": "Şirketteki yeni çalışma düzeni nihayet yerine oturdu.",
+   "en": "The new working order in the company has finally become established.",
+   "level": "B2"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "meaning": "to function, to operate",
+   "tr": "Şehirdeki ulaşım ağı saat gibi kusursuz işliyor.",
+   "en": "The transportation network in the city operates flawlessly like a clock.",
+   "level": "B1"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "meaning": "to embroider, to engrave",
+   "tr": "Genç kız, çeyizindeki örtülere renkli iplerle çiçek motifleri işledi.",
+   "en": "The young girl embroidered flower motifs with colorful threads on the covers in her dowry.",
+   "level": "B2"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "meaning": "to process, to work on",
+   "tr": "Fabrika her gün tonlarca pamuğu işleyerek iplik üretiyor.",
+   "en": "The factory produces yarn by processing tons of cotton every day.",
+   "level": "B2"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "meaning": "to penetrate, to affect deeply",
+   "tr": "Kışın dondurucu soğuğu ince paltosundan kemiklerine işledi.",
+   "en": "The freezing cold of winter penetrated through his thin coat to his bones.",
+   "level": "C1"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "meaning": "to commit (a crime/sin)",
+   "tr": "O kadar dürüsttür ki hayatı boyunca tek bir suç işlememiştir.",
+   "en": "He is so honest that he has never committed a single crime in his life.",
+   "level": "B2"
+  },
+  {
+   "word": "çalmak",
+   "lang": "tr",
+   "meaning": "to steal",
+   "tr": "Hırsızlar gece yarısı müzeye girip değerli tabloları çaldılar.",
+   "en": "Thieves broke into the museum at midnight and stole valuable paintings.",
+   "level": "A2"
+  },
+  {
+   "word": "çalmak",
+   "lang": "tr",
+   "meaning": "to play (an instrument)",
+   "tr": "Ünlü piyanist sahnede en zor klasik eserleri ustalıkla çaldı.",
+   "en": "The famous pianist masterfully played the most difficult classical pieces on stage.",
+   "level": "A2"
+  },
+  {
+   "word": "çalmak",
+   "lang": "tr",
+   "meaning": "to ring, to knock",
+   "tr": "Sabahın köründe kapı art arda ve şiddetle çaldı.",
+   "en": "Someone knocked on the door again and again at the crack of dawn.",
+   "level": "A2"
+  },
+  {
+   "word": "çalmak",
+   "lang": "tr",
+   "meaning": "to verge on (a color)",
+   "tr": "Aldığı yeni elbisenin rengi hafiften maviye çalıyor.",
+   "en": "The color of the new dress she bought slightly verges on blue.",
+   "level": "C1"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "meaning": "to tie, to fasten",
+   "tr": "Düşmemek için ayakkabısının bağcıklarını sıkıca bağladı.",
+   "en": "He tied his shoelaces tightly so as not to fall.",
+   "level": "A1"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "meaning": "to connect, to link",
+   "tr": "Yeni kurulan fiber optik hat, adayı ana karaya bağladı.",
+   "en": "The newly established fiber optic line connected the island to the mainland.",
+   "level": "B1"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "meaning": "to win over, to captivate",
+   "tr": "Samimi ve dürüst tavırlarıyla tüm müşterileri kendine bağladı.",
+   "en": "She won over all the customers with her sincere and honest attitude.",
+   "level": "C1"
+  },
+  {
+   "word": "bağlamak",
+   "lang": "tr",
+   "meaning": "to conclude, to settle",
+   "tr": "Uzun süren müzakerelerin ardından konuyu nihayet bir karara bağladık.",
+   "en": "After long negotiations, we finally settled the matter with a decision.",
+   "level": "B2"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "meaning": "face",
+   "tr": "Soğuk suyla yıkayınca yorgun yüzüne biraz renk geldi.",
+   "en": "When she washed it with cold water, some color came to her tired face.",
+   "level": "A1"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "meaning": "surface",
+   "tr": "Gölün yüzünde yüzen sonbahar yapraklarını sessizce izledik.",
+   "en": "We silently watched the autumn leaves floating on the surface of the lake.",
+   "level": "B1"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "meaning": "hundred",
+   "tr": "Kütüphaneye bu ay tam yüz yeni roman bağışlandı.",
+   "en": "Exactly one hundred new novels were donated to the library this month.",
+   "level": "A1"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "meaning": "cover, case",
+   "tr": "Bahar temizliğinde yastıkların yüzünü değiştirip yıkadı.",
+   "en": "During spring cleaning, she changed the cover of the pillows and washed them.",
+   "level": "B2"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "meaning": "head",
+   "tr": "Şiddetli rüzgardan korunmak için başına yün bir bere taktı.",
+   "en": "He put a woolen beanie on his head to protect himself from the fierce wind.",
+   "level": "A1"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "meaning": "leader, head, chief",
+   "tr": "Ekibin başında oldukça tecrübeli ve disiplinli bir mühendis var.",
+   "en": "There is a highly experienced and disciplined engineer at the head of the team.",
+   "level": "B1"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "meaning": "beginning, start",
+   "tr": "Kitabın başından sonuna kadar merak uyandıran bir olay örgüsü var.",
+   "en": "There is an intriguing plot from the beginning to the end of the book.",
+   "level": "A2"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "meaning": "top, summit",
+   "tr": "Dağın başında yılın her mevsimi kar eksik olmaz.",
+   "en": "Snow is never missing at the top of the mountain in any season of the year.",
+   "level": "B1"
+  },
+  {
+   "word": "baş",
+   "lang": "tr",
+   "meaning": "head (of cattle)",
+   "tr": "Çiftlikte şu an elli baş koyun ve yirmi inek bulunuyor.",
+   "en": "There are currently fifty head of sheep and twenty cows on the farm.",
+   "level": "B2"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "eye",
+   "tr": "Bütün gün bilgisayar ekranına bakmaktan gözleri çok yorulmuştu.",
+   "en": "His eyes were very tired from looking at the computer screen all day.",
+   "level": "A1"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "drawer, compartment",
+   "tr": "Önemli evrakları çalışma masasının en alt gözünde saklıyor.",
+   "en": "He keeps important documents in the bottom drawer of his desk.",
+   "level": "A2"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "spring (of water)",
+   "tr": "Dağın eteklerinde buz gibi su fışkıran bir su gözü bulduk.",
+   "en": "We found a spring of water gushing ice-cold water at the foot of the mountain.",
+   "level": "B2"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "arch (of a bridge)",
+   "tr": "Nehrin üzerindeki beş gözlü tarihi taş köprü hala ayakta.",
+   "en": "The historic five-arched stone bridge over the river is still standing.",
+   "level": "C1"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "evil eye, envy",
+   "tr": "Yeni arabasını gören komşuların gözü değmiş olmalı ki kaza yaptı.",
+   "en": "The evil eye of the neighbors who saw his new car must have struck him, as he had an accident.",
+   "level": "C1"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "meaning": "mouth",
+   "tr": "Çok sıcak çayı aceleyle içince ağzı yanmış, hemen su içmişti.",
+   "en": "When he hastily drank the very hot tea, his mouth burned and he immediately drank water.",
+   "level": "A1"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "meaning": "dialect, accent",
+   "tr": "Karadeniz yöresine özgü o tatlı ağızla konuşmayı çok seviyor.",
+   "en": "He loves speaking with that sweet dialect specific to the Black Sea region.",
+   "level": "B2"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "meaning": "opening, entrance",
+   "tr": "Mağaranın ağzı o kadar dardı ki içeri girmekte çok zorlandılar.",
+   "en": "The entrance of the cave was so narrow that they had great difficulty getting in.",
+   "level": "B1"
+  },
+  {
+   "word": "ağız",
+   "lang": "tr",
+   "meaning": "edge (of a blade)",
+   "tr": "Bıçağın ağzı iyice köreldiği için domatesleri bile kesemiyordu.",
+   "en": "Because the edge of the knife was completely blunted, it couldn't even cut the tomatoes.",
+   "level": "C1"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "meaning": "hand",
+   "tr": "Soğuktan buz gibi olan ellerini şöminenin ateşinde ısıttı.",
+   "en": "She warmed her hands, which were ice-cold from the freezing weather, by the fire of the fireplace.",
+   "level": "A1"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "meaning": "stranger, others",
+   "tr": "Elin ne dediğini umursamadan kendi inandığı yolda ilerledi.",
+   "en": "She proceeded on the path she believed in without caring what strangers said.",
+   "level": "B2"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "meaning": "round, game",
+   "tr": "Dün akşam arkadaşlarla bir el daha satranç oynamaya karar verdik.",
+   "en": "Last night we decided to play one more round of chess with friends.",
+   "level": "A2"
+  },
+  {
+   "word": "el",
+   "lang": "tr",
+   "meaning": "authority, possession",
+   "tr": "Bu değerli arazi geçen yıl devletin eline geçti.",
+   "en": "This valuable land passed into the possession of the state last year.",
+   "level": "B2"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "tutmak, kavramak",
+   "tr": "Bebek uyurken onu kollarında nazikçe tuttu.",
+   "en": "She held the baby gently in her arms while he slept.",
+   "level": "A1"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "içine almak, sığdırmak",
+   "tr": "Yeni konferans salonu bin kişiye kadar insan alabilir.",
+   "en": "The new conference hall can hold up to a thousand people.",
+   "level": "B1"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "düzenlemek",
+   "tr": "Projeyi tartışmak için yarın sabah kısa bir toplantı düzenleyeceğiz.",
+   "en": "We will hold a brief meeting tomorrow morning to discuss the project.",
+   "level": "A2"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "bekletmek, korumak",
+   "tr": "Lütfen arkanızdaki yolcular için kapıyı açık tutun.",
+   "en": "Please hold the door open for the passengers behind you.",
+   "level": "A2"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "savunmak, iddia etmek",
+   "tr": "Birçok bilim insanı iklim değişikliğinin hızla ivmelendiğini savunuyor.",
+   "en": "Many scientists hold that climate change is accelerating rapidly.",
+   "level": "C1"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "meaning": "taşımak",
+   "tr": "Ağır kutuları üçüncü kata kadar tek başına taşıdı.",
+   "en": "He carried the heavy boxes up to the third floor by himself.",
+   "level": "A1"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "meaning": "bulaştırmak",
+   "tr": "Sivrisinekler tropikal bölgelerde sıtma gibi hastalıkları taşır.",
+   "en": "Mosquitoes carry diseases like malaria in tropical regions.",
+   "level": "B2"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "meaning": "içermek, risk taşımak",
+   "tr": "Bu tür bir yatırım önemli miktarda finansal risk taşır.",
+   "en": "This kind of investment carries a significant amount of financial risk.",
+   "level": "C1"
+  },
+  {
+   "word": "carry",
+   "lang": "en",
+   "meaning": "satmak, bulundurmak",
+   "tr": "Maalesef yerel kitapçımız artık o belirli dergiyi satmıyor.",
+   "en": "Unfortunately, our local bookstore doesn't carry that specific magazine anymore.",
+   "level": "B2"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "meaning": "çizmek",
+   "tr": "Küçük çocuk bir ev ve ağacın çok güzel bir resmini çizdi.",
+   "en": "The little boy drew a beautiful picture of a house and a tree.",
+   "level": "A1"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "meaning": "çekmek (perde vb.)",
+   "tr": "Parlak sabah güneşini engellemek için perdeleri çekti.",
+   "en": "She drew the curtains to block out the bright morning sun.",
+   "level": "B1"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "meaning": "ilgi çekmek",
+   "tr": "Tartışmalı sergi yerel medyadan büyük ilgi çekti.",
+   "en": "The controversial exhibition drew a lot of attention from the local media.",
+   "level": "B2"
+  },
+  {
+   "word": "draw",
+   "lang": "en",
+   "meaning": "berabere kalmak",
+   "tr": "Her iki takım da savunma ağırlıklı oynadı ve maç sonunda berabere bitti.",
+   "en": "Both teams played defensively, and they eventually drew the match.",
+   "level": "B2"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "meaning": "seçmek",
+   "tr": "Menüden istediğin herhangi bir dondurma aromasını seçebilirsin.",
+   "en": "You can pick any flavor of ice cream you want from the menu.",
+   "level": "A1"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "meaning": "toplamak, koparmak",
+   "tr": "Bütün öğleden sonrayı meyve bahçesinde taze elma toplayarak geçirdik.",
+   "en": "We spent the whole afternoon picking fresh apples in the orchard.",
+   "level": "B1"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "meaning": "maymuncukla açmak",
+   "tr": "Yetenekli hırsız kilidi maymuncukla açmayı ve eve fark edilmeden girmeyi başardı.",
+   "en": "The skilled thief managed to pick the lock and enter the house unnoticed.",
+   "level": "C1"
+  },
+  {
+   "word": "pick",
+   "lang": "en",
+   "meaning": "kavga çıkarmak",
+   "tr": "Her zaman kötü bir ruh halindedir ve herkesle kavga çıkarmaya çalışır.",
+   "en": "He is always in a bad mood and tries to pick a fight with everyone.",
+   "level": "B2"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "meaning": "anlamına gelmek",
+   "tr": "Bu yanıp sönen yeşil ışık makinenin hazır olduğu anlamına mı geliyor?",
+   "en": "Does this blinking green light mean that the machine is ready?",
+   "level": "A1"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "meaning": "kastetmek, niyetlenmek",
+   "tr": "Daha önceki yorumlarımla seni gücendirmeyi kastetmemiştim.",
+   "en": "I didn't mean to offend you with my comments earlier.",
+   "level": "B1"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "meaning": "cimri, kaba",
+   "tr": "Yaşlı kadına ağır çantalarıyla yardım etmemesi onun adına çok kaba bir davranıştı.",
+   "en": "It was very mean of him not to help the old lady with her heavy bags.",
+   "level": "B1"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "meaning": "ortalama",
+   "tr": "Bu bölgede temmuz ayı boyunca ortalama sıcaklık otuz derecedir.",
+   "en": "The mean temperature in this region during July is thirty degrees.",
+   "level": "B2"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "meaning": "isabet ettirememek",
+   "tr": "Topu potaya fırlattı ama tamamen isabet ettiremedi.",
+   "en": "He threw the ball at the basket but missed completely.",
+   "level": "A2"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "meaning": "özlemek",
+   "tr": "Şehre taşındığımdan beri kırsalın sessizliğini gerçekten çok özlüyorum.",
+   "en": "Since I moved to the city, I really miss the quiet of the countryside.",
+   "level": "A1"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "meaning": "kaçırmak",
+   "tr": "Korkunç trafik sıkışıklığı yüzünden filmin başını kaçırdım.",
+   "en": "Because of the terrible traffic jam, I missed the beginning of the movie.",
+   "level": "A2"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "meaning": "gözden kaçırmak",
+   "tr": "Yazım hatası o kadar küçüktü ki redaktör onu tamamen gözden kaçırdı.",
+   "en": "The typo was so small that the proofreader completely missed it.",
+   "level": "B2"
+  },
+  {
+   "word": "charge",
+   "lang": "en",
+   "meaning": "ücret talep etmek",
+   "tr": "Lüks restoran birinci sınıf ekmek ve tereyağı için ekstra ücret talep ediyor.",
+   "en": "The luxury restaurant charges extra for premium bread and butter.",
+   "level": "B1"
+  },
+  {
+   "word": "charge",
+   "lang": "en",
+   "meaning": "şarj etmek",
+   "tr": "Lütfen yola çıkmadan önce telefonumu şarj etmemi hatırlat.",
+   "en": "Please remind me to charge my phone before we leave for the trip.",
+   "level": "A2"
+  },
+  {
+   "word": "charge",
+   "lang": "en",
+   "meaning": "suçlamak",
+   "tr": "Yerel polis şüpheliyi dün silahlı soygundan resmen suçladı.",
+   "en": "The local police charged the suspect with armed robbery yesterday.",
+   "level": "C1"
+  },
+  {
+   "word": "charge",
+   "lang": "en",
+   "meaning": "hücum etmek",
+   "tr": "Kızgın boğa arenada aniden matadora hücum etti.",
+   "en": "The angry bull suddenly charged at the matador in the arena.",
+   "level": "C1"
+  },
+  {
+   "word": "run out",
+   "lang": "en",
+   "meaning": "tükenmek",
+   "tr": "Sütümüz tükendi, bu yüzden markete gideceğim.",
+   "en": "We have run out of milk, so I'll go to the grocery store.",
+   "level": "B1"
+  },
+  {
+   "word": "run out",
+   "lang": "en",
+   "meaning": "süresi dolmak",
+   "tr": "Pasaportunun süresi gelecek ay dolacak, bu yüzden yenilemesi gerekiyor.",
+   "en": "His passport will run out next month, so he needs to renew it.",
+   "level": "B2"
+  },
+  {
+   "word": "müsait",
+   "lang": "tr",
+   "meaning": "available, free",
+   "tr": "Yarın öğleden sonra toplantı yapmak için müsait misiniz?",
+   "en": "Are you available for a meeting tomorrow afternoon?",
+   "level": "B2"
+  },
+  {
+   "word": "tesadüf",
+   "lang": "tr",
+   "meaning": "coincidence, chance",
+   "tr": "Eski sınıf arkadaşımla aynı uçakta karşılaşmamız büyük bir tesadüftü.",
+   "en": "Meeting my old classmate on the same flight was a huge coincidence.",
+   "level": "B2"
+  },
+  {
+   "word": "verimli",
+   "lang": "tr",
+   "meaning": "productive, efficient",
+   "tr": "Yeni çalışma düzenimiz sayesinde çok daha verimli bir hafta geçirdik.",
+   "en": "Thanks to our new working schedule, we had a much more productive week.",
+   "level": "B2"
+  },
+  {
+   "word": "zahmet",
+   "lang": "tr",
+   "meaning": "trouble, effort",
+   "tr": "Bu kadar ağır paketleri taşıdığınız için size çok zahmet verdik.",
+   "en": "We put you to a lot of trouble by having you carry such heavy packages.",
+   "level": "B2"
+  },
+  {
+   "word": "itiraz etmek",
+   "lang": "tr",
+   "meaning": "to object, to protest",
+   "tr": "Avukat, mahkemede sunulan kanıtlara hemen itiraz etti.",
+   "en": "The lawyer immediately objected to the evidence presented in court.",
+   "level": "B2"
+  },
+  {
+   "word": "makul",
+   "lang": "tr",
+   "meaning": "reasonable, sensible",
+   "tr": "Bence sundukları fiyat, piyasa koşullarına göre oldukça makul.",
+   "en": "I think the price they offered is quite reasonable according to market conditions.",
+   "level": "B2"
+  },
+  {
+   "word": "kaynak",
+   "lang": "tr",
+   "meaning": "source, resource",
+   "tr": "İnternet, doğru kullanıldığında bilgi için harika bir kaynaktır.",
+   "en": "The internet is a great resource for information when used correctly.",
+   "level": "B2"
+  },
+  {
+   "word": "heves",
+   "lang": "tr",
+   "meaning": "enthusiasm, desire",
+   "tr": "Genç sporcunun başarmak için içindeki o büyük heves hiç sönmedi.",
+   "en": "The young athlete's great enthusiasm to succeed never faded.",
+   "level": "B2"
+  },
+  {
+   "word": "uyarmak",
+   "lang": "tr",
+   "meaning": "to warn, to caution",
+   "tr": "Güvenlik görevlisi, insanları çizgiyi geçmemeleri konusunda uyardı.",
+   "en": "The security guard warned the people not to cross the line.",
+   "level": "B2"
+  },
+  {
+   "word": "telaş",
+   "lang": "tr",
+   "meaning": "rush, panic, hurry",
+   "tr": "Sabah işe geç kalınca evde büyük bir telaş yaşandı.",
+   "en": "When he was late for work in the morning, there was a big panic in the house.",
+   "level": "B2"
+  },
+  {
+   "word": "güvence",
+   "lang": "tr",
+   "meaning": "guarantee, assurance",
+   "tr": "Müdür, projenin zamanında biteceğine dair bize güvence verdi.",
+   "en": "The manager gave us an assurance that the project would be finished on time.",
+   "level": "B2"
+  },
+  {
+   "word": "öncelik",
+   "lang": "tr",
+   "meaning": "priority",
+   "tr": "Şirketimizin bu yılki en büyük önceliği müşteri memnuniyetidir.",
+   "en": "Our company's top priority this year is customer satisfaction.",
+   "level": "B2"
+  },
+  {
+   "word": "kasten",
+   "lang": "tr",
+   "meaning": "deliberately, on purpose",
+   "tr": "Hakem, oyuncunun rakibine kasten faul yaptığını söyledi.",
+   "en": "The referee said that the player deliberately fouled his opponent.",
+   "level": "B2"
+  },
+  {
+   "word": "tereddüt",
+   "lang": "tr",
+   "meaning": "hesitation",
+   "tr": "Soruyu duyunca hiç tereddüt etmeden doğru cevabı verdi.",
+   "en": "When she heard the question, she gave the correct answer without any hesitation.",
+   "level": "B2"
+  },
+  {
+   "word": "teşvik",
+   "lang": "tr",
+   "meaning": "encouragement, incentive",
+   "tr": "Hükümet, çiftçilere yerli üretim yapmaları için maddi teşvik veriyor.",
+   "en": "The government gives financial incentives to farmers to produce locally.",
+   "level": "B2"
+  },
+  {
+   "word": "katkı",
+   "lang": "tr",
+   "meaning": "contribution",
+   "tr": "Bilim insanının bu buluşla insanlığa yaptığı katkı unutulmaz.",
+   "en": "The scientist's contribution to humanity with this invention is unforgettable.",
+   "level": "B2"
+  },
+  {
+   "word": "vazgeçilmez",
+   "lang": "tr",
+   "meaning": "indispensable",
+   "tr": "Akıllı telefonlar artık modern hayatın vazgeçilmez bir parçası oldu.",
+   "en": "Smartphones have now become an indispensable part of modern life.",
+   "level": "B2"
+  },
+  {
+   "word": "kapsam",
+   "lang": "tr",
+   "meaning": "scope, extent",
+   "tr": "Yeni yasanın kapsamı, küçük işletmeleri de içine alacak şekilde genişletildi.",
+   "en": "The scope of the new law was expanded to include small businesses as well.",
+   "level": "B2"
+  },
+  {
+   "word": "rely on",
+   "lang": "en",
+   "meaning": "güvenmek, bel bağlamak",
+   "tr": "İşi zamanında bitirmesi konusunda ona her zaman güvenebilirsiniz.",
+   "en": "You can always rely on him to finish the work on time.",
+   "level": "B2"
+  },
+  {
+   "word": "figure out",
+   "lang": "en",
+   "meaning": "çözmek, anlamak",
+   "tr": "Bu yeni yazılımı nasıl kullanacağımı çözmek biraz zamanımı aldı.",
+   "en": "It took me a while to figure out how to use this new software.",
+   "level": "B2"
+  },
+  {
+   "word": "catch up",
+   "lang": "en",
+   "meaning": "arayı kapatmak, yetişmek",
+   "tr": "İki hafta okul kaçırdım, bu yüzden ödevlerimde arayı kapatmam gerekiyor.",
+   "en": "I missed two weeks of school, so I need to catch up on my homework.",
+   "level": "B2"
+  },
+  {
+   "word": "look forward to",
+   "lang": "en",
+   "meaning": "dört gözle beklemek",
+   "tr": "Sizi yarın partide görmeyi gerçekten dört gözle bekliyoruz.",
+   "en": "We are really looking forward to seeing you at the party tomorrow.",
+   "level": "B2"
+  },
+  {
+   "word": "turn out",
+   "lang": "en",
+   "meaning": "sonuçlanmak, ortaya çıkmak",
+   "tr": "Film beklediğimden çok daha heyecanlı çıktı.",
+   "en": "The movie turned out to be much more exciting than I had expected.",
+   "level": "B2"
+  },
+  {
+   "word": "put off",
+   "lang": "en",
+   "meaning": "ertelemek",
+   "tr": "Müdür seyahatinden dönene kadar toplantıyı ertelemeye karar verdiler.",
+   "en": "They decided to put off the meeting until the manager returns from his trip.",
+   "level": "B2"
+  },
+  {
+   "word": "call off",
+   "lang": "en",
+   "meaning": "iptal etmek",
+   "tr": "Organizatörler şiddetli fırtına nedeniyle konseri iptal etmek zorunda kaldı.",
+   "en": "The organizers had to call off the concert due to the heavy thunderstorm.",
+   "level": "B2"
+  },
+  {
+   "word": "take place",
+   "lang": "en",
+   "meaning": "meydana gelmek, gerçekleşmek",
+   "tr": "Yıllık müzik festivali gelecek hafta merkez parkta gerçekleşecek.",
+   "en": "The annual music festival will take place in the central park next week.",
+   "level": "B2"
+  },
+  {
+   "word": "make up",
+   "lang": "en",
+   "meaning": "uydurmak",
+   "tr": "İşe neden geç kaldığına dair tamamen bir hikaye uydurdu.",
+   "en": "She completely made up a story about why she was late for work.",
+   "level": "B2"
+  },
+  {
+   "word": "give up",
+   "lang": "en",
+   "meaning": "pes etmek, vazgeçmek",
+   "tr": "Projenin bitirilmesi imkansız görünse bile o pes etmeyi reddetti.",
+   "en": "He refused to give up, even when the project seemed impossible to finish.",
+   "level": "B2"
+  },
+  {
+   "word": "look into",
+   "lang": "en",
+   "meaning": "araştırmak, incelemek",
+   "tr": "Polis, belgelerin gizemli bir şekilde kaybolmasını araştıracağına söz verdi.",
+   "en": "The police promised to look into the mysterious disappearance of the documents.",
+   "level": "B2"
+  },
+  {
+   "word": "set up",
+   "lang": "en",
+   "meaning": "kurmak, ayarlamak",
+   "tr": "Bilgi işlem departmanı yarın ofise yeni bilgisayarları kuracak.",
+   "en": "The IT department will set up the new computers in the office tomorrow.",
+   "level": "B2"
+  },
+  {
+   "word": "show up",
+   "lang": "en",
+   "meaning": "gelmek, ortaya çıkmak",
+   "tr": "Bir saat bekledik ama o restorana gelmedi.",
+   "en": "We waited for an hour, but he didn't show up at the restaurant.",
+   "level": "B2"
+  },
+  {
+   "word": "work out",
+   "lang": "en",
+   "meaning": "çözülmek, işe yaramak",
+   "tr": "Seyahat planları için endişelenme; her şey mükemmel bir şekilde yoluna girecek.",
+   "en": "Don't worry about the travel plans; everything will work out perfectly.",
+   "level": "B2"
+  },
+  {
+   "word": "turn into",
+   "lang": "en",
+   "meaning": "dönüşmek",
+   "tr": "Küçük bir tartışma olarak başlayan şey devasa bir kavgaya dönüştü.",
+   "en": "What started as a small argument turned into a massive fight.",
+   "level": "B2"
+  },
+  {
+   "word": "pass out",
+   "lang": "en",
+   "meaning": "bayılmak, kendinden geçmek",
+   "tr": "Kalabalık odada hava o kadar sıcaktı ki misafirlerden biri bayıldı.",
+   "en": "It was so hot in the crowded room that one of the guests passed out.",
+   "level": "B2"
+  },
+  {
+   "word": "bring up",
+   "lang": "en",
+   "meaning": "gündeme getirmek, bahsetmek",
+   "tr": "Bütçe tartışmamız sırasında çok ilginç bir noktayı gündeme getirdi.",
+   "en": "He brought up a very interesting point during our budget discussion.",
+   "level": "B2"
+  },
+  {
+   "word": "stand out",
+   "lang": "en",
+   "meaning": "öne çıkmak, dikkat çekmek",
+   "tr": "Parlak sarı paltosu, karanlık kış kalabalığında onun öne çıkmasını sağladı.",
+   "en": "Her bright yellow coat made her stand out in the dark winter crowd.",
+   "level": "B2"
   }
  ],
  "phrases": [
@@ -52065,6 +54350,2175 @@
    "meaning": "deneyi tekrarlamak",
    "ex": "Another laboratory replicated the experiment using fresh samples.",
    "ex_tr": "Başka bir laboratuvar deneyi yeni numunelerle tekrarladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "run out",
+   "lang": "en",
+   "meaning": "tükenmek",
+   "ex": "We have run out of milk, so I'll go to the grocery store.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "run out",
+   "lang": "en",
+   "meaning": "süresi dolmak",
+   "ex": "His passport will run out next month, so he needs to renew it.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "burnundan getirmek",
+   "lang": "tr",
+   "meaning": "to make someone's life a misery, to embitter",
+   "ex": "Sürekli şikayet ederek o güzel tatili hepimizin burnundan getirdi.",
+   "ex_tr": "By constantly complaining, he made that beautiful vacation a misery for all of us."
+  },
+  {
+   "phrase": "ipe un sermek",
+   "lang": "tr",
+   "meaning": "to drag one's feet, to stall, to make excuses",
+   "ex": "Bu işi yapmamak için sabahtan beri ipe un seriyor, sürekli mazeret üretiyor.",
+   "ex_tr": "He has been dragging his feet since morning to avoid doing this job, constantly making excuses."
+  },
+  {
+   "phrase": "kulak asmamak",
+   "lang": "tr",
+   "meaning": "to turn a deaf ear to, to pay no attention",
+   "ex": "Doktorun uyarılarına hiç kulak asmadı ve sağlığını daha da tehlikeye attı.",
+   "ex_tr": "He paid no attention to the doctor's warnings and put his health in even more danger."
+  },
+  {
+   "phrase": "göze girmek",
+   "lang": "tr",
+   "meaning": "to get in someone's good graces, to impress",
+   "ex": "Patronun gözüne girmek için mesai saatinden sonra bile ofiste çalışıyordu.",
+   "ex_tr": "He was working in the office even after hours to get in the boss's good graces."
+  },
+  {
+   "phrase": "yüzünü ağartmak",
+   "lang": "tr",
+   "meaning": "to do someone proud, to make proud",
+   "ex": "Sınavı birincilikle kazanarak tüm ailesinin yüzünü ağarttı.",
+   "ex_tr": "He made his entire family proud by passing the exam in first place."
+  },
+  {
+   "phrase": "gözü yükseklerde olmak",
+   "lang": "tr",
+   "meaning": "to aim high, to be overly ambitious",
+   "ex": "Onun her zaman gözü yükseklerdedir, ufak başarılarla asla yetinmez.",
+   "ex_tr": "He always aims high; he is never satisfied with small successes."
+  },
+  {
+   "phrase": "nabza göre şerbet vermek",
+   "lang": "tr",
+   "meaning": "to play to the gallery, to tell people what they want to hear",
+   "ex": "İyi bir politikacı her zaman kime nasıl konuşacağını bilir, nabza göre şerbet verir.",
+   "ex_tr": "A good politician always knows how to speak to whom; he tells people what they want to hear."
+  },
+  {
+   "phrase": "suçu üstlenmek",
+   "lang": "tr",
+   "meaning": "to take the rap, to take the blame",
+   "ex": "Kardeşini korumak için kırılan vazonun suçunu o üstlendi.",
+   "ex_tr": "To protect her brother, she took the blame for the broken vase."
+  },
+  {
+   "phrase": "sözünden dönmek",
+   "lang": "tr",
+   "meaning": "to go back on one's word, to renege",
+   "ex": "Anlaşmayı imzaladıktan sonra sözünden dönmesi hepimizi çok kızdırdı.",
+   "ex_tr": "His going back on his word after signing the agreement made us all very angry."
+  },
+  {
+   "phrase": "taşı gediğine koymak",
+   "lang": "tr",
+   "meaning": "to hit the nail on the head, to make a spot-on remark",
+   "ex": "Tartışmanın tam ortasında harika bir cevap verip taşı gediğine koydu.",
+   "ex_tr": "Right in the middle of the argument, he gave a wonderful answer and hit the nail on the head."
+  },
+  {
+   "phrase": "vaktini boşa harcamak",
+   "lang": "tr",
+   "meaning": "to twiddle one's thumbs, to waste time",
+   "ex": "Televizyon karşısında vaktini boşa harcamak yerine bir kitap okuyabilirdi.",
+   "ex_tr": "Instead of wasting his time in front of the television, he could have read a book."
+  },
+  {
+   "phrase": "yelkenleri suya indirmek",
+   "lang": "tr",
+   "meaning": "to climb down, to give in, to surrender",
+   "ex": "Çok inatçıydı ama gerçekleri görünce hemen yelkenleri suya indirdi.",
+   "ex_tr": "He was very stubborn, but when he saw the facts, he quickly gave in."
+  },
+  {
+   "phrase": "zıvanadan çıkmak",
+   "lang": "tr",
+   "meaning": "to go crazy, to hit the roof",
+   "ex": "Bütün gün süren o korkunç gürültü sonunda onu zıvanadan çıkardı.",
+   "ex_tr": "That terrible noise that lasted all day finally made him hit the roof."
+  },
+  {
+   "phrase": "faint smile",
+   "lang": "en",
+   "meaning": "hafif bir gülümseme",
+   "ex": "A faint smile crossed her face when she recognized the song.",
+   "ex_tr": "Şarkıyı tanıyınca yüzünde hafif bir gülümseme belirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "forced smile",
+   "lang": "en",
+   "meaning": "zoraki bir gülümseme",
+   "ex": "He gave the guests a forced smile and opened the door.",
+   "ex_tr": "Konuklara zoraki bir gülümseme gösterip kapıyı açtı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "warm smile",
+   "lang": "en",
+   "meaning": "içten bir gülümseme",
+   "ex": "Her warm smile made the nervous child feel welcome.",
+   "ex_tr": "İçten gülümsemesi gergin çocuğun kendini hoş karşılanmış hissetmesini sağladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "crooked smile",
+   "lang": "en",
+   "meaning": "çarpık bir gülümseme",
+   "ex": "A crooked smile appeared on his face as he read the note.",
+   "ex_tr": "Notu okurken yüzünde çarpık bir gülümseme belirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "knowing smile",
+   "lang": "en",
+   "meaning": "anlamlı bir gülümseme",
+   "ex": "Maya exchanged a knowing smile with her sister.",
+   "ex_tr": "Maya kız kardeşiyle anlamlı bir gülümseme paylaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "nervous laugh",
+   "lang": "en",
+   "meaning": "gergin bir gülüş",
+   "ex": "He let out a nervous laugh when nobody answered.",
+   "ex_tr": "Kimse yanıt vermeyince gergin bir kahkaha attı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter laugh",
+   "lang": "en",
+   "meaning": "acı bir gülüş",
+   "ex": "She gave a bitter laugh at the thought of his promise.",
+   "ex_tr": "Onun sözünü hatırlayınca acı acı güldü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shaky voice",
+   "lang": "en",
+   "meaning": "titrek bir ses",
+   "ex": "Her shaky voice betrayed how frightened she was.",
+   "ex_tr": "Titrek sesi ne kadar korktuğunu ele verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "trembling voice",
+   "lang": "en",
+   "meaning": "titreyen bir ses",
+   "ex": "He spoke in a trembling voice as he described the accident.",
+   "ex_tr": "Kazayı anlatırken sesi titriyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hushed voice",
+   "lang": "en",
+   "meaning": "alçak ve kısık ses",
+   "ex": "The librarian spoke in a hushed voice near the reading room.",
+   "ex_tr": "Kütüphaneci okuma salonunun yakınında alçak sesle konuştu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hoarse whisper",
+   "lang": "en",
+   "meaning": "boğuk bir fısıltı",
+   "ex": "A hoarse whisper came from behind the curtain.",
+   "ex_tr": "Perdenin arkasından boğuk bir fısıltı geldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "piercing scream",
+   "lang": "en",
+   "meaning": "kulakları delen çığlık",
+   "ex": "A piercing scream shattered the silence of the street.",
+   "ex_tr": "Kulakları delen bir çığlık sokağın sessizliğini bozdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "muffled cry",
+   "lang": "en",
+   "meaning": "boğuk bir çığlık",
+   "ex": "She heard a muffled cry through the closed door.",
+   "ex_tr": "Kapalı kapının ardından boğuk bir çığlık duydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sudden silence",
+   "lang": "en",
+   "meaning": "ani bir sessizlik",
+   "ex": "A sudden silence fell over the crowded room.",
+   "ex_tr": "Kalabalık odaya birden sessizlik çöktü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "awkward silence",
+   "lang": "en",
+   "meaning": "rahatsız edici bir sessizlik",
+   "ex": "An awkward silence followed his unexpected question.",
+   "ex_tr": "Beklenmedik sorusunun ardından rahatsız edici bir sessizlik oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uneasy silence",
+   "lang": "en",
+   "meaning": "tedirgin edici sessizlik",
+   "ex": "An uneasy silence settled between the two friends.",
+   "ex_tr": "İki arkadaşın arasına tedirgin edici bir sessizlik çöktü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "long pause",
+   "lang": "en",
+   "meaning": "uzun bir duraksama",
+   "ex": "After a long pause, she finally answered the question.",
+   "ex_tr": "Uzun bir duraksamadan sonra soruyu sonunda yanıtladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "brief hesitation",
+   "lang": "en",
+   "meaning": "kısa bir tereddüt",
+   "ex": "After a brief hesitation, he stepped onto the bridge.",
+   "ex_tr": "Kısa bir tereddütten sonra köprüye adım attı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sharp intake of breath",
+   "lang": "en",
+   "meaning": "ani ve keskin bir nefes alma",
+   "ex": "There was a sharp intake of breath when the verdict was read.",
+   "ex_tr": "Karar okununca herkes bir anda keskin bir nefes aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "racing heart",
+   "lang": "en",
+   "meaning": "hızla çarpan kalp",
+   "ex": "With a racing heart, she approached the dark staircase.",
+   "ex_tr": "Kalbi hızla çarparken karanlık merdivene yaklaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pounding heart",
+   "lang": "en",
+   "meaning": "güm güm atan kalp",
+   "ex": "He waited behind the door with a pounding heart.",
+   "ex_tr": "Kapının arkasında kalbi güm güm atarak bekledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sleepless night",
+   "lang": "en",
+   "meaning": "uykusuz bir gece",
+   "ex": "After a sleepless night, the journey felt twice as long.",
+   "ex_tr": "Uykusuz bir gecenin ardından yolculuk iki kat uzun geldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restless night",
+   "lang": "en",
+   "meaning": "huzursuz bir gece",
+   "ex": "She spent a restless night worrying about the letter.",
+   "ex_tr": "Mektubu düşünerek huzursuz bir gece geçirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "troubled expression",
+   "lang": "en",
+   "meaning": "kaygılı bir yüz ifadesi",
+   "ex": "A troubled expression appeared on his face when he saw the bill.",
+   "ex_tr": "Faturayı görünce yüzüne kaygılı bir ifade yerleşti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "puzzled expression",
+   "lang": "en",
+   "meaning": "şaşkın bir yüz ifadesi",
+   "ex": "She studied the map with a puzzled expression.",
+   "ex_tr": "Haritayı şaşkın bir ifadeyle inceledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "blank expression",
+   "lang": "en",
+   "meaning": "ifadesiz bir yüz",
+   "ex": "He stared at the photograph with a blank expression.",
+   "ex_tr": "Fotoğrafa ifadesiz bir yüzle baktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "stern expression",
+   "lang": "en",
+   "meaning": "sert bir yüz ifadesi",
+   "ex": "The headteacher entered the classroom with a stern expression.",
+   "ex_tr": "Okul müdürü sınıfa sert bir yüz ifadesiyle girdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant look",
+   "lang": "en",
+   "meaning": "dalgın ve uzaklara bakan ifade",
+   "ex": "A distant look came into her eyes as she remembered home.",
+   "ex_tr": "Evini hatırlarken gözleri uzaklara daldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "suspicious glance",
+   "lang": "en",
+   "meaning": "kuşkulu bir bakış",
+   "ex": "He cast a suspicious glance at the unopened package.",
+   "ex_tr": "Açılmamış pakete kuşkulu bir bakış attı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sideways glance",
+   "lang": "en",
+   "meaning": "yan gözle bakış",
+   "ex": "She gave him a sideways glance but said nothing.",
+   "ex_tr": "Ona yan gözle baktı ama bir şey söylemedi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fleeting glance",
+   "lang": "en",
+   "meaning": "anlık bir bakış",
+   "ex": "A fleeting glance at the clock told him he was late.",
+   "ex_tr": "Saate attığı anlık bakış geç kaldığını anlamasına yetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lingering glance",
+   "lang": "en",
+   "meaning": "uzun süren bir bakış",
+   "ex": "He gave the old house a lingering glance before leaving.",
+   "ex_tr": "Ayrılmadan önce eski eve uzun uzun baktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "wary look",
+   "lang": "en",
+   "meaning": "temkinli bir bakış",
+   "ex": "The dog gave the stranger a wary look.",
+   "ex_tr": "Köpek yabancıya temkinli bir bakış attı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow escape",
+   "lang": "en",
+   "meaning": "kıl payı kurtuluş",
+   "ex": "Their narrow escape from the fire left them shaken.",
+   "ex_tr": "Yangından kıl payı kurtulmaları onları sarstı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "close call",
+   "lang": "en",
+   "meaning": "ucuz atlatılan tehlike",
+   "ex": "The falling branch was a close call for the cyclist.",
+   "ex_tr": "Düşen dal bisikletli için ucuz atlatılmış bir tehlikeydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "chilling discovery",
+   "lang": "en",
+   "meaning": "ürpertici bir keşif",
+   "ex": "The hikers made a chilling discovery inside the abandoned cabin.",
+   "ex_tr": "Yürüyüşçüler terk edilmiş kulübede ürpertici bir şey keşfetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grim reminder",
+   "lang": "en",
+   "meaning": "acı bir hatırlatma",
+   "ex": "The empty school was a grim reminder of the flood.",
+   "ex_tr": "Boş okul selin acı bir hatırlatıcısıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "haunting memory",
+   "lang": "en",
+   "meaning": "peşini bırakmayan anı",
+   "ex": "The accident remained a haunting memory for years.",
+   "ex_tr": "Kaza yıllarca peşini bırakmayan bir anı olarak kaldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "vivid memory",
+   "lang": "en",
+   "meaning": "canlı bir anı",
+   "ex": "She still had a vivid memory of her first day at school.",
+   "ex_tr": "Okuldaki ilk gününü hâlâ canlı biçimde hatırlıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant memory",
+   "lang": "en",
+   "meaning": "uzak bir anı",
+   "ex": "Their summer adventures had become a distant memory.",
+   "ex_tr": "Yaz maceraları artık uzak bir anıya dönüşmüştü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "childhood memory",
+   "lang": "en",
+   "meaning": "çocukluk anısı",
+   "ex": "The scent of oranges brought back a childhood memory.",
+   "ex_tr": "Portakal kokusu bir çocukluk anısını canlandırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden motive",
+   "lang": "en",
+   "meaning": "gizli bir amaç",
+   "ex": "The detective suspected a hidden motive behind the donation.",
+   "ex_tr": "Dedektif bağışın arkasında gizli bir amaç olduğundan şüphelendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "false lead",
+   "lang": "en",
+   "meaning": "yanlış iz",
+   "ex": "The anonymous tip turned out to be a false lead.",
+   "ex_tr": "İsimsiz ihbar yanlış bir iz çıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "vital clue",
+   "lang": "en",
+   "meaning": "hayati bir ipucu",
+   "ex": "A torn receipt provided a vital clue to the mystery.",
+   "ex_tr": "Yırtık bir fiş gizem için hayati bir ipucu sağladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "missing piece",
+   "lang": "en",
+   "meaning": "eksik parça",
+   "ex": "The photograph was the missing piece of the puzzle.",
+   "ex_tr": "Fotoğraf yapbozun eksik parçasıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "secret passage",
+   "lang": "en",
+   "meaning": "gizli geçit",
+   "ex": "They discovered a secret passage behind the fireplace.",
+   "ex_tr": "Şöminenin arkasında gizli bir geçit keşfettiler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "locked drawer",
+   "lang": "en",
+   "meaning": "kilitli çekmece",
+   "ex": "A small key lay beside the locked drawer.",
+   "ex_tr": "Kilitli çekmecenin yanında küçük bir anahtar duruyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mysterious stranger",
+   "lang": "en",
+   "meaning": "gizemli bir yabancı",
+   "ex": "A mysterious stranger appeared at the inn just after midnight.",
+   "ex_tr": "Gece yarısından hemen sonra handa gizemli bir yabancı belirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "ominous warning",
+   "lang": "en",
+   "meaning": "uğursuz bir uyarı",
+   "ex": "The note contained an ominous warning about the road ahead.",
+   "ex_tr": "Notta ilerideki yol hakkında uğursuz bir uyarı vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "eerie feeling",
+   "lang": "en",
+   "meaning": "ürkütücü bir his",
+   "ex": "An eerie feeling crept over him as the lights went out.",
+   "ex_tr": "Işıklar sönünce içine ürkütücü bir his doldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unsettling thought",
+   "lang": "en",
+   "meaning": "huzursuz edici bir düşünce",
+   "ex": "An unsettling thought kept her awake until dawn.",
+   "ex_tr": "Huzursuz edici bir düşünce onu şafağa kadar uyutmadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sinister smile",
+   "lang": "en",
+   "meaning": "tekinsiz bir gülümseme",
+   "ex": "The villain greeted them with a sinister smile.",
+   "ex_tr": "Kötü karakter onları tekinsiz bir gülümsemeyle karşıladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shadowy figure",
+   "lang": "en",
+   "meaning": "gölgeler içindeki siluet",
+   "ex": "A shadowy figure stood beneath the streetlamp.",
+   "ex_tr": "Sokak lambasının altında gölgeler içindeki bir siluet duruyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deserted street",
+   "lang": "en",
+   "meaning": "ıssız bir sokak",
+   "ex": "Her footsteps echoed along the deserted street.",
+   "ex_tr": "Ayak sesleri ıssız sokakta yankılandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dimly lit room",
+   "lang": "en",
+   "meaning": "loş ışıklı bir oda",
+   "ex": "They waited in a dimly lit room above the shop.",
+   "ex_tr": "Dükkânın üstündeki loş ışıklı odada beklediler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "creaking floorboard",
+   "lang": "en",
+   "meaning": "gıcırdayan döşeme tahtası",
+   "ex": "A creaking floorboard revealed someone was upstairs.",
+   "ex_tr": "Gıcırdayan bir döşeme tahtası üst katta birinin olduğunu ele verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "heavy silence",
+   "lang": "en",
+   "meaning": "derin ve bunaltıcı sessizlik",
+   "ex": "A heavy silence filled the house after the argument.",
+   "ex_tr": "Tartışmanın ardından evi bunaltıcı bir sessizlik kapladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "tense atmosphere",
+   "lang": "en",
+   "meaning": "gergin bir ortam",
+   "ex": "A tense atmosphere hung over the family dinner.",
+   "ex_tr": "Aile yemeğinde gergin bir hava vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter disappointment",
+   "lang": "en",
+   "meaning": "büyük bir hayal kırıklığı",
+   "ex": "The cancellation was a bitter disappointment to the young actors.",
+   "ex_tr": "İptal genç oyuncular için büyük bir hayal kırıklığıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter rivalry",
+   "lang": "en",
+   "meaning": "sert ve köklü rekabet",
+   "ex": "A bitter rivalry divided the two neighboring towns.",
+   "ex_tr": "İki komşu kasabayı sert bir rekabet bölüyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep resentment",
+   "lang": "en",
+   "meaning": "derin kırgınlık ve öfke",
+   "ex": "Years of unfair treatment left him with deep resentment.",
+   "ex_tr": "Yıllarca haksızlığa uğraması onda derin bir öfke bıraktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "profound sadness",
+   "lang": "en",
+   "meaning": "derin bir hüzün",
+   "ex": "A profound sadness settled over her after the farewell.",
+   "ex_tr": "Vedanın ardından içine derin bir hüzün çöktü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "overwhelming sense of relief",
+   "lang": "en",
+   "meaning": "tarifsiz bir rahatlama duygusu",
+   "ex": "She felt an overwhelming sense of relief when the child was found.",
+   "ex_tr": "Çocuk bulununca tarifsiz bir rahatlama hissetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing suspicion",
+   "lang": "en",
+   "meaning": "giderek artan kuşku",
+   "ex": "A growing suspicion made him check the records again.",
+   "ex_tr": "Giderek artan kuşkusu kayıtları yeniden kontrol etmesine neden oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "nagging doubt",
+   "lang": "en",
+   "meaning": "akıldan çıkmayan kuşku",
+   "ex": "A nagging doubt stopped her from signing the contract.",
+   "ex_tr": "Aklından çıkmayan bir kuşku sözleşmeyi imzalamasını engelledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sudden realization",
+   "lang": "en",
+   "meaning": "ani bir farkına varış",
+   "ex": "A sudden realization made him turn back toward the station.",
+   "ex_tr": "Bir şeyi birden fark edince istasyona doğru geri döndü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sinking feeling",
+   "lang": "en",
+   "meaning": "içine kötü bir his doğması",
+   "ex": "He had a sinking feeling when the phone rang at midnight.",
+   "ex_tr": "Telefon gece yarısı çalınca içine kötü bir his doğdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "guilty conscience",
+   "lang": "en",
+   "meaning": "suçluluk duyan vicdan",
+   "ex": "His guilty conscience kept him from enjoying the celebration.",
+   "ex_tr": "Suçluluk duygusu kutlamanın tadını çıkarmasına engel oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "guilty pleasure",
+   "lang": "en",
+   "meaning": "gizli bir keyif",
+   "ex": "Watching old game shows was her guilty pleasure.",
+   "ex_tr": "Eski yarışma programlarını izlemek onun gizli keyfiydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine concern",
+   "lang": "en",
+   "meaning": "samimi bir endişe",
+   "ex": "His questions showed genuine concern for her safety.",
+   "ex_tr": "Soruları onun güvenliği için içtenlikle endişelendiğini gösterdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sincere apology",
+   "lang": "en",
+   "meaning": "içten bir özür",
+   "ex": "She offered a sincere apology for the misunderstanding.",
+   "ex_tr": "Yanlış anlaşılma için içtenlikle özür diledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "heartfelt apology",
+   "lang": "en",
+   "meaning": "yürekten bir özür",
+   "ex": "His heartfelt apology helped repair their friendship.",
+   "ex_tr": "Yürekten özrü arkadaşlıklarını onarmaya yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "warm welcome",
+   "lang": "en",
+   "meaning": "sıcak karşılama",
+   "ex": "The villagers gave the visitors a warm welcome.",
+   "ex_tr": "Köylüler ziyaretçileri sıcak karşıladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cold reception",
+   "lang": "en",
+   "meaning": "soğuk karşılama",
+   "ex": "The proposal received a cold reception at the meeting.",
+   "ex_tr": "Öneri toplantıda soğuk karşılandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "close friendship",
+   "lang": "en",
+   "meaning": "yakın dostluk",
+   "ex": "A close friendship developed between the two neighbors.",
+   "ex_tr": "İki komşu arasında yakın bir dostluk gelişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strained relationship",
+   "lang": "en",
+   "meaning": "gergin ilişki",
+   "ex": "Their strained relationship improved after an honest conversation.",
+   "ex_tr": "Gergin ilişkileri açık bir konuşmanın ardından düzeldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutual understanding",
+   "lang": "en",
+   "meaning": "karşılıklı anlayış",
+   "ex": "Mutual understanding grew as they learned each other's stories.",
+   "ex_tr": "Birbirlerinin hikâyelerini öğrendikçe aralarında karşılıklı anlayış gelişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unspoken agreement",
+   "lang": "en",
+   "meaning": "söze dökülmemiş anlaşma",
+   "ex": "They had an unspoken agreement never to mention the incident.",
+   "ex_tr": "Olaydan bir daha söz etmemek konusunda aralarında söze dökülmemiş bir anlaşma vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "empty promise",
+   "lang": "en",
+   "meaning": "boş vaat",
+   "ex": "She had heard too many empty promises to believe him.",
+   "ex_tr": "Ona inanamayacak kadar çok boş vaat duymuştu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "broken promise",
+   "lang": "en",
+   "meaning": "tutulmamış söz",
+   "ex": "The broken promise damaged their friendship.",
+   "ex_tr": "Tutulmayan söz dostluklarına zarar verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "harsh word",
+   "lang": "en",
+   "meaning": "sert bir söz",
+   "ex": "One harsh word was enough to end the conversation.",
+   "ex_tr": "Tek bir sert söz konuşmayı bitirmeye yetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "kind gesture",
+   "lang": "en",
+   "meaning": "nazik bir davranış",
+   "ex": "A kind gesture from a stranger brightened her day.",
+   "ex_tr": "Bir yabancının nazik davranışı gününü güzelleştirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "thoughtful gift",
+   "lang": "en",
+   "meaning": "ince düşünülmüş bir hediye",
+   "ex": "The handmade notebook was a thoughtful gift.",
+   "ex_tr": "El yapımı defter ince düşünülmüş bir hediyeydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter argument",
+   "lang": "en",
+   "meaning": "sert bir tartışma",
+   "ex": "A bitter argument erupted over the inheritance.",
+   "ex_tr": "Miras yüzünden sert bir tartışma çıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "heated discussion",
+   "lang": "en",
+   "meaning": "hararetli bir tartışma",
+   "ex": "A heated discussion continued long after dinner.",
+   "ex_tr": "Hararetli tartışma yemekten çok sonra da sürdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "delicate matter",
+   "lang": "en",
+   "meaning": "hassas bir konu",
+   "ex": "She chose her words carefully because it was a delicate matter.",
+   "ex_tr": "Hassas bir konu olduğu için sözlerini dikkatle seçti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sensitive subject",
+   "lang": "en",
+   "meaning": "hassas bir mesele",
+   "ex": "His family history was a sensitive subject.",
+   "ex_tr": "Aile geçmişi hassas bir konuydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "difficult choice",
+   "lang": "en",
+   "meaning": "zor bir seçim",
+   "ex": "Leaving her hometown was a difficult choice.",
+   "ex_tr": "Memleketinden ayrılmak zor bir seçimdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "split-second decision",
+   "lang": "en",
+   "meaning": "anlık karar",
+   "ex": "A split-second decision saved the driver from a collision.",
+   "ex_tr": "Anlık bir karar sürücüyü çarpışmadan kurtardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reckless decision",
+   "lang": "en",
+   "meaning": "düşüncesizce alınmış karar",
+   "ex": "His reckless decision put the whole group at risk.",
+   "ex_tr": "Düşüncesizce aldığı karar bütün grubu tehlikeye attı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "calculated risk",
+   "lang": "en",
+   "meaning": "hesaplanmış risk",
+   "ex": "Opening the shop during winter was a calculated risk.",
+   "ex_tr": "Kışın dükkânı açmak hesaplanmış bir riskti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "desperate attempt",
+   "lang": "en",
+   "meaning": "çaresizce girişim",
+   "ex": "He made a desperate attempt to reach the last train.",
+   "ex_tr": "Son trene yetişmek için çaresizce çabaladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "futile attempt",
+   "lang": "en",
+   "meaning": "boşuna girişim",
+   "ex": "Their futile attempt to repair the boat lasted all afternoon.",
+   "ex_tr": "Tekneyi onarmak için boşuna uğraşmaları bütün öğleden sonrayı aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow path",
+   "lang": "en",
+   "meaning": "dar bir patika",
+   "ex": "A narrow path wound between the tall trees.",
+   "ex_tr": "Uzun ağaçların arasından dar bir patika kıvrılıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "winding road",
+   "lang": "en",
+   "meaning": "virajlı yol",
+   "ex": "A winding road led up to the mountain village.",
+   "ex_tr": "Virajlı bir yol dağ köyüne çıkıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steep slope",
+   "lang": "en",
+   "meaning": "dik yamaç",
+   "ex": "The children struggled to climb the steep slope.",
+   "ex_tr": "Çocuklar dik yamacı tırmanmakta zorlandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gentle breeze",
+   "lang": "en",
+   "meaning": "hafif esinti",
+   "ex": "A gentle breeze moved the curtains beside the window.",
+   "ex_tr": "Hafif bir esinti pencerenin yanındaki perdeleri hareket ettirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter wind",
+   "lang": "en",
+   "meaning": "dondurucu rüzgâr",
+   "ex": "A bitter wind swept across the empty square.",
+   "ex_tr": "Dondurucu bir rüzgâr boş meydanı süpürdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "biting wind",
+   "lang": "en",
+   "meaning": "keskin ve soğuk rüzgâr",
+   "ex": "The biting wind stung their faces on the pier.",
+   "ex_tr": "Keskin soğuk rüzgâr iskelede yüzlerini sızlattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "thick fog",
+   "lang": "en",
+   "meaning": "yoğun sis",
+   "ex": "A thick fog hid the lighthouse from view.",
+   "ex_tr": "Yoğun sis deniz fenerini gözden gizledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dense forest",
+   "lang": "en",
+   "meaning": "sık orman",
+   "ex": "They followed the stream into a dense forest.",
+   "ex_tr": "Dereyi takip ederek sık bir ormana girdiler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint light",
+   "lang": "en",
+   "meaning": "soluk ışık",
+   "ex": "A faint light shone beneath the bedroom door.",
+   "ex_tr": "Yatak odasının kapısının altından soluk bir ışık sızıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pale moon",
+   "lang": "en",
+   "meaning": "solgun ay",
+   "ex": "A pale moon rose above the rooftops.",
+   "ex_tr": "Çatıların üzerinde solgun bir ay yükseldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "golden glow",
+   "lang": "en",
+   "meaning": "altın rengi parıltı",
+   "ex": "A golden glow spread across the fields at sunset.",
+   "ex_tr": "Gün batımında tarlalara altın rengi bir parıltı yayıldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dark cloud",
+   "lang": "en",
+   "meaning": "kara bulut",
+   "ex": "A dark cloud drifted over the valley.",
+   "ex_tr": "Vadinin üzerinde kara bir bulut süzüldü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant rumble",
+   "lang": "en",
+   "meaning": "uzaktan gelen gümbürtü",
+   "ex": "A distant rumble announced the approaching storm.",
+   "ex_tr": "Uzaktan gelen bir gümbürtü yaklaşan fırtınayı haber verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deafening roar",
+   "lang": "en",
+   "meaning": "sağır edici uğultu",
+   "ex": "A deafening roar rose from the waterfall.",
+   "ex_tr": "Şelaleden sağır edici bir uğultu yükseldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint scent",
+   "lang": "en",
+   "meaning": "hafif koku",
+   "ex": "A faint scent of lavender lingered in the hallway.",
+   "ex_tr": "Koridorda hafif bir lavanta kokusu kalmıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pungent smell",
+   "lang": "en",
+   "meaning": "keskin koku",
+   "ex": "A pungent smell of smoke filled the kitchen.",
+   "ex_tr": "Mutfağı keskin bir duman kokusu doldurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "musty smell",
+   "lang": "en",
+   "meaning": "küf kokusu",
+   "ex": "A musty smell greeted them in the old cellar.",
+   "ex_tr": "Eski mahzende onları küf kokusu karşıladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter taste",
+   "lang": "en",
+   "meaning": "acı tat",
+   "ex": "The medicine left a bitter taste in his mouth.",
+   "ex_tr": "İlaç ağzında acı bir tat bıraktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rough surface",
+   "lang": "en",
+   "meaning": "pürüzlü yüzey",
+   "ex": "She ran her fingers over the rough surface of the stone.",
+   "ex_tr": "Parmaklarını taşın pürüzlü yüzeyinde gezdirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "smooth texture",
+   "lang": "en",
+   "meaning": "pürüzsüz doku",
+   "ex": "The polished wood had a smooth texture.",
+   "ex_tr": "Cilalı ahşabın pürüzsüz bir dokusu vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fragile peace",
+   "lang": "en",
+   "meaning": "kırılgan barış",
+   "ex": "A fragile peace held between the two villages.",
+   "ex_tr": "İki köy arasında kırılgan bir barış sürüyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fragile hope",
+   "lang": "en",
+   "meaning": "kırılgan umut",
+   "ex": "A fragile hope remained despite the bad news.",
+   "ex_tr": "Kötü habere rağmen kırılgan bir umut kalmıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "glimmer of hope",
+   "lang": "en",
+   "meaning": "bir umut ışığı",
+   "ex": "The new message gave them a glimmer of hope.",
+   "ex_tr": "Yeni mesaj onlara bir umut ışığı verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "wave of panic",
+   "lang": "en",
+   "meaning": "panik dalgası",
+   "ex": "A wave of panic swept through the crowd when the alarm sounded.",
+   "ex_tr": "Alarm çalınca kalabalığı bir panik dalgası sardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rush of excitement",
+   "lang": "en",
+   "meaning": "ani heyecan dalgası",
+   "ex": "A rush of excitement filled her as the train approached.",
+   "ex_tr": "Tren yaklaşırken içini ani bir heyecan kapladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "surge of anger",
+   "lang": "en",
+   "meaning": "ani öfke kabarması",
+   "ex": "He felt a surge of anger when he read the accusation.",
+   "ex_tr": "Suçlamayı okuyunca içinde bir öfke kabardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pang of regret",
+   "lang": "en",
+   "meaning": "ani pişmanlık sızısı",
+   "ex": "She felt a pang of regret as the bus pulled away.",
+   "ex_tr": "Otobüs uzaklaşırken içinde bir pişmanlık sızısı hissetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pang of jealousy",
+   "lang": "en",
+   "meaning": "ani kıskançlık sızısı",
+   "ex": "He felt a pang of jealousy when he saw their photograph.",
+   "ex_tr": "Fotoğraflarını görünce içinde bir kıskançlık sızısı hissetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sense of dread",
+   "lang": "en",
+   "meaning": "iç sıkıntısı ve korku",
+   "ex": "A sense of dread grew as they approached the empty house.",
+   "ex_tr": "Boş eve yaklaştıkça içlerindeki korku büyüdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sense of wonder",
+   "lang": "en",
+   "meaning": "hayranlık ve merak duygusu",
+   "ex": "The night sky filled the children with a sense of wonder.",
+   "ex_tr": "Gece gökyüzü çocuklarda hayranlık ve merak uyandırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sense of urgency",
+   "lang": "en",
+   "meaning": "aciliyet duygusu",
+   "ex": "There was a sense of urgency in her voice.",
+   "ex_tr": "Sesinden işin acil olduğu anlaşılıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sense of unease",
+   "lang": "en",
+   "meaning": "huzursuzluk duygusu",
+   "ex": "A sense of unease followed him down the corridor.",
+   "ex_tr": "Koridor boyunca içindeki huzursuzluk ona eşlik etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "moment of clarity",
+   "lang": "en",
+   "meaning": "bir anlık berraklık",
+   "ex": "In a moment of clarity, she understood why he had left.",
+   "ex_tr": "Bir an her şey netleşti ve neden gittiğini anladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "moment of weakness",
+   "lang": "en",
+   "meaning": "bir anlık zayıflık",
+   "ex": "He admitted that he had spoken in a moment of weakness.",
+   "ex_tr": "Bir anlık zayıflıkla konuştuğunu kabul etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "stroke of luck",
+   "lang": "en",
+   "meaning": "şans eseri gelişme",
+   "ex": "Finding the lost key was a stroke of luck.",
+   "ex_tr": "Kayıp anahtarı bulmaları büyük şanstı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "twist of fate",
+   "lang": "en",
+   "meaning": "kaderin cilvesi",
+   "ex": "By a twist of fate, the former rivals became neighbors.",
+   "ex_tr": "Kaderin cilvesiyle eski rakipler komşu oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter truth",
+   "lang": "en",
+   "meaning": "acı gerçek",
+   "ex": "She finally accepted the bitter truth about the journey.",
+   "ex_tr": "Sonunda yolculukla ilgili acı gerçeği kabul etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "harsh reality",
+   "lang": "en",
+   "meaning": "acı gerçeklik",
+   "ex": "The harsh reality of winter surprised the new settlers.",
+   "ex_tr": "Kışın acı gerçekliği yeni yerleşenleri şaşırttı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "inconvenient truth",
+   "lang": "en",
+   "meaning": "rahatsız edici gerçek",
+   "ex": "He ignored an inconvenient truth about the family business.",
+   "ex_tr": "Aile işiyle ilgili rahatsız edici bir gerçeği görmezden geldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unexpected turn",
+   "lang": "en",
+   "meaning": "beklenmedik gelişme",
+   "ex": "The story took an unexpected turn after the visitor arrived.",
+   "ex_tr": "Ziyaretçi geldikten sonra hikâye beklenmedik bir yön aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dramatic change",
+   "lang": "en",
+   "meaning": "köklü değişim",
+   "ex": "A dramatic change came over the village after the railway opened.",
+   "ex_tr": "Demiryolu açıldıktan sonra köy büyük ölçüde değişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "subtle change",
+   "lang": "en",
+   "meaning": "ince ve fark edilmesi zor değişim",
+   "ex": "She noticed a subtle change in his tone.",
+   "ex_tr": "Ses tonundaki ince değişikliği fark etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "striking resemblance",
+   "lang": "en",
+   "meaning": "çarpıcı benzerlik",
+   "ex": "There was a striking resemblance between the twins and their grandfather.",
+   "ex_tr": "İkizlerle büyükbabaları arasında çarpıcı bir benzerlik vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable coincidence",
+   "lang": "en",
+   "meaning": "şaşırtıcı tesadüf",
+   "ex": "Meeting on the same train was a remarkable coincidence.",
+   "ex_tr": "Aynı trende karşılaşmaları şaşırtıcı bir tesadüftü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unlikely friendship",
+   "lang": "en",
+   "meaning": "beklenmedik dostluk",
+   "ex": "An unlikely friendship grew between the old sailor and the boy.",
+   "ex_tr": "Yaşlı denizciyle çocuk arasında beklenmedik bir dostluk gelişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uneasy alliance",
+   "lang": "en",
+   "meaning": "huzursuz ittifak",
+   "ex": "The rivals formed an uneasy alliance against a common enemy.",
+   "ex_tr": "Rakipler ortak düşmana karşı huzursuz bir ittifak kurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "impossible task",
+   "lang": "en",
+   "meaning": "imkânsız görev",
+   "ex": "Finding one ring in the forest seemed an impossible task.",
+   "ex_tr": "Ormanda tek bir yüzüğü bulmak imkânsız bir görev gibi görünüyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uphill battle",
+   "lang": "en",
+   "meaning": "zorlu mücadele",
+   "ex": "Convincing the council was an uphill battle.",
+   "ex_tr": "Belediye meclisini ikna etmek zorlu bir mücadeleydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden talent",
+   "lang": "en",
+   "meaning": "gizli yetenek",
+   "ex": "Her hidden talent for painting surprised everyone.",
+   "ex_tr": "Resim konusundaki gizli yeteneği herkesi şaşırttı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "natural instinct",
+   "lang": "en",
+   "meaning": "doğal içgüdü",
+   "ex": "His natural instinct was to protect his younger brother.",
+   "ex_tr": "Doğal içgüdüsü küçük kardeşini korumaktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fierce determination",
+   "lang": "en",
+   "meaning": "sarsılmaz kararlılık",
+   "ex": "She faced the climb with fierce determination.",
+   "ex_tr": "Tırmanışa sarsılmaz bir kararlılıkla girişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unwavering loyalty",
+   "lang": "en",
+   "meaning": "sarsılmaz sadakat",
+   "ex": "The old dog showed unwavering loyalty to its owner.",
+   "ex_tr": "Yaşlı köpek sahibine sarsılmaz bir sadakat gösterdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "overwhelming desire",
+   "lang": "en",
+   "meaning": "karşı konulmaz istek",
+   "ex": "He felt an overwhelming desire to return home.",
+   "ex_tr": "Eve dönmek için karşı konulmaz bir istek duydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "burning ambition",
+   "lang": "en",
+   "meaning": "yakıcı hırs",
+   "ex": "Her burning ambition was to become a pilot.",
+   "ex_tr": "En büyük tutkusu pilot olmaktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint hope",
+   "lang": "en",
+   "meaning": "zayıf bir umut",
+   "ex": "They held on to a faint hope of rescue.",
+   "ex_tr": "Kurtarılacaklarına dair zayıf bir umuda tutundular.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep longing",
+   "lang": "en",
+   "meaning": "derin özlem",
+   "ex": "A deep longing for home filled his letters.",
+   "ex_tr": "Mektupları eve duyduğu derin özlemle doluydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lingering sadness",
+   "lang": "en",
+   "meaning": "geçmeyen hüzün",
+   "ex": "A lingering sadness followed her after the farewell.",
+   "ex_tr": "Vedanın ardından geçmeyen bir hüzün ona eşlik etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "profound sense of loss",
+   "lang": "en",
+   "meaning": "derin kayıp duygusu",
+   "ex": "He felt a profound sense of loss after his friend's departure.",
+   "ex_tr": "Arkadaşı ayrıldıktan sonra derin bir kayıp duygusu yaşadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply concerned",
+   "lang": "en",
+   "meaning": "derinden endişeli",
+   "ex": "Her parents were deeply concerned about the missing dog.",
+   "ex_tr": "Ailesi kayıp köpek için çok endişeliydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply ashamed",
+   "lang": "en",
+   "meaning": "derinden utanmış",
+   "ex": "He was deeply ashamed of the lie he had told.",
+   "ex_tr": "Söylediği yalandan derinden utanıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply grateful",
+   "lang": "en",
+   "meaning": "son derece minnettar",
+   "ex": "We are deeply grateful for your kindness.",
+   "ex_tr": "Nezaketiniz için son derece minnettarız.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply disappointed",
+   "lang": "en",
+   "meaning": "büyük hayal kırıklığına uğramış",
+   "ex": "She was deeply disappointed by the final result.",
+   "ex_tr": "Son sonuç onu büyük hayal kırıklığına uğrattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply suspicious",
+   "lang": "en",
+   "meaning": "çok kuşkucu",
+   "ex": "The detective was deeply suspicious of the sudden confession.",
+   "ex_tr": "Dedektif ani itiraftan ciddi biçimde kuşkulandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply troubled",
+   "lang": "en",
+   "meaning": "derinden rahatsız olmuş",
+   "ex": "He was deeply troubled by what he had witnessed.",
+   "ex_tr": "Tanık oldukları onu derinden sarstı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply rooted",
+   "lang": "en",
+   "meaning": "köklü ve yerleşik",
+   "ex": "The custom was deeply rooted in village life.",
+   "ex_tr": "Gelenek köy yaşamında köklü bir yere sahipti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deeply divided",
+   "lang": "en",
+   "meaning": "derinden bölünmüş",
+   "ex": "The town remained deeply divided over the proposal.",
+   "ex_tr": "Kasaba öneri konusunda derinden bölünmüş durumdaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly unlikely",
+   "lang": "en",
+   "meaning": "son derece düşük olasılıklı",
+   "ex": "It is highly unlikely that the bridge will reopen today.",
+   "ex_tr": "Köprünün bugün yeniden açılması son derece düşük bir olasılık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly probable",
+   "lang": "en",
+   "meaning": "oldukça muhtemel",
+   "ex": "A delay is highly probable in this weather.",
+   "ex_tr": "Bu havada gecikme olması oldukça muhtemel.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly unusual",
+   "lang": "en",
+   "meaning": "son derece sıra dışı",
+   "ex": "Such behavior is highly unusual for this quiet child.",
+   "ex_tr": "Böyle bir davranış bu sakin çocuk için son derece sıra dışı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly sensitive",
+   "lang": "en",
+   "meaning": "son derece hassas",
+   "ex": "The old manuscript is highly sensitive to moisture.",
+   "ex_tr": "Eski el yazması neme karşı son derece hassas.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly effective",
+   "lang": "en",
+   "meaning": "son derece etkili",
+   "ex": "The new treatment proved highly effective for many patients.",
+   "ex_tr": "Yeni tedavi birçok hasta için son derece etkili oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly controversial",
+   "lang": "en",
+   "meaning": "çok tartışmalı",
+   "ex": "The mayor's decision remains highly controversial.",
+   "ex_tr": "Belediye başkanının kararı hâlâ çok tartışmalı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly competitive",
+   "lang": "en",
+   "meaning": "son derece rekabetçi",
+   "ex": "The scholarship program is highly competitive.",
+   "ex_tr": "Burs programında rekabet çok yüksek.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly respected",
+   "lang": "en",
+   "meaning": "çok saygı duyulan",
+   "ex": "She was a highly respected teacher in the village.",
+   "ex_tr": "Köyde çok saygı duyulan bir öğretmendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "highly regarded",
+   "lang": "en",
+   "meaning": "çok değer verilen",
+   "ex": "The novelist is highly regarded by younger writers.",
+   "ex_tr": "Romancı genç yazarlar tarafından çok takdir ediliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fully aware",
+   "lang": "en",
+   "meaning": "tamamen farkında",
+   "ex": "He was fully aware of the risks before setting off.",
+   "ex_tr": "Yola çıkmadan önce risklerin tamamen farkındaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fully prepared",
+   "lang": "en",
+   "meaning": "tamamen hazır",
+   "ex": "The crew was fully prepared for the storm.",
+   "ex_tr": "Mürettebat fırtınaya tamamen hazırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fully convinced",
+   "lang": "en",
+   "meaning": "tamamen ikna olmuş",
+   "ex": "She was not fully convinced by his explanation.",
+   "ex_tr": "Açıklamasına tam olarak ikna olmamıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fully responsible",
+   "lang": "en",
+   "meaning": "tamamen sorumlu",
+   "ex": "The landlord was fully responsible for the repairs.",
+   "ex_tr": "Onarımlardan tamamen ev sahibi sorumluydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fully committed",
+   "lang": "en",
+   "meaning": "tamamen bağlı ve kararlı",
+   "ex": "The volunteers were fully committed to the rescue effort.",
+   "ex_tr": "Gönüllüler kurtarma çalışmasına tümüyle bağlıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fully conscious",
+   "lang": "en",
+   "meaning": "bilinci tamamen açık",
+   "ex": "The patient was fully conscious when the doctor arrived.",
+   "ex_tr": "Doktor geldiğinde hastanın bilinci tamamen açıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "perfectly clear",
+   "lang": "en",
+   "meaning": "son derece açık",
+   "ex": "Her instructions were perfectly clear to everyone.",
+   "ex_tr": "Talimatları herkes için son derece açıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "perfectly normal",
+   "lang": "en",
+   "meaning": "tamamen normal",
+   "ex": "It is perfectly normal to feel nervous before an exam.",
+   "ex_tr": "Sınavdan önce gergin hissetmek tamamen normaldir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "perfectly reasonable",
+   "lang": "en",
+   "meaning": "son derece makul",
+   "ex": "Your request sounds perfectly reasonable to me.",
+   "ex_tr": "İsteğin bana son derece makul geliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "perfectly still",
+   "lang": "en",
+   "meaning": "tamamen hareketsiz",
+   "ex": "The deer stood perfectly still beside the river.",
+   "ex_tr": "Geyik nehrin yanında tamamen hareketsiz durdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "perfectly harmless",
+   "lang": "en",
+   "meaning": "tamamen zararsız",
+   "ex": "The strange-looking insect is perfectly harmless.",
+   "ex_tr": "Tuhaf görünen böcek tamamen zararsız.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "utterly ridiculous",
+   "lang": "en",
+   "meaning": "tamamen saçma",
+   "ex": "The rumor sounded utterly ridiculous to her.",
+   "ex_tr": "Söylenti ona tamamen saçma geldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "utterly exhausted",
+   "lang": "en",
+   "meaning": "tamamen bitkin",
+   "ex": "After the climb, they were utterly exhausted.",
+   "ex_tr": "Tırmanıştan sonra tamamen bitkin düşmüşlerdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "utterly helpless",
+   "lang": "en",
+   "meaning": "tamamen çaresiz",
+   "ex": "He felt utterly helpless as the water rose.",
+   "ex_tr": "Su yükselirken kendini tamamen çaresiz hissetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "utterly bewildered",
+   "lang": "en",
+   "meaning": "tamamen şaşkına dönmüş",
+   "ex": "The sudden announcement left everyone utterly bewildered.",
+   "ex_tr": "Ani duyuru herkesi şaşkına çevirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "utterly convinced",
+   "lang": "en",
+   "meaning": "tamamen ikna olmuş",
+   "ex": "She remained utterly convinced that the letter was genuine.",
+   "ex_tr": "Mektubun gerçek olduğuna kesinlikle inanıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitterly cold",
+   "lang": "en",
+   "meaning": "dondurucu derecede soğuk",
+   "ex": "It was bitterly cold when they reached the mountain pass.",
+   "ex_tr": "Dağ geçidine vardıklarında hava dondurucu derecede soğuktu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitterly disappointed",
+   "lang": "en",
+   "meaning": "büyük hayal kırıklığına uğramış",
+   "ex": "He was bitterly disappointed to miss the final match.",
+   "ex_tr": "Final maçı kaçırdığı için büyük hayal kırıklığına uğradı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitterly opposed",
+   "lang": "en",
+   "meaning": "şiddetle karşı",
+   "ex": "The residents were bitterly opposed to the demolition.",
+   "ex_tr": "Mahalle sakinleri yıkıma şiddetle karşıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitterly divided",
+   "lang": "en",
+   "meaning": "sert biçimde bölünmüş",
+   "ex": "The family was bitterly divided over the inheritance.",
+   "ex_tr": "Aile miras konusunda sert biçimde bölünmüştü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "painfully aware",
+   "lang": "en",
+   "meaning": "acı biçimde farkında",
+   "ex": "She was painfully aware that time was running out.",
+   "ex_tr": "Zamanın tükenmekte olduğunun acı biçimde farkındaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "painfully shy",
+   "lang": "en",
+   "meaning": "aşırı derecede utangaç",
+   "ex": "As a child, he was painfully shy around strangers.",
+   "ex_tr": "Çocukken yabancıların yanında aşırı utangaçtı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "painfully obvious",
+   "lang": "en",
+   "meaning": "acı verecek kadar açık",
+   "ex": "It was painfully obvious that nobody trusted him.",
+   "ex_tr": "Kimsenin ona güvenmediği acı verecek kadar açıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "painfully slow",
+   "lang": "en",
+   "meaning": "dayanılmaz derecede yavaş",
+   "ex": "The journey was painfully slow in the heavy snow.",
+   "ex_tr": "Yoğun karda yolculuk dayanılmaz derecede yavaş ilerledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "blissfully unaware",
+   "lang": "en",
+   "meaning": "hiçbir şeyden habersiz ve huzurlu",
+   "ex": "The children played outside, blissfully unaware of the argument.",
+   "ex_tr": "Çocuklar tartışmadan habersiz, huzur içinde dışarıda oynuyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "blissfully happy",
+   "lang": "en",
+   "meaning": "son derece mutlu",
+   "ex": "They were blissfully happy during their first summer together.",
+   "ex_tr": "Birlikte geçirdikleri ilk yaz son derece mutluydular.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "keenly aware",
+   "lang": "en",
+   "meaning": "çok iyi farkında",
+   "ex": "She was keenly aware of every sound in the empty house.",
+   "ex_tr": "Boş evdeki her sesin son derece farkındaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "keenly interested",
+   "lang": "en",
+   "meaning": "çok ilgili",
+   "ex": "He was keenly interested in the history of the old bridge.",
+   "ex_tr": "Eski köprünün tarihiyle çok ilgileniyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "keenly felt",
+   "lang": "en",
+   "meaning": "derinden hissedilen",
+   "ex": "The teacher's absence was keenly felt by the students.",
+   "ex_tr": "Öğretmenin yokluğu öğrenciler tarafından derinden hissedildi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widely known",
+   "lang": "en",
+   "meaning": "yaygın olarak bilinen",
+   "ex": "The legend is widely known throughout the region.",
+   "ex_tr": "Efsane bölge genelinde yaygın olarak bilinir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widely accepted",
+   "lang": "en",
+   "meaning": "geniş ölçüde kabul gören",
+   "ex": "The explanation is widely accepted among historians.",
+   "ex_tr": "Açıklama tarihçiler arasında geniş ölçüde kabul görüyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widely available",
+   "lang": "en",
+   "meaning": "yaygın olarak erişilebilir",
+   "ex": "The book is now widely available in translation.",
+   "ex_tr": "Kitap artık çeviri olarak pek çok yerde bulunabiliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widely regarded",
+   "lang": "en",
+   "meaning": "geniş çevrelerce kabul edilen",
+   "ex": "The novel is widely regarded as a modern classic.",
+   "ex_tr": "Roman geniş çevrelerce modern bir klasik kabul edilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strictly confidential",
+   "lang": "en",
+   "meaning": "kesinlikle gizli",
+   "ex": "The contents of the letter were strictly confidential.",
+   "ex_tr": "Mektubun içeriği kesinlikle gizliydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strictly forbidden",
+   "lang": "en",
+   "meaning": "kesinlikle yasak",
+   "ex": "Visitors were told that photography was strictly forbidden.",
+   "ex_tr": "Ziyaretçilere fotoğraf çekmenin kesinlikle yasak olduğu söylendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strictly necessary",
+   "lang": "en",
+   "meaning": "kesinlikle gerekli",
+   "ex": "Take only what is strictly necessary for the trip.",
+   "ex_tr": "Yolculuk için yalnızca kesinlikle gerekli olanları al.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strictly limited",
+   "lang": "en",
+   "meaning": "kesin biçimde sınırlı",
+   "ex": "Access to the archive was strictly limited.",
+   "ex_tr": "Arşive erişim kesin biçimde sınırlıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "closely related",
+   "lang": "en",
+   "meaning": "yakından ilişkili",
+   "ex": "The two families were closely related for generations.",
+   "ex_tr": "İki aile kuşaklar boyunca yakın akrabaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "closely guarded",
+   "lang": "en",
+   "meaning": "sıkı korunan",
+   "ex": "The location of the hidden room was a closely guarded secret.",
+   "ex_tr": "Gizli odanın yeri sıkı korunan bir sırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "closely connected",
+   "lang": "en",
+   "meaning": "yakından bağlantılı",
+   "ex": "The two events were more closely connected than they seemed.",
+   "ex_tr": "İki olay göründüğünden daha yakından bağlantılıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "closely associated",
+   "lang": "en",
+   "meaning": "yakından ilişkilendirilen",
+   "ex": "The village is closely associated with the poet's early life.",
+   "ex_tr": "Köy şairin ilk yıllarıyla yakından ilişkilendirilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "firmly convinced",
+   "lang": "en",
+   "meaning": "kesin biçimde ikna olmuş",
+   "ex": "He remained firmly convinced that the witness was mistaken.",
+   "ex_tr": "Tanığın yanıldığına kesinlikle inanıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "firmly established",
+   "lang": "en",
+   "meaning": "sağlam biçimde yerleşmiş",
+   "ex": "The custom was firmly established by the end of the century.",
+   "ex_tr": "Gelenek yüzyılın sonuna gelindiğinde iyice yerleşmişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "firmly opposed",
+   "lang": "en",
+   "meaning": "kesinlikle karşı",
+   "ex": "Her father was firmly opposed to the plan.",
+   "ex_tr": "Babası plana kesinlikle karşıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strongly opposed",
+   "lang": "en",
+   "meaning": "şiddetle karşı",
+   "ex": "Local residents were strongly opposed to the new road.",
+   "ex_tr": "Bölge sakinleri yeni yola şiddetle karşıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strongly recommended",
+   "lang": "en",
+   "meaning": "şiddetle tavsiye edilen",
+   "ex": "Advance booking is strongly recommended in summer.",
+   "ex_tr": "Yazın önceden rezervasyon yaptırmak şiddetle tavsiye edilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strongly worded",
+   "lang": "en",
+   "meaning": "sert ifadeler içeren",
+   "ex": "She sent a strongly worded letter to the newspaper.",
+   "ex_tr": "Gazeteye sert ifadeler içeren bir mektup gönderdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seriously injured",
+   "lang": "en",
+   "meaning": "ağır yaralı",
+   "ex": "Two passengers were seriously injured in the crash.",
+   "ex_tr": "Kazada iki yolcu ağır yaralandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seriously ill",
+   "lang": "en",
+   "meaning": "ağır hasta",
+   "ex": "His grandmother became seriously ill that winter.",
+   "ex_tr": "Büyükannesi o kış ağır hastalandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seriously worried",
+   "lang": "en",
+   "meaning": "ciddi biçimde endişeli",
+   "ex": "The neighbors were seriously worried about the missing child.",
+   "ex_tr": "Komşular kayıp çocuk için ciddi biçimde endişeliydi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severely damaged",
+   "lang": "en",
+   "meaning": "ağır hasarlı",
+   "ex": "The old bridge was severely damaged by the flood.",
+   "ex_tr": "Eski köprü selde ağır hasar gördü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severely restricted",
+   "lang": "en",
+   "meaning": "ciddi ölçüde kısıtlanmış",
+   "ex": "Travel was severely restricted during the storm.",
+   "ex_tr": "Fırtına sırasında seyahat ciddi ölçüde kısıtlandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severely weakened",
+   "lang": "en",
+   "meaning": "ciddi ölçüde zayıflamış",
+   "ex": "The long winter left the animals severely weakened.",
+   "ex_tr": "Uzun kış hayvanları ciddi ölçüde güçsüz bıraktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "completely unaware",
+   "lang": "en",
+   "meaning": "tamamen habersiz",
+   "ex": "He was completely unaware that his friends had planned a surprise.",
+   "ex_tr": "Arkadaşlarının sürpriz planladığından tamamen habersizdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "completely silent",
+   "lang": "en",
+   "meaning": "tamamen sessiz",
+   "ex": "The house was completely silent when she returned.",
+   "ex_tr": "Döndüğünde ev tamamen sessizdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "completely empty",
+   "lang": "en",
+   "meaning": "bomboş",
+   "ex": "The station was completely empty after the last train.",
+   "ex_tr": "Son trenden sonra istasyon bomboştu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "completely different",
+   "lang": "en",
+   "meaning": "tamamen farklı",
+   "ex": "Her second novel was completely different from the first.",
+   "ex_tr": "İkinci romanı ilkinden tamamen farklıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "partly responsible",
+   "lang": "en",
+   "meaning": "kısmen sorumlu",
+   "ex": "He admitted he was partly responsible for the confusion.",
+   "ex_tr": "Karışıklıktan kısmen sorumlu olduğunu kabul etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "partly cloudy",
+   "lang": "en",
+   "meaning": "parçalı bulutlu",
+   "ex": "The sky was partly cloudy as they left the harbor.",
+   "ex_tr": "Limandan ayrılırken gökyüzü parçalı bulutluydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "partly hidden",
+   "lang": "en",
+   "meaning": "kısmen gizlenmiş",
+   "ex": "The cottage was partly hidden behind tall hedges.",
+   "ex_tr": "Kulübe uzun çit bitkilerinin arkasında kısmen gizlenmişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "barely visible",
+   "lang": "en",
+   "meaning": "zar zor görülebilen",
+   "ex": "The path was barely visible in the moonlight.",
+   "ex_tr": "Patika ay ışığında zar zor görünüyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "barely audible",
+   "lang": "en",
+   "meaning": "zar zor duyulabilen",
+   "ex": "Her reply was barely audible above the rain.",
+   "ex_tr": "Yanıtı yağmurun sesinden zar zor duyuluyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "barely recognizable",
+   "lang": "en",
+   "meaning": "zar zor tanınabilen",
+   "ex": "The town was barely recognizable after twenty years.",
+   "ex_tr": "Kasaba yirmi yıl sonra zar zor tanınabiliyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "readily available",
+   "lang": "en",
+   "meaning": "kolayca erişilebilir",
+   "ex": "Fresh water was not readily available on the island.",
+   "ex_tr": "Adada temiz suya kolayca ulaşılamıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "readily apparent",
+   "lang": "en",
+   "meaning": "kolayca fark edilen",
+   "ex": "The difference was readily apparent in the morning light.",
+   "ex_tr": "Fark sabah ışığında kolayca görülebiliyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "readily accessible",
+   "lang": "en",
+   "meaning": "kolayca ulaşılabilir",
+   "ex": "The village is not readily accessible in winter.",
+   "ex_tr": "Kışın köye kolayca ulaşmak mümkün değildir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkably similar",
+   "lang": "en",
+   "meaning": "şaşırtıcı derecede benzer",
+   "ex": "The two paintings were remarkably similar in style.",
+   "ex_tr": "İki tablo üslup bakımından şaşırtıcı derecede benziyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkably calm",
+   "lang": "en",
+   "meaning": "şaşırtıcı derecede sakin",
+   "ex": "She remained remarkably calm during the emergency.",
+   "ex_tr": "Acil durumda şaşırtıcı derecede sakin kaldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkably resilient",
+   "lang": "en",
+   "meaning": "şaşırtıcı derecede dayanıklı",
+   "ex": "The young trees proved remarkably resilient after the drought.",
+   "ex_tr": "Genç ağaçlar kuraklıktan sonra şaşırtıcı derecede dayanıklı çıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "entirely possible",
+   "lang": "en",
+   "meaning": "pekâlâ mümkün",
+   "ex": "It is entirely possible that he missed the message.",
+   "ex_tr": "Mesajı kaçırmış olması pekâlâ mümkün.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "entirely different",
+   "lang": "en",
+   "meaning": "tamamen farklı",
+   "ex": "The truth turned out to be entirely different from the rumor.",
+   "ex_tr": "Gerçek söylentiden tamamen farklı çıktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "entirely unexpected",
+   "lang": "en",
+   "meaning": "tamamen beklenmedik",
+   "ex": "Her return was entirely unexpected.",
+   "ex_tr": "Geri dönüşü tamamen beklenmedikti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "increasingly anxious",
+   "lang": "en",
+   "meaning": "giderek daha kaygılı",
+   "ex": "The parents grew increasingly anxious as darkness fell.",
+   "ex_tr": "Hava karardıkça anne baba giderek daha fazla kaygılandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "increasingly difficult",
+   "lang": "en",
+   "meaning": "giderek zorlaşan",
+   "ex": "The trail became increasingly difficult near the summit.",
+   "ex_tr": "Patika zirveye yakın giderek zorlaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "increasingly clear",
+   "lang": "en",
+   "meaning": "giderek daha açık",
+   "ex": "It became increasingly clear that the letter was a forgery.",
+   "ex_tr": "Mektubun sahte olduğu giderek daha açık hâle geldi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutually beneficial",
+   "lang": "en",
+   "meaning": "karşılıklı yarar sağlayan",
+   "ex": "The arrangement was mutually beneficial to both families.",
+   "ex_tr": "Düzenleme iki aileye de karşılıklı yarar sağlıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutually exclusive",
+   "lang": "en",
+   "meaning": "birbirini dışlayan",
+   "ex": "The two explanations are not mutually exclusive.",
+   "ex_tr": "İki açıklama birbirini dışlamıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutually dependent",
+   "lang": "en",
+   "meaning": "birbirine bağımlı",
+   "ex": "The two communities were mutually dependent for trade.",
+   "ex_tr": "İki topluluk ticaret için birbirine bağımlıydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "visibly shaken",
+   "lang": "en",
+   "meaning": "gözle görülür biçimde sarsılmış",
+   "ex": "He was visibly shaken after the near accident.",
+   "ex_tr": "Kazayı kıl payı atlattıktan sonra gözle görülür biçimde sarsılmıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "visibly upset",
+   "lang": "en",
+   "meaning": "belli olacak kadar üzgün",
+   "ex": "She was visibly upset by the accusation.",
+   "ex_tr": "Suçlama onu gözle görülür biçimde üzmüştü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "visibly relieved",
+   "lang": "en",
+   "meaning": "rahatladığı açıkça görülen",
+   "ex": "The mother was visibly relieved when her son called.",
+   "ex_tr": "Oğlu arayınca annenin rahatladığı açıkça görüldü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotionally drained",
+   "lang": "en",
+   "meaning": "duygusal olarak tükenmiş",
+   "ex": "After the funeral, everyone felt emotionally drained.",
+   "ex_tr": "Cenazeden sonra herkes duygusal olarak tükenmiş hissediyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotionally distant",
+   "lang": "en",
+   "meaning": "duygusal olarak mesafeli",
+   "ex": "He had become emotionally distant after the move.",
+   "ex_tr": "Taşındıktan sonra duygusal olarak mesafeli biri olmuştu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotionally vulnerable",
+   "lang": "en",
+   "meaning": "duygusal olarak savunmasız",
+   "ex": "She felt emotionally vulnerable after the argument.",
+   "ex_tr": "Tartışmadan sonra kendini duygusal olarak savunmasız hissetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "physically exhausted",
+   "lang": "en",
+   "meaning": "bedenen bitkin",
+   "ex": "They were physically exhausted after the long hike.",
+   "ex_tr": "Uzun yürüyüşten sonra bedenen bitkindiler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "physically demanding",
+   "lang": "en",
+   "meaning": "bedensel olarak yorucu",
+   "ex": "Working on the farm was physically demanding.",
+   "ex_tr": "Çiftlikte çalışmak bedensel olarak yorucuydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "physically fit",
+   "lang": "en",
+   "meaning": "bedensel olarak formda",
+   "ex": "Despite his age, the guide was physically fit.",
+   "ex_tr": "Yaşına rağmen rehber bedensel olarak formdaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "morally wrong",
+   "lang": "en",
+   "meaning": "ahlaken yanlış",
+   "ex": "She believed that hiding the truth was morally wrong.",
+   "ex_tr": "Gerçeği saklamanın ahlaken yanlış olduğuna inanıyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "morally responsible",
+   "lang": "en",
+   "meaning": "ahlaken sorumlu",
+   "ex": "He felt morally responsible for the abandoned animals.",
+   "ex_tr": "Terk edilmiş hayvanlardan ahlaken sorumlu hissediyordu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "morally ambiguous",
+   "lang": "en",
+   "meaning": "ahlaki açıdan belirsiz",
+   "ex": "The novel's hero makes several morally ambiguous choices.",
+   "ex_tr": "Romanın kahramanı ahlaki açıdan belirsiz birkaç seçim yapıyor.",
    "cat": "collocations"
   }
  ]
