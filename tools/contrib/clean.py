@@ -31,7 +31,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
          tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v20.xlsx
 """
 import json
 import re
@@ -610,7 +611,39 @@ V19_PH_FIX = {
     47: {'ex_tr': 'Kesin rakamları şu an ezbere söyleyemem.'},
 }
 
+# --- Dictionary v20 (hamit_2026-11-20_v20.xlsx, sent as "v22") -------------------
+# Examples for the last Turkish meanings that had none. Word-for-word English
+# rewritten ("engaged in honoring them", "the apoplexy illness", "made a small
+# discount for"). The "v23" file sent with it holds the same rows again (and
+# the template's sample rows), so it is not read.
+V20_EX_FIX = {
+    6: {'en': "He wasn't so foolish as not to realize that people only liked him for his money."},
+    8: {'en': 'The French Revolution spread the ideas of equality and freedom all over the world.'},
+    10: {'en': 'The engineers started safety checks at the construction site early in the morning.'},
+    13: {'en': 'On a stormy night, the captain was steering his ship safely across the vast ocean.'},
+    14: {'en': 'Okyanus is the most hardworking student in the class and loves painting more than anyone.'},
+    15: {'en': 'The market seller adjusted the scales and weighed out exactly one batman of wheat.'},
+    17: {'en': 'Early in the morning, the dewdrops on the leaves were glittering in the sun.'},
+    18: {'en': 'After that huge argument, only a drop of hope was left in her.'},
+    19: {'en': 'The old man can no longer walk because of the stroke he had last year.'},
+    20: {'en': 'After dinner, the host offered the guests some of his homemade dessert.'},
+    21: {'en': 'While we were shopping at the market, the seller gave the local customers a small discount.'},
+    22: {'en': 'The villagers welcomed the strangers warmly and treated them as honoured guests in the best room.'},
+    23: {'en': 'The child pulled from the rubble was still alive despite going without water for days.'},
+    26: {'en': 'In his latest essay, the author wrote in very pure, clear Turkish.'},
+    29: {'en': 'He had dreamed of sailing around the world since he was a child.'},
+}
+V20_PH_FIX = {
+    2: {'ex': 'Borcu yüzünden eski patronundan köşe bucak kaçıyor.', 'ex_tr': 'Because of his debt, he avoids his old boss at all costs.'},
+    4: {'ex_tr': 'The angry crowd broke through the barricades and poured into the square as if it had broken loose.'},
+    5: {'ex_tr': 'Defending their homeland at the front, the soldiers fought for days, putting their lives on the line.'},
+    18: {'ex': "I'm exhausted after a twelve-hour shift, so I'm going to hit the sack.",
+         'ex_tr': 'On iki saatlik mesainin ardından bitkinim, bu yüzden yatmaya gidiyorum.'},
+}
+
 FIXES = {
+    'hamit_2026-11-20_v20.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split={}, tr_split={}, ex_fix=V20_EX_FIX, ph_fix=V20_PH_FIX),
     'hamit_2026-11-20_v19.xlsx': dict(ctx_fix=V19_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       en_split={}, tr_split={}, ex_fix=V19_EX_FIX, ph_fix=V19_PH_FIX),
     'hamit_2026-11-20_v18.xlsx': dict(ctx_fix=V18_CTX_FIX, ctx_to_phrase=set(), ctx_add=[],
@@ -1132,6 +1165,11 @@ for src in srcs:
         e = {'phrase': ph, 'lang': lang, 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr}
         e.update(fx['ph_fix'].get(i, {}))
         phrases.append(e)
+
+    if name == 'hamit_2026-11-20_v20.xlsx':
+        # Batman (seen with its examples): the province is in Southeastern Anatolia, not on the Black Sea.
+        word_drops.append({'word': 'batman', 'lang': 'tr', 'meaning': 'Batman (a province in the Black Sea region, in northern Turkey)'})
+        words.append({'word': 'batman', 'lang': 'tr', 'pos': 'name', 'meaning': 'Batman (a province in Southeastern Anatolia, Turkey)', 'note': ''})
 
     if name == 'hamit_2026-11-20.xlsx':
         # "run over" is a phrasal verb; its context row also makes it a phrase.

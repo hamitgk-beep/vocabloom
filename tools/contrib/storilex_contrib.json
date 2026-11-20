@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx, hamit_denetim22_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx, hamit_denetim22_2026-11-20.xlsx, hamit_2026-11-20_v20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -10239,6 +10239,238 @@
    "lemma": "düzey",
    "lang": "tr",
    "meaning": "horizontal boundary, level",
+   "translation": ""
+  },
+  {
+   "sentence": "Ormandaki tecrübeli avcı, geyiğin ayak izlerini sessizce takip ediyor.",
+   "form": "avcı",
+   "lemma": "avcı",
+   "lang": "tr",
+   "meaning": "hunter",
+   "translation": ""
+  },
+  {
+   "sentence": "Bugünkü toplantıda projenin detaylarını bize Sayın Avcı sunacak.",
+   "form": "Avcı",
+   "lemma": "avcı",
+   "lang": "tr",
+   "meaning": "surname",
+   "translation": ""
+  },
+  {
+   "sentence": "Belgeselde gördüğümüz devasa bengal kaplanı avına usulca yaklaşıyordu.",
+   "form": "kaplanı",
+   "lemma": "kaplan",
+   "lang": "tr",
+   "meaning": "tiger",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirketin yeni finans müdürü olan Elif Kaplan yarın görevine başlıyor.",
+   "form": "Kaplan",
+   "lemma": "kaplan",
+   "lang": "tr",
+   "meaning": "surname",
+   "translation": ""
+  },
+  {
+   "sentence": "İnsanların onu sadece parası için sevdiğini anlamayacak kadar budala değildi.",
+   "form": "budala",
+   "lemma": "budala",
+   "lang": "tr",
+   "meaning": "fool, idiot",
+   "translation": ""
+  },
+  {
+   "sentence": "O, teknolojiden pek anlamayan eski kafalı bir budaladır.",
+   "form": "budaladır",
+   "lemma": "budala",
+   "lang": "tr",
+   "meaning": "simpleton",
+   "translation": ""
+  },
+  {
+   "sentence": "Fransız devrimi, tüm dünyada eşitlik ve özgürlük fikirlerinin yayılmasını sağladı.",
+   "form": "devrimi",
+   "lemma": "devrim",
+   "lang": "tr",
+   "meaning": "revolution, reform",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni yönetimin getirdiği kurallar şirket içinde tam bir devrim yarattı.",
+   "form": "devrim",
+   "lemma": "devrim",
+   "lang": "tr",
+   "meaning": "upheaval, reformation",
+   "translation": ""
+  },
+  {
+   "sentence": "Mühendisler sabah erkenden şantiye sahasında güvenlik kontrollerine başladılar.",
+   "form": "sahasında",
+   "lemma": "saha",
+   "lang": "tr",
+   "meaning": "area, field",
+   "translation": ""
+  },
+  {
+   "sentence": "İki takım da basketbol sahasına çıkıp ısınma hareketlerine başladı.",
+   "form": "sahasına",
+   "lemma": "saha",
+   "lang": "tr",
+   "meaning": "court",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski konağın taş döşeli sahasında çocuklar akşama kadar neşeyle koşturdu.",
+   "form": "sahasında",
+   "lemma": "saha",
+   "lang": "tr",
+   "meaning": "courtyard",
+   "translation": ""
+  },
+  {
+   "sentence": "Kaptan, fırtınalı bir gecede gemisini devasa okyanusta güvenle ilerletiyordu.",
+   "form": "okyanusta",
+   "lemma": "okyanus",
+   "lang": "tr",
+   "meaning": "ocean",
+   "translation": ""
+  },
+  {
+   "sentence": "Okyanus, sınıfın en çalışkan ve resim yapmayı en çok seven öğrencisidir.",
+   "form": "Okyanus",
+   "lemma": "okyanus",
+   "lang": "tr",
+   "meaning": "given name",
+   "translation": ""
+  },
+  {
+   "sentence": "Pazarcı tartıyı ayarlayıp buğdayı bir batman ağırlığında tam olarak ölçtü.",
+   "form": "batman",
+   "lemma": "batman",
+   "lang": "tr",
+   "meaning": "unit of weight (Ottoman)",
+   "translation": ""
+  },
+  {
+   "sentence": "Güneydoğu Anadolu turunda Batman şehrinin tarihi bölgelerini de ziyaret ettik.",
+   "form": "Batman",
+   "lemma": "batman",
+   "lang": "tr",
+   "meaning": "Batman (city in Turkey)",
+   "translation": ""
+  },
+  {
+   "sentence": "Sabahın erken saatlerinde ağaç yapraklarındaki çiy damlaları güneşle parlıyordu.",
+   "form": "damlaları",
+   "lemma": "damla",
+   "lang": "tr",
+   "meaning": "drop",
+   "translation": ""
+  },
+  {
+   "sentence": "O büyük tartışmadan sonra içinde geçmişe dair sadece bir damla umut kalmıştı.",
+   "form": "damla",
+   "lemma": "damla",
+   "lang": "tr",
+   "meaning": "a small amount",
+   "translation": ""
+  },
+  {
+   "sentence": "Yaşlı adam geçen yıl geçirdiği damla rahatsızlığı yüzünden artık yürüyemiyor.",
+   "form": "damla",
+   "lemma": "damla",
+   "lang": "tr",
+   "meaning": "apoplexy",
+   "translation": ""
+  },
+  {
+   "sentence": "Ev sahibi yemekten sonra misafirlere kendi yaptığı tatlıdan ikram sundu.",
+   "form": "ikram",
+   "lemma": "ikram",
+   "lang": "tr",
+   "meaning": "a treat, a gift",
+   "translation": ""
+  },
+  {
+   "sentence": "Pazarda alışveriş yaparken satıcı yerli müşterilerine küçük bir ikram yaptı.",
+   "form": "ikram",
+   "lemma": "ikram",
+   "lang": "tr",
+   "meaning": "a discount",
+   "translation": ""
+  },
+  {
+   "sentence": "Köye gelen yabancılara misafirperverlik gösterip en güzel odada ikramda bulundular.",
+   "form": "ikramda",
+   "lemma": "ikram",
+   "lang": "tr",
+   "meaning": "honoring",
+   "translation": ""
+  },
+  {
+   "sentence": "Göçük altından çıkarılan çocuk günlerce susuz kalmasına rağmen hala diriydi.",
+   "form": "diriydi",
+   "lemma": "diri",
+   "lang": "tr",
+   "meaning": "alive, living",
+   "translation": ""
+  },
+  {
+   "sentence": "Düzenli sabah yürüyüşleri onu seksen yaşında bile oldukça diri tutuyor.",
+   "form": "diri",
+   "lemma": "diri",
+   "lang": "tr",
+   "meaning": "lively, energetic, fresh",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahar gelince bahçedeki çiçeklerin üzerinde sayısız bal arısı uçuşmaya başladı.",
+   "form": "arısı",
+   "lemma": "arı",
+   "lang": "tr",
+   "meaning": "bee",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazar, son denemesinde son derece arı ve anlaşılır bir Türkçe kullanmış.",
+   "form": "arı",
+   "lemma": "arı",
+   "lang": "tr",
+   "meaning": "clean, pure",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski dönemlerde krallar kışlık pelerinlerini nadir bulunan as kürküyle süslerdi.",
+   "form": "as",
+   "lemma": "as",
+   "lang": "tr",
+   "meaning": "ermine, weasel",
+   "translation": ""
+  },
+  {
+   "sentence": "Kart oyununun sonunda elindeki maça ası ile bütün eli kazandı.",
+   "form": "ası",
+   "lemma": "as",
+   "lang": "tr",
+   "meaning": "ace",
+   "translation": ""
+  },
+  {
+   "sentence": "Çocukluğundan beri dünyanın etrafını yelkenliyle dolaşma düşü kuruyordu.",
+   "form": "düşü",
+   "lemma": "düş",
+   "lang": "tr",
+   "meaning": "dream, hope",
+   "translation": ""
+  },
+  {
+   "sentence": "Güneşin en tepede olduğu düş vaktinde tarlada çalışmak çok yorucudur.",
+   "form": "düş",
+   "lemma": "düş",
+   "lang": "tr",
+   "meaning": "noon",
    "translation": ""
   }
  ],
@@ -26916,6 +27148,13 @@
    "pos": "noun",
    "meaning": "ruin, mess",
    "note": "perişanlık, kötü durum"
+  },
+  {
+   "word": "batman",
+   "lang": "tr",
+   "pos": "name",
+   "meaning": "Batman (a province in Southeastern Anatolia, Turkey)",
+   "note": ""
   }
  ],
  "examples": [
@@ -38033,6 +38272,238 @@
    "tr": "Bu baharatlı yemek sadece bizim yöremize özgü bir lezzettir.",
    "en": "This spicy dish is a flavour found only in our region.",
    "level": "B2"
+  },
+  {
+   "word": "avcı",
+   "lang": "tr",
+   "meaning": "hunter",
+   "tr": "Ormandaki tecrübeli avcı, geyiğin ayak izlerini sessizce takip ediyor.",
+   "en": "The experienced hunter in the forest is silently following the deer's footprints.",
+   "level": "B1"
+  },
+  {
+   "word": "avcı",
+   "lang": "tr",
+   "meaning": "surname",
+   "tr": "Bugünkü toplantıda projenin detaylarını bize Sayın Avcı sunacak.",
+   "en": "Mr. Avcı will present the details of the project to us in today's meeting.",
+   "level": "A2"
+  },
+  {
+   "word": "kaplan",
+   "lang": "tr",
+   "meaning": "tiger",
+   "tr": "Belgeselde gördüğümüz devasa bengal kaplanı avına usulca yaklaşıyordu.",
+   "en": "The massive Bengal tiger we saw in the documentary was quietly approaching its prey.",
+   "level": "A1"
+  },
+  {
+   "word": "kaplan",
+   "lang": "tr",
+   "meaning": "surname",
+   "tr": "Şirketin yeni finans müdürü olan Elif Kaplan yarın görevine başlıyor.",
+   "en": "Elif Kaplan, who is the company's new finance manager, is starting her duty tomorrow.",
+   "level": "A2"
+  },
+  {
+   "word": "budala",
+   "lang": "tr",
+   "meaning": "fool, idiot",
+   "tr": "İnsanların onu sadece parası için sevdiğini anlamayacak kadar budala değildi.",
+   "en": "He wasn't so foolish as not to realize that people only liked him for his money.",
+   "level": "B1"
+  },
+  {
+   "word": "budala",
+   "lang": "tr",
+   "meaning": "simpleton",
+   "tr": "O, teknolojiden pek anlamayan eski kafalı bir budaladır.",
+   "en": "He is an old-fashioned simpleton who doesn't understand much about technology.",
+   "level": "C1"
+  },
+  {
+   "word": "devrim",
+   "lang": "tr",
+   "meaning": "revolution, reform",
+   "tr": "Fransız devrimi, tüm dünyada eşitlik ve özgürlük fikirlerinin yayılmasını sağladı.",
+   "en": "The French Revolution spread the ideas of equality and freedom all over the world.",
+   "level": "B1"
+  },
+  {
+   "word": "devrim",
+   "lang": "tr",
+   "meaning": "upheaval, reformation",
+   "tr": "Yeni yönetimin getirdiği kurallar şirket içinde tam bir devrim yarattı.",
+   "en": "The rules brought by the new management created a complete upheaval within the company.",
+   "level": "B2"
+  },
+  {
+   "word": "saha",
+   "lang": "tr",
+   "meaning": "area, field",
+   "tr": "Mühendisler sabah erkenden şantiye sahasında güvenlik kontrollerine başladılar.",
+   "en": "The engineers started safety checks at the construction site early in the morning.",
+   "level": "B1"
+  },
+  {
+   "word": "saha",
+   "lang": "tr",
+   "meaning": "court",
+   "tr": "İki takım da basketbol sahasına çıkıp ısınma hareketlerine başladı.",
+   "en": "Both teams went out to the basketball court and started their warm-up exercises.",
+   "level": "A2"
+  },
+  {
+   "word": "saha",
+   "lang": "tr",
+   "meaning": "courtyard",
+   "tr": "Eski konağın taş döşeli sahasında çocuklar akşama kadar neşeyle koşturdu.",
+   "en": "Children ran around joyfully in the stone-paved courtyard of the old mansion until evening.",
+   "level": "C1"
+  },
+  {
+   "word": "okyanus",
+   "lang": "tr",
+   "meaning": "ocean",
+   "tr": "Kaptan, fırtınalı bir gecede gemisini devasa okyanusta güvenle ilerletiyordu.",
+   "en": "On a stormy night, the captain was steering his ship safely across the vast ocean.",
+   "level": "A2"
+  },
+  {
+   "word": "okyanus",
+   "lang": "tr",
+   "meaning": "given name",
+   "tr": "Okyanus, sınıfın en çalışkan ve resim yapmayı en çok seven öğrencisidir.",
+   "en": "Okyanus is the most hardworking student in the class and loves painting more than anyone.",
+   "level": "A1"
+  },
+  {
+   "word": "batman",
+   "lang": "tr",
+   "meaning": "unit of weight (Ottoman)",
+   "tr": "Pazarcı tartıyı ayarlayıp buğdayı bir batman ağırlığında tam olarak ölçtü.",
+   "en": "The market seller adjusted the scales and weighed out exactly one batman of wheat.",
+   "level": "C2"
+  },
+  {
+   "word": "batman",
+   "lang": "tr",
+   "meaning": "Batman (city in Turkey)",
+   "tr": "Güneydoğu Anadolu turunda Batman şehrinin tarihi bölgelerini de ziyaret ettik.",
+   "en": "On the Southeastern Anatolia tour, we also visited the historical regions of the city of Batman.",
+   "level": "A2"
+  },
+  {
+   "word": "damla",
+   "lang": "tr",
+   "meaning": "drop",
+   "tr": "Sabahın erken saatlerinde ağaç yapraklarındaki çiy damlaları güneşle parlıyordu.",
+   "en": "Early in the morning, the dewdrops on the leaves were glittering in the sun.",
+   "level": "A2"
+  },
+  {
+   "word": "damla",
+   "lang": "tr",
+   "meaning": "a small amount",
+   "tr": "O büyük tartışmadan sonra içinde geçmişe dair sadece bir damla umut kalmıştı.",
+   "en": "After that huge argument, only a drop of hope was left in her.",
+   "level": "C1"
+  },
+  {
+   "word": "damla",
+   "lang": "tr",
+   "meaning": "apoplexy",
+   "tr": "Yaşlı adam geçen yıl geçirdiği damla rahatsızlığı yüzünden artık yürüyemiyor.",
+   "en": "The old man can no longer walk because of the stroke he had last year.",
+   "level": "C2"
+  },
+  {
+   "word": "ikram",
+   "lang": "tr",
+   "meaning": "a treat, a gift",
+   "tr": "Ev sahibi yemekten sonra misafirlere kendi yaptığı tatlıdan ikram sundu.",
+   "en": "After dinner, the host offered the guests some of his homemade dessert.",
+   "level": "B1"
+  },
+  {
+   "word": "ikram",
+   "lang": "tr",
+   "meaning": "a discount",
+   "tr": "Pazarda alışveriş yaparken satıcı yerli müşterilerine küçük bir ikram yaptı.",
+   "en": "While we were shopping at the market, the seller gave the local customers a small discount.",
+   "level": "B2"
+  },
+  {
+   "word": "ikram",
+   "lang": "tr",
+   "meaning": "honoring",
+   "tr": "Köye gelen yabancılara misafirperverlik gösterip en güzel odada ikramda bulundular.",
+   "en": "The villagers welcomed the strangers warmly and treated them as honoured guests in the best room.",
+   "level": "C1"
+  },
+  {
+   "word": "diri",
+   "lang": "tr",
+   "meaning": "alive, living",
+   "tr": "Göçük altından çıkarılan çocuk günlerce susuz kalmasına rağmen hala diriydi.",
+   "en": "The child pulled from the rubble was still alive despite going without water for days.",
+   "level": "B1"
+  },
+  {
+   "word": "diri",
+   "lang": "tr",
+   "meaning": "lively, energetic, fresh",
+   "tr": "Düzenli sabah yürüyüşleri onu seksen yaşında bile oldukça diri tutuyor.",
+   "en": "Regular morning walks keep him quite energetic even at eighty years old.",
+   "level": "B2"
+  },
+  {
+   "word": "arı",
+   "lang": "tr",
+   "meaning": "bee",
+   "tr": "Bahar gelince bahçedeki çiçeklerin üzerinde sayısız bal arısı uçuşmaya başladı.",
+   "en": "When spring came, countless honey bees started flying over the flowers in the garden.",
+   "level": "A1"
+  },
+  {
+   "word": "arı",
+   "lang": "tr",
+   "meaning": "clean, pure",
+   "tr": "Yazar, son denemesinde son derece arı ve anlaşılır bir Türkçe kullanmış.",
+   "en": "In his latest essay, the author wrote in very pure, clear Turkish.",
+   "level": "C1"
+  },
+  {
+   "word": "as",
+   "lang": "tr",
+   "meaning": "ermine, weasel",
+   "tr": "Eski dönemlerde krallar kışlık pelerinlerini nadir bulunan as kürküyle süslerdi.",
+   "en": "In ancient times, kings used to decorate their winter capes with rare ermine fur.",
+   "level": "C2"
+  },
+  {
+   "word": "as",
+   "lang": "tr",
+   "meaning": "ace",
+   "tr": "Kart oyununun sonunda elindeki maça ası ile bütün eli kazandı.",
+   "en": "At the end of the card game, he won the whole hand with the ace of spades in his hand.",
+   "level": "B1"
+  },
+  {
+   "word": "düş",
+   "lang": "tr",
+   "meaning": "dream, hope",
+   "tr": "Çocukluğundan beri dünyanın etrafını yelkenliyle dolaşma düşü kuruyordu.",
+   "en": "He had dreamed of sailing around the world since he was a child.",
+   "level": "B1"
+  },
+  {
+   "word": "düş",
+   "lang": "tr",
+   "meaning": "noon",
+   "tr": "Güneşin en tepede olduğu düş vaktinde tarlada çalışmak çok yorucudur.",
+   "en": "Working in the field at noon when the sun is at its highest is very tiring.",
+   "level": "C2"
   }
  ],
  "phrases": [
@@ -76547,6 +77018,146 @@
    "meaning": "",
    "ex": "“Once upon a time,” he began, and all three children stopped whispering.",
    "ex_tr": "“Bir varmış bir yokmuş,” diye söze başlayınca üç çocuk da fısıldaşmayı bıraktı."
+  },
+  {
+   "phrase": "köşe bucak kaçmak",
+   "lang": "tr",
+   "meaning": "to avoid at all costs",
+   "ex": "Borcu yüzünden eski patronundan köşe bucak kaçıyor.",
+   "ex_tr": "Because of his debt, he avoids his old boss at all costs."
+  },
+  {
+   "phrase": "nabız yoklamak",
+   "lang": "tr",
+   "meaning": "to test the waters",
+   "ex": "Yeni bir ürünü piyasaya sürmeden önce müşteri anketleriyle nabız yokluyorlar.",
+   "ex_tr": "They are testing the waters with customer surveys before launching a new product."
+  },
+  {
+   "phrase": "ipini koparmak",
+   "lang": "tr",
+   "meaning": "to break loose",
+   "ex": "Öfkeli kalabalık barikatları aşarak resmen ipini koparmış gibi meydana aktı.",
+   "ex_tr": "The angry crowd broke through the barricades and poured into the square as if it had broken loose."
+  },
+  {
+   "phrase": "kelle koltukta",
+   "lang": "tr",
+   "meaning": "putting one's life on the line",
+   "ex": "Cephede vatanı savunurken askerler günlerce kelle koltukta savaştı.",
+   "ex_tr": "Defending their homeland at the front, the soldiers fought for days, putting their lives on the line."
+  },
+  {
+   "phrase": "göze almak",
+   "lang": "tr",
+   "meaning": "to risk, to brave",
+   "ex": "Büyük bir başarı elde etmek için bazen büyük hatalar yapmayı göze almalısın.",
+   "ex_tr": "To achieve a great success, you must sometimes risk making big mistakes."
+  },
+  {
+   "phrase": "lafı ağzında gevelemek",
+   "lang": "tr",
+   "meaning": "to beat around the bush",
+   "ex": "Lafı ağzında gevelemeyi bırakıp bana acı gerçeği hemen söylemelisin.",
+   "ex_tr": "You must stop beating around the bush and tell me the bitter truth immediately."
+  },
+  {
+   "phrase": "sıfırı tüketmek",
+   "lang": "tr",
+   "meaning": "to hit rock bottom, to run out of money",
+   "ex": "Bu ay o kadar çok gereksiz harcama yaptı ki daha ay bitmeden sıfırı tüketti.",
+   "ex_tr": "He made so many unnecessary expenses this month that he ran out of money before the month even ended."
+  },
+  {
+   "phrase": "el üstünde tutulmak",
+   "lang": "tr",
+   "meaning": "to be highly regarded",
+   "ex": "Yazdığı bu harika kitaptan sonra edebiyat dünyasında el üstünde tutulmaya başlandı.",
+   "ex_tr": "After this wonderful book he wrote, he started to be highly regarded in the literary world."
+  },
+  {
+   "phrase": "ağzı kulaklarına varmak",
+   "lang": "tr",
+   "meaning": "to grin from ear to ear",
+   "ex": "Terfi aldığını öğrenince sevinçten ağzı kulaklarına vardı.",
+   "ex_tr": "When he learned he got a promotion, he grinned from ear to ear out of joy."
+  },
+  {
+   "phrase": "kafa yormak",
+   "lang": "tr",
+   "meaning": "to rack one's brain",
+   "ex": "Şirketin krizden nasıl çıkacağı üzerine bütün gece uykusuz kalıp kafa yordu.",
+   "ex_tr": "He stayed sleepless all night and racked his brain over how the company would get out of the crisis."
+  },
+  {
+   "phrase": "pull one's weight",
+   "lang": "en",
+   "meaning": "üzerine düşeni yapmak, elini taşın altına koymak",
+   "ex": "If everyone in the team pulls their weight, we can finish this project on time.",
+   "ex_tr": "Eğer takımdaki herkes üzerine düşeni yaparsa bu projeyi zamanında bitirebiliriz."
+  },
+  {
+   "phrase": "throw caution to the wind",
+   "lang": "en",
+   "meaning": "tehlikeyi hiçe saymak, sonuçlarını düşünmeden hareket etmek",
+   "ex": "He threw caution to the wind and invested all his savings in a new risky startup.",
+   "ex_tr": "Tehlikeyi hiçe saydı ve tüm birikimini yeni riskli bir girişime yatırdı."
+  },
+  {
+   "phrase": "a far cry from",
+   "lang": "en",
+   "meaning": "yakından uzaktan alakası olmamak",
+   "ex": "The messy hotel room we stayed in was a far cry from the photos on the website.",
+   "ex_tr": "Kaldığımız dağınık otel odasının web sitesindeki fotoğraflarla yakından uzaktan alakası yoktu."
+  },
+  {
+   "phrase": "beat the clock",
+   "lang": "en",
+   "meaning": "zamanla yarışıp yetiştirmek",
+   "ex": "We managed to beat the clock and submit our application just seconds before the deadline.",
+   "ex_tr": "Zamanla yarışıp başvurumuzu son teslim tarihinden saniyeler önce sunmayı başardık."
+  },
+  {
+   "phrase": "jump the gun",
+   "lang": "en",
+   "meaning": "erken davranmak, acele etmek",
+   "ex": "We shouldn't jump the gun and announce the results before they are officially confirmed.",
+   "ex_tr": "Erken davranıp sonuçları resmen onaylanmadan duyurmamalıyız."
+  },
+  {
+   "phrase": "once in a blue moon",
+   "lang": "en",
+   "meaning": "ayda yılda bir, çok nadiren",
+   "ex": "Since my brother lives abroad, we only get to see each other once in a blue moon.",
+   "ex_tr": "Erkek kardeşim yurt dışında yaşadığı için birbirimizi ancak ayda yılda bir görebiliyoruz."
+  },
+  {
+   "phrase": "hit the sack",
+   "lang": "en",
+   "meaning": "yatmaya gitmek, kafayı vurup yatmak",
+   "ex": "I'm exhausted after a twelve-hour shift, so I'm going to hit the sack.",
+   "ex_tr": "On iki saatlik mesainin ardından bitkinim, bu yüzden yatmaya gidiyorum."
+  },
+  {
+   "phrase": "miss the boat",
+   "lang": "en",
+   "meaning": "fırsatı kaçırmak",
+   "ex": "If you wait too long to buy those concert tickets, you will definitely miss the boat.",
+   "ex_tr": "O konser biletlerini almak için çok uzun süre beklersen, fırsatı kesinlikle kaçıracaksın."
+  },
+  {
+   "phrase": "on the ball",
+   "lang": "en",
+   "meaning": "işini bilen, dikkatli ve tetikte",
+   "ex": "Our new project manager is really on the ball; she notices every single small detail.",
+   "ex_tr": "Yeni proje yöneticimiz gerçekten işini biliyor; her bir küçük detayı fark ediyor."
+  },
+  {
+   "phrase": "sit on the fence",
+   "lang": "en",
+   "meaning": "kararsız kalmak, taraf tutmamak",
+   "ex": "You can't sit on the fence forever; you have to choose which strategy you support.",
+   "ex_tr": "Sonsuza kadar kararsız kalamazsın; hangi stratejiyi desteklediğini seçmek zorundasın."
   }
  ],
  "phrase_edits": [
@@ -77033,6 +77644,11 @@
    "word": "pm",
    "lang": "en",
    "meaning": "gece yarısından sonra"
+  },
+  {
+   "word": "batman",
+   "lang": "tr",
+   "meaning": "Batman (a province in the Black Sea region, in northern Turkey)"
   }
  ]
 }
