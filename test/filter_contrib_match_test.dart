@@ -66,5 +66,8 @@ void main() {
     expect(found("Don't boss the volunteers about.", 'phrasal_verbs'), contains('boss about'));
     expect(found('The kids ran me off my feet.', 'idioms'), contains("run someone off one's feet"));
     expect(found('He bit off more than he can chew.', 'idioms'), contains('bite off more than sb can chew'));
+    // Audit 22: headings in the form texts have.
+    expect(found('He worked his employees into the ground.', 'idioms'), contains('work sb into the ground'));
+    expect(found('She gave the horse its head.', 'idioms'), contains("give someone one's head"));
   });
 }

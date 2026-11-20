@@ -31,7 +31,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
          tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v19.xlsx
+         tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx
 """
 import json
 import re
@@ -908,7 +908,46 @@ D21_EDITS = {
     'stick about': {'action': 'meaning', 'meaning': 'bir süre daha kalmak, etrafta beklemek'},
 }
 
-AUDIT_FIX = {'hamit_denetim21_2026-11-20.xlsx': (D21_EX_FIX, D21_EDITS),
+# --- Audit sheet 22 -------------------------------------------------------------
+# Rows 54-73: seven rows hold a sentence of another phrase ("medicine up" has
+# "make a name for himself"); each goes to the phrase it shows. Headings take the
+# form texts have ("give the horse its head", "work his employees into the ground").
+D22_EX_FIX = {
+    8: {'phrase': 'within reason'},
+    49: {'phrase': 'give someone the eye'},
+    54: {'phrase': 'make a name for oneself'},
+    55: {'phrase': 'make an example of'},
+    56: {'phrase': 'make light of'},
+    58: {'phrase': 'on the point of'},
+    62: {'phrase': "pull one's leg"},
+    70: {'phrase': 'face the music'},
+    72: None,  # "a bitter pill to swallow" is not in the dictionary
+    73: {'phrase': 'jump the gun'},
+    115: None,  # "keep your mind about you" is another verb
+    106: {'ex': 'The new teacher is not as black as she is painted; the students just exaggerate.',
+          'ex_tr': 'Yeni öğretmen anlatıldığı kadar kötü değil; öğrenciler sadece abartıyor.'},
+}
+D22_EDITS = {
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ('give someone their head', "give someone one's head"), ('do somebody wrong', 'do someone wrong'),
+        ('give the glad eye', 'give someone the glad eye'), ("one can run but one can't hide", "you can run but you can't hide"),
+        ('throw in at the deep end', 'throw sb in at the deep end'), ('not as black as one is painted', 'not as black as sb is painted'),
+        ("have one's foot in the door", 'foot in the door'), ("have time on one's hands", "time on one's hands"),
+        ('put in the ground', 'put sb in the ground'), ('work into the ground', 'work sb into the ground'),
+        ('give the gate', 'give sb the gate'), ('ride fence', 'ride the fence'), ('not worth salt', "not worth one's salt"),
+        ("one could do it in one's sleep", "do it in one's sleep"))},
+    **{p: {'action': 'merge', 'to': t} for p, t in (
+        ('think one hung the moon', 'hang the moon'), ('leave somebody high and dry', 'leave someone high and dry'),
+        ('fresh up', 'freshen up'), ('upon the books', 'on the books'))},
+    # Review sheet: no such phrase, or the meaning is not one ("french fact": "Fransız gerçeği").
+    **{p: {'action': 'delete'} for p in (
+        'french fact', 'fire into the sun', 'kiss out', 'short down', 'slow off', 'slow out', 'apple up', 'sweater up',
+        'bet up', 'dark up', 'with one shoulder', 'gone north about', 'rid out', 'medicine up', 'take the ride')},
+    'fool away': {'action': 'meaning', 'meaning': '(vakit, para) boşa harcamak, çarçur etmek'},
+}
+
+AUDIT_FIX = {'hamit_denetim22_2026-11-20.xlsx': (D22_EX_FIX, D22_EDITS),
+             'hamit_denetim21_2026-11-20.xlsx': (D21_EX_FIX, D21_EDITS),
              'hamit_denetim20_2026-11-20.xlsx': (D20_EX_FIX, D20_EDITS),
              'hamit_denetim19_2026-11-20.xlsx': (D19_EX_FIX, D19_EDITS),
              'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
