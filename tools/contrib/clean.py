@@ -24,7 +24,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
          tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v11.xlsx
+         tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx
 """
 import json
 import re
@@ -559,7 +559,25 @@ D15_EDITS = {
     # "I'll tell you the truth": "to tell you the truth" is the phrase.
     'tell you the truth': {'action': 'delete'},
 }
-AUDIT_FIX = {'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
+# --- Audit sheet 16 -------------------------------------------------------------
+# "their" in a heading is any possessive ("gave the director his flowers").
+D16_EX_FIX = {
+    71: {'ex': 'He likes to order everyone about in the office.', 'ex_tr': 'Ofiste herkese emir yağdırmayı sever.'},
+    89: {'phrase': "give someone one's flowers", 'ex': 'We should give our teachers their flowers while they are still with us.',
+         'ex_tr': 'Öğretmenlerimizin hakkını, onlar hâlâ aramızdayken teslim etmeliyiz.'},
+}
+D16_EDITS = {
+    'give someone their flowers': {'action': 'rename', 'to': "give someone one's flowers"},
+    'while one is about it': {'action': 'rename', 'to': "while you're at it"},
+    'on the ready': {'action': 'delete'},  # "at the ready" is there
+    'from good hands': {'action': 'delete'},
+    'son of the morning': {'action': 'meaning', 'meaning': "sabah yıldızı; Şeytan (Lucifer, Kitab-ı Mukaddes'te)"},
+    'on a promise': {'action': 'meaning', 'meaning': '(İngiliz argo) birinden birlikte olma sözü almış olmak'},
+    'go out like a light': {'action': 'meaning', 'meaning': 'hemen uyuyakalmak, ölü gibi uyumak'},
+    'stupid is as stupid does': {'action': 'meaning', 'meaning': 'insanı aptal yapan davranışlarıdır'},
+}
+AUDIT_FIX = {'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
+             'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
              'hamit_denetim15_2026-11-20.xlsx': (D15_EX_FIX, D15_EDITS)}
 
 

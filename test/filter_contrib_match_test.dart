@@ -50,5 +50,8 @@ void main() {
     expect(found("Don't let your fear get the best of you.", 'idioms'), contains('get the best of'));
     expect(found('We got the best price in town.', 'idioms'), isNot(contains('get the best of')));
     expect(found('The guard gave the visitor the once over.', 'idioms'), contains('give sb the once over'));
+    // Audit 16: "their flowers" is any possessive; the usual "while you're at it".
+    expect(found('Critics finally gave the director his flowers.', 'idioms'), contains("give someone one's flowers"));
+    expect(found("Buy some milk while you're at it.", 'conjunctions'), contains("while you're at it"));
   });
 }
