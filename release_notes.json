@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "filters-contrib-hamit-2",
+      "area": "reader",
+      "tr": "Filtrelere yeni kalıplar eklendi: Fiil/sıfat + edat filtresine 188 kalıp (accuse someone of, be famous for, be prone to …), 30 atasözü (better late than never: geç olsun güç olmasın), 20 ikili kalıp (trial and error), 20 yanıltıcı benzer kelime (magazine ≠ mağaza) ve 20 öbek fiil.",
+      "en": "New phrases in the filters: 188 in Dependent Prepositions (accuse someone of, be famous for, be prone to …), 30 proverbs (better late than never), 20 binomials (trial and error), 20 false friends (magazine ≠ mağaza) and 20 phrasal verbs."
+    },
+    {
       "id": "contrib-dictionary-hamit-3",
       "area": "dictionary",
       "tr": "Sözlüğe yeni elle hazırlanmış veri eklendi: 24 yeni Türkçe anlam (örneğin \"tırmanmak\": to escalate), müsamaha, muamma, safsata gibi kelimeler, 30 bağlam cümlesi; İngilizcede abide by, alleviate, discrepancy gibi kelimeler ve bring about, iron out, rule out gibi öbek fiillerin örnek cümleleri.",

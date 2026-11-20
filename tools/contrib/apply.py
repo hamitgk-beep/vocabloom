@@ -18,8 +18,9 @@ nothing.
     examples and context sentences: under the sense they show ("more"), and
                   in exs for the word, shown before the Tatoeba ones
     phrases: own_expr for a known phrase, a new expr row for a new one; a
-             phrase from a filter sheet goes in that filter ("cat"), so the
-             same phrase can be in two filters, as "actually" already is
+             phrase from a filter sheet goes in that filter ("cat"); in one of
+             the new filters the same phrase can also be in another one, as
+             "actually" already is
 
 usage: python3 tools/contrib/apply.py tools/contrib/storilex_contrib.json assets/tr_en.db assets/dict.db
 """
@@ -255,11 +256,16 @@ def en_example(word, meaning, en, tr):
 
 
 en_new_exs = defaultdict(list)
+# Filters that only the contributors' sheets fill: a phrase can be there and in another filter.
+OWN_FILTERS = {'dependent_prepositions', 'similes', 'polite_phrases', 'informal_slang', 'confusables', 'uk_us'}
 
 
 def en_phrase(p):
     phrase, meaning, ex, ex_tr = p['phrase'].strip(), p['meaning'].strip(), p.get('ex', ''), p.get('ex_tr', '')
     want = p.get('cat')
+    if want and want not in OWN_FILTERS and en_db.execute('SELECT 1 FROM expr WHERE phrase=?', (phrase,)).fetchone():
+        # A filter the dictionary already fills: the phrase stays where it is.
+        want = None
     rows = en_db.execute('SELECT id, cat, tr, entr, ex, extr FROM expr WHERE phrase=?' + (' AND cat=?' if want else ''),
                          (phrase, want) if want else (phrase,)).fetchall()
     if not rows:

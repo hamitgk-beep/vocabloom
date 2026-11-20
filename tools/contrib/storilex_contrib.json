@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_filtre_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -25186,14 +25186,6 @@
    "cat": "polite_phrases"
   },
   {
-   "phrase": "i'm afraid",
-   "lang": "en",
-   "meaning": "Maalesef ...",
-   "ex": "I am afraid we are fully booked.",
-   "ex_tr": "Maalesef tüm yerlerimiz dolu.",
-   "cat": "polite_phrases"
-  },
-  {
    "phrase": "would it be possible to",
    "lang": "en",
    "meaning": "... mümkün olur mu?",
@@ -25800,6 +25792,2214 @@
    "ex": "In general, the plan works well.",
    "ex_tr": "Genel olarak plan iyi işliyor.",
    "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "rely on",
+   "lang": "en",
+   "meaning": "güvenmek, bel bağlamak",
+   "ex": "We rely on accurate measurements before making a decision.",
+   "ex_tr": "Karar vermeden önce doğru ölçümlere güveniriz.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "depend on",
+   "lang": "en",
+   "meaning": "bağlı olmak",
+   "ex": "The delivery date depends on the weather.",
+   "ex_tr": "Teslimat tarihi hava durumuna bağlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "insist on",
+   "lang": "en",
+   "meaning": "ısrar etmek",
+   "ex": "She insisted on checking the figures again.",
+   "ex_tr": "Rakamları yeniden kontrol etmekte ısrar etti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "focus on",
+   "lang": "en",
+   "meaning": "odaklanmak",
+   "ex": "Please focus on the main question.",
+   "ex_tr": "Lütfen asıl soruya odaklan.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "concentrate on",
+   "lang": "en",
+   "meaning": "yoğunlaşmak",
+   "ex": "I cannot concentrate on my work in this noise.",
+   "ex_tr": "Bu gürültüde işime yoğunlaşamıyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "apologize for",
+   "lang": "en",
+   "meaning": "özür dilemek",
+   "ex": "He apologized for arriving late.",
+   "ex_tr": "Geç geldiği için özür diledi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "thank someone for",
+   "lang": "en",
+   "meaning": "birine bir şey için teşekkür etmek",
+   "ex": "I thanked her for the helpful advice.",
+   "ex_tr": "Yararlı tavsiyesi için ona teşekkür ettim.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "blame someone for",
+   "lang": "en",
+   "meaning": "birini bir şeyden sorumlu tutmak",
+   "ex": "They blamed the contractor for the delay.",
+   "ex_tr": "Gecikmeden yükleniciyi sorumlu tuttular.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "accuse someone of",
+   "lang": "en",
+   "meaning": "birini bir şeyle suçlamak",
+   "ex": "The witness accused him of lying.",
+   "ex_tr": "Tanık onu yalan söylemekle suçladı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "suspect someone of",
+   "lang": "en",
+   "meaning": "birinden bir konuda şüphelenmek",
+   "ex": "Police suspected him of stealing the bicycle.",
+   "ex_tr": "Polis bisikleti çaldığından şüphelendi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "prevent someone from",
+   "lang": "en",
+   "meaning": "birinin bir şey yapmasını engellemek",
+   "ex": "The locked gate prevented us from entering.",
+   "ex_tr": "Kilitli kapı içeri girmemizi engelledi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "stop someone from",
+   "lang": "en",
+   "meaning": "birinin bir şey yapmasını durdurmak",
+   "ex": "Nothing could stop her from trying again.",
+   "ex_tr": "Hiçbir şey onu yeniden denemekten alıkoyamadı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "protect someone from",
+   "lang": "en",
+   "meaning": "birini bir şeyden korumak",
+   "ex": "These gloves protect your hands from heat.",
+   "ex_tr": "Bu eldivenler ellerini sıcaktan korur.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "recover from",
+   "lang": "en",
+   "meaning": "iyileşmek, toparlanmak",
+   "ex": "He recovered from the flu in a week.",
+   "ex_tr": "Bir haftada gripten iyileşti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "suffer from",
+   "lang": "en",
+   "meaning": "bir rahatsızlıktan muzdarip olmak",
+   "ex": "Many residents suffer from seasonal allergies.",
+   "ex_tr": "Birçok sakin mevsimsel alerjilerden şikâyetçi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "benefit from",
+   "lang": "en",
+   "meaning": "yarar sağlamak",
+   "ex": "Students benefit from regular feedback.",
+   "ex_tr": "Öğrenciler düzenli geri bildirimden yarar sağlar.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "result in",
+   "lang": "en",
+   "meaning": "sonuçlanmak, yol açmak",
+   "ex": "The mistake resulted in an extra charge.",
+   "ex_tr": "Hata ek bir ücrete yol açtı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "result from",
+   "lang": "en",
+   "meaning": "kaynaklanmak",
+   "ex": "The damage resulted from a power surge.",
+   "ex_tr": "Hasar ani gerilim yükselmesinden kaynaklandı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "lead to",
+   "lang": "en",
+   "meaning": "yol açmak",
+   "ex": "Poor planning can lead to expensive repairs.",
+   "ex_tr": "Kötü planlama pahalı onarımlara yol açabilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "contribute to",
+   "lang": "en",
+   "meaning": "katkıda bulunmak",
+   "ex": "Regular exercise contributes to better sleep.",
+   "ex_tr": "Düzenli egzersiz daha iyi uykuya katkıda bulunur.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "participate in",
+   "lang": "en",
+   "meaning": "katılmak",
+   "ex": "Our team participated in the safety training.",
+   "ex_tr": "Ekibimiz güvenlik eğitimine katıldı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "succeed in",
+   "lang": "en",
+   "meaning": "başarmak",
+   "ex": "She succeeded in solving the puzzle.",
+   "ex_tr": "Bulmacayı çözmeyi başardı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "believe in",
+   "lang": "en",
+   "meaning": "inanmak",
+   "ex": "I believe in giving everyone a fair chance.",
+   "ex_tr": "Herkese adil bir şans vermeye inanırım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "belong to",
+   "lang": "en",
+   "meaning": "ait olmak",
+   "ex": "This toolbox belongs to the electrical team.",
+   "ex_tr": "Bu alet çantası elektrik ekibine ait.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "consist of",
+   "lang": "en",
+   "meaning": "oluşmak",
+   "ex": "The course consists of twelve lessons.",
+   "ex_tr": "Kurs on iki dersten oluşuyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "apply for",
+   "lang": "en",
+   "meaning": "başvurmak",
+   "ex": "He applied for a new position last Monday.",
+   "ex_tr": "Geçen pazartesi yeni bir pozisyona başvurdu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "apply to",
+   "lang": "en",
+   "meaning": "geçerli olmak, uygulanmak",
+   "ex": "The new rule applies to all visitors.",
+   "ex_tr": "Yeni kural tüm ziyaretçiler için geçerli.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "search for",
+   "lang": "en",
+   "meaning": "aramak",
+   "ex": "We searched for the missing key all morning.",
+   "ex_tr": "Bütün sabah kayıp anahtarı aradık.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "look for",
+   "lang": "en",
+   "meaning": "aramak",
+   "ex": "I'm looking for a quieter place to study.",
+   "ex_tr": "Ders çalışmak için daha sessiz bir yer arıyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "wait for",
+   "lang": "en",
+   "meaning": "beklemek",
+   "ex": "They waited for the bus in the rain.",
+   "ex_tr": "Yağmurda otobüsü beklediler.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "listen to",
+   "lang": "en",
+   "meaning": "dinlemek",
+   "ex": "Listen to the instructions carefully.",
+   "ex_tr": "Talimatları dikkatle dinle.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "talk to",
+   "lang": "en",
+   "meaning": "biriyle konuşmak",
+   "ex": "I talked to the manager about the schedule.",
+   "ex_tr": "Program hakkında müdürle konuştum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "talk about",
+   "lang": "en",
+   "meaning": "hakkında konuşmak",
+   "ex": "We talked about our holiday plans.",
+   "ex_tr": "Tatil planlarımız hakkında konuştuk.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "agree with",
+   "lang": "en",
+   "meaning": "aynı fikirde olmak",
+   "ex": "I agree with your assessment.",
+   "ex_tr": "Değerlendirmenize katılıyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "agree on",
+   "lang": "en",
+   "meaning": "üzerinde anlaşmak",
+   "ex": "We agreed on a date for the inspection.",
+   "ex_tr": "Denetim için bir tarihte anlaştık.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "agree to",
+   "lang": "en",
+   "meaning": "kabul etmek",
+   "ex": "The owner agreed to the proposed changes.",
+   "ex_tr": "Mal sahibi önerilen değişiklikleri kabul etti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "disagree with",
+   "lang": "en",
+   "meaning": "aynı fikirde olmamak",
+   "ex": "I disagree with that conclusion.",
+   "ex_tr": "O sonuca katılmıyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "object to",
+   "lang": "en",
+   "meaning": "itiraz etmek",
+   "ex": "Several neighbors objected to the new road.",
+   "ex_tr": "Birkaç komşu yeni yola itiraz etti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "respond to",
+   "lang": "en",
+   "meaning": "yanıt vermek",
+   "ex": "Please respond to my email by Friday.",
+   "ex_tr": "Lütfen e-postama cuma gününe kadar yanıt ver.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "reply to",
+   "lang": "en",
+   "meaning": "yanıt vermek",
+   "ex": "She replied to the invitation immediately.",
+   "ex_tr": "Davete hemen yanıt verdi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "refer to",
+   "lang": "en",
+   "meaning": "atıfta bulunmak, söz etmek",
+   "ex": "The report refers to last year's inspection.",
+   "ex_tr": "Rapor geçen yılki denetimden söz ediyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "compare with",
+   "lang": "en",
+   "meaning": "karşılaştırmak",
+   "ex": "Compare these results with the earlier measurements.",
+   "ex_tr": "Bu sonuçları önceki ölçümlerle karşılaştır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "compare to",
+   "lang": "en",
+   "meaning": "benzetmek, karşılaştırmak",
+   "ex": "The poet compared the city to a sleeping giant.",
+   "ex_tr": "Şair şehri uyuyan bir deve benzetti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "prefer something to",
+   "lang": "en",
+   "meaning": "bir şeyi diğerine tercih etmek",
+   "ex": "I prefer tea to coffee in the evening.",
+   "ex_tr": "Akşamları çayı kahveye tercih ederim.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "replace something with",
+   "lang": "en",
+   "meaning": "bir şeyi başka bir şeyle değiştirmek",
+   "ex": "We replaced the old cable with a new one.",
+   "ex_tr": "Eski kabloyu yenisiyle değiştirdik.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "provide someone with",
+   "lang": "en",
+   "meaning": "birine bir şey sağlamak",
+   "ex": "The school provided students with tablets.",
+   "ex_tr": "Okul öğrencilere tablet sağladı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "supply someone with",
+   "lang": "en",
+   "meaning": "birine bir şey tedarik etmek",
+   "ex": "The clinic supplied patients with clean masks.",
+   "ex_tr": "Klinik hastalara temiz maske sağladı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "remind someone of",
+   "lang": "en",
+   "meaning": "birine bir şeyi hatırlatmak",
+   "ex": "That song reminds me of my childhood.",
+   "ex_tr": "O şarkı bana çocukluğumu hatırlatıyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "remind someone about",
+   "lang": "en",
+   "meaning": "birine bir konuyu hatırlatmak",
+   "ex": "Please remind me about tomorrow's meeting.",
+   "ex_tr": "Lütfen yarınki toplantıyı bana hatırlat.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "warn someone about",
+   "lang": "en",
+   "meaning": "birini bir konuda uyarmak",
+   "ex": "They warned us about the icy roads.",
+   "ex_tr": "Bizi buzlu yollar konusunda uyardılar.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "warn someone against",
+   "lang": "en",
+   "meaning": "birini bir şey yapmaması için uyarmak",
+   "ex": "The doctor warned him against smoking.",
+   "ex_tr": "Doktor onu sigara içmemesi konusunda uyardı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "congratulate someone on",
+   "lang": "en",
+   "meaning": "birini bir şey için kutlamak",
+   "ex": "We congratulated her on her promotion.",
+   "ex_tr": "Terfisi için onu kutladık.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "complain about",
+   "lang": "en",
+   "meaning": "şikâyet etmek",
+   "ex": "Several guests complained about the noise.",
+   "ex_tr": "Birkaç misafir gürültüden şikâyet etti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "deal with",
+   "lang": "en",
+   "meaning": "ilgilenmek, başa çıkmak",
+   "ex": "Our team deals with urgent repairs every day.",
+   "ex_tr": "Ekibimiz her gün acil onarımlarla ilgileniyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "cope with",
+   "lang": "en",
+   "meaning": "başa çıkmak",
+   "ex": "She coped with the pressure remarkably well.",
+   "ex_tr": "Baskıyla son derece iyi başa çıktı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "adapt to",
+   "lang": "en",
+   "meaning": "uyum sağlamak",
+   "ex": "It took me a month to adapt to the new routine.",
+   "ex_tr": "Yeni düzene uyum sağlamam bir ay sürdü.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "adjust to",
+   "lang": "en",
+   "meaning": "alışmak, uyum sağlamak",
+   "ex": "The children quickly adjusted to their new school.",
+   "ex_tr": "Çocuklar yeni okullarına hızla alıştı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "get used to",
+   "lang": "en",
+   "meaning": "alışmak",
+   "ex": "I'm getting used to waking up early.",
+   "ex_tr": "Erken kalkmaya alışıyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be accustomed to",
+   "lang": "en",
+   "meaning": "alışkın olmak",
+   "ex": "She's accustomed to working under pressure.",
+   "ex_tr": "Baskı altında çalışmaya alışkın.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be afraid of",
+   "lang": "en",
+   "meaning": "korkmak",
+   "ex": "My little brother is afraid of spiders.",
+   "ex_tr": "Küçük kardeşim örümceklerden korkar.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be interested in",
+   "lang": "en",
+   "meaning": "ilgilenmek",
+   "ex": "He's interested in learning Italian.",
+   "ex_tr": "İtalyanca öğrenmekle ilgileniyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be good at",
+   "lang": "en",
+   "meaning": "iyi olmak",
+   "ex": "Mina is good at solving difficult problems.",
+   "ex_tr": "Mina zor problemleri çözmede iyidir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be bad at",
+   "lang": "en",
+   "meaning": "kötü olmak",
+   "ex": "I'm bad at remembering names.",
+   "ex_tr": "İsimleri hatırlamakta kötüyüm.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be responsible for",
+   "lang": "en",
+   "meaning": "sorumlu olmak",
+   "ex": "Who is responsible for locking the building?",
+   "ex_tr": "Binayı kilitlemekten kim sorumlu?",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be capable of",
+   "lang": "en",
+   "meaning": "yapabilecek durumda olmak",
+   "ex": "This machine is capable of cutting thick steel.",
+   "ex_tr": "Bu makine kalın çeliği kesebilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be aware of",
+   "lang": "en",
+   "meaning": "farkında olmak",
+   "ex": "Are you aware of the new deadline?",
+   "ex_tr": "Yeni son tarihin farkında mısın?",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be proud of",
+   "lang": "en",
+   "meaning": "gurur duymak",
+   "ex": "Her parents are proud of her achievements.",
+   "ex_tr": "Ailesi onun başarılarıyla gurur duyuyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be ashamed of",
+   "lang": "en",
+   "meaning": "utanmak",
+   "ex": "He was ashamed of his rude behavior.",
+   "ex_tr": "Kaba davranışından utandı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be jealous of",
+   "lang": "en",
+   "meaning": "kıskanmak",
+   "ex": "She was jealous of her sister's success.",
+   "ex_tr": "Kız kardeşinin başarısını kıskanıyordu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be famous for",
+   "lang": "en",
+   "meaning": "ile ünlü olmak",
+   "ex": "The village is famous for its olive oil.",
+   "ex_tr": "Köy zeytinyağıyla ünlüdür.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be known for",
+   "lang": "en",
+   "meaning": "ile tanınmak",
+   "ex": "The restaurant is known for its fresh bread.",
+   "ex_tr": "Restoran taze ekmeğiyle tanınır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be different from",
+   "lang": "en",
+   "meaning": "farklı olmak",
+   "ex": "This design is different from the original.",
+   "ex_tr": "Bu tasarım orijinalinden farklı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be similar to",
+   "lang": "en",
+   "meaning": "benzemek",
+   "ex": "Your handwriting is similar to mine.",
+   "ex_tr": "El yazın benimkine benziyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be married to",
+   "lang": "en",
+   "meaning": "ile evli olmak",
+   "ex": "She has been married to Ali for ten years.",
+   "ex_tr": "Ali ile on yıldır evli.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be engaged to",
+   "lang": "en",
+   "meaning": "ile nişanlı olmak",
+   "ex": "He's engaged to his childhood friend.",
+   "ex_tr": "Çocukluk arkadaşıyla nişanlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be related to",
+   "lang": "en",
+   "meaning": "ilişkili olmak",
+   "ex": "These two problems are related to each other.",
+   "ex_tr": "Bu iki sorun birbiriyle ilişkili.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be familiar with",
+   "lang": "en",
+   "meaning": "aşina olmak",
+   "ex": "Are you familiar with this software?",
+   "ex_tr": "Bu yazılıma aşina mısın?",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be satisfied with",
+   "lang": "en",
+   "meaning": "memnun olmak",
+   "ex": "The client was satisfied with the repairs.",
+   "ex_tr": "Müşteri onarımlardan memnun kaldı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be disappointed with",
+   "lang": "en",
+   "meaning": "hayal kırıklığına uğramak",
+   "ex": "I was disappointed with the service.",
+   "ex_tr": "Hizmet beni hayal kırıklığına uğrattı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be worried about",
+   "lang": "en",
+   "meaning": "endişelenmek",
+   "ex": "She's worried about the exam results.",
+   "ex_tr": "Sınav sonuçları için endişeleniyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be excited about",
+   "lang": "en",
+   "meaning": "heyecanlanmak",
+   "ex": "We're excited about the upcoming trip.",
+   "ex_tr": "Yaklaşan gezi için heyecanlıyız.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be tired of",
+   "lang": "en",
+   "meaning": "bıkmak",
+   "ex": "I'm tired of hearing the same excuse.",
+   "ex_tr": "Aynı bahaneyi duymaktan bıktım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be tired from",
+   "lang": "en",
+   "meaning": "yorgun olmak",
+   "ex": "He was tired from carrying heavy boxes.",
+   "ex_tr": "Ağır kutular taşımaktan yorulmuştu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be full of",
+   "lang": "en",
+   "meaning": "ile dolu olmak",
+   "ex": "The garden was full of butterflies.",
+   "ex_tr": "Bahçe kelebeklerle doluydu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be short of",
+   "lang": "en",
+   "meaning": "eksik olmak, yetersiz olmak",
+   "ex": "We're short of time, so let's begin.",
+   "ex_tr": "Zamanımız az, o yüzden başlayalım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be rich in",
+   "lang": "en",
+   "meaning": "bakımından zengin olmak",
+   "ex": "Spinach is rich in iron.",
+   "ex_tr": "Ispanak demir bakımından zengindir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be suitable for",
+   "lang": "en",
+   "meaning": "uygun olmak",
+   "ex": "This activity is suitable for young children.",
+   "ex_tr": "Bu etkinlik küçük çocuklar için uygundur.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be eligible for",
+   "lang": "en",
+   "meaning": "hak kazanmak",
+   "ex": "You may be eligible for a refund.",
+   "ex_tr": "Para iadesi almaya hak kazanabilirsiniz.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be addicted to",
+   "lang": "en",
+   "meaning": "bağımlı olmak",
+   "ex": "He became addicted to online games.",
+   "ex_tr": "Çevrim içi oyunlara bağımlı hâle geldi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be committed to",
+   "lang": "en",
+   "meaning": "kendini adamak",
+   "ex": "Our staff are committed to improving safety.",
+   "ex_tr": "Çalışanlarımız güvenliği artırmaya kararlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be dedicated to",
+   "lang": "en",
+   "meaning": "kendini adamak",
+   "ex": "She is dedicated to helping older people.",
+   "ex_tr": "Yaşlı insanlara yardım etmeye kendini adamış.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be involved in",
+   "lang": "en",
+   "meaning": "yer almak",
+   "ex": "He was involved in planning the event.",
+   "ex_tr": "Etkinliğin planlanmasında yer aldı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be based on",
+   "lang": "en",
+   "meaning": "dayanmak",
+   "ex": "The film is based on a true story.",
+   "ex_tr": "Film gerçek bir hikâyeye dayanıyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be made of",
+   "lang": "en",
+   "meaning": "yapılmış olmak",
+   "ex": "The table is made of solid oak.",
+   "ex_tr": "Masa masif meşeden yapılmış.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be made from",
+   "lang": "en",
+   "meaning": "elde edilmek",
+   "ex": "Paper is made from wood pulp.",
+   "ex_tr": "Kâğıt odun hamurundan yapılır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be divided into",
+   "lang": "en",
+   "meaning": "bölünmek",
+   "ex": "The class was divided into four groups.",
+   "ex_tr": "Sınıf dört gruba ayrıldı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be equipped with",
+   "lang": "en",
+   "meaning": "ile donatılmış olmak",
+   "ex": "The ambulance is equipped with modern equipment.",
+   "ex_tr": "Ambulans modern ekipmanlarla donatılmış.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be covered in",
+   "lang": "en",
+   "meaning": "ile kaplı olmak",
+   "ex": "His shoes were covered in mud.",
+   "ex_tr": "Ayakkabıları çamurla kaplıydı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be filled with",
+   "lang": "en",
+   "meaning": "ile dolu olmak",
+   "ex": "The room was filled with laughter.",
+   "ex_tr": "Oda kahkahalarla doldu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be concerned about",
+   "lang": "en",
+   "meaning": "endişelenmek",
+   "ex": "Residents are concerned about water quality.",
+   "ex_tr": "Sakinler su kalitesi konusunda endişeli.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be grateful for",
+   "lang": "en",
+   "meaning": "minnettar olmak",
+   "ex": "I'm grateful for your patience.",
+   "ex_tr": "Sabrınız için minnettarım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be keen on",
+   "lang": "en",
+   "meaning": "çok sevmek, meraklı olmak",
+   "ex": "She's keen on hiking in the mountains.",
+   "ex_tr": "Dağlarda yürüyüş yapmayı çok seviyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be opposed to",
+   "lang": "en",
+   "meaning": "karşı olmak",
+   "ex": "Many residents are opposed to the proposal.",
+   "ex_tr": "Birçok sakin öneriye karşı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be dependent on",
+   "lang": "en",
+   "meaning": "bağımlı olmak",
+   "ex": "The farm is dependent on seasonal rainfall.",
+   "ex_tr": "Çiftlik mevsimlik yağışlara bağımlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be independent of",
+   "lang": "en",
+   "meaning": "bağımsız olmak",
+   "ex": "The review must be independent of political pressure.",
+   "ex_tr": "İnceleme siyasi baskıdan bağımsız olmalı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be allergic to",
+   "lang": "en",
+   "meaning": "alerjisi olmak",
+   "ex": "My son is allergic to peanuts.",
+   "ex_tr": "Oğlumun yer fıstığına alerjisi var.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be sensitive to",
+   "lang": "en",
+   "meaning": "duyarlı olmak",
+   "ex": "This sensor is sensitive to temperature changes.",
+   "ex_tr": "Bu sensör sıcaklık değişimlerine duyarlıdır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be crowded with",
+   "lang": "en",
+   "meaning": "ile kalabalık olmak",
+   "ex": "The square was crowded with tourists.",
+   "ex_tr": "Meydan turistlerle doluydu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be pleased with",
+   "lang": "en",
+   "meaning": "memnun olmak",
+   "ex": "The teacher was pleased with our progress.",
+   "ex_tr": "Öğretmen ilerlememizden memnundu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be shocked by",
+   "lang": "en",
+   "meaning": "şoke olmak",
+   "ex": "We were shocked by the sudden announcement.",
+   "ex_tr": "Ani duyuru karşısında şoke olduk.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be surprised at",
+   "lang": "en",
+   "meaning": "şaşırmak",
+   "ex": "I was surprised at how quickly she learned.",
+   "ex_tr": "Ne kadar hızlı öğrendiğine şaşırdım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be nervous about",
+   "lang": "en",
+   "meaning": "gergin olmak",
+   "ex": "He's nervous about his first interview.",
+   "ex_tr": "İlk mülakatı için gergin.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be confident in",
+   "lang": "en",
+   "meaning": "güven duymak",
+   "ex": "I'm confident in our team's ability.",
+   "ex_tr": "Ekibimizin becerisine güveniyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be curious about",
+   "lang": "en",
+   "meaning": "merak etmek",
+   "ex": "The children were curious about the experiment.",
+   "ex_tr": "Çocuklar deneyi merak ediyordu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be passionate about",
+   "lang": "en",
+   "meaning": "tutkuyla ilgilenmek",
+   "ex": "She's passionate about wildlife conservation.",
+   "ex_tr": "Yaban hayatını koruma konusunda tutkulu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be bored with",
+   "lang": "en",
+   "meaning": "sıkılmak",
+   "ex": "He was bored with the repetitive tasks.",
+   "ex_tr": "Tekrarlanan işlerden sıkılmıştı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be impressed by",
+   "lang": "en",
+   "meaning": "etkilenmek",
+   "ex": "I was impressed by her clear explanation.",
+   "ex_tr": "Açık anlatımından etkilendim.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be prepared for",
+   "lang": "en",
+   "meaning": "hazırlıklı olmak",
+   "ex": "We are prepared for unexpected delays.",
+   "ex_tr": "Beklenmedik gecikmelere hazırlıklıyız.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be ready for",
+   "lang": "en",
+   "meaning": "hazır olmak",
+   "ex": "Are you ready for the presentation?",
+   "ex_tr": "Sunuma hazır mısın?",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be absent from",
+   "lang": "en",
+   "meaning": "katılmamak, bulunmamak",
+   "ex": "Three students were absent from class.",
+   "ex_tr": "Üç öğrenci derste yoktu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be present at",
+   "lang": "en",
+   "meaning": "hazır bulunmak",
+   "ex": "The director was present at the ceremony.",
+   "ex_tr": "Müdür törende hazır bulundu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be qualified for",
+   "lang": "en",
+   "meaning": "yeterliliğe sahip olmak",
+   "ex": "She's qualified for the engineering role.",
+   "ex_tr": "Mühendislik pozisyonu için yeterli niteliklere sahip.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be experienced in",
+   "lang": "en",
+   "meaning": "deneyimli olmak",
+   "ex": "He's experienced in repairing old radios.",
+   "ex_tr": "Eski radyoları onarmada deneyimli.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be skilled at",
+   "lang": "en",
+   "meaning": "becerikli olmak",
+   "ex": "She's skilled at negotiating contracts.",
+   "ex_tr": "Sözleşme müzakerelerinde becerikli.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be useful for",
+   "lang": "en",
+   "meaning": "yararlı olmak",
+   "ex": "This chart is useful for tracking expenses.",
+   "ex_tr": "Bu çizelge giderleri takip etmek için yararlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be harmful to",
+   "lang": "en",
+   "meaning": "zararlı olmak",
+   "ex": "Excessive noise can be harmful to hearing.",
+   "ex_tr": "Aşırı gürültü işitmeye zararlı olabilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be essential for",
+   "lang": "en",
+   "meaning": "gerekli olmak",
+   "ex": "Clean water is essential for good health.",
+   "ex_tr": "Temiz su sağlıklı yaşam için gereklidir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be necessary for",
+   "lang": "en",
+   "meaning": "gerekli olmak",
+   "ex": "A password is necessary for access.",
+   "ex_tr": "Erişim için parola gereklidir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be open to",
+   "lang": "en",
+   "meaning": "açık olmak",
+   "ex": "We're open to suggestions from the team.",
+   "ex_tr": "Ekibin önerilerine açığız.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be closed to",
+   "lang": "en",
+   "meaning": "kapalı olmak",
+   "ex": "The trail is closed to visitors in winter.",
+   "ex_tr": "Patika kışın ziyaretçilere kapalıdır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be available to",
+   "lang": "en",
+   "meaning": "erişilebilir olmak",
+   "ex": "The documents are available to all employees.",
+   "ex_tr": "Belgeler tüm çalışanların erişimine açık.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be popular with",
+   "lang": "en",
+   "meaning": "arasında popüler olmak",
+   "ex": "The new café is popular with students.",
+   "ex_tr": "Yeni kafe öğrenciler arasında popüler.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be popular for",
+   "lang": "en",
+   "meaning": "ile popüler olmak",
+   "ex": "The town is popular for its beaches.",
+   "ex_tr": "Kasaba plajlarıyla popülerdir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be careful with",
+   "lang": "en",
+   "meaning": "dikkatli davranmak",
+   "ex": "Be careful with that glass vase.",
+   "ex_tr": "O cam vazoya dikkat et.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be careful about",
+   "lang": "en",
+   "meaning": "konusunda dikkatli olmak",
+   "ex": "Be careful about sharing personal information.",
+   "ex_tr": "Kişisel bilgileri paylaşırken dikkatli ol.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be serious about",
+   "lang": "en",
+   "meaning": "konusunda ciddi olmak",
+   "ex": "She's serious about learning English.",
+   "ex_tr": "İngilizce öğrenme konusunda ciddi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be honest about",
+   "lang": "en",
+   "meaning": "konusunda dürüst olmak",
+   "ex": "Please be honest about what happened.",
+   "ex_tr": "Lütfen olanlar konusunda dürüst ol.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be kind to",
+   "lang": "en",
+   "meaning": "nazik davranmak",
+   "ex": "Try to be kind to new students.",
+   "ex_tr": "Yeni öğrencilere nazik davranmaya çalış.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be rude to",
+   "lang": "en",
+   "meaning": "kaba davranmak",
+   "ex": "He was rude to the waiter.",
+   "ex_tr": "Garsona kaba davrandı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be polite to",
+   "lang": "en",
+   "meaning": "kibar davranmak",
+   "ex": "Always be polite to visitors.",
+   "ex_tr": "Ziyaretçilere her zaman kibar davran.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be patient with",
+   "lang": "en",
+   "meaning": "sabırlı olmak",
+   "ex": "Please be patient with beginners.",
+   "ex_tr": "Lütfen yeni başlayanlara karşı sabırlı ol.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be angry with",
+   "lang": "en",
+   "meaning": "birine kızgın olmak",
+   "ex": "She's angry with me for forgetting her birthday.",
+   "ex_tr": "Doğum gününü unuttuğum için bana kızgın.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be angry about",
+   "lang": "en",
+   "meaning": "bir şeye kızgın olmak",
+   "ex": "They're angry about the sudden price increase.",
+   "ex_tr": "Ani fiyat artışına kızgınlar.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be upset about",
+   "lang": "en",
+   "meaning": "üzgün olmak",
+   "ex": "He was upset about the cancelled trip.",
+   "ex_tr": "İptal edilen geziye üzüldü.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be delighted with",
+   "lang": "en",
+   "meaning": "çok memnun olmak",
+   "ex": "We were delighted with the final result.",
+   "ex_tr": "Son sonuçtan çok memnun kaldık.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be frightened of",
+   "lang": "en",
+   "meaning": "korkmak",
+   "ex": "The puppy is frightened of thunder.",
+   "ex_tr": "Yavru köpek gök gürültüsünden korkuyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be terrified of",
+   "lang": "en",
+   "meaning": "çok korkmak",
+   "ex": "She's terrified of flying.",
+   "ex_tr": "Uçmaktan çok korkuyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be surprised by",
+   "lang": "en",
+   "meaning": "şaşırmak",
+   "ex": "Everyone was surprised by the news.",
+   "ex_tr": "Herkes habere şaşırdı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be amazed at",
+   "lang": "en",
+   "meaning": "hayran kalmak",
+   "ex": "We were amazed at the view from the summit.",
+   "ex_tr": "Zirveden manzaraya hayran kaldık.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be annoyed with",
+   "lang": "en",
+   "meaning": "birine sinirlenmek",
+   "ex": "I was annoyed with him for interrupting.",
+   "ex_tr": "Sözümü kestiği için ona sinirlendim.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be annoyed by",
+   "lang": "en",
+   "meaning": "bir şeyden rahatsız olmak",
+   "ex": "She was annoyed by the constant noise.",
+   "ex_tr": "Sürekli gürültüden rahatsız oldu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be frightened by",
+   "lang": "en",
+   "meaning": "bir şeyden ürkmek",
+   "ex": "The horse was frightened by the loud bang.",
+   "ex_tr": "At yüksek patlama sesiyle ürktü.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be fascinated by",
+   "lang": "en",
+   "meaning": "büyülenmek",
+   "ex": "The children were fascinated by the stars.",
+   "ex_tr": "Çocuklar yıldızlardan büyülendi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be fascinated with",
+   "lang": "en",
+   "meaning": "çok ilgilenmek",
+   "ex": "He's fascinated with ancient maps.",
+   "ex_tr": "Eski haritalara büyük ilgi duyuyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be obsessed with",
+   "lang": "en",
+   "meaning": "takıntılı olmak",
+   "ex": "He's obsessed with checking every detail.",
+   "ex_tr": "Her ayrıntıyı kontrol etmeye takıntılı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be worried for",
+   "lang": "en",
+   "meaning": "biri için endişelenmek",
+   "ex": "I'm worried for the people trapped in the storm.",
+   "ex_tr": "Fırtınada mahsur kalan insanlar için endişeleniyorum.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be responsible to",
+   "lang": "en",
+   "meaning": "birine karşı sorumlu olmak",
+   "ex": "The committee is responsible to the board.",
+   "ex_tr": "Komite yönetim kuruluna karşı sorumludur.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be accountable for",
+   "lang": "en",
+   "meaning": "hesap vermekle yükümlü olmak",
+   "ex": "Managers are accountable for their decisions.",
+   "ex_tr": "Yöneticiler kararlarından hesap vermekle yükümlüdür.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be accountable to",
+   "lang": "en",
+   "meaning": "birine karşı hesap vermekle yükümlü olmak",
+   "ex": "The agency is accountable to parliament.",
+   "ex_tr": "Kurum parlamentoya karşı hesap vermekle yükümlüdür.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be grateful to",
+   "lang": "en",
+   "meaning": "birine minnettar olmak",
+   "ex": "I'm grateful to my teachers for their support.",
+   "ex_tr": "Destekleri için öğretmenlerime minnettarım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be disappointed in",
+   "lang": "en",
+   "meaning": "birinden hayal kırıklığına uğramak",
+   "ex": "I'm disappointed in you for breaking your promise.",
+   "ex_tr": "Sözünü tutmadığın için senden hayal kırıklığına uğradım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be concerned with",
+   "lang": "en",
+   "meaning": "ile ilgili olmak",
+   "ex": "This chapter is concerned with climate policy.",
+   "ex_tr": "Bu bölüm iklim politikasıyla ilgilidir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be associated with",
+   "lang": "en",
+   "meaning": "ile ilişkilendirilmek",
+   "ex": "The symbol is associated with peace.",
+   "ex_tr": "Bu sembol barışla ilişkilendirilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be connected to",
+   "lang": "en",
+   "meaning": "bağlı olmak",
+   "ex": "The printer is connected to the network.",
+   "ex_tr": "Yazıcı ağa bağlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be linked to",
+   "lang": "en",
+   "meaning": "ile bağlantılı olmak",
+   "ex": "The symptoms may be linked to stress.",
+   "ex_tr": "Belirtiler stresle bağlantılı olabilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be exposed to",
+   "lang": "en",
+   "meaning": "maruz kalmak",
+   "ex": "Workers were exposed to extreme heat.",
+   "ex_tr": "İşçiler aşırı sıcağa maruz kaldı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be protected against",
+   "lang": "en",
+   "meaning": "karşı korunmak",
+   "ex": "The system is protected against power surges.",
+   "ex_tr": "Sistem ani gerilim yükselmelerine karşı korunuyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be insured against",
+   "lang": "en",
+   "meaning": "karşı sigortalı olmak",
+   "ex": "The house is insured against fire.",
+   "ex_tr": "Ev yangına karşı sigortalı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be exempt from",
+   "lang": "en",
+   "meaning": "muaf olmak",
+   "ex": "Children under six are exempt from the fee.",
+   "ex_tr": "Altı yaşından küçük çocuklar ücretten muaftır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be entitled to",
+   "lang": "en",
+   "meaning": "hakkı olmak",
+   "ex": "All staff are entitled to annual leave.",
+   "ex_tr": "Tüm personelin yıllık izin hakkı vardır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be subject to",
+   "lang": "en",
+   "meaning": "tabi olmak",
+   "ex": "All applications are subject to review.",
+   "ex_tr": "Tüm başvurular incelemeye tabidir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be prone to",
+   "lang": "en",
+   "meaning": "yatkın olmak",
+   "ex": "This area is prone to flooding.",
+   "ex_tr": "Bu bölge sel baskınlarına yatkındır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be vulnerable to",
+   "lang": "en",
+   "meaning": "karşı savunmasız olmak",
+   "ex": "Young plants are vulnerable to frost.",
+   "ex_tr": "Genç bitkiler dona karşı savunmasızdır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be resistant to",
+   "lang": "en",
+   "meaning": "dayanıklı olmak",
+   "ex": "The coating is resistant to scratches.",
+   "ex_tr": "Kaplama çizilmelere dayanıklıdır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be immune to",
+   "lang": "en",
+   "meaning": "bağışık olmak",
+   "ex": "No organization is immune to mistakes.",
+   "ex_tr": "Hiçbir kuruluş hatalara karşı bağışık değildir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be relevant to",
+   "lang": "en",
+   "meaning": "ile ilgili olmak",
+   "ex": "Your experience is relevant to this role.",
+   "ex_tr": "Deneyiminiz bu pozisyonla ilgili.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be unrelated to",
+   "lang": "en",
+   "meaning": "ile ilgisiz olmak",
+   "ex": "The second issue is unrelated to the first.",
+   "ex_tr": "İkinci sorun birincisiyle ilgisiz.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be equal to",
+   "lang": "en",
+   "meaning": "eşit olmak",
+   "ex": "Two plus three is equal to five.",
+   "ex_tr": "İki artı üç beşe eşittir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be superior to",
+   "lang": "en",
+   "meaning": "daha üstün olmak",
+   "ex": "This material is superior to ordinary plastic.",
+   "ex_tr": "Bu malzeme sıradan plastikten üstündür.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be inferior to",
+   "lang": "en",
+   "meaning": "daha düşük nitelikte olmak",
+   "ex": "The replacement was inferior to the original.",
+   "ex_tr": "Yedek parça orijinalinden daha düşük nitelikteydi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be preferable to",
+   "lang": "en",
+   "meaning": "daha tercih edilir olmak",
+   "ex": "Walking is preferable to driving for short distances.",
+   "ex_tr": "Kısa mesafelerde yürümek araba kullanmaya tercih edilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be comparable to",
+   "lang": "en",
+   "meaning": "karşılaştırılabilir olmak",
+   "ex": "The new figures are comparable to last year's.",
+   "ex_tr": "Yeni rakamlar geçen yılınkilerle karşılaştırılabilir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be compatible with",
+   "lang": "en",
+   "meaning": "uyumlu olmak",
+   "ex": "This charger is compatible with my phone.",
+   "ex_tr": "Bu şarj cihazı telefonumla uyumlu.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be consistent with",
+   "lang": "en",
+   "meaning": "ile tutarlı olmak",
+   "ex": "The findings are consistent with earlier research.",
+   "ex_tr": "Bulgular önceki araştırmalarla tutarlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be inconsistent with",
+   "lang": "en",
+   "meaning": "ile çelişmek",
+   "ex": "His explanation is inconsistent with the evidence.",
+   "ex_tr": "Açıklaması kanıtlarla çelişiyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be dependent upon",
+   "lang": "en",
+   "meaning": "bağlı olmak",
+   "ex": "The final decision is dependent upon funding.",
+   "ex_tr": "Son karar finansmana bağlı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be devoted to",
+   "lang": "en",
+   "meaning": "kendini adamak",
+   "ex": "He is devoted to caring for abandoned animals.",
+   "ex_tr": "Terk edilmiş hayvanlara bakmaya kendini adamış.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be involved with",
+   "lang": "en",
+   "meaning": "ile ilişkili olmak",
+   "ex": "She's involved with a local charity.",
+   "ex_tr": "Yerel bir yardım kuruluşuyla çalışıyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "back and forth",
+   "lang": "en",
+   "meaning": "ileri geri",
+   "ex": "The pendulum swung back and forth.",
+   "ex_tr": "Sarkaç ileri geri sallandı.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "sooner or later",
+   "lang": "en",
+   "meaning": "er ya da geç",
+   "ex": "Sooner or later, you'll need to make a choice.",
+   "ex_tr": "Er ya da geç bir seçim yapman gerekecek.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "now and then",
+   "lang": "en",
+   "meaning": "ara sıra",
+   "ex": "We still meet for coffee now and then.",
+   "ex_tr": "Hâlâ ara sıra kahve içmek için buluşuyoruz.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "more or less",
+   "lang": "en",
+   "meaning": "aşağı yukarı",
+   "ex": "The repair is more or less complete.",
+   "ex_tr": "Onarım aşağı yukarı tamamlandı.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "first and foremost",
+   "lang": "en",
+   "meaning": "her şeyden önce",
+   "ex": "First and foremost, we must keep everyone safe.",
+   "ex_tr": "Her şeyden önce herkesi güvende tutmalıyız.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "peace and quiet",
+   "lang": "en",
+   "meaning": "huzur ve sessizlik",
+   "ex": "I came here for some peace and quiet.",
+   "ex_tr": "Biraz huzur ve sessizlik için buraya geldim.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "safe and sound",
+   "lang": "en",
+   "meaning": "sağ salim",
+   "ex": "The hikers returned safe and sound.",
+   "ex_tr": "Yürüyüşçüler sağ salim döndü.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "trial and error",
+   "lang": "en",
+   "meaning": "deneme yanılma",
+   "ex": "We found the solution through trial and error.",
+   "ex_tr": "Çözümü deneme yanılma yoluyla bulduk.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "pros and cons",
+   "lang": "en",
+   "meaning": "artılar ve eksiler",
+   "ex": "Let's discuss the pros and cons before deciding.",
+   "ex_tr": "Karar vermeden önce artıları ve eksileri konuşalım.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "ups and downs",
+   "lang": "en",
+   "meaning": "inişler ve çıkışlar",
+   "ex": "Every friendship has its ups and downs.",
+   "ex_tr": "Her arkadaşlığın inişleri ve çıkışları vardır.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "give and take",
+   "lang": "en",
+   "meaning": "karşılıklı anlayış ve ödün",
+   "ex": "A good partnership requires give and take.",
+   "ex_tr": "İyi bir ortaklık karşılıklı anlayış ve ödün gerektirir.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "wear and tear",
+   "lang": "en",
+   "meaning": "normal kullanım kaynaklı yıpranma",
+   "ex": "The chair shows signs of wear and tear.",
+   "ex_tr": "Sandalyede normal kullanım kaynaklı yıpranma izleri var.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "black and white",
+   "lang": "en",
+   "meaning": "siyah beyaz",
+   "ex": "I printed the document in black and white.",
+   "ex_tr": "Belgeyi siyah beyaz yazdırdım.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "part and parcel",
+   "lang": "en",
+   "meaning": "ayrılmaz parça",
+   "ex": "Unexpected changes are part and parcel of the job.",
+   "ex_tr": "Beklenmedik değişiklikler işin ayrılmaz parçasıdır.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "by and large",
+   "lang": "en",
+   "meaning": "genel olarak",
+   "ex": "By and large, the event went smoothly.",
+   "ex_tr": "Genel olarak etkinlik sorunsuz geçti.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "law and order",
+   "lang": "en",
+   "meaning": "kanun ve düzen",
+   "ex": "The new policy aims to maintain law and order.",
+   "ex_tr": "Yeni politika kanun ve düzeni korumayı amaçlıyor.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "life and death",
+   "lang": "en",
+   "meaning": "ölüm kalım",
+   "ex": "For the patient, every minute was a matter of life and death.",
+   "ex_tr": "Hasta için her dakika ölüm kalım meselesiydi.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "checks and balances",
+   "lang": "en",
+   "meaning": "denetim ve denge mekanizmaları",
+   "ex": "Checks and balances limit the concentration of power.",
+   "ex_tr": "Denetim ve denge mekanizmaları gücün tek elde toplanmasını sınırlar.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "hustle and bustle",
+   "lang": "en",
+   "meaning": "koşuşturma ve kalabalık",
+   "ex": "She missed the hustle and bustle of city life.",
+   "ex_tr": "Şehir hayatının koşuşturmasını ve kalabalığını özledi.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "touch and go",
+   "lang": "en",
+   "meaning": "sonucu belirsiz ve kritik",
+   "ex": "It was touch and go whether the plane could land.",
+   "ex_tr": "Uçağın inip inemeyeceği son ana kadar belirsizdi.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "better late than never",
+   "lang": "en",
+   "meaning": "Geç olsun güç olmasın.",
+   "ex": "He finally started learning to swim; better late than never.",
+   "ex_tr": "Sonunda yüzme öğrenmeye başladı; geç olsun güç olmasın.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "actions speak louder than words",
+   "lang": "en",
+   "meaning": "Lafla peynir gemisi yürümez; davranışlar sözlerden önemlidir.",
+   "ex": "She volunteers every weekend because actions speak louder than words.",
+   "ex_tr": "Her hafta sonu gönüllü çalışıyor çünkü davranışlar sözlerden önemlidir.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "practice makes perfect",
+   "lang": "en",
+   "meaning": "Pratik yaptıkça ustalaşırsın.",
+   "ex": "Keep practicing the piano; practice makes perfect.",
+   "ex_tr": "Piyano çalışmaya devam et; pratik yaptıkça ustalaşırsın.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "don't judge a book by its cover",
+   "lang": "en",
+   "meaning": "Dış görünüşe aldanma.",
+   "ex": "The small restaurant serves excellent food; don't judge a book by its cover.",
+   "ex_tr": "Küçük restoran harika yemekler sunuyor; dış görünüşe aldanma.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the early bird catches the worm",
+   "lang": "en",
+   "meaning": "Erken davranan avantaj sağlar.",
+   "ex": "I arrived before the sale started; the early bird catches the worm.",
+   "ex_tr": "İndirim başlamadan geldim; erken davranan avantaj sağlar.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "two heads are better than one",
+   "lang": "en",
+   "meaning": "Bir elin nesi var iki elin sesi var.",
+   "ex": "Let's solve this together; two heads are better than one.",
+   "ex_tr": "Bunu birlikte çözelim; bir elin nesi var iki elin sesi var.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "where there's a will, there's a way",
+   "lang": "en",
+   "meaning": "İsteyen bir yolunu bulur.",
+   "ex": "She studied every evening despite her busy schedule; where there's a will, there's a way.",
+   "ex_tr": "Yoğun programına rağmen her akşam çalıştı; isteyen bir yolunu bulur.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "a picture is worth a thousand words",
+   "lang": "en",
+   "meaning": "Bir resim bin sözcüğe bedeldir.",
+   "ex": "Show me the diagram; a picture is worth a thousand words.",
+   "ex_tr": "Bana şemayı göster; bir resim bin sözcüğe bedeldir.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "honesty is the best policy",
+   "lang": "en",
+   "meaning": "Dürüstlük en iyi yoldur.",
+   "ex": "Tell the customer what happened; honesty is the best policy.",
+   "ex_tr": "Müşteriye ne olduğunu söyle; dürüstlük en iyi yoldur.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "look before you leap",
+   "lang": "en",
+   "meaning": "Adım atmadan önce düşün.",
+   "ex": "Read the contract carefully; look before you leap.",
+   "ex_tr": "Sözleşmeyi dikkatle oku; adım atmadan önce düşün.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "don't put all your eggs in one basket",
+   "lang": "en",
+   "meaning": "Bütün yumurtalarını aynı sepete koyma.",
+   "ex": "Invest in several areas; don't put all your eggs in one basket.",
+   "ex_tr": "Birkaç alana yatırım yap; bütün yumurtalarını aynı sepete koyma.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the grass is always greener on the other side",
+   "lang": "en",
+   "meaning": "Komşunun tavuğu komşuya kaz görünür.",
+   "ex": "He thinks every other job is easier, but the grass is always greener on the other side.",
+   "ex_tr": "Diğer bütün işlerin daha kolay olduğunu sanıyor ama komşunun tavuğu komşuya kaz görünür.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "when in rome, do as the romans do",
+   "lang": "en",
+   "meaning": "Gittiğin yerin âdetine uy.",
+   "ex": "Everyone removes their shoes here; when in Rome, do as the Romans do.",
+   "ex_tr": "Burada herkes ayakkabısını çıkarıyor; gittiğin yerin âdetine uy.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "every cloud has a silver lining",
+   "lang": "en",
+   "meaning": "Her şerde bir hayır vardır.",
+   "ex": "Losing the train gave us time to explore the town; every cloud has a silver lining.",
+   "ex_tr": "Treni kaçırmak kasabayı gezmemize fırsat verdi; her şerde bir hayır vardır.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "too many cooks spoil the broth",
+   "lang": "en",
+   "meaning": "Çok aşçı çorbayı bozar.",
+   "ex": "Six people tried to manage one tiny task; too many cooks spoil the broth.",
+   "ex_tr": "Altı kişi küçücük bir işi yönetmeye çalıştı; çok aşçı çorbayı bozar.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the pen is mightier than the sword",
+   "lang": "en",
+   "meaning": "Kalem kılıçtan keskindir.",
+   "ex": "Her article changed public opinion; the pen is mightier than the sword.",
+   "ex_tr": "Yazısı kamuoyunu değiştirdi; kalem kılıçtan keskindir.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "no pain, no gain",
+   "lang": "en",
+   "meaning": "Emek olmadan yemek olmaz.",
+   "ex": "Training for a marathon takes discipline; no pain, no gain.",
+   "ex_tr": "Maratona hazırlanmak disiplin ister; emek olmadan yemek olmaz.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "you can't have your cake and eat it too",
+   "lang": "en",
+   "meaning": "İki zıt avantajı aynı anda elde edemezsin.",
+   "ex": "You can't spend all your savings and still keep the money; you can't have your cake and eat it too.",
+   "ex_tr": "Hem bütün birikimini harcayıp hem de parayı elinde tutamazsın; ikisi birden olmaz.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "rome wasn't built in a day",
+   "lang": "en",
+   "meaning": "Büyük işler bir günde olmaz.",
+   "ex": "Be patient with your progress; Rome wasn't built in a day.",
+   "ex_tr": "İlerlemen konusunda sabırlı ol; büyük işler bir günde olmaz.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "a stitch in time saves nine",
+   "lang": "en",
+   "meaning": "Zamanında alınan küçük önlem büyük sorunu önler.",
+   "ex": "Fix the leak now; a stitch in time saves nine.",
+   "ex_tr": "Sızıntıyı şimdi onar; zamanında alınan küçük önlem büyük sorunu önler.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "necessity is the mother of invention",
+   "lang": "en",
+   "meaning": "İhtiyaç icadın anasıdır.",
+   "ex": "They built a simple tool when none was available; necessity is the mother of invention.",
+   "ex_tr": "Uygun araç bulunmayınca basit bir araç yaptılar; ihtiyaç icadın anasıdır.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "birds of a feather flock together",
+   "lang": "en",
+   "meaning": "Tencere yuvarlanmış kapağını bulmuş.",
+   "ex": "Those two always share the same interests; birds of a feather flock together.",
+   "ex_tr": "O ikisinin ilgi alanları hep aynı; tencere yuvarlanmış kapağını bulmuş.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "don't count your chickens before they hatch",
+   "lang": "en",
+   "meaning": "Dereyi görmeden paçayı sıvama.",
+   "ex": "Wait until the offer is confirmed; don't count your chickens before they hatch.",
+   "ex_tr": "Teklif kesinleşene kadar bekle; dereyi görmeden paçayı sıvama.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "all that glitters is not gold",
+   "lang": "en",
+   "meaning": "Her parlayan altın değildir.",
+   "ex": "The cheap-looking deal had hidden fees; all that glitters is not gold.",
+   "ex_tr": "Cazip görünen teklifin gizli ücretleri vardı; her parlayan altın değildir.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the apple doesn't fall far from the tree",
+   "lang": "en",
+   "meaning": "Armut dibine düşer.",
+   "ex": "Both father and daughter love music; the apple doesn't fall far from the tree.",
+   "ex_tr": "Baba da kızı da müziği seviyor; armut dibine düşer.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "a watched pot never boils",
+   "lang": "en",
+   "meaning": "Beklerken zaman geçmek bilmez.",
+   "ex": "Stop staring at the clock; a watched pot never boils.",
+   "ex_tr": "Saate bakıp durma; beklerken zaman geçmek bilmez.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "better safe than sorry",
+   "lang": "en",
+   "meaning": "İşi sağlama almak pişman olmaktan iyidir.",
+   "ex": "Take an umbrella just in case; better safe than sorry.",
+   "ex_tr": "Her ihtimale karşı şemsiye al; işi sağlama almak iyidir.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "easy come, easy go",
+   "lang": "en",
+   "meaning": "Kolay gelen kolay gider.",
+   "ex": "He won the money and spent it immediately; easy come, easy go.",
+   "ex_tr": "Parayı kazandı ve hemen harcadı; kolay gelen kolay gider.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "don't bite the hand that feeds you",
+   "lang": "en",
+   "meaning": "İyilik gördüğün kişiye zarar verme.",
+   "ex": "Don't insult the mentor who supports you; don't bite the hand that feeds you.",
+   "ex_tr": "Sana destek olan akıl hocana hakaret etme; iyilik gördüğün kişiye zarar verme.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the squeaky wheel gets the grease",
+   "lang": "en",
+   "meaning": "Sesini çıkaran ilgiyi görür.",
+   "ex": "She kept asking for repairs and finally got help; the squeaky wheel gets the grease.",
+   "ex_tr": "Onarım istemeyi sürdürdü ve sonunda yardım aldı; sesini çıkaran ilgiyi görür.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "actually",
+   "lang": "en",
+   "meaning": "aslında (≠ aktüel/güncel)",
+   "ex": "Actually, the meeting starts at nine, not ten.",
+   "ex_tr": "Aslında toplantı onda değil dokuzda başlıyor.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "eventually",
+   "lang": "en",
+   "meaning": "sonunda, eninde sonunda (≠ eventüel/muhtemel)",
+   "ex": "After several attempts, we eventually fixed the problem.",
+   "ex_tr": "Birkaç denemeden sonra sorunu sonunda çözdük.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "realize",
+   "lang": "en",
+   "meaning": "farkına varmak, anlamak (≠ realize etmek: gerçekleştirmek, daha az)",
+   "ex": "I didn't realize the door was unlocked.",
+   "ex_tr": "Kapının kilitli olmadığını fark etmedim.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "sensible",
+   "lang": "en",
+   "meaning": "mantıklı, akıllıca (≠ hassas: sensitive)",
+   "ex": "That sounds like a sensible solution.",
+   "ex_tr": "Bu mantıklı bir çözüm gibi görünüyor.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "sensitive",
+   "lang": "en",
+   "meaning": "hassas, duyarlı (≠ mantıklı: sensible)",
+   "ex": "This device is sensitive to sudden voltage changes.",
+   "ex_tr": "Bu cihaz ani gerilim değişimlerine karşı hassas.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "sympathetic",
+   "lang": "en",
+   "meaning": "anlayışlı, hâlden anlayan (≠ sempatik: nice)",
+   "ex": "The supervisor was sympathetic to our concerns.",
+   "ex_tr": "Amir endişelerimize anlayış gösterdi.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "conductor",
+   "lang": "en",
+   "meaning": "orkestra şefi; iletken (≠ kondüktör: biletçi, daha az)",
+   "ex": "The conductor raised her baton before the concert.",
+   "ex_tr": "Orkestra şefi konserden önce bagetini kaldırdı.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "magazine",
+   "lang": "en",
+   "meaning": "dergi (≠ mağaza: shop)",
+   "ex": "I read an interesting article in a science magazine.",
+   "ex_tr": "Bir bilim dergisinde ilginç bir makale okudum.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "fabric",
+   "lang": "en",
+   "meaning": "kumaş (≠ fabrika: factory)",
+   "ex": "This fabric dries quickly after washing.",
+   "ex_tr": "Bu kumaş yıkandıktan sonra çabuk kurur.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "chef",
+   "lang": "en",
+   "meaning": "aşçıbaşı (≠ iş yerindeki şef: boss)",
+   "ex": "The chef prepared a special vegetarian meal.",
+   "ex_tr": "Aşçıbaşı özel bir vejetaryen yemek hazırladı.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "patron",
+   "lang": "en",
+   "meaning": "müşteri, destekçi (≠ patron: boss)",
+   "ex": "The café's regular patrons know the owner.",
+   "ex_tr": "Kafenin müdavimleri sahibini tanıyor.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "lecture",
+   "lang": "en",
+   "meaning": "ders, konferans (≠ lektür: okuma)",
+   "ex": "The professor gave a lecture on climate change.",
+   "ex_tr": "Profesör iklim değişikliği üzerine bir ders verdi.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "college",
+   "lang": "en",
+   "meaning": "yüksekokul, üniversite (≠ kolej: özel lise)",
+   "ex": "She plans to attend college next year.",
+   "ex_tr": "Gelecek yıl üniversiteye gitmeyi planlıyor.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "public school",
+   "lang": "en",
+   "meaning": "İngiltere'de paralı özel okul, ABD'de devlet okulu",
+   "ex": "In England, some public schools charge high fees.",
+   "ex_tr": "İngiltere'de bazı public school'lar yüksek ücret alır.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "argument",
+   "lang": "en",
+   "meaning": "tartışma, ağız kavgası; sav (≠ yalnızca argüman)",
+   "ex": "They had an argument about money.",
+   "ex_tr": "Para yüzünden tartıştılar.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "agenda",
+   "lang": "en",
+   "meaning": "gündem (≠ ajanda: diary, planner)",
+   "ex": "Safety is the first item on today's agenda.",
+   "ex_tr": "Güvenlik bugünkü gündemin ilk maddesi.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "abstract",
+   "lang": "en",
+   "meaning": "özet (makale); soyut (≠ yalnızca abstre)",
+   "ex": "Please read the abstract before the article.",
+   "ex_tr": "Lütfen makaleden önce özeti oku.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "novel",
+   "lang": "en",
+   "meaning": "roman; yeni, alışılmamış (sıfat)",
+   "ex": "She borrowed a historical novel from the library.",
+   "ex_tr": "Kütüphaneden tarihî bir roman ödünç aldı.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "resume",
+   "lang": "en",
+   "meaning": "devam etmek, yeniden başlamak (≠ résumé: özgeçmiş)",
+   "ex": "The game will resume after the break.",
+   "ex_tr": "Oyun aradan sonra devam edecek.",
+   "cat": "false_friends"
+  },
+  {
+   "phrase": "turn off",
+   "lang": "en",
+   "meaning": "kapatmak",
+   "ex": "Please turn off the lights before leaving.",
+   "ex_tr": "Lütfen çıkmadan önce ışıkları kapat.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "turn on",
+   "lang": "en",
+   "meaning": "açmak",
+   "ex": "Can you turn on the fan?",
+   "ex_tr": "Vantilatörü açabilir misin?",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "pick up",
+   "lang": "en",
+   "meaning": "gidip almak, yerden almak",
+   "ex": "I'll pick up the parcel after work.",
+   "ex_tr": "Paketi işten sonra gidip alacağım.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "put off",
+   "lang": "en",
+   "meaning": "ertelemek",
+   "ex": "They put off the meeting until Tuesday.",
+   "ex_tr": "Toplantıyı salı gününe ertelediler.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "put on",
+   "lang": "en",
+   "meaning": "giymek, takmak",
+   "ex": "Put on your coat before you go outside.",
+   "ex_tr": "Dışarı çıkmadan önce montunu giy.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "take off",
+   "lang": "en",
+   "meaning": "çıkarmak; havalanmak",
+   "ex": "Please take off your shoes at the door.",
+   "ex_tr": "Lütfen kapıda ayakkabılarını çıkar.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "write down",
+   "lang": "en",
+   "meaning": "not almak",
+   "ex": "Write down the address so you don't forget it.",
+   "ex_tr": "Unutmamak için adresi not al.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "fill out",
+   "lang": "en",
+   "meaning": "form doldurmak",
+   "ex": "Please fill out this form in blue ink.",
+   "ex_tr": "Lütfen bu formu mavi mürekkeple doldur.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "hand in",
+   "lang": "en",
+   "meaning": "teslim etmek",
+   "ex": "Students must hand in their essays by Friday.",
+   "ex_tr": "Öğrenciler kompozisyonlarını cumaya kadar teslim etmeli.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "hand out",
+   "lang": "en",
+   "meaning": "dağıtmak",
+   "ex": "The teacher handed out the worksheets.",
+   "ex_tr": "Öğretmen çalışma kâğıtlarını dağıttı.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "throw away",
+   "lang": "en",
+   "meaning": "atmak",
+   "ex": "Don't throw away the receipt.",
+   "ex_tr": "Fişi atma.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "bring back",
+   "lang": "en",
+   "meaning": "geri getirmek",
+   "ex": "Please bring back the library book tomorrow.",
+   "ex_tr": "Lütfen kütüphane kitabını yarın geri getir.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "give back",
+   "lang": "en",
+   "meaning": "geri vermek",
+   "ex": "Could you give back my pen?",
+   "ex_tr": "Kalemimi geri verebilir misin?",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "call off",
+   "lang": "en",
+   "meaning": "iptal etmek",
+   "ex": "They called off the match because of heavy rain.",
+   "ex_tr": "Şiddetli yağmur nedeniyle maçı iptal ettiler.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "set up",
+   "lang": "en",
+   "meaning": "kurmak",
+   "ex": "We set up the projector before the presentation.",
+   "ex_tr": "Sunumdan önce projektörü kurduk.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "figure out",
+   "lang": "en",
+   "meaning": "çözmek, anlamak",
+   "ex": "I finally figured out how the lock works.",
+   "ex_tr": "Sonunda kilidin nasıl çalıştığını çözdüm.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "work out",
+   "lang": "en",
+   "meaning": "çözmek; egzersiz yapmak",
+   "ex": "We worked out a practical solution together.",
+   "ex_tr": "Birlikte uygulanabilir bir çözüm bulduk.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "carry out",
+   "lang": "en",
+   "meaning": "yerine getirmek, yürütmek",
+   "ex": "The team carried out a safety inspection.",
+   "ex_tr": "Ekip bir güvenlik denetimi gerçekleştirdi.",
+   "cat": "phrasal_verbs"
+  },
+  {
+   "phrase": "point out",
+   "lang": "en",
+   "meaning": "dikkat çekmek, belirtmek",
+   "ex": "She pointed out an error in the report.",
+   "ex_tr": "Rapordaki bir hataya dikkat çekti.",
+   "cat": "phrasal_verbs"
   }
  ]
 }

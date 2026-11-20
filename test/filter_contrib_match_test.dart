@@ -21,5 +21,9 @@ void main() {
     expect(found('Could you please close the window?', 'polite_phrases'), contains('could you please'));
     expect(found('The lorry arrived early.', 'uk_us'), contains('lorry'));
     expect(found('We hung out after class.', 'informal_slang'), contains('hang out'));
+    // Second sheet: a slot for the person, "be" in any form, a proverb.
+    expect(found('They accused him of lying.', 'dependent_prepositions'), contains('accuse someone of'));
+    expect(found('The village is famous for its olive oil.', 'dependent_prepositions'), contains('be famous for'));
+    expect(found('Well, better late than never.', 'proverbs'), contains('better late than never'));
   });
 }
