@@ -25,7 +25,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
          tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v13.xlsx
 """
 import json
 import re
@@ -417,7 +418,31 @@ V12_EN_SPLIT = {36: [('sıfat', V12_MODERN, 'gelişmiş donanımlı')], 42: [('i
                 48: [('ünlem', 'günaydın', 'selamlama (kısa)')]}
 V12_PH_FIX = {8: {'ex_tr': 'Reading and translating these old manuscripts one by one is painstakingly slow work.'}}
 
+# --- Dictionary v13 (hamit_2026-11-20_v13.xlsx) ----------------------------------
+# v12's words again in other sentences (left out: they would be the same meaning
+# twice) and new words: en, öyle, ise, ilk/aşırı as adverbs, yüce, güney, hizmet,
+# çavuş, don, piç; suffering, dollar, religious, explosion, lion; one idiom.
+_V13_ROWS = {4, 5, 6, 7, 8, 11, 12, 13, 21} | set(range(30, 44))
+V13_KEEP = {'Cümlede anlam': _V13_ROWS | set(range(72, 81)), 'Örnek cümleler': _V13_ROWS | set(range(72, 81)),
+            'TR-EN kelimeler': _V13_ROWS, 'EN-TR kelimeler': set(range(30, 39)), 'Deyim ve kalıplar': {2}}
+V13_PIC_RASCAL, V13_PIC_SPROUT, V13_LION = 'bastard (an objectionable person)', 'a sprout that appears near the main plant', 'sosyete yıldızı, ilgi odağı'
+V13_EX_FIX = {
+    6: {'en': "If you look at me like that, I can't tell what you mean."},
+    13: {'en': "If you ask me, I'd accept; as for the manager, I don't know."},
+    39: {'en': "While packing his suitcase, he didn't forget a few pairs of clean underpants."},
+    73: {'tr': "New York'a uçmadan önce bütün eurolarını ABD dolarına çevirdi."},
+    42: {'meaning': V13_PIC_RASCAL}, 43: {'meaning': V13_PIC_SPROUT}, 80: {'meaning': V13_LION,
+         'tr': 'Ünlü bir yazar olarak başkentte edebiyat dünyasının gözdesi gibi ağırlandı.'},
+}
+# Senses the dictionary has in other words take its wording (piç, lion).
+V13_TR_SPLIT = {41: [('isim', 'bastard, illegitimate child', 'kaba')], 42: [('isim', V13_PIC_RASCAL, '')],
+                43: [('isim', V13_PIC_SPROUT, '')]}
+V13_EN_SPLIT = {38: [('isim', V13_LION, '')]}
+
 FIXES = {
+    'hamit_2026-11-20_v13.xlsx': dict(ctx_fix={42: (None, None, None, V13_PIC_RASCAL), 43: (None, None, None, V13_PIC_SPROUT),
+                                               80: (None, None, None, V13_LION)}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split=V13_EN_SPLIT, tr_split=V13_TR_SPLIT, ex_fix=V13_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v12.xlsx': dict(ctx_fix=V12_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       en_split=V12_EN_SPLIT, tr_split=V12_TR_SPLIT, ex_fix=V12_EX_FIX, ph_fix=V12_PH_FIX),
     'hamit_2026-11-20_v11.xlsx': dict(ctx_fix=V11_CTX_FIX, ctx_to_phrase=set(), ctx_add=[], ctx_phrase={54: 'soup up'},
@@ -638,7 +663,8 @@ seen = set()  # (sheet, row contents) already read from an earlier file
 
 
 def rows(wb, sheet):
-    keep, drop = {'hamit_2026-11-20_v4.xlsx': (V4_KEEP, V4_DROP), 'hamit_2026-11-20_v12.xlsx': (V12_KEEP, set())}.get(wb_name, (None, None))
+    keep, drop = {'hamit_2026-11-20_v4.xlsx': (V4_KEEP, V4_DROP), 'hamit_2026-11-20_v12.xlsx': (V12_KEEP, set()),
+                  'hamit_2026-11-20_v13.xlsx': (V13_KEEP, set())}.get(wb_name, (None, None))
     for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
         r = ['' if v is None else str(v).strip() for v in r]
         if keep is not None and (i not in keep.get(sheet, set()) or i in drop):

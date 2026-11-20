@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -7871,6 +7871,262 @@
    "lemma": "hour",
    "lang": "en",
    "meaning": "belirli bir zaman, an",
+   "translation": ""
+  },
+  {
+   "sentence": "Sınıftaki en başarılı öğrenci her zaman o olmuştur.",
+   "form": "en",
+   "lemma": "en",
+   "lang": "tr",
+   "meaning": "the most, the -est",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu kumaşın eni dar olduğu için elbiseye yetmedi.",
+   "form": "eni",
+   "lemma": "en",
+   "lang": "tr",
+   "meaning": "width",
+   "translation": ""
+  },
+  {
+   "sentence": "Bana öyle bakarsan ne demek istediğini anlayamam.",
+   "form": "öyle",
+   "lemma": "öyle",
+   "lang": "tr",
+   "meaning": "in that way, so",
+   "translation": ""
+  },
+  {
+   "sentence": "Hava öyle soğuktu ki nehrin yüzeyi tamamen buz tuttu.",
+   "form": "öyle",
+   "lemma": "öyle",
+   "lang": "tr",
+   "meaning": "so ... that",
+   "translation": ""
+  },
+  {
+   "sentence": "Ben hayatımda hiç öyle lezzetli bir yemek yemedim.",
+   "form": "öyle",
+   "lemma": "öyle",
+   "lang": "tr",
+   "meaning": "like that, such",
+   "translation": ""
+  },
+  {
+   "sentence": "Sabah ofise geldiğinde ilk e-postalarını kontrol eder.",
+   "form": "ilk",
+   "lemma": "ilk",
+   "lang": "tr",
+   "meaning": "firstly, at first",
+   "translation": ""
+  },
+  {
+   "sentence": "Ben çay içmeyi severim, kardeşim ise kahveyi tercih eder.",
+   "form": "ise",
+   "lemma": "ise",
+   "lang": "tr",
+   "meaning": "whereas, while",
+   "translation": ""
+  },
+  {
+   "sentence": "Bana sorarsanız kabul ederim, müdüre gelince ise bilemiyorum.",
+   "form": "ise",
+   "lemma": "ise",
+   "lang": "tr",
+   "meaning": "regarding, as for",
+   "translation": ""
+  },
+  {
+   "sentence": "Dünkü uzun yürüyüşten sonra bacaklarım aşırı yoruldu.",
+   "form": "aşırı",
+   "lemma": "aşırı",
+   "lang": "tr",
+   "meaning": "extremely, excessively",
+   "translation": ""
+  },
+  {
+   "sentence": "O, ülkesi için canını vererek en yüce mertebeye ulaştı.",
+   "form": "yüce",
+   "lemma": "yüce",
+   "lang": "tr",
+   "meaning": "supreme, sublime",
+   "translation": ""
+  },
+  {
+   "sentence": "Köyün arkasındaki yüce dağlar kışın tamamen karla kaplanır.",
+   "form": "yüce",
+   "lemma": "yüce",
+   "lang": "tr",
+   "meaning": "lofty, high",
+   "translation": ""
+  },
+  {
+   "sentence": "Kış aylarında göçmen kuşlar güneye doğru uçarlar.",
+   "form": "güneye",
+   "lemma": "güney",
+   "lang": "tr",
+   "meaning": "south",
+   "translation": ""
+  },
+  {
+   "sentence": "Ülkenin güneyinde yaz mevsimi çok daha uzun ve sıcak geçer.",
+   "form": "güneyinde",
+   "lemma": "güney",
+   "lang": "tr",
+   "meaning": "the South",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni açılan restoranın yemekleri güzel ama hizmeti çok yavaştı.",
+   "form": "hizmeti",
+   "lemma": "hizmet",
+   "lang": "tr",
+   "meaning": "service",
+   "translation": ""
+  },
+  {
+   "sentence": "Onun bu zor zamanımızda bize yaptığı hizmeti asla unutmayacağız.",
+   "form": "hizmeti",
+   "lemma": "hizmet",
+   "lang": "tr",
+   "meaning": "favor, good turn",
+   "translation": ""
+  },
+  {
+   "sentence": "Askerde üstün başarı gösterdiği için kısa sürede çavuş oldu.",
+   "form": "çavuş",
+   "lemma": "çavuş",
+   "lang": "tr",
+   "meaning": "sergeant",
+   "translation": ""
+  },
+  {
+   "sentence": "İnşaat alanındaki tüm işçileri yönlendiren tecrübeli bir çavuş vardı.",
+   "form": "çavuş",
+   "lemma": "çavuş",
+   "lang": "tr",
+   "meaning": "foreman",
+   "translation": ""
+  },
+  {
+   "sentence": "Gece aniden don olunca bahçedeki bütün ekinler zarar gördü.",
+   "form": "don",
+   "lemma": "don",
+   "lang": "tr",
+   "meaning": "frost, freeze",
+   "translation": ""
+  },
+  {
+   "sentence": "Bavulunu hazırlarken yanına birkaç temiz don almayı unutmadı.",
+   "form": "don",
+   "lemma": "don",
+   "lang": "tr",
+   "meaning": "underpants",
+   "translation": ""
+  },
+  {
+   "sentence": "Yarışa katılan atın parlak siyah bir donu vardı.",
+   "form": "donu",
+   "lemma": "don",
+   "lang": "tr",
+   "meaning": "coat (color of a horse)",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski romanlarda genellikle zengin adamın mirastan mahrum kalan piç bir oğlu olur.",
+   "form": "piç",
+   "lemma": "piç",
+   "lang": "tr",
+   "meaning": "bastard, illegitimate child",
+   "translation": ""
+  },
+  {
+   "sentence": "Bizim mahallenin o sarışın piçi yine herkesi kandırmayı başardı.",
+   "form": "piçi",
+   "lemma": "piç",
+   "lang": "tr",
+   "meaning": "bastard (an objectionable person)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahçıvan domates fidanlarının dibinde çıkan piçleri tek tek kopardı.",
+   "form": "piçleri",
+   "lemma": "piç",
+   "lang": "tr",
+   "meaning": "a sprout that appears near the main plant",
+   "translation": ""
+  },
+  {
+   "sentence": "The new medication helps to alleviate the suffering of patients with chronic pain.",
+   "form": "suffering",
+   "lemma": "suffering",
+   "lang": "en",
+   "meaning": "acı, ıstırap",
+   "translation": ""
+  },
+  {
+   "sentence": "He exchanged all his euros for US dollars before flying to New York.",
+   "form": "dollars",
+   "lemma": "dollar",
+   "lang": "en",
+   "meaning": "dolar",
+   "translation": ""
+  },
+  {
+   "sentence": "My grandmother is a highly religious person who visits the church every Sunday.",
+   "form": "religious",
+   "lemma": "religious",
+   "lang": "en",
+   "meaning": "dindar, dine bağlı",
+   "translation": ""
+  },
+  {
+   "sentence": "The museum displays many ancient religious artifacts from the Byzantine era.",
+   "form": "religious",
+   "lemma": "religious",
+   "lang": "en",
+   "meaning": "dini, dinle ilgili",
+   "translation": ""
+  },
+  {
+   "sentence": "He pays religious attention to detail when painting his miniature models.",
+   "form": "religious",
+   "lemma": "religious",
+   "lang": "en",
+   "meaning": "titiz, aşırı özenli",
+   "translation": ""
+  },
+  {
+   "sentence": "The loud explosion in the chemical factory shattered windows miles away.",
+   "form": "explosion",
+   "lemma": "explosion",
+   "lang": "en",
+   "meaning": "patlama, infilak",
+   "translation": ""
+  },
+  {
+   "sentence": "There has been an incredible explosion in the popularity of electric cars lately.",
+   "form": "explosion",
+   "lemma": "explosion",
+   "lang": "en",
+   "meaning": "ani artış, patlama",
+   "translation": ""
+  },
+  {
+   "sentence": "The male lion let out a terrifying roar to protect his pride.",
+   "form": "lion",
+   "lemma": "lion",
+   "lang": "en",
+   "meaning": "aslan",
+   "translation": ""
+  },
+  {
+   "sentence": "As a famous author, he was treated as a literary lion in the capital.",
+   "form": "lion",
+   "lemma": "lion",
+   "lang": "en",
+   "meaning": "sosyete yıldızı, ilgi odağı",
    "translation": ""
   }
  ],
@@ -23694,6 +23950,230 @@
    "pos": "noun",
    "meaning": "belirli bir zaman, an",
    "note": "özel an"
+  },
+  {
+   "word": "en",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "the most, the -est",
+   "note": "üstünlük belirteci"
+  },
+  {
+   "word": "en",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "width",
+   "note": "boyun karşıtı"
+  },
+  {
+   "word": "öyle",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "in that way, so",
+   "note": "belirtilen biçimde"
+  },
+  {
+   "word": "öyle",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "so ... that",
+   "note": "aşırılık belirten bağlaç"
+  },
+  {
+   "word": "öyle",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "like that, such",
+   "note": "benzerini gösteren"
+  },
+  {
+   "word": "ilk",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "firstly, at first",
+   "note": "zaman sırasına göre önce"
+  },
+  {
+   "word": "ise",
+   "lang": "tr",
+   "pos": "conj",
+   "meaning": "whereas, while",
+   "note": "iki durumu kıyaslama"
+  },
+  {
+   "word": "ise",
+   "lang": "tr",
+   "pos": "postp",
+   "meaning": "regarding, as for",
+   "note": "başka bir konuya geçiş"
+  },
+  {
+   "word": "aşırı",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "extremely, excessively",
+   "note": "derecesi çok"
+  },
+  {
+   "word": "yüce",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "supreme, sublime",
+   "note": "çok yüksek, saygın"
+  },
+  {
+   "word": "yüce",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "lofty, high",
+   "note": "boyut olarak ulu"
+  },
+  {
+   "word": "güney",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "south",
+   "note": "pusula yönü"
+  },
+  {
+   "word": "güney",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "the South",
+   "note": "bir ülkenin güney kısmı"
+  },
+  {
+   "word": "hizmet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "service",
+   "note": "birinin işini görme"
+  },
+  {
+   "word": "hizmet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "favor, good turn",
+   "note": "birine yapılan iyilik"
+  },
+  {
+   "word": "çavuş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "sergeant",
+   "note": "onbaşıdan sonraki rütbe"
+  },
+  {
+   "word": "çavuş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "foreman",
+   "note": "işçileri yöneten kişi"
+  },
+  {
+   "word": "don",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "frost, freeze",
+   "note": "havanın sıfırın altına düşmesi"
+  },
+  {
+   "word": "don",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "underpants",
+   "note": "alt iç giysisi"
+  },
+  {
+   "word": "don",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "coat (color of a horse)",
+   "note": "hayvanın rengi"
+  },
+  {
+   "word": "piç",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "bastard, illegitimate child",
+   "note": "kaba"
+  },
+  {
+   "word": "piç",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "bastard (an objectionable person)",
+   "note": ""
+  },
+  {
+   "word": "piç",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "a sprout that appears near the main plant",
+   "note": ""
+  },
+  {
+   "word": "suffering",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "acı, ıstırap",
+   "note": "fiziksel veya ruhsal acı"
+  },
+  {
+   "word": "dollar",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "dolar",
+   "note": "para birimi"
+  },
+  {
+   "word": "religious",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "dindar, dine bağlı",
+   "note": "inançlı kişi"
+  },
+  {
+   "word": "religious",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "dini, dinle ilgili",
+   "note": "inanç temelli"
+  },
+  {
+   "word": "religious",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "titiz, aşırı özenli",
+   "note": "bir işi din gibi benimsemiş"
+  },
+  {
+   "word": "explosion",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "patlama, infilak",
+   "note": "fiziksel patlama"
+  },
+  {
+   "word": "explosion",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ani artış, patlama",
+   "note": "sayısal veya duygusal artış"
+  },
+  {
+   "word": "lion",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "aslan",
+   "note": "hayvan"
+  },
+  {
+   "word": "lion",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sosyete yıldızı, ilgi odağı",
+   "note": ""
   }
  ],
  "examples": [
@@ -32456,6 +32936,262 @@
    "tr": "En karanlık anında, gerçek dostları onun yanında durdu.",
    "en": "In his darkest hour, his true friends stood by his side.",
    "level": "B2"
+  },
+  {
+   "word": "en",
+   "lang": "tr",
+   "meaning": "the most, the -est",
+   "tr": "Sınıftaki en başarılı öğrenci her zaman o olmuştur.",
+   "en": "He has always been the most successful student in the class.",
+   "level": "A1"
+  },
+  {
+   "word": "en",
+   "lang": "tr",
+   "meaning": "width",
+   "tr": "Bu kumaşın eni dar olduğu için elbiseye yetmedi.",
+   "en": "Because the width of this fabric is narrow, it wasn't enough for the dress.",
+   "level": "B1"
+  },
+  {
+   "word": "öyle",
+   "lang": "tr",
+   "meaning": "in that way, so",
+   "tr": "Bana öyle bakarsan ne demek istediğini anlayamam.",
+   "en": "If you look at me like that, I can't tell what you mean.",
+   "level": "A2"
+  },
+  {
+   "word": "öyle",
+   "lang": "tr",
+   "meaning": "so ... that",
+   "tr": "Hava öyle soğuktu ki nehrin yüzeyi tamamen buz tuttu.",
+   "en": "The weather was so cold that the surface of the river completely froze.",
+   "level": "B1"
+  },
+  {
+   "word": "öyle",
+   "lang": "tr",
+   "meaning": "like that, such",
+   "tr": "Ben hayatımda hiç öyle lezzetli bir yemek yemedim.",
+   "en": "I have never eaten such a delicious meal in my life.",
+   "level": "A2"
+  },
+  {
+   "word": "ilk",
+   "lang": "tr",
+   "meaning": "firstly, at first",
+   "tr": "Sabah ofise geldiğinde ilk e-postalarını kontrol eder.",
+   "en": "When she arrives at the office in the morning, she checks her emails first.",
+   "level": "A2"
+  },
+  {
+   "word": "ise",
+   "lang": "tr",
+   "meaning": "whereas, while",
+   "tr": "Ben çay içmeyi severim, kardeşim ise kahveyi tercih eder.",
+   "en": "I like drinking tea, whereas my brother prefers coffee.",
+   "level": "B1"
+  },
+  {
+   "word": "ise",
+   "lang": "tr",
+   "meaning": "regarding, as for",
+   "tr": "Bana sorarsanız kabul ederim, müdüre gelince ise bilemiyorum.",
+   "en": "If you ask me, I'd accept; as for the manager, I don't know.",
+   "level": "B2"
+  },
+  {
+   "word": "aşırı",
+   "lang": "tr",
+   "meaning": "extremely, excessively",
+   "tr": "Dünkü uzun yürüyüşten sonra bacaklarım aşırı yoruldu.",
+   "en": "After yesterday's long walk, my legs got extremely tired.",
+   "level": "A2"
+  },
+  {
+   "word": "yüce",
+   "lang": "tr",
+   "meaning": "supreme, sublime",
+   "tr": "O, ülkesi için canını vererek en yüce mertebeye ulaştı.",
+   "en": "He reached the supreme rank by giving his life for his country.",
+   "level": "B2"
+  },
+  {
+   "word": "yüce",
+   "lang": "tr",
+   "meaning": "lofty, high",
+   "tr": "Köyün arkasındaki yüce dağlar kışın tamamen karla kaplanır.",
+   "en": "The lofty mountains behind the village are completely covered with snow in winter.",
+   "level": "C1"
+  },
+  {
+   "word": "güney",
+   "lang": "tr",
+   "meaning": "south",
+   "tr": "Kış aylarında göçmen kuşlar güneye doğru uçarlar.",
+   "en": "In the winter months, migratory birds fly towards the south.",
+   "level": "A1"
+  },
+  {
+   "word": "güney",
+   "lang": "tr",
+   "meaning": "the South",
+   "tr": "Ülkenin güneyinde yaz mevsimi çok daha uzun ve sıcak geçer.",
+   "en": "In the south of the country, the summer season is much longer and hotter.",
+   "level": "B1"
+  },
+  {
+   "word": "hizmet",
+   "lang": "tr",
+   "meaning": "service",
+   "tr": "Yeni açılan restoranın yemekleri güzel ama hizmeti çok yavaştı.",
+   "en": "The food at the newly opened restaurant was good, but the service was very slow.",
+   "level": "A2"
+  },
+  {
+   "word": "hizmet",
+   "lang": "tr",
+   "meaning": "favor, good turn",
+   "tr": "Onun bu zor zamanımızda bize yaptığı hizmeti asla unutmayacağız.",
+   "en": "We will never forget the favor he did for us in this difficult time.",
+   "level": "B2"
+  },
+  {
+   "word": "çavuş",
+   "lang": "tr",
+   "meaning": "sergeant",
+   "tr": "Askerde üstün başarı gösterdiği için kısa sürede çavuş oldu.",
+   "en": "Because he showed outstanding success in the military, he became a sergeant in a short time.",
+   "level": "B1"
+  },
+  {
+   "word": "çavuş",
+   "lang": "tr",
+   "meaning": "foreman",
+   "tr": "İnşaat alanındaki tüm işçileri yönlendiren tecrübeli bir çavuş vardı.",
+   "en": "There was an experienced foreman directing all the workers on the construction site.",
+   "level": "B2"
+  },
+  {
+   "word": "don",
+   "lang": "tr",
+   "meaning": "frost, freeze",
+   "tr": "Gece aniden don olunca bahçedeki bütün ekinler zarar gördü.",
+   "en": "When there was a sudden frost at night, all the crops in the garden were damaged.",
+   "level": "B1"
+  },
+  {
+   "word": "don",
+   "lang": "tr",
+   "meaning": "underpants",
+   "tr": "Bavulunu hazırlarken yanına birkaç temiz don almayı unutmadı.",
+   "en": "While packing his suitcase, he didn't forget a few pairs of clean underpants.",
+   "level": "A2"
+  },
+  {
+   "word": "don",
+   "lang": "tr",
+   "meaning": "coat (color of a horse)",
+   "tr": "Yarışa katılan atın parlak siyah bir donu vardı.",
+   "en": "The horse participating in the race had a shiny black coat.",
+   "level": "C2"
+  },
+  {
+   "word": "piç",
+   "lang": "tr",
+   "meaning": "bastard, illegitimate child",
+   "tr": "Eski romanlarda genellikle zengin adamın mirastan mahrum kalan piç bir oğlu olur.",
+   "en": "In old novels, the rich man usually has a bastard son who is deprived of the inheritance.",
+   "level": "C1"
+  },
+  {
+   "word": "piç",
+   "lang": "tr",
+   "meaning": "bastard (an objectionable person)",
+   "tr": "Bizim mahallenin o sarışın piçi yine herkesi kandırmayı başardı.",
+   "en": "That blond rascal from our neighborhood managed to fool everyone again.",
+   "level": "C2"
+  },
+  {
+   "word": "piç",
+   "lang": "tr",
+   "meaning": "a sprout that appears near the main plant",
+   "tr": "Bahçıvan domates fidanlarının dibinde çıkan piçleri tek tek kopardı.",
+   "en": "The gardener individually plucked the suckers emerging at the base of the tomato seedlings.",
+   "level": "C2"
+  },
+  {
+   "word": "suffering",
+   "lang": "en",
+   "meaning": "acı, ıstırap",
+   "tr": "Yeni ilaç, kronik ağrısı olan hastaların ıstırabını hafifletmeye yardımcı oluyor.",
+   "en": "The new medication helps to alleviate the suffering of patients with chronic pain.",
+   "level": "B2"
+  },
+  {
+   "word": "dollar",
+   "lang": "en",
+   "meaning": "dolar",
+   "tr": "New York'a uçmadan önce bütün eurolarını ABD dolarına çevirdi.",
+   "en": "He exchanged all his euros for US dollars before flying to New York.",
+   "level": "A1"
+  },
+  {
+   "word": "religious",
+   "lang": "en",
+   "meaning": "dindar, dine bağlı",
+   "tr": "Büyükannem her pazar kiliseyi ziyaret eden son derece dindar bir insandır.",
+   "en": "My grandmother is a highly religious person who visits the church every Sunday.",
+   "level": "B1"
+  },
+  {
+   "word": "religious",
+   "lang": "en",
+   "meaning": "dini, dinle ilgili",
+   "tr": "Müze, Bizans dönemine ait birçok antik dini eseri sergiliyor.",
+   "en": "The museum displays many ancient religious artifacts from the Byzantine era.",
+   "level": "B2"
+  },
+  {
+   "word": "religious",
+   "lang": "en",
+   "meaning": "titiz, aşırı özenli",
+   "tr": "Minyatür modellerini boyarken detaylara titiz bir özen gösteriyor.",
+   "en": "He pays religious attention to detail when painting his miniature models.",
+   "level": "C2"
+  },
+  {
+   "word": "explosion",
+   "lang": "en",
+   "meaning": "patlama, infilak",
+   "tr": "Kimya fabrikasındaki şiddetli patlama, kilometrelerce ötedeki camları paramparça etti.",
+   "en": "The loud explosion in the chemical factory shattered windows miles away.",
+   "level": "B1"
+  },
+  {
+   "word": "explosion",
+   "lang": "en",
+   "meaning": "ani artış, patlama",
+   "tr": "Son zamanlarda elektrikli arabaların popülaritesinde inanılmaz bir patlama yaşandı.",
+   "en": "There has been an incredible explosion in the popularity of electric cars lately.",
+   "level": "C1"
+  },
+  {
+   "word": "lion",
+   "lang": "en",
+   "meaning": "aslan",
+   "tr": "Erkek aslan, sürüsünü korumak için korkutucu bir kükreme savurdu.",
+   "en": "The male lion let out a terrifying roar to protect his pride.",
+   "level": "A1"
+  },
+  {
+   "word": "lion",
+   "lang": "en",
+   "meaning": "sosyete yıldızı, ilgi odağı",
+   "tr": "Ünlü bir yazar olarak başkentte edebiyat dünyasının gözdesi gibi ağırlandı.",
+   "en": "As a famous author, he was treated as a literary lion in the capital.",
+   "level": "C2"
   }
  ],
  "phrases": [
@@ -61476,6 +62212,13 @@
    "ex": "This juice contains no artificial preservative.",
    "ex_tr": "Bu meyve suyunda yapay koruyucu katkı maddesi yok.",
    "cat": "false_friends"
+  },
+  {
+   "phrase": "yakayı ele vermek",
+   "lang": "tr",
+   "meaning": "to get caught, to give oneself away",
+   "ex": "Saklandığı depo polisler tarafından basılınca sonunda yakayı ele verdi.",
+   "ex_tr": "When the warehouse he was hiding in was raided by the police, he finally got caught."
   }
  ],
  "phrase_edits": [
