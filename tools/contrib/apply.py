@@ -331,7 +331,7 @@ for w in data['words']:
 
 for e in data['examples']:
     if e['lang'] == 'tr':
-        tr_add_meaning(e['word'], 'verb' if e['word'].endswith(('mak', 'mek')) else 'adj', e['meaning'])
+        tr_add_meaning(e['word'], e.get('pos') or ('verb' if e['word'].endswith(('mak', 'mek')) else 'adj'), e['meaning'])
         tr_example(e['word'], e['tr'], e['en'])
     else:
         en_example(e['word'], e['meaning'], e['en'], e['tr'])

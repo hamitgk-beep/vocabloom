@@ -27,7 +27,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx
+         tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx \
+         tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx
 """
 import json
 import re
@@ -474,7 +475,30 @@ V15_EX_FIX = {
     **{i: {'meaning': m} for i, (_, m) in V15_SAME.items()},
 }
 
+# --- Dictionary v16 (hamit_2026-11-20_v16.xlsx) ----------------------------------
+# All new. "aşağılık" in row 5 is the adjective (inferior), not "inferiority";
+# "geçer" in row 19 is "in use", not "popular"; "rezil" is not "crappy".
+# Meanings the dictionary already has take its wording; "tahliye" and "alay" are nouns.
+V16_MEANING = {5: 'Less of worth, lower of value.', 7: 'just, first', 13: 'evacuation', 14: 'setting (a prisoner) free',
+               19: 'current, in use', 23: 'awful, disgraceful'}
+V16_EX_FIX = {
+    5: {'meaning': V16_MEANING[5], 'en': 'In the past, this social class was regarded as inferior.'},
+    6: {'en': 'I love sweets, especially chocolate cake.'},
+    7: {'meaning': V16_MEANING[7]},
+    13: {'meaning': V16_MEANING[13], 'pos': 'noun'},
+    14: {'meaning': V16_MEANING[14]},
+    26: {'pos': 'noun'},
+    10: {'en': 'The old castle on the hill dominated the whole plain.'},
+    15: {'en': "Our little one doesn't want to go to kindergarten today."},
+    19: {'meaning': V16_MEANING[19], 'en': 'This old payment method is not really in use in the market anymore.'},
+    23: {'meaning': V16_MEANING[23], 'en': 'I had never stayed in such an awful hotel in my life before.'},
+    34: {'tr': 'Dondurucu kuzey rüzgârları bu bölgeye soğuk hava getirir.'},
+}
+V16_PH_FIX = {6: {'ex_tr': 'Your mother waited anxiously for you to come home.'}}
+
 FIXES = {
+    'hamit_2026-11-20_v16.xlsx': dict(ctx_fix={i: (None, None, None, m) for i, m in V16_MEANING.items()}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split={}, tr_split={}, ex_fix=V16_EX_FIX, ph_fix=V16_PH_FIX),
     'hamit_2026-11-20_v15.xlsx': dict(ctx_fix={55: (None, None, None, V15_BLIND), **{i: (None, None, None, m) for i, (_, m) in V15_SAME.items()}}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       ctx_drop={8}, en_split={28: [('sıfat', V15_BLIND, 'sorgulamayan')],
                                                 **{r: [('fiil' if r == 24 else 'sıfat' if r == 19 else 'isim', m, '')] for r, m in V15_SAME.values()}}, tr_split={8: []},
@@ -696,7 +720,25 @@ F18_MEANING = {'twisted plot': 'dolambaçlı, beklenmedik dönüşlü olay örg�
                'sound judgment': 'sağlam muhakeme', 'hasty judgment': 'aceleci karar, peşin hüküm',
                'fair judgment': 'adil değerlendirme'}
 
-AUDIT_FIX = {'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
+# --- Audit sheet 19 -------------------------------------------------------------
+# The review sheet's notes from row 40 on belong to other phrases than the row
+# they sit on, so only rows 2-39 are acted on.
+D19_EX_FIX = {
+    77: {'phrase': 'put sth on the line', 'ex': "\u201cDon't put everything we've worked for on the line,\u201d his brother warned."},
+    88: {'ex': 'He was taken ill during the long ferry crossing.', 'ex_tr': 'Uzun feribot yolculuğu sırasında rahatsızlandı.'},
+}
+D19_EDITS = {
+    **{p: {'action': 'delete'} for p in ('under it', 'under that', 'for the lose', "i'm not telling you", 'do you have a girlfriend',
+                                         'milk can', 'in glass', 'for real life', 'in one case', 'nervous hit', 'crazy up',
+                                         'leave with the one what brought you')},
+    'put on the line': {'action': 'rename', 'to': 'put sth on the line'},  # "put his job on the line"
+    'stuff you': {'action': 'meaning', 'meaning': 'canın cehenneme, defol (kaba)'},
+    'behind its time': {'action': 'meaning', 'meaning': 'zamanının gerisinde, modası geçmiş'},
+    'body english': {'action': 'meaning', 'meaning': '(sporda) topu vücut hareketiyle yönlendirmeye çalışmak'},
+}
+
+AUDIT_FIX = {'hamit_denetim19_2026-11-20.xlsx': (D19_EX_FIX, D19_EDITS),
+             'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
              'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
              'hamit_denetim15_2026-11-20.xlsx': (D15_EX_FIX, D15_EDITS)}
 

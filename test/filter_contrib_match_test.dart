@@ -56,5 +56,8 @@ void main() {
     // Sheet 17: modal patterns, a hyphenated slang word.
     expect(found('The door must have been open.', 'modal_verbs'), contains('must have been'));
     expect(found('I am low-key tired.', 'informal_slang'), contains('low-key'));
+    // Audit 19: an object inside "put sth on the line"; "under it" is no idiom any more.
+    expect(found('He put his job on the line.', 'idioms'), contains('put sth on the line'));
+    expect(found('The box was under it.', 'prepositional_phrases'), isNot(contains('under it')));
   });
 }
