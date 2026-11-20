@@ -271,6 +271,9 @@ def en_phrase(p):
         want = None
     rows = en_db.execute('SELECT id, cat, tr, entr, ex, extr FROM expr WHERE phrase=?' + (' AND cat=?' if want else ''),
                          (phrase, want) if want else (phrase,)).fetchall()
+    if not rows and meaning is None:
+        stats['en phrase examples skipped (no such phrase)'] += 1
+        return
     if not rows:
         words = phrase.split()
         cat = want or ('phrasal_verbs' if len(words) == 2 and words[1] in {'up', 'down', 'over', 'out', 'off', 'on', 'in', 'away', 'back'} else 'idioms')
@@ -345,7 +348,16 @@ for c in data['context']:
 for p in data.get('phrase_edits', []):
     # Checked by hand: a wrong meaning replaced, or a phrase that is not one removed.
     phrase = p['phrase']
-    if p['action'] == 'delete':
+    if p['action'] == 'rename':
+        # "get the best" → "get the best of": the heading in its usual form.
+        to = p['to']
+        cats = [c for c, in en_db.execute('SELECT cat FROM expr WHERE phrase=?', (phrase,))]
+        for t in ('expr', 'own_expr', 'exd', 'exfreq'):
+            en_db.execute(f'UPDATE {t} SET phrase=? WHERE phrase=?', (to, phrase))
+        for c in cats:
+            en_db.execute('UPDATE exs SET key=? WHERE key=?', (f'{to}|{c}', f'{phrase}|{c}'))
+        stats['en phrases renamed'] += len(cats)
+    elif p['action'] == 'delete':
         cats = [c for c, in en_db.execute('SELECT cat FROM expr WHERE phrase=?', (phrase,))]
         en_db.execute('DELETE FROM expr WHERE phrase=?', (phrase,))
         for t in ('own_expr', 'exd', 'exfreq'):

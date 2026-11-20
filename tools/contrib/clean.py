@@ -23,7 +23,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
-         tools/contrib/hamit_denetim14_2026-11-20.xlsx
+         tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx
 """
 import json
 import re
@@ -468,6 +468,47 @@ D14_EDITS = {
     'party up': {'action': 'delete'},
 }
 
+# --- Audit sheet 15 -------------------------------------------------------------
+# Examples rewritten so that they read naturally and the phrase is found in them;
+# none for a phrase removed below, or one whose heading is not the usual form
+# ("while one is about it", "on the ready": "at the ready").
+D15_EX_FIX = {
+    9: {'phrase': 'get the best of'},
+    10: {'phrase': 'have the best of'},
+    11: {'phrase': 'at the best of times'},
+    16: {'ex': 'There is enough to go around, so nobody needs to skip dinner.',
+         'ex_tr': 'Herkese yetecek kadar var, kimsenin akşam yemeğini atlamasına gerek yok.'},
+    25: None, 47: None,
+    44: {'ex': "It's early days, so we cannot judge the results yet."},
+    27: {'ex': '"Do you remember your first day at school?" "I remember like it was yesterday."',
+         'ex_tr': '"Okuldaki ilk gününü hatırlıyor musun?" "Dün gibi hatırlıyorum."'},
+    29: None, 30: None, 31: None, 32: None, 33: None, 34: None,
+    55: {'phrase': 'put someone in mind of'},
+    74: None,
+    79: {'ex': 'We promised to show our visitors a good time in Istanbul.',
+         'ex_tr': "İstanbul'da misafirlerimize güzel vakit geçirteceğimize söz verdik."},
+    86: {'phrase': 'give sb the once over', 'ex': 'The guard gave the visitor the once over before opening the gate.'},
+}
+D15_EDITS = {
+    # Without "of" they are found in "get the best price", "at the best hotel".
+    'get the best': {'action': 'rename', 'to': 'get the best of'},
+    'have the best': {'action': 'rename', 'to': 'have the best of'},
+    'give the once over': {'action': 'rename', 'to': 'give sb the once over'},
+    'at the best': {'action': 'delete'},  # "at best" and "at the best of times" are there
+    'put in mind': {'action': 'delete'},  # "put someone in mind of" is there
+    'show someone a good time': {'action': 'meaning', 'meaning': 'birine güzel vakit geçirtmek, eğlendirmek; (argo) cinsel ilişkiye girmek'},
+    'meet up with': {'action': 'meaning', 'meaning': 'buluşmak, bir araya gelmek'},
+    'there must be something in the water': {'action': 'meaning', 'meaning': '(şaka) herkeste aynı şey oluyor, suda bir şey var herhalde'},
+    # Ordinary grammar, found everywhere with no meaning of its own.
+    'at that place': {'action': 'delete'}, 'for each one': {'action': 'delete'},
+    'for each person': {'action': 'delete'}, 'from each one': {'action': 'delete'},
+    'of each person': {'action': 'delete'}, 'to each one': {'action': 'delete'},
+    # "I'll tell you the truth": "to tell you the truth" is the phrase.
+    'tell you the truth': {'action': 'delete'},
+}
+AUDIT_FIX = {'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
+             'hamit_denetim15_2026-11-20.xlsx': (D15_EX_FIX, D15_EDITS)}
+
 
 def lang_of(word, meaning, tr_words):
     """Turkish when the word is a known Turkish word or has Turkish letters,
@@ -503,17 +544,18 @@ for src in srcs:
 
     if 'Örnek cümle önerileri' in wb.sheetnames:
         # An audit sheet: examples for phrases that had none, and phrases to fix or remove.
+        ex_fix, ph_edits = AUDIT_FIX[name]
         for i, r in rows(wb, 'Örnek cümle önerileri'):
+            if wb['Örnek cümle önerileri'].cell(1, 1).value == 'Kaynak satır':
+                r = r[1:]  # sheet 15 starts with the row in the full list
             ph, cat, mean, ex, ex_tr = [str(x or '').strip() for x in (r + [''] * 5)[:5]]
-            fix = D14_EX_FIX.get(i, {})
+            fix = ex_fix.get(i, {})
             if fix is None or not ph:
                 continue
             e = {'phrase': re.sub(r'\s*…\s*', ' sb ', ph).strip(), 'lang': 'en', 'meaning': '', 'ex': ex, 'ex_tr': ex_tr}
             e.update(fix)
             phrases.append(e)
-        for i, r in rows(wb, 'Anlam ve silme kontrolü'):
-            if r[0] and r[0] in D14_EDITS:
-                edits.append(dict(D14_EDITS[r[0]], phrase=r[0]))
+        edits += [dict(v, phrase=k) for k, v in ph_edits.items()]
         continue
 
     if 'Kalıplar' in wb.sheetnames and 'Cümlede anlam' not in wb.sheetnames:

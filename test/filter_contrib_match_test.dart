@@ -46,5 +46,9 @@ void main() {
     expect(found('He looked at the money.', 'prepositional_phrases'), isNot(contains('at the money')));
     expect(found('The shelf was well out of reach.', 'phrasal_verbs'), isNot(contains('well out')));
     expect(found('Let me have a go at it first.', 'idioms'), contains('have a go at it'));
+    // Audit 15: "get the best of" with its "of", so "the best price" is not it.
+    expect(found("Don't let your fear get the best of you.", 'idioms'), contains('get the best of'));
+    expect(found('We got the best price in town.', 'idioms'), isNot(contains('get the best of')));
+    expect(found('The guard gave the visitor the once over.', 'idioms'), contains('give sb the once over'));
   });
 }

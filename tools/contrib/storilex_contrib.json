@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -57010,6 +57010,594 @@
    "meaning": "",
    "ex": "The mayor called together the neighborhood representatives.",
    "ex_tr": "Belediye başkanı mahalle temsilcilerini bir araya çağırdı."
+  },
+  {
+   "phrase": "i'm not the one",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He pointed at me, but I said, \"I'm not the one who broke the window.\"",
+   "ex_tr": "Beni işaret etti ama pencereyi kıran kişinin ben olmadığımı söyledim."
+  },
+  {
+   "phrase": "i want doesn't get",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My grandmother used to say, \"I want doesn't get,\" whenever we demanded something.",
+   "ex_tr": "Bir şeyleri buyurgan biçimde istediğimizde büyükannem, istemekle olmaz, derdi."
+  },
+  {
+   "phrase": "from can see to can't see",
+   "lang": "en",
+   "meaning": "",
+   "ex": "They worked from can see to can't see during the harvest.",
+   "ex_tr": "Hasat boyunca gün doğumundan hava kararıncaya kadar çalıştılar."
+  },
+  {
+   "phrase": "up to anything",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The children were unusually quiet, so I wondered whether they were up to anything.",
+   "ex_tr": "Çocuklar alışılmadık derecede sessizdi; acaba bir yaramazlık mı çeviriyorlardı diye düşündüm."
+  },
+  {
+   "phrase": "for love or money",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I could not persuade him to sell the old house for love or money.",
+   "ex_tr": "Ne yaptıysam onu eski evi satmaya ikna edemedim."
+  },
+  {
+   "phrase": "play away",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He admitted that he used to play away while he was married.",
+   "ex_tr": "Evliyken eşini aldattığını itiraf etti."
+  },
+  {
+   "phrase": "have a hard time of it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Small shops have a hard time of it when rents rise so quickly.",
+   "ex_tr": "Kiralar bu kadar hızlı yükselince küçük dükkânlar zorlanıyor."
+  },
+  {
+   "phrase": "get the best of",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She refused to let her fear get the best of her.",
+   "ex_tr": "Korkusunun kendisini yenmesine izin vermedi."
+  },
+  {
+   "phrase": "have the best of",
+   "lang": "en",
+   "meaning": "",
+   "ex": "In the final round, the younger player seemed to have the best of the exchange.",
+   "ex_tr": "Son turda genç oyuncu karşılıklı mücadelede üstün görünüyordu."
+  },
+  {
+   "phrase": "at the best of times",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The road was dangerous at the best of times, especially after dark.",
+   "ex_tr": "Bu yol en iyi koşullarda bile tehlikeliydi, özellikle hava karardıktan sonra."
+  },
+  {
+   "phrase": "with the best of them",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Despite her age, she could dance with the best of them.",
+   "ex_tr": "Yaşına rağmen en iyilerle boy ölçüşecek kadar iyi dans ediyordu."
+  },
+  {
+   "phrase": "the best things in life aren't things",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After the reunion, she smiled and said, \"The best things in life aren't things.\"",
+   "ex_tr": "Buluşmadan sonra gülümseyip hayattaki en güzel şeylerin eşya olmadığını söyledi."
+  },
+  {
+   "phrase": "let it alone",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The paint is still wet, so let it alone until tomorrow.",
+   "ex_tr": "Boya hâlâ ıslak, yarına kadar dokunma."
+  },
+  {
+   "phrase": "let things alone",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Sometimes it is wiser to let things alone instead of starting another argument.",
+   "ex_tr": "Bazen yeni bir tartışma başlatmak yerine işleri kendi hâline bırakmak daha akıllıcadır."
+  },
+  {
+   "phrase": "enough to go around",
+   "lang": "en",
+   "meaning": "",
+   "ex": "There is enough to go around, so nobody needs to skip dinner.",
+   "ex_tr": "Herkese yetecek kadar var, kimsenin akşam yemeğini atlamasına gerek yok."
+  },
+  {
+   "phrase": "talk around",
+   "lang": "en",
+   "meaning": "",
+   "ex": "It took an hour to talk around the reluctant committee members.",
+   "ex_tr": "İsteksiz komite üyelerini ikna etmek bir saat sürdü."
+  },
+  {
+   "phrase": "around the way",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Everyone around the way knew the old barber by name.",
+   "ex_tr": "Mahalledeki herkes yaşlı berberi adıyla tanırdı."
+  },
+  {
+   "phrase": "that's a good idea",
+   "lang": "en",
+   "meaning": "",
+   "ex": "\"We could leave before sunrise.\" \"That's a good idea,\" she replied.",
+   "ex_tr": "“Güneş doğmadan çıkabiliriz.” “İyi fikir,” diye yanıtladı."
+  },
+  {
+   "phrase": "it seems that",
+   "lang": "en",
+   "meaning": "",
+   "ex": "It seems that the train has been delayed by heavy snow.",
+   "ex_tr": "Görünüşe göre yoğun kar yüzünden tren gecikmiş."
+  },
+  {
+   "phrase": "at the most",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The walk will take twenty minutes at the most.",
+   "ex_tr": "Yürüyüş en fazla yirmi dakika sürer."
+  },
+  {
+   "phrase": "there must be something in the water",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Three neighbors won prizes this week; there must be something in the water.",
+   "ex_tr": "Bu hafta üç komşu ödül kazandı; bu işte tuhaf bir rastlantı var."
+  },
+  {
+   "phrase": "of the best water",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The jeweler described the diamond as a stone of the best water.",
+   "ex_tr": "Kuyumcu elması en yüksek kalitede bir taş olarak tanımladı."
+  },
+  {
+   "phrase": "big as a house",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The dog looked big as a house to the frightened child.",
+   "ex_tr": "Köpek, korkmuş çocuğa dev gibi görünüyordu."
+  },
+  {
+   "phrase": "let's get the party started",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The host clapped his hands and shouted, \"Let's get the party started!\"",
+   "ex_tr": "Ev sahibi ellerini çırpıp “Haydi eğlence başlasın!” diye bağırdı."
+  },
+  {
+   "phrase": "remember like it was yesterday",
+   "lang": "en",
+   "meaning": "",
+   "ex": "\"Do you remember your first day at school?\" \"I remember like it was yesterday.\"",
+   "ex_tr": "\"Okuldaki ilk gününü hatırlıyor musun?\" \"Dün gibi hatırlıyorum.\""
+  },
+  {
+   "phrase": "if needs be",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We can spend the night at the station if needs be.",
+   "ex_tr": "Gerekirse geceyi istasyonda geçirebiliriz."
+  },
+  {
+   "phrase": "bad old days",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He never wanted to return to the bad old days of constant shortages.",
+   "ex_tr": "Sürekli kıtlık yaşanan o kötü eski günlere dönmek istemiyordu."
+  },
+  {
+   "phrase": "be on days",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I will be on days next week, so I can meet you after work.",
+   "ex_tr": "Gelecek hafta gündüz vardiyasında olacağım, işten sonra buluşabiliriz."
+  },
+  {
+   "phrase": "all over the world",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Readers all over the world sent letters to the author.",
+   "ex_tr": "Dünyanın dört bir yanındaki okurlar yazara mektup gönderdi."
+  },
+  {
+   "phrase": "for all the world to see",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He left the accusation on the noticeboard for all the world to see.",
+   "ex_tr": "Suçlamayı herkes görsün diye ilan panosuna astı."
+  },
+  {
+   "phrase": "sure as the world",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Sure as the world, the cat was waiting at the door again.",
+   "ex_tr": "Beklendiği gibi kedi yine kapıda bekliyordu."
+  },
+  {
+   "phrase": "for the world",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I would not betray her trust for the world.",
+   "ex_tr": "Dünyaları verseler onun güvenine ihanet etmem."
+  },
+  {
+   "phrase": "with the best will in the world",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With the best will in the world, I cannot finish this by noon.",
+   "ex_tr": "Ne kadar istesem de bunu öğlene kadar bitiremem."
+  },
+  {
+   "phrase": "great care",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The museum staff handled the fragile vase with great care.",
+   "ex_tr": "Müze çalışanları kırılgan vazoyu büyük bir özenle taşıdı."
+  },
+  {
+   "phrase": "call it an early night",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After the long journey, we decided to call it an early night.",
+   "ex_tr": "Uzun yolculuğun ardından erkenden yatmaya karar verdik."
+  },
+  {
+   "phrase": "it's early days",
+   "lang": "en",
+   "meaning": "",
+   "ex": "It's early days, so we cannot judge the results yet.",
+   "ex_tr": "Henüz çok erken, sonuçları şimdiden değerlendiremeyiz."
+  },
+  {
+   "phrase": "put to good use",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She put to good use the skills she had learned from her father.",
+   "ex_tr": "Babasından öğrendiği becerileri iyi değerlendirdi."
+  },
+  {
+   "phrase": "ready as i'll ever be",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I checked my notes one last time and said, \"Ready as I'll ever be.\"",
+   "ex_tr": "Notlarımı son kez kontrol edip “Hazır olabileceğim kadar hazırım,” dedim."
+  },
+  {
+   "phrase": "one thing or another",
+   "lang": "en",
+   "meaning": "",
+   "ex": "One thing or another kept delaying our departure.",
+   "ex_tr": "Bir türlü yola çıkamadık; sürekli başka bir şey bizi geciktirdi."
+  },
+  {
+   "phrase": "at one time or another",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Almost everyone feels lonely at one time or another.",
+   "ex_tr": "Hemen herkes zaman zaman kendini yalnız hisseder."
+  },
+  {
+   "phrase": "in another world",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He sat by the window, lost in another world.",
+   "ex_tr": "Pencerenin yanında kendi dünyasına dalmış oturuyordu."
+  },
+  {
+   "phrase": "do you mind if",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Do you mind if I open the window for a moment?",
+   "ex_tr": "Pencereyi bir süreliğine açmamın sakıncası var mı?"
+  },
+  {
+   "phrase": "would you mind",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Would you mind closing the door quietly?",
+   "ex_tr": "Kapıyı sessizce kapatabilir misiniz?"
+  },
+  {
+   "phrase": "mind you",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The room is small; mind you, the view is wonderful.",
+   "ex_tr": "Oda küçük; ama manzarası harika, onu da söyleyeyim."
+  },
+  {
+   "phrase": "never you mind",
+   "lang": "en",
+   "meaning": "",
+   "ex": "\"What is in that box?\" \"Never you mind,\" she said with a smile.",
+   "ex_tr": "“O kutuda ne var?” “Sen onu boş ver,” dedi gülümseyerek."
+  },
+  {
+   "phrase": "put someone in mind of",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The smell of pine trees put me in mind of our childhood holidays.",
+   "ex_tr": "Çam ağaçlarının kokusu bana çocukluk tatillerimizi hatırlattı."
+  },
+  {
+   "phrase": "meet up with",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I plan to meet up with my cousin after the concert.",
+   "ex_tr": "Konserden sonra kuzenimle buluşmayı planlıyorum."
+  },
+  {
+   "phrase": "you can't win them all",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We lost the match, but you can't win them all.",
+   "ex_tr": "Maçı kaybettik ama insan her zaman kazanamaz."
+  },
+  {
+   "phrase": "i wonder if",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I wonder if the old bridge is still standing.",
+   "ex_tr": "Acaba eski köprü hâlâ ayakta mı?"
+  },
+  {
+   "phrase": "in her own right",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She became a respected writer in her own right.",
+   "ex_tr": "Kendi başarısıyla saygın bir yazar oldu."
+  },
+  {
+   "phrase": "in his own right",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He was an accomplished musician in his own right.",
+   "ex_tr": "O da kendi başına başarılı bir müzisyendi."
+  },
+  {
+   "phrase": "good things come to those who wait",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My father always said that good things come to those who wait.",
+   "ex_tr": "Babam hep sabredenlerin sonunda güzel şeylere kavuşacağını söylerdi."
+  },
+  {
+   "phrase": "coming right up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "\"Two cups of tea, please.\" \"Coming right up,\" the waiter replied.",
+   "ex_tr": "“İki çay lütfen.” “Hemen geliyor,” diye yanıtladı garson."
+  },
+  {
+   "phrase": "long in coming",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Their apology was long in coming, but it was sincere.",
+   "ex_tr": "Özür dilemeleri uzun zaman aldı ama içtendi."
+  },
+  {
+   "phrase": "all in the family",
+   "lang": "en",
+   "meaning": "",
+   "ex": "They kept the disagreement all in the family instead of discussing it publicly.",
+   "ex_tr": "Anlaşmazlığı herkesin önünde konuşmak yerine aile içinde tuttular."
+  },
+  {
+   "phrase": "in waiting",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The prince in waiting watched the ceremony from the balcony.",
+   "ex_tr": "Tahta çıkmayı bekleyen prens töreni balkondan izledi."
+  },
+  {
+   "phrase": "bed out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The gardener will bed out the young plants after the last frost.",
+   "ex_tr": "Bahçıvan son dondan sonra genç fideleri bahçeye dikecek."
+  },
+  {
+   "phrase": "while we're young",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Please bring the bill while we're young; we have a train to catch.",
+   "ex_tr": "Lütfen hesabı artık getirin, yetişmemiz gereken bir tren var."
+  },
+  {
+   "phrase": "with young",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The veterinarian confirmed that the fox was with young.",
+   "ex_tr": "Veteriner tilkinin gebe olduğunu doğruladı."
+  },
+  {
+   "phrase": "change out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We need to change out the damaged filter before restarting the machine.",
+   "ex_tr": "Makineyi yeniden çalıştırmadan önce hasarlı filtreyi değiştirmeliyiz."
+  },
+  {
+   "phrase": "you're never too old to learn",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She started piano lessons at seventy because you're never too old to learn.",
+   "ex_tr": "Yetmiş yaşında piyano derslerine başladı; öğrenmenin yaşı yok."
+  },
+  {
+   "phrase": "coffee up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We decided to coffee up before the long drive.",
+   "ex_tr": "Uzun yolculuktan önce kahve içip kendimize gelmeye karar verdik."
+  },
+  {
+   "phrase": "sleep like a dog",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After working all night, he expected to sleep like a dog.",
+   "ex_tr": "Bütün gece çalıştıktan sonra deliksiz uyumayı umuyordu."
+  },
+  {
+   "phrase": "to tell you the truth",
+   "lang": "en",
+   "meaning": "",
+   "ex": "To tell you the truth, I did not enjoy the ending.",
+   "ex_tr": "Doğrusunu söylemek gerekirse sonunu beğenmedim."
+  },
+  {
+   "phrase": "to tell the truth",
+   "lang": "en",
+   "meaning": "",
+   "ex": "To tell the truth, we had already heard the news.",
+   "ex_tr": "Doğrusunu söylemek gerekirse haberi zaten duymuştuk."
+  },
+  {
+   "phrase": "until such time as",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The gate will remain locked until such time as the repairs are complete.",
+   "ex_tr": "Onarım tamamlanana kadar kapı kilitli kalacak."
+  },
+  {
+   "phrase": "and such",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The attic was full of old photographs, letters and such.",
+   "ex_tr": "Tavan arası eski fotoğraflar, mektuplar ve benzeri şeylerle doluydu."
+  },
+  {
+   "phrase": "back that train up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "\"Back that train up,\" she said. \"Who told you I had agreed?\"",
+   "ex_tr": "“Dur bir dakika,” dedi. “Kabul ettiğimi sana kim söyledi?”"
+  },
+  {
+   "phrase": "show someone a good time",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We promised to show our visitors a good time in Istanbul.",
+   "ex_tr": "İstanbul'da misafirlerimize güzel vakit geçirteceğimize söz verdik."
+  },
+  {
+   "phrase": "all over the show",
+   "lang": "en",
+   "meaning": "",
+   "ex": "His notes were all over the show, and he could not find the address.",
+   "ex_tr": "Notları darmadağındı, adresi bulamıyordu."
+  },
+  {
+   "phrase": "in true",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The carpenter checked that the frame was in true before fixing it in place.",
+   "ex_tr": "Marangoz çerçeveyi sabitlemeden önce düzgün hizada olduğunu kontrol etti."
+  },
+  {
+   "phrase": "out of true",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The bicycle wheel was out of true after the accident.",
+   "ex_tr": "Kazadan sonra bisiklet tekerleğinin ayarı bozulmuştu."
+  },
+  {
+   "phrase": "have an easy time of it",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The new manager did not have an easy time of it during the first month.",
+   "ex_tr": "Yeni müdür ilk ayında hiç de rahat etmedi."
+  },
+  {
+   "phrase": "over easy",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She ordered two eggs over easy with toast.",
+   "ex_tr": "Kızarmış ekmekle birlikte sarısı akışkan iki yumurta sipariş etti."
+  },
+  {
+   "phrase": "for this once",
+   "lang": "en",
+   "meaning": "",
+   "ex": "For this once, I will overlook your mistake.",
+   "ex_tr": "Bu seferlik hatanı görmezden geleceğim."
+  },
+  {
+   "phrase": "give sb the once over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The guard gave the visitor the once over before opening the gate.",
+   "ex_tr": "Görevli kapıyı açmadan önce ziyaretçiyi baştan aşağı süzdü."
+  },
+  {
+   "phrase": "walk the talk",
+   "lang": "en",
+   "meaning": "",
+   "ex": "A leader must walk the talk instead of making empty promises.",
+   "ex_tr": "Bir lider boş vaatler vermek yerine söylediklerini uygulamalı."
+  },
+  {
+   "phrase": "get with the times",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The shop needs to get with the times and accept digital payments.",
+   "ex_tr": "Dükkânın çağa ayak uydurup dijital ödemeleri kabul etmesi gerekiyor."
+  },
+  {
+   "phrase": "keep up with the times",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The library introduced e-books to keep up with the times.",
+   "ex_tr": "Kütüphane çağa ayak uydurmak için elektronik kitapları hizmete sundu."
+  },
+  {
+   "phrase": "in the old times",
+   "lang": "en",
+   "meaning": "",
+   "ex": "In the old times, news traveled much more slowly.",
+   "ex_tr": "Eskiden haberler çok daha yavaş yayılırdı."
+  },
+  {
+   "phrase": "be supposed to",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You are supposed to return the key before leaving.",
+   "ex_tr": "Ayrılmadan önce anahtarı teslim etmen gerekiyor."
+  },
+  {
+   "phrase": "by right of office",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The mayor attends the council meetings by right of office.",
+   "ex_tr": "Belediye başkanı görevi gereği meclis toplantılarına katılır."
+  },
+  {
+   "phrase": "on the sick",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He has been on the sick since his operation.",
+   "ex_tr": "Ameliyatından beri hastalık izninde."
+  },
+  {
+   "phrase": "hurt people hurt people",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The counselor reminded us that hurt people hurt people.",
+   "ex_tr": "Danışman, incinmiş insanların bazen başkalarını da incittiğini hatırlattı."
   }
  ],
  "phrase_edits": [
@@ -57019,21 +57607,14 @@
    "phrase": "have a go at it"
   },
   {
-   "action": "delete",
-   "phrase": "on seen"
-  },
-  {
-   "action": "delete",
-   "phrase": "go in the out door"
-  },
-  {
-   "action": "delete",
-   "phrase": "read the car"
-  },
-  {
    "action": "meaning",
    "meaning": "hiçbir şekilde, ne yapsan (olumsuz cümlede)",
    "phrase": "for love or money"
+  },
+  {
+   "action": "meaning",
+   "meaning": "o kişi ben değilim; (argo) benimle uğraşma",
+   "phrase": "i'm not the one"
   },
   {
    "action": "delete",
@@ -57045,16 +57626,89 @@
   },
   {
    "action": "delete",
-   "phrase": "party up"
+   "phrase": "on seen"
+  },
+  {
+   "action": "delete",
+   "phrase": "read the car"
   },
   {
    "action": "delete",
    "phrase": "for the love of me"
   },
   {
+   "action": "delete",
+   "phrase": "go in the out door"
+  },
+  {
+   "action": "delete",
+   "phrase": "party up"
+  },
+  {
+   "action": "rename",
+   "to": "get the best of",
+   "phrase": "get the best"
+  },
+  {
+   "action": "rename",
+   "to": "have the best of",
+   "phrase": "have the best"
+  },
+  {
+   "action": "rename",
+   "to": "give sb the once over",
+   "phrase": "give the once over"
+  },
+  {
+   "action": "delete",
+   "phrase": "at the best"
+  },
+  {
+   "action": "delete",
+   "phrase": "put in mind"
+  },
+  {
    "action": "meaning",
-   "meaning": "o kişi ben değilim; (argo) benimle uğraşma",
-   "phrase": "i'm not the one"
+   "meaning": "birine güzel vakit geçirtmek, eğlendirmek; (argo) cinsel ilişkiye girmek",
+   "phrase": "show someone a good time"
+  },
+  {
+   "action": "meaning",
+   "meaning": "buluşmak, bir araya gelmek",
+   "phrase": "meet up with"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(şaka) herkeste aynı şey oluyor, suda bir şey var herhalde",
+   "phrase": "there must be something in the water"
+  },
+  {
+   "action": "delete",
+   "phrase": "at that place"
+  },
+  {
+   "action": "delete",
+   "phrase": "for each one"
+  },
+  {
+   "action": "delete",
+   "phrase": "for each person"
+  },
+  {
+   "action": "delete",
+   "phrase": "from each one"
+  },
+  {
+   "action": "delete",
+   "phrase": "of each person"
+  },
+  {
+   "action": "delete",
+   "phrase": "to each one"
+  },
+  {
+   "action": "delete",
+   "phrase": "tell you the truth"
   }
  ]
 }
