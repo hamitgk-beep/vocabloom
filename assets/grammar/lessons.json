@@ -20664,6 +20664,1815 @@
     "karışık tekrar",
     "genel tekrar"
    ]
+  },
+  {
+   "id": "dependent_prepositions",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Fiil/sıfat + edat (interested in, depend on)",
+   "title_en": "Dependent Prepositions",
+   "explanation": "**Nedir?** Bazı fiil ve sıfatlar hep aynı edatla kullanılır. Edat Türkçedeki ekin karşılığıdır ama çoğu zaman bire bir tutmaz; bu yüzden kelimeyle birlikte ezberlenir.\n- **Fiil + edat:** depend **on** (-e bağlı olmak), listen **to** (-i dinlemek), wait **for** (-i beklemek), belong **to** (-e ait olmak), consist **of** (-den oluşmak), apply **for** (-e başvurmak), agree **with** (-e katılmak), suffer **from** (-den muzdarip olmak).\n- **Sıfat + edat:** interested **in** (-e ilgili), good **at** (-de iyi), afraid **of** (-den korkan), proud **of** (ile gurur duyan), responsible **for** (-den sorumlu), similar **to** (-e benzer), different **from** (-den farklı), familiar **with** (-e aşina).\n- Edattan sonra fiil gelirse **-ing** olur: She is good at **drawing**. I'm interested in **learning** Spanish.\n- Sık yapılan hatalar: ~~depend of~~ → depend **on**, ~~interested about~~ → interested **in**, ~~listen music~~ → listen **to** music, ~~wait the bus~~ → wait **for** the bus.\n- Okurken Filtreler'den **Fiil/sıfat + edat**'ı açarsan kitapta bu kalıplar renkli altı çizili görünür.",
+   "structure": [
+    "fiil + sabit edat + nesne: wait for the bus",
+    "sıfat + sabit edat + isim / -ing: good at drawing"
+   ],
+   "examples": [
+    [
+     "It depends on the weather.",
+     "Havaya bağlı."
+    ],
+    [
+     "She is interested in history.",
+     "Tarihe ilgi duyuyor."
+    ],
+    [
+     "We are waiting for the bus.",
+     "Otobüsü bekliyoruz."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "dependent_prepositions-1",
+     "tr": "Havaya bağlı.",
+     "answers": [
+      "It depends on the weather."
+     ],
+     "note": "depend on (of değil)."
+    },
+    {
+     "id": "dependent_prepositions-2",
+     "tr": "Tarihe ilgi duyuyorum.",
+     "answers": [
+      "I am interested in history.",
+      "I'm interested in history."
+     ],
+     "note": "interested in."
+    },
+    {
+     "id": "dependent_prepositions-3",
+     "tr": "Otobüsü bekliyoruz.",
+     "answers": [
+      "We are waiting for the bus.",
+      "We're waiting for the bus."
+     ],
+     "note": "wait for + nesne."
+    },
+    {
+     "id": "dependent_prepositions-4",
+     "tr": "Müzik dinlemeyi severim.",
+     "answers": [
+      "I like listening to music.",
+      "I like to listen to music.",
+      "I love listening to music."
+     ],
+     "note": "listen to music."
+    },
+    {
+     "id": "dependent_prepositions-5",
+     "tr": "Bu çanta kız kardeşime ait.",
+     "answers": [
+      "This bag belongs to my sister."
+     ],
+     "note": "belong to."
+    },
+    {
+     "id": "dependent_prepositions-6",
+     "tr": "Matematikte çok iyidir.",
+     "answers": [
+      "He is very good at maths.",
+      "She is very good at maths.",
+      "He is very good at math.",
+      "She is very good at math.",
+      "He's very good at maths.",
+      "She's very good at maths."
+     ],
+     "note": "good at (in değil)."
+    },
+    {
+     "id": "dependent_prepositions-7",
+     "tr": "Çocuk köpeklerden korkuyor.",
+     "answers": [
+      "The child is afraid of dogs.",
+      "The kid is afraid of dogs."
+     ],
+     "note": "afraid of."
+    },
+    {
+     "id": "dependent_prepositions-8",
+     "tr": "Seninle gurur duyuyoruz.",
+     "answers": [
+      "We are proud of you.",
+      "We're proud of you."
+     ],
+     "note": "proud of."
+    },
+    {
+     "id": "dependent_prepositions-9",
+     "tr": "Programdan ben sorumluyum.",
+     "answers": [
+      "I am responsible for the schedule.",
+      "I'm responsible for the schedule.",
+      "I am responsible for the programme.",
+      "I am responsible for the program."
+     ],
+     "note": "responsible for."
+    },
+    {
+     "id": "dependent_prepositions-10",
+     "tr": "Ekip beş kişiden oluşuyor.",
+     "answers": [
+      "The team consists of five people."
+     ],
+     "note": "consist of (from değil)."
+    },
+    {
+     "id": "dependent_prepositions-11",
+     "tr": "Bir işe başvurdu.",
+     "answers": [
+      "She applied for a job.",
+      "He applied for a job."
+     ],
+     "note": "apply for a job."
+    },
+    {
+     "id": "dependent_prepositions-12",
+     "tr": "Sana katılıyorum.",
+     "answers": [
+      "I agree with you."
+     ],
+     "note": "agree with + kişi."
+    },
+    {
+     "id": "dependent_prepositions-13",
+     "tr": "Baş ağrısından muzdarip.",
+     "answers": [
+      "She suffers from headaches.",
+      "He suffers from headaches."
+     ],
+     "note": "suffer from."
+    },
+    {
+     "id": "dependent_prepositions-14",
+     "tr": "Bu tasarım benimkine benziyor.",
+     "answers": [
+      "This design is similar to mine."
+     ],
+     "note": "similar to."
+    },
+    {
+     "id": "dependent_prepositions-15",
+     "tr": "Bu sürüm eskisinden farklı.",
+     "answers": [
+      "This version is different from the old one."
+     ],
+     "note": "different from."
+    },
+    {
+     "id": "dependent_prepositions-16",
+     "tr": "Bu programa aşina mısın?",
+     "answers": [
+      "Are you familiar with this program?",
+      "Are you familiar with this software?",
+      "Are you familiar with this programme?"
+     ],
+     "note": "familiar with."
+    },
+    {
+     "id": "dependent_prepositions-17",
+     "tr": "İspanyolca öğrenmeye ilgi duyuyorum.",
+     "answers": [
+      "I am interested in learning Spanish.",
+      "I'm interested in learning Spanish."
+     ],
+     "note": "edattan sonra -ing."
+    },
+    {
+     "id": "dependent_prepositions-b1",
+     "gap": "It depends ___ the weather.",
+     "tr": "Havaya bağlı.",
+     "answers": [
+      "on"
+     ],
+     "note": "depend on."
+    },
+    {
+     "id": "dependent_prepositions-b2",
+     "gap": "She is interested ___ art.",
+     "tr": "Sanata ilgi duyuyor.",
+     "answers": [
+      "in"
+     ],
+     "note": "interested in."
+    },
+    {
+     "id": "dependent_prepositions-b3",
+     "gap": "We are waiting ___ the train.",
+     "tr": "Treni bekliyoruz.",
+     "answers": [
+      "for"
+     ],
+     "note": "wait for."
+    },
+    {
+     "id": "dependent_prepositions-b4",
+     "gap": "Please listen ___ the teacher.",
+     "tr": "Lütfen öğretmeni dinleyin.",
+     "answers": [
+      "to"
+     ],
+     "note": "listen to."
+    },
+    {
+     "id": "dependent_prepositions-b5",
+     "gap": "He is good ___ football.",
+     "tr": "Futbolda iyidir.",
+     "answers": [
+      "at"
+     ],
+     "note": "good at."
+    },
+    {
+     "id": "dependent_prepositions-b6",
+     "gap": "I am afraid ___ spiders.",
+     "tr": "Örümceklerden korkarım.",
+     "answers": [
+      "of"
+     ],
+     "note": "afraid of."
+    },
+    {
+     "id": "dependent_prepositions-b7",
+     "gap": "This house belongs ___ my uncle.",
+     "tr": "Bu ev amcama ait.",
+     "answers": [
+      "to"
+     ],
+     "note": "belong to."
+    },
+    {
+     "id": "dependent_prepositions-b8",
+     "gap": "The book consists ___ ten chapters.",
+     "tr": "Kitap on bölümden oluşuyor.",
+     "answers": [
+      "of"
+     ],
+     "note": "consist of."
+    },
+    {
+     "id": "dependent_prepositions-b9",
+     "gap": "Who is responsible ___ this mess?",
+     "tr": "Bu dağınıklıktan kim sorumlu?",
+     "answers": [
+      "for"
+     ],
+     "note": "responsible for."
+    },
+    {
+     "id": "dependent_prepositions-b10",
+     "gap": "Her bag is similar ___ mine.",
+     "tr": "Çantası benimkine benziyor.",
+     "answers": [
+      "to"
+     ],
+     "note": "similar to."
+    },
+    {
+     "id": "dependent_prepositions-b11",
+     "gap": "I agree ___ your idea.",
+     "tr": "Fikrine katılıyorum.",
+     "answers": [
+      "with"
+     ],
+     "note": "agree with."
+    },
+    {
+     "id": "dependent_prepositions-b12",
+     "gap": "My grandmother suffers ___ back pain.",
+     "tr": "Büyükannem bel ağrısından muzdarip.",
+     "answers": [
+      "from"
+     ],
+     "note": "suffer from."
+    },
+    {
+     "id": "dependent_prepositions-b13",
+     "gap": "She is proud ___ her son.",
+     "tr": "Oğlu ile gurur duyuyor.",
+     "answers": [
+      "of"
+     ],
+     "note": "proud of."
+    }
+   ],
+   "aliases": [
+    "dependent prepositions",
+    "dependent preposition",
+    "fiil edat",
+    "sıfat edat",
+    "edatlı fiiller"
+   ],
+   "dict_category": "dependent_prepositions"
+  },
+  {
+   "id": "similes",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Benzetmeler (as busy as a bee)",
+   "title_en": "Similes",
+   "explanation": "**Benzetme nedir?** Bir şeyi başka bir şeye benzeterek anlatan kalıplardır. İngilizcede çoğu **as + sıfat + as + isim** biçimindedir ve kalıp olarak kullanılır; Türkçedeki \"buz gibi\", \"kuzu gibi\" sözlerine benzer.\n- **as busy as a bee** = arı gibi çalışkan, çok meşgul\n- **as cold as ice** = buz gibi\n- **as light as a feather** = tüy gibi hafif\n- **as white as snow** = kar gibi beyaz\n- **as brave as a lion** = aslan gibi cesur\n- **as stubborn as a mule** = katır gibi inatçı\n- **as blind as a bat** = göz gözü görmez, çok kötü gören\n- **as fresh as a daisy** = çok dinç, zinde\n- Hayvan ve nesneler Türkçedekiyle her zaman aynı değildir: Türkçede **kuş gibi hafif**, İngilizcede **as light as a feather** denir.\n- Okurken Filtreler'den **Benzetmeler**'i açarsan kitapta bu kalıplar renkli altı çizili görünür.",
+   "structure": [
+    "as + sıfat + as + isim: as cold as ice"
+   ],
+   "examples": [
+    [
+     "His hands were as cold as ice.",
+     "Elleri buz gibiydi."
+    ],
+    [
+     "This bag is as light as a feather.",
+     "Bu çanta tüy gibi hafif."
+    ],
+    [
+     "Before the wedding she was as busy as a bee.",
+     "Düğünden önce arı gibi çalışıyordu."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "similes-1",
+     "tr": "Elleri buz gibiydi.",
+     "answers": [
+      "His hands were as cold as ice.",
+      "Her hands were as cold as ice."
+     ],
+     "note": "as cold as ice."
+    },
+    {
+     "id": "similes-2",
+     "tr": "Bu çanta tüy gibi hafif.",
+     "answers": [
+      "This bag is as light as a feather."
+     ],
+     "note": "as light as a feather."
+    },
+    {
+     "id": "similes-3",
+     "tr": "Duvarlar kar gibi beyazdı.",
+     "answers": [
+      "The walls were as white as snow."
+     ],
+     "note": "as white as snow."
+    },
+    {
+     "id": "similes-4",
+     "tr": "Aslan gibi cesurdu.",
+     "answers": [
+      "He was as brave as a lion.",
+      "She was as brave as a lion."
+     ],
+     "note": "as brave as a lion."
+    },
+    {
+     "id": "similes-5",
+     "tr": "Kardeşim katır gibi inatçı.",
+     "answers": [
+      "My brother is as stubborn as a mule.",
+      "My sister is as stubborn as a mule."
+     ],
+     "note": "as stubborn as a mule."
+    },
+    {
+     "id": "similes-6",
+     "tr": "Gözlüksüz göz gözü görmüyorum.",
+     "answers": [
+      "I am as blind as a bat without my glasses.",
+      "Without my glasses I am as blind as a bat.",
+      "I'm as blind as a bat without my glasses.",
+      "Without my glasses, I'm as blind as a bat."
+     ],
+     "note": "as blind as a bat."
+    },
+    {
+     "id": "similes-7",
+     "tr": "Annem arı gibi çalışıyor.",
+     "answers": [
+      "My mother is as busy as a bee.",
+      "My mum is as busy as a bee.",
+      "My mom is as busy as a bee."
+     ],
+     "note": "as busy as a bee."
+    },
+    {
+     "id": "similes-8",
+     "tr": "İyi bir uykudan sonra çok zinde hissettim.",
+     "answers": [
+      "After a good sleep I felt as fresh as a daisy.",
+      "After a good sleep, I felt as fresh as a daisy.",
+      "I felt as fresh as a daisy after a good sleep."
+     ],
+     "note": "as fresh as a daisy."
+    },
+    {
+     "id": "similes-9",
+     "tr": "Su kristal gibi berraktı.",
+     "answers": [
+      "The water was as clear as crystal."
+     ],
+     "note": "as clear as crystal."
+    },
+    {
+     "id": "similes-10",
+     "tr": "Cevabı şimşek gibi hızlıydı.",
+     "answers": [
+      "Her answer was as quick as lightning.",
+      "His answer was as quick as lightning.",
+      "Her reply was as quick as lightning."
+     ],
+     "note": "as quick as lightning."
+    },
+    {
+     "id": "similes-11",
+     "tr": "Oda buz gibi soğuktu.",
+     "answers": [
+      "The room was as cold as ice."
+     ],
+     "note": "as cold as ice."
+    },
+    {
+     "id": "similes-12",
+     "tr": "Kedi tüy gibi hafifti.",
+     "answers": [
+      "The cat was as light as a feather."
+     ],
+     "note": "as light as a feather."
+    },
+    {
+     "id": "similes-13",
+     "tr": "Onun gömleği kar gibi beyaz.",
+     "answers": [
+      "His shirt is as white as snow.",
+      "Her shirt is as white as snow."
+     ],
+     "note": "as white as snow."
+    },
+    {
+     "id": "similes-14",
+     "tr": "Babam katır gibi inatçı olabilir.",
+     "answers": [
+      "My father can be as stubborn as a mule.",
+      "My dad can be as stubborn as a mule."
+     ],
+     "note": "can be + benzetme."
+    },
+    {
+     "id": "similes-15",
+     "tr": "Asker aslan gibi cesurdu.",
+     "answers": [
+      "The soldier was as brave as a lion."
+     ],
+     "note": "as brave as a lion."
+    },
+    {
+     "id": "similes-16",
+     "tr": "Sınav haftası arı gibi meşguldüm.",
+     "answers": [
+      "I was as busy as a bee during exam week.",
+      "During exam week I was as busy as a bee.",
+      "In exam week I was as busy as a bee."
+     ],
+     "note": "as busy as a bee."
+    },
+    {
+     "id": "similes-b1",
+     "gap": "His hands were as cold as ___.",
+     "tr": "Elleri buz gibiydi.",
+     "answers": [
+      "ice"
+     ],
+     "note": "as cold as ice."
+    },
+    {
+     "id": "similes-b2",
+     "gap": "The bag is as light as a ___.",
+     "tr": "Çanta tüy gibi hafif.",
+     "answers": [
+      "feather"
+     ],
+     "note": "as light as a feather."
+    },
+    {
+     "id": "similes-b3",
+     "gap": "Her dress was as white as ___.",
+     "tr": "Elbisesi kar gibi beyazdı.",
+     "answers": [
+      "snow"
+     ],
+     "note": "as white as snow."
+    },
+    {
+     "id": "similes-b4",
+     "gap": "He was as brave as a ___.",
+     "tr": "Aslan gibi cesurdu.",
+     "answers": [
+      "lion"
+     ],
+     "note": "as brave as a lion."
+    },
+    {
+     "id": "similes-b5",
+     "gap": "My uncle is as stubborn as a ___.",
+     "tr": "Amcam katır gibi inatçı.",
+     "answers": [
+      "mule"
+     ],
+     "note": "as stubborn as a mule."
+    },
+    {
+     "id": "similes-b6",
+     "gap": "Without glasses I am as blind as a ___.",
+     "tr": "Gözlüksüz göz gözü görmüyorum.",
+     "answers": [
+      "bat"
+     ],
+     "note": "as blind as a bat."
+    },
+    {
+     "id": "similes-b7",
+     "gap": "She is as busy as a ___ today.",
+     "tr": "Bugün arı gibi çalışıyor.",
+     "answers": [
+      "bee"
+     ],
+     "note": "as busy as a bee."
+    },
+    {
+     "id": "similes-b8",
+     "gap": "After the holiday I felt as fresh as a ___.",
+     "tr": "Tatilden sonra çok zinde hissettim.",
+     "answers": [
+      "daisy"
+     ],
+     "note": "as fresh as a daisy."
+    },
+    {
+     "id": "similes-b9",
+     "gap": "The lake was as clear as ___.",
+     "tr": "Göl kristal gibi berraktı.",
+     "answers": [
+      "crystal"
+     ],
+     "note": "as clear as crystal."
+    },
+    {
+     "id": "similes-b10",
+     "gap": "His reply was as quick as ___.",
+     "tr": "Cevabı şimşek gibi hızlıydı.",
+     "answers": [
+      "lightning"
+     ],
+     "note": "as quick as lightning."
+    },
+    {
+     "id": "similes-b11",
+     "gap": "The water was ___ cold as ice.",
+     "tr": "Su buz gibiydi.",
+     "answers": [
+      "as"
+     ],
+     "note": "as ... as."
+    },
+    {
+     "id": "similes-b12",
+     "gap": "This box is as ___ as a feather.",
+     "tr": "Bu kutu tüy gibi hafif.",
+     "answers": [
+      "light"
+     ],
+     "note": "as light as a feather."
+    }
+   ],
+   "aliases": [
+    "simile",
+    "similes",
+    "benzetme",
+    "benzetmeler",
+    "as as"
+   ],
+   "dict_category": "similes"
+  },
+  {
+   "id": "polite_phrases",
+   "category": "phrases",
+   "level": "A2",
+   "title_tr": "Kibar istek ve cevaplar (Could you please …?)",
+   "title_en": "Polite Phrases",
+   "explanation": "**Nedir?** İngilizcede emir cümlesi (Open the door.) çoğu zaman sert duyulur. Rica, izin, özür ve teşekkür için hazır kalıplar kullanılır.\n- **Rica:** **Could you please** open the door? · **Would you mind** open**ing** the door? (mind'dan sonra **-ing**) · **Would it be possible to** change the date?\n- **İzin:** **May I** ask a question? · **Can I** sit here?\n- **Teşekkür ve özür:** **Thank you for** your help. · **I apologize for** the delay. · **Excuse me for** interrupting. (for'dan sonra isim ya da **-ing**)\n- **Kibar olumsuz haber:** **I'm afraid** we are closed. (= Maalesef ...)\n- **Yazışmada:** **I would appreciate it if** you could reply today. · **Please let me know** when you arrive.\n- \"Would you mind ...?\" sorusuna **evet** demek için **No, not at all** denir (= hayır, sakıncası yok).\n- Okurken Filtreler'den **Kibar istek ve cevaplar**'ı açarsan bu kalıplar renkli altı çizili görünür.",
+   "structure": [
+    "Could you please + fiil? / Would you mind + -ing?",
+    "Thank you for / I apologize for + isim / -ing"
+   ],
+   "examples": [
+    [
+     "Could you please close the window?",
+     "Lütfen pencereyi kapatabilir misiniz?"
+    ],
+    [
+     "Would you mind waiting a moment?",
+     "Biraz beklemenizin sakıncası var mı?"
+    ],
+    [
+     "I'm afraid we are fully booked.",
+     "Maalesef tüm yerlerimiz dolu."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "polite_phrases-1",
+     "tr": "Lütfen pencereyi kapatabilir misiniz?",
+     "answers": [
+      "Could you please close the window?",
+      "Could you close the window, please?"
+     ],
+     "note": "Could you please ...?"
+    },
+    {
+     "id": "polite_phrases-2",
+     "tr": "Kapıyı açmanızın sakıncası var mı?",
+     "answers": [
+      "Would you mind opening the door?"
+     ],
+     "note": "mind + -ing."
+    },
+    {
+     "id": "polite_phrases-3",
+     "tr": "Bir soru sorabilir miyim?",
+     "answers": [
+      "May I ask a question?",
+      "Can I ask a question?",
+      "May I ask you a question?",
+      "Can I ask you a question?"
+     ],
+     "note": "May I ...?"
+    },
+    {
+     "id": "polite_phrases-4",
+     "tr": "Yardımınız için teşekkür ederim.",
+     "answers": [
+      "Thank you for your help.",
+      "Thanks for your help."
+     ],
+     "note": "Thank you for + isim."
+    },
+    {
+     "id": "polite_phrases-5",
+     "tr": "Gecikme için özür dilerim.",
+     "answers": [
+      "I apologize for the delay.",
+      "I apologise for the delay.",
+      "Sorry for the delay.",
+      "I am sorry for the delay."
+     ],
+     "note": "I apologize for."
+    },
+    {
+     "id": "polite_phrases-6",
+     "tr": "Sözünüzü kestiğim için kusura bakmayın.",
+     "answers": [
+      "Excuse me for interrupting.",
+      "Sorry for interrupting.",
+      "Excuse me for interrupting you."
+     ],
+     "note": "for + -ing."
+    },
+    {
+     "id": "polite_phrases-7",
+     "tr": "Maalesef kapalıyız.",
+     "answers": [
+      "I'm afraid we are closed.",
+      "I'm afraid we're closed.",
+      "I am afraid we are closed."
+     ],
+     "note": "I'm afraid = maalesef."
+    },
+    {
+     "id": "polite_phrases-8",
+     "tr": "Bugün cevap verirseniz memnun olurum.",
+     "answers": [
+      "I would appreciate it if you replied today.",
+      "I would appreciate it if you could reply today.",
+      "I'd appreciate it if you could reply today.",
+      "I'd appreciate it if you replied today."
+     ],
+     "note": "I would appreciate it if."
+    },
+    {
+     "id": "polite_phrases-9",
+     "tr": "Vardığınızda lütfen bana haber verin.",
+     "answers": [
+      "Please let me know when you arrive.",
+      "Let me know when you arrive, please."
+     ],
+     "note": "Please let me know."
+    },
+    {
+     "id": "polite_phrases-10",
+     "tr": "Tarihi değiştirmek mümkün olur mu?",
+     "answers": [
+      "Would it be possible to change the date?"
+     ],
+     "note": "Would it be possible to ...?"
+    },
+    {
+     "id": "polite_phrases-11",
+     "tr": "Sabrınız için teşekkür ederim.",
+     "answers": [
+      "Thank you for your patience.",
+      "Thanks for your patience."
+     ],
+     "note": "Thank you for."
+    },
+    {
+     "id": "polite_phrases-12",
+     "tr": "Biraz beklemenizin sakıncası var mı?",
+     "answers": [
+      "Would you mind waiting a moment?",
+      "Would you mind waiting a minute?",
+      "Would you mind waiting a little?"
+     ],
+     "note": "mind + -ing."
+    },
+    {
+     "id": "polite_phrases-13",
+     "tr": "Maalesef yarın gelemem.",
+     "answers": [
+      "I'm afraid I can't come tomorrow.",
+      "I'm afraid I cannot come tomorrow.",
+      "I am afraid I can't come tomorrow."
+     ],
+     "note": "I'm afraid + olumsuz haber."
+    },
+    {
+     "id": "polite_phrases-14",
+     "tr": "Lütfen tuzu uzatabilir misin?",
+     "answers": [
+      "Could you please pass the salt?",
+      "Could you pass the salt, please?"
+     ],
+     "note": "Could you please ...?"
+    },
+    {
+     "id": "polite_phrases-15",
+     "tr": "Karışıklık için özür dileriz.",
+     "answers": [
+      "We apologize for the confusion.",
+      "We apologise for the confusion."
+     ],
+     "note": "apologize for."
+    },
+    {
+     "id": "polite_phrases-16",
+     "tr": "İçeri girebilir miyim?",
+     "answers": [
+      "May I come in?",
+      "Can I come in?"
+     ],
+     "note": "May I ...?"
+    },
+    {
+     "id": "polite_phrases-b1",
+     "gap": "Could you ___ close the door?",
+     "tr": "Lütfen kapıyı kapatabilir misiniz?",
+     "answers": [
+      "please"
+     ],
+     "note": "Could you please."
+    },
+    {
+     "id": "polite_phrases-b2",
+     "gap": "Would you mind ___ the window?",
+     "tr": "Pencereyi açmanızın sakıncası var mı?",
+     "answers": [
+      "opening"
+     ],
+     "note": "mind + -ing."
+    },
+    {
+     "id": "polite_phrases-b3",
+     "gap": "___ I ask a question?",
+     "tr": "Bir soru sorabilir miyim?",
+     "answers": [
+      "May",
+      "Can"
+     ],
+     "note": "May I."
+    },
+    {
+     "id": "polite_phrases-b4",
+     "gap": "Thank you ___ your help.",
+     "tr": "Yardımın için teşekkürler.",
+     "answers": [
+      "for"
+     ],
+     "note": "Thank you for."
+    },
+    {
+     "id": "polite_phrases-b5",
+     "gap": "I apologize ___ the delay.",
+     "tr": "Gecikme için özür dilerim.",
+     "answers": [
+      "for"
+     ],
+     "note": "apologize for."
+    },
+    {
+     "id": "polite_phrases-b6",
+     "gap": "I'm ___ we are closed today.",
+     "tr": "Maalesef bugün kapalıyız.",
+     "answers": [
+      "afraid"
+     ],
+     "note": "I'm afraid."
+    },
+    {
+     "id": "polite_phrases-b7",
+     "gap": "I would ___ it if you could call me.",
+     "tr": "Beni ararsanız memnun olurum.",
+     "answers": [
+      "appreciate"
+     ],
+     "note": "I would appreciate it if."
+    },
+    {
+     "id": "polite_phrases-b8",
+     "gap": "Please let me ___ when you arrive.",
+     "tr": "Vardığında bana haber ver lütfen.",
+     "answers": [
+      "know"
+     ],
+     "note": "let me know."
+    },
+    {
+     "id": "polite_phrases-b9",
+     "gap": "Would it be ___ to change my seat?",
+     "tr": "Yerimi değiştirmek mümkün olur mu?",
+     "answers": [
+      "possible"
+     ],
+     "note": "Would it be possible."
+    },
+    {
+     "id": "polite_phrases-b10",
+     "gap": "Excuse me for ___ you.",
+     "tr": "Rahatsız ettiğim için kusura bakmayın.",
+     "answers": [
+      "disturbing",
+      "interrupting",
+      "bothering"
+     ],
+     "note": "for + -ing."
+    },
+    {
+     "id": "polite_phrases-b11",
+     "gap": "\"Would you mind helping me?\" \"No, not at ___.\"",
+     "tr": "\"Bana yardım etmenizin sakıncası var mı?\" \"Hayır, ne demek.\"",
+     "answers": [
+      "all"
+     ],
+     "note": "No, not at all = tabii."
+    },
+    {
+     "id": "polite_phrases-b12",
+     "gap": "Thank you for ___ me.",
+     "tr": "Beklediğin için teşekkürler.",
+     "answers": [
+      "waiting"
+     ],
+     "note": "for + -ing."
+    }
+   ],
+   "aliases": [
+    "polite phrases",
+    "polite requests",
+    "kibar istek",
+    "rica",
+    "nezaket kalıpları"
+   ],
+   "dict_category": "polite_phrases"
+  },
+  {
+   "id": "informal_slang",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Gündelik konuşma ve argo (gonna, no big deal)",
+   "title_en": "Informal Language & Slang",
+   "explanation": "**Nedir?** Arkadaşlar arasında, diyaloglarda ve mesajlarda kullanılan gayriresmî sözlerdir. Okurken anlamak gerekir ama resmî yazıda kullanılmaz.\n- **hang out** = takılmak, birlikte vakit geçirmek · **grab a bite** = bir şeyler atıştırmak\n- **no big deal** = önemli değil · **my bad** = benim hatam · **chill out** = sakin ol\n- **awesome** = harika · **bucks** = dolar (twenty bucks)\n- **give me a sec** = bir saniye · **gonna / wanna** = going to / want to (konuşmada)\n- Resmî karşılıklar: no big deal → **it doesn't matter**, my bad → **I'm sorry, it was my mistake**, awesome → **excellent**.\n- Okurken Filtreler'den **Gündelik konuşma ve argo**'yu açarsan bu sözler renkli altı çizili görünür.",
+   "structure": [
+    "gayriresmî söz = resmî karşılığı: no big deal = it does not matter"
+   ],
+   "examples": [
+    [
+     "We hung out after class.",
+     "Dersten sonra takıldık."
+    ],
+    [
+     "It's no big deal.",
+     "Önemli değil."
+    ],
+    [
+     "My bad, I sent the wrong file.",
+     "Benim hatam, yanlış dosyayı gönderdim."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "informal_slang-1",
+     "tr": "Dersten sonra takıldık.",
+     "answers": [
+      "We hung out after class.",
+      "We hung out after school."
+     ],
+     "note": "hang out → hung out."
+    },
+    {
+     "id": "informal_slang-2",
+     "tr": "Önemli değil.",
+     "answers": [
+      "It's no big deal.",
+      "No big deal.",
+      "It is no big deal."
+     ],
+     "note": "no big deal."
+    },
+    {
+     "id": "informal_slang-3",
+     "tr": "Benim hatam, yanlış dosyayı gönderdim.",
+     "answers": [
+      "My bad, I sent the wrong file."
+     ],
+     "note": "my bad."
+    },
+    {
+     "id": "informal_slang-4",
+     "tr": "Sakin ol, bol zaman var.",
+     "answers": [
+      "Chill out, there's plenty of time.",
+      "Chill out, there is plenty of time.",
+      "Chill out, we have plenty of time."
+     ],
+     "note": "chill out."
+    },
+    {
+     "id": "informal_slang-5",
+     "tr": "Bu harika bir fikir.",
+     "answers": [
+      "That's an awesome idea.",
+      "That is an awesome idea.",
+      "This is an awesome idea."
+     ],
+     "note": "awesome = harika."
+    },
+    {
+     "id": "informal_slang-6",
+     "tr": "Bilet yirmi dolar.",
+     "answers": [
+      "The ticket is twenty bucks.",
+      "The ticket costs twenty bucks."
+     ],
+     "note": "bucks = dolar."
+    },
+    {
+     "id": "informal_slang-7",
+     "tr": "Filmden önce bir şeyler atıştıralım.",
+     "answers": [
+      "Let's grab a bite before the movie.",
+      "Let's grab a bite before the film.",
+      "Let us grab a bite before the movie."
+     ],
+     "note": "grab a bite."
+    },
+    {
+     "id": "informal_slang-8",
+     "tr": "Bir saniye, neredeyse hazırım.",
+     "answers": [
+      "Give me a sec, I'm almost ready.",
+      "Give me a sec, I am almost ready."
+     ],
+     "note": "give me a sec."
+    },
+    {
+     "id": "informal_slang-9",
+     "tr": "Hafta sonu takılalım mı?",
+     "answers": [
+      "Do you want to hang out this weekend?",
+      "Shall we hang out this weekend?",
+      "Do you wanna hang out this weekend?"
+     ],
+     "note": "hang out."
+    },
+    {
+     "id": "informal_slang-10",
+     "tr": "Geç kaldım, benim hatam.",
+     "answers": [
+      "I'm late, my bad.",
+      "I am late, my bad."
+     ],
+     "note": "my bad."
+    },
+    {
+     "id": "informal_slang-11",
+     "tr": "Endişelenme, önemli değil.",
+     "answers": [
+      "Don't worry, it's no big deal.",
+      "Do not worry, it is no big deal."
+     ],
+     "note": "no big deal."
+    },
+    {
+     "id": "informal_slang-12",
+     "tr": "Konser harikaydı.",
+     "answers": [
+      "The concert was awesome."
+     ],
+     "note": "awesome."
+    },
+    {
+     "id": "informal_slang-13",
+     "tr": "Öğle yemeğinde bir şeyler atıştırdık.",
+     "answers": [
+      "We grabbed a bite at lunch.",
+      "We grabbed a bite for lunch."
+     ],
+     "note": "grab → grabbed."
+    },
+    {
+     "id": "informal_slang-14",
+     "tr": "Herkes sakin olsun.",
+     "answers": [
+      "Everybody chill out.",
+      "Everyone chill out.",
+      "Everybody, chill out.",
+      "Everyone, chill out."
+     ],
+     "note": "chill out."
+    },
+    {
+     "id": "informal_slang-15",
+     "tr": "Bu ayakkabılar elli dolar.",
+     "answers": [
+      "These shoes are fifty bucks.",
+      "These shoes cost fifty bucks."
+     ],
+     "note": "bucks."
+    },
+    {
+     "id": "informal_slang-16",
+     "tr": "Arkadaşlarımla parkta takılıyorum.",
+     "answers": [
+      "I'm hanging out with my friends in the park.",
+      "I am hanging out with my friends in the park.",
+      "I hang out with my friends in the park."
+     ],
+     "note": "hang out with."
+    },
+    {
+     "id": "informal_slang-b1",
+     "gap": "We hung ___ at the mall.",
+     "tr": "AVM'de takıldık.",
+     "answers": [
+      "out"
+     ],
+     "note": "hang out."
+    },
+    {
+     "id": "informal_slang-b2",
+     "gap": "Don't worry, it's no big ___.",
+     "tr": "Merak etme, önemli değil.",
+     "answers": [
+      "deal"
+     ],
+     "note": "no big deal."
+    },
+    {
+     "id": "informal_slang-b3",
+     "gap": "My ___, I forgot your book.",
+     "tr": "Benim hatam, kitabını unuttum.",
+     "answers": [
+      "bad"
+     ],
+     "note": "my bad."
+    },
+    {
+     "id": "informal_slang-b4",
+     "gap": "Chill ___, everything is fine.",
+     "tr": "Sakin ol, her şey yolunda.",
+     "answers": [
+      "out"
+     ],
+     "note": "chill out."
+    },
+    {
+     "id": "informal_slang-b5",
+     "gap": "Let's grab a ___ before work.",
+     "tr": "İşten önce bir şeyler atıştıralım.",
+     "answers": [
+      "bite"
+     ],
+     "note": "grab a bite."
+    },
+    {
+     "id": "informal_slang-b6",
+     "gap": "Give me a ___, I am coming.",
+     "tr": "Bir saniye, geliyorum.",
+     "answers": [
+      "sec",
+      "second"
+     ],
+     "note": "sec = second."
+    },
+    {
+     "id": "informal_slang-b7",
+     "gap": "It only costs ten ___.",
+     "tr": "Sadece on dolar.",
+     "answers": [
+      "bucks"
+     ],
+     "note": "bucks = dolar."
+    },
+    {
+     "id": "informal_slang-b8",
+     "gap": "The party was ___!",
+     "tr": "Parti harikaydı!",
+     "answers": [
+      "awesome",
+      "great",
+      "amazing"
+     ],
+     "note": "awesome = harika."
+    },
+    {
+     "id": "informal_slang-b9",
+     "gap": "Do you want to hang out ___ us?",
+     "tr": "Bizimle takılmak ister misin?",
+     "answers": [
+      "with"
+     ],
+     "note": "hang out with."
+    },
+    {
+     "id": "informal_slang-b10",
+     "gap": "It is no ___ deal, I can fix it.",
+     "tr": "Önemli değil, düzeltebilirim.",
+     "answers": [
+      "big"
+     ],
+     "note": "no big deal."
+    },
+    {
+     "id": "informal_slang-b11",
+     "gap": "We ___ a bite at a small cafe.",
+     "tr": "Küçük bir kafede bir şeyler atıştırdık.",
+     "answers": [
+      "grabbed"
+     ],
+     "note": "grab → grabbed."
+    },
+    {
+     "id": "informal_slang-b12",
+     "gap": "They ___ out every Saturday.",
+     "tr": "Her cumartesi takılırlar.",
+     "answers": [
+      "hang"
+     ],
+     "note": "hang out."
+    }
+   ],
+   "aliases": [
+    "informal",
+    "slang",
+    "argo",
+    "gündelik konuşma",
+    "konuşma dili"
+   ],
+   "dict_category": "informal_slang"
+  },
+  {
+   "id": "confusables",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "Karıştırılan kelimeler (affect / effect, borrow / lend)",
+   "title_en": "Confusable Words",
+   "explanation": "**Nedir?** Yazılışı ya da anlamı birbirine çok yakın olduğu için sık karıştırılan İngilizce kelimelerdir.\n- **borrow / lend:** borrow = ödünç **almak**, lend = ödünç **vermek**. Can I borrow your pen? · Can you lend me your pen?\n- **say / tell:** tell'den sonra kişi gelir (tell **me**), say'den sonra söz gelir (say **hello**). She said hello. · She told me the truth.\n- **rise / raise:** rise = yükselmek (nesnesiz), raise = yükseltmek, kaldırmak (nesneli). Prices rise. · Raise your hand.\n- **affect / effect:** affect = etkilemek (fiil), effect = etki (isim).\n- **lose / loose:** lose = kaybetmek, loose = gevşek, bol.\n- **advice / advise:** advice = tavsiye (isim), advise = tavsiye etmek (fiil).\n- **quiet / quite:** quiet = sessiz, quite = oldukça.\n- **then / than:** then = sonra, o zaman · than = -den (daha): taller **than** me.\n- **accept / except:** accept = kabul etmek, except = hariç.\n- Okurken Filtreler'den **Karıştırılan kelimeler**'i açarsan bu kelimeler renkli altı çizili görünür; dokununca diğeriyle farkı yazar.",
+   "structure": [
+    "borrow = ödünç almak / lend = ödünç vermek",
+    "tell + kişi / say + söz"
+   ],
+   "examples": [
+    [
+     "Can I borrow your pen?",
+     "Kalemini ödünç alabilir miyim?"
+    ],
+    [
+     "She told me the truth.",
+     "Bana gerçeği söyledi."
+    ],
+    [
+     "He is taller than me.",
+     "Benden uzun."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "confusables-1",
+     "tr": "Kalemini ödünç alabilir miyim?",
+     "answers": [
+      "Can I borrow your pen?",
+      "May I borrow your pen?",
+      "Could I borrow your pen?"
+     ],
+     "note": "ödünç almak = borrow."
+    },
+    {
+     "id": "confusables-2",
+     "tr": "Bana biraz para ödünç verir misin?",
+     "answers": [
+      "Can you lend me some money?",
+      "Could you lend me some money?",
+      "Will you lend me some money?"
+     ],
+     "note": "ödünç vermek = lend."
+    },
+    {
+     "id": "confusables-3",
+     "tr": "Bana gerçeği söyledi.",
+     "answers": [
+      "She told me the truth.",
+      "He told me the truth."
+     ],
+     "note": "tell + kişi."
+    },
+    {
+     "id": "confusables-4",
+     "tr": "Merhaba dedi.",
+     "answers": [
+      "She said hello.",
+      "He said hello."
+     ],
+     "note": "say + söz."
+    },
+    {
+     "id": "confusables-5",
+     "tr": "Fiyatlar her yıl yükseliyor.",
+     "answers": [
+      "Prices rise every year.",
+      "Prices go up every year."
+     ],
+     "note": "rise = yükselmek (nesnesiz)."
+    },
+    {
+     "id": "confusables-6",
+     "tr": "Elini kaldır.",
+     "answers": [
+      "Raise your hand.",
+      "Put your hand up."
+     ],
+     "note": "raise = kaldırmak (nesneli)."
+    },
+    {
+     "id": "confusables-7",
+     "tr": "Soğuk hava ekinleri etkiledi.",
+     "answers": [
+      "The cold weather affected the crops."
+     ],
+     "note": "affect = etkilemek."
+    },
+    {
+     "id": "confusables-8",
+     "tr": "İlacın büyük bir etkisi oldu.",
+     "answers": [
+      "The medicine had a big effect.",
+      "The medicine had a great effect."
+     ],
+     "note": "effect = etki."
+    },
+    {
+     "id": "confusables-9",
+     "tr": "Anahtarlarımı kaybettim.",
+     "answers": [
+      "I lost my keys.",
+      "I have lost my keys.",
+      "I've lost my keys."
+     ],
+     "note": "lose = kaybetmek."
+    },
+    {
+     "id": "confusables-10",
+     "tr": "Bu pantolon çok bol.",
+     "answers": [
+      "These trousers are very loose.",
+      "These pants are very loose.",
+      "These trousers are too loose."
+     ],
+     "note": "loose = bol, gevşek."
+    },
+    {
+     "id": "confusables-11",
+     "tr": "Sana bir tavsiye vereyim.",
+     "answers": [
+      "Let me give you some advice.",
+      "Let me give you a piece of advice."
+     ],
+     "note": "advice = tavsiye (sayılamaz)."
+    },
+    {
+     "id": "confusables-12",
+     "tr": "Doktora gitmeni tavsiye ederim.",
+     "answers": [
+      "I advise you to see a doctor.",
+      "I advise you to go to a doctor."
+     ],
+     "note": "advise = tavsiye etmek."
+    },
+    {
+     "id": "confusables-13",
+     "tr": "Burası oldukça sessiz.",
+     "answers": [
+      "It is quite quiet here.",
+      "It's quite quiet here.",
+      "This place is quite quiet."
+     ],
+     "note": "quite = oldukça, quiet = sessiz."
+    },
+    {
+     "id": "confusables-14",
+     "tr": "Benden daha uzun.",
+     "answers": [
+      "He is taller than me.",
+      "She is taller than me.",
+      "He's taller than me.",
+      "She's taller than me."
+     ],
+     "note": "than = -den daha."
+    },
+    {
+     "id": "confusables-15",
+     "tr": "Önce yemek yedik, sonra yürüdük.",
+     "answers": [
+      "First we ate, then we walked.",
+      "We ate first, then we walked.",
+      "First we ate and then we walked."
+     ],
+     "note": "then = sonra."
+    },
+    {
+     "id": "confusables-16",
+     "tr": "Ali hariç herkes geldi.",
+     "answers": [
+      "Everyone came except Ali.",
+      "Everybody came except Ali.",
+      "Everyone except Ali came."
+     ],
+     "note": "except = hariç."
+    },
+    {
+     "id": "confusables-17",
+     "tr": "Teklifi kabul etti.",
+     "answers": [
+      "She accepted the offer.",
+      "He accepted the offer."
+     ],
+     "note": "accept = kabul etmek."
+    },
+    {
+     "id": "confusables-b1",
+     "gap": "Can I ___ your umbrella?",
+     "tr": "Şemsiyeni ödünç alabilir miyim?",
+     "answers": [
+      "borrow"
+     ],
+     "note": "ödünç almak = borrow."
+    },
+    {
+     "id": "confusables-b2",
+     "gap": "Could you ___ me your car?",
+     "tr": "Arabanı bana ödünç verir misin?",
+     "answers": [
+      "lend"
+     ],
+     "note": "ödünç vermek = lend."
+    },
+    {
+     "id": "confusables-b3",
+     "gap": "She ___ me a funny story.",
+     "tr": "Bana komik bir hikâye anlattı.",
+     "answers": [
+      "told"
+     ],
+     "note": "tell + kişi."
+    },
+    {
+     "id": "confusables-b4",
+     "gap": "He ___ goodbye and left.",
+     "tr": "Hoşça kal deyip gitti.",
+     "answers": [
+      "said"
+     ],
+     "note": "say + söz."
+    },
+    {
+     "id": "confusables-b5",
+     "gap": "The sun ___ at six.",
+     "tr": "Güneş altıda doğar.",
+     "answers": [
+      "rises"
+     ],
+     "note": "rise: nesnesiz."
+    },
+    {
+     "id": "confusables-b6",
+     "gap": "Please ___ your hand.",
+     "tr": "Lütfen elini kaldır.",
+     "answers": [
+      "raise"
+     ],
+     "note": "raise: nesneli."
+    },
+    {
+     "id": "confusables-b7",
+     "gap": "Stress can ___ your health.",
+     "tr": "Stres sağlığını etkileyebilir.",
+     "answers": [
+      "affect"
+     ],
+     "note": "affect = fiil."
+    },
+    {
+     "id": "confusables-b8",
+     "gap": "The film had a strong ___ on me.",
+     "tr": "Filmin üzerimde güçlü bir etkisi oldu.",
+     "answers": [
+      "effect"
+     ],
+     "note": "effect = isim."
+    },
+    {
+     "id": "confusables-b9",
+     "gap": "Don't ___ your ticket.",
+     "tr": "Biletini kaybetme.",
+     "answers": [
+      "lose"
+     ],
+     "note": "lose = kaybetmek."
+    },
+    {
+     "id": "confusables-b10",
+     "gap": "This screw is ___.",
+     "tr": "Bu vida gevşek.",
+     "answers": [
+      "loose"
+     ],
+     "note": "loose = gevşek."
+    },
+    {
+     "id": "confusables-b11",
+     "gap": "She is taller ___ her brother.",
+     "tr": "Ağabeyinden daha uzun.",
+     "answers": [
+      "than"
+     ],
+     "note": "than = -den daha."
+    },
+    {
+     "id": "confusables-b12",
+     "gap": "Everyone was there ___ Tom.",
+     "tr": "Tom hariç herkes oradaydı.",
+     "answers": [
+      "except"
+     ],
+     "note": "except = hariç."
+    },
+    {
+     "id": "confusables-b13",
+     "gap": "It was ___ cold this morning.",
+     "tr": "Bu sabah oldukça soğuktu.",
+     "answers": [
+      "quite"
+     ],
+     "note": "quite = oldukça."
+    }
+   ],
+   "aliases": [
+    "confusable words",
+    "commonly confused words",
+    "karıştırılan kelimeler",
+    "affect effect",
+    "borrow lend"
+   ],
+   "dict_category": "confusables"
+  },
+  {
+   "id": "uk_us",
+   "category": "phrases",
+   "level": "B1",
+   "title_tr": "İngiliz / Amerikan farkı (lorry / truck)",
+   "title_en": "British and American English",
+   "explanation": "**Nedir?** İngiltere'de ve Amerika'da aynı şey için farklı kelime kullanılır. İkisi de doğrudur; okuduğun kitabın hangisini kullandığını bilmek işe yarar.\n- **flat / apartment** = daire · **lift / elevator** = asansör · **lorry / truck** = kamyon\n- **petrol / gas** = benzin · **holiday / vacation** = tatil · **queue / line** = sıra, kuyruk\n- **biscuit / cookie** = kurabiye, bisküvi · **rubbish / trash** = çöp · **autumn / fall** = sonbahar\n- **postcode / ZIP code** = posta kodu · **mobile / cell phone** = cep telefonu · **film / movie** = film\n- Yazım da farklıdır: colour / color, centre / center, travelled / traveled.\n- Okurken Filtreler'den **İngiliz / Amerikan farkı**'nı açarsan bu kelimeler renkli altı çizili görünür; dokununca öbür ülkedeki karşılığı yazar.",
+   "structure": [
+    "UK kelimesi / US kelimesi: lorry / truck"
+   ],
+   "examples": [
+    [
+     "We live in a small flat in London.",
+     "Londra'da küçük bir dairede oturuyoruz."
+    ],
+    [
+     "The truck stopped at the gas station.",
+     "Kamyon benzin istasyonunda durdu."
+    ],
+    [
+     "Please join the queue.",
+     "Lütfen sıraya girin."
+    ]
+   ],
+   "exercises": [
+    {
+     "id": "uk_us-1",
+     "tr": "Londra'da küçük bir dairede oturuyoruz.",
+     "answers": [
+      "We live in a small flat in London.",
+      "We live in a small apartment in London."
+     ],
+     "note": "UK: flat, US: apartment."
+    },
+    {
+     "id": "uk_us-2",
+     "tr": "Asansörle üçüncü kata çık.",
+     "answers": [
+      "Take the lift to the third floor.",
+      "Take the elevator to the third floor."
+     ],
+     "note": "UK: lift, US: elevator."
+    },
+    {
+     "id": "uk_us-3",
+     "tr": "Kamyon erken geldi.",
+     "answers": [
+      "The lorry arrived early.",
+      "The truck arrived early.",
+      "The lorry came early.",
+      "The truck came early."
+     ],
+     "note": "UK: lorry, US: truck."
+    },
+    {
+     "id": "uk_us-4",
+     "tr": "Arabaya benzin lazım.",
+     "answers": [
+      "The car needs petrol.",
+      "The car needs gas.",
+      "The car needs gasoline."
+     ],
+     "note": "UK: petrol, US: gas."
+    },
+    {
+     "id": "uk_us-5",
+     "tr": "Temmuzda tatile gittik.",
+     "answers": [
+      "We went on holiday in July.",
+      "We went on vacation in July."
+     ],
+     "note": "UK: holiday, US: vacation."
+    },
+    {
+     "id": "uk_us-6",
+     "tr": "Lütfen sıraya girin.",
+     "answers": [
+      "Please join the queue.",
+      "Please get in line.",
+      "Please queue up.",
+      "Please stand in line."
+     ],
+     "note": "UK: queue, US: line."
+    },
+    {
+     "id": "uk_us-7",
+     "tr": "Çayla bir kurabiye yedim.",
+     "answers": [
+      "I had a biscuit with my tea.",
+      "I had a cookie with my tea.",
+      "I ate a biscuit with my tea.",
+      "I ate a cookie with my tea."
+     ],
+     "note": "UK: biscuit, US: cookie."
+    },
+    {
+     "id": "uk_us-8",
+     "tr": "Çöpü dışarı çıkar.",
+     "answers": [
+      "Take the rubbish out.",
+      "Take out the rubbish.",
+      "Take the trash out.",
+      "Take out the trash."
+     ],
+     "note": "UK: rubbish, US: trash."
+    },
+    {
+     "id": "uk_us-9",
+     "tr": "Sonbaharda yapraklar düşer.",
+     "answers": [
+      "Leaves fall in autumn.",
+      "Leaves fall in the fall.",
+      "The leaves fall in autumn.",
+      "The leaves fall in the fall."
+     ],
+     "note": "UK: autumn, US: fall."
+    },
+    {
+     "id": "uk_us-10",
+     "tr": "Posta kodunuzu yazın.",
+     "answers": [
+      "Write your postcode.",
+      "Write your ZIP code.",
+      "Enter your postcode.",
+      "Enter your ZIP code."
+     ],
+     "note": "UK: postcode, US: ZIP code."
+    },
+    {
+     "id": "uk_us-11",
+     "tr": "Cep telefonumu evde unuttum.",
+     "answers": [
+      "I left my mobile at home.",
+      "I left my cell phone at home.",
+      "I forgot my mobile at home.",
+      "I left my mobile phone at home."
+     ],
+     "note": "UK: mobile, US: cell phone."
+    },
+    {
+     "id": "uk_us-12",
+     "tr": "Dün akşam bir film izledik.",
+     "answers": [
+      "We watched a film last night.",
+      "We watched a movie last night."
+     ],
+     "note": "UK: film, US: movie."
+    },
+    {
+     "id": "uk_us-13",
+     "tr": "Asansör bozuk.",
+     "answers": [
+      "The lift is broken.",
+      "The elevator is broken.",
+      "The lift is out of order.",
+      "The elevator is out of order."
+     ],
+     "note": "lift / elevator."
+    },
+    {
+     "id": "uk_us-14",
+     "tr": "Benzin çok pahalı.",
+     "answers": [
+      "Petrol is very expensive.",
+      "Gas is very expensive."
+     ],
+     "note": "petrol / gas."
+    },
+    {
+     "id": "uk_us-15",
+     "tr": "Uzun bir sıra vardı.",
+     "answers": [
+      "There was a long queue.",
+      "There was a long line."
+     ],
+     "note": "queue / line."
+    },
+    {
+     "id": "uk_us-16",
+     "tr": "Yeni daireleri çok güzel.",
+     "answers": [
+      "Their new flat is very nice.",
+      "Their new apartment is very nice."
+     ],
+     "note": "flat / apartment."
+    },
+    {
+     "id": "uk_us-b1",
+     "gap": "In London we rented a small ___.",
+     "tr": "Londra'da küçük bir daire kiraladık.",
+     "answers": [
+      "flat"
+     ],
+     "note": "UK: flat."
+    },
+    {
+     "id": "uk_us-b2",
+     "gap": "In New York we took the ___ to the 20th floor.",
+     "tr": "New York'ta asansörle 20. kata çıktık.",
+     "answers": [
+      "elevator"
+     ],
+     "note": "US: elevator."
+    },
+    {
+     "id": "uk_us-b3",
+     "gap": "A big ___ was parked outside. (UK)",
+     "tr": "Dışarıda büyük bir kamyon park etmişti.",
+     "answers": [
+      "lorry"
+     ],
+     "note": "UK: lorry."
+    },
+    {
+     "id": "uk_us-b4",
+     "gap": "We need to stop for ___. (US)",
+     "tr": "Benzin için durmamız lazım.",
+     "answers": [
+      "gas"
+     ],
+     "note": "US: gas."
+    },
+    {
+     "id": "uk_us-b5",
+     "gap": "They are on ___ in Spain. (UK)",
+     "tr": "İspanya'da tatildeler.",
+     "answers": [
+      "holiday"
+     ],
+     "note": "UK: holiday."
+    },
+    {
+     "id": "uk_us-b6",
+     "gap": "We spent our summer ___ in Florida. (US)",
+     "tr": "Yaz tatilimizi Florida'da geçirdik.",
+     "answers": [
+      "vacation"
+     ],
+     "note": "US: vacation."
+    },
+    {
+     "id": "uk_us-b7",
+     "gap": "There was a long ___ at the bank. (UK)",
+     "tr": "Bankada uzun bir sıra vardı.",
+     "answers": [
+      "queue"
+     ],
+     "note": "UK: queue."
+    },
+    {
+     "id": "uk_us-b8",
+     "gap": "The kids ate chocolate chip ___. (US)",
+     "tr": "Çocuklar çikolatalı kurabiye yedi.",
+     "answers": [
+      "cookies"
+     ],
+     "note": "US: cookie."
+    },
+    {
+     "id": "uk_us-b9",
+     "gap": "Put the ___ in the bin. (UK)",
+     "tr": "Çöpü çöp kutusuna at.",
+     "answers": [
+      "rubbish"
+     ],
+     "note": "UK: rubbish."
+    },
+    {
+     "id": "uk_us-b10",
+     "gap": "The leaves turn red in the ___. (US)",
+     "tr": "Sonbaharda yapraklar kızarır.",
+     "answers": [
+      "fall"
+     ],
+     "note": "US: fall."
+    },
+    {
+     "id": "uk_us-b11",
+     "gap": "Write your ___ code on the form. (US)",
+     "tr": "Forma posta kodunu yaz.",
+     "answers": [
+      "ZIP",
+      "zip"
+     ],
+     "note": "US: ZIP code."
+    },
+    {
+     "id": "uk_us-b12",
+     "gap": "Call me on my ___. (UK)",
+     "tr": "Beni cep telefonumdan ara.",
+     "answers": [
+      "mobile"
+     ],
+     "note": "UK: mobile."
+    }
+   ],
+   "aliases": [
+    "british american",
+    "uk us",
+    "ingiliz amerikan",
+    "british english",
+    "american english"
+   ],
+   "dict_category": "uk_us"
   }
  ]
 }

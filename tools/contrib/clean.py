@@ -8,11 +8,13 @@ stay as they were sent (the tables below, one set a file):
   - wrong meanings and unnatural sentences are fixed;
   - the "meaning in context" sentences of the first file get a translation,
     so they can also be shown as examples.
-A later file repeats rows of the earlier ones; a row that is the same as in an
+A filter sheet (filtre-kalip-sablonu.xlsx) adds phrases with the filter they
+belong to ("cat"). A later file repeats rows of the earlier ones; a row that is the same as in an
 earlier file is read only once, with that file's corrections.
 
 usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
-         tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx
+         tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx \
+         tools/contrib/hamit_filtre_2026-11-20.xlsx
 """
 import json
 import sys
@@ -265,6 +267,30 @@ FIXES = {
                                      en_split=V2_EN_SPLIT, tr_split=V2_TR_SPLIT, ex_fix=V2_EX_FIX, ph_fix=V2_PH_FIX),
 }
 
+# --- Filter sheets (filtre-kalip-sablonu.xlsx): one phrase a row with its filter
+# Row -> the columns that change; None drops the row.
+F1_FIX = {
+    7: {'ex_tr': 'Eskiden çok sigara içerdi.'},
+    8: {'ex_tr': 'Eskiden çok içki içerdi.'},
+    52: {'ex': 'He is a close friend of mine.', 'ex_tr': 'O benim yakın arkadaşım.'},
+    54: {'meaning': 'büyük dikkat, dikkatle'},
+    58: {'ex': 'She is a close relative of ours.', 'ex_tr': 'O bizim yakın akrabamız.'},
+    66: {'ex': 'She is a bright student.', 'ex_tr': 'Zeki bir öğrenci.'},
+    70: {'ex': 'He is a bright child.', 'ex_tr': 'Zeki bir çocuk.'},
+    91: {'meaning': 'geniş kitlelere hitap etme'},
+    140: {'meaning': 'göz gözü görmez, çok kötü gören'},
+    165: None,  # beat: too many other meanings to mark every "beat"
+    166: None,  # catch up: a phrasal verb, already in that filter
+    201: {'meaning': 'almak (gidip), teslim almak'},
+    204: {'meaning': 'tükenmek, bitmek'},
+}
+# "a / b" rows: halves that are left out, because the word has other common meanings.
+F1_SKIP_HALF = {'lift', 'flat', 'gas', 'line', 'fall', 'do'}
+# Sentences made from one pattern for every row say nothing about the phrase.
+F1_TEMPLATE = ('They discussed ', 'The report highlighted the importance of ')
+F1_PHRASE = {"i am afraid ...": ["i am afraid", "i'm afraid"], 'may i ...?': ['may i'],
+             'i would appreciate it if ...': ['i would appreciate it if']}
+
 
 def lang_of(word, meaning, tr_words):
     """Turkish when the word is a known Turkish word or has Turkish letters,
@@ -294,6 +320,37 @@ for src in srcs:
     fx = FIXES.get(name) or dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                  en_split={}, tr_split={}, ex_fix={}, ph_fix={})
     wb = openpyxl.load_workbook(src, data_only=True)
+
+    if 'Kalıplar' in wb.sheetnames and 'Cümlede anlam' not in wb.sheetnames:
+        for i, r in rows(wb, 'Kalıplar'):
+            cat, ph, lang, mean, forms, sep, ex, ex_tr, note = (r + [''] * 9)[:9]
+            if not cat or not ph:
+                continue
+            fix = F1_FIX.get(i, {}) if name == 'hamit_filtre_2026-11-20.xlsx' else {}
+            if fix is None:
+                continue
+            e = {'phrase': ph, 'lang': lang, 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': cat}
+            e.update(fix)
+            if e['ex'].startswith(F1_TEMPLATE):
+                e['ex'] = e['ex_tr'] = ''
+            if lang == 'tr':
+                phrases.append(e)
+                continue
+            if ' / ' in ph:
+                # Two easily mixed words: each one, with the other named (like the false friends).
+                a, b = [x.strip() for x in ph.split(' / ', 1)]
+                ma, mb = ([x.strip() for x in e['meaning'].split(' / ', 1)] + [e['meaning']])[:2]
+                tag = ('UK', 'US') if cat == 'uk_us' else ('', '')
+                for w, m, o, om, t, ot in [(a, ma, b, mb, tag[0], tag[1]), (b, mb, a, ma, tag[1], tag[0])]:
+                    if w.lower() in F1_SKIP_HALF:
+                        continue
+                    m2 = f'{m} ({t}; {ot}: {o})' if t else f'{m} (≠ {o}: {om})'
+                    phrases.append(dict(e, phrase=w.lower(), meaning=m2))
+                continue
+            key = ph.lower().strip()
+            for p2 in F1_PHRASE.get(key, [key.replace('...', '').strip(' ?').strip()]):
+                phrases.append(dict(e, phrase=p2))
+        continue
 
     # --- Meaning in context
     for i, r in rows(wb, 'Cümlede anlam'):

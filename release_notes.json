@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "filters-contrib-hamit-1",
+      "area": "reader",
+      "tr": "Okuma ekranına altı yeni filtre eklendi: Fiil/sıfat + edat (interested in), Benzetmeler (as busy as a bee), Kibar istek ve cevaplar (Could you please …), Gündelik konuşma ve argo, Karıştırılan kelimeler (affect / effect) ve İngiliz / Amerikan farkı (lorry / truck). Eşdizimler filtresine de 95 yeni kalıp geldi (heavy rain, strong coffee …). Her birinin Gramer'de kısa bir dersi var.",
+      "en": "Six new reading filters: Dependent Prepositions (interested in), Similes (as busy as a bee), Polite Phrases (Could you please …), Informal & Slang, Confusable Words (affect / effect) and British / American (lorry / truck). The Collocations filter got 95 new phrases (heavy rain, strong coffee …). Each has a short lesson in Grammar."
+    },
+    {
       "id": "turkish-grammar-1",
       "area": "grammar",
       "tr": "Türkçe öğrenenler için Gramer sekmesinde artık İngilizce değil Türkçe dilbilgisi konuları var: ünlü uyumundan sıfat-fiillere 21 konu (A1-B2), İngilizce anlatım ve İngilizce cümleleri Türkçeye çevirme alıştırmaları.",
