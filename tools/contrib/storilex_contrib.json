@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -7039,6 +7039,438 @@
    "lemma": "charge",
    "lang": "en",
    "meaning": "hücum etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "Evin numarasını unuttuğum için yanlış kapıyı çaldım.",
+   "form": "numarasını",
+   "lemma": "numara",
+   "lang": "tr",
+   "meaning": "number",
+   "translation": ""
+  },
+  {
+   "sentence": "Ben genellikle kırk iki numara ayakkabı giyerim.",
+   "form": "numara",
+   "lemma": "numara",
+   "lang": "tr",
+   "meaning": "size (shoes/clothes)",
+   "translation": ""
+  },
+  {
+   "sentence": "Onun bu ucuz numaralarına artık kimse inanmıyor.",
+   "form": "numaralarına",
+   "lemma": "numara",
+   "lang": "tr",
+   "meaning": "trick, deceit",
+   "translation": ""
+  },
+  {
+   "sentence": "Hasta numarası yaparak okula gitmekten kurtuldu.",
+   "form": "numarası",
+   "lemma": "numara",
+   "lang": "tr",
+   "meaning": "act, pretense",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu pantolon o kadar sıkı ki içinde rahat edemiyorum.",
+   "form": "sıkı",
+   "lemma": "sıkı",
+   "lang": "tr",
+   "meaning": "tight",
+   "translation": ""
+  },
+  {
+   "sentence": "Fabrikada güvenlik konusunda çok sıkı kurallar uygulanıyor.",
+   "form": "sıkı",
+   "lemma": "sıkı",
+   "lang": "tr",
+   "meaning": "strict, rigorous",
+   "translation": ""
+  },
+  {
+   "sentence": "Çocukluğumuzdan beri çok sıkı dostuz.",
+   "form": "sıkı",
+   "lemma": "sıkı",
+   "lang": "tr",
+   "meaning": "close, intimate",
+   "translation": ""
+  },
+  {
+   "sentence": "Gelecek haftaki final sınavı için çok sıkı çalışmam gerek.",
+   "form": "sıkı",
+   "lemma": "sıkı",
+   "lang": "tr",
+   "meaning": "hard, intense",
+   "translation": ""
+  },
+  {
+   "sentence": "Yağmurlu havada otoyolda feci bir zincirleme kaza oldu.",
+   "form": "kaza",
+   "lemma": "kaza",
+   "lang": "tr",
+   "meaning": "accident, crash",
+   "translation": ""
+  },
+  {
+   "sentence": "Dedemlerin köyü, komşu şehre bağlı uzak bir kazadadır.",
+   "form": "kazadadır",
+   "lemma": "kaza",
+   "lang": "tr",
+   "meaning": "district",
+   "translation": ""
+  },
+  {
+   "sentence": "Hastalığı yüzünden tutamadığı oruçların kazasını sonradan tuttu.",
+   "form": "kazasını",
+   "lemma": "kaza",
+   "lang": "tr",
+   "meaning": "replacement of missed salah or fasting",
+   "translation": ""
+  },
+  {
+   "sentence": "Okul idaresi, bu yıl bahar şenliği yapılmayacağını duyurdu.",
+   "form": "idaresi",
+   "lemma": "idare",
+   "lang": "tr",
+   "meaning": "administration, management",
+   "translation": ""
+  },
+  {
+   "sentence": "Zor zamanlarda mutfak masraflarında biraz idare etmek gerekiyor.",
+   "form": "idare etmek",
+   "lemma": "idare etmek",
+   "lang": "tr",
+   "meaning": "to make do, to economize",
+   "translation": ""
+  },
+  {
+   "sentence": "Elektrikler kesilince masadaki eski idare lambasını yaktık.",
+   "form": "idare",
+   "lemma": "idare",
+   "lang": "tr",
+   "meaning": "oil lamp",
+   "translation": ""
+  },
+  {
+   "sentence": "O kadar yaramazdı ki öğretmen onu sadece bir süre idare etti.",
+   "form": "idare etti",
+   "lemma": "idare etmek",
+   "lang": "tr",
+   "meaning": "to put up with, to tolerate",
+   "translation": ""
+  },
+  {
+   "sentence": "Yaptığı fedakarlıklar tüm halkın büyük bir takdirini kazandı.",
+   "form": "takdirini",
+   "lemma": "takdir",
+   "lang": "tr",
+   "meaning": "appreciation, admiration",
+   "translation": ""
+  },
+  {
+   "sentence": "Son kararı tamamen yönetim kurulunun takdirine bırakıyoruz.",
+   "form": "takdirine",
+   "lemma": "takdir",
+   "lang": "tr",
+   "meaning": "discretion, judgment",
+   "translation": ""
+  },
+  {
+   "sentence": "Olaylar öyle gelişti ki herkes bunu ilahi bir takdir olarak gördü.",
+   "form": "takdir",
+   "lemma": "takdir",
+   "lang": "tr",
+   "meaning": "destiny, fate",
+   "translation": ""
+  },
+  {
+   "sentence": "Televizyondaki şiddet içeren diziler çocukları olumsuz etkiliyor.",
+   "form": "şiddet",
+   "lemma": "şiddet",
+   "lang": "tr",
+   "meaning": "violence",
+   "translation": ""
+  },
+  {
+   "sentence": "Rüzgarın şiddeti sabaha karşı o kadar arttı ki çatılar uçtu.",
+   "form": "şiddeti",
+   "lemma": "şiddet",
+   "lang": "tr",
+   "meaning": "intensity, severity",
+   "translation": ""
+  },
+  {
+   "sentence": "Ülke ekonomisi şu an oldukça zorlu ve belirsiz bir devreden geçiyor.",
+   "form": "devreden",
+   "lemma": "devre",
+   "lang": "tr",
+   "meaning": "era, period",
+   "translation": ""
+  },
+  {
+   "sentence": "Mühendisler bozulan cihazın elektronik devresini onarmaya çalıştı.",
+   "form": "devresini",
+   "lemma": "devre",
+   "lang": "tr",
+   "meaning": "circuit",
+   "translation": ""
+  },
+  {
+   "sentence": "Takımımız maçın ikinci devresinde harika bir performans sergiledi.",
+   "form": "devresinde",
+   "lemma": "devre",
+   "lang": "tr",
+   "meaning": "half (of a match)",
+   "translation": ""
+  },
+  {
+   "sentence": "Polis ekipleri olay yerine sadece beş dakikada ulaştı.",
+   "form": "olay",
+   "lemma": "olay",
+   "lang": "tr",
+   "meaning": "incident, event",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazarın yeni çıkardığı roman tam anlamıyla bir olay oldu.",
+   "form": "olay",
+   "lemma": "olay",
+   "lang": "tr",
+   "meaning": "phenomenon, sensation",
+   "translation": ""
+  },
+  {
+   "sentence": "Bütün olayı yanlış anlamışsın, sana doğrusunu anlatayım.",
+   "form": "olayı",
+   "lemma": "olay",
+   "lang": "tr",
+   "meaning": "issue, matter",
+   "translation": ""
+  },
+  {
+   "sentence": "Hedefe varmak için sadece birkaç adım kalmıştı.",
+   "form": "adım",
+   "lemma": "adım",
+   "lang": "tr",
+   "meaning": "step, pace",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirket, çevre dostu üretim yapmak için önemli bir adım attı.",
+   "form": "adım",
+   "lemma": "adım",
+   "lang": "tr",
+   "meaning": "step, initiative, move",
+   "translation": ""
+  },
+  {
+   "sentence": "Toplantıda ortaya attığı bu fikir bana tamamen saçma geldi.",
+   "form": "saçma",
+   "lemma": "saçma",
+   "lang": "tr",
+   "meaning": "absurd, ridiculous",
+   "translation": ""
+  },
+  {
+   "sentence": "Avcının tüfeğinden çıkan saçma, ağacın gövdesine saplandı.",
+   "form": "saçma",
+   "lemma": "saçma",
+   "lang": "tr",
+   "meaning": "buckshot, pellet",
+   "translation": ""
+  },
+  {
+   "sentence": "Kahvaltıda yarım ekmek yedim.",
+   "form": "yarım",
+   "lemma": "yarım",
+   "lang": "tr",
+   "meaning": "half",
+   "translation": ""
+  },
+  {
+   "sentence": "Projedeki bazı detaylar hâlâ yarım kaldığı için sunumu erteledik.",
+   "form": "yarım",
+   "lemma": "yarım",
+   "lang": "tr",
+   "meaning": "incomplete, unfinished",
+   "translation": ""
+  },
+  {
+   "sentence": "She is a highly able manager who easily solves complex problems.",
+   "form": "able",
+   "lemma": "able",
+   "lang": "en",
+   "meaning": "yetenekli, kabiliyetli",
+   "translation": ""
+  },
+  {
+   "sentence": "I won't be able to attend the meeting tomorrow morning.",
+   "form": "able",
+   "lemma": "able",
+   "lang": "en",
+   "meaning": "yapabilen, muktedir",
+   "translation": ""
+  },
+  {
+   "sentence": "He wants to learn how to play the piano this summer.",
+   "form": "learn",
+   "lemma": "learn",
+   "lang": "en",
+   "meaning": "öğrenmek, bilgi edinmek",
+   "translation": ""
+  },
+  {
+   "sentence": "We were shocked to learn that the company was going bankrupt.",
+   "form": "learn",
+   "lemma": "learn",
+   "lang": "en",
+   "meaning": "haber almak, duymak",
+   "translation": ""
+  },
+  {
+   "sentence": "You must learn from your past mistakes to succeed in the future.",
+   "form": "learn",
+   "lemma": "learn",
+   "lang": "en",
+   "meaning": "ders çıkarmak",
+   "translation": ""
+  },
+  {
+   "sentence": "This is the most important decision we will make this year.",
+   "form": "important",
+   "lemma": "important",
+   "lang": "en",
+   "meaning": "önemli, mühim",
+   "translation": ""
+  },
+  {
+   "sentence": "He acts like a very important person in the local government.",
+   "form": "important",
+   "lemma": "important",
+   "lang": "en",
+   "meaning": "nüfuzlu, güçlü",
+   "translation": ""
+  },
+  {
+   "sentence": "She has so much energy that she can work for twelve hours straight.",
+   "form": "energy",
+   "lemma": "energy",
+   "lang": "en",
+   "meaning": "enerji, güç",
+   "translation": ""
+  },
+  {
+   "sentence": "The government aims to rely entirely on renewable energy by 2030.",
+   "form": "energy",
+   "lemma": "energy",
+   "lang": "en",
+   "meaning": "enerji",
+   "translation": ""
+  },
+  {
+   "sentence": "The team lacked the energy needed to win the final match.",
+   "form": "energy",
+   "lemma": "energy",
+   "lang": "en",
+   "meaning": "güç, canlılık, dinçlik",
+   "translation": ""
+  },
+  {
+   "sentence": "Experts forecast a significant drop in housing prices next year.",
+   "form": "forecast",
+   "lemma": "forecast",
+   "lang": "en",
+   "meaning": "tahmin etmek, öngörmek",
+   "translation": ""
+  },
+  {
+   "sentence": "According to the weather forecast, it will rain heavily this weekend.",
+   "form": "forecast",
+   "lemma": "forecast",
+   "lang": "en",
+   "meaning": "tahmin, öngörü",
+   "translation": ""
+  },
+  {
+   "sentence": "The sales forecast for the upcoming quarter looks very promising.",
+   "form": "forecast",
+   "lemma": "forecast",
+   "lang": "en",
+   "meaning": "öngörü, tahmin (satış vb.)",
+   "translation": ""
+  },
+  {
+   "sentence": "He was too drunk to drive safely back home.",
+   "form": "drunk",
+   "lemma": "drunk",
+   "lang": "en",
+   "meaning": "sarhoş",
+   "translation": ""
+  },
+  {
+   "sentence": "The loud drunk at the corner table bothered the other customers.",
+   "form": "drunk",
+   "lemma": "drunk",
+   "lang": "en",
+   "meaning": "ayyaş",
+   "translation": ""
+  },
+  {
+   "sentence": "My grandfather still reads the morning newspaper every single day.",
+   "form": "newspaper",
+   "lemma": "newspaper",
+   "lang": "en",
+   "meaning": "gazete (yayın)",
+   "translation": ""
+  },
+  {
+   "sentence": "We used some old newspaper to wrap the fragile glasses for moving.",
+   "form": "newspaper",
+   "lemma": "newspaper",
+   "lang": "en",
+   "meaning": "gazete kağıdı",
+   "translation": ""
+  },
+  {
+   "sentence": "She works hard to translate classic French literature into Turkish.",
+   "form": "translate",
+   "lemma": "translate",
+   "lang": "en",
+   "meaning": "çevirmek, tercüme etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "High sales numbers usually translate into larger bonuses for the team.",
+   "form": "translate",
+   "lemma": "translate",
+   "lang": "en",
+   "meaning": "anlamına gelmek, dönüşmek",
+   "translation": ""
+  },
+  {
+   "sentence": "A hot bowl of chicken soup is perfect for a cold winter day.",
+   "form": "soup",
+   "lemma": "soup",
+   "lang": "en",
+   "meaning": "çorba",
+   "translation": ""
+  },
+  {
+   "sentence": "I prefer a sandwich with fresh tomatoes and mozzarella cheese.",
+   "form": "cheese",
+   "lemma": "cheese",
+   "lang": "en",
+   "meaning": "peynir",
+   "translation": ""
+  },
+  {
+   "sentence": "The romantic comedy was fun, but the dialogue was full of cheese.",
+   "form": "cheese",
+   "lemma": "cheese",
+   "lang": "en",
+   "meaning": "klişe duygusallık, bayağılık",
    "translation": ""
   }
  ],
@@ -22148,6 +22580,370 @@
    "pos": "verb",
    "meaning": "öne çıkmak, dikkat çekmek",
    "note": "diğerlerinden ayrılmak"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "number",
+   "note": "sayısal değer"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "size (shoes/clothes)",
+   "note": "giyim eşyası büyüklüğü"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "trick, deceit",
+   "note": "kandırmaca"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "act, pretense",
+   "note": "gerçek dışı tavır"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "tight",
+   "note": "bol olmayan"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "strict, rigorous",
+   "note": "esnemeyen kural"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "close, intimate",
+   "note": "samimi ilişki"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "hard, intensely",
+   "note": "büyük çabayla"
+  },
+  {
+   "word": "kaza",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "accident, crash",
+   "note": "beklenmedik zarar"
+  },
+  {
+   "word": "kaza",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "district",
+   "note": "idari birim"
+  },
+  {
+   "word": "kaza",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "replacement of missed salah or fasting",
+   "note": ""
+  },
+  {
+   "word": "idare",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "administration, management",
+   "note": "bir kurumu yönetme işi"
+  },
+  {
+   "word": "idare",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "oil lamp (idare lambası)",
+   "note": "eski aydınlatma aracı"
+  },
+  {
+   "word": "takdir",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "appreciation, admiration",
+   "note": "övme"
+  },
+  {
+   "word": "takdir",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "discretion, judgment",
+   "note": "birinin seçimine bırakma"
+  },
+  {
+   "word": "takdir",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "destiny, fate",
+   "note": "ilahi karar"
+  },
+  {
+   "word": "şiddet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "violence",
+   "note": "bedensel/ruhsal zarar verme"
+  },
+  {
+   "word": "şiddet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "intensity, severity",
+   "note": "bir olgunun gücü"
+  },
+  {
+   "word": "devre",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "era, period",
+   "note": "belirli bir zaman dilimi"
+  },
+  {
+   "word": "devre",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "circuit",
+   "note": "akımın dolaştığı düzenek"
+  },
+  {
+   "word": "devre",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "half (of a match)",
+   "note": "sporda maç bölümü"
+  },
+  {
+   "word": "olay",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "incident, event",
+   "note": "meydana gelen durum"
+  },
+  {
+   "word": "olay",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "phenomenon, sensation",
+   "note": "büyük ilgi çeken durum"
+  },
+  {
+   "word": "olay",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "issue, matter",
+   "note": "çözülmesi gereken iş"
+  },
+  {
+   "word": "adım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "step, pace",
+   "note": "yürürken ayak atışı"
+  },
+  {
+   "word": "adım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "step, initiative, move",
+   "note": "bir iş için harekete geçme"
+  },
+  {
+   "word": "saçma",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "absurd, ridiculous",
+   "note": "akla yatkın olmayan"
+  },
+  {
+   "word": "saçma",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "buckshot, pellet",
+   "note": "tüfek mermisi"
+  },
+  {
+   "word": "yarım",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "half",
+   "note": "bütünün yarısı"
+  },
+  {
+   "word": "yarım",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "incomplete, unfinished",
+   "note": "bitmemiş olan"
+  },
+  {
+   "word": "able",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yetenekli, kabiliyetli",
+   "note": "bir işi yapmaya gücü yeten"
+  },
+  {
+   "word": "able",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yapabilen, muktedir",
+   "note": "fırsatı veya imkanı olan"
+  },
+  {
+   "word": "learn",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "öğrenmek, bilgi edinmek",
+   "note": "yeni bir şey kavramak"
+  },
+  {
+   "word": "learn",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "haber almak, duymak",
+   "note": "bir gerçeği öğrenmek"
+  },
+  {
+   "word": "learn",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ders çıkarmak",
+   "note": "tecrübeden faydalanmak"
+  },
+  {
+   "word": "important",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "önemli, mühim",
+   "note": "büyük değer taşıyan"
+  },
+  {
+   "word": "important",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "nüfuzlu, güçlü",
+   "note": "yetki sahibi kişi"
+  },
+  {
+   "word": "energy",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "enerji, güç",
+   "note": "çalışma ve hareket gücü"
+  },
+  {
+   "word": "energy",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "enerji",
+   "note": ""
+  },
+  {
+   "word": "energy",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "güç, canlılık, dinçlik",
+   "note": ""
+  },
+  {
+   "word": "forecast",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "tahmin etmek, öngörmek",
+   "note": "geleceği öngörmek"
+  },
+  {
+   "word": "forecast",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tahmin, öngörü",
+   "note": ""
+  },
+  {
+   "word": "forecast",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "öngörü, tahmin (satış vb.)",
+   "note": "ekonomik beklenti"
+  },
+  {
+   "word": "drunk",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sarhoş",
+   "note": "alkol etkisinde"
+  },
+  {
+   "word": "drunk",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ayyaş",
+   "note": "sürekli alkol alan kişi"
+  },
+  {
+   "word": "newspaper",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "gazete (yayın)",
+   "note": "haber veren kağıt"
+  },
+  {
+   "word": "newspaper",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "gazete kağıdı",
+   "note": "maddesi"
+  },
+  {
+   "word": "translate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çevirmek, tercüme etmek",
+   "note": "dilden dile aktarmak"
+  },
+  {
+   "word": "translate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "anlamına gelmek, dönüşmek",
+   "note": "bir şeyin başka bir şeye yansıması"
+  },
+  {
+   "word": "soup",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "çorba",
+   "note": "sıvı yiyecek"
+  },
+  {
+   "word": "cheese",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "peynir",
+   "note": "süt ürünü"
+  },
+  {
+   "word": "cheese",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "klişe duygusallık, bayağılık",
+   "note": "sıfatı: cheesy"
   }
  ],
  "examples": [
@@ -30078,6 +30874,438 @@
    "tr": "Parlak sarı paltosu, karanlık kış kalabalığında onun öne çıkmasını sağladı.",
    "en": "Her bright yellow coat made her stand out in the dark winter crowd.",
    "level": "B2"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "meaning": "number",
+   "tr": "Evin numarasını unuttuğum için yanlış kapıyı çaldım.",
+   "en": "Because I forgot the house number, I knocked on the wrong door.",
+   "level": "A1"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "meaning": "size (shoes/clothes)",
+   "tr": "Ben genellikle kırk iki numara ayakkabı giyerim.",
+   "en": "I usually wear size forty-two shoes.",
+   "level": "A2"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "meaning": "trick, deceit",
+   "tr": "Onun bu ucuz numaralarına artık kimse inanmıyor.",
+   "en": "Nobody believes his cheap tricks anymore.",
+   "level": "B2"
+  },
+  {
+   "word": "numara",
+   "lang": "tr",
+   "meaning": "act, pretense",
+   "tr": "Hasta numarası yaparak okula gitmekten kurtuldu.",
+   "en": "He got out of going to school by pretending to be sick.",
+   "level": "B2"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "meaning": "tight",
+   "tr": "Bu pantolon o kadar sıkı ki içinde rahat edemiyorum.",
+   "en": "These pants are so tight that I can't feel comfortable in them.",
+   "level": "A2"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "meaning": "strict, rigorous",
+   "tr": "Fabrikada güvenlik konusunda çok sıkı kurallar uygulanıyor.",
+   "en": "Very strict rules are applied regarding safety in the factory.",
+   "level": "B1"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "meaning": "close, intimate",
+   "tr": "Çocukluğumuzdan beri çok sıkı dostuz.",
+   "en": "We have been very close friends since childhood.",
+   "level": "B1"
+  },
+  {
+   "word": "sıkı",
+   "lang": "tr",
+   "meaning": "hard, intense",
+   "tr": "Gelecek haftaki final sınavı için çok sıkı çalışmam gerek.",
+   "en": "I need to study very hard for the final exam next week.",
+   "level": "A2"
+  },
+  {
+   "word": "kaza",
+   "lang": "tr",
+   "meaning": "accident, crash",
+   "tr": "Yağmurlu havada otoyolda feci bir zincirleme kaza oldu.",
+   "en": "There was a terrible chain-reaction crash on the highway in the rainy weather.",
+   "level": "A2"
+  },
+  {
+   "word": "kaza",
+   "lang": "tr",
+   "meaning": "district",
+   "tr": "Dedemlerin köyü, komşu şehre bağlı uzak bir kazadadır.",
+   "en": "My grandparents' village is in a remote district belonging to the neighboring city.",
+   "level": "C1"
+  },
+  {
+   "word": "kaza",
+   "lang": "tr",
+   "meaning": "replacement of missed salah or fasting",
+   "tr": "Hastalığı yüzünden tutamadığı oruçların kazasını sonradan tuttu.",
+   "en": "He later made up the fasts he had missed because of his illness.",
+   "level": "C1"
+  },
+  {
+   "word": "idare",
+   "lang": "tr",
+   "meaning": "administration, management",
+   "tr": "Okul idaresi, bu yıl bahar şenliği yapılmayacağını duyurdu.",
+   "en": "The school administration announced that there would be no spring festival this year.",
+   "level": "B1"
+  },
+  {
+   "word": "idare etmek",
+   "lang": "tr",
+   "meaning": "to make do, to economize",
+   "tr": "Zor zamanlarda mutfak masraflarında biraz idare etmek gerekiyor.",
+   "en": "In hard times we have to economize a little on kitchen expenses.",
+   "level": "B2"
+  },
+  {
+   "word": "idare",
+   "lang": "tr",
+   "meaning": "oil lamp",
+   "tr": "Elektrikler kesilince masadaki eski idare lambasını yaktık.",
+   "en": "When the electricity went out, we lit the old oil lamp on the table.",
+   "level": "C1"
+  },
+  {
+   "word": "idare etmek",
+   "lang": "tr",
+   "meaning": "to put up with, to tolerate",
+   "tr": "O kadar yaramazdı ki öğretmen onu sadece bir süre idare etti.",
+   "en": "He was so naughty that the teacher only put up with him for a while.",
+   "level": "B2"
+  },
+  {
+   "word": "takdir",
+   "lang": "tr",
+   "meaning": "appreciation, admiration",
+   "tr": "Yaptığı fedakarlıklar tüm halkın büyük bir takdirini kazandı.",
+   "en": "The sacrifices he made earned the great admiration of all the people.",
+   "level": "B2"
+  },
+  {
+   "word": "takdir",
+   "lang": "tr",
+   "meaning": "discretion, judgment",
+   "tr": "Son kararı tamamen yönetim kurulunun takdirine bırakıyoruz.",
+   "en": "We leave the final decision entirely to the discretion of the board of directors.",
+   "level": "C1"
+  },
+  {
+   "word": "takdir",
+   "lang": "tr",
+   "meaning": "destiny, fate",
+   "tr": "Olaylar öyle gelişti ki herkes bunu ilahi bir takdir olarak gördü.",
+   "en": "Events developed in such a way that everyone saw it as divine fate.",
+   "level": "C2"
+  },
+  {
+   "word": "şiddet",
+   "lang": "tr",
+   "meaning": "violence",
+   "tr": "Televizyondaki şiddet içeren diziler çocukları olumsuz etkiliyor.",
+   "en": "TV series containing violence negatively affect children.",
+   "level": "B1"
+  },
+  {
+   "word": "şiddet",
+   "lang": "tr",
+   "meaning": "intensity, severity",
+   "tr": "Rüzgarın şiddeti sabaha karşı o kadar arttı ki çatılar uçtu.",
+   "en": "The force of the wind grew so much toward morning that roofs were blown off.",
+   "level": "B2"
+  },
+  {
+   "word": "devre",
+   "lang": "tr",
+   "meaning": "era, period",
+   "tr": "Ülke ekonomisi şu an oldukça zorlu ve belirsiz bir devreden geçiyor.",
+   "en": "The country's economy is currently going through a very difficult and uncertain period.",
+   "level": "B2"
+  },
+  {
+   "word": "devre",
+   "lang": "tr",
+   "meaning": "circuit",
+   "tr": "Mühendisler bozulan cihazın elektronik devresini onarmaya çalıştı.",
+   "en": "The engineers tried to repair the electronic circuit of the broken device.",
+   "level": "B1"
+  },
+  {
+   "word": "devre",
+   "lang": "tr",
+   "meaning": "half (of a match)",
+   "tr": "Takımımız maçın ikinci devresinde harika bir performans sergiledi.",
+   "en": "Our team put on a wonderful performance in the second half of the match.",
+   "level": "A2"
+  },
+  {
+   "word": "olay",
+   "lang": "tr",
+   "meaning": "incident, event",
+   "tr": "Polis ekipleri olay yerine sadece beş dakikada ulaştı.",
+   "en": "Police teams reached the scene of the incident in just five minutes.",
+   "level": "A2"
+  },
+  {
+   "word": "olay",
+   "lang": "tr",
+   "meaning": "phenomenon, sensation",
+   "tr": "Yazarın yeni çıkardığı roman tam anlamıyla bir olay oldu.",
+   "en": "The author's newly released novel truly became a sensation.",
+   "level": "B2"
+  },
+  {
+   "word": "olay",
+   "lang": "tr",
+   "meaning": "issue, matter",
+   "tr": "Bütün olayı yanlış anlamışsın, sana doğrusunu anlatayım.",
+   "en": "You misunderstood the whole matter; let me tell you the truth.",
+   "level": "B1"
+  },
+  {
+   "word": "adım",
+   "lang": "tr",
+   "meaning": "step, pace",
+   "tr": "Hedefe varmak için sadece birkaç adım kalmıştı.",
+   "en": "There were only a few steps left to reach the goal.",
+   "level": "A1"
+  },
+  {
+   "word": "adım",
+   "lang": "tr",
+   "meaning": "step, initiative, move",
+   "tr": "Şirket, çevre dostu üretim yapmak için önemli bir adım attı.",
+   "en": "The company took an important step toward eco-friendly production.",
+   "level": "B1"
+  },
+  {
+   "word": "saçma",
+   "lang": "tr",
+   "meaning": "absurd, ridiculous",
+   "tr": "Toplantıda ortaya attığı bu fikir bana tamamen saçma geldi.",
+   "en": "This idea he put forward in the meeting seemed completely absurd to me.",
+   "level": "B1"
+  },
+  {
+   "word": "saçma",
+   "lang": "tr",
+   "meaning": "buckshot, pellet",
+   "tr": "Avcının tüfeğinden çıkan saçma, ağacın gövdesine saplandı.",
+   "en": "The buckshot from the hunter's rifle got stuck in the tree trunk.",
+   "level": "C1"
+  },
+  {
+   "word": "yarım",
+   "lang": "tr",
+   "meaning": "half",
+   "tr": "Kahvaltıda yarım ekmek yedim.",
+   "en": "I ate half a loaf of bread at breakfast.",
+   "level": "A1"
+  },
+  {
+   "word": "yarım",
+   "lang": "tr",
+   "meaning": "incomplete, unfinished",
+   "tr": "Projedeki bazı detaylar hâlâ yarım kaldığı için sunumu erteledik.",
+   "en": "We postponed the presentation because some details in the project were still incomplete.",
+   "level": "B1"
+  },
+  {
+   "word": "able",
+   "lang": "en",
+   "meaning": "yetenekli, kabiliyetli",
+   "tr": "O, karmaşık sorunları kolayca çözen son derece yetenekli bir yöneticidir.",
+   "en": "She is a highly able manager who easily solves complex problems.",
+   "level": "B1"
+  },
+  {
+   "word": "able",
+   "lang": "en",
+   "meaning": "yapabilen, muktedir",
+   "tr": "Yarın sabahki toplantıya katılamayacağım.",
+   "en": "I won't be able to attend the meeting tomorrow morning.",
+   "level": "A2"
+  },
+  {
+   "word": "learn",
+   "lang": "en",
+   "meaning": "öğrenmek, bilgi edinmek",
+   "tr": "Bu yaz piyano çalmayı öğrenmek istiyor.",
+   "en": "He wants to learn how to play the piano this summer.",
+   "level": "A1"
+  },
+  {
+   "word": "learn",
+   "lang": "en",
+   "meaning": "haber almak, duymak",
+   "tr": "Şirketin iflas ettiğini duyduğumuzda şok olduk.",
+   "en": "We were shocked to learn that the company was going bankrupt.",
+   "level": "B1"
+  },
+  {
+   "word": "learn",
+   "lang": "en",
+   "meaning": "ders çıkarmak",
+   "tr": "Gelecekte başarılı olmak için geçmiş hatalarından ders çıkarmalısın.",
+   "en": "You must learn from your past mistakes to succeed in the future.",
+   "level": "B2"
+  },
+  {
+   "word": "important",
+   "lang": "en",
+   "meaning": "önemli, mühim",
+   "tr": "Bu, bu yıl vereceğimiz en önemli karardır.",
+   "en": "This is the most important decision we will make this year.",
+   "level": "A1"
+  },
+  {
+   "word": "important",
+   "lang": "en",
+   "meaning": "nüfuzlu, güçlü",
+   "tr": "Yerel yönetimde çok nüfuzlu biri gibi davranıyor.",
+   "en": "He acts like a very important person in the local government.",
+   "level": "B2"
+  },
+  {
+   "word": "energy",
+   "lang": "en",
+   "meaning": "enerji, güç",
+   "tr": "O kadar çok enerjisi var ki aralıksız on iki saat çalışabilir.",
+   "en": "She has so much energy that she can work for twelve hours straight.",
+   "level": "A2"
+  },
+  {
+   "word": "energy",
+   "lang": "en",
+   "meaning": "enerji",
+   "tr": "Hükümet, 2030'a kadar tamamen yenilenebilir enerjiye dayanmayı hedefliyor.",
+   "en": "The government aims to rely entirely on renewable energy by 2030.",
+   "level": "B1"
+  },
+  {
+   "word": "energy",
+   "lang": "en",
+   "meaning": "güç, canlılık, dinçlik",
+   "tr": "Takım, final maçını kazanmak için gereken coşkudan yoksundu.",
+   "en": "The team lacked the energy needed to win the final match.",
+   "level": "B2"
+  },
+  {
+   "word": "forecast",
+   "lang": "en",
+   "meaning": "tahmin etmek, öngörmek",
+   "tr": "Uzmanlar gelecek yıl konut fiyatlarında önemli bir düşüş tahmin ediyor.",
+   "en": "Experts forecast a significant drop in housing prices next year.",
+   "level": "B1"
+  },
+  {
+   "word": "forecast",
+   "lang": "en",
+   "meaning": "tahmin, öngörü",
+   "tr": "Hava durumu tahminine göre bu hafta sonu şiddetli yağmur yağacak.",
+   "en": "According to the weather forecast, it will rain heavily this weekend.",
+   "level": "A2"
+  },
+  {
+   "word": "forecast",
+   "lang": "en",
+   "meaning": "öngörü, tahmin (satış vb.)",
+   "tr": "Önümüzdeki çeyrek için satış öngörüsü çok umut verici görünüyor.",
+   "en": "The sales forecast for the upcoming quarter looks very promising.",
+   "level": "C1"
+  },
+  {
+   "word": "drunk",
+   "lang": "en",
+   "meaning": "sarhoş",
+   "tr": "Eve güvenle arabayla dönemeyecek kadar sarhoştu.",
+   "en": "He was too drunk to drive safely back home.",
+   "level": "B1"
+  },
+  {
+   "word": "drunk",
+   "lang": "en",
+   "meaning": "ayyaş",
+   "tr": "Köşe masadaki gürültücü ayyaş diğer müşterileri rahatsız etti.",
+   "en": "The loud drunk at the corner table bothered the other customers.",
+   "level": "B2"
+  },
+  {
+   "word": "newspaper",
+   "lang": "en",
+   "meaning": "gazete (yayın)",
+   "tr": "Büyükbabam hala her gün sabah gazetesini okur.",
+   "en": "My grandfather still reads the morning newspaper every single day.",
+   "level": "A1"
+  },
+  {
+   "word": "newspaper",
+   "lang": "en",
+   "meaning": "gazete kağıdı",
+   "tr": "Taşınırken kırılgan bardakları eski gazete kâğıdına sardık.",
+   "en": "We used some old newspaper to wrap the fragile glasses for moving.",
+   "level": "B1"
+  },
+  {
+   "word": "translate",
+   "lang": "en",
+   "meaning": "çevirmek, tercüme etmek",
+   "tr": "Klasik Fransız edebiyatını Türkçeye çevirmek için çok çalışıyor.",
+   "en": "She works hard to translate classic French literature into Turkish.",
+   "level": "A2"
+  },
+  {
+   "word": "translate",
+   "lang": "en",
+   "meaning": "anlamına gelmek, dönüşmek",
+   "tr": "Yüksek satış rakamları genellikle takım için daha büyük primlere dönüşür.",
+   "en": "High sales numbers usually translate into larger bonuses for the team.",
+   "level": "C1"
+  },
+  {
+   "word": "soup",
+   "lang": "en",
+   "meaning": "çorba",
+   "tr": "Soğuk bir kış günü için sıcak bir kase tavuk çorbası mükemmeldir.",
+   "en": "A hot bowl of chicken soup is perfect for a cold winter day.",
+   "level": "A1"
+  },
+  {
+   "word": "cheese",
+   "lang": "en",
+   "meaning": "peynir",
+   "tr": "Taze domates ve mozzarella peyniri olan bir sandviçi tercih ederim.",
+   "en": "I prefer a sandwich with fresh tomatoes and mozzarella cheese.",
+   "level": "A1"
+  },
+  {
+   "word": "cheese",
+   "lang": "en",
+   "meaning": "klişe duygusallık, bayağılık",
+   "tr": "Romantik komedi eğlenceliydi ama diyaloglar tamamen klişeyle doluydu.",
+   "en": "The romantic comedy was fun, but the dialogue was full of cheese.",
+   "level": "C1"
   }
  ],
  "phrases": [
@@ -57598,6 +58826,34 @@
    "meaning": "",
    "ex": "The counselor reminded us that hurt people hurt people.",
    "ex_tr": "Danışman, incinmiş insanların bazen başkalarını da incittiğini hatırlattı."
+  },
+  {
+   "phrase": "soup up",
+   "lang": "en",
+   "meaning": "güçlendirmek, modifiye etmek",
+   "ex": "He decided to soup up his old car to race on the weekends.",
+   "ex_tr": "Hafta sonları yarışmak için eski arabasını güçlendirmeye karar verdi."
+  },
+  {
+   "phrase": "kafaya takmak",
+   "lang": "tr",
+   "meaning": "to obsess over, to worry excessively",
+   "ex": "Lütfen söylenen bu önemsiz sözleri günlerce kafana takma.",
+   "ex_tr": "Please don't obsess over these unimportant words for days."
+  },
+  {
+   "phrase": "ipe un sermek",
+   "lang": "tr",
+   "meaning": "to drag one's feet, to make excuses",
+   "ex": "Bu işi yapmamak için sabahtan beri ipe un seriyor.",
+   "ex_tr": "He has been dragging his feet since morning to avoid doing this job."
+  },
+  {
+   "phrase": "a piece of cake",
+   "lang": "en",
+   "meaning": "çocuk oyuncağı, çok kolay",
+   "ex": "Don't worry about the final exam; it will be a piece of cake.",
+   "ex_tr": "Final sınavı için endişelenme; çocuk oyuncağı olacak."
   }
  ],
  "phrase_edits": [

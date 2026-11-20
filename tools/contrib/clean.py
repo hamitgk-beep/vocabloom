@@ -23,7 +23,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
-         tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx
+         tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v11.xlsx
 """
 import json
 import re
@@ -340,7 +341,59 @@ V10_EN_SPLIT = {16: [('fiil', 'anlamına gelmek', 'ifade etmek')], 17: [('fiil',
 V9_EX_FIX = {26: {'en': 'The board of directors promised they would act transparently in the hiring process.'}}
 V8_EX_FIX = {51: {'tr': 'Romanın kapağı eski bir İstanbul fotoğrafıyla süslenmişti.'}}
 
+# --- Dictionary v11 (hamit_2026-11-20_v11.xlsx) ----------------------------------
+# One part of speech a row ("sıkı" adjective, "sıkı çalışmak" adverb); "idare"
+# in "idare etmek" is the verb's meaning (make do, put up with); "soup up" is a
+# phrasal verb, not a meaning of "soup"; a few translations made natural.
+# Meanings the dictionary has in other words take its wording, so the example
+# joins that sense: energy "enerji" / "güç, canlılık", forecast "tahmin", kaza
+# "replacement of missed salah or fasting".
+V11_KAZA = 'replacement of missed salah or fasting'
+V11_MAKE_DO, V11_PUT_UP = 'to make do, to economize', 'to put up with, to tolerate'
+V11_CTX_FIX = {
+    8: ('Çocukluğumuzdan beri çok sıkı dostuz.', None, None, None),
+    12: (None, None, None, V11_KAZA),
+    14: (None, None, 'idare etmek', V11_MAKE_DO),
+    42: (None, None, None, 'enerji'), 43: (None, None, None, 'güç, canlılık, dinçlik'),
+    45: (None, None, None, 'tahmin, öngörü'),
+    16: (None, None, 'idare etmek', V11_PUT_UP),
+    32: ('Kahvaltıda yarım ekmek yedim.', None, None, None),
+    44: (None, None, None, 'tahmin etmek, öngörmek'),
+    46: (None, None, None, 'öngörü, tahmin (satış vb.)'),
+    54: (None, None, None, 'güçlendirmek, modifiye etmek'),
+    56: (None, None, None, 'klişe duygusallık, bayağılık'),
+}
+V11_EX_FIX = {
+    5: {'en': 'He got out of going to school by pretending to be sick.'},
+    8: {'tr': 'Çocukluğumuzdan beri çok sıkı dostuz.', 'en': 'We have been very close friends since childhood.'},
+    12: {'en': 'He later made up the fasts he had missed because of his illness.', 'meaning': V11_KAZA},
+    42: {'meaning': 'enerji'}, 43: {'meaning': 'güç, canlılık, dinçlik'}, 45: {'meaning': 'tahmin, öngörü'},
+    14: {'word': 'idare etmek', 'meaning': V11_MAKE_DO, 'en': 'In hard times we have to economize a little on kitchen expenses.'},
+    16: {'word': 'idare etmek', 'meaning': V11_PUT_UP},
+    21: {'en': 'The force of the wind grew so much toward morning that roofs were blown off.'},
+    29: {'en': 'The company took an important step toward eco-friendly production.'},
+    32: {'tr': 'Kahvaltıda yarım ekmek yedim.', 'en': 'I ate half a loaf of bread at breakfast.'},
+    44: {'meaning': 'tahmin etmek, öngörmek'},
+    46: {'meaning': 'öngörü, tahmin (satış vb.)'},
+    50: {'tr': 'Taşınırken kırılgan bardakları eski gazete kâğıdına sardık.'},
+    54: None,
+    56: {'meaning': 'klişe duygusallık, bayağılık'},
+}
+V11_TR_SPLIT = {6: [('sıfat', 'tight', 'bol olmayan')], 7: [('sıfat', 'strict, rigorous', 'esnemeyen kural')],
+                8: [('sıfat', 'close, intimate', 'samimi ilişki')], 9: [('zarf', 'hard, intensely', 'büyük çabayla')],
+                12: [('isim', V11_KAZA, '')], 14: [], 15: [('isim', 'oil lamp (idare lambası)', 'eski aydınlatma aracı')], 16: [],
+                30: [('sıfat', 'absurd, ridiculous', 'akla yatkın olmayan')], 31: [('isim', 'buckshot, pellet', 'tüfek mermisi')],
+                32: [('sıfat', 'half', 'bütünün yarısı')], 33: [('sıfat', 'incomplete, unfinished', 'bitmemiş olan')]}
+V11_EN_SPLIT = {10: [('isim', 'enerji', '')], 11: [('isim', 'güç, canlılık, dinçlik', '')], 13: [('isim', 'tahmin, öngörü', '')],
+                12: [('fiil', 'tahmin etmek, öngörmek', 'geleceği öngörmek')],
+                14: [('isim', 'öngörü, tahmin (satış vb.)', 'ekonomik beklenti')], 15: [('sıfat', 'sarhoş', 'alkol etkisinde')],
+                16: [('isim', 'ayyaş', 'sürekli alkol alan kişi')], 21: [('isim', 'çorba', 'sıvı yiyecek')], 22: [],
+                24: [('isim', 'klişe duygusallık, bayağılık', 'sıfatı: cheesy')]}
+
 FIXES = {
+    'hamit_2026-11-20_v11.xlsx': dict(ctx_fix=V11_CTX_FIX, ctx_to_phrase=set(), ctx_add=[], ctx_phrase={54: 'soup up'},
+                                      ctx_tr={54: 'Hafta sonları yarışmak için eski arabasını güçlendirmeye karar verdi.'},
+                                      en_split=V11_EN_SPLIT, tr_split=V11_TR_SPLIT, ex_fix=V11_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v10.xlsx': dict(ctx_fix=V10_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       en_split=V10_EN_SPLIT, tr_split={}, ex_fix=V10_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v9.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
@@ -627,7 +680,7 @@ for src in srcs:
             continue
         if i in fx.get('ctx_phrase', {}) or (lang == 'en' and ' ' in lemma and i not in fx['ctx_fix']):
             phrases.append({'phrase': fx.get('ctx_phrase', {}).get(i, lemma), 'lang': 'en',
-                            'meaning': (fx['ctx_fix'].get(i) or (None,) * 4)[3] or mean, 'ex': sent, 'ex_tr': ''})
+                            'meaning': (fx['ctx_fix'].get(i) or (None,) * 4)[3] or mean, 'ex': sent, 'ex_tr': fx['ctx_tr'].get(i, '')})
             continue
         if i in fx['ctx_fix']:
             s2, f2, l2, m2 = fx['ctx_fix'][i]
@@ -648,6 +701,8 @@ for src in srcs:
     tr_words = {w['word'] for w in words if w['lang'] == 'tr'} | {c['lemma'] for c in ctx if c['lang'] == 'tr'}
     for i, r in rows(wb, 'Örnek cümleler'):
         w, sense, tr, en, level = (r + [''] * 5)[:5]
+        if i in fx['ex_fix'] and fx['ex_fix'][i] is None:
+            continue
         e = {'word': w, 'lang': lang_of(w, sense, tr_words), 'meaning': sense, 'tr': tr, 'en': en, 'level': level}
         e.update(fx['ex_fix'].get(i, {}))
         examples.append(e)
