@@ -78,6 +78,7 @@ flutter:
     - assets/library/stories.json.gz
     - assets/library/catalog_tr.json
     - assets/library/stories_tr.json.gz
+    - assets/library/catalog_tr_books.json
 
   fonts:
     - family: Inter

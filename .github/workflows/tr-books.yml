@@ -1,0 +1,42 @@
+name: tr-books
+# Builds the Turkish books of the free library (public-domain works from
+# Turkish Wikisource and Project Gutenberg) and commits them to the branch.
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-k0oemn]
+    paths: [tools/library_tr/build_books_tr.py, .github/workflows/tr-books.yml]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sources
+        run: |
+          set -e
+          curl -sSfL -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
+          f=trwikisource-latest-pages-articles.xml.bz2
+          curl -sSfL -o trws.xml.bz2 https://dumps.wikimedia.org/trwikisource/latest/$f \
+            || curl -sSfL -o trws.xml.bz2 https://mirror.accum.se/mirror/wikimedia.org/dumps/trwikisource/latest/$f \
+            || curl -sSfL -o trws.xml.bz2 https://wikimedia.bringyour.com/trwikisource/latest/$f
+          curl -sSfL -o pg_catalog.csv https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv
+          mkdir -p pg_texts
+          for n in $(python3 tools/library_tr/build_books_tr.py --list pg_catalog.csv); do
+            curl -sSfL -o pg_texts/pg$n.txt https://www.gutenberg.org/cache/epub/$n/pg$n.txt || echo "no text for $n"
+            sleep 1
+          done
+          ls -la pg_texts
+      - name: Build
+        run: |
+          python3 tools/library_tr/build_books_tr.py tr_full.txt trws.xml.bz2 pg_catalog.csv pg_texts . > tools/library_tr/books_report.md
+          cat tools/library_tr/books_report.md
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add assets/library/catalog_tr_books.json tools/library_tr/books_report.md library/books/trb-*.md.gz library/books/trpg-*.md.gz 2>/dev/null || git add assets/library/catalog_tr_books.json tools/library_tr/books_report.md library/books
+          git commit -m "Turkish free-library books (Wikisource, Project Gutenberg; public domain)" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -q origin "$GITHUB_REF_NAME" && git push && exit 0; sleep 10; done
+          exit 1
