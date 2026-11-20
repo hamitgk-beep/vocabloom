@@ -27,7 +27,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v14.xlsx
+         tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx
 """
 import json
 import re
@@ -456,7 +456,29 @@ V14_EX_FIX = {
 V14_TR_SPLIT = {22: [('sıfat', 'so much, all that', 'miktarın fazlalığı')]}
 V14_PH_FIX = {4: {'ex_tr': "I've finally had enough of the neighbour's endless construction noise."}}
 
+# --- Dictionary v15 (hamit_2026-11-20_v15.xlsx) ----------------------------------
+# New words only this time. Left out: "milyar" as "tons of" ("daha milyar tane
+# hata" is not said); blind "farksız" is not a meaning of it.
+V15_BLIND = 'körü körüne, sorgusuz'
+# Meanings the dictionary has in other words take its wording, so each example
+# goes under the sense it shows (pool "havuz" is "yüzme havuzu", not "ortak havuz").
+V15_SAME = {34: (7, 'yüzme havuzu'), 35: (8, 'gölcük, birikinti'), 36: (9, 'ortak havuz, kaynak'),
+            40: (13, 'lif, doku yönü'), 43: (16, 'mantık (bilim dalı), mantık bilimi'), 44: (17, 'mantıklı gerekçe, akla yatkınlık'),
+            46: (19, 'sipariş üzerine yapılmış, özel'), 51: (24, 'yer almak, sayılmak')}
+V15_EX_FIX = {
+    4: {'en': 'He has been living like a lord for years on the money his father left him.'},
+    8: None,
+    10: {'en': 'He is a true man of his word; he always stands by what he says.'},
+    17: {'en': 'In winter the days are very short in northern countries.'},
+    55: {'meaning': V15_BLIND},
+    **{i: {'meaning': m} for i, (_, m) in V15_SAME.items()},
+}
+
 FIXES = {
+    'hamit_2026-11-20_v15.xlsx': dict(ctx_fix={55: (None, None, None, V15_BLIND), **{i: (None, None, None, m) for i, (_, m) in V15_SAME.items()}}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      ctx_drop={8}, en_split={28: [('sıfat', V15_BLIND, 'sorgulamayan')],
+                                                **{r: [('fiil' if r == 24 else 'sıfat' if r == 19 else 'isim', m, '')] for r, m in V15_SAME.values()}}, tr_split={8: []},
+                                      ex_fix=V15_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v14.xlsx': dict(ctx_fix=V14_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       en_split={}, tr_split=V14_TR_SPLIT, ex_fix=V14_EX_FIX, ph_fix=V14_PH_FIX),
     'hamit_2026-11-20_v13.xlsx': dict(ctx_fix={42: (None, None, None, V13_PIC_RASCAL), 43: (None, None, None, V13_PIC_SPROUT),
@@ -811,6 +833,8 @@ for src in srcs:
     # --- Meaning in context
     for i, r in rows(wb, 'Cümlede anlam'):
         sent, form, lemma, lang, mean, note = (r + [''] * 6)[:6]
+        if i in fx.get('ctx_drop', ()):
+            continue
         if i in fx['ctx_to_phrase']:
             phrases.append({'phrase': 'drop someone a line', 'lang': 'en', 'meaning': 'birine birkaç satır yazmak, haber vermek',
                             'ex': sent, 'ex_tr': 'Eve sağ salim vardığında bana bir haber ver.'})

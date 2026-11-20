@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -8383,6 +8383,446 @@
    "lemma": "temple",
    "lang": "en",
    "meaning": "şakak",
+   "translation": ""
+  },
+  {
+   "sentence": "Mevlana'nın şiirlerinde sevgi ve inan her zaman bir arada işlenir.",
+   "form": "inan",
+   "lemma": "inan",
+   "lang": "tr",
+   "meaning": "belief, faith",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski şatoda yaşayan yaşlı lord, mirasını kime bırakacağına karar veremedi.",
+   "form": "lord",
+   "lemma": "lord",
+   "lang": "tr",
+   "meaning": "lord",
+   "translation": ""
+  },
+  {
+   "sentence": "Babadan kalma mirasla yıllardır lord gibi yaşıyor.",
+   "form": "lord",
+   "lemma": "lord",
+   "lang": "tr",
+   "meaning": "wealthy and ostentatious person",
+   "translation": ""
+  },
+  {
+   "sentence": "Evlilik yıl dönümlerinde sahilde çok romantik bir akşam yemeği yediler.",
+   "form": "romantik",
+   "lemma": "romantik",
+   "lang": "tr",
+   "meaning": "romantic, emotional",
+   "translation": ""
+  },
+  {
+   "sentence": "Genç adamın dünyayı tek başına değiştirme fikri oldukça romantik ve saftı.",
+   "form": "romantik",
+   "lemma": "romantik",
+   "lang": "tr",
+   "meaning": "idealistic, unrealistic",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirketin geçen yılki net kârı bir milyar lirayı aştı.",
+   "form": "milyar",
+   "lemma": "milyar",
+   "lang": "tr",
+   "meaning": "billion",
+   "translation": ""
+  },
+  {
+   "sentence": "Kapıda bekleyen yaşlı adam sana bir zarf getirdi.",
+   "form": "adam",
+   "lemma": "adam",
+   "lang": "tr",
+   "meaning": "man",
+   "translation": ""
+  },
+  {
+   "sentence": "O her zaman sözünün arkasında duran gerçek bir adamdır.",
+   "form": "adamdır",
+   "lemma": "adam",
+   "lang": "tr",
+   "meaning": "good person, reliable man",
+   "translation": ""
+  },
+  {
+   "sentence": "Seçimden sonra kendi adamlarını önemli pozisyonlara yerleştirdi.",
+   "form": "adamlarını",
+   "lemma": "adam",
+   "lang": "tr",
+   "meaning": "supporter, follower",
+   "translation": ""
+  },
+  {
+   "sentence": "Yemekten sonra hesabı ödemek için adam başı yüz lira topladık.",
+   "form": "adam",
+   "lemma": "adam",
+   "lang": "tr",
+   "meaning": "per person, a head",
+   "translation": ""
+  },
+  {
+   "sentence": "Projenin tamamlanması için sadece üç günümüz kaldı.",
+   "form": "günümüz",
+   "lemma": "gün",
+   "lang": "tr",
+   "meaning": "day",
+   "translation": ""
+  },
+  {
+   "sentence": "Kışın kuzey ülkelerinde gün çok kısa sürer.",
+   "form": "gün",
+   "lemma": "gün",
+   "lang": "tr",
+   "meaning": "daytime",
+   "translation": ""
+  },
+  {
+   "sentence": "Nöbet çizelgesine göre bulaşıkları yıkama günü bugün sende.",
+   "form": "günü",
+   "lemma": "gün",
+   "lang": "tr",
+   "meaning": "turn, shift",
+   "translation": ""
+  },
+  {
+   "sentence": "Annem mahalledeki komşularla perşembe günleri gün yapar.",
+   "form": "gün",
+   "lemma": "gün",
+   "lang": "tr",
+   "meaning": "reception day, gathering",
+   "translation": ""
+  },
+  {
+   "sentence": "Dün gece şiddetli fırtınadan dolayı hiç uyuyamadım.",
+   "form": "gece",
+   "lemma": "gece",
+   "lang": "tr",
+   "meaning": "night",
+   "translation": ""
+  },
+  {
+   "sentence": "Okulun mezuniyet gecesi için harika bir mekan kiraladılar.",
+   "form": "gecesi",
+   "lemma": "gece",
+   "lang": "tr",
+   "meaning": "evening party, night out",
+   "translation": ""
+  },
+  {
+   "sentence": "Gece yola çıkmayı hiç sevmiyorum, çok tehlikeli oluyor.",
+   "form": "Gece",
+   "lemma": "gece",
+   "lang": "tr",
+   "meaning": "at night",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu işi bitirmek için yeterli zamanımız var.",
+   "form": "zamanımız",
+   "lemma": "zaman",
+   "lang": "tr",
+   "meaning": "time",
+   "translation": ""
+  },
+  {
+   "sentence": "Osmanlı zamanında bu bölge çok önemli bir ticaret merkeziydi.",
+   "form": "zamanında",
+   "lemma": "zaman",
+   "lang": "tr",
+   "meaning": "era, period",
+   "translation": ""
+  },
+  {
+   "sentence": "Yağmur başladığı zaman henüz eve ulaşmamıştık.",
+   "form": "zaman",
+   "lemma": "zaman",
+   "lang": "tr",
+   "meaning": "when",
+   "translation": ""
+  },
+  {
+   "sentence": "Yaz sıcağında buz gibi bir bardak su içmek gibisi yoktur.",
+   "form": "su",
+   "lemma": "su",
+   "lang": "tr",
+   "meaning": "water",
+   "translation": ""
+  },
+  {
+   "sentence": "Yemeğin suyuna ekmek banmayı çok seviyorum.",
+   "form": "suyuna",
+   "lemma": "su",
+   "lang": "tr",
+   "meaning": "juice, broth",
+   "translation": ""
+  },
+  {
+   "sentence": "Mücevherdeki pırlanta en saf ve birinci sudandı.",
+   "form": "sudandı",
+   "lemma": "su",
+   "lang": "tr",
+   "meaning": "water (gem clarity)",
+   "translation": ""
+  },
+  {
+   "sentence": "The government invested over two billion dollars in renewable energy last year.",
+   "form": "billion",
+   "lemma": "billion",
+   "lang": "en",
+   "meaning": "milyar",
+   "translation": ""
+  },
+  {
+   "sentence": "Many old trains were powered by burning coal.",
+   "form": "coal",
+   "lemma": "coal",
+   "lang": "en",
+   "meaning": "kömür",
+   "translation": ""
+  },
+  {
+   "sentence": "The campfire burned down to a few glowing coals in the dark.",
+   "form": "coals",
+   "lemma": "coal",
+   "lang": "en",
+   "meaning": "kor, köz",
+   "translation": ""
+  },
+  {
+   "sentence": "The diplomat hired a professional interpreter for the international summit.",
+   "form": "interpreter",
+   "lemma": "interpreter",
+   "lang": "en",
+   "meaning": "tercüman, çevirmen",
+   "translation": ""
+  },
+  {
+   "sentence": "The Python interpreter reads and executes the code line by line.",
+   "form": "interpreter",
+   "lemma": "interpreter",
+   "lang": "en",
+   "meaning": "yorumlayıcı (bilgisayar)",
+   "translation": ""
+  },
+  {
+   "sentence": "The children spent the whole afternoon playing in the swimming pool.",
+   "form": "pool",
+   "lemma": "pool",
+   "lang": "en",
+   "meaning": "yüzme havuzu",
+   "translation": ""
+  },
+  {
+   "sentence": "After the heavy rain, a large pool of water formed in the garden.",
+   "form": "pool",
+   "lemma": "pool",
+   "lang": "en",
+   "meaning": "gölcük, birikinti",
+   "translation": ""
+  },
+  {
+   "sentence": "The company created a talent pool to recruit the best engineers.",
+   "form": "pool",
+   "lemma": "pool",
+   "lang": "en",
+   "meaning": "ortak havuz, kaynak",
+   "translation": ""
+  },
+  {
+   "sentence": "We went to the local pub to play a few games of pool.",
+   "form": "pool",
+   "lemma": "pool",
+   "lang": "en",
+   "meaning": "bilardo (amerikan)",
+   "translation": ""
+  },
+  {
+   "sentence": "Wheat and barley are the most common grains grown in this region.",
+   "form": "grains",
+   "lemma": "grain",
+   "lang": "en",
+   "meaning": "tahıl, ekin",
+   "translation": ""
+  },
+  {
+   "sentence": "She brushed a single grain of sand off her shoulder.",
+   "form": "grain",
+   "lemma": "grain",
+   "lang": "en",
+   "meaning": "tanecik, zerre",
+   "translation": ""
+  },
+  {
+   "sentence": "The carpenter carefully sanded the wood along the grain.",
+   "form": "grain",
+   "lemma": "grain",
+   "lang": "en",
+   "meaning": "lif, doku yönü",
+   "translation": ""
+  },
+  {
+   "sentence": "In autumn, the green leaves turn yellow and fall to the ground.",
+   "form": "leaves",
+   "lemma": "leaf",
+   "lang": "en",
+   "meaning": "yaprak (bitki)",
+   "translation": ""
+  },
+  {
+   "sentence": "He carefully tore a blank leaf from his old notebook.",
+   "form": "leaf",
+   "lemma": "leaf",
+   "lang": "en",
+   "meaning": "sayfa (kitap)",
+   "translation": ""
+  },
+  {
+   "sentence": "She is studying philosophy and formal logic at the university.",
+   "form": "logic",
+   "lemma": "logic",
+   "lang": "en",
+   "meaning": "mantık (bilim dalı), mantık bilimi",
+   "translation": ""
+  },
+  {
+   "sentence": "There is absolutely no logic in buying a new car when the old one works perfectly.",
+   "form": "logic",
+   "lemma": "logic",
+   "lang": "en",
+   "meaning": "mantıklı gerekçe, akla yatkınlık",
+   "translation": ""
+  },
+  {
+   "sentence": "It is a local custom to offer tea to guests immediately upon arrival.",
+   "form": "custom",
+   "lemma": "custom",
+   "lang": "en",
+   "meaning": "gelenek, görenek",
+   "translation": ""
+  },
+  {
+   "sentence": "He drives a custom sports car that was designed specifically for him.",
+   "form": "custom",
+   "lemma": "custom",
+   "lang": "en",
+   "meaning": "sipariş üzerine yapılmış, özel",
+   "translation": ""
+  },
+  {
+   "sentence": "The long river forms a natural border between the two countries.",
+   "form": "border",
+   "lemma": "border",
+   "lang": "en",
+   "meaning": "sınır, hudut",
+   "translation": ""
+  },
+  {
+   "sentence": "She sewed a beautiful lace border around the white tablecloth.",
+   "form": "border",
+   "lemma": "border",
+   "lang": "en",
+   "meaning": "kenar, çerçeve",
+   "translation": ""
+  },
+  {
+   "sentence": "He eventually achieved the highest rank in the military after years of service.",
+   "form": "rank",
+   "lemma": "rank",
+   "lang": "en",
+   "meaning": "rütbe, derece",
+   "translation": ""
+  },
+  {
+   "sentence": "A tight rank of police officers stood silently in front of the building.",
+   "form": "rank",
+   "lemma": "rank",
+   "lang": "en",
+   "meaning": "sıra, dizi",
+   "translation": ""
+  },
+  {
+   "sentence": "The new restaurant ranks among the top ten places to eat in the city.",
+   "form": "ranks",
+   "lemma": "rank",
+   "lang": "en",
+   "meaning": "yer almak, sayılmak",
+   "translation": ""
+  },
+  {
+   "sentence": "She carefully sealed the letter in a white envelope and sent it.",
+   "form": "envelope",
+   "lemma": "envelope",
+   "lang": "en",
+   "meaning": "zarf",
+   "translation": ""
+  },
+  {
+   "sentence": "The spacecraft successfully re-entered the earth's atmospheric envelope.",
+   "form": "envelope",
+   "lemma": "envelope",
+   "lang": "en",
+   "meaning": "kılıf, örtü",
+   "translation": ""
+  },
+  {
+   "sentence": "The guide dog helps the blind man safely cross the busy street.",
+   "form": "blind",
+   "lemma": "blind",
+   "lang": "en",
+   "meaning": "kör, görme engelli",
+   "translation": ""
+  },
+  {
+   "sentence": "Blind faith in unverified rumors can lead to dangerous consequences.",
+   "form": "Blind",
+   "lemma": "blind",
+   "lang": "en",
+   "meaning": "körü körüne, sorgusuz",
+   "translation": ""
+  },
+  {
+   "sentence": "We accidentally drove into a blind alley and had to reverse out.",
+   "form": "blind",
+   "lemma": "blind",
+   "lang": "en",
+   "meaning": "çıkmaz (sokak)",
+   "translation": ""
+  },
+  {
+   "sentence": "Water freezes and turns into solid ice at zero degrees Celsius.",
+   "form": "solid",
+   "lemma": "solid",
+   "lang": "en",
+   "meaning": "katı (madde)",
+   "translation": ""
+  },
+  {
+   "sentence": "The old oak desk is very solid and will last for generations.",
+   "form": "solid",
+   "lemma": "solid",
+   "lang": "en",
+   "meaning": "sağlam, dayanıklı",
+   "translation": ""
+  },
+  {
+   "sentence": "The detective needs solid evidence before arresting the main suspect.",
+   "form": "solid",
+   "lemma": "solid",
+   "lang": "en",
+   "meaning": "kesin, güvenilir",
+   "translation": ""
+  },
+  {
+   "sentence": "It rained for a solid week, completely ruining our summer vacation.",
+   "form": "solid",
+   "lemma": "solid",
+   "lang": "en",
+   "meaning": "aralıksız, kesintisiz",
    "translation": ""
   }
  ],
@@ -24640,6 +25080,391 @@
    "pos": "noun",
    "meaning": "şakak",
    "note": "başın yan kısmı"
+  },
+  {
+   "word": "inan",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "belief, faith",
+   "note": "dini inanç (eski dilde)"
+  },
+  {
+   "word": "lord",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "lord",
+   "note": "soylu kişi"
+  },
+  {
+   "word": "lord",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "wealthy and ostentatious person",
+   "note": "zengin (mecaz)"
+  },
+  {
+   "word": "romantik",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "romantic, emotional",
+   "note": "aşkla ilgili"
+  },
+  {
+   "word": "romantik",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "idealistic, unrealistic",
+   "note": "gerçeklerden uzak"
+  },
+  {
+   "word": "milyar",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "billion",
+   "note": "bin milyon"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "man",
+   "note": "erkek insan"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "good person, reliable man",
+   "note": "karakterli kimse"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "supporter, follower",
+   "note": "birini destekleyen (argo)"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "per person, a head",
+   "note": "bölüştürme"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "evil eye, envy",
+   "note": "kötü niyetli bakış"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "day",
+   "note": "zaman birimi"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "daytime",
+   "note": "güneşli zaman"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "turn, shift",
+   "note": "yapılacak iş sırası"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "reception day, gathering",
+   "note": "toplanma etkinliği"
+  },
+  {
+   "word": "gece",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "night",
+   "note": "günün karanlık bölümü"
+  },
+  {
+   "word": "gece",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "evening party, night out",
+   "note": "akşam etkinliği"
+  },
+  {
+   "word": "gece",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "at night",
+   "note": "karanlıkta"
+  },
+  {
+   "word": "zaman",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "time",
+   "note": "süre"
+  },
+  {
+   "word": "zaman",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "era, period",
+   "note": "geçmiş çağ"
+  },
+  {
+   "word": "zaman",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "when",
+   "note": "bir anı belirtirken"
+  },
+  {
+   "word": "su",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "water",
+   "note": "yaşam kaynağı"
+  },
+  {
+   "word": "su",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "juice, broth",
+   "note": "meyve/et suyu"
+  },
+  {
+   "word": "su",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "water (gem clarity)",
+   "note": "elmas/taş kalitesi"
+  },
+  {
+   "word": "billion",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "milyar",
+   "note": "sayı"
+  },
+  {
+   "word": "coal",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kömür",
+   "note": "yakıt"
+  },
+  {
+   "word": "coal",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kor, köz",
+   "note": "yanan ateş parçası"
+  },
+  {
+   "word": "interpreter",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tercüman, çevirmen",
+   "note": "sözlü çeviri yapan"
+  },
+  {
+   "word": "interpreter",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yorumlayıcı (bilgisayar)",
+   "note": "yazılım terimi"
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yüzme havuzu",
+   "note": ""
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "gölcük, birikinti",
+   "note": ""
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ortak havuz, kaynak",
+   "note": ""
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "bilardo (amerikan)",
+   "note": "oyun türü"
+  },
+  {
+   "word": "grain",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tahıl, ekin",
+   "note": "tarım ürünü"
+  },
+  {
+   "word": "grain",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tanecik, zerre",
+   "note": "küçük parça"
+  },
+  {
+   "word": "grain",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "lif, doku yönü",
+   "note": ""
+  },
+  {
+   "word": "leaf",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yaprak (bitki)",
+   "note": "ağaç parçası"
+  },
+  {
+   "word": "leaf",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sayfa (kitap)",
+   "note": "kağıt yaprağı"
+  },
+  {
+   "word": "logic",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mantık (bilim dalı), mantık bilimi",
+   "note": ""
+  },
+  {
+   "word": "logic",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mantıklı gerekçe, akla yatkınlık",
+   "note": ""
+  },
+  {
+   "word": "custom",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "gelenek, görenek",
+   "note": "adet"
+  },
+  {
+   "word": "custom",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sipariş üzerine yapılmış, özel",
+   "note": ""
+  },
+  {
+   "word": "border",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sınır, hudut",
+   "note": "ülke/bölge çizgisi"
+  },
+  {
+   "word": "border",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kenar, çerçeve",
+   "note": "örtü/halı kenarı"
+  },
+  {
+   "word": "rank",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "rütbe, derece",
+   "note": "hiyerarşik sıra"
+  },
+  {
+   "word": "rank",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sıra, dizi",
+   "note": "dizilmiş sıra"
+  },
+  {
+   "word": "rank",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yer almak, sayılmak",
+   "note": ""
+  },
+  {
+   "word": "envelope",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "zarf",
+   "note": "mektup kabı"
+  },
+  {
+   "word": "envelope",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kılıf, örtü",
+   "note": "dış sınır (havacılık/fizik)"
+  },
+  {
+   "word": "blind",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "körü körüne, sorgusuz",
+   "note": "sorgulamayan"
+  },
+  {
+   "word": "blind",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çıkmaz (sokak)",
+   "note": "kapalı"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "katı (madde)",
+   "note": "sıvı olmayan"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sağlam, dayanıklı",
+   "note": "güçlü"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kesin, güvenilir",
+   "note": "şüphe götürmeyen"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "aralıksız, kesintisiz",
+   "note": "devamlı"
   }
  ],
  "examples": [
@@ -33914,6 +34739,470 @@
    "tr": "Korkunç bir baş ağrısı olduğu için gergin bir şekilde sol şakağını ovdu.",
    "en": "He nervously rubbed his left temple because he had a terrible headache.",
    "level": "C1"
+  },
+  {
+   "word": "inan",
+   "lang": "tr",
+   "meaning": "belief, faith",
+   "tr": "Mevlana'nın şiirlerinde sevgi ve inan her zaman bir arada işlenir.",
+   "en": "In Rumi's poems, love and faith are always woven together.",
+   "level": "C2"
+  },
+  {
+   "word": "lord",
+   "lang": "tr",
+   "meaning": "lord",
+   "tr": "Eski şatoda yaşayan yaşlı lord, mirasını kime bırakacağına karar veremedi.",
+   "en": "The old lord living in the old castle couldn't decide who to leave his inheritance to.",
+   "level": "B1"
+  },
+  {
+   "word": "lord",
+   "lang": "tr",
+   "meaning": "wealthy and ostentatious person",
+   "tr": "Babadan kalma mirasla yıllardır lord gibi yaşıyor.",
+   "en": "He has been living like a lord for years on the money his father left him.",
+   "level": "C1"
+  },
+  {
+   "word": "romantik",
+   "lang": "tr",
+   "meaning": "romantic, emotional",
+   "tr": "Evlilik yıl dönümlerinde sahilde çok romantik bir akşam yemeği yediler.",
+   "en": "They had a very romantic dinner on the beach for their wedding anniversary.",
+   "level": "B1"
+  },
+  {
+   "word": "romantik",
+   "lang": "tr",
+   "meaning": "idealistic, unrealistic",
+   "tr": "Genç adamın dünyayı tek başına değiştirme fikri oldukça romantik ve saftı.",
+   "en": "The young man's idea of changing the world all by himself was quite idealistic and naive.",
+   "level": "C1"
+  },
+  {
+   "word": "milyar",
+   "lang": "tr",
+   "meaning": "billion",
+   "tr": "Şirketin geçen yılki net kârı bir milyar lirayı aştı.",
+   "en": "The company's net profit exceeded one billion liras last year.",
+   "level": "A2"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "meaning": "man",
+   "tr": "Kapıda bekleyen yaşlı adam sana bir zarf getirdi.",
+   "en": "The old man waiting at the door brought you an envelope.",
+   "level": "A1"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "meaning": "good person, reliable man",
+   "tr": "O her zaman sözünün arkasında duran gerçek bir adamdır.",
+   "en": "He is a true man of his word; he always stands by what he says.",
+   "level": "B2"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "meaning": "supporter, follower",
+   "tr": "Seçimden sonra kendi adamlarını önemli pozisyonlara yerleştirdi.",
+   "en": "After the election, he placed his own supporters in important positions.",
+   "level": "C1"
+  },
+  {
+   "word": "adam",
+   "lang": "tr",
+   "meaning": "per person, a head",
+   "tr": "Yemekten sonra hesabı ödemek için adam başı yüz lira topladık.",
+   "en": "We collected a hundred liras per person to pay the bill after dinner.",
+   "level": "B1"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "drawer, compartment",
+   "tr": "Önemli evrakları çalışma masasının en alt gözünde saklıyor.",
+   "en": "He keeps important documents in the bottom drawer of his desk.",
+   "level": "B1"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "spring (of water)",
+   "tr": "Dağın eteklerinde buz gibi su fışkıran bir su gözü bulduk.",
+   "en": "We found a spring gushing ice-cold water at the foot of the mountain.",
+   "level": "C1"
+  },
+  {
+   "word": "göz",
+   "lang": "tr",
+   "meaning": "evil eye, envy",
+   "tr": "Yeni arabasını gören komşuların gözü değmiş olmalı ki kaza yaptı.",
+   "en": "The evil eye of the neighbors who saw his new car must have struck him, as he had an accident.",
+   "level": "C2"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "meaning": "day",
+   "tr": "Projenin tamamlanması için sadece üç günümüz kaldı.",
+   "en": "We only have three days left for the completion of the project.",
+   "level": "A1"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "meaning": "daytime",
+   "tr": "Kışın kuzey ülkelerinde gün çok kısa sürer.",
+   "en": "In winter the days are very short in northern countries.",
+   "level": "A2"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "meaning": "turn, shift",
+   "tr": "Nöbet çizelgesine göre bulaşıkları yıkama günü bugün sende.",
+   "en": "According to the duty roster, your turn to wash the dishes is today.",
+   "level": "B1"
+  },
+  {
+   "word": "gün",
+   "lang": "tr",
+   "meaning": "reception day, gathering",
+   "tr": "Annem mahalledeki komşularla perşembe günleri gün yapar.",
+   "en": "My mother holds a gathering with the neighbors in the neighborhood on Thursdays.",
+   "level": "C1"
+  },
+  {
+   "word": "gece",
+   "lang": "tr",
+   "meaning": "night",
+   "tr": "Dün gece şiddetli fırtınadan dolayı hiç uyuyamadım.",
+   "en": "I couldn't sleep at all last night due to the severe storm.",
+   "level": "A1"
+  },
+  {
+   "word": "gece",
+   "lang": "tr",
+   "meaning": "evening party, night out",
+   "tr": "Okulun mezuniyet gecesi için harika bir mekan kiraladılar.",
+   "en": "They rented a wonderful venue for the school's graduation night.",
+   "level": "B1"
+  },
+  {
+   "word": "gece",
+   "lang": "tr",
+   "meaning": "at night",
+   "tr": "Gece yola çıkmayı hiç sevmiyorum, çok tehlikeli oluyor.",
+   "en": "I don't like setting out at night at all; it gets very dangerous.",
+   "level": "A2"
+  },
+  {
+   "word": "zaman",
+   "lang": "tr",
+   "meaning": "time",
+   "tr": "Bu işi bitirmek için yeterli zamanımız var.",
+   "en": "We have enough time to finish this job.",
+   "level": "A1"
+  },
+  {
+   "word": "zaman",
+   "lang": "tr",
+   "meaning": "era, period",
+   "tr": "Osmanlı zamanında bu bölge çok önemli bir ticaret merkeziydi.",
+   "en": "During the Ottoman era, this region was a very important trade center.",
+   "level": "B2"
+  },
+  {
+   "word": "zaman",
+   "lang": "tr",
+   "meaning": "when",
+   "tr": "Yağmur başladığı zaman henüz eve ulaşmamıştık.",
+   "en": "When the rain started, we hadn't reached home yet.",
+   "level": "A2"
+  },
+  {
+   "word": "su",
+   "lang": "tr",
+   "meaning": "water",
+   "tr": "Yaz sıcağında buz gibi bir bardak su içmek gibisi yoktur.",
+   "en": "There is nothing like drinking a glass of ice-cold water in the summer heat.",
+   "level": "A1"
+  },
+  {
+   "word": "su",
+   "lang": "tr",
+   "meaning": "juice, broth",
+   "tr": "Yemeğin suyuna ekmek banmayı çok seviyorum.",
+   "en": "I really love dipping bread into the broth of the meal.",
+   "level": "B1"
+  },
+  {
+   "word": "su",
+   "lang": "tr",
+   "meaning": "water (gem clarity)",
+   "tr": "Mücevherdeki pırlanta en saf ve birinci sudandı.",
+   "en": "The diamond in the jewelry was of the purest and first water.",
+   "level": "C2"
+  },
+  {
+   "word": "billion",
+   "lang": "en",
+   "meaning": "milyar",
+   "tr": "Hükümet geçen yıl yenilenebilir enerjiye iki milyar dolardan fazla yatırım yaptı.",
+   "en": "The government invested over two billion dollars in renewable energy last year.",
+   "level": "A2"
+  },
+  {
+   "word": "coal",
+   "lang": "en",
+   "meaning": "kömür",
+   "tr": "Birçok eski tren kömür yakılarak çalıştırılırdı.",
+   "en": "Many old trains were powered by burning coal.",
+   "level": "B1"
+  },
+  {
+   "word": "coal",
+   "lang": "en",
+   "meaning": "kor, köz",
+   "tr": "Kamp ateşi karanlıkta birkaç parlayan köze dönüştü.",
+   "en": "The campfire burned down to a few glowing coals in the dark.",
+   "level": "C1"
+  },
+  {
+   "word": "interpreter",
+   "lang": "en",
+   "meaning": "tercüman, çevirmen",
+   "tr": "Diplomat, uluslararası zirve için profesyonel bir tercüman tuttu.",
+   "en": "The diplomat hired a professional interpreter for the international summit.",
+   "level": "B1"
+  },
+  {
+   "word": "interpreter",
+   "lang": "en",
+   "meaning": "yorumlayıcı (bilgisayar)",
+   "tr": "Python yorumlayıcısı kodu satır satır okur ve çalıştırır.",
+   "en": "The Python interpreter reads and executes the code line by line.",
+   "level": "C1"
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "meaning": "yüzme havuzu",
+   "tr": "Çocuklar bütün öğleden sonrayı yüzme havuzunda oynayarak geçirdiler.",
+   "en": "The children spent the whole afternoon playing in the swimming pool.",
+   "level": "A1"
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "meaning": "gölcük, birikinti",
+   "tr": "Şiddetli yağmurdan sonra bahçede büyük bir su birikintisi oluştu.",
+   "en": "After the heavy rain, a large pool of water formed in the garden.",
+   "level": "B1"
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "meaning": "ortak havuz, kaynak",
+   "tr": "Şirket, en iyi mühendisleri işe almak için bir yetenek havuzu oluşturdu.",
+   "en": "The company created a talent pool to recruit the best engineers.",
+   "level": "C1"
+  },
+  {
+   "word": "pool",
+   "lang": "en",
+   "meaning": "bilardo (amerikan)",
+   "tr": "Birkaç el amerikan bilardosu oynamak için yerel bara gittik.",
+   "en": "We went to the local pub to play a few games of pool.",
+   "level": "B2"
+  },
+  {
+   "word": "grain",
+   "lang": "en",
+   "meaning": "tahıl, ekin",
+   "tr": "Buğday ve arpa bu bölgede yetiştirilen en yaygın tahıllardır.",
+   "en": "Wheat and barley are the most common grains grown in this region.",
+   "level": "B1"
+  },
+  {
+   "word": "grain",
+   "lang": "en",
+   "meaning": "tanecik, zerre",
+   "tr": "Omzundaki tek bir kum zerresini fırçalayarak temizledi.",
+   "en": "She brushed a single grain of sand off her shoulder.",
+   "level": "B2"
+  },
+  {
+   "word": "grain",
+   "lang": "en",
+   "meaning": "lif, doku yönü",
+   "tr": "Marangoz tahtayı ahşap damarı boyunca dikkatlice zımparaladı.",
+   "en": "The carpenter carefully sanded the wood along the grain.",
+   "level": "C2"
+  },
+  {
+   "word": "leaf",
+   "lang": "en",
+   "meaning": "yaprak (bitki)",
+   "tr": "Sonbaharda yeşil yapraklar sararır ve yere düşer.",
+   "en": "In autumn, the green leaves turn yellow and fall to the ground.",
+   "level": "A1"
+  },
+  {
+   "word": "leaf",
+   "lang": "en",
+   "meaning": "sayfa (kitap)",
+   "tr": "Eski defterinden boş bir sayfayı dikkatlice yırttı.",
+   "en": "He carefully tore a blank leaf from his old notebook.",
+   "level": "B2"
+  },
+  {
+   "word": "logic",
+   "lang": "en",
+   "meaning": "mantık (bilim dalı), mantık bilimi",
+   "tr": "Üniversitede felsefe ve biçimsel mantık okuyor.",
+   "en": "She is studying philosophy and formal logic at the university.",
+   "level": "B2"
+  },
+  {
+   "word": "logic",
+   "lang": "en",
+   "meaning": "mantıklı gerekçe, akla yatkınlık",
+   "tr": "Eskisi kusursuz çalışırken yeni bir araba almanın kesinlikle hiçbir mantığı yok.",
+   "en": "There is absolutely no logic in buying a new car when the old one works perfectly.",
+   "level": "B1"
+  },
+  {
+   "word": "custom",
+   "lang": "en",
+   "meaning": "gelenek, görenek",
+   "tr": "Gelen misafirlere hemen çay ikram etmek yerel bir gelenektir.",
+   "en": "It is a local custom to offer tea to guests immediately upon arrival.",
+   "level": "B1"
+  },
+  {
+   "word": "custom",
+   "lang": "en",
+   "meaning": "sipariş üzerine yapılmış, özel",
+   "tr": "Özellikle onun için tasarlanmış özel yapım bir spor araba kullanıyor.",
+   "en": "He drives a custom sports car that was designed specifically for him.",
+   "level": "B2"
+  },
+  {
+   "word": "border",
+   "lang": "en",
+   "meaning": "sınır, hudut",
+   "tr": "Uzun nehir iki ülke arasında doğal bir sınır oluşturur.",
+   "en": "The long river forms a natural border between the two countries.",
+   "level": "A2"
+  },
+  {
+   "word": "border",
+   "lang": "en",
+   "meaning": "kenar, çerçeve",
+   "tr": "Beyaz masa örtüsünün etrafına çok güzel bir dantel kenar dikti.",
+   "en": "She sewed a beautiful lace border around the white tablecloth.",
+   "level": "C1"
+  },
+  {
+   "word": "rank",
+   "lang": "en",
+   "meaning": "rütbe, derece",
+   "tr": "Yıllarca hizmet ettikten sonra sonunda ordudaki en yüksek rütbeye ulaştı.",
+   "en": "He eventually achieved the highest rank in the military after years of service.",
+   "level": "B2"
+  },
+  {
+   "word": "rank",
+   "lang": "en",
+   "meaning": "sıra, dizi",
+   "tr": "Binanın önünde sıkı bir polis memuru sırası sessizce duruyordu.",
+   "en": "A tight rank of police officers stood silently in front of the building.",
+   "level": "C1"
+  },
+  {
+   "word": "rank",
+   "lang": "en",
+   "meaning": "yer almak, sayılmak",
+   "tr": "Yeni restoran, şehirde yemek yenecek en iyi on yer arasında sıralanıyor.",
+   "en": "The new restaurant ranks among the top ten places to eat in the city.",
+   "level": "B2"
+  },
+  {
+   "word": "envelope",
+   "lang": "en",
+   "meaning": "zarf",
+   "tr": "Mektubu beyaz bir zarfa dikkatlice mühürledi ve gönderdi.",
+   "en": "She carefully sealed the letter in a white envelope and sent it.",
+   "level": "A2"
+  },
+  {
+   "word": "envelope",
+   "lang": "en",
+   "meaning": "kılıf, örtü",
+   "tr": "Uzay aracı dünyanın atmosferik kılıfına başarıyla yeniden girdi.",
+   "en": "The spacecraft successfully re-entered the earth's atmospheric envelope.",
+   "level": "C2"
+  },
+  {
+   "word": "blind",
+   "lang": "en",
+   "meaning": "kör, görme engelli",
+   "tr": "Rehber köpek, görme engelli adamın yoğun sokağı güvenle geçmesine yardımcı olur.",
+   "en": "The guide dog helps the blind man safely cross the busy street.",
+   "level": "A2"
+  },
+  {
+   "word": "blind",
+   "lang": "en",
+   "meaning": "körü körüne, sorgusuz",
+   "tr": "Doğrulanmamış söylentilere körü körüne inanç tehlikeli sonuçlara yol açabilir.",
+   "en": "Blind faith in unverified rumors can lead to dangerous consequences.",
+   "level": "C1"
+  },
+  {
+   "word": "blind",
+   "lang": "en",
+   "meaning": "çıkmaz (sokak)",
+   "tr": "Yanlışlıkla çıkmaz sokağa girdik ve geri geri çıkmak zorunda kaldık.",
+   "en": "We accidentally drove into a blind alley and had to reverse out.",
+   "level": "C1"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "meaning": "katı (madde)",
+   "tr": "Su donar ve sıfır santigrat derecede katı buza dönüşür.",
+   "en": "Water freezes and turns into solid ice at zero degrees Celsius.",
+   "level": "B1"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "meaning": "sağlam, dayanıklı",
+   "tr": "Eski meşe masa çok sağlamdır ve nesiller boyu dayanır.",
+   "en": "The old oak desk is very solid and will last for generations.",
+   "level": "B2"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "meaning": "kesin, güvenilir",
+   "tr": "Dedektifin ana şüpheliyi tutuklamadan önce kesin kanıta ihtiyacı var.",
+   "en": "The detective needs solid evidence before arresting the main suspect.",
+   "level": "C1"
+  },
+  {
+   "word": "solid",
+   "lang": "en",
+   "meaning": "aralıksız, kesintisiz",
+   "tr": "Aralıksız bir hafta yağmur yağdı ve yaz tatilimizi tamamen mahvetti.",
+   "en": "It rained for a solid week, completely ruining our summer vacation.",
+   "level": "C2"
   }
  ],
  "phrases": [
@@ -66695,6 +67984,76 @@
    "meaning": "to blow one's top",
    "ex": "Bütün uyarılara rağmen aynı hatayı görünce patronun tepesi attı.",
    "ex_tr": "When he saw the same mistake despite all the warnings, the boss blew his top."
+  },
+  {
+   "phrase": "çamur atmak",
+   "lang": "tr",
+   "meaning": "to sling mud at, to slander",
+   "ex": "Rakipleri seçimden önce dürüst adaya çamur atmaya çalıştı.",
+   "ex_tr": "The rivals tried to sling mud at the honest candidate before the election."
+  },
+  {
+   "phrase": "zaman kazanmak",
+   "lang": "tr",
+   "meaning": "to buy time",
+   "ex": "Karar vermek için oyalayıp biraz zaman kazanmaya çalışıyor.",
+   "ex_tr": "He is trying to stall and buy some time to make a decision."
+  },
+  {
+   "phrase": "ateş püskürmek",
+   "lang": "tr",
+   "meaning": "to breathe fire, to be furious",
+   "ex": "Yapılan büyük hataları görünce öfkeden adeta ateş püskürüyordu.",
+   "ex_tr": "When he saw the huge mistakes made, he was practically breathing fire with anger."
+  },
+  {
+   "phrase": "kılı kırk yarmak",
+   "lang": "tr",
+   "meaning": "to split hairs, to be extremely meticulous",
+   "ex": "Editör, kitabı yayına hazırlarken hata yapmamak için adeta kılı kırk yarmış.",
+   "ex_tr": "The editor literally split hairs to avoid making a mistake while preparing the book for publication."
+  },
+  {
+   "phrase": "gözdağı vermek",
+   "lang": "tr",
+   "meaning": "to intimidate, to make a threat",
+   "ex": "Rakiplerine gözdağı vermek için çok sert bir basın açıklaması yaptı.",
+   "ex_tr": "He made a very harsh press statement to intimidate his rivals."
+  },
+  {
+   "phrase": "drag one's feet",
+   "lang": "en",
+   "meaning": "ağırdan almak, ipe un sermek",
+   "ex": "He has been dragging his feet since morning to avoid doing this job.",
+   "ex_tr": "Bu işi yapmamak için sabahtan beri ipe un seriyor."
+  },
+  {
+   "phrase": "hit the roof",
+   "lang": "en",
+   "meaning": "küplere binmek, zıvanadan çıkmak",
+   "ex": "When he saw the huge scratch on his new car, he completely hit the roof.",
+   "ex_tr": "Yeni arabasındaki kocaman çiziği görünce resmen küplere bindi."
+  },
+  {
+   "phrase": "leave no stone unturned",
+   "lang": "en",
+   "meaning": "bakmadık yer bırakmamak",
+   "ex": "The police will leave no stone unturned to find the missing documents.",
+   "ex_tr": "Polis kayıp belgeleri bulmak için bakmadık yer bırakmayacak."
+  },
+  {
+   "phrase": "pull someone's leg",
+   "lang": "en",
+   "meaning": "biriyle kafa bulmak, işletmek",
+   "ex": "Don't get angry immediately; he is just pulling your leg.",
+   "ex_tr": "Hemen sinirlenme; o sadece seninle kafa buluyor."
+  },
+  {
+   "phrase": "read between the lines",
+   "lang": "en",
+   "meaning": "satır aralarını okumak",
+   "ex": "If you read between the lines, you'll see he isn't happy with the deal.",
+   "ex_tr": "Satır aralarını okursan anlaşmadan memnun olmadığını anlarsın."
   }
  ],
  "phrase_edits": [
