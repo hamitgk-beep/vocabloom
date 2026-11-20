@@ -35,7 +35,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx \
          tools/contrib/hamit_obek1_2026-11-20.xlsx tools/contrib/hamit_deyim1_2026-11-20.xlsx \
          tools/contrib/hamit_obek2_2026-11-20.xlsx tools/contrib/hamit_obek3_2026-11-20.xlsx tools/contrib/hamit_obek4_2026-11-20.xlsx \
-         tools/contrib/hamit_deyim2_2026-11-20.xlsx
+         tools/contrib/hamit_deyim2_2026-11-20.xlsx tools/contrib/hamit_obek5_2026-11-20.xlsx
 """
 import json
 import re
@@ -1261,7 +1261,34 @@ Y2_EDITS = {
     **{p: {'action': 'delete'} for p in ('short on looks', 'warm as life', 'marriage bed', 'english as apple pie')},
 }
 
-AUDIT_FIX = {'hamit_deyim2_2026-11-20.xlsx': (Y2_EX_FIX, Y2_EDITS),
+# --- Phrasal verb work sheet 5 (rows 260-319) --------------------------------------
+# Eleven long objects between verb and particle; two rows show another verb.
+O5_EX_FIX = {
+    9: {'ex': 'Before the tow truck arrived, the police coned off the dangerous accident area.'},
+    10: {'ex': 'With a pep talk, the new manager tried to ginger up the bored sales team.'},
+    11: {'ex': 'At the airport entrance, the security guards patted down the suspicious passenger.'},
+    12: {'ex': 'To keep the wild animals out, the wealthy owner railed in the beautiful garden.'},
+    13: {'ex': 'The farmer railed off the sick sheep from the rest of the healthy flock.'},
+    19: {'ex': "To improve the movie's pacing, the director edited in a new exciting scene."},
+    24: {'ex': 'She managed to rake together enough money to buy that vintage dress.'},
+    27: {'phrase': 'double down'},
+    29: {'ex': 'The skilled carpenter buffed down the rough wooden table until it was smooth.'},
+    36: {'ex': 'During the press conference, the busy journalist dashed down a few quick notes.'},
+    42: {'ex': 'The smart sheepdog quickly herded together the scattered sheep into the barn.'},
+    52: {'phrase': 'shove off'},
+    53: {'ex': 'In the school playground, the big bully shoved around the smaller kids.'},
+}
+O5_EDITS = {
+    # Rows marked "sil"; "fart about" and "fart around" (vakit öldürmek, oyalanmak) are common and stay.
+    **{p: {'action': 'delete'} for p in (
+        'stack off', 'brace about', 'brace by', 'brace in', 'wasp around', 'bud up', 'dodge up', 'bro out', 'bump across',
+        'bump around', 'bump down', 'bump on', 'enlarge up', 'fart off', 'fleet up', 'puddle up', 'quest after',
+        'rattle down', 'scope in', 'shove about', 'sling about', 'sling along', 'spike out', 'stance up', 'strengthen up')},
+    'double down': {'action': 'meaning', 'meaning': 'üstüne gitmek, kararlılığını artırmak, riski ikiye katlamak'},
+}
+
+AUDIT_FIX = {'hamit_obek5_2026-11-20.xlsx': (O5_EX_FIX, O5_EDITS),
+             'hamit_deyim2_2026-11-20.xlsx': (Y2_EX_FIX, Y2_EDITS),
              'hamit_obek2_2026-11-20.xlsx': (O2_EX_FIX, O2_EDITS), 'hamit_obek3_2026-11-20.xlsx': (O3_EX_FIX, {}),
              'hamit_obek4_2026-11-20.xlsx': (O4_EX_FIX, {}),
              'hamit_deyim1_2026-11-20.xlsx': (Y1_EX_FIX, Y1_EDITS),
