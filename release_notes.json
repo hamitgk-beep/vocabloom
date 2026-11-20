@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "contrib-dictionary-hamit-2",
+      "area": "dictionary",
+      "tr": "Sözlüğe ikinci büyük elle hazırlanmış veri paketi eklendi. Türkçe → İngilizce: 187 yeni anlam, 187 yeni kelime ve deyim (örneğin \"çorbada tuzu olmak\"), 309 örnek cümle; yaklaşık 200 yeni cümle kelimenin o cümledeki anlamını seçmeyi öğretiyor. İngilizce → Türkçe: 39 yeni anlam, 42 yeni deyim ve kalıp, 46 deyime yeni karşılık, 692 örnek cümle.",
+      "en": "A second large set of hand-made dictionary data was added. Turkish → English: 187 new meanings, 187 new words and idioms (e.g. \"çorbada tuzu olmak\"), 309 example sentences; about 200 new sentences teach which meaning a word has in its sentence. English → Turkish: 39 new meanings, 42 new idioms and phrases, new equivalents for 46 idioms, 692 example sentences."
+    },
+    {
       "id": "contrib-dictionary-hamit-1",
       "area": "dictionary",
       "tr": "Sözlüğe elle hazırlanıp kontrol edilmiş veri eklendi. Türkçe → İngilizce: 39 yeni anlam, 36 yeni kelime ve deyim, 154 örnek cümle; 52 cümle, kelimenin o cümledeki anlamını seçmeyi öğretiyor (örneğin \"direksiyonu sağa kırmak\": to swerve). İngilizce → Türkçe: 14 yeni anlam, 5 yeni deyim, 14 deyime yeni karşılık, 153 örnek cümle. Elle hazırlanan örnekler artık önce gösteriliyor.",
