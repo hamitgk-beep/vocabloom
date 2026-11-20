@@ -77,25 +77,70 @@ class FreeLibrary {
   /// Tests set this to read books from library/books instead of downloading.
   static Future<String> Function(LibraryItem it)? debugBookText;
 
-  static Future<FreeLibrary> load() async {
-    if (_cached != null) return _cached!;
+  static Future<FreeLibrary>? _loading;
+
+  /// Tests set this to stand in for the app's bundled files.
+  static AssetBundle? debugBundle;
+
+  /// What went wrong while loading, one line per file; empty when all loaded.
+  final List<String> problems = [];
+
+  /// The catalog and the bundled stories. One broken or missing file never
+  /// hides the rest: the English and the Turkish texts load on their own.
+  /// Throws only when nothing at all could be read, and then the next call
+  /// tries again.
+  /// Forgets the loaded library (tests).
+  static void debugReset() => _cached = null;
+
+  static Future<FreeLibrary> load() {
+    if (_cached != null) return Future.value(_cached!);
+    return _loading ??= _load().whenComplete(() => _loading = null);
+  }
+
+  static Future<FreeLibrary> _load() async {
+    final bundle = debugBundle ?? rootBundle;
     final items = <LibraryItem>[];
     final stories = <String, String>{};
+    final problems = <String>[];
+    // Read as bytes and decoded here: rootBundle.loadString hands big files
+    // to a background isolate, and a library that waits on that forever only
+    // shows a spinner.
+    Future<List<int>> bytes(String key) async =>
+        (await bundle.load(key).timeout(const Duration(seconds: 20))).buffer.asUint8List();
     // English, then Turkish (tools/library_tr/build_library_tr.py).
     for (final (cat, texts) in [
       ('assets/library/catalog.json', 'assets/library/stories.json.gz'),
       ('assets/library/catalog_tr.json', 'assets/library/stories_tr.json.gz'),
     ]) {
+      final found = <LibraryItem>[];
       try {
-        final list = jsonDecode(await rootBundle.loadString(cat)) as List;
-        final gz = await rootBundle.load(texts);
-        stories.addAll((jsonDecode(utf8.decode(gzip.decode(gz.buffer.asUint8List()))) as Map).cast<String, String>());
-        items.addAll([for (final j in list) LibraryItem.fromJson(j as Map<String, dynamic>)]);
-      } catch (_) {
-        if (cat.endsWith('catalog.json')) rethrow;
+        final list = jsonDecode(utf8.decode(await bytes(cat), allowMalformed: true)) as List;
+        var bad = 0;
+        for (final j in list) {
+          try {
+            found.add(LibraryItem.fromJson((j as Map).cast<String, dynamic>()));
+          } catch (_) {
+            bad++;
+          }
+        }
+        if (bad > 0) problems.add('$cat: $bad entries skipped');
+      } catch (e) {
+        problems.add('$cat: $e');
+        continue;
       }
+      try {
+        final text = utf8.decode(gzip.decode(await bytes(texts)), allowMalformed: true);
+        (jsonDecode(text) as Map).forEach((k, v) {
+          if (k is String && v is String) stories[k] = v;
+        });
+      } catch (e) {
+        problems.add('$texts: $e');
+      }
+      // A story without its text cannot open: show only what can.
+      items.addAll(found.where((it) => it.isBook || stories.containsKey(it.id)));
     }
-    return _cached = FreeLibrary(items, stories);
+    if (items.isEmpty) throw StateError(problems.join('\n'));
+    return _cached = FreeLibrary(items, stories)..problems.addAll(problems);
   }
 
   /// Tests set this to read pictures from local copies instead of downloading.

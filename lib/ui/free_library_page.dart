@@ -20,6 +20,9 @@ class FreeLibraryPage extends StatefulWidget {
 
 class _FreeLibraryPageState extends State<FreeLibraryPage> {
   FreeLibrary? lib;
+
+  /// Why the library could not be read; shown instead of the spinner.
+  String? failed;
   String? level;
   String kind = 'all'; // all, story, book
   String query = '';
@@ -30,10 +33,39 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     super.initState();
     final saved = widget.app.user.getSetting('library_level');
     if (libraryLevels.contains(saved)) level = saved;
+    _load();
+  }
+
+  void _load() {
+    if (failed != null) setState(() => failed = null);
     FreeLibrary.load().then((l) {
       if (mounted) setState(() => lib = l);
+    }, onError: (Object e) {
+      if (mounted) setState(() => failed = '$e');
     });
   }
+
+  Widget _failure(ThemeData theme) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Icon(Icons.error_outline_rounded, size: 40, color: theme.colorScheme.error),
+            const SizedBox(height: 12),
+            Text(L('Kütüphane açılamadı.', 'The library could not be opened.'),
+                key: const Key('free-library-failed'), style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            SelectableText(failed!,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: _load,
+              icon: const Icon(Icons.refresh_rounded),
+              label: Text(L('Tekrar dene', 'Try again')),
+            ),
+          ]),
+        ),
+      );
 
   void _setLevel(String? l) {
     setState(() => level = l);
@@ -181,7 +213,7 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     return Scaffold(
       appBar: AppBar(title: Text(L('Ücretsiz kütüphane', 'Free library'))),
       body: l == null
-          ? const Center(child: CircularProgressIndicator())
+          ? (failed != null ? _failure(theme) : const Center(child: CircularProgressIndicator()))
           : ListView(
               padding: EdgeInsets.fromLTRB(pad, 4, pad, 40),
               children: [
