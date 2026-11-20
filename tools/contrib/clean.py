@@ -14,7 +14,8 @@ earlier file is read only once, with that file's corrections.
 
 usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx \
-         tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx \
+         tools/contrib/hamit_filtre2_2026-11-20.xlsx
 """
 import json
 import re
@@ -309,6 +310,36 @@ F1_FIX = {
 }
 # "a / b" rows: halves that are left out, because the word has other common meanings.
 F1_SKIP_HALF = {'lift', 'flat', 'gas', 'line', 'fall', 'do'}
+# Second filter sheet (hamit_filtre2_2026-11-20.xlsx).
+# False friends: the meaning in the form the filter shows, "meaning (≠ the look-alike)".
+F2_FIX = {
+    240: {'meaning': 'aslında (≠ aktüel/güncel)'},
+    241: {'meaning': 'sonunda, eninde sonunda (≠ eventüel/muhtemel)'},
+    242: None,  # currently: not a false friend
+    243: {'meaning': 'farkına varmak, anlamak (≠ realize etmek: gerçekleştirmek, daha az)'},
+    244: None,  # "actually existing" is not a phrase
+    245: {'meaning': 'mantıklı, akıllıca (≠ hassas: sensitive)'},
+    246: {'meaning': 'hassas, duyarlı (≠ mantıklı: sensible)'},
+    247: {'meaning': 'anlayışlı, hâlden anlayan (≠ sempatik: nice)'},
+    248: None,  # comprehensive: not a false friend
+    249: {'meaning': 'orkestra şefi; iletken (≠ kondüktör: biletçi, daha az)'},
+    250: {'meaning': 'dergi (≠ mağaza: shop)'},
+    251: {'meaning': 'kumaş (≠ fabrika: factory)'},
+    252: None,  # factory: the Turkish word means the same
+    253: {'meaning': 'aşçıbaşı (≠ iş yerindeki şef: boss)'},
+    254: {'meaning': 'müşteri, destekçi (≠ patron: boss)'},
+    255: {'meaning': 'ders, konferans (≠ lektür: okuma)'},
+    256: {'meaning': 'yüksekokul, üniversite (≠ kolej: özel lise)'},
+    257: {'meaning': 'İngiltere\'de paralı özel okul, ABD\'de devlet okulu'},
+    258: None,  # ordinary: not a false friend
+    259: {'meaning': 'tartışma, ağız kavgası; sav (≠ yalnızca argüman)'},
+    260: None,  # application: the Turkish word means the same
+    261: {'meaning': 'gündem (≠ ajanda: diary, planner)'},
+    262: {'meaning': 'özet (makale); soyut (≠ yalnızca abstre)'},
+    263: {'meaning': 'roman; yeni, alışılmamış (sıfat)'},
+    264: {'meaning': 'devam etmek, yeniden başlamak (≠ résumé: özgeçmiş)'},
+    280: None,  # look up: "(sözlükte) bakmak" is already its meaning
+}
 # Sentences made from one pattern for every row say nothing about the phrase.
 F1_TEMPLATE = ('They discussed ', 'The report highlighted the importance of ')
 F1_PHRASE = {"i am afraid ...": ["i am afraid", "i'm afraid"], 'may i ...?': ['may i'],
@@ -349,7 +380,7 @@ for src in srcs:
             cat, ph, lang, mean, forms, sep, ex, ex_tr, note = (r + [''] * 9)[:9]
             if not cat or not ph:
                 continue
-            fix = F1_FIX.get(i, {}) if name == 'hamit_filtre_2026-11-20.xlsx' else {}
+            fix = {'hamit_filtre_2026-11-20.xlsx': F1_FIX, 'hamit_filtre2_2026-11-20.xlsx': F2_FIX}.get(name, {}).get(i, {})
             if fix is None:
                 continue
             e = {'phrase': ph, 'lang': lang, 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': cat}
@@ -370,7 +401,7 @@ for src in srcs:
                     m2 = f'{m} ({t}; {ot}: {o})' if t else f'{m} (≠ {o}: {om})'
                     phrases.append(dict(e, phrase=w.lower(), meaning=m2))
                 continue
-            key = ph.lower().strip()
+            key = ph.lower().strip().rstrip('.')
             for p2 in F1_PHRASE.get(key, [key.replace('...', '').strip(' ?').strip()]):
                 phrases.append(dict(e, phrase=p2))
         continue
