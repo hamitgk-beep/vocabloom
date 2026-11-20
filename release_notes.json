@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "contrib-dictionary-hamit-4",
+      "area": "dictionary",
+      "tr": "Sözlüğe 100 yeni elle hazırlanmış deyim ve örnek cümlesi eklendi (çantada keklik, pot kırmak, spill the beans, cut corners …), ayrıca İngilizce kelime ailelerinden zarflar (effectively: etkili bir şekilde) ve öbek fiillerin Türkçe karşılıkları.",
+      "en": "100 new hand-made idioms with example sentences (çantada keklik, pot kırmak, spill the beans, cut corners …), plus adverbs from English word families (effectively) and Turkish equivalents of phrasal verbs."
+    },
+    {
       "id": "filters-contrib-hamit-2",
       "area": "reader",
       "tr": "Filtrelere yeni kalıplar eklendi: Fiil/sıfat + edat filtresine 188 kalıp (accuse someone of, be famous for, be prone to …), 30 atasözü (better late than never: geç olsun güç olmasın), 20 ikili kalıp (trial and error), 20 yanıltıcı benzer kelime (magazine ≠ mağaza) ve 20 öbek fiil.",
