@@ -39,7 +39,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_deyim3_2026-11-20.xlsx \
          tools/contrib/hamit_deyim4_2026-11-20.xlsx tools/contrib/hamit_obek6_2026-11-20.xlsx tools/contrib/hamit_obek7_2026-11-20.xlsx \
          tools/contrib/hamit_obek8_2026-11-20.xlsx tools/contrib/hamit_obek9_2026-11-20.xlsx tools/contrib/hamit_obek10_2026-11-20.xlsx \
-         tools/contrib/hamit_obek11_2026-11-20.xlsx
+         tools/contrib/hamit_obek11_2026-11-20.xlsx tools/contrib/hamit_deyim5_2026-11-20.xlsx \
+         tools/contrib/hamit_obek12_2026-11-20.xlsx tools/contrib/hamit_obek13_2026-11-20.xlsx
 """
 import json
 import re
@@ -1598,7 +1599,107 @@ OB_EDITS = {
     'blot up': {'action': 'meaning', 'meaning': 'emdirerek almak, kurulamak'},
 }
 
-AUDIT_FIX = {'hamit_deyim4_2026-11-20.xlsx': (Y4_EX_FIX, Y4_EDITS),
+# --- Idiom work sheet 5 (Parti 28) and the last phrasal verb sheets 12-13 ------------
+# Parti 28.
+Y5_EX_FIX = {
+    171: {'ex': 'With two players injured, the coach had to rely on his third string.',
+          'ex_tr': 'İki oyuncu sakatlanınca koç üçüncü sınıf yedeklerine güvenmek zorunda kaldı.'},
+    541: {'ex': 'A walk along the coast always gets my juices flowing before I write.'},
+    710: {'ex': 'She offered free repairs for a month, throwing a sprat to catch a mackerel.',
+          'ex_tr': 'Bir ay ücretsiz onarım teklif ederek küçük bir yemle büyük sözleşmeyi kapmayı umdu.'},
+}
+Y5_EDITS = {
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ('bring to the hammer', 'bring sth to the hammer'), ("think one is god's own cousin", "think sb is god's own cousin"),
+        ("put batteries in someone's back", "put batteries in one's back"), ('bring out in a rash', 'bring sb out in a rash'),
+        ('catch red-handed', 'catch sb red-handed'), ('take up the cudgel for', 'take up the cudgels for'))},
+    **{p: {'action': 'merge', 'to': t} for p, t in (
+        ('knock the wind out of someone', 'knock the wind out of sb'), ("have one's mind about one", "have one's wits about one"),
+        ('give-up the ghost', 'give up the ghost'), ('rest his soul', "rest one's soul"),
+        ('give someone the cold shoulder', 'give sb the cold shoulder'))},
+    'greater of two evils': {'action': 'meaning', 'meaning': 'iki kötüden daha kötüsü'},
+    'shiver me timbers': {'action': 'meaning', 'meaning': '(denizci ünlemi, şaka) vay canına, hay aksi'},
+}
+# Sheets 12-13: long objects before the particle are moved after the verb; rows that
+# show another verb ("bailed out" for "bale out") go to that verb. "faffing" and
+# "pootled" are not read as forms of their verbs, so those two stay out.
+OB2_EX_FIX = {
+    12: {
+        2: {'ex': 'The aggressive hiker trod down the beautiful wild flowers.'},
+        3: {'ex': 'To finish the knitting, she carefully bound off the edge of the scarf.'},
+        4: {'ex': 'Instead of sending him to jail, the judge bound over the young suspect.'},
+        5: {'ex': 'The doctor bound up the deep cut tightly with a white bandage.'},
+        19: {'ex': "The strong wind ruffled up the bird's colorful feathers."},
+        23: {'ex': 'She strapped up the heavy suitcase tightly before the long flight.'},
+        42: {'ex': 'The DJ cued up the next energetic song on his laptop.'},
+        47: {'ex': 'The old man hoarded up useful tools in his large garage for years.'},
+        56: {'ex': 'The farmer plowed in the dead weeds to fertilize the new soil.'},
+        57: {'ex': 'The curious dog plowed up an old bone in the backyard.'},
+        62: {'ex': 'The gardener pricked out the small green seedlings to give them more space.'},
+        64: {'ex': 'The butcher rendered down the animal fat to make traditional soap.'},
+        66: {'ex': 'We rigged up a temporary shelter using some old wooden branches.'},
+        67: {'ex': 'She scraped together enough money to buy a decent second-hand car.'},
+        68: {'ex': 'The cruel king scythed down his innocent opponents without showing any mercy.'},
+        69: None,
+        70: {'phrase': 'bail out'},
+        71: {'phrase': 'black out', 'ex': 'The thick dark curtains blacked out the sunny room completely.'},
+        72: None,
+        75: {'ex': 'He chocked up his small messy closet with old useless clothes.'},
+        76: {'ex': 'The sailors clewed up the large main sail quickly before the wild storm.'},
+        77: {'phrase': 'conk out'},
+        78: {'phrase': 'damp off'},
+        79: None,
+        80: None,
+        81: {'phrase': 'dwindle away'},
+        82: None,
+        83: {'phrase': 'fatten up', 'ex': 'The farmer fattened up the young turkeys before the holiday feast.'},
+        85: {'phrase': 'fizzle out'},
+        87: {'ex': 'She flung out her heavy wet coat onto the cold muddy floor.'},
+        88: None,
+        89: {'ex': 'He lathered up his dirty face heavily with expensive shaving cream.'},
+        91: {'ex': 'The tailor lengthened out the short elegant dress for the tall beautiful model.'},
+        98: {'ex': 'The mechanic lubed up the squeaky door hinges quickly with thick dark oil.'},
+        105: {'ex': 'The ruthless army mustered in young innocent boys by force during the war.'},
+        107: {'ex': 'The careful gardener nipped off the dead rose heads cleanly with sharp scissors.'},
+        114: {'ex': 'The clever architect partitioned off the large empty room to create two separate offices.'},
+        121: {'ex': 'He plonked down the heavy grocery bags carelessly on the clean kitchen counter.'},
+        123: {'ex': 'The tired farmer ploughed over the dry hard soil before planting the spring seeds.'},
+        124: {'ex': 'The angry boss plunked down the thick messy file heavily on the glass table.'},
+        128: None,
+    },
+    13: {
+        8: None,
+        10: {'ex': 'She carefully raveled out the old damaged sweater to reuse the soft wool yarn.'},
+        11: {'ex': 'The experienced fisherman reeled in the huge struggling fish with great effort.'},
+        12: {'ex': 'He reeled out the long fishing line to reach the deeper dark waters.'},
+        13: {'ex': 'The happy child reeled up the colorful kite string as the sun went down.'},
+        14: {'phrase': 'renege on'},
+        16: {'ex': 'The angry mother routed out the hidden stolen cookies from the bottom drawer.'},
+        17: {'ex': 'The clever detective routed up the vital missing documents after a long search.'},
+        18: {'ex': 'The careless boy rucked up his clean white shirt before jumping into the muddy puddle.'},
+        20: {'ex': 'The naughty puppy rumpled up the neatly folded blankets on the clean bed.'},
+        23: {'ex': 'The sick child spewed up his hot lunch suddenly in the middle of the classroom.'},
+        24: {'phrase': 'veg out'},
+    },
+}
+OB2_EDITS = {
+    # Rows marked "sil"; the common ones kept before stay, with bugger/arse about and around.
+    **{p: {'action': 'delete'} for p in (
+        'fluff about', 'fritz out', 'lib out', 'mull up', 'preach up', 'shrub up', 'weaken up', 'amp down',
+        'boo up', 'flap down', 'gummy up', 'holler back', 'honk off', 'iris in', 'iris out', 'lair up',
+        'lug in', 'lug out', 'pooch out', 'posh up', 'pretzel up', 'ramp along', 'render off', 'lengthen down',
+        'likker up', 'louse around', 'mack on', 'marinate on', 'mime out', 'nicen up', 'nosh off', 'pelt along',
+        'plank over', 'plank up', 'poach up', 'poon up', 'popper up', 'poz up', 'prang up', 'prat around',
+        'prep out', 'prim out', 'prim up',
+    )},
+    **{p: {'action': 'merge', 'to': t} for p, t in (('matte up', 'mat up'), ('renegue on', 'renege on'), ('vege out', 'veg out'), ('dote over', 'dote on')) if p != 'dote over'},
+    'dote over': {'action': 'rename', 'to': 'dote on'},
+    'plow up': {'action': 'meaning', 'meaning': 'kazıp ortaya çıkarmak'},
+}
+
+AUDIT_FIX = {'hamit_deyim5_2026-11-20.xlsx': (Y5_EX_FIX, Y5_EDITS),
+             'hamit_obek12_2026-11-20.xlsx': (OB2_EX_FIX[12], OB2_EDITS), 'hamit_obek13_2026-11-20.xlsx': (OB2_EX_FIX[13], {}),
+             'hamit_deyim4_2026-11-20.xlsx': (Y4_EX_FIX, Y4_EDITS),
              **{f'hamit_obek{n}_2026-11-20.xlsx': (OB_EX_FIX[n], OB_EDITS if n == 6 else {}) for n in range(6, 12)},
              'hamit_deyim3_2026-11-20.xlsx': (Y3_EX_FIX, Y3_EDITS),
              'hamit_obek5_2026-11-20.xlsx': (O5_EX_FIX, O5_EDITS),
@@ -1684,7 +1785,7 @@ for src in srcs:
             e.update(fix)
             phrases.append(e)
         edits += [dict(v, phrase=k) for k, v in ph_edits.items()]
-        if name in ('hamit_deyim1_2026-11-20.xlsx', 'hamit_deyim2_2026-11-20.xlsx', 'hamit_deyim3_2026-11-20.xlsx', 'hamit_deyim4_2026-11-20.xlsx'):
+        if name in ('hamit_deyim1_2026-11-20.xlsx', 'hamit_deyim2_2026-11-20.xlsx', 'hamit_deyim3_2026-11-20.xlsx', 'hamit_deyim4_2026-11-20.xlsx', 'hamit_deyim5_2026-11-20.xlsx'):
             edits += y1_meaning_edits(wb, ph_edits)
         continue
 
