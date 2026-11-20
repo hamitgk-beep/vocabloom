@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -6287,6 +6287,126 @@
    "lemma": "keep",
    "lang": "en",
    "meaning": "kısmak, tutmak (ses)",
+   "translation": ""
+  },
+  {
+   "sentence": "Uzun yıllar gurbette yaşadıktan sonra nihayet memleketine döndü.",
+   "form": "döndü",
+   "lemma": "dönmek",
+   "lang": "tr",
+   "meaning": "to return, to go back",
+   "translation": ""
+  },
+  {
+   "sentence": "Rüzgarın yön değiştirmesiyle yel değirmeninin pervaneleri hızla döndü.",
+   "form": "döndü",
+   "lemma": "dönmek",
+   "lang": "tr",
+   "meaning": "to spin, to rotate",
+   "translation": ""
+  },
+  {
+   "sentence": "Soğuk havada dışarıda beklemekten elleri adeta buza döndü.",
+   "form": "döndü",
+   "lemma": "dönmek",
+   "lang": "tr",
+   "meaning": "to turn into, to become",
+   "translation": ""
+  },
+  {
+   "sentence": "Konuyu değiştirmek için sohbeti aniden eski anılara döndürdü.",
+   "form": "döndürdü",
+   "lemma": "döndürmek",
+   "lang": "tr",
+   "meaning": "to shift, to steer (a conversation)",
+   "translation": ""
+  },
+  {
+   "sentence": "Uzun süre hastalıkla boğuşan hasta, doktorun çabasıyla hayata döndü.",
+   "form": "döndü",
+   "lemma": "dönmek",
+   "lang": "tr",
+   "meaning": "to revive, to come back to life",
+   "translation": ""
+  },
+  {
+   "sentence": "Şiirin derinliklerindeki mecazları okuyunca ne demek istediğini anladı.",
+   "form": "anladı",
+   "lemma": "anlamak",
+   "lang": "tr",
+   "meaning": "to understand, to comprehend",
+   "translation": ""
+  },
+  {
+   "sentence": "Onun sessizliğinden bu teklife pek sıcak bakmadığını anladım.",
+   "form": "anladım",
+   "lemma": "anlamak",
+   "lang": "tr",
+   "meaning": "to realize, to deduce",
+   "translation": ""
+  },
+  {
+   "sentence": "Motorun sesini dinler dinlemez sorunun nereden kaynaklandığını anladı.",
+   "form": "anladı",
+   "lemma": "anlamak",
+   "lang": "tr",
+   "meaning": "to figure out, to pinpoint",
+   "translation": ""
+  },
+  {
+   "sentence": "İngilizce konuşmaları anlıyor ama cevap vermekte zorlanıyor.",
+   "form": "anlıyor",
+   "lemma": "anlamak",
+   "lang": "tr",
+   "meaning": "to understand (a language)",
+   "translation": ""
+  },
+  {
+   "sentence": "Doktor hastanın halinden hemen anladı ve ona şefkatle yaklaştı.",
+   "form": "anladı",
+   "lemma": "anlamak",
+   "lang": "tr",
+   "meaning": "to empathize with, to read someone's situation",
+   "translation": ""
+  },
+  {
+   "sentence": "Toplantıdaki düşüncelerini hiç çekinmeden herkesin önünde söyledi.",
+   "form": "söyledi",
+   "lemma": "söylemek",
+   "lang": "tr",
+   "meaning": "to say, to state",
+   "translation": ""
+  },
+  {
+   "sentence": "Gelecek yıl şirketin daha kârlı olacağını önceden söylemişti.",
+   "form": "söylemişti",
+   "lemma": "söylemek",
+   "lang": "tr",
+   "meaning": "to predict, to foretell",
+   "translation": ""
+  },
+  {
+   "sentence": "Sırrını kimseye söylememesi konusunda onu defalarca uyardı.",
+   "form": "söylememesi",
+   "lemma": "söylemek",
+   "lang": "tr",
+   "meaning": "to tell, to reveal",
+   "translation": ""
+  },
+  {
+   "sentence": "Akşam yemeği için hepimize en sevdiğimiz kebaptan söyledi.",
+   "form": "söyledi",
+   "lemma": "söylemek",
+   "lang": "tr",
+   "meaning": "to order (food/drink)",
+   "translation": ""
+  },
+  {
+   "sentence": "Genç sanatçı sahnede en popüler şarkılarını coşkuyla söyledi.",
+   "form": "söyledi",
+   "lemma": "söylemek",
+   "lang": "tr",
+   "meaning": "to sing",
    "translation": ""
   }
  ],
@@ -20458,6 +20578,251 @@
    "pos": "noun",
    "meaning": "kapak",
    "note": "kitap kapağı"
+  },
+  {
+   "word": "noksan",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "deficient, incomplete",
+   "note": "eksik, tam olmayan"
+  },
+  {
+   "word": "bağnaz",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "bigoted, fanatical",
+   "note": "kendi düşüncesine körü körüne bağlı"
+  },
+  {
+   "word": "temkinli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "cautious, wary",
+   "note": "ileriyi düşünerek davranan"
+  },
+  {
+   "word": "özgün",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "original, authentic",
+   "note": "yalnızca kendine has özellikleri olan"
+  },
+  {
+   "word": "gözlem",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "observation",
+   "note": "bir olayı dikkatle izleme işi"
+  },
+  {
+   "word": "teşebbüs",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "attempt, initiative",
+   "note": "bir işe girişme, yeltenme"
+  },
+  {
+   "word": "muğlak",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "ambiguous, vague",
+   "note": "anlamı belirsiz olan"
+  },
+  {
+   "word": "taviz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "concession, compromise",
+   "note": "ödün, kendi hakkından vazgeçme"
+  },
+  {
+   "word": "idrak",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "perception, comprehension",
+   "note": "anlama, akıl erdirme yeteneği"
+  },
+  {
+   "word": "betimlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to describe, to depict",
+   "note": "kelimelerle tasvir etmek"
+  },
+  {
+   "word": "vurgulamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to emphasize, to highlight",
+   "note": "önemini belirterek dikkati çekmek"
+  },
+  {
+   "word": "hasıraltı etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to sweep under the rug",
+   "note": "gizlemek, örtbas etmek"
+  },
+  {
+   "word": "kınamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to condemn",
+   "note": "ayıplamak, şiddetle eleştirmek"
+  },
+  {
+   "word": "kanıksamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to become desensitized to",
+   "note": "olumsuz bir duruma alışmak"
+  },
+  {
+   "word": "kapsamlı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "comprehensive",
+   "note": "geniş sınırları olan, detaylı"
+  },
+  {
+   "word": "olağanüstü",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "extraordinary",
+   "note": "alışılmışın dışında, harika"
+  },
+  {
+   "word": "çetrefilli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "complicated",
+   "note": "içinden çıkılması zor, karmaşık"
+  },
+  {
+   "word": "elzem",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "essential",
+   "note": "çok gerekli, vazgeçilmez"
+  },
+  {
+   "word": "mütevazı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "modest, humble",
+   "note": "alçakgönüllü, gösterişsiz"
+  },
+  {
+   "word": "şeffaf",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "transparent",
+   "note": "saydam, açık ve dürüst"
+  },
+  {
+   "word": "inevitable",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kaçınılmaz",
+   "note": "önlenemez, kesin olacak olan"
+  },
+  {
+   "word": "profound",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "derin, çok etkili",
+   "note": "yoğun ve derinlikli (duygu/etki)"
+  },
+  {
+   "word": "feasible",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "uygulanabilir",
+   "note": "pratikte yapılabilir olan"
+  },
+  {
+   "word": "versatile",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çok yönlü",
+   "note": "birçok farklı işe yarayan"
+  },
+  {
+   "word": "volatile",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "istikrarsız, dalgalı",
+   "note": "hızla ve aniden değişebilen"
+  },
+  {
+   "word": "lucrative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kârlı, kazançlı",
+   "note": "getirisi yüksek"
+  },
+  {
+   "word": "ambiguous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "muğlak, belirsiz",
+   "note": "birden fazla anlama gelebilen"
+  },
+  {
+   "word": "scrutinize",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dikkatle incelemek",
+   "note": "detaylıca gözden geçirmek"
+  },
+  {
+   "word": "comprehend",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "idrak etmek, anlamak",
+   "note": "tamamen kavramak"
+  },
+  {
+   "word": "deter",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "caydırmak",
+   "note": "vazgeçirmek, engel olmak"
+  },
+  {
+   "word": "reluctant",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "isteksiz, gönülsüz",
+   "note": "hevesli olmayan"
+  },
+  {
+   "word": "anticipate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "öngörmek, beklemek",
+   "note": "önceden tahmin edip hazırlanmak"
+  },
+  {
+   "word": "isolate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "soyutlamak, tecrit etmek",
+   "note": "ayrı tutmak"
+  },
+  {
+   "word": "concede",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kabul etmek",
+   "note": "yenilgiyi veya hatayı kabullenmek"
+  },
+  {
+   "word": "mitigate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "hafifletmek",
+   "note": "kötü bir etkiyi yatıştırmak"
   }
  ],
  "examples": [
@@ -27028,6 +27393,406 @@
    "tr": "Romanın kapağı eski bir İstanbul fotoğrafıyla süslenmişti.",
    "en": "The cover of the novel was decorated with an old photograph of Istanbul.",
    "level": "B1"
+  },
+  {
+   "word": "noksan",
+   "lang": "tr",
+   "meaning": "deficient, incomplete",
+   "tr": "Hesaplamalardaki noksan veriler sonucun yanlış çıkmasına neden oldu.",
+   "en": "The deficient data in the calculations caused the result to be incorrect.",
+   "level": "B2"
+  },
+  {
+   "word": "bağnaz",
+   "lang": "tr",
+   "meaning": "bigoted, fanatical",
+   "tr": "Bağnaz düşüncelere sahip insanlarla yenilikleri tartışmak zordur.",
+   "en": "It is difficult to discuss innovations with people who have bigoted thoughts.",
+   "level": "C1"
+  },
+  {
+   "word": "temkinli",
+   "lang": "tr",
+   "meaning": "cautious, wary",
+   "tr": "Yeni bir sektöre yatırım yaparken daima temkinli davranır.",
+   "en": "He always acts cautiously when investing in a new sector.",
+   "level": "B2"
+  },
+  {
+   "word": "özgün",
+   "lang": "tr",
+   "meaning": "original, authentic",
+   "tr": "Genç ressamın özgün eserleri sergide büyük ilgi topladı.",
+   "en": "The young painter's original works attracted great attention at the exhibition.",
+   "level": "B2"
+  },
+  {
+   "word": "safsata",
+   "lang": "tr",
+   "meaning": "fallacy",
+   "tr": "Rakiplerinin öne sürdüğü bu iddialar tamamen safsatadan ibaret.",
+   "en": "These claims put forward by their rivals are nothing but fallacies.",
+   "level": "C2"
+  },
+  {
+   "word": "gözlem",
+   "lang": "tr",
+   "meaning": "observation",
+   "tr": "Bilim insanı, hayvan davranışları üzerine yıllarca gözlem yaptı.",
+   "en": "The scientist made observations on animal behavior for years.",
+   "level": "B2"
+  },
+  {
+   "word": "teşebbüs",
+   "lang": "tr",
+   "meaning": "attempt, initiative",
+   "tr": "Dağcıların zirveye ulaşma teşebbüsü kötü hava nedeniyle yarım kaldı.",
+   "en": "The climbers' attempt to reach the summit was cut short due to bad weather.",
+   "level": "C1"
+  },
+  {
+   "word": "muğlak",
+   "lang": "tr",
+   "meaning": "ambiguous, vague",
+   "tr": "Sözleşmedeki bazı muğlak maddeler iki tarafı da tedirgin etti.",
+   "en": "Some ambiguous clauses in the contract made both parties uneasy.",
+   "level": "C1"
+  },
+  {
+   "word": "taviz",
+   "lang": "tr",
+   "meaning": "concession, compromise",
+   "tr": "Kaliteden asla taviz vermeyen şirket, sektörde bir numara oldu.",
+   "en": "The company, which never makes concessions on quality, became number one in the sector.",
+   "level": "C1"
+  },
+  {
+   "word": "idrak",
+   "lang": "tr",
+   "meaning": "perception, comprehension",
+   "tr": "Durumun ciddiyetini ancak olaylar büyüyünce idrak edebildim.",
+   "en": "I was only able to comprehend the seriousness of the situation when things escalated.",
+   "level": "C1"
+  },
+  {
+   "word": "betimlemek",
+   "lang": "tr",
+   "meaning": "to describe, to depict",
+   "tr": "Yazar, karakterin iç dünyasını inanılmaz bir ustalıkla betimlemiş.",
+   "en": "The author described the character's inner world with incredible mastery.",
+   "level": "C1"
+  },
+  {
+   "word": "vurgulamak",
+   "lang": "tr",
+   "meaning": "to emphasize, to highlight",
+   "tr": "Konuşmacı eğitimde eşit fırsatların önemini özellikle vurguladı.",
+   "en": "The speaker particularly emphasized the importance of equal opportunities in education.",
+   "level": "B2"
+  },
+  {
+   "word": "aşılamak",
+   "lang": "tr",
+   "meaning": "to instill",
+   "tr": "Çocuklara küçük yaştan doğa sevgisini aşılamak çok önemlidir.",
+   "en": "It is very important to instill a love of nature in children from a young age.",
+   "level": "B2"
+  },
+  {
+   "word": "pekiştirmek",
+   "lang": "tr",
+   "meaning": "to reinforce",
+   "tr": "Pratik yapmak, kursta öğrenilen bilgileri pekiştirmek için en iyi yoldur.",
+   "en": "Practicing is the best way to reinforce the knowledge learned in the course.",
+   "level": "B2"
+  },
+  {
+   "word": "yozlaşmak",
+   "lang": "tr",
+   "meaning": "to degenerate",
+   "tr": "Geleneklerin yozlaşması toplumun temel bağlarını yavaş yavaş zayıflatır.",
+   "en": "The degeneration of traditions slowly weakens the foundational bonds of society.",
+   "level": "C2"
+  },
+  {
+   "word": "hasıraltı etmek",
+   "lang": "tr",
+   "meaning": "to sweep under the rug",
+   "tr": "Şirket yönetimi yapılan hatayı hasıraltı etmek yerine dürüstçe açıkladı.",
+   "en": "The company management honestly announced the mistake instead of sweeping it under the rug.",
+   "level": "C1"
+  },
+  {
+   "word": "kınamak",
+   "lang": "tr",
+   "meaning": "to condemn",
+   "tr": "Uluslararası örgütler, sivillere yönelik saldırıyı sert bir dille kınadı.",
+   "en": "International organizations strongly condemned the attack on civilians.",
+   "level": "C1"
+  },
+  {
+   "word": "yadsımak",
+   "lang": "tr",
+   "meaning": "to deny",
+   "tr": "Elde edilen bu büyük başarıda onun da emeği olduğunu kimse yadsıyamaz.",
+   "en": "No one can deny that she also contributed to this great success achieved.",
+   "level": "C2"
+  },
+  {
+   "word": "kanıksamak",
+   "lang": "tr",
+   "meaning": "to become desensitized to",
+   "tr": "Maalesef şehir halkı her gün yaşanan trafik çilesini artık kanıksadı.",
+   "en": "Unfortunately, the city residents have now become desensitized to the daily traffic ordeal.",
+   "level": "C2"
+  },
+  {
+   "word": "kapsamlı",
+   "lang": "tr",
+   "meaning": "comprehensive",
+   "tr": "Uzmanlar bölgedeki çevre kirliliği üzerine çok kapsamlı bir rapor hazırladı.",
+   "en": "Experts prepared a very comprehensive report on environmental pollution in the region.",
+   "level": "B2"
+  },
+  {
+   "word": "olağanüstü",
+   "lang": "tr",
+   "meaning": "extraordinary",
+   "tr": "Genç yetenek, piyanoda sergilediği olağanüstü performansla herkesi büyüledi.",
+   "en": "The young talent mesmerized everyone with the extraordinary performance he displayed on the piano.",
+   "level": "B2"
+  },
+  {
+   "word": "çetrefilli",
+   "lang": "tr",
+   "meaning": "complicated",
+   "tr": "Bu çetrefilli hukuki süreci ancak deneyimli bir avukat çözebilir.",
+   "en": "Only an experienced lawyer can resolve this complicated legal process.",
+   "level": "C1"
+  },
+  {
+   "word": "elzem",
+   "lang": "tr",
+   "meaning": "essential",
+   "tr": "Başarılı bir ekip çalışması için sağlıklı ve açık iletişim elzemdir.",
+   "en": "Healthy and open communication is essential for successful teamwork.",
+   "level": "C1"
+  },
+  {
+   "word": "mütevazı",
+   "lang": "tr",
+   "meaning": "modest, humble",
+   "tr": "Dünyaca ünlü bir bilim insanı olmasına rağmen son derece mütevazı biri.",
+   "en": "Despite being a world-famous scientist, he is an extremely modest person.",
+   "level": "B2"
+  },
+  {
+   "word": "şeffaf",
+   "lang": "tr",
+   "meaning": "transparent",
+   "tr": "Yönetim kurulu, işe alım sürecinde şeffaf davranacaklarına söz verdi.",
+   "en": "The board of directors promised they would act transparently in the hiring process.",
+   "level": "B2"
+  },
+  {
+   "word": "inevitable",
+   "lang": "en",
+   "meaning": "kaçınılmaz",
+   "tr": "Teknolojideki bu hızlı değişim, iş dünyası için kaçınılmaz bir sonuçtu.",
+   "en": "This rapid change in technology was an inevitable outcome for the business world.",
+   "level": "C1"
+  },
+  {
+   "word": "profound",
+   "lang": "en",
+   "meaning": "derin, çok etkili",
+   "tr": "Yazarın sözleri, okuyucuların üzerinde derin bir etki bıraktı.",
+   "en": "The author's words left a profound impact on the readers.",
+   "level": "C1"
+  },
+  {
+   "word": "feasible",
+   "lang": "en",
+   "meaning": "uygulanabilir",
+   "tr": "Sunulan bu bütçe planı mevcut koşullarda pek uygulanabilir görünmüyor.",
+   "en": "This proposed budget plan doesn't seem very feasible under the current conditions.",
+   "level": "C1"
+  },
+  {
+   "word": "versatile",
+   "lang": "en",
+   "meaning": "çok yönlü",
+   "tr": "Akıllı telefonlar, günlük işlerimizi kolaylaştıran çok yönlü cihazlardır.",
+   "en": "Smartphones are versatile devices that simplify our daily tasks.",
+   "level": "B2"
+  },
+  {
+   "word": "volatile",
+   "lang": "en",
+   "meaning": "istikrarsız, dalgalı",
+   "tr": "Borsa, küresel siyasi gerilimler nedeniyle son derece istikrarsız durumda.",
+   "en": "The stock market has been highly volatile due to global political tensions.",
+   "level": "C1"
+  },
+  {
+   "word": "lucrative",
+   "lang": "en",
+   "meaning": "kârlı, kazançlı",
+   "tr": "Gayrimenkul sektöründe kârlı bir iş kurmak için öğretmenliği bıraktı.",
+   "en": "He quit his teaching job to start a lucrative business in real estate.",
+   "level": "C1"
+  },
+  {
+   "word": "ubiquitous",
+   "lang": "en",
+   "meaning": "her yerde bulunan",
+   "tr": "Kahve dükkanları bu şehrin hemen her mahallesinde yaygındır.",
+   "en": "Coffee shops are ubiquitous in almost every neighborhood of this city.",
+   "level": "C2"
+  },
+  {
+   "word": "meticulous",
+   "lang": "en",
+   "meaning": "titiz",
+   "tr": "Muhasebeci, finansal detaylara gösterdiği titiz özenle tanınır.",
+   "en": "The accountant is known for her meticulous attention to financial details.",
+   "level": "C1"
+  },
+  {
+   "word": "resilient",
+   "lang": "en",
+   "meaning": "dirençli, esnek",
+   "tr": "Yerel ekonomi dirençli olduğunu kanıtlayıp zorlu krizden sonra çabucak toparlandı.",
+   "en": "The local economy proved resilient, recovering quickly after the harsh crisis.",
+   "level": "C1"
+  },
+  {
+   "word": "vulnerable",
+   "lang": "en",
+   "meaning": "savunmasız, hassas",
+   "tr": "Eski ahşap binalar kurak yazlarda ateş almaya karşı son derece savunmasızdır.",
+   "en": "Old wooden buildings are highly vulnerable to catching fire during dry summers.",
+   "level": "B2"
+  },
+  {
+   "word": "ambiguous",
+   "lang": "en",
+   "meaning": "muğlak, belirsiz",
+   "tr": "Politikacı, kimseyi gücendirmemek için muğlak bir cevap verdi.",
+   "en": "The politician gave an ambiguous answer to avoid offending anyone.",
+   "level": "C1"
+  },
+  {
+   "word": "superficial",
+   "lang": "en",
+   "meaning": "yüzeysel",
+   "tr": "Konu hakkındaki bilgisi gerçek bir derinlikten yoksun, oldukça yüzeyseldi.",
+   "en": "His knowledge of the subject was quite superficial, lacking any real depth.",
+   "level": "C1"
+  },
+  {
+   "word": "coherent",
+   "lang": "en",
+   "meaning": "tutarlı, mantıklı",
+   "tr": "Tartışmacı jüriye son derece tutarlı ve mantıklı bir argüman sundu.",
+   "en": "The debater presented a highly coherent and logical argument to the jury.",
+   "level": "C1"
+  },
+  {
+   "word": "obsolete",
+   "lang": "en",
+   "meaning": "modası geçmiş",
+   "tr": "Kişisel bilgisayarlar piyasaya sürüldüğünde daktiloların modası geçti.",
+   "en": "Typewriters became obsolete when personal computers were introduced.",
+   "level": "C1"
+  },
+  {
+   "word": "plausible",
+   "lang": "en",
+   "meaning": "makul, inandırıcı",
+   "tr": "Ödevini geç teslim etmek için makul bir mazeret uydurdu.",
+   "en": "She came up with a plausible excuse for handing in her assignment late.",
+   "level": "C1"
+  },
+  {
+   "word": "scrutinize",
+   "lang": "en",
+   "meaning": "dikkatle incelemek",
+   "tr": "Müfettiş, inşaatı onaylamadan önce her bir belgeyi dikkatle inceledi.",
+   "en": "The inspector scrutinized every document before approving the construction.",
+   "level": "C2"
+  },
+  {
+   "word": "comprehend",
+   "lang": "en",
+   "meaning": "idrak etmek, anlamak",
+   "tr": "Evrenin devasa ölçeğini idrak etmek zordur.",
+   "en": "It's hard to comprehend the vast scale of the universe.",
+   "level": "C1"
+  },
+  {
+   "word": "deter",
+   "lang": "en",
+   "meaning": "caydırmak",
+   "tr": "Güvenlik kameraları, hırsızları evlere zorla girmekten caydırmayı amaçlar.",
+   "en": "Security cameras are installed to deter thieves from breaking into houses.",
+   "level": "C1"
+  },
+  {
+   "word": "reluctant",
+   "lang": "en",
+   "meaning": "isteksiz, gönülsüz",
+   "tr": "Tüm ekibin önünde hatasını kabul etme konusunda isteksizdi.",
+   "en": "He was reluctant to admit his mistake in front of the entire team.",
+   "level": "B2"
+  },
+  {
+   "word": "eager",
+   "lang": "en",
+   "meaning": "istekli, hevesli",
+   "tr": "Küçük çocuklar Noel sabahında hediyelerini açmak için çok hevesliydi.",
+   "en": "The young children were eager to open their gifts on Christmas morning.",
+   "level": "B2"
+  },
+  {
+   "word": "anticipate",
+   "lang": "en",
+   "meaning": "öngörmek, beklemek",
+   "tr": "Hafta sonuna kadar sıcaklıklarda önemli bir düşüş öngörüyoruz.",
+   "en": "We anticipate a significant drop in temperatures by the end of the week.",
+   "level": "C1"
+  },
+  {
+   "word": "evaluate",
+   "lang": "en",
+   "meaning": "değerlendirmek",
+   "tr": "Yöneticiler, maaş zamlarını belirlemek için çalışan performansını yıllık olarak değerlendirir.",
+   "en": "Managers evaluate employee performance annually to determine salary raises.",
+   "level": "B2"
+  },
+  {
+   "word": "isolate",
+   "lang": "en",
+   "meaning": "soyutlamak, tecrit etmek",
+   "tr": "Araştırmacılar, reaksiyondan sorumlu kimyasal bileşiği izole etmeye çalıştılar.",
+   "en": "The researchers tried to isolate the chemical compound responsible for the reaction.",
+   "level": "C1"
+  },
+  {
+   "word": "concede",
+   "lang": "en",
+   "meaning": "kabul etmek",
+   "tr": "Çürütülemez kanıtı gördükten sonra sanık suçunu kabul etti.",
+   "en": "After seeing the irrefutable evidence, the defendant conceded his guilt.",
+   "level": "C2"
+  },
+  {
+   "word": "mitigate",
+   "lang": "en",
+   "meaning": "hafifletmek",
+   "tr": "Yeni yazılım güncellemesi güvenlik risklerini hafifletmek için tasarlanmıştır.",
+   "en": "The new software update is designed to mitigate security risks.",
+   "level": "C1"
   }
  ],
  "phrases": [
@@ -48364,6 +49129,2943 @@
    "ex": "The old stone bridge is as solid as a rock.",
    "ex_tr": "Eski taş köprü kaya gibi sağlam.",
    "cat": "similes"
+  },
+  {
+   "phrase": "come across",
+   "lang": "en",
+   "meaning": "tesadüfen rastlamak",
+   "ex": "I came across an incredibly rare stamp in the old antique shop.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "come across",
+   "lang": "en",
+   "meaning": "izlenimi vermek, gibi görünmek",
+   "ex": "He comes across as a bit arrogant, but he's actually very kind.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "get on",
+   "lang": "en",
+   "meaning": "binmek (taşıta)",
+   "ex": "We need to get on the train quickly before it leaves the station.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "get on",
+   "lang": "en",
+   "meaning": "iyi geçinmek",
+   "ex": "She has always got on remarkably well with her younger brother.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "get on",
+   "lang": "en",
+   "meaning": "kaldığı yerden devam etmek",
+   "ex": "I must get on with my project if I want to finish it by tomorrow.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "get on",
+   "lang": "en",
+   "meaning": "yaşlanmak",
+   "ex": "He is getting on in years and finds it hard to climb stairs.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "give away",
+   "lang": "en",
+   "meaning": "bedava dağıtmak, hediye etmek",
+   "ex": "The supermarket is giving away free samples of their new cheese.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "give away",
+   "lang": "en",
+   "meaning": "sırrı/sonucu ifşa etmek, ele vermek",
+   "ex": "Don't give away the ending of the movie; I haven't seen it yet!",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "hold out",
+   "lang": "en",
+   "meaning": "direnmek, dayanmak",
+   "ex": "The defending troops held out for weeks despite the heavy siege.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "hold out",
+   "lang": "en",
+   "meaning": "uzatmak (el vb.)",
+   "ex": "She held out her hand to greet the new manager warmly.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "put down",
+   "lang": "en",
+   "meaning": "yere bırakmak, indirmek",
+   "ex": "He put down his heavy backpack and took a deep breath.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "put down",
+   "lang": "en",
+   "meaning": "aşağılamak, küçük düşürmek",
+   "ex": "It's cruel to put people down just because they lack experience.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "put down",
+   "lang": "en",
+   "meaning": "uyutmak (hayvanı)",
+   "ex": "The vet had to put the sick dog down to end its suffering.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "put down",
+   "lang": "en",
+   "meaning": "kaydetmek, listeye yazmak",
+   "ex": "Please put my name down for the upcoming charity marathon.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "take out",
+   "lang": "en",
+   "meaning": "çıkarmak",
+   "ex": "She took out her notebook and started writing down ideas.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "take out",
+   "lang": "en",
+   "meaning": "yemeğe/dışarı çıkarmak",
+   "ex": "He took his family out for a fancy dinner to celebrate his promotion.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "take out",
+   "lang": "en",
+   "meaning": "kredi çekmek",
+   "ex": "I need to take out a loan to cover the renovation costs.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "turn up",
+   "lang": "en",
+   "meaning": "ortaya çıkmak, bulunmak",
+   "ex": "The missing document finally turned up at the bottom of the drawer.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "turn up",
+   "lang": "en",
+   "meaning": "sesini açmak, artırmak",
+   "ex": "Could you turn up the volume? I can barely hear the news.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "turn up",
+   "lang": "en",
+   "meaning": "gelmek, katılmak",
+   "ex": "We invited thirty people, but only half of them turned up.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "aba altından sopa göstermek",
+   "lang": "tr",
+   "meaning": "to make a veiled threat",
+   "ex": "Toplantıda gülümseyerek konuşsa da aba altından sopa gösteriyordu.",
+   "ex_tr": "Although he spoke with a smile in the meeting, he was making a veiled threat."
+  },
+  {
+   "phrase": "bardağı taşıran son damla",
+   "lang": "tr",
+   "meaning": "the straw that broke the camel's back",
+   "ex": "Onun bu son saygısızlığı, benim için bardağı taşıran son damla oldu.",
+   "ex_tr": "His final act of disrespect was the straw that broke the camel's back for me."
+  },
+  {
+   "phrase": "havanda su dövmek",
+   "lang": "tr",
+   "meaning": "to beat the air, to waste time on a futile task",
+   "ex": "Çözüm üretmeden saatlerce tartışmak, havanda su dövmekten farksızdır.",
+   "ex_tr": "Arguing for hours without producing a solution is no different than beating the air."
+  },
+  {
+   "phrase": "form a habit",
+   "lang": "en",
+   "meaning": "alışkanlık edinmek",
+   "ex": "She formed a habit of reading before bed.",
+   "ex_tr": "Yatmadan önce kitap okuma alışkanlığı edindi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "follow a routine",
+   "lang": "en",
+   "meaning": "rutine uymak",
+   "ex": "I follow a routine on weekday mornings.",
+   "ex_tr": "Hafta içi sabahları bir rutine uyarım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "set an alarm",
+   "lang": "en",
+   "meaning": "alarm kurmak",
+   "ex": "I set an alarm for six thirty.",
+   "ex_tr": "Altı buçuğa alarm kurdum.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "miss a bus",
+   "lang": "en",
+   "meaning": "otobüsü kaçırmak",
+   "ex": "We missed the last bus home.",
+   "ex_tr": "Eve giden son otobüsü kaçırdık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "board a flight",
+   "lang": "en",
+   "meaning": "uçağa binmek",
+   "ex": "Passengers boarded the flight through gate twelve.",
+   "ex_tr": "Yolcular on ikinci kapıdan uçağa bindi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "miss a connection",
+   "lang": "en",
+   "meaning": "aktarmayı kaçırmak",
+   "ex": "Our first flight was delayed, so we missed our connection.",
+   "ex_tr": "İlk uçuşumuz geciktiği için aktarmayı kaçırdık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "clear customs",
+   "lang": "en",
+   "meaning": "gümrükten geçmek",
+   "ex": "We cleared customs without any problems.",
+   "ex_tr": "Sorunsuz şekilde gümrükten geçtik.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "check baggage",
+   "lang": "en",
+   "meaning": "bagaj teslim etmek",
+   "ex": "You can check baggage at the counter.",
+   "ex_tr": "Bagajınızı kontuarda teslim edebilirsiniz.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pack a suitcase",
+   "lang": "en",
+   "meaning": "valiz hazırlamak",
+   "ex": "I packed my suitcase the night before departure.",
+   "ex_tr": "Yola çıkmadan önceki gece valizimi hazırladım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "book accommodation",
+   "lang": "en",
+   "meaning": "konaklama ayarlamak",
+   "ex": "We booked accommodation near the station.",
+   "ex_tr": "İstasyon yakınında konaklama ayarladık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "extend a stay",
+   "lang": "en",
+   "meaning": "konaklamayı uzatmak",
+   "ex": "They extended their stay by two nights.",
+   "ex_tr": "Konaklamalarını iki gece uzattılar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "explore a neighborhood",
+   "lang": "en",
+   "meaning": "mahalleyi keşfetmek",
+   "ex": "We explored the neighborhood on foot.",
+   "ex_tr": "Mahalleyi yürüyerek keşfettik.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "follow directions",
+   "lang": "en",
+   "meaning": "yol tarifini takip etmek",
+   "ex": "Follow the directions on the map.",
+   "ex_tr": "Haritadaki yol tarifini takip et.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lose one's way",
+   "lang": "en",
+   "meaning": "yolunu kaybetmek",
+   "ex": "We lost our way in the old town.",
+   "ex_tr": "Eski şehirde yolumuzu kaybettik.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "avoid traffic",
+   "lang": "en",
+   "meaning": "trafikten kaçınmak",
+   "ex": "We left early to avoid traffic.",
+   "ex_tr": "Trafikten kaçınmak için erken çıktık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "face delays",
+   "lang": "en",
+   "meaning": "gecikmelerle karşılaşmak",
+   "ex": "Commuters faced delays after the storm.",
+   "ex_tr": "Yolcular fırtınadan sonra gecikmelerle karşılaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cancel a booking",
+   "lang": "en",
+   "meaning": "rezervasyonu iptal etmek",
+   "ex": "We cancelled the booking because our plans changed.",
+   "ex_tr": "Planlarımız değiştiği için rezervasyonu iptal ettik.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "request a window seat",
+   "lang": "en",
+   "meaning": "cam kenarı koltuk istemek",
+   "ex": "She requested a window seat for the long flight.",
+   "ex_tr": "Uzun uçuş için cam kenarı koltuk istedi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "order a meal",
+   "lang": "en",
+   "meaning": "yemek sipariş etmek",
+   "ex": "We ordered a meal after arriving at the hotel.",
+   "ex_tr": "Otele vardıktan sonra yemek sipariş ettik.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "prepare a meal",
+   "lang": "en",
+   "meaning": "yemek hazırlamak",
+   "ex": "My father prepared a meal for the guests.",
+   "ex_tr": "Babam misafirler için yemek hazırladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "skip breakfast",
+   "lang": "en",
+   "meaning": "kahvaltıyı atlamak",
+   "ex": "I skipped breakfast because I woke up late.",
+   "ex_tr": "Geç uyandığım için kahvaltıyı atladım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "have a snack",
+   "lang": "en",
+   "meaning": "atıştırmak",
+   "ex": "Let's have a snack before the movie.",
+   "ex_tr": "Filmden önce bir şeyler atıştıralım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "wash the dishes",
+   "lang": "en",
+   "meaning": "bulaşıkları yıkamak",
+   "ex": "I washed the dishes while she dried them.",
+   "ex_tr": "O bulaşıkları kurularken ben yıkadım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fold laundry",
+   "lang": "en",
+   "meaning": "çamaşır katlamak",
+   "ex": "He folded the laundry after dinner.",
+   "ex_tr": "Akşam yemeğinden sonra çamaşırları katladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make the bed",
+   "lang": "en",
+   "meaning": "yatağı toplamak",
+   "ex": "The children make their beds every morning.",
+   "ex_tr": "Çocuklar her sabah yataklarını toplar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "run errands",
+   "lang": "en",
+   "meaning": "günlük işleri halletmek",
+   "ex": "I ran errands during my lunch break.",
+   "ex_tr": "Öğle aramda günlük işlerimi hallettim.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pay a bill",
+   "lang": "en",
+   "meaning": "fatura ödemek",
+   "ex": "She paid the electricity bill online.",
+   "ex_tr": "Elektrik faturasını internetten ödedi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "stick to a budget",
+   "lang": "en",
+   "meaning": "bütçeye bağlı kalmak",
+   "ex": "We stick to a budget when shopping for groceries.",
+   "ex_tr": "Market alışverişinde bütçemize bağlı kalırız.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "save money",
+   "lang": "en",
+   "meaning": "para biriktirmek",
+   "ex": "They save money for their children's education.",
+   "ex_tr": "Çocuklarının eğitimi için para biriktiriyorlar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "track spending",
+   "lang": "en",
+   "meaning": "harcamaları takip etmek",
+   "ex": "The app helps me track spending each month.",
+   "ex_tr": "Uygulama her ay harcamalarımı takip etmeme yardımcı oluyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "build savings",
+   "lang": "en",
+   "meaning": "birikim oluşturmak",
+   "ex": "She built savings by setting aside a little each week.",
+   "ex_tr": "Her hafta biraz para ayırarak birikim oluşturdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reduce debt",
+   "lang": "en",
+   "meaning": "borcu azaltmak",
+   "ex": "They reduced their debt over three years.",
+   "ex_tr": "Üç yıl içinde borçlarını azalttılar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "apply for a loan",
+   "lang": "en",
+   "meaning": "krediye başvurmak",
+   "ex": "He applied for a loan to renovate the house.",
+   "ex_tr": "Evi yenilemek için krediye başvurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "repay a loan",
+   "lang": "en",
+   "meaning": "krediyi geri ödemek",
+   "ex": "They repaid the loan ahead of schedule.",
+   "ex_tr": "Krediyi planlanandan önce geri ödediler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "assess risk",
+   "lang": "en",
+   "meaning": "riski değerlendirmek",
+   "ex": "Investors must assess risk before buying shares.",
+   "ex_tr": "Yatırımcılar hisse almadan önce riski değerlendirmeli.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "maintain cash flow",
+   "lang": "en",
+   "meaning": "nakit akışını sürdürmek",
+   "ex": "The shop struggled to maintain cash flow in winter.",
+   "ex_tr": "Dükkân kışın nakit akışını sürdürmekte zorlandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "boost productivity",
+   "lang": "en",
+   "meaning": "verimliliği artırmak",
+   "ex": "Shorter meetings helped boost productivity.",
+   "ex_tr": "Daha kısa toplantılar verimliliği artırmaya yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "improve efficiency",
+   "lang": "en",
+   "meaning": "verimliliği iyileştirmek",
+   "ex": "The new process improved efficiency in the workshop.",
+   "ex_tr": "Yeni süreç atölyedeki verimliliği iyileştirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "streamline operations",
+   "lang": "en",
+   "meaning": "işleyişi sadeleştirmek",
+   "ex": "The company streamlined operations across its branches.",
+   "ex_tr": "Şirket şubelerindeki işleyişi sadeleştirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "exceed expectations",
+   "lang": "en",
+   "meaning": "beklentileri aşmak",
+   "ex": "The new employee exceeded expectations in her first month.",
+   "ex_tr": "Yeni çalışan ilk ayında beklentileri aştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "address concerns",
+   "lang": "en",
+   "meaning": "endişeleri ele almak",
+   "ex": "The director addressed concerns about the schedule.",
+   "ex_tr": "Müdür takvimle ilgili endişeleri ele aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "offer a solution",
+   "lang": "en",
+   "meaning": "çözüm önermek",
+   "ex": "The technician offered a solution to the recurring problem.",
+   "ex_tr": "Teknisyen tekrarlayan soruna bir çözüm önerdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "implement a solution",
+   "lang": "en",
+   "meaning": "çözümü uygulamak",
+   "ex": "The team implemented a solution over the weekend.",
+   "ex_tr": "Ekip hafta sonu bir çözümü uygulamaya koydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "coordinate efforts",
+   "lang": "en",
+   "meaning": "çabaları koordine etmek",
+   "ex": "The departments coordinated efforts during the outage.",
+   "ex_tr": "Bölümler kesinti sırasında çalışmalarını koordine etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "share responsibility",
+   "lang": "en",
+   "meaning": "sorumluluğu paylaşmak",
+   "ex": "Both teams share responsibility for the project.",
+   "ex_tr": "İki ekip de projenin sorumluluğunu paylaşıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish priorities",
+   "lang": "en",
+   "meaning": "öncelikleri belirlemek",
+   "ex": "We established priorities before assigning tasks.",
+   "ex_tr": "Görevleri dağıtmadan önce öncelikleri belirledik.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "adjust a schedule",
+   "lang": "en",
+   "meaning": "programı ayarlamak",
+   "ex": "We adjusted the schedule to accommodate the inspection.",
+   "ex_tr": "Denetimi programa sığdırmak için takvimi ayarladık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "track progress",
+   "lang": "en",
+   "meaning": "ilerlemeyi izlemek",
+   "ex": "The dashboard tracks progress on each assignment.",
+   "ex_tr": "Gösterge paneli her görevin ilerlemesini izliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "report a problem",
+   "lang": "en",
+   "meaning": "sorun bildirmek",
+   "ex": "Please report a problem as soon as it occurs.",
+   "ex_tr": "Bir sorun ortaya çıkar çıkmaz lütfen bildirin.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "investigate a failure",
+   "lang": "en",
+   "meaning": "arızayı araştırmak",
+   "ex": "Engineers investigated the failure of the cooling unit.",
+   "ex_tr": "Mühendisler soğutma ünitesindeki arızayı araştırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "trace a fault",
+   "lang": "en",
+   "meaning": "arızanın kaynağını bulmak",
+   "ex": "The electrician traced the fault to a damaged cable.",
+   "ex_tr": "Elektrikçi arızanın kaynağını hasarlı bir kabloya kadar izledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "isolate a circuit",
+   "lang": "en",
+   "meaning": "devreyi izole etmek",
+   "ex": "Isolate the circuit before opening the panel.",
+   "ex_tr": "Panoyu açmadan önce devreyi izole edin.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "verify a connection",
+   "lang": "en",
+   "meaning": "bağlantıyı doğrulamak",
+   "ex": "We verified the connection before restoring power.",
+   "ex_tr": "Enerjiyi geri vermeden önce bağlantıyı doğruladık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "measure voltage",
+   "lang": "en",
+   "meaning": "gerilim ölçmek",
+   "ex": "The technician measured voltage at the terminals.",
+   "ex_tr": "Teknisyen terminallerde gerilim ölçtü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "record readings",
+   "lang": "en",
+   "meaning": "ölçüm değerlerini kaydetmek",
+   "ex": "Record the readings in the maintenance log.",
+   "ex_tr": "Ölçüm değerlerini bakım kayıtlarına yazın.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "perform an inspection",
+   "lang": "en",
+   "meaning": "denetim yapmak",
+   "ex": "The team performed an inspection after the repair.",
+   "ex_tr": "Ekip onarımdan sonra denetim yaptı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "schedule maintenance",
+   "lang": "en",
+   "meaning": "bakım planlamak",
+   "ex": "We scheduled maintenance for next Tuesday.",
+   "ex_tr": "Bakımı gelecek salıya planladık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "replace a component",
+   "lang": "en",
+   "meaning": "bileşeni değiştirmek",
+   "ex": "They replaced a component inside the controller.",
+   "ex_tr": "Kontrol cihazının içindeki bir bileşeni değiştirdiler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restore service",
+   "lang": "en",
+   "meaning": "hizmeti yeniden sağlamak",
+   "ex": "The utility restored service after the storm.",
+   "ex_tr": "Elektrik şirketi fırtınadan sonra hizmeti yeniden sağladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "minimize downtime",
+   "lang": "en",
+   "meaning": "kesinti süresini azaltmak",
+   "ex": "We keep spare parts to minimize downtime.",
+   "ex_tr": "Kesinti süresini azaltmak için yedek parça bulunduruyoruz.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "monitor temperature",
+   "lang": "en",
+   "meaning": "sıcaklığı izlemek",
+   "ex": "Sensors monitor temperature inside the server room.",
+   "ex_tr": "Sensörler sunucu odasındaki sıcaklığı izliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "configure a device",
+   "lang": "en",
+   "meaning": "cihazı yapılandırmak",
+   "ex": "I configured the device to connect to our network.",
+   "ex_tr": "Cihazı ağımıza bağlanacak şekilde yapılandırdım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "install an update",
+   "lang": "en",
+   "meaning": "güncelleme yüklemek",
+   "ex": "Install an update before restarting the computer.",
+   "ex_tr": "Bilgisayarı yeniden başlatmadan önce güncellemeyi yükleyin.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "patch a vulnerability",
+   "lang": "en",
+   "meaning": "güvenlik açığını yamamak",
+   "ex": "The developers patched a vulnerability in the login system.",
+   "ex_tr": "Geliştiriciler giriş sistemindeki bir güvenlik açığını yamadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "encrypt data",
+   "lang": "en",
+   "meaning": "verileri şifrelemek",
+   "ex": "The application encrypts data before transmission.",
+   "ex_tr": "Uygulama verileri iletmeden önce şifreliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restrict access",
+   "lang": "en",
+   "meaning": "erişimi kısıtlamak",
+   "ex": "The administrator restricted access to sensitive files.",
+   "ex_tr": "Yönetici hassas dosyalara erişimi kısıtladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grant permission",
+   "lang": "en",
+   "meaning": "izin vermek",
+   "ex": "Only managers can grant permission to edit records.",
+   "ex_tr": "Yalnızca yöneticiler kayıtları düzenleme izni verebilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "revoke access",
+   "lang": "en",
+   "meaning": "erişim yetkisini kaldırmak",
+   "ex": "The administrator revoked access after the contract ended.",
+   "ex_tr": "Yönetici sözleşme bitince erişim yetkisini kaldırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sync records",
+   "lang": "en",
+   "meaning": "kayıtları eşitlemek",
+   "ex": "The app syncs records when the connection returns.",
+   "ex_tr": "Bağlantı geri geldiğinde uygulama kayıtları eşitler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "resolve a conflict",
+   "lang": "en",
+   "meaning": "çakışmayı çözmek",
+   "ex": "The system resolved a conflict between two offline edits.",
+   "ex_tr": "Sistem iki çevrimdışı düzenleme arasındaki çakışmayı çözdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "validate input",
+   "lang": "en",
+   "meaning": "girdiyi doğrulamak",
+   "ex": "The form validates input before saving it.",
+   "ex_tr": "Form girdiyi kaydetmeden önce doğruluyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "handle an exception",
+   "lang": "en",
+   "meaning": "istisna durumunu işlemek",
+   "ex": "The code handles an exception when the file is missing.",
+   "ex_tr": "Kod dosya eksik olduğunda oluşan istisna durumunu işliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish a connection",
+   "lang": "en",
+   "meaning": "bağlantı kurmak",
+   "ex": "The phone established a connection to the local server.",
+   "ex_tr": "Telefon yerel sunucuyla bağlantı kurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lose connectivity",
+   "lang": "en",
+   "meaning": "bağlantıyı kaybetmek",
+   "ex": "The scanner lost connectivity in the basement.",
+   "ex_tr": "Tarayıcı bodrumda bağlantıyı kaybetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restore connectivity",
+   "lang": "en",
+   "meaning": "bağlantıyı yeniden sağlamak",
+   "ex": "Restarting the router restored connectivity.",
+   "ex_tr": "Yönlendiriciyi yeniden başlatmak bağlantıyı geri getirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "protect privacy",
+   "lang": "en",
+   "meaning": "gizliliği korumak",
+   "ex": "The policy aims to protect privacy for all users.",
+   "ex_tr": "Politika bütün kullanıcıların gizliliğini korumayı amaçlıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "collect samples",
+   "lang": "en",
+   "meaning": "numune toplamak",
+   "ex": "The researchers collected samples from the river.",
+   "ex_tr": "Araştırmacılar nehirden numune topladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "analyze samples",
+   "lang": "en",
+   "meaning": "numuneleri analiz etmek",
+   "ex": "The laboratory analyzed samples for contamination.",
+   "ex_tr": "Laboratuvar numuneleri kirlilik açısından analiz etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "observe changes",
+   "lang": "en",
+   "meaning": "değişiklikleri gözlemlemek",
+   "ex": "Scientists observed changes in the ice cover.",
+   "ex_tr": "Bilim insanları buz örtüsündeki değişiklikleri gözlemledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "replicate results",
+   "lang": "en",
+   "meaning": "sonuçları tekrarlayarak doğrulamak",
+   "ex": "Other laboratories struggled to replicate the results.",
+   "ex_tr": "Diğer laboratuvarlar sonuçları tekrarlamakta zorlandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "review literature",
+   "lang": "en",
+   "meaning": "alan yazınını incelemek",
+   "ex": "The student reviewed literature on language learning.",
+   "ex_tr": "Öğrenci dil öğrenimi üzerine alan yazınını inceledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "formulate a theory",
+   "lang": "en",
+   "meaning": "kuram geliştirmek",
+   "ex": "The team formulated a theory based on the evidence.",
+   "ex_tr": "Ekip kanıtlara dayanarak bir kuram geliştirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "support a claim",
+   "lang": "en",
+   "meaning": "iddiayı desteklemek",
+   "ex": "The data does not support that claim.",
+   "ex_tr": "Veriler bu iddiayı desteklemiyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "question a finding",
+   "lang": "en",
+   "meaning": "bulguyu sorgulamak",
+   "ex": "Several experts questioned the finding.",
+   "ex_tr": "Bazı uzmanlar bulguyu sorguladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "acknowledge limitations",
+   "lang": "en",
+   "meaning": "sınırlılıkları kabul etmek",
+   "ex": "The authors acknowledged limitations in their study.",
+   "ex_tr": "Yazarlar çalışmalarındaki sınırlılıkları kabul etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish a link",
+   "lang": "en",
+   "meaning": "bağlantı ortaya koymak",
+   "ex": "The study established a link between sleep and memory.",
+   "ex_tr": "Çalışma uyku ile hafıza arasında bir bağlantı ortaya koydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "provide insight",
+   "lang": "en",
+   "meaning": "içgörü sağlamak",
+   "ex": "The interviews provide insight into student motivation.",
+   "ex_tr": "Görüşmeler öğrencilerin motivasyonuna ilişkin içgörü sağlıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "expand knowledge",
+   "lang": "en",
+   "meaning": "bilgiyi genişletmek",
+   "ex": "The course helped me expand my knowledge of history.",
+   "ex_tr": "Ders tarih bilgimi genişletmeme yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "retain information",
+   "lang": "en",
+   "meaning": "bilgiyi akılda tutmak",
+   "ex": "Regular revision helps learners retain information.",
+   "ex_tr": "Düzenli tekrar öğrencilerin bilgiyi akılda tutmasına yardımcı olur.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "develop fluency",
+   "lang": "en",
+   "meaning": "akıcılık geliştirmek",
+   "ex": "Daily conversations helped her develop fluency.",
+   "ex_tr": "Günlük konuşmalar akıcılığını geliştirmesine yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "improve pronunciation",
+   "lang": "en",
+   "meaning": "telaffuzu geliştirmek",
+   "ex": "Recording yourself can improve pronunciation.",
+   "ex_tr": "Kendini kaydetmek telaffuzunu geliştirebilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "expand vocabulary",
+   "lang": "en",
+   "meaning": "kelime dağarcığını genişletmek",
+   "ex": "Reading novels helped him expand his vocabulary.",
+   "ex_tr": "Roman okumak kelime dağarcığını genişletmesine yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grasp a concept",
+   "lang": "en",
+   "meaning": "kavramı anlamak",
+   "ex": "It took me a while to grasp the concept.",
+   "ex_tr": "Kavramı anlamam biraz zaman aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "master a skill",
+   "lang": "en",
+   "meaning": "beceride ustalaşmak",
+   "ex": "She mastered the skill through years of practice.",
+   "ex_tr": "Yıllarca pratik yaparak bu beceride ustalaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "assess understanding",
+   "lang": "en",
+   "meaning": "anlama düzeyini değerlendirmek",
+   "ex": "The teacher used questions to assess understanding.",
+   "ex_tr": "Öğretmen anlama düzeyini değerlendirmek için sorular kullandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "encourage participation",
+   "lang": "en",
+   "meaning": "katılımı teşvik etmek",
+   "ex": "The instructor encouraged participation in every lesson.",
+   "ex_tr": "Eğitmen her derste katılımı teşvik etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "provide guidance",
+   "lang": "en",
+   "meaning": "rehberlik sağlamak",
+   "ex": "The tutor provided guidance on the final project.",
+   "ex_tr": "Özel öğretmen bitirme projesinde rehberlik sağladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seek advice",
+   "lang": "en",
+   "meaning": "tavsiye istemek",
+   "ex": "I sought advice from a more experienced colleague.",
+   "ex_tr": "Daha deneyimli bir iş arkadaşımdan tavsiye istedim.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "show respect",
+   "lang": "en",
+   "meaning": "saygı göstermek",
+   "ex": "The children showed respect for their grandparents.",
+   "ex_tr": "Çocuklar büyükanne ve büyükbabalarına saygı gösterdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "build trust",
+   "lang": "en",
+   "meaning": "güven oluşturmak",
+   "ex": "Clear communication helps build trust.",
+   "ex_tr": "Açık iletişim güven oluşturmaya yardımcı olur.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "maintain contact",
+   "lang": "en",
+   "meaning": "iletişimi sürdürmek",
+   "ex": "We maintained contact after graduation.",
+   "ex_tr": "Mezuniyetten sonra iletişimi sürdürdük.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "resolve differences",
+   "lang": "en",
+   "meaning": "anlaşmazlıkları gidermek",
+   "ex": "The neighbors resolved their differences peacefully.",
+   "ex_tr": "Komşular anlaşmazlıklarını barışçıl biçimde giderdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make an apology",
+   "lang": "en",
+   "meaning": "özür dilemek",
+   "ex": "He made an apology for his rude remark.",
+   "ex_tr": "Kaba sözünden dolayı özür diledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "accept an apology",
+   "lang": "en",
+   "meaning": "özrü kabul etmek",
+   "ex": "I accepted her apology and moved on.",
+   "ex_tr": "Özrünü kabul edip yoluma devam ettim.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "share an experience",
+   "lang": "en",
+   "meaning": "deneyim paylaşmak",
+   "ex": "The volunteers shared their experiences at the meeting.",
+   "ex_tr": "Gönüllüler toplantıda deneyimlerini paylaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "overcome an obstacle",
+   "lang": "en",
+   "meaning": "engeli aşmak",
+   "ex": "They overcame an obstacle by working together.",
+   "ex_tr": "Birlikte çalışarak bir engeli aştılar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seize an opportunity",
+   "lang": "en",
+   "meaning": "fırsatı değerlendirmek",
+   "ex": "She seized an opportunity to study overseas.",
+   "ex_tr": "Yurt dışında okuma fırsatını değerlendirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "miss an opportunity",
+   "lang": "en",
+   "meaning": "fırsatı kaçırmak",
+   "ex": "I missed an opportunity to meet the author.",
+   "ex_tr": "Yazarla tanışma fırsatını kaçırdım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reduce emissions",
+   "lang": "en",
+   "meaning": "emisyonları azaltmak",
+   "ex": "The city plans to reduce emissions from buses.",
+   "ex_tr": "Şehir otobüslerden kaynaklanan emisyonları azaltmayı planlıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "conserve energy",
+   "lang": "en",
+   "meaning": "enerji tasarrufu yapmak",
+   "ex": "Smart controls help buildings conserve energy.",
+   "ex_tr": "Akıllı kontroller binaların enerji tasarrufu yapmasına yardımcı oluyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "preserve habitats",
+   "lang": "en",
+   "meaning": "yaşam alanlarını korumak",
+   "ex": "The park was created to preserve habitats for rare birds.",
+   "ex_tr": "Park nadir kuşların yaşam alanlarını korumak için oluşturuldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restore wetlands",
+   "lang": "en",
+   "meaning": "sulak alanları eski hâline getirmek",
+   "ex": "Volunteers helped restore wetlands near the coast.",
+   "ex_tr": "Gönüllüler kıyı yakınındaki sulak alanların iyileştirilmesine yardım etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "protect biodiversity",
+   "lang": "en",
+   "meaning": "biyolojik çeşitliliği korumak",
+   "ex": "Local groups work to protect biodiversity.",
+   "ex_tr": "Yerel gruplar biyolojik çeşitliliği korumak için çalışıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "monitor air quality",
+   "lang": "en",
+   "meaning": "hava kalitesini izlemek",
+   "ex": "New sensors monitor air quality across the city.",
+   "ex_tr": "Yeni sensörler şehir genelinde hava kalitesini izliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "manage waste",
+   "lang": "en",
+   "meaning": "atıkları yönetmek",
+   "ex": "The hospital has strict procedures to manage waste.",
+   "ex_tr": "Hastanenin atıkları yönetmek için sıkı prosedürleri var.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "recycle materials",
+   "lang": "en",
+   "meaning": "malzemeleri geri dönüştürmek",
+   "ex": "The factory recycles materials from old machines.",
+   "ex_tr": "Fabrika eski makinelerden çıkan malzemeleri geri dönüştürüyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "limit exposure",
+   "lang": "en",
+   "meaning": "maruziyeti sınırlamak",
+   "ex": "The rules limit exposure to harmful chemicals.",
+   "ex_tr": "Kurallar zararlı kimyasallara maruziyeti sınırlıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "relieve symptoms",
+   "lang": "en",
+   "meaning": "belirtileri hafifletmek",
+   "ex": "The treatment helped relieve symptoms.",
+   "ex_tr": "Tedavi belirtileri hafifletmeye yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "manage stress",
+   "lang": "en",
+   "meaning": "stresi yönetmek",
+   "ex": "She uses breathing exercises to manage stress.",
+   "ex_tr": "Stresi yönetmek için nefes egzersizleri yapıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "get sufficient sleep",
+   "lang": "en",
+   "meaning": "yeterince uyumak",
+   "ex": "Teenagers need to get sufficient sleep.",
+   "ex_tr": "Gençlerin yeterince uyuması gerekir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "maintain balance",
+   "lang": "en",
+   "meaning": "dengeyi korumak",
+   "ex": "He tries to maintain balance between work and family.",
+   "ex_tr": "İş ve aile arasında dengeyi korumaya çalışıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "recover strength",
+   "lang": "en",
+   "meaning": "gücünü yeniden kazanmak",
+   "ex": "She gradually recovered strength after the illness.",
+   "ex_tr": "Hastalıktan sonra gücünü yavaş yavaş yeniden kazandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seek treatment",
+   "lang": "en",
+   "meaning": "tedavi aramak",
+   "ex": "He sought treatment when the pain persisted.",
+   "ex_tr": "Ağrı devam edince tedavi aradı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "receive care",
+   "lang": "en",
+   "meaning": "bakım almak",
+   "ex": "Patients receive care from trained nurses.",
+   "ex_tr": "Hastalar eğitimli hemşirelerden bakım alıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "monitor symptoms",
+   "lang": "en",
+   "meaning": "belirtileri takip etmek",
+   "ex": "The doctor asked her to monitor symptoms at home.",
+   "ex_tr": "Doktor belirtileri evde takip etmesini istedi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "follow instructions",
+   "lang": "en",
+   "meaning": "talimatlara uymak",
+   "ex": "Follow the instructions printed on the package.",
+   "ex_tr": "Paketin üzerindeki talimatlara uyun.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "schedule an appointment",
+   "lang": "en",
+   "meaning": "randevu ayarlamak",
+   "ex": "I scheduled an appointment with the dentist.",
+   "ex_tr": "Diş hekiminden randevu aldım.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cancel an appointment",
+   "lang": "en",
+   "meaning": "randevuyu iptal etmek",
+   "ex": "She cancelled her appointment because of a fever.",
+   "ex_tr": "Ateşi olduğu için randevusunu iptal etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "receive a diagnosis",
+   "lang": "en",
+   "meaning": "tanı almak",
+   "ex": "He received a diagnosis after several tests.",
+   "ex_tr": "Birkaç testten sonra tanı aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "suppress an emotion",
+   "lang": "en",
+   "meaning": "duyguyu bastırmak",
+   "ex": "He suppressed his anger during the interview.",
+   "ex_tr": "Görüşme sırasında öfkesini bastırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "express frustration",
+   "lang": "en",
+   "meaning": "hayal kırıklığını dile getirmek",
+   "ex": "She expressed frustration with the repeated delays.",
+   "ex_tr": "Tekrarlanan gecikmelerden duyduğu rahatsızlığı dile getirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "experience anxiety",
+   "lang": "en",
+   "meaning": "kaygı yaşamak",
+   "ex": "Some students experience anxiety before presentations.",
+   "ex_tr": "Bazı öğrenciler sunumlardan önce kaygı yaşar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "overcome a fear",
+   "lang": "en",
+   "meaning": "korkunun üstesinden gelmek",
+   "ex": "He overcame his fear of public speaking.",
+   "ex_tr": "Topluluk önünde konuşma korkusunu yendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "build confidence",
+   "lang": "en",
+   "meaning": "özgüven geliştirmek",
+   "ex": "Regular practice helped her build confidence.",
+   "ex_tr": "Düzenli alıştırma özgüvenini geliştirmesine yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lose confidence",
+   "lang": "en",
+   "meaning": "özgüvenini kaybetmek",
+   "ex": "He lost confidence after several unsuccessful interviews.",
+   "ex_tr": "Birkaç başarısız görüşmeden sonra özgüvenini kaybetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "regain confidence",
+   "lang": "en",
+   "meaning": "özgüvenini yeniden kazanmak",
+   "ex": "The coach helped the team regain confidence.",
+   "ex_tr": "Antrenör takımın özgüvenini yeniden kazanmasına yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "change a mindset",
+   "lang": "en",
+   "meaning": "bakış açısını değiştirmek",
+   "ex": "Travel helped her change her mindset about unfamiliar cultures.",
+   "ex_tr": "Seyahat, yabancı kültürlere bakışını değiştirmesine yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "develop resilience",
+   "lang": "en",
+   "meaning": "psikolojik dayanıklılık geliştirmek",
+   "ex": "Supportive relationships can help children develop resilience.",
+   "ex_tr": "Destekleyici ilişkiler çocukların psikolojik dayanıklılık geliştirmesine yardımcı olabilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cope with uncertainty",
+   "lang": "en",
+   "meaning": "belirsizlikle başa çıkmak",
+   "ex": "She learned to cope with uncertainty during the move.",
+   "ex_tr": "Taşınma sırasında belirsizlikle başa çıkmayı öğrendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "process grief",
+   "lang": "en",
+   "meaning": "yasını yaşayıp anlamlandırmak",
+   "ex": "He needed time to process his grief.",
+   "ex_tr": "Yasını yaşayıp anlamlandırmak için zamana ihtiyacı vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "trigger a memory",
+   "lang": "en",
+   "meaning": "bir anıyı tetiklemek",
+   "ex": "The smell of bread triggered a childhood memory.",
+   "ex_tr": "Ekmek kokusu çocukluğundan bir anıyı canlandırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "evoke nostalgia",
+   "lang": "en",
+   "meaning": "nostalji uyandırmak",
+   "ex": "The old photographs evoked nostalgia.",
+   "ex_tr": "Eski fotoğraflar nostalji uyandırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shape behavior",
+   "lang": "en",
+   "meaning": "davranışı şekillendirmek",
+   "ex": "Early experiences can shape behavior later in life.",
+   "ex_tr": "Erken yaşantılar ileriki yaşlarda davranışları şekillendirebilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reinforce a belief",
+   "lang": "en",
+   "meaning": "inancı pekiştirmek",
+   "ex": "The experience reinforced her belief in teamwork.",
+   "ex_tr": "Bu deneyim ekip çalışmasına olan inancını pekiştirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "question a belief",
+   "lang": "en",
+   "meaning": "inancı sorgulamak",
+   "ex": "The documentary made him question a long-held belief.",
+   "ex_tr": "Belgesel, uzun zamandır benimsediği bir inancı sorgulamasına yol açtı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "develop self-awareness",
+   "lang": "en",
+   "meaning": "öz farkındalık geliştirmek",
+   "ex": "Keeping a journal helped her develop self-awareness.",
+   "ex_tr": "Günlük tutmak öz farkındalık geliştirmesine yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "seek reassurance",
+   "lang": "en",
+   "meaning": "güvence aramak",
+   "ex": "The child sought reassurance after the loud noise.",
+   "ex_tr": "Çocuk yüksek sesten sonra güvence aradı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "maintain motivation",
+   "lang": "en",
+   "meaning": "motivasyonu korumak",
+   "ex": "Small goals helped him maintain motivation.",
+   "ex_tr": "Küçük hedefler motivasyonunu korumasına yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "avoid confrontation",
+   "lang": "en",
+   "meaning": "yüzleşmeden kaçınmak",
+   "ex": "She avoided confrontation until everyone had calmed down.",
+   "ex_tr": "Herkes sakinleşene kadar yüzleşmekten kaçındı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "experience burnout",
+   "lang": "en",
+   "meaning": "tükenmişlik yaşamak",
+   "ex": "Several employees experienced burnout after months of overtime.",
+   "ex_tr": "Birkaç çalışan aylarca fazla mesai yaptıktan sonra tükenmişlik yaşadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "set boundaries",
+   "lang": "en",
+   "meaning": "sınır koymak",
+   "ex": "She set boundaries around her working hours.",
+   "ex_tr": "Çalışma saatleri konusunda sınırlar koydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "respect boundaries",
+   "lang": "en",
+   "meaning": "sınırlara saygı göstermek",
+   "ex": "Good friends respect each other's boundaries.",
+   "ex_tr": "İyi arkadaşlar birbirlerinin sınırlarına saygı gösterir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "develop empathy",
+   "lang": "en",
+   "meaning": "empati geliştirmek",
+   "ex": "Listening to different stories can develop empathy.",
+   "ex_tr": "Farklı hikâyeler dinlemek empatiyi geliştirebilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "show compassion",
+   "lang": "en",
+   "meaning": "şefkat göstermek",
+   "ex": "The nurse showed compassion to the frightened patient.",
+   "ex_tr": "Hemşire korkmuş hastaya şefkat gösterdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "manage expectations",
+   "lang": "en",
+   "meaning": "beklentileri yönetmek",
+   "ex": "The manager tried to manage expectations about the launch date.",
+   "ex_tr": "Yönetici lansman tarihiyle ilgili beklentileri yönetmeye çalıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restore a sense of control",
+   "lang": "en",
+   "meaning": "kontrol duygusunu yeniden kazanmak",
+   "ex": "A clear plan helped her restore a sense of control.",
+   "ex_tr": "Açık bir plan kontrol duygusunu yeniden kazanmasına yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "feel a sense of belonging",
+   "lang": "en",
+   "meaning": "aidiyet duygusu hissetmek",
+   "ex": "New members soon felt a sense of belonging.",
+   "ex_tr": "Yeni üyeler kısa sürede aidiyet duygusu hissetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "suffer a setback",
+   "lang": "en",
+   "meaning": "aksilik yaşamak",
+   "ex": "The athlete suffered a setback during recovery.",
+   "ex_tr": "Sporcu iyileşme sürecinde bir aksilik yaşadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "earn trust",
+   "lang": "en",
+   "meaning": "güven kazanmak",
+   "ex": "He earned her trust by keeping his promises.",
+   "ex_tr": "Sözlerini tutarak onun güvenini kazandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "betray trust",
+   "lang": "en",
+   "meaning": "güvene ihanet etmek",
+   "ex": "Sharing the private message betrayed her trust.",
+   "ex_tr": "Özel mesajı paylaşmak onun güvenine ihanet etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rebuild trust",
+   "lang": "en",
+   "meaning": "güveni yeniden inşa etmek",
+   "ex": "It took months to rebuild trust after the argument.",
+   "ex_tr": "Tartışmadan sonra güveni yeniden kurmak aylar sürdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make a compromise",
+   "lang": "en",
+   "meaning": "uzlaşmaya varmak",
+   "ex": "Both neighbors made a compromise over the fence.",
+   "ex_tr": "İki komşu çit konusunda uzlaşmaya vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "resolve a disagreement",
+   "lang": "en",
+   "meaning": "anlaşmazlığı çözmek",
+   "ex": "They resolved their disagreement over dinner.",
+   "ex_tr": "Akşam yemeğinde anlaşmazlıklarını çözdüler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "settle a dispute",
+   "lang": "en",
+   "meaning": "anlaşmazlığı gidermek",
+   "ex": "The mediator helped the families settle their dispute.",
+   "ex_tr": "Arabulucu ailelerin anlaşmazlığı çözmesine yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "offer an apology",
+   "lang": "en",
+   "meaning": "özür dilemek",
+   "ex": "He offered an apology for his harsh words.",
+   "ex_tr": "Sert sözleri için özür diledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hold a grudge",
+   "lang": "en",
+   "meaning": "kin tutmak",
+   "ex": "She doesn't hold a grudge over small mistakes.",
+   "ex_tr": "Küçük hatalar yüzünden kin tutmaz.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make amends",
+   "lang": "en",
+   "meaning": "hatayı telafi etmek",
+   "ex": "He tried to make amends by repairing the damage.",
+   "ex_tr": "Zararı onararak hatasını telafi etmeye çalıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "share a secret",
+   "lang": "en",
+   "meaning": "sır paylaşmak",
+   "ex": "The sisters shared a secret on the train.",
+   "ex_tr": "Kız kardeşler trende bir sır paylaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "spread a rumor",
+   "lang": "en",
+   "meaning": "söylenti yaymak",
+   "ex": "Someone spread a rumor about the new director.",
+   "ex_tr": "Birisi yeni müdür hakkında söylenti yaydı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "clear up a misunderstanding",
+   "lang": "en",
+   "meaning": "yanlış anlamayı gidermek",
+   "ex": "A short phone call cleared up the misunderstanding.",
+   "ex_tr": "Kısa bir telefon görüşmesi yanlış anlamayı giderdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "build a friendship",
+   "lang": "en",
+   "meaning": "arkadaşlık kurmak",
+   "ex": "They built a friendship while studying abroad.",
+   "ex_tr": "Yurt dışında okurken arkadaşlık kurdular.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "maintain a friendship",
+   "lang": "en",
+   "meaning": "arkadaşlığı sürdürmek",
+   "ex": "They maintained their friendship across two continents.",
+   "ex_tr": "İki kıtada yaşamalarına rağmen arkadaşlıklarını sürdürdüler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strengthen a bond",
+   "lang": "en",
+   "meaning": "bağı güçlendirmek",
+   "ex": "The trip strengthened the bond between the brothers.",
+   "ex_tr": "Gezi kardeşler arasındaki bağı güçlendirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "form a connection",
+   "lang": "en",
+   "meaning": "bağ kurmak",
+   "ex": "She formed a connection with her new colleagues.",
+   "ex_tr": "Yeni iş arkadaşlarıyla bağ kurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "drift apart",
+   "lang": "en",
+   "meaning": "zamanla birbirinden uzaklaşmak",
+   "ex": "The friends drifted apart after graduation.",
+   "ex_tr": "Arkadaşlar mezuniyetten sonra zamanla uzaklaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "offer support",
+   "lang": "en",
+   "meaning": "destek sunmak",
+   "ex": "Her neighbors offered support during the move.",
+   "ex_tr": "Komşuları taşınma sırasında destek sundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "provide emotional support",
+   "lang": "en",
+   "meaning": "duygusal destek sağlamak",
+   "ex": "His family provided emotional support throughout treatment.",
+   "ex_tr": "Ailesi tedavi boyunca duygusal destek sağladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "respect a decision",
+   "lang": "en",
+   "meaning": "karara saygı duymak",
+   "ex": "We respect your decision to leave the committee.",
+   "ex_tr": "Komiteden ayrılma kararına saygı duyuyoruz.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "share common interests",
+   "lang": "en",
+   "meaning": "ortak ilgi alanlarını paylaşmak",
+   "ex": "The two students share common interests in music and art.",
+   "ex_tr": "İki öğrencinin müzik ve sanatta ortak ilgi alanları var.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "leave a lasting impression",
+   "lang": "en",
+   "meaning": "kalıcı iz bırakmak",
+   "ex": "The teacher left a lasting impression on his students.",
+   "ex_tr": "Öğretmen öğrencilerinde kalıcı iz bıraktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "exchange greetings",
+   "lang": "en",
+   "meaning": "selamlaşmak",
+   "ex": "The neighbors exchanged greetings across the garden wall.",
+   "ex_tr": "Komşular bahçe duvarının üzerinden selamlaştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "start a conversation",
+   "lang": "en",
+   "meaning": "sohbet başlatmak",
+   "ex": "He started a conversation about the book she was reading.",
+   "ex_tr": "Onun okuduğu kitap hakkında sohbet başlattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "avoid an argument",
+   "lang": "en",
+   "meaning": "tartışmadan kaçınmak",
+   "ex": "They changed the subject to avoid an argument.",
+   "ex_tr": "Tartışmadan kaçınmak için konuyu değiştirdiler.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lodge an appeal",
+   "lang": "en",
+   "meaning": "itiraz başvurusu yapmak",
+   "ex": "The lawyer lodged an appeal against the ruling.",
+   "ex_tr": "Avukat karara karşı itiraz başvurusu yaptı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bring a lawsuit",
+   "lang": "en",
+   "meaning": "dava açmak",
+   "ex": "The residents brought a lawsuit against the developer.",
+   "ex_tr": "Sakinler müteahhide karşı dava açtı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "file a lawsuit",
+   "lang": "en",
+   "meaning": "dava açmak",
+   "ex": "The company filed a lawsuit over the contract.",
+   "ex_tr": "Şirket sözleşme nedeniyle dava açtı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "withdraw a claim",
+   "lang": "en",
+   "meaning": "talebini geri çekmek",
+   "ex": "The claimant withdrew the claim before the hearing.",
+   "ex_tr": "Davacı duruşmadan önce talebini geri çekti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sign an affidavit",
+   "lang": "en",
+   "meaning": "yeminli beyan imzalamak",
+   "ex": "The witness signed an affidavit describing the incident.",
+   "ex_tr": "Tanık olayı anlatan yeminli bir beyan imzaladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "give testimony",
+   "lang": "en",
+   "meaning": "ifade vermek",
+   "ex": "Three witnesses gave testimony during the trial.",
+   "ex_tr": "Üç tanık duruşmada ifade verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "present evidence",
+   "lang": "en",
+   "meaning": "delil sunmak",
+   "ex": "The prosecutor presented evidence to the jury.",
+   "ex_tr": "Savcı jüriye delil sundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "examine a witness",
+   "lang": "en",
+   "meaning": "tanığı sorgulamak",
+   "ex": "The defense lawyer examined the witness carefully.",
+   "ex_tr": "Savunma avukatı tanığı dikkatle sorguladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cross-examine a witness",
+   "lang": "en",
+   "meaning": "tanığı çapraz sorguya almak",
+   "ex": "The attorney cross-examined the witness for an hour.",
+   "ex_tr": "Avukat tanığı bir saat çapraz sorguya aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deliver a verdict",
+   "lang": "en",
+   "meaning": "hüküm açıklamak",
+   "ex": "The jury delivered a verdict late in the afternoon.",
+   "ex_tr": "Jüri öğleden sonra geç saatlerde kararını açıkladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pass a sentence",
+   "lang": "en",
+   "meaning": "ceza hükmü vermek",
+   "ex": "The judge passed a sentence of community service.",
+   "ex_tr": "Hâkim kamu hizmeti cezası verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "serve a sentence",
+   "lang": "en",
+   "meaning": "cezasını çekmek",
+   "ex": "He served his sentence at a regional prison.",
+   "ex_tr": "Cezasını bölgesel bir cezaevinde çekti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grant bail",
+   "lang": "en",
+   "meaning": "kefaletle serbest bırakmaya karar vermek",
+   "ex": "The court granted bail under strict conditions.",
+   "ex_tr": "Mahkeme sıkı şartlarla kefaletle salıverme kararı verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deny bail",
+   "lang": "en",
+   "meaning": "kefaletle salıvermeyi reddetmek",
+   "ex": "The judge denied bail because of the flight risk.",
+   "ex_tr": "Hâkim kaçma riski nedeniyle kefalet talebini reddetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "issue a warrant",
+   "lang": "en",
+   "meaning": "arama veya yakalama emri çıkarmak",
+   "ex": "The court issued a warrant for the suspect's arrest.",
+   "ex_tr": "Mahkeme şüphelinin yakalanması için emir çıkardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "obtain a permit",
+   "lang": "en",
+   "meaning": "izin belgesi almak",
+   "ex": "The builders obtained a permit before starting work.",
+   "ex_tr": "İnşaatçılar işe başlamadan önce izin belgesi aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "revoke a license",
+   "lang": "en",
+   "meaning": "ruhsatı iptal etmek",
+   "ex": "The authority revoked the operator's license.",
+   "ex_tr": "Yetkili kurum işletmecinin ruhsatını iptal etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "enforce a regulation",
+   "lang": "en",
+   "meaning": "yönetmeliği uygulamak",
+   "ex": "Inspectors enforce the regulation at industrial sites.",
+   "ex_tr": "Denetçiler yönetmeliği sanayi tesislerinde uygular.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "comply with legislation",
+   "lang": "en",
+   "meaning": "mevzuata uymak",
+   "ex": "Every supplier must comply with current legislation.",
+   "ex_tr": "Her tedarikçi yürürlükteki mevzuata uymalıdır.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "violate a contract",
+   "lang": "en",
+   "meaning": "sözleşmeyi ihlal etmek",
+   "ex": "The supplier violated the contract by missing the deadline.",
+   "ex_tr": "Tedarikçi son tarihi kaçırarak sözleşmeyi ihlal etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "breach confidentiality",
+   "lang": "en",
+   "meaning": "gizliliği ihlal etmek",
+   "ex": "Publishing the records would breach confidentiality.",
+   "ex_tr": "Kayıtları yayımlamak gizliliği ihlal ederdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "assume liability",
+   "lang": "en",
+   "meaning": "hukuki sorumluluk üstlenmek",
+   "ex": "The contractor agreed to assume liability for the damage.",
+   "ex_tr": "Yüklenici hasarın hukuki sorumluluğunu üstlenmeyi kabul etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish liability",
+   "lang": "en",
+   "meaning": "hukuki sorumluluğu ortaya koymak",
+   "ex": "The investigation sought to establish liability for the accident.",
+   "ex_tr": "Soruşturma kazadaki hukuki sorumluluğu belirlemeyi amaçladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "protect intellectual property",
+   "lang": "en",
+   "meaning": "fikrî mülkiyeti korumak",
+   "ex": "The agreement protects intellectual property created by the team.",
+   "ex_tr": "Anlaşma ekibin oluşturduğu fikrî mülkiyeti koruyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "draft a contract",
+   "lang": "en",
+   "meaning": "sözleşme taslağı hazırlamak",
+   "ex": "The lawyer drafted a contract for the partnership.",
+   "ex_tr": "Avukat ortaklık için sözleşme taslağı hazırladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negotiate terms",
+   "lang": "en",
+   "meaning": "şartları müzakere etmek",
+   "ex": "Both sides negotiated terms before signing.",
+   "ex_tr": "İki taraf imzalamadan önce şartları müzakere etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "terminate an agreement",
+   "lang": "en",
+   "meaning": "anlaşmayı feshetmek",
+   "ex": "Either party may terminate the agreement with notice.",
+   "ex_tr": "Taraflardan biri bildirimde bulunarak anlaşmayı feshedebilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "trace the origins",
+   "lang": "en",
+   "meaning": "kökenlerin izini sürmek",
+   "ex": "The historian traced the origins of the settlement.",
+   "ex_tr": "Tarihçi yerleşimin kökenlerinin izini sürdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "preserve a tradition",
+   "lang": "en",
+   "meaning": "geleneği korumak",
+   "ex": "The village preserved a tradition of winter storytelling.",
+   "ex_tr": "Köy kışın hikâye anlatma geleneğini korudu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pass down a tradition",
+   "lang": "en",
+   "meaning": "geleneği kuşaktan kuşağa aktarmak",
+   "ex": "Families passed down the tradition through generations.",
+   "ex_tr": "Aileler geleneği kuşaklar boyunca aktardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "record an event",
+   "lang": "en",
+   "meaning": "olayı kayda geçirmek",
+   "ex": "The chronicler recorded the event in his diary.",
+   "ex_tr": "Vakayinüvis olayı günlüğüne kaydetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "document a period",
+   "lang": "en",
+   "meaning": "bir dönemi belgelemek",
+   "ex": "The letters document a period of rapid social change.",
+   "ex_tr": "Mektuplar hızlı toplumsal değişim dönemini belgeliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uncover an artifact",
+   "lang": "en",
+   "meaning": "tarihî eser ortaya çıkarmak",
+   "ex": "Archaeologists uncovered an artifact near the ancient wall.",
+   "ex_tr": "Arkeologlar antik duvarın yakınında bir eser ortaya çıkardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "excavate a site",
+   "lang": "en",
+   "meaning": "kazı alanında kazı yapmak",
+   "ex": "The team excavated a site outside the city.",
+   "ex_tr": "Ekip şehrin dışında bir alanda kazı yaptı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "date a manuscript",
+   "lang": "en",
+   "meaning": "el yazmasının tarihini belirlemek",
+   "ex": "Researchers dated the manuscript to the twelfth century.",
+   "ex_tr": "Araştırmacılar el yazmasını on ikinci yüzyıla tarihlendirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "decipher an inscription",
+   "lang": "en",
+   "meaning": "yazıtı çözmek",
+   "ex": "Scholars deciphered an inscription found in the temple.",
+   "ex_tr": "Bilim insanları tapınakta bulunan bir yazıtı çözdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restore a monument",
+   "lang": "en",
+   "meaning": "anıtı restore etmek",
+   "ex": "Specialists restored the monument after the earthquake.",
+   "ex_tr": "Uzmanlar depremden sonra anıtı restore etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "protect a heritage site",
+   "lang": "en",
+   "meaning": "miras alanını korumak",
+   "ex": "New rules protect the heritage site from construction.",
+   "ex_tr": "Yeni kurallar miras alanını inşaattan koruyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish a dynasty",
+   "lang": "en",
+   "meaning": "hanedan kurmak",
+   "ex": "The ruler established a dynasty that lasted centuries.",
+   "ex_tr": "Hükümdar yüzyıllarca süren bir hanedan kurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "expand an empire",
+   "lang": "en",
+   "meaning": "imparatorluğu genişletmek",
+   "ex": "The emperor expanded the empire toward the coast.",
+   "ex_tr": "İmparator imparatorluğu kıyıya doğru genişletti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "conquer a territory",
+   "lang": "en",
+   "meaning": "toprak ele geçirmek",
+   "ex": "The army conquered the territory after a long campaign.",
+   "ex_tr": "Ordu uzun bir seferin ardından bölgeyi ele geçirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "defend a fortress",
+   "lang": "en",
+   "meaning": "kaleyi savunmak",
+   "ex": "The soldiers defended the fortress through the winter.",
+   "ex_tr": "Askerler kış boyunca kaleyi savundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sign a treaty",
+   "lang": "en",
+   "meaning": "antlaşma imzalamak",
+   "ex": "The two kingdoms signed a treaty to end the war.",
+   "ex_tr": "İki krallık savaşı bitirmek için antlaşma imzaladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "break a treaty",
+   "lang": "en",
+   "meaning": "antlaşmayı ihlal etmek",
+   "ex": "The invasion broke the treaty signed the previous year.",
+   "ex_tr": "İstila bir önceki yıl imzalanan antlaşmayı ihlal etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "forge an alliance",
+   "lang": "en",
+   "meaning": "ittifak kurmak",
+   "ex": "The rulers forged an alliance against a common enemy.",
+   "ex_tr": "Hükümdarlar ortak düşmana karşı ittifak kurdu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "launch a rebellion",
+   "lang": "en",
+   "meaning": "isyan başlatmak",
+   "ex": "The farmers launched a rebellion against the new taxes.",
+   "ex_tr": "Çiftçiler yeni vergilere karşı isyan başlattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "suppress a revolt",
+   "lang": "en",
+   "meaning": "ayaklanmayı bastırmak",
+   "ex": "The army suppressed the revolt within weeks.",
+   "ex_tr": "Ordu ayaklanmayı birkaç hafta içinde bastırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gain independence",
+   "lang": "en",
+   "meaning": "bağımsızlık kazanmak",
+   "ex": "The country gained independence after years of negotiation.",
+   "ex_tr": "Ülke yıllar süren görüşmelerin ardından bağımsızlık kazandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "declare independence",
+   "lang": "en",
+   "meaning": "bağımsızlık ilan etmek",
+   "ex": "The colony declared independence in the summer.",
+   "ex_tr": "Sömürge yaz aylarında bağımsızlığını ilan etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "abolish a practice",
+   "lang": "en",
+   "meaning": "uygulamayı kaldırmak",
+   "ex": "The reformers sought to abolish the practice.",
+   "ex_tr": "Reformcular bu uygulamayı kaldırmaya çalıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "introduce a reform",
+   "lang": "en",
+   "meaning": "reform başlatmak",
+   "ex": "The government introduced a reform of the tax system.",
+   "ex_tr": "Hükûmet vergi sisteminde reform başlattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "spark a revolution",
+   "lang": "en",
+   "meaning": "devrimi tetiklemek",
+   "ex": "The uprising helped spark a wider revolution.",
+   "ex_tr": "Ayaklanma daha geniş bir devrimi tetiklemeye yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shape an era",
+   "lang": "en",
+   "meaning": "bir dönemi şekillendirmek",
+   "ex": "Trade routes shaped the era's cultural exchange.",
+   "ex_tr": "Ticaret yolları dönemin kültürel etkileşimini şekillendirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mark a turning point",
+   "lang": "en",
+   "meaning": "dönüm noktası oluşturmak",
+   "ex": "The discovery marked a turning point in navigation.",
+   "ex_tr": "Keşif denizcilikte bir dönüm noktası oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "leave a legacy",
+   "lang": "en",
+   "meaning": "miras bırakmak",
+   "ex": "The architect left a legacy of remarkable buildings.",
+   "ex_tr": "Mimar olağanüstü yapılardan oluşan bir miras bıraktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "challenge the prevailing view",
+   "lang": "en",
+   "meaning": "hâkim görüşe karşı çıkmak",
+   "ex": "The new evidence challenged the prevailing view of the period.",
+   "ex_tr": "Yeni kanıtlar döneme ilişkin hâkim görüşü sorgulattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reconstruct the past",
+   "lang": "en",
+   "meaning": "geçmişi yeniden canlandırmak",
+   "ex": "Archaeologists use pottery to reconstruct the past.",
+   "ex_tr": "Arkeologlar geçmişi yeniden canlandırmak için çanak çömlek kullanır.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "stimulate demand",
+   "lang": "en",
+   "meaning": "talebi canlandırmak",
+   "ex": "Lower prices stimulated demand for electric bicycles.",
+   "ex_tr": "Düşük fiyatlar elektrikli bisiklet talebini canlandırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "curb inflation",
+   "lang": "en",
+   "meaning": "enflasyonu dizginlemek",
+   "ex": "The central bank raised rates to curb inflation.",
+   "ex_tr": "Merkez bankası enflasyonu dizginlemek için faizleri artırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "ease inflationary pressure",
+   "lang": "en",
+   "meaning": "enflasyon baskısını hafifletmek",
+   "ex": "Falling energy prices eased inflationary pressure.",
+   "ex_tr": "Düşen enerji fiyatları enflasyon baskısını hafifletti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "raise interest rates",
+   "lang": "en",
+   "meaning": "faiz oranlarını yükseltmek",
+   "ex": "The bank raised interest rates in September.",
+   "ex_tr": "Banka eylülde faiz oranlarını yükseltti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cut interest rates",
+   "lang": "en",
+   "meaning": "faiz oranlarını düşürmek",
+   "ex": "Policymakers cut interest rates after growth slowed.",
+   "ex_tr": "Büyüme yavaşlayınca politika yapıcılar faizleri düşürdü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "boost consumer spending",
+   "lang": "en",
+   "meaning": "tüketici harcamalarını artırmak",
+   "ex": "Tax rebates boosted consumer spending in the spring.",
+   "ex_tr": "Vergi iadeleri ilkbaharda tüketici harcamalarını artırdı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reduce purchasing power",
+   "lang": "en",
+   "meaning": "satın alma gücünü azaltmak",
+   "ex": "Rising food prices reduced purchasing power.",
+   "ex_tr": "Artan gıda fiyatları satın alma gücünü azalttı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widen income inequality",
+   "lang": "en",
+   "meaning": "gelir eşitsizliğini artırmak",
+   "ex": "Unequal access to education can widen income inequality.",
+   "ex_tr": "Eğitime eşitsiz erişim gelir eşitsizliğini artırabilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow the gap",
+   "lang": "en",
+   "meaning": "farkı azaltmak",
+   "ex": "The policy aims to narrow the gap between rural and urban incomes.",
+   "ex_tr": "Politika kırsal ve kentsel gelirler arasındaki farkı azaltmayı amaçlıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "create jobs",
+   "lang": "en",
+   "meaning": "istihdam yaratmak",
+   "ex": "The new factory will create jobs in the region.",
+   "ex_tr": "Yeni fabrika bölgede istihdam yaratacak.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lose market share",
+   "lang": "en",
+   "meaning": "pazar payı kaybetmek",
+   "ex": "The retailer lost market share to online competitors.",
+   "ex_tr": "Perakendeci çevrim içi rakiplerine karşı pazar payı kaybetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gain market share",
+   "lang": "en",
+   "meaning": "pazar payı kazanmak",
+   "ex": "The company gained market share after lowering prices.",
+   "ex_tr": "Şirket fiyatları düşürdükten sonra pazar payı kazandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "enter a market",
+   "lang": "en",
+   "meaning": "pazara girmek",
+   "ex": "The startup entered the market with a low-cost device.",
+   "ex_tr": "Girişim düşük maliyetli bir cihazla pazara girdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "exit a market",
+   "lang": "en",
+   "meaning": "pazardan çekilmek",
+   "ex": "The manufacturer exited the market after years of losses.",
+   "ex_tr": "Üretici yıllarca zarar ettikten sonra pazardan çekildi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "impose a tariff",
+   "lang": "en",
+   "meaning": "gümrük vergisi koymak",
+   "ex": "The government imposed a tariff on imported steel.",
+   "ex_tr": "Hükûmet ithal çeliğe gümrük vergisi koydu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lift a tariff",
+   "lang": "en",
+   "meaning": "gümrük vergisini kaldırmak",
+   "ex": "The countries agreed to lift the tariff on agricultural goods.",
+   "ex_tr": "Ülkeler tarım ürünlerindeki gümrük vergisini kaldırmayı kabul etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negotiate a trade deal",
+   "lang": "en",
+   "meaning": "ticaret anlaşması müzakere etmek",
+   "ex": "Officials negotiated a trade deal over several months.",
+   "ex_tr": "Yetkililer birkaç ay boyunca ticaret anlaşması müzakere etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "run a deficit",
+   "lang": "en",
+   "meaning": "açık vermek",
+   "ex": "The city ran a budget deficit for a second year.",
+   "ex_tr": "Şehir ikinci yıl üst üste bütçe açığı verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "post a surplus",
+   "lang": "en",
+   "meaning": "fazla vermek",
+   "ex": "The fund posted a surplus at the end of the year.",
+   "ex_tr": "Fon yıl sonunda fazla verdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "balance a budget",
+   "lang": "en",
+   "meaning": "bütçeyi dengelemek",
+   "ex": "The council struggled to balance its budget.",
+   "ex_tr": "Belediye meclisi bütçesini dengelemekte zorlandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "allocate funding",
+   "lang": "en",
+   "meaning": "kaynak tahsis etmek",
+   "ex": "The ministry allocated funding to rural schools.",
+   "ex_tr": "Bakanlık kırsal okullara kaynak tahsis etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "secure financing",
+   "lang": "en",
+   "meaning": "finansman sağlamak",
+   "ex": "The company secured financing for its expansion.",
+   "ex_tr": "Şirket büyümesi için finansman sağladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "absorb costs",
+   "lang": "en",
+   "meaning": "maliyetleri üstlenmek",
+   "ex": "The supplier absorbed the costs instead of raising prices.",
+   "ex_tr": "Tedarikçi fiyatları artırmak yerine maliyetleri üstlendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pass on costs",
+   "lang": "en",
+   "meaning": "maliyetleri yansıtmak",
+   "ex": "Some shops passed on higher costs to customers.",
+   "ex_tr": "Bazı dükkânlar artan maliyetleri müşterilere yansıttı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "forecast growth",
+   "lang": "en",
+   "meaning": "büyümeyi tahmin etmek",
+   "ex": "Analysts forecast growth in renewable energy jobs.",
+   "ex_tr": "Analistler yenilenebilir enerji istihdamında büyüme öngörüyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "experience a recession",
+   "lang": "en",
+   "meaning": "resesyon yaşamak",
+   "ex": "The economy experienced a recession after the crisis.",
+   "ex_tr": "Ekonomi krizden sonra resesyon yaşadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "recover from a downturn",
+   "lang": "en",
+   "meaning": "ekonomik daralmadan toparlanmak",
+   "ex": "Tourism recovered from the downturn faster than expected.",
+   "ex_tr": "Turizm ekonomik daralmadan beklenenden hızlı toparlandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "protect a habitat",
+   "lang": "en",
+   "meaning": "yaşam alanını korumak",
+   "ex": "Volunteers protected the habitat of nesting birds.",
+   "ex_tr": "Gönüllüler yuva yapan kuşların yaşam alanını korudu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "restore a wetland",
+   "lang": "en",
+   "meaning": "sulak alanı eski hâline getirmek",
+   "ex": "The project restored a wetland damaged by drainage.",
+   "ex_tr": "Proje kurutma nedeniyle zarar görmüş sulak alanı restore etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "preserve an ecosystem",
+   "lang": "en",
+   "meaning": "ekosistemi korumak",
+   "ex": "The park was created to preserve a fragile ecosystem.",
+   "ex_tr": "Park hassas bir ekosistemi korumak için kuruldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "disrupt an ecosystem",
+   "lang": "en",
+   "meaning": "ekosistemin dengesini bozmak",
+   "ex": "Invasive plants can disrupt an ecosystem.",
+   "ex_tr": "İstilacı bitkiler ekosistemin dengesini bozabilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "threaten biodiversity",
+   "lang": "en",
+   "meaning": "biyolojik çeşitliliği tehdit etmek",
+   "ex": "Habitat loss threatens biodiversity across the region.",
+   "ex_tr": "Yaşam alanı kaybı bölgede biyolojik çeşitliliği tehdit ediyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "support wildlife",
+   "lang": "en",
+   "meaning": "yaban hayatını desteklemek",
+   "ex": "The restored riverbank supports wildlife.",
+   "ex_tr": "Restore edilen nehir kıyısı yaban hayatını destekliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "track migration",
+   "lang": "en",
+   "meaning": "göçü izlemek",
+   "ex": "Scientists track migration using lightweight tags.",
+   "ex_tr": "Bilim insanları hafif etiketlerle göçü izliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "migrate seasonally",
+   "lang": "en",
+   "meaning": "mevsimsel göç etmek",
+   "ex": "These birds migrate seasonally between continents.",
+   "ex_tr": "Bu kuşlar kıtalar arasında mevsimsel göç eder.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "breed in captivity",
+   "lang": "en",
+   "meaning": "esaret altında üremek",
+   "ex": "The rare turtles bred in captivity for the first time.",
+   "ex_tr": "Nadir kaplumbağalar ilk kez esaret altında üredi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "release into the wild",
+   "lang": "en",
+   "meaning": "doğaya salmak",
+   "ex": "The rescue center released the fox into the wild.",
+   "ex_tr": "Kurtarma merkezi tilkiyi doğaya saldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "adapt to a climate",
+   "lang": "en",
+   "meaning": "iklime uyum sağlamak",
+   "ex": "Some crops adapt to a dry climate better than others.",
+   "ex_tr": "Bazı ürünler kuru iklime diğerlerinden daha iyi uyum sağlar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "withstand drought",
+   "lang": "en",
+   "meaning": "kuraklığa dayanmak",
+   "ex": "Native grasses can withstand drought for months.",
+   "ex_tr": "Yerli otlar aylarca kuraklığa dayanabilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "suffer soil erosion",
+   "lang": "en",
+   "meaning": "toprak erozyonuna uğramak",
+   "ex": "The hillside suffered soil erosion after the trees were removed.",
+   "ex_tr": "Ağaçlar kaldırıldıktan sonra yamaçta toprak erozyonu oluştu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "prevent erosion",
+   "lang": "en",
+   "meaning": "erozyonu önlemek",
+   "ex": "Deep roots help prevent erosion on steep slopes.",
+   "ex_tr": "Derin kökler dik yamaçlarda erozyonu önlemeye yardımcı olur.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "replenish groundwater",
+   "lang": "en",
+   "meaning": "yer altı suyunu beslemek",
+   "ex": "Winter rainfall helps replenish groundwater.",
+   "ex_tr": "Kış yağmurları yer altı suyunu beslemeye yardımcı olur.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pollute a river",
+   "lang": "en",
+   "meaning": "nehri kirletmek",
+   "ex": "Untreated waste polluted the river downstream.",
+   "ex_tr": "Arıtılmamış atık aşağı kesimde nehri kirletti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "capture carbon",
+   "lang": "en",
+   "meaning": "karbon tutmak",
+   "ex": "Healthy forests capture carbon as they grow.",
+   "ex_tr": "Sağlıklı ormanlar büyürken karbon tutar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "store carbon",
+   "lang": "en",
+   "meaning": "karbon depolamak",
+   "ex": "Peatlands store carbon in their waterlogged soils.",
+   "ex_tr": "Turba alanları suya doygun topraklarında karbon depolar.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "experience flooding",
+   "lang": "en",
+   "meaning": "sel yaşamak",
+   "ex": "The village experienced flooding after heavy rainfall.",
+   "ex_tr": "Köy şiddetli yağıştan sonra sel yaşadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "trigger a landslide",
+   "lang": "en",
+   "meaning": "heyelanı tetiklemek",
+   "ex": "The storm triggered a landslide near the road.",
+   "ex_tr": "Fırtına yol yakınında heyelanı tetikledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "form a glacier",
+   "lang": "en",
+   "meaning": "buzul oluşturmak",
+   "ex": "Compacted snow can form a glacier over time.",
+   "ex_tr": "Sıkışmış kar zamanla buzul oluşturabilir.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "survive harsh conditions",
+   "lang": "en",
+   "meaning": "zorlu koşullarda hayatta kalmak",
+   "ex": "Desert plants survive harsh conditions with little water.",
+   "ex_tr": "Çöl bitkileri az suyla zorlu koşullarda hayatta kalır.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "maintain ecological balance",
+   "lang": "en",
+   "meaning": "ekolojik dengeyi korumak",
+   "ex": "Predators help maintain ecological balance.",
+   "ex_tr": "Yırtıcılar ekolojik dengeyi korumaya yardımcı olur.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "protect endangered species",
+   "lang": "en",
+   "meaning": "nesli tehlikedeki türleri korumak",
+   "ex": "The reserve protects endangered species from poaching.",
+   "ex_tr": "Koruma alanı nesli tehlikedeki türleri kaçak avcılıktan koruyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "develop a character",
+   "lang": "en",
+   "meaning": "karakteri geliştirmek",
+   "ex": "The novelist develops the main character through dialogue.",
+   "ex_tr": "Romancı ana karakteri diyaloglarla geliştiriyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "introduce a character",
+   "lang": "en",
+   "meaning": "karakteri tanıtmak",
+   "ex": "The first chapter introduces a mysterious stranger.",
+   "ex_tr": "İlk bölüm gizemli bir yabancıyı tanıtıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reveal a motive",
+   "lang": "en",
+   "meaning": "güdüyü ortaya çıkarmak",
+   "ex": "The final letter reveals the villain's motive.",
+   "ex_tr": "Son mektup kötü karakterin güdüsünü ortaya çıkarıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "conceal an identity",
+   "lang": "en",
+   "meaning": "kimliği gizlemek",
+   "ex": "The traveler conceals his identity until the final chapter.",
+   "ex_tr": "Yolcu son bölüme kadar kimliğini gizliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "build suspense",
+   "lang": "en",
+   "meaning": "gerilim yaratmak",
+   "ex": "Short chapters build suspense throughout the novel.",
+   "ex_tr": "Kısa bölümler roman boyunca gerilim yaratıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "create tension",
+   "lang": "en",
+   "meaning": "gerilim oluşturmak",
+   "ex": "The silence creates tension between the characters.",
+   "ex_tr": "Sessizlik karakterler arasında gerilim oluşturuyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "heighten tension",
+   "lang": "en",
+   "meaning": "gerilimi artırmak",
+   "ex": "The approaching footsteps heighten tension in the scene.",
+   "ex_tr": "Yaklaşan ayak sesleri sahnedeki gerilimi artırıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "foreshadow an event",
+   "lang": "en",
+   "meaning": "olayı önceden sezdirmek",
+   "ex": "The broken clock foreshadows an event later in the story.",
+   "ex_tr": "Kırık saat hikâyenin ilerleyen kısmındaki bir olayı önceden sezdiriyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish a setting",
+   "lang": "en",
+   "meaning": "mekânı ve ortamı kurmak",
+   "ex": "The opening pages establish a bleak coastal setting.",
+   "ex_tr": "İlk sayfalar kasvetli bir kıyı ortamı kuruyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shift perspective",
+   "lang": "en",
+   "meaning": "bakış açısını değiştirmek",
+   "ex": "The narrative shifts perspective halfway through the book.",
+   "ex_tr": "Anlatı kitabın ortasında bakış açısını değiştiriyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "change the narrator",
+   "lang": "en",
+   "meaning": "anlatıcıyı değiştirmek",
+   "ex": "The author changes the narrator in the second part.",
+   "ex_tr": "Yazar ikinci bölümde anlatıcıyı değiştiriyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "use imagery",
+   "lang": "en",
+   "meaning": "imgesel anlatım kullanmak",
+   "ex": "The poet uses imagery drawn from the sea.",
+   "ex_tr": "Şair denizden alınmış imgeler kullanıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "employ symbolism",
+   "lang": "en",
+   "meaning": "sembolizm kullanmak",
+   "ex": "The story employs symbolism to explore loss.",
+   "ex_tr": "Hikâye kaybı ele almak için sembolizm kullanıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "convey a mood",
+   "lang": "en",
+   "meaning": "ruh hâlini yansıtmak",
+   "ex": "The dim lighting conveys a mood of uncertainty.",
+   "ex_tr": "Loş ışık belirsizlik duygusunu yansıtıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "set the tone",
+   "lang": "en",
+   "meaning": "anlatımın havasını belirlemek",
+   "ex": "The opening sentence sets the tone for the whole novel.",
+   "ex_tr": "Açılış cümlesi bütün romanın havasını belirliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "explore a theme",
+   "lang": "en",
+   "meaning": "temayı işlemek",
+   "ex": "The novel explores a theme of forgiveness.",
+   "ex_tr": "Roman bağışlama temasını işliyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "address a theme",
+   "lang": "en",
+   "meaning": "temayı ele almak",
+   "ex": "Several poems address the theme of exile.",
+   "ex_tr": "Birkaç şiir sürgün temasını ele alıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "draw a parallel",
+   "lang": "en",
+   "meaning": "benzerlik kurmak",
+   "ex": "The essay draws a parallel between the two heroes.",
+   "ex_tr": "Deneme iki kahraman arasında benzerlik kuruyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make an allusion",
+   "lang": "en",
+   "meaning": "göndermede bulunmak",
+   "ex": "The writer makes an allusion to an ancient myth.",
+   "ex_tr": "Yazar eski bir mite göndermede bulunuyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "quote a passage",
+   "lang": "en",
+   "meaning": "bir pasajdan alıntı yapmak",
+   "ex": "The critic quoted a passage from the final chapter.",
+   "ex_tr": "Eleştirmen son bölümden bir pasaj alıntıladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "interpret a metaphor",
+   "lang": "en",
+   "meaning": "metaforu yorumlamak",
+   "ex": "Students interpreted the metaphor in different ways.",
+   "ex_tr": "Öğrenciler metaforu farklı şekillerde yorumladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "analyze a poem",
+   "lang": "en",
+   "meaning": "şiiri çözümlemek",
+   "ex": "The class analyzed a poem about migration.",
+   "ex_tr": "Sınıf göç üzerine bir şiiri çözümledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "compare narratives",
+   "lang": "en",
+   "meaning": "anlatıları karşılaştırmak",
+   "ex": "The article compares narratives from two cultures.",
+   "ex_tr": "Makale iki kültürün anlatılarını karşılaştırıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "challenge a stereotype",
+   "lang": "en",
+   "meaning": "kalıp yargıyı sorgulamak",
+   "ex": "The protagonist challenges a stereotype about old age.",
+   "ex_tr": "Başkahraman yaşlılık hakkındaki bir kalıp yargıyı sorguluyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "subvert expectations",
+   "lang": "en",
+   "meaning": "beklentileri tersine çevirmek",
+   "ex": "The ending subverts readers' expectations.",
+   "ex_tr": "Final okurların beklentilerini tersine çeviriyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unravel a mystery",
+   "lang": "en",
+   "meaning": "gizemi çözmek",
+   "ex": "The detective slowly unravels a mystery surrounding the house.",
+   "ex_tr": "Dedektif evin etrafındaki gizemi yavaş yavaş çözüyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reach a climax",
+   "lang": "en",
+   "meaning": "doruk noktasına ulaşmak",
+   "ex": "The story reaches a climax during the storm.",
+   "ex_tr": "Hikâye fırtına sırasında doruk noktasına ulaşıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "end on a cliffhanger",
+   "lang": "en",
+   "meaning": "merak uyandıran bir noktada bitmek",
+   "ex": "The episode ends on a cliffhanger.",
+   "ex_tr": "Bölüm merak uyandıran bir noktada bitiyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "leave an ending open",
+   "lang": "en",
+   "meaning": "sonu açık bırakmak",
+   "ex": "The author leaves the ending open to interpretation.",
+   "ex_tr": "Yazar sonu yoruma açık bırakıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "define a research question",
+   "lang": "en",
+   "meaning": "araştırma sorusunu tanımlamak",
+   "ex": "The team defined a research question before collecting data.",
+   "ex_tr": "Ekip veri toplamadan önce araştırma sorusunu tanımladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "state an objective",
+   "lang": "en",
+   "meaning": "amacı belirtmek",
+   "ex": "The introduction states the objective of the study.",
+   "ex_tr": "Giriş bölümü çalışmanın amacını belirtiyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "design a study",
+   "lang": "en",
+   "meaning": "araştırma tasarlamak",
+   "ex": "The researchers designed a study involving three schools.",
+   "ex_tr": "Araştırmacılar üç okulu kapsayan bir çalışma tasarladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "recruit participants",
+   "lang": "en",
+   "meaning": "katılımcı toplamak",
+   "ex": "The team recruited participants through local clinics.",
+   "ex_tr": "Ekip yerel klinikler aracılığıyla katılımcı topladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "obtain consent",
+   "lang": "en",
+   "meaning": "onam almak",
+   "ex": "Researchers obtained consent before the interviews.",
+   "ex_tr": "Araştırmacılar görüşmelerden önce onam aldı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "assign participants randomly",
+   "lang": "en",
+   "meaning": "katılımcıları rastgele atamak",
+   "ex": "The trial assigned participants randomly to two groups.",
+   "ex_tr": "Deneme katılımcıları rastgele iki gruba atadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "control a variable",
+   "lang": "en",
+   "meaning": "değişkeni kontrol etmek",
+   "ex": "The experiment controlled temperature throughout the trial.",
+   "ex_tr": "Deney boyunca sıcaklık değişkeni kontrol edildi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "measure an outcome",
+   "lang": "en",
+   "meaning": "sonucu ölçmek",
+   "ex": "The study measured outcomes after twelve weeks.",
+   "ex_tr": "Çalışma sonuçları on iki hafta sonra ölçtü.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "collect qualitative data",
+   "lang": "en",
+   "meaning": "nitel veri toplamak",
+   "ex": "Interviews helped the team collect qualitative data.",
+   "ex_tr": "Görüşmeler ekibin nitel veri toplamasına yardımcı oldu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "collect quantitative data",
+   "lang": "en",
+   "meaning": "nicel veri toplamak",
+   "ex": "Sensors collected quantitative data every minute.",
+   "ex_tr": "Sensörler her dakika nicel veri topladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "clean a dataset",
+   "lang": "en",
+   "meaning": "veri kümesini temizlemek",
+   "ex": "The analyst cleaned the dataset before running the model.",
+   "ex_tr": "Analist modeli çalıştırmadan önce veri kümesini temizledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remove outliers",
+   "lang": "en",
+   "meaning": "aykırı değerleri çıkarmak",
+   "ex": "The analyst documented why she removed outliers.",
+   "ex_tr": "Analist aykırı değerleri neden çıkardığını belgeledi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "calculate an average",
+   "lang": "en",
+   "meaning": "ortalama hesaplamak",
+   "ex": "The students calculated an average from ten measurements.",
+   "ex_tr": "Öğrenciler on ölçümden bir ortalama hesapladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "estimate an effect",
+   "lang": "en",
+   "meaning": "etkiyi tahmin etmek",
+   "ex": "The model estimates an effect of reduced sleep on attention.",
+   "ex_tr": "Model azalan uykunun dikkat üzerindeki etkisini tahmin ediyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "test a hypothesis",
+   "lang": "en",
+   "meaning": "hipotezi test etmek",
+   "ex": "The experiment tested a hypothesis about plant growth.",
+   "ex_tr": "Deney bitki büyümesiyle ilgili bir hipotezi test etti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reject a hypothesis",
+   "lang": "en",
+   "meaning": "hipotezi reddetmek",
+   "ex": "The results led the researchers to reject the hypothesis.",
+   "ex_tr": "Sonuçlar araştırmacıların hipotezi reddetmesine yol açtı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "confirm a prediction",
+   "lang": "en",
+   "meaning": "öngörüyü doğrulamak",
+   "ex": "The observations confirmed the team's prediction.",
+   "ex_tr": "Gözlemler ekibin öngörüsünü doğruladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "detect a correlation",
+   "lang": "en",
+   "meaning": "korelasyon saptamak",
+   "ex": "The analysis detected a correlation between age and sleep duration.",
+   "ex_tr": "Analiz yaş ile uyku süresi arasında korelasyon saptadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "establish causation",
+   "lang": "en",
+   "meaning": "nedenselliği ortaya koymak",
+   "ex": "A correlation alone cannot establish causation.",
+   "ex_tr": "Tek başına korelasyon nedenselliği ortaya koyamaz.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "report a finding",
+   "lang": "en",
+   "meaning": "bulguyu raporlamak",
+   "ex": "The researchers reported a finding that surprised reviewers.",
+   "ex_tr": "Araştırmacılar hakemleri şaşırtan bir bulgu raporladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "interpret the results",
+   "lang": "en",
+   "meaning": "sonuçları yorumlamak",
+   "ex": "The authors interpreted the results cautiously.",
+   "ex_tr": "Yazarlar sonuçları temkinli yorumladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "address a limitation",
+   "lang": "en",
+   "meaning": "sınırlılığı ele almak",
+   "ex": "The discussion addresses a limitation in the sampling method.",
+   "ex_tr": "Tartışma bölümü örnekleme yöntemindeki bir sınırlılığı ele alıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "minimize bias",
+   "lang": "en",
+   "meaning": "yanlılığı en aza indirmek",
+   "ex": "The team used blind scoring to minimize bias.",
+   "ex_tr": "Ekip yanlılığı azaltmak için kör puanlama kullandı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "disclose a conflict of interest",
+   "lang": "en",
+   "meaning": "çıkar çatışmasını açıklamak",
+   "ex": "The author disclosed a conflict of interest in the report.",
+   "ex_tr": "Yazar raporda bir çıkar çatışmasını açıkladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "undergo peer review",
+   "lang": "en",
+   "meaning": "hakem değerlendirmesinden geçmek",
+   "ex": "The paper underwent peer review before publication.",
+   "ex_tr": "Makale yayımlanmadan önce hakem değerlendirmesinden geçti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "revise a manuscript",
+   "lang": "en",
+   "meaning": "makaleyi gözden geçirip düzeltmek",
+   "ex": "The authors revised the manuscript after receiving feedback.",
+   "ex_tr": "Yazarlar geri bildirim aldıktan sonra makaleyi düzeltti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "replicate an experiment",
+   "lang": "en",
+   "meaning": "deneyi tekrarlamak",
+   "ex": "Another laboratory replicated the experiment using fresh samples.",
+   "ex_tr": "Başka bir laboratuvar deneyi yeni numunelerle tekrarladı.",
+   "cat": "collocations"
   }
  ]
 }

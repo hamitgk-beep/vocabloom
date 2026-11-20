@@ -20,7 +20,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v6.xlsx tools/contrib/hamit_filtre4_2026-11-20.xlsx tools/contrib/hamit_filtre5_2026-11-20.xlsx \
          tools/contrib/hamit_filtre6_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v7.xlsx \
          tools/contrib/hamit_2026-11-20_v8.xlsx tools/contrib/hamit_filtre7_2026-11-20.xlsx tools/contrib/hamit_filtre8_2026-11-20.xlsx \
-         tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx
+         tools/contrib/hamit_filtre9_2026-11-20.xlsx tools/contrib/hamit_filtre10_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx
 """
 import json
 import re
@@ -317,9 +318,12 @@ V6_EN_SPLIT = {
     51: [],  # mere ≠ önemsiz
 }
 
+V9_EX_FIX = {26: {'en': 'The board of directors promised they would act transparently in the hiring process.'}}
 V8_EX_FIX = {51: {'tr': 'Romanın kapağı eski bir İstanbul fotoğrafıyla süslenmişti.'}}
 
 FIXES = {
+    'hamit_2026-11-20_v9.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                     en_split={}, tr_split={}, ex_fix=V9_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v8.xlsx': dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                      en_split={}, tr_split={}, ex_fix=V8_EX_FIX, ph_fix={}),
     'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
@@ -372,6 +376,8 @@ F8_FIX = {153: None, 154: None, 158: None,
           194: {'meaning': 'ahlaki; kıssadan hisse (≠ Türkçe moral: morale)'}}
 F9_FIX = {31: None, 62: None, 64: None, 65: None}
 F10_FIX = {134: {'cat': 'informal_slang'}, 135: {'cat': 'informal_slang'}}
+F11_FIX = {15: {'phrase': "lose one's way"}}
+F12_FIX = {160: None, 162: None, 163: None}  # verb + any adverb, not a fixed pair
 F6_FIX = {52: {'meaning': 'olursa ve olduğunda; gerçekleşirse'}, 62: None, 136: None, 138: None}
 # Second filter sheet (hamit_filtre2_2026-11-20.xlsx).
 # False friends: the meaning in the form the filter shows, "meaning (≠ the look-alike)".
@@ -449,7 +455,8 @@ for src in srcs:
             fix = {'hamit_filtre_2026-11-20.xlsx': F1_FIX, 'hamit_filtre2_2026-11-20.xlsx': F2_FIX, 'hamit_filtre4_2026-11-20.xlsx': F4_FIX,
                    'hamit_filtre5_2026-11-20.xlsx': F5_FIX, 'hamit_filtre6_2026-11-20.xlsx': F6_FIX,
                    'hamit_filtre7_2026-11-20.xlsx': F7_FIX, 'hamit_filtre8_2026-11-20.xlsx': F8_FIX,
-                   'hamit_filtre9_2026-11-20.xlsx': F9_FIX, 'hamit_filtre10_2026-11-20.xlsx': F10_FIX}.get(name, {}).get(i, {})
+                   'hamit_filtre9_2026-11-20.xlsx': F9_FIX, 'hamit_filtre10_2026-11-20.xlsx': F10_FIX,
+                   'hamit_filtre11_2026-11-20.xlsx': F11_FIX, 'hamit_filtre12_2026-11-20.xlsx': F12_FIX}.get(name, {}).get(i, {})
             if cat == 'discourse_markers' and ';' in mean:
                 # "bu arada; konu değiştirirken": the part after ";" says when it is used.
                 mean, note = [x.strip() for x in mean.split(';', 1)]
