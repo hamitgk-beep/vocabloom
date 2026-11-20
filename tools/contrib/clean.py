@@ -14,9 +14,10 @@ earlier file is read only once, with that file's corrections.
 
 usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx \
-         tools/contrib/hamit_filtre_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx
 """
 import json
+import re
 import sys
 
 import openpyxl
@@ -259,13 +260,35 @@ V2_PH_FIX = {
     414: {'ex_tr': 'Yardım etmeye varım ama bütün ödevini yapmaya gelince sınırı çizerim.'},
 }
 
+# --- Third file, hamit_2026-11-20_v3.xlsx ("1000 yeni kayıt") -------------------
+# Most of its rows are numbered stand-ins ("phrase_499", "TR sent 5 for s4."):
+# PLACEHOLDER leaves them out. Of the real rows:
+V3_CTX_FIX = {
+    26: ('Motorun bujilerinden biri bozulduğu için araç zor çalıştı.', 'çalıştı', 'çalışmak', 'to start (an engine)'),
+}
+# English context rows whose word is a phrasal verb: they go to the phrases with
+# their sentence, so the verb alone ("bring") does not get the phrase's meaning.
+V3_CTX_PHRASE = {
+    502: 'bring about', 503: 'brush off', 504: 'iron out', 505: 'wipe out', 506: 'rule out', 507: 'phase out',
+    508: 'single out', 509: 'boil down to', 510: 'piece together', 511: 'fall back on', 512: 'fade away',
+    513: 'step down', 514: 'set out', 515: 'ward off', 516: 'gloss over', 517: 'band together',
+}
+V3_EX_FIX = {
+    4: {'en': 'This technology broke new ground in medical science.'},
+}
+
 FIXES = {
     'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
                                   en_split=EN_SPLIT, tr_split=TR_SPLIT, ex_fix={i: {'en': e} for i, e in EX_EN_FIX.items()},
                                   ph_fix=PH_FIX),
     'hamit_2026-11-20_v2.xlsx': dict(ctx_fix=V2_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=V2_CTX_ADD,
                                      en_split=V2_EN_SPLIT, tr_split=V2_TR_SPLIT, ex_fix=V2_EX_FIX, ph_fix=V2_PH_FIX),
+    'hamit_2026-11-20_v3.xlsx': dict(ctx_fix=V3_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[], ctx_phrase=V3_CTX_PHRASE,
+                                     en_split={}, tr_split={}, ex_fix=V3_EX_FIX, ph_fix={}),
 }
+# Numbered stand-in rows: word_5, phrase_499, form499, "TR sent 5 for s4.", "New EN contextual sentence 3."
+PLACEHOLDER = re.compile(r'_\d+\b|\b(?:form|fiil|verb|base|meaning|word|phrase|desc)\d+\b|\bsent \d+|contextual sentence \d+'
+                         r'|TR cümle \d+|\bEx (?:tr|en) \d+|\bmeaning \d+')
 
 # --- Filter sheets (filtre-kalip-sablonu.xlsx): one phrase a row with its filter
 # Row -> the columns that change; None drops the row.
@@ -310,7 +333,7 @@ seen = set()  # (sheet, row contents) already read from an earlier file
 def rows(wb, sheet):
     for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
         r = ['' if v is None else str(v).strip() for v in r]
-        if any(r) and (sheet, tuple(r)) not in seen:
+        if any(r) and (sheet, tuple(r)) not in seen and not any(PLACEHOLDER.search(x) for x in r):
             seen.add((sheet, tuple(r)))
             yield i, r
 
@@ -358,6 +381,9 @@ for src in srcs:
         if i in fx['ctx_to_phrase']:
             phrases.append({'phrase': 'drop someone a line', 'lang': 'en', 'meaning': 'birine birkaç satır yazmak, haber vermek',
                             'ex': sent, 'ex_tr': 'Eve sağ salim vardığında bana bir haber ver.'})
+            continue
+        if i in fx.get('ctx_phrase', {}):
+            phrases.append({'phrase': fx['ctx_phrase'][i], 'lang': 'en', 'meaning': mean, 'ex': sent, 'ex_tr': ''})
             continue
         if i in fx['ctx_fix']:
             s2, f2, l2, m2 = fx['ctx_fix'][i]
