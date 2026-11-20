@@ -25,7 +25,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
          tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v12.xlsx
+         tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx
 """
 import json
 import re
@@ -605,6 +605,18 @@ D16_EDITS = {
     'go out like a light': {'action': 'meaning', 'meaning': 'hemen uyuyakalmak, ölü gibi uyumak'},
     'stupid is as stupid does': {'action': 'meaning', 'meaning': 'insanı aptal yapan davranışlarıdır'},
 }
+# --- Filter sheet 17: new phrases for the thin filters, the filter named in Turkish.
+F17_CAT = {'Kip fiilleri': 'modal_verbs', 'Benzetmeler': 'similes', 'Gündelik dil / argo': 'informal_slang',
+           'Kibar kalıplar': 'polite_phrases', 'Karıştırılan kelimeler': 'confusables', 'Sahte eş anlamlılar': 'false_friends'}
+# "low-key" and "high-key" are the slang words ("low-key obsessed", "low-key tired");
+# "would rather" is also "would rather go"; "I'm down" is found in "I'm down here".
+F17_FIX = {
+    12: {'phrase': 'would rather', 'meaning': '-meyi tercih etmek; (not ile) -memeyi tercih etmek'},
+    22: {'phrase': 'low-key', 'meaning': '(argo) içten içe, biraz; sessiz sedasız'},
+    23: {'phrase': 'high-key', 'meaning': '(argo) açık açık, fena hâlde'},
+    28: None,
+}
+
 AUDIT_FIX = {'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
              'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
              'hamit_denetim15_2026-11-20.xlsx': (D15_EX_FIX, D15_EDITS)}
@@ -641,6 +653,17 @@ for src in srcs:
     fx = FIXES.get(name) or dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                  en_split={}, tr_split={}, ex_fix={}, ph_fix={})
     wb = openpyxl.load_workbook(src, data_only=True)
+
+    if 'Yeni filtre ifadeleri' in wb.sheetnames:
+        for i, r in rows(wb, 'Yeni filtre ifadeleri'):
+            cat, ph, mean, ex, ex_tr = (r + [''] * 5)[:5]
+            fix = F17_FIX.get(i, {})
+            if fix is None or cat not in F17_CAT:
+                continue
+            e = {'phrase': ph.lower(), 'lang': 'en', 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': F17_CAT[cat]}
+            e.update(fix)
+            phrases.append(e)
+        continue
 
     if 'Örnek cümle önerileri' in wb.sheetnames:
         # An audit sheet: examples for phrases that had none, and phrases to fix or remove.

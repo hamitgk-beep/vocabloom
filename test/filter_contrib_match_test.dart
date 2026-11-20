@@ -53,5 +53,8 @@ void main() {
     // Audit 16: "their flowers" is any possessive; the usual "while you're at it".
     expect(found('Critics finally gave the director his flowers.', 'idioms'), contains("give someone one's flowers"));
     expect(found("Buy some milk while you're at it.", 'conjunctions'), contains("while you're at it"));
+    // Sheet 17: modal patterns, a hyphenated slang word.
+    expect(found('The door must have been open.', 'modal_verbs'), contains('must have been'));
+    expect(found('I am low-key tired.', 'informal_slang'), contains('low-key'));
   });
 }

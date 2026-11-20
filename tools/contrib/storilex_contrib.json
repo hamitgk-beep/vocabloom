@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -61180,6 +61180,302 @@
    "meaning": "genel geçer kural, pratik kural",
    "ex": "As a general rule of thumb, you should save at least ten percent of your salary.",
    "ex_tr": "Genel geçer bir kural olarak, maaşınızın en az yüzde onunu biriktirmelisiniz."
+  },
+  {
+   "phrase": "must have been",
+   "lang": "en",
+   "meaning": "olmuş olmalı; geçmişe ilişkin güçlü çıkarım",
+   "ex": "The door must have been open when the storm began.",
+   "ex_tr": "Fırtına başladığında kapı açık olmalıydı.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "might have been",
+   "lang": "en",
+   "meaning": "olmuş olabilir",
+   "ex": "The noise might have been a branch hitting the window.",
+   "ex_tr": "Ses, pencereye çarpan bir dalın sesi olabilir.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "could have been",
+   "lang": "en",
+   "meaning": "olabilirdi; olmuş olabilir",
+   "ex": "It could have been much worse without your help.",
+   "ex_tr": "Yardımın olmasaydı çok daha kötü olabilirdi.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "should have been",
+   "lang": "en",
+   "meaning": "olmalıydı; olması gerekirdi",
+   "ex": "The package should have been here yesterday.",
+   "ex_tr": "Paketin dün burada olması gerekiyordu.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "would have been",
+   "lang": "en",
+   "meaning": "olurdu; olmuş olurdu",
+   "ex": "The walk would have been easier in cooler weather.",
+   "ex_tr": "Daha serin havada yürüyüş daha kolay olurdu.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "may have been",
+   "lang": "en",
+   "meaning": "olmuş olabilir",
+   "ex": "The message may have been sent to the wrong address.",
+   "ex_tr": "Mesaj yanlış adrese gönderilmiş olabilir.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "must be joking",
+   "lang": "en",
+   "meaning": "şaka yapıyor olmalısın",
+   "ex": "You must be joking if you think I can finish this tonight.",
+   "ex_tr": "Bunu bu gece bitirebileceğimi düşünüyorsan şaka yapıyor olmalısın.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "cannot have been",
+   "lang": "en",
+   "meaning": "olmuş olması mümkün değil",
+   "ex": "That cannot have been the same person we saw yesterday.",
+   "ex_tr": "O, dün gördüğümüz kişi olamaz.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "might as well",
+   "lang": "en",
+   "meaning": "bari; hazır fırsat varken",
+   "ex": "We might as well leave now before the roads get busy.",
+   "ex_tr": "Yollar kalabalıklaşmadan bari şimdi çıkalım.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "may as well",
+   "lang": "en",
+   "meaning": "bari; en iyisi",
+   "ex": "You may as well take an umbrella; the sky looks dark.",
+   "ex_tr": "Gökyüzü kararmış, en iyisi şemsiye al.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "would rather",
+   "lang": "en",
+   "meaning": "-meyi tercih etmek; (not ile) -memeyi tercih etmek",
+   "ex": "I would rather not discuss it in front of the children.",
+   "ex_tr": "Bunu çocukların önünde konuşmamayı tercih ederim.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "had better not",
+   "lang": "en",
+   "meaning": "yapmasa iyi olur",
+   "ex": "You had better not touch that loose wire.",
+   "ex_tr": "O gevşek kabloya dokunmasan iyi olur.",
+   "cat": "modal_verbs"
+  },
+  {
+   "phrase": "as soft as silk",
+   "lang": "en",
+   "meaning": "ipek gibi yumuşak",
+   "ex": "The blanket was as soft as silk against her skin.",
+   "ex_tr": "Battaniye tenine ipek gibi yumuşak geliyordu.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as smooth as glass",
+   "lang": "en",
+   "meaning": "cam gibi pürüzsüz",
+   "ex": "The lake was as smooth as glass at dawn.",
+   "ex_tr": "Şafakta gölün yüzeyi cam gibi dümdüzdü.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as hot as an oven",
+   "lang": "en",
+   "meaning": "fırın gibi sıcak",
+   "ex": "The attic was as hot as an oven in August.",
+   "ex_tr": "Ağustosta çatı katı fırın gibiydi.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as slow as molasses",
+   "lang": "en",
+   "meaning": "pek yavaş; kaplumbağa hızında",
+   "ex": "The queue moved as slow as molasses.",
+   "ex_tr": "Kuyruk çok ağır ilerliyordu.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as sharp as a razor",
+   "lang": "en",
+   "meaning": "ustura gibi keskin",
+   "ex": "The knife was as sharp as a razor.",
+   "ex_tr": "Bıçak ustura kadar keskindi.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as bright as day",
+   "lang": "en",
+   "meaning": "gündüz gibi aydınlık",
+   "ex": "The moon made the courtyard as bright as day.",
+   "ex_tr": "Ay avluyu gündüz gibi aydınlatıyordu.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as happy as a clam",
+   "lang": "en",
+   "meaning": "çok mutlu; keyfi yerinde",
+   "ex": "She was as happy as a clam in her little garden.",
+   "ex_tr": "Küçük bahçesinde çok mutluydu.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "spill the tea",
+   "lang": "en",
+   "meaning": "dedikoduyu anlat; olanları dökül",
+   "ex": "Come on, spill the tea about what happened at the party.",
+   "ex_tr": "Hadi, partide neler olduğunu anlat.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "low-key",
+   "lang": "en",
+   "meaning": "(argo) içten içe, biraz; sessiz sedasız",
+   "ex": "I am low-key obsessed with this mystery novel.",
+   "ex_tr": "Bu polisiye romana içten içe fena takıldım.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "high-key",
+   "lang": "en",
+   "meaning": "(argo) açık açık, fena hâlde",
+   "ex": "I am high-key excited about the weekend trip.",
+   "ex_tr": "Hafta sonu gezisi için aşırı heyecanlıyım.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "that tracks",
+   "lang": "en",
+   "meaning": "mantıklı; şaşırtmadı",
+   "ex": "He forgot the meeting again? Yeah, that tracks.",
+   "ex_tr": "Toplantıyı yine mi unuttu? Evet, şaşırmadım.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "say less",
+   "lang": "en",
+   "meaning": "anladım; başka bir şey söylemene gerek yok",
+   "ex": "You need help moving? Say less, I will be there.",
+   "ex_tr": "Taşınırken yardıma mı ihtiyacın var? Tamamdır, gelirim.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "big yikes",
+   "lang": "en",
+   "meaning": "çok kötü; fena durum",
+   "ex": "He sent the complaint to the wrong customer. Big yikes.",
+   "ex_tr": "Şikâyeti yanlış müşteriye göndermiş. Çok fena.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "what a drag",
+   "lang": "en",
+   "meaning": "ne sıkıcı; ne can sıkıcı",
+   "ex": "The museum is closed today? What a drag.",
+   "ex_tr": "Müze bugün kapalı mı? Ne can sıkıcı.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "not gonna lie",
+   "lang": "en",
+   "meaning": "yalan yok; açıkçası",
+   "ex": "Not gonna lie, the ending surprised me.",
+   "ex_tr": "Açıkçası sonu beni şaşırttı.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "you do you",
+   "lang": "en",
+   "meaning": "sen nasıl istersen öyle yap",
+   "ex": "I prefer quiet weekends, but you do you.",
+   "ex_tr": "Ben sakin hafta sonlarını severim ama sen nasıl istersen öyle yap.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "would you care to",
+   "lang": "en",
+   "meaning": "... ister misiniz",
+   "ex": "Would you care to join us for dinner?",
+   "ex_tr": "Akşam yemeğinde bize katılmak ister misiniz?",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "if it is not too much trouble",
+   "lang": "en",
+   "meaning": "fazla zahmet olmayacaksa",
+   "ex": "If it is not too much trouble, could you print another copy?",
+   "ex_tr": "Fazla zahmet olmayacaksa bir kopya daha basabilir misiniz?",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "may i ask you to",
+   "lang": "en",
+   "meaning": "sizden ... yapmanızı rica edebilir miyim",
+   "ex": "May I ask you to wait outside for a moment?",
+   "ex_tr": "Sizden bir an dışarıda beklemenizi rica edebilir miyim?",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "i hope you don't mind",
+   "lang": "en",
+   "meaning": "umarım sakıncası yoktur",
+   "ex": "I hope you don't mind, but I opened the window.",
+   "ex_tr": "Umarım sakıncası yoktur ama pencereyi açtım.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "thank you for bringing this to our attention",
+   "lang": "en",
+   "meaning": "bunu bize bildirdiğiniz için teşekkür ederiz",
+   "ex": "Thank you for bringing this to our attention; we will investigate.",
+   "ex_tr": "Bunu bize bildirdiğiniz için teşekkür ederiz; araştıracağız.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "conscience",
+   "lang": "en",
+   "meaning": "vicdan (≠ conscious: bilinçli, farkında)",
+   "ex": "His conscience would not let him keep the money.",
+   "ex_tr": "Vicdanı parayı kendine saklamasına izin vermedi.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "desert",
+   "lang": "en",
+   "meaning": "çöl; terk etmek (≠ dessert: tatlı)",
+   "ex": "The travellers crossed the desert before sunrise.",
+   "ex_tr": "Yolcular gün doğmadan çölü geçti.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "dessert",
+   "lang": "en",
+   "meaning": "tatlı (≠ desert: çöl)",
+   "ex": "We ordered chocolate cake for dessert.",
+   "ex_tr": "Tatlı olarak çikolatalı pasta söyledik.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "preservative",
+   "lang": "en",
+   "meaning": "koruyucu katkı maddesi (≠ prezervatif: condom)",
+   "ex": "This juice contains no artificial preservative.",
+   "ex_tr": "Bu meyve suyunda yapay koruyucu katkı maddesi yok.",
+   "cat": "false_friends"
   }
  ],
  "phrase_edits": [
