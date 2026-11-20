@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -62219,6 +62219,3718 @@
    "meaning": "to get caught, to give oneself away",
    "ex": "Saklandığı depo polisler tarafından basılınca sonunda yakayı ele verdi.",
    "ex_tr": "When the warehouse he was hiding in was raided by the police, he finally got caught."
+  },
+  {
+   "phrase": "gentle smile",
+   "lang": "en",
+   "meaning": "yumuşak gülümseme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "wry smile",
+   "lang": "en",
+   "meaning": "alaycı gülümseme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "prolonged silence",
+   "lang": "en",
+   "meaning": "uzun süren sessizlik",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hoarse voice",
+   "lang": "en",
+   "meaning": "kısık ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "soft voice",
+   "lang": "en",
+   "meaning": "yumuşak ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steady voice",
+   "lang": "en",
+   "meaning": "kararlı ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "familiar voice",
+   "lang": "en",
+   "meaning": "tanıdık ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hushed whisper",
+   "lang": "en",
+   "meaning": "alçak fısıltı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "urgent whisper",
+   "lang": "en",
+   "meaning": "aceleci fısıltı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint whisper",
+   "lang": "en",
+   "meaning": "belli belirsiz fısıltı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "soft whisper",
+   "lang": "en",
+   "meaning": "hafif fısıltı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "conspiratorial whisper",
+   "lang": "en",
+   "meaning": "gizli anlaşma havasındaki fısıltı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "terrified scream",
+   "lang": "en",
+   "meaning": "dehşet dolu çığlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "high-pitched scream",
+   "lang": "en",
+   "meaning": "tiz çığlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant scream",
+   "lang": "en",
+   "meaning": "uzaktan gelen çığlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bloodcurdling scream",
+   "lang": "en",
+   "meaning": "kan donduran çığlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "puzzled look",
+   "lang": "en",
+   "meaning": "şaşkın bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "worried look",
+   "lang": "en",
+   "meaning": "endişeli bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "blank look",
+   "lang": "en",
+   "meaning": "ifadesiz bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "stern look",
+   "lang": "en",
+   "meaning": "sert bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "meaningful look",
+   "lang": "en",
+   "meaning": "manidar bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "quick glance",
+   "lang": "en",
+   "meaning": "hızlı bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "furtive glance",
+   "lang": "en",
+   "meaning": "kaçamak bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "curious glance",
+   "lang": "en",
+   "meaning": "meraklı bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "appraising glance",
+   "lang": "en",
+   "meaning": "değerlendirici bakış",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grim expression",
+   "lang": "en",
+   "meaning": "kasvetli ifade",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "thoughtful expression",
+   "lang": "en",
+   "meaning": "düşünceli ifade",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "confused expression",
+   "lang": "en",
+   "meaning": "şaşkın ifade",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "guarded expression",
+   "lang": "en",
+   "meaning": "temkinli ifade",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "solemn expression",
+   "lang": "en",
+   "meaning": "ciddi ifade",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "nervous laughter",
+   "lang": "en",
+   "meaning": "gergin kahkaha",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "infectious laughter",
+   "lang": "en",
+   "meaning": "bulaşıcı kahkaha",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uncontrollable laughter",
+   "lang": "en",
+   "meaning": "kontrol edilemez kahkaha",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter laughter",
+   "lang": "en",
+   "meaning": "acı kahkaha",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine laughter",
+   "lang": "en",
+   "meaning": "içten kahkaha",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter tears",
+   "lang": "en",
+   "meaning": "acı gözyaşları",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "silent tears",
+   "lang": "en",
+   "meaning": "sessiz gözyaşları",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hot tears",
+   "lang": "en",
+   "meaning": "sıcak gözyaşları",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "happy tears",
+   "lang": "en",
+   "meaning": "mutluluk gözyaşları",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep fear",
+   "lang": "en",
+   "meaning": "derin korku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "irrational fear",
+   "lang": "en",
+   "meaning": "mantıksız korku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing fear",
+   "lang": "en",
+   "meaning": "artan korku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant fear",
+   "lang": "en",
+   "meaning": "sürekli korku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "overwhelming fear",
+   "lang": "en",
+   "meaning": "ezici korku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sudden anger",
+   "lang": "en",
+   "meaning": "ani öfke",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep anger",
+   "lang": "en",
+   "meaning": "derin öfke",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "barely concealed anger",
+   "lang": "en",
+   "meaning": "zor gizlenen öfke",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mounting anger",
+   "lang": "en",
+   "meaning": "artan öfke",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uncontrollable anger",
+   "lang": "en",
+   "meaning": "kontrol edilemeyen öfke",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immense relief",
+   "lang": "en",
+   "meaning": "muazzam rahatlama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "overwhelming relief",
+   "lang": "en",
+   "meaning": "çok büyük rahatlama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "visible relief",
+   "lang": "en",
+   "meaning": "gözle görülür rahatlama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine relief",
+   "lang": "en",
+   "meaning": "gerçek rahatlama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immediate relief",
+   "lang": "en",
+   "meaning": "anında gelen rahatlama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lasting regret",
+   "lang": "en",
+   "meaning": "kalıcı pişmanlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter regret",
+   "lang": "en",
+   "meaning": "acı pişmanlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine regret",
+   "lang": "en",
+   "meaning": "içten pişmanlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "profound regret",
+   "lang": "en",
+   "meaning": "çok derin pişmanlık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "renewed hope",
+   "lang": "en",
+   "meaning": "yeniden doğan umut",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "desperate hope",
+   "lang": "en",
+   "meaning": "çaresiz umut",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine hope",
+   "lang": "en",
+   "meaning": "gerçek umut",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lingering suspicion",
+   "lang": "en",
+   "meaning": "geçmeyen şüphe",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "vague suspicion",
+   "lang": "en",
+   "meaning": "belirsiz şüphe",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong suspicion",
+   "lang": "en",
+   "meaning": "güçlü şüphe",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lingering doubt",
+   "lang": "en",
+   "meaning": "geçmeyen kuşku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing doubt",
+   "lang": "en",
+   "meaning": "artan kuşku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "slight doubt",
+   "lang": "en",
+   "meaning": "hafif kuşku",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dark secret",
+   "lang": "en",
+   "meaning": "karanlık sır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "closely guarded secret",
+   "lang": "en",
+   "meaning": "özenle saklanan sır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "terrible secret",
+   "lang": "en",
+   "meaning": "korkunç sır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "family secret",
+   "lang": "en",
+   "meaning": "aileye ait sır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint memory",
+   "lang": "en",
+   "meaning": "silik anı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "painful memory",
+   "lang": "en",
+   "meaning": "acı verici anı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cherished memory",
+   "lang": "en",
+   "meaning": "değerli anı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "solemn promise",
+   "lang": "en",
+   "meaning": "ciddi söz",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "firm promise",
+   "lang": "en",
+   "meaning": "kesin söz",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unspoken promise",
+   "lang": "en",
+   "meaning": "dile getirilmemiş söz",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immediate threat",
+   "lang": "en",
+   "meaning": "acil tehdit",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden threat",
+   "lang": "en",
+   "meaning": "gizli tehdit",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing threat",
+   "lang": "en",
+   "meaning": "artan tehdit",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "credible threat",
+   "lang": "en",
+   "meaning": "inandırıcı tehdit",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "stern warning",
+   "lang": "en",
+   "meaning": "sert uyarı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "final warning",
+   "lang": "en",
+   "meaning": "son uyarı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "clear warning",
+   "lang": "en",
+   "meaning": "açık uyarı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "urgent warning",
+   "lang": "en",
+   "meaning": "acil uyarı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "obvious choice",
+   "lang": "en",
+   "meaning": "akla en yatkın seçim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "wise choice",
+   "lang": "en",
+   "meaning": "akıllıca seçim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deliberate choice",
+   "lang": "en",
+   "meaning": "bilinçli seçim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "impossible choice",
+   "lang": "en",
+   "meaning": "imkânsız seçim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "costly mistake",
+   "lang": "en",
+   "meaning": "pahalıya mal olan hata",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "careless mistake",
+   "lang": "en",
+   "meaning": "dikkatsizce yapılan hata",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "honest mistake",
+   "lang": "en",
+   "meaning": "kasıtsız hata",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fatal mistake",
+   "lang": "en",
+   "meaning": "ölümcül hata",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "slim chance",
+   "lang": "en",
+   "meaning": "düşük şans",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fair chance",
+   "lang": "en",
+   "meaning": "makul şans",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "real chance",
+   "lang": "en",
+   "meaning": "gerçek şans",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rare chance",
+   "lang": "en",
+   "meaning": "nadir şans",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "last chance",
+   "lang": "en",
+   "meaning": "son şans",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rare opportunity",
+   "lang": "en",
+   "meaning": "nadir fırsat",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unique opportunity",
+   "lang": "en",
+   "meaning": "benzersiz fırsat",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "daunting challenge",
+   "lang": "en",
+   "meaning": "göz korkutucu zorluk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "formidable challenge",
+   "lang": "en",
+   "meaning": "çetin zorluk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "serious challenge",
+   "lang": "en",
+   "meaning": "ciddi zorluk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter struggle",
+   "lang": "en",
+   "meaning": "çetin mücadele",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "long struggle",
+   "lang": "en",
+   "meaning": "uzun mücadele",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "desperate struggle",
+   "lang": "en",
+   "meaning": "umutsuz mücadele",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant struggle",
+   "lang": "en",
+   "meaning": "sürekli mücadele",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unequal struggle",
+   "lang": "en",
+   "meaning": "eşitsiz mücadele",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow victory",
+   "lang": "en",
+   "meaning": "kıl payı zafer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "decisive victory",
+   "lang": "en",
+   "meaning": "kesin zafer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hard-fought victory",
+   "lang": "en",
+   "meaning": "zorlu mücadeleyle kazanılmış zafer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "historic victory",
+   "lang": "en",
+   "meaning": "tarihî zafer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "crushing defeat",
+   "lang": "en",
+   "meaning": "ezici yenilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "humiliating defeat",
+   "lang": "en",
+   "meaning": "küçük düşürücü yenilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow defeat",
+   "lang": "en",
+   "meaning": "kıl payı yenilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter defeat",
+   "lang": "en",
+   "meaning": "acı yenilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "heated argument",
+   "lang": "en",
+   "meaning": "hararetli tartışma",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lengthy argument",
+   "lang": "en",
+   "meaning": "uzun tartışma",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pointless argument",
+   "lang": "en",
+   "meaning": "anlamsız tartışma",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fierce argument",
+   "lang": "en",
+   "meaning": "şiddetli tartışma",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "awkward conversation",
+   "lang": "en",
+   "meaning": "garip sohbet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "private conversation",
+   "lang": "en",
+   "meaning": "özel sohbet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lengthy conversation",
+   "lang": "en",
+   "meaning": "uzun sohbet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "difficult conversation",
+   "lang": "en",
+   "meaning": "zor sohbet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "quiet conversation",
+   "lang": "en",
+   "meaning": "sakin sohbet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "awkward question",
+   "lang": "en",
+   "meaning": "rahatsız edici soru",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "difficult question",
+   "lang": "en",
+   "meaning": "zor soru",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "obvious question",
+   "lang": "en",
+   "meaning": "akla ilk gelen soru",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "personal question",
+   "lang": "en",
+   "meaning": "kişisel soru",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "honest answer",
+   "lang": "en",
+   "meaning": "dürüst yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "straightforward answer",
+   "lang": "en",
+   "meaning": "doğrudan yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "vague answer",
+   "lang": "en",
+   "meaning": "belirsiz yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "brief answer",
+   "lang": "en",
+   "meaning": "kısa yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "plausible explanation",
+   "lang": "en",
+   "meaning": "makul açıklama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "detailed explanation",
+   "lang": "en",
+   "meaning": "ayrıntılı açıklama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "simple explanation",
+   "lang": "en",
+   "meaning": "basit açıklama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "convincing explanation",
+   "lang": "en",
+   "meaning": "ikna edici açıklama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lengthy explanation",
+   "lang": "en",
+   "meaning": "uzun açıklama",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "flimsy excuse",
+   "lang": "en",
+   "meaning": "inandırıcı olmayan bahane",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "poor excuse",
+   "lang": "en",
+   "meaning": "zayıf bahane",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "plausible excuse",
+   "lang": "en",
+   "meaning": "makul bahane",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "convenient excuse",
+   "lang": "en",
+   "meaning": "işine gelen bahane",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unconvincing excuse",
+   "lang": "en",
+   "meaning": "inandırıcı olmayan bahane",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "public apology",
+   "lang": "en",
+   "meaning": "kamuoyu önünde yapılan özür",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "formal apology",
+   "lang": "en",
+   "meaning": "resmî özür",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "belated apology",
+   "lang": "en",
+   "meaning": "gecikmiş özür",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "polite request",
+   "lang": "en",
+   "meaning": "kibar istek",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reasonable request",
+   "lang": "en",
+   "meaning": "makul istek",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "urgent request",
+   "lang": "en",
+   "meaning": "acil istek",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unusual request",
+   "lang": "en",
+   "meaning": "alışılmadık istek",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "simple request",
+   "lang": "en",
+   "meaning": "basit istek",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "formal invitation",
+   "lang": "en",
+   "meaning": "resmî davet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "personal invitation",
+   "lang": "en",
+   "meaning": "kişisel davet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "generous invitation",
+   "lang": "en",
+   "meaning": "cömert davet",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immediate reaction",
+   "lang": "en",
+   "meaning": "anında gelen tepki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong reaction",
+   "lang": "en",
+   "meaning": "güçlü tepki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotional reaction",
+   "lang": "en",
+   "meaning": "duygusal tepki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hostile reaction",
+   "lang": "en",
+   "meaning": "düşmanca tepki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "swift response",
+   "lang": "en",
+   "meaning": "hızlı yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "measured response",
+   "lang": "en",
+   "meaning": "ölçülü yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "positive response",
+   "lang": "en",
+   "meaning": "olumlu yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negative response",
+   "lang": "en",
+   "meaning": "olumsuz yanıt",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "intense pressure",
+   "lang": "en",
+   "meaning": "yoğun baskı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mounting pressure",
+   "lang": "en",
+   "meaning": "artan baskı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant pressure",
+   "lang": "en",
+   "meaning": "sürekli baskı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "enormous pressure",
+   "lang": "en",
+   "meaning": "muazzam baskı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unbearable pressure",
+   "lang": "en",
+   "meaning": "dayanılmaz baskı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "chronic stress",
+   "lang": "en",
+   "meaning": "kronik stres",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe stress",
+   "lang": "en",
+   "meaning": "şiddetli stres",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotional stress",
+   "lang": "en",
+   "meaning": "duygusal stres",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant stress",
+   "lang": "en",
+   "meaning": "sürekli stres",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "extreme stress",
+   "lang": "en",
+   "meaning": "aşırı stres",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dull pain",
+   "lang": "en",
+   "meaning": "künt ağrı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe pain",
+   "lang": "en",
+   "meaning": "şiddetli ağrı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "chronic pain",
+   "lang": "en",
+   "meaning": "kronik ağrı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shooting pain",
+   "lang": "en",
+   "meaning": "ani saplanan ağrı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe injury",
+   "lang": "en",
+   "meaning": "ağır yaralanma",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "permanent injury",
+   "lang": "en",
+   "meaning": "kalıcı yaralanma",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "long-term illness",
+   "lang": "en",
+   "meaning": "uzun süreli hastalık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rare illness",
+   "lang": "en",
+   "meaning": "nadir hastalık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "chronic illness",
+   "lang": "en",
+   "meaning": "kronik hastalık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "early symptom",
+   "lang": "en",
+   "meaning": "erken belirti",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "common symptom",
+   "lang": "en",
+   "meaning": "yaygın belirti",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unusual symptom",
+   "lang": "en",
+   "meaning": "alışılmadık belirti",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "warning symptom",
+   "lang": "en",
+   "meaning": "uyarı niteliğinde belirti",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe symptom",
+   "lang": "en",
+   "meaning": "şiddetli belirti",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "slow recovery",
+   "lang": "en",
+   "meaning": "yavaş iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "full recovery",
+   "lang": "en",
+   "meaning": "tam iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable recovery",
+   "lang": "en",
+   "meaning": "dikkat çekici iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gradual recovery",
+   "lang": "en",
+   "meaning": "kademeli iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steady progress",
+   "lang": "en",
+   "meaning": "istikrarlı ilerleme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "slow progress",
+   "lang": "en",
+   "meaning": "yavaş ilerleme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable progress",
+   "lang": "en",
+   "meaning": "dikkat çekici ilerleme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant progress",
+   "lang": "en",
+   "meaning": "önemli ilerleme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant improvement",
+   "lang": "en",
+   "meaning": "önemli iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dramatic improvement",
+   "lang": "en",
+   "meaning": "çarpıcı iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gradual improvement",
+   "lang": "en",
+   "meaning": "kademeli iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "noticeable improvement",
+   "lang": "en",
+   "meaning": "fark edilir iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steady improvement",
+   "lang": "en",
+   "meaning": "istikrarlı iyileşme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gradual change",
+   "lang": "en",
+   "meaning": "kademeli değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sudden change",
+   "lang": "en",
+   "meaning": "ani değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant change",
+   "lang": "en",
+   "meaning": "önemli değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sudden shift",
+   "lang": "en",
+   "meaning": "ani değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gradual shift",
+   "lang": "en",
+   "meaning": "kademeli değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "subtle shift",
+   "lang": "en",
+   "meaning": "ince değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dramatic shift",
+   "lang": "en",
+   "meaning": "çarpıcı değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant shift",
+   "lang": "en",
+   "meaning": "önemli değişim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "familiar pattern",
+   "lang": "en",
+   "meaning": "tanıdık örüntü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strange pattern",
+   "lang": "en",
+   "meaning": "garip örüntü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "recurring pattern",
+   "lang": "en",
+   "meaning": "tekrarlayan örüntü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distinctive pattern",
+   "lang": "en",
+   "meaning": "ayırt edici örüntü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "clear pattern",
+   "lang": "en",
+   "meaning": "belirgin örüntü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "clear signal",
+   "lang": "en",
+   "meaning": "net sinyal",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "weak signal",
+   "lang": "en",
+   "meaning": "zayıf sinyal",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong signal",
+   "lang": "en",
+   "meaning": "güçlü sinyal",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint signal",
+   "lang": "en",
+   "meaning": "belli belirsiz sinyal",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distorted signal",
+   "lang": "en",
+   "meaning": "bozulmuş sinyal",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "loud noise",
+   "lang": "en",
+   "meaning": "yüksek gürültü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint noise",
+   "lang": "en",
+   "meaning": "hafif gürültü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant noise",
+   "lang": "en",
+   "meaning": "sürekli gürültü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strange noise",
+   "lang": "en",
+   "meaning": "garip gürültü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant noise",
+   "lang": "en",
+   "meaning": "uzaktan gelen gürültü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint sound",
+   "lang": "en",
+   "meaning": "belli belirsiz ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strange sound",
+   "lang": "en",
+   "meaning": "garip ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant sound",
+   "lang": "en",
+   "meaning": "uzaktan gelen ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "familiar sound",
+   "lang": "en",
+   "meaning": "tanıdık ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sharp sound",
+   "lang": "en",
+   "meaning": "keskin ses",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dim light",
+   "lang": "en",
+   "meaning": "loş ışık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "harsh light",
+   "lang": "en",
+   "meaning": "sert ışık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "soft light",
+   "lang": "en",
+   "meaning": "yumuşak ışık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "long shadow",
+   "lang": "en",
+   "meaning": "uzun gölge",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dark shadow",
+   "lang": "en",
+   "meaning": "koyu gölge",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "faint shadow",
+   "lang": "en",
+   "meaning": "belirsiz gölge",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "moving shadow",
+   "lang": "en",
+   "meaning": "hareket eden gölge",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep shadow",
+   "lang": "en",
+   "meaning": "derin gölge",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "icy wind",
+   "lang": "en",
+   "meaning": "buz gibi rüzgâr",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gentle wind",
+   "lang": "en",
+   "meaning": "hafif rüzgâr",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gusty wind",
+   "lang": "en",
+   "meaning": "hamleli rüzgâr",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steady rain",
+   "lang": "en",
+   "meaning": "aralıksız yağmur",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "light rain",
+   "lang": "en",
+   "meaning": "hafif yağmur",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "torrential rain",
+   "lang": "en",
+   "meaning": "sağanak hâlindeki yağmur",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "driving rain",
+   "lang": "en",
+   "meaning": "sert esen rüzgârla savrulan yağmur",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dense fog",
+   "lang": "en",
+   "meaning": "yoğun sis",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "morning fog",
+   "lang": "en",
+   "meaning": "sabah sisi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rolling fog",
+   "lang": "en",
+   "meaning": "dalga dalga ilerleyen sis",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fresh snow",
+   "lang": "en",
+   "meaning": "taze kar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep snow",
+   "lang": "en",
+   "meaning": "derin kar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "powdery snow",
+   "lang": "en",
+   "meaning": "toz gibi kar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "wet snow",
+   "lang": "en",
+   "meaning": "ıslak kar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "violent storm",
+   "lang": "en",
+   "meaning": "şiddetli fırtına",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fierce storm",
+   "lang": "en",
+   "meaning": "sert fırtına",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe storm",
+   "lang": "en",
+   "meaning": "şiddetli fırtına",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "approaching storm",
+   "lang": "en",
+   "meaning": "yaklaşan fırtına",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sudden storm",
+   "lang": "en",
+   "meaning": "ani fırtına",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "intense heat",
+   "lang": "en",
+   "meaning": "yoğun sıcak",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "oppressive heat",
+   "lang": "en",
+   "meaning": "bunaltıcı sıcak",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "scorching heat",
+   "lang": "en",
+   "meaning": "kavurucu sıcak",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "extreme heat",
+   "lang": "en",
+   "meaning": "aşırı sıcak",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unbearable heat",
+   "lang": "en",
+   "meaning": "dayanılmaz sıcak",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bitter cold",
+   "lang": "en",
+   "meaning": "keskin soğuk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "extreme cold",
+   "lang": "en",
+   "meaning": "aşırı soğuk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "intense cold",
+   "lang": "en",
+   "meaning": "yoğun soğuk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe cold",
+   "lang": "en",
+   "meaning": "şiddetli soğuk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unseasonable cold",
+   "lang": "en",
+   "meaning": "mevsimsiz soğuk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow road",
+   "lang": "en",
+   "meaning": "dar yol",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steep road",
+   "lang": "en",
+   "meaning": "dik yol",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deserted road",
+   "lang": "en",
+   "meaning": "ıssız yol",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rough road",
+   "lang": "en",
+   "meaning": "engebeli yol",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "winding path",
+   "lang": "en",
+   "meaning": "kıvrımlı patika",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steep path",
+   "lang": "en",
+   "meaning": "dik patika",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rocky path",
+   "lang": "en",
+   "meaning": "taşlı patika",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden path",
+   "lang": "en",
+   "meaning": "gizli patika",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fast-flowing river",
+   "lang": "en",
+   "meaning": "hızlı akan nehir",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "shallow river",
+   "lang": "en",
+   "meaning": "sığ nehir",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "muddy river",
+   "lang": "en",
+   "meaning": "çamurlu nehir",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dark forest",
+   "lang": "en",
+   "meaning": "karanlık orman",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "ancient forest",
+   "lang": "en",
+   "meaning": "çok eski orman",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "vast forest",
+   "lang": "en",
+   "meaning": "uçsuz bucaksız orman",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remote forest",
+   "lang": "en",
+   "meaning": "uzak orman",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "steep mountain",
+   "lang": "en",
+   "meaning": "dik dağ",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rocky mountain",
+   "lang": "en",
+   "meaning": "kayalık dağ",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "snow-capped mountain",
+   "lang": "en",
+   "meaning": "karla kaplı dağ",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant mountain",
+   "lang": "en",
+   "meaning": "uzaktaki dağ",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "towering mountain",
+   "lang": "en",
+   "meaning": "heybetli dağ",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep valley",
+   "lang": "en",
+   "meaning": "derin vadi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "narrow valley",
+   "lang": "en",
+   "meaning": "dar vadi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remote valley",
+   "lang": "en",
+   "meaning": "ıssız vadi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fertile valley",
+   "lang": "en",
+   "meaning": "verimli vadi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden valley",
+   "lang": "en",
+   "meaning": "gizli vadi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cramped room",
+   "lang": "en",
+   "meaning": "daracık oda",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "spacious room",
+   "lang": "en",
+   "meaning": "geniş oda",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "abandoned house",
+   "lang": "en",
+   "meaning": "terk edilmiş ev",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "isolated house",
+   "lang": "en",
+   "meaning": "ıssız ev",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "old-fashioned house",
+   "lang": "en",
+   "meaning": "eski tarz ev",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grand house",
+   "lang": "en",
+   "meaning": "gösterişli ev",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "modest house",
+   "lang": "en",
+   "meaning": "mütevazı ev",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "heavy door",
+   "lang": "en",
+   "meaning": "ağır kapı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "locked door",
+   "lang": "en",
+   "meaning": "kilitli kapı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden door",
+   "lang": "en",
+   "meaning": "gizli kapı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "rusty door",
+   "lang": "en",
+   "meaning": "paslı kapı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "broken window",
+   "lang": "en",
+   "meaning": "kırık pencere",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "handwritten letter",
+   "lang": "en",
+   "meaning": "el yazısıyla yazılmış mektup",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "anonymous letter",
+   "lang": "en",
+   "meaning": "imzasız mektup",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sealed letter",
+   "lang": "en",
+   "meaning": "mühürlü mektup",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "urgent message",
+   "lang": "en",
+   "meaning": "acil mesaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cryptic message",
+   "lang": "en",
+   "meaning": "şifreli mesaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "brief message",
+   "lang": "en",
+   "meaning": "kısa mesaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "anonymous message",
+   "lang": "en",
+   "meaning": "imzasız mesaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "moving story",
+   "lang": "en",
+   "meaning": "duygulandırıcı hikâye",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gripping story",
+   "lang": "en",
+   "meaning": "sürükleyici hikâye",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "tragic story",
+   "lang": "en",
+   "meaning": "trajik hikâye",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "compelling story",
+   "lang": "en",
+   "meaning": "etkileyici hikâye",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unbelievable story",
+   "lang": "en",
+   "meaning": "inanılmaz hikâye",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "tragic ending",
+   "lang": "en",
+   "meaning": "trajik son",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "happy ending",
+   "lang": "en",
+   "meaning": "mutlu son",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "ambiguous ending",
+   "lang": "en",
+   "meaning": "belirsiz son",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "bittersweet ending",
+   "lang": "en",
+   "meaning": "buruk son",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "intricate plot",
+   "lang": "en",
+   "meaning": "karmaşık olay örgüsü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "compelling plot",
+   "lang": "en",
+   "meaning": "ilgi çekici olay örgüsü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "predictable plot",
+   "lang": "en",
+   "meaning": "tahmin edilebilir olay örgüsü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "twisted plot",
+   "lang": "en",
+   "meaning": "dolambaçlı, beklenmedik dönüşlü olay örgüsü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "simple plot",
+   "lang": "en",
+   "meaning": "basit olay örgüsü",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "complex character",
+   "lang": "en",
+   "meaning": "karmaşık karakter",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "flawed character",
+   "lang": "en",
+   "meaning": "kusurlu karakter",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "memorable character",
+   "lang": "en",
+   "meaning": "akılda kalıcı karakter",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "minor character",
+   "lang": "en",
+   "meaning": "ikincil karakter",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "central character",
+   "lang": "en",
+   "meaning": "merkezî karakter",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dramatic scene",
+   "lang": "en",
+   "meaning": "çarpıcı sahne",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotional scene",
+   "lang": "en",
+   "meaning": "duygusal sahne",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "memorable scene",
+   "lang": "en",
+   "meaning": "unutulmaz sahne",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "final scene",
+   "lang": "en",
+   "meaning": "son sahne",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "tense scene",
+   "lang": "en",
+   "meaning": "gerilimli sahne",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "relaxed atmosphere",
+   "lang": "en",
+   "meaning": "rahat atmosfer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gloomy atmosphere",
+   "lang": "en",
+   "meaning": "kasvetli atmosfer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "festive atmosphere",
+   "lang": "en",
+   "meaning": "şenlikli atmosfer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "oppressive atmosphere",
+   "lang": "en",
+   "meaning": "bunaltıcı atmosfer",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "cheerful mood",
+   "lang": "en",
+   "meaning": "neşeli ruh hâli",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "gloomy mood",
+   "lang": "en",
+   "meaning": "kasvetli ruh hâli",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reflective mood",
+   "lang": "en",
+   "meaning": "düşünceli ruh hâli",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "somber mood",
+   "lang": "en",
+   "meaning": "kederli ruh hâli",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "playful mood",
+   "lang": "en",
+   "meaning": "şakacı ruh hâli",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong reputation",
+   "lang": "en",
+   "meaning": "güçlü itibar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "solid reputation",
+   "lang": "en",
+   "meaning": "sağlam itibar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "damaged reputation",
+   "lang": "en",
+   "meaning": "zedelenmiş itibar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "excellent reputation",
+   "lang": "en",
+   "meaning": "mükemmel itibar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "poor reputation",
+   "lang": "en",
+   "meaning": "kötü itibar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "complicated relationship",
+   "lang": "en",
+   "meaning": "karmaşık ilişki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "healthy relationship",
+   "lang": "en",
+   "meaning": "sağlıklı ilişki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distant relationship",
+   "lang": "en",
+   "meaning": "mesafeli ilişki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lasting friendship",
+   "lang": "en",
+   "meaning": "kalıcı dostluk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep friendship",
+   "lang": "en",
+   "meaning": "derin dostluk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine friendship",
+   "lang": "en",
+   "meaning": "gerçek dostluk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutual trust",
+   "lang": "en",
+   "meaning": "karşılıklı güven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep trust",
+   "lang": "en",
+   "meaning": "derin güven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "blind trust",
+   "lang": "en",
+   "meaning": "körü körüne güven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "complete trust",
+   "lang": "en",
+   "meaning": "tam güven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fragile trust",
+   "lang": "en",
+   "meaning": "kırılgan güven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine respect",
+   "lang": "en",
+   "meaning": "içten saygı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grudging respect",
+   "lang": "en",
+   "meaning": "isteksizce gösterilen saygı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "professional respect",
+   "lang": "en",
+   "meaning": "mesleki saygı",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "undivided attention",
+   "lang": "en",
+   "meaning": "tam dikkat",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "careful attention",
+   "lang": "en",
+   "meaning": "özenli dikkat",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "special attention",
+   "lang": "en",
+   "meaning": "özel dikkat",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant attention",
+   "lang": "en",
+   "meaning": "sürekli dikkat",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "genuine interest",
+   "lang": "en",
+   "meaning": "gerçek ilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "keen interest",
+   "lang": "en",
+   "meaning": "yoğun ilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing interest",
+   "lang": "en",
+   "meaning": "artan ilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutual interest",
+   "lang": "en",
+   "meaning": "karşılıklı ilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "special interest",
+   "lang": "en",
+   "meaning": "özel ilgi",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing concern",
+   "lang": "en",
+   "meaning": "artan endişe",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widespread concern",
+   "lang": "en",
+   "meaning": "yaygın endişe",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "quiet confidence",
+   "lang": "en",
+   "meaning": "sessiz ama sağlam özgüven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "growing confidence",
+   "lang": "en",
+   "meaning": "artan özgüven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "newfound confidence",
+   "lang": "en",
+   "meaning": "yeni kazanılmış özgüven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "complete confidence",
+   "lang": "en",
+   "meaning": "tam özgüven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unshakable confidence",
+   "lang": "en",
+   "meaning": "sarsılmaz özgüven",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "great courage",
+   "lang": "en",
+   "meaning": "büyük cesaret",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "quiet courage",
+   "lang": "en",
+   "meaning": "gösterişsiz cesaret",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable courage",
+   "lang": "en",
+   "meaning": "dikkat çekici cesaret",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "moral courage",
+   "lang": "en",
+   "meaning": "ahlaki cesaret",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "extraordinary courage",
+   "lang": "en",
+   "meaning": "olağanüstü cesaret",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "great patience",
+   "lang": "en",
+   "meaning": "büyük sabır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable patience",
+   "lang": "en",
+   "meaning": "dikkat çekici sabır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "endless patience",
+   "lang": "en",
+   "meaning": "sonsuz sabır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "extraordinary patience",
+   "lang": "en",
+   "meaning": "olağanüstü sabır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "considerable patience",
+   "lang": "en",
+   "meaning": "hatırı sayılır sabır",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "physical strength",
+   "lang": "en",
+   "meaning": "fiziksel güç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "emotional strength",
+   "lang": "en",
+   "meaning": "duygusal güç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable strength",
+   "lang": "en",
+   "meaning": "dikkat çekici güç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "renewed strength",
+   "lang": "en",
+   "meaning": "yeniden kazanılmış güç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fatal weakness",
+   "lang": "en",
+   "meaning": "ölümcül zayıflık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden weakness",
+   "lang": "en",
+   "meaning": "gizli zayıflık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "obvious weakness",
+   "lang": "en",
+   "meaning": "açık zayıflık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "serious weakness",
+   "lang": "en",
+   "meaning": "ciddi zayıflık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "temporary weakness",
+   "lang": "en",
+   "meaning": "geçici zayıflık",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "major advantage",
+   "lang": "en",
+   "meaning": "büyük avantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unfair advantage",
+   "lang": "en",
+   "meaning": "haksız avantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "decisive advantage",
+   "lang": "en",
+   "meaning": "belirleyici avantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "serious disadvantage",
+   "lang": "en",
+   "meaning": "ciddi dezavantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "major disadvantage",
+   "lang": "en",
+   "meaning": "büyük dezavantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "obvious disadvantage",
+   "lang": "en",
+   "meaning": "açık dezavantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant disadvantage",
+   "lang": "en",
+   "meaning": "önemli dezavantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "distinct disadvantage",
+   "lang": "en",
+   "meaning": "belirgin dezavantaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "major risk",
+   "lang": "en",
+   "meaning": "büyük risk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant risk",
+   "lang": "en",
+   "meaning": "önemli risk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unnecessary risk",
+   "lang": "en",
+   "meaning": "gereksiz risk",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immediate danger",
+   "lang": "en",
+   "meaning": "yakın tehlike",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "serious danger",
+   "lang": "en",
+   "meaning": "ciddi tehlike",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hidden danger",
+   "lang": "en",
+   "meaning": "gizli tehlike",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "constant danger",
+   "lang": "en",
+   "meaning": "sürekli tehlike",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "grave danger",
+   "lang": "en",
+   "meaning": "çok ciddi tehlike",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "minor problem",
+   "lang": "en",
+   "meaning": "küçük sorun",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "underlying problem",
+   "lang": "en",
+   "meaning": "altta yatan sorun",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "recurring problem",
+   "lang": "en",
+   "meaning": "tekrarlayan sorun",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "practical solution",
+   "lang": "en",
+   "meaning": "pratik çözüm",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "simple solution",
+   "lang": "en",
+   "meaning": "basit çözüm",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "effective solution",
+   "lang": "en",
+   "meaning": "etkili çözüm",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "temporary solution",
+   "lang": "en",
+   "meaning": "geçici çözüm",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lasting solution",
+   "lang": "en",
+   "meaning": "kalıcı çözüm",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "positive result",
+   "lang": "en",
+   "meaning": "olumlu sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negative result",
+   "lang": "en",
+   "meaning": "olumsuz sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "remarkable result",
+   "lang": "en",
+   "meaning": "dikkat çekici sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "disappointing result",
+   "lang": "en",
+   "meaning": "hayal kırıklığı yaratan sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "positive outcome",
+   "lang": "en",
+   "meaning": "olumlu sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negative outcome",
+   "lang": "en",
+   "meaning": "olumsuz sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "favorable outcome",
+   "lang": "en",
+   "meaning": "olumlu sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "uncertain outcome",
+   "lang": "en",
+   "meaning": "belirsiz sonuç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "significant impact",
+   "lang": "en",
+   "meaning": "önemli etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immediate impact",
+   "lang": "en",
+   "meaning": "anında etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "profound impact",
+   "lang": "en",
+   "meaning": "derin etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negative impact",
+   "lang": "en",
+   "meaning": "olumsuz etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong influence",
+   "lang": "en",
+   "meaning": "güçlü etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lasting influence",
+   "lang": "en",
+   "meaning": "kalıcı etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "positive influence",
+   "lang": "en",
+   "meaning": "olumlu etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negative influence",
+   "lang": "en",
+   "meaning": "olumsuz etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "subtle influence",
+   "lang": "en",
+   "meaning": "ince etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "immediate effect",
+   "lang": "en",
+   "meaning": "anında etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lasting effect",
+   "lang": "en",
+   "meaning": "kalıcı etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "dramatic effect",
+   "lang": "en",
+   "meaning": "çarpıcı etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "positive effect",
+   "lang": "en",
+   "meaning": "olumlu etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "adverse effect",
+   "lang": "en",
+   "meaning": "olumsuz etki",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong impression",
+   "lang": "en",
+   "meaning": "güçlü izlenim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "favorable impression",
+   "lang": "en",
+   "meaning": "olumlu izlenim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "first impression",
+   "lang": "en",
+   "meaning": "ilk izlenim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "false impression",
+   "lang": "en",
+   "meaning": "yanlış izlenim",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "public image",
+   "lang": "en",
+   "meaning": "kamuoyundaki imaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "positive image",
+   "lang": "en",
+   "meaning": "olumlu imaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "negative image",
+   "lang": "en",
+   "meaning": "olumsuz imaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "false image",
+   "lang": "en",
+   "meaning": "yanlış imaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "idealized image",
+   "lang": "en",
+   "meaning": "idealleştirilmiş imaj",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "deep belief",
+   "lang": "en",
+   "meaning": "derin inanç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong belief",
+   "lang": "en",
+   "meaning": "güçlü inanç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "widespread belief",
+   "lang": "en",
+   "meaning": "yaygın inanç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "false belief",
+   "lang": "en",
+   "meaning": "yanlış inanç",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strong opinion",
+   "lang": "en",
+   "meaning": "güçlü görüş",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "personal opinion",
+   "lang": "en",
+   "meaning": "kişisel görüş",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "popular opinion",
+   "lang": "en",
+   "meaning": "yaygın görüş",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "unpopular opinion",
+   "lang": "en",
+   "meaning": "sevilmeyen görüş",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "informed opinion",
+   "lang": "en",
+   "meaning": "bilgiye dayalı görüş",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "poor judgment",
+   "lang": "en",
+   "meaning": "kötü muhakeme, yanlış karar",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "good judgment",
+   "lang": "en",
+   "meaning": "sağduyu, iyi muhakeme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "sound judgment",
+   "lang": "en",
+   "meaning": "sağlam muhakeme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "hasty judgment",
+   "lang": "en",
+   "meaning": "aceleci karar, peşin hüküm",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fair judgment",
+   "lang": "en",
+   "meaning": "adil değerlendirme",
+   "ex": "",
+   "ex_tr": "",
+   "cat": "collocations"
   }
  ],
  "phrase_edits": [

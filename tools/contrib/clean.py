@@ -26,7 +26,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v13.xlsx
+         tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx
 """
 import json
 import re
@@ -642,6 +642,19 @@ F17_FIX = {
     28: None,
 }
 
+# --- Filter sheet 18: adjective + noun collocations of story language. The
+# examples all follow one pattern ("The X changed their plans.", "The negative
+# response reassured the residents.") and are left out; the collocations come
+# without them. Left out too: free combinations with no pull between the words
+# ("unexpected" + any noun, "empty room", "wooden door", "reaction time").
+F18_DROP = {'hidden secret', 'empty room', 'quiet room', 'small window', 'open window', 'high window', 'narrow window',
+            'long letter', 'wooden door', 'wide river', 'deep river'}
+F18_MEANING = {'twisted plot': 'dolambaçlı, beklenmedik dönüşlü olay örgüsü', 'obvious choice': 'akla en yatkın seçim',
+               'obvious question': 'akla ilk gelen soru', 'morning fog': 'sabah sisi',
+               'poor judgment': 'kötü muhakeme, yanlış karar', 'good judgment': 'sağduyu, iyi muhakeme',
+               'sound judgment': 'sağlam muhakeme', 'hasty judgment': 'aceleci karar, peşin hüküm',
+               'fair judgment': 'adil değerlendirme'}
+
 AUDIT_FIX = {'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
              'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
              'hamit_denetim15_2026-11-20.xlsx': (D15_EX_FIX, D15_EDITS)}
@@ -689,6 +702,15 @@ for src in srcs:
             e = {'phrase': ph.lower(), 'lang': 'en', 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': F17_CAT[cat]}
             e.update(fix)
             phrases.append(e)
+        continue
+
+    if 'Yeni eşdizimler' in wb.sheetnames:
+        for i, r in rows(wb, 'Yeni eşdizimler'):
+            ph, mean = r[0].lower(), r[2]
+            if ph in F18_DROP or ph.startswith('unexpected ') or ph.endswith('reaction time'):
+                continue
+            phrases.append({'phrase': ph, 'lang': 'en', 'meaning': F18_MEANING.get(ph, mean), 'ex': '', 'ex_tr': '',
+                            'cat': 'collocations'})
         continue
 
     if 'Örnek cümle önerileri' in wb.sheetnames:
