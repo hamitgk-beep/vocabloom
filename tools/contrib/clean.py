@@ -28,7 +28,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx \
-         tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx
+         tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
+         tools/contrib/hamit_2026-11-20_v17.xlsx
 """
 import json
 import re
@@ -496,7 +497,33 @@ V16_EX_FIX = {
 }
 V16_PH_FIX = {6: {'ex_tr': 'Your mother waited anxiously for you to come home.'}}
 
+# --- Dictionary v17 (hamit_2026-11-20_v17.xlsx, sent as "v15") -------------------
+# "evvel" in "-madan evvel" is "before" (a postposition); "abla" for a woman one
+# does not know takes the wording the dictionary has. The other meanings are the
+# dictionary's own ones that had no example yet.
+V17_MEANING = {7: 'before', 9: 'term of address for a woman, younger than teyze (“auntie”)'}
+V17_EX_FIX = {
+    5: {'en': 'Knowing two foreign languages was a big plus in her job application.'},
+    6: {'en': 'The engineers measured the elevation of the land before starting construction.'},
+    9: {'en': 'The woman who ran the neighbourhood grocery used to hand out sweets to the children every morning.'},
+    11: {'en': 'The doctor said the ultrasound showed some small stones in his kidneys.'},
+    18: {'tr': 'Halıdaki o çıkmak bilmeyen lekeyi temizlemek için güçlü bir kimyasal temizleyici kullandı.'},
+    20: {'tr': 'Dürüstlüğüne kesinlikle kefil olabilirim; onu on yıldır tanıyorum.'},
+    7: {'pos': 'postp'},
+    28: {'tr': 'Her hafta bozulduğu için o güvenilmez eski arabayı satmak zorunda kaldılar.'},
+}
+for _i, _m in V17_MEANING.items():
+    V17_EX_FIX.setdefault(_i, {})['meaning'] = _m
+V17_PH_FIX = {
+    13: {'ex_tr': 'Piyasadaki son eğilimlerle ilgili derin analiziniz gerçekten tam isabet oldu.'},
+    15: {'ex': "I'm keeping my fingers crossed that the weather stays clear tomorrow.",
+         'ex_tr': 'Yarın havanın açık kalmasını umuyorum, şans dileyelim.'},
+}
+
 FIXES = {
+    'hamit_2026-11-20_v17.xlsx': dict(ctx_fix={i: (None, None, None, m) for i, m in V17_MEANING.items()},
+                                      ctx_to_phrase=set(), ctx_add=[], ctx_tr={},
+                                      en_split={}, tr_split={}, ex_fix=V17_EX_FIX, ph_fix=V17_PH_FIX),
     'hamit_2026-11-20_v16.xlsx': dict(ctx_fix={i: (None, None, None, m) for i, m in V16_MEANING.items()}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       en_split={}, tr_split={}, ex_fix=V16_EX_FIX, ph_fix=V16_PH_FIX),
     'hamit_2026-11-20_v15.xlsx': dict(ctx_fix={55: (None, None, None, V15_BLIND), **{i: (None, None, None, m) for i, (_, m) in V15_SAME.items()}}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],

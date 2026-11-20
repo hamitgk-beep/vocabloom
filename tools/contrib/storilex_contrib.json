@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -9207,6 +9207,238 @@
    "lemma": "neighbour",
    "lang": "en",
    "meaning": "komşu ülke/bölge",
+   "translation": ""
+  },
+  {
+   "sentence": "Gürültüden uzak bu sessiz kasaba bizim için tam bir cennetti.",
+   "form": "cennetti",
+   "lemma": "cennet",
+   "lang": "tr",
+   "meaning": "heaven, paradise",
+   "translation": ""
+  },
+  {
+   "sentence": "Ajanlar toplantı odasındaki masanın altına küçük bir böcek yerleştirmiş.",
+   "form": "böcek",
+   "lemma": "böcek",
+   "lang": "tr",
+   "meaning": "bug, hidden microphone",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski zamanlarda kadınlar çamaşırları büyük ahşap bir teknede yıkardı.",
+   "form": "teknede",
+   "lemma": "tekne",
+   "lang": "tr",
+   "meaning": "trough, tray",
+   "translation": ""
+  },
+  {
+   "sentence": "İki yabancı dil bilmesi iş başvurusunda ona büyük bir artı sağladı.",
+   "form": "artı",
+   "lemma": "artı",
+   "lang": "tr",
+   "meaning": "plus, advantage",
+   "translation": ""
+  },
+  {
+   "sentence": "Mühendisler inşaata başlamadan önce arazinin kod seviyesini ölçtüler.",
+   "form": "kod",
+   "lemma": "kod",
+   "lang": "tr",
+   "meaning": "elevation, benchmark",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu meseleyi tartışmadan evvel herkesin fikrini öğrenmemiz gerekiyor.",
+   "form": "evvel",
+   "lemma": "evvel",
+   "lang": "tr",
+   "meaning": "before",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirketteki geçici görevinden sonra nihayet devamlı bir pozisyona geçti.",
+   "form": "devamlı",
+   "lemma": "devamlı",
+   "lang": "tr",
+   "meaning": "permanent, consistent",
+   "translation": ""
+  },
+  {
+   "sentence": "Mahalledeki bakkal abla her sabah çocuklara şeker dağıtırdı.",
+   "form": "abla",
+   "lemma": "abla",
+   "lang": "tr",
+   "meaning": "term of address for a woman, younger than teyze (“auntie”)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahçedeki ağaçların bu seneki yemişi beklentimizin çok altındaydı.",
+   "form": "yemişi",
+   "lemma": "yemiş",
+   "lang": "tr",
+   "meaning": "yield, fruit",
+   "translation": ""
+  },
+  {
+   "sentence": "Doktor ultrason sonucunda böbreklerinde ufak bir kum olduğunu söyledi.",
+   "form": "kum",
+   "lemma": "kum",
+   "lang": "tr",
+   "meaning": "gravel, kidney stone",
+   "translation": ""
+  },
+  {
+   "sentence": "Tavla oynarken şansı yaver gitmedi ve sürekli kötü zar attı.",
+   "form": "zar",
+   "lemma": "zar",
+   "lang": "tr",
+   "meaning": "die, dice",
+   "translation": ""
+  },
+  {
+   "sentence": "İş dünyasında sadece eğitim değil, görgü ve pratik bilgi de çok önemlidir.",
+   "form": "görgü",
+   "lemma": "görgü",
+   "lang": "tr",
+   "meaning": "experience, background",
+   "translation": ""
+  },
+  {
+   "sentence": "Gençliğinde bir dönem duman içtiği için ailesiyle büyük sorunlar yaşamış.",
+   "form": "duman",
+   "lemma": "duman",
+   "lang": "tr",
+   "meaning": "marijuana, weed",
+   "translation": ""
+  },
+  {
+   "sentence": "Sınavda sorular o kadar zordu ki hepimizin hali duman oldu.",
+   "form": "duman",
+   "lemma": "duman",
+   "lang": "tr",
+   "meaning": "ruin, mess",
+   "translation": ""
+  },
+  {
+   "sentence": "For the dedicated writer, his morning writing routine is completely sacred.",
+   "form": "sacred",
+   "lemma": "sacred",
+   "lang": "en",
+   "meaning": "dokunulmaz, değerli",
+   "translation": ""
+  },
+  {
+   "sentence": "The brave rescuer dove into the freezing river to save the child.",
+   "form": "dove",
+   "lemma": "dove",
+   "lang": "en",
+   "meaning": "daldı (dive fiilinin geçmiş zamanı)",
+   "translation": ""
+  },
+  {
+   "sentence": "He used a strong chemical cleaner to remove the obstinate stain from the carpet.",
+   "form": "obstinate",
+   "lemma": "obstinate",
+   "lang": "en",
+   "meaning": "inatla süren, zor giderilen",
+   "translation": ""
+  },
+  {
+   "sentence": "After closing the big deal, she poured a glass of wine to congratulate herself.",
+   "form": "congratulate",
+   "lemma": "congratulate",
+   "lang": "en",
+   "meaning": "kendini övmek",
+   "translation": ""
+  },
+  {
+   "sentence": "I can definitely vouch for his honesty; I have known him for ten years.",
+   "form": "vouch",
+   "lemma": "vouch",
+   "lang": "en",
+   "meaning": "doğrulamak, tanıklık etmek",
+   "translation": ""
+  },
+  {
+   "sentence": "The doctor advised him to strictly monitor his daily sugar consumption.",
+   "form": "consumption",
+   "lemma": "consumption",
+   "lang": "en",
+   "meaning": "yeme, yutma",
+   "translation": ""
+  },
+  {
+   "sentence": "The hills were beautifully covered with bright yellow broom in the spring.",
+   "form": "broom",
+   "lemma": "broom",
+   "lang": "en",
+   "meaning": "katırtırnağı (bitki)",
+   "translation": ""
+  },
+  {
+   "sentence": "My grandmother cooked a traditional dish with onions and fried liver.",
+   "form": "liver",
+   "lemma": "liver",
+   "lang": "en",
+   "meaning": "ciğer",
+   "translation": ""
+  },
+  {
+   "sentence": "He went to the old wooden church every Sunday morning for confession.",
+   "form": "confession",
+   "lemma": "confession",
+   "lang": "en",
+   "meaning": "günah çıkarma",
+   "translation": ""
+  },
+  {
+   "sentence": "She was pranked out in her finest silk dress for the gala dinner.",
+   "form": "pranked",
+   "lemma": "prank",
+   "lang": "en",
+   "meaning": "süslemek, göz alıcı giydirmek",
+   "translation": ""
+  },
+  {
+   "sentence": "We watched a fascinating documentary about the life of the emperor penguin in Antarctica.",
+   "form": "emperor",
+   "lemma": "emperor",
+   "lang": "en",
+   "meaning": "imparator penguen",
+   "translation": ""
+  },
+  {
+   "sentence": "If you want to keep your job in this strict company, you have to toe the line.",
+   "form": "toe",
+   "lemma": "toe",
+   "lang": "en",
+   "meaning": "kurallara uymak, emirlere boyun eğmek (toe the line)",
+   "translation": ""
+  },
+  {
+   "sentence": "They had to sell the unreliable old car because it broke down every week.",
+   "form": "unreliable",
+   "lemma": "unreliable",
+   "lang": "en",
+   "meaning": "sık bozulan",
+   "translation": ""
+  },
+  {
+   "sentence": "The fragrant spices they use give this local dish a very peculiar flavor.",
+   "form": "peculiar",
+   "lemma": "peculiar",
+   "lang": "en",
+   "meaning": "kendine özgü, özel",
+   "translation": ""
+  },
+  {
+   "sentence": "The brave journalist didn't hesitate to directly contradict the politician's statements.",
+   "form": "contradict",
+   "lemma": "contradict",
+   "lang": "en",
+   "meaning": "yalanlamak, itiraz etmek",
    "translation": ""
   }
  ],
@@ -25877,6 +26109,13 @@
    "pos": "noun",
    "meaning": "şirket",
    "note": "company kısaltması"
+  },
+  {
+   "word": "duman",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "ruin, mess",
+   "note": "perişanlık, kötü durum"
   }
  ],
  "examples": [
@@ -36001,6 +36240,239 @@
    "tr": "İspanya, İber Yarımadası'nda Portekiz'in yakın bir komşu ülkesidir.",
    "en": "Spain is a close neighbour of Portugal on the Iberian Peninsula.",
    "level": "A2"
+  },
+  {
+   "word": "cennet",
+   "lang": "tr",
+   "meaning": "heaven, paradise",
+   "tr": "Gürültüden uzak bu sessiz kasaba bizim için tam bir cennetti.",
+   "en": "This quiet town far from the noise was a complete paradise for us.",
+   "level": "B1"
+  },
+  {
+   "word": "böcek",
+   "lang": "tr",
+   "meaning": "bug, hidden microphone",
+   "tr": "Ajanlar toplantı odasındaki masanın altına küçük bir böcek yerleştirmiş.",
+   "en": "The agents placed a small bug under the table in the meeting room.",
+   "level": "B2"
+  },
+  {
+   "word": "tekne",
+   "lang": "tr",
+   "meaning": "trough, tray",
+   "tr": "Eski zamanlarda kadınlar çamaşırları büyük ahşap bir teknede yıkardı.",
+   "en": "In the old days, women used to wash the laundry in a large wooden trough.",
+   "level": "C1"
+  },
+  {
+   "word": "artı",
+   "lang": "tr",
+   "meaning": "plus, advantage",
+   "tr": "İki yabancı dil bilmesi iş başvurusunda ona büyük bir artı sağladı.",
+   "en": "Knowing two foreign languages was a big plus in her job application.",
+   "level": "B1"
+  },
+  {
+   "word": "kod",
+   "lang": "tr",
+   "meaning": "elevation, benchmark",
+   "tr": "Mühendisler inşaata başlamadan önce arazinin kod seviyesini ölçtüler.",
+   "en": "The engineers measured the elevation of the land before starting construction.",
+   "level": "C1"
+  },
+  {
+   "word": "evvel",
+   "lang": "tr",
+   "meaning": "before",
+   "tr": "Bu meseleyi tartışmadan evvel herkesin fikrini öğrenmemiz gerekiyor.",
+   "en": "Before discussing this matter, we need to learn everyone's opinion.",
+   "level": "A2",
+   "pos": "postp"
+  },
+  {
+   "word": "devamlı",
+   "lang": "tr",
+   "meaning": "permanent, consistent",
+   "tr": "Şirketteki geçici görevinden sonra nihayet devamlı bir pozisyona geçti.",
+   "en": "After her temporary role in the company, she finally moved to a permanent position.",
+   "level": "B1"
+  },
+  {
+   "word": "abla",
+   "lang": "tr",
+   "meaning": "term of address for a woman, younger than teyze (“auntie”)",
+   "tr": "Mahalledeki bakkal abla her sabah çocuklara şeker dağıtırdı.",
+   "en": "The woman who ran the neighbourhood grocery used to hand out sweets to the children every morning.",
+   "level": "A2"
+  },
+  {
+   "word": "yemiş",
+   "lang": "tr",
+   "meaning": "yield, fruit",
+   "tr": "Bahçedeki ağaçların bu seneki yemişi beklentimizin çok altındaydı.",
+   "en": "The yield of the trees in the garden this year was far below our expectation.",
+   "level": "B2"
+  },
+  {
+   "word": "kum",
+   "lang": "tr",
+   "meaning": "gravel, kidney stone",
+   "tr": "Doktor ultrason sonucunda böbreklerinde ufak bir kum olduğunu söyledi.",
+   "en": "The doctor said the ultrasound showed some small stones in his kidneys.",
+   "level": "C1"
+  },
+  {
+   "word": "zar",
+   "lang": "tr",
+   "meaning": "die, dice",
+   "tr": "Tavla oynarken şansı yaver gitmedi ve sürekli kötü zar attı.",
+   "en": "His luck wasn't in while playing backgammon, and he constantly rolled bad dice.",
+   "level": "A2"
+  },
+  {
+   "word": "görgü",
+   "lang": "tr",
+   "meaning": "experience, background",
+   "tr": "İş dünyasında sadece eğitim değil, görgü ve pratik bilgi de çok önemlidir.",
+   "en": "In the business world, not only education but also experience and practical knowledge are very important.",
+   "level": "B2"
+  },
+  {
+   "word": "duman",
+   "lang": "tr",
+   "meaning": "marijuana, weed",
+   "tr": "Gençliğinde bir dönem duman içtiği için ailesiyle büyük sorunlar yaşamış.",
+   "en": "He had big problems with his family because he smoked weed for a period in his youth.",
+   "level": "C2"
+  },
+  {
+   "word": "duman",
+   "lang": "tr",
+   "meaning": "ruin, mess",
+   "tr": "Sınavda sorular o kadar zordu ki hepimizin hali duman oldu.",
+   "en": "The questions in the exam were so hard that we were all in a terrible mess.",
+   "level": "B2"
+  },
+  {
+   "word": "sacred",
+   "lang": "en",
+   "meaning": "dokunulmaz, değerli",
+   "tr": "Kendini adamış yazar için sabah yazı rutini tamamen dokunulmazdır.",
+   "en": "For the dedicated writer, his morning writing routine is completely sacred.",
+   "level": "B2"
+  },
+  {
+   "word": "dove",
+   "lang": "en",
+   "meaning": "daldı (dive fiilinin geçmiş zamanı)",
+   "tr": "Cesur kurtarıcı çocuğu kurtarmak için dondurucu nehre daldı.",
+   "en": "The brave rescuer dove into the freezing river to save the child.",
+   "level": "B1"
+  },
+  {
+   "word": "obstinate",
+   "lang": "en",
+   "meaning": "inatla süren, zor giderilen",
+   "tr": "Halıdaki o çıkmak bilmeyen lekeyi temizlemek için güçlü bir kimyasal temizleyici kullandı.",
+   "en": "He used a strong chemical cleaner to remove the obstinate stain from the carpet.",
+   "level": "C1"
+  },
+  {
+   "word": "congratulate",
+   "lang": "en",
+   "meaning": "kendini övmek",
+   "tr": "Büyük anlaşmayı kapattıktan sonra, kendini tebrik etmek için bir kadeh şarap doldurdu.",
+   "en": "After closing the big deal, she poured a glass of wine to congratulate herself.",
+   "level": "B2"
+  },
+  {
+   "word": "vouch",
+   "lang": "en",
+   "meaning": "doğrulamak, tanıklık etmek",
+   "tr": "Dürüstlüğüne kesinlikle kefil olabilirim; onu on yıldır tanıyorum.",
+   "en": "I can definitely vouch for his honesty; I have known him for ten years.",
+   "level": "C1"
+  },
+  {
+   "word": "consumption",
+   "lang": "en",
+   "meaning": "yeme, yutma",
+   "tr": "Doktor ona günlük şeker tüketimini sıkı bir şekilde izlemesini tavsiye etti.",
+   "en": "The doctor advised him to strictly monitor his daily sugar consumption.",
+   "level": "B1"
+  },
+  {
+   "word": "broom",
+   "lang": "en",
+   "meaning": "katırtırnağı (bitki)",
+   "tr": "Tepeler ilkbaharda parlak sarı katırtırnağı çiçekleriyle güzelce kaplanmıştı.",
+   "en": "The hills were beautifully covered with bright yellow broom in the spring.",
+   "level": "C2"
+  },
+  {
+   "word": "liver",
+   "lang": "en",
+   "meaning": "ciğer",
+   "tr": "Büyükannem soğan ve kızarmış ciğer ile geleneksel bir yemek pişirdi.",
+   "en": "My grandmother cooked a traditional dish with onions and fried liver.",
+   "level": "A2"
+  },
+  {
+   "word": "confession",
+   "lang": "en",
+   "meaning": "günah çıkarma",
+   "tr": "Her pazar sabahı günah çıkarmak için eski ahşap kiliseye giderdi.",
+   "en": "He went to the old wooden church every Sunday morning for confession.",
+   "level": "B2"
+  },
+  {
+   "word": "prank",
+   "lang": "en",
+   "meaning": "süslemek, göz alıcı giydirmek",
+   "tr": "Gala yemeği için en ince ipek elbisesiyle göz alıcı giyinmişti.",
+   "en": "She was pranked out in her finest silk dress for the gala dinner.",
+   "level": "C2"
+  },
+  {
+   "word": "emperor",
+   "lang": "en",
+   "meaning": "imparator penguen",
+   "tr": "Antarktika'daki imparator penguenin hayatı hakkında büyüleyici bir belgesel izledik.",
+   "en": "We watched a fascinating documentary about the life of the emperor penguin in Antarctica.",
+   "level": "B1"
+  },
+  {
+   "word": "toe",
+   "lang": "en",
+   "meaning": "kurallara uymak, emirlere boyun eğmek (toe the line)",
+   "tr": "Bu katı şirkette işini korumak istiyorsan, kurallara uymak zorundasın.",
+   "en": "If you want to keep your job in this strict company, you have to toe the line.",
+   "level": "C1"
+  },
+  {
+   "word": "unreliable",
+   "lang": "en",
+   "meaning": "sık bozulan",
+   "tr": "Her hafta bozulduğu için o güvenilmez eski arabayı satmak zorunda kaldılar.",
+   "en": "They had to sell the unreliable old car because it broke down every week.",
+   "level": "B2"
+  },
+  {
+   "word": "peculiar",
+   "lang": "en",
+   "meaning": "kendine özgü, özel",
+   "tr": "Kullandıkları kokulu baharatlar bu yerel yemeğe çok kendine özgü bir tat veriyor.",
+   "en": "The fragrant spices they use give this local dish a very peculiar flavor.",
+   "level": "B2"
+  },
+  {
+   "word": "contradict",
+   "lang": "en",
+   "meaning": "yalanlamak, itiraz etmek",
+   "tr": "Cesur gazeteci, politikacının ifadelerini doğrudan yalanlamaktan çekinmedi.",
+   "en": "The brave journalist didn't hesitate to directly contradict the politician's statements.",
+   "level": "C1"
   }
  ],
  "phrases": [
@@ -70049,6 +70521,69 @@
    "meaning": "görmezden gelmek",
    "ex": "The manager turned a blind eye to the employees coming in late today.",
    "ex_tr": "Müdür bugün işe geç gelen çalışanları görmezden geldi."
+  },
+  {
+   "phrase": "ipe un sermek",
+   "lang": "tr",
+   "meaning": "to drag one's feet, to stall, to make excuses",
+   "ex": "Bu işi yapmamak için sabahtan beri ipe un seriyor, mazeret üretiyor.",
+   "ex_tr": "He has been dragging his feet since morning to avoid doing this job, constantly making excuses."
+  },
+  {
+   "phrase": "tadı damağında kalmak",
+   "lang": "tr",
+   "meaning": "to leave a pleasant and lasting memory",
+   "ex": "Geçen yaz gittiğimiz o küçük sahil kasabasının tadı hala damağımda.",
+   "ex_tr": "The pleasant memory of that small coastal town we went to last summer still lingers."
+  },
+  {
+   "phrase": "saman altından su yürütmek",
+   "lang": "tr",
+   "meaning": "to act deceitfully behind the scenes",
+   "ex": "Toplantıda sessiz kalır ama saman altından su yürüterek kendi planını uygular.",
+   "ex_tr": "He stays quiet in meetings but implements his own plan by acting deceitfully behind the scenes."
+  },
+  {
+   "phrase": "cut to the chase",
+   "lang": "en",
+   "meaning": "sadede gelmek, doğrudan konuya girmek",
+   "ex": "Let's skip the long formal introductions and cut to the chase.",
+   "ex_tr": "Uzun resmi tanıtımları atlayıp sadede gelelim."
+  },
+  {
+   "phrase": "hit the nail on the head",
+   "lang": "en",
+   "meaning": "tam isabet ettirmek, doğruyu söylemek",
+   "ex": "Your deep analysis of the current market trends really hit the nail on the head.",
+   "ex_tr": "Piyasadaki son eğilimlerle ilgili derin analiziniz gerçekten tam isabet oldu."
+  },
+  {
+   "phrase": "in a nutshell",
+   "lang": "en",
+   "meaning": "özetle, kısacası",
+   "ex": "In a nutshell, the latest update makes the translation engine much faster.",
+   "ex_tr": "Özetle, en son güncelleme çeviri motorunu çok daha hızlı hale getiriyor."
+  },
+  {
+   "phrase": "keep one's fingers crossed",
+   "lang": "en",
+   "meaning": "şans dilemek, iyi olmasını ummak",
+   "ex": "I'm keeping my fingers crossed that the weather stays clear tomorrow.",
+   "ex_tr": "Yarın havanın açık kalmasını umuyorum, şans dileyelim."
+  },
+  {
+   "phrase": "make ends meet",
+   "lang": "en",
+   "meaning": "geçimini sağlamak, iki yakasını bir araya getirmek",
+   "ex": "During college, he worked part-time at a busy cafe just to make ends meet.",
+   "ex_tr": "Üniversite yıllarında, sırf geçimini sağlamak için yoğun bir kafede yarı zamanlı çalıştı."
+  },
+  {
+   "phrase": "on the same page",
+   "lang": "en",
+   "meaning": "aynı fikirde/aşamada olmak",
+   "ex": "Let's review the final plan to ensure everyone in the team is on the same page.",
+   "ex_tr": "Ekipteki herkesin aynı fikirde olduğundan emin olmak için nihai planı gözden geçirelim."
   }
  ],
  "phrase_edits": [
