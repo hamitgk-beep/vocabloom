@@ -1,6 +1,7 @@
 // The hand-checked dictionary data (tools/contrib) is in both dictionaries:
 // new meanings, examples shown first, meaning in context, new phrases.
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -49,5 +50,20 @@ void main() {
     final st = tr.entry('akmak')!.senses.where((s) => s.source == 'st').expand((s) => s.glosses);
     expect(st, contains('to flow smoothly (traffic)'));
     expect(tr.entry('çorbada tuzu olmak'), isNotNull);
+  });
+
+  test('Filter sheet: new filters have their phrases, every filter has a category', () {
+    final cats = en.db.select('SELECT DISTINCT cat FROM expr').map((r) => r['cat'] as String);
+    for (final c in cats) {
+      expect(categoryById[c], isNotNull, reason: c);
+      expect(filterGroups.any((g) => g.$3.contains(c)), isTrue, reason: c);
+    }
+    String? tr(String phrase, String cat) =>
+        en.db.select('SELECT tr FROM expr WHERE phrase = ? AND cat = ?', [phrase, cat]).firstOrNull?['tr'] as String?;
+    expect(tr('interested in', 'dependent_prepositions'), '-e ilgi duyan');
+    expect(tr('affect', 'confusables'), 'etkilemek (≠ effect: etki, sonuç)');
+    expect(tr('lorry', 'uk_us'), 'kamyon (UK; US: truck)');
+    expect(tr('as busy as a bee', 'similes'), 'arı gibi çalışkan');
+    expect(tr('do', 'confusables'), isNull);
   });
 }

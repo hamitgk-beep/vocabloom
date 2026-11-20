@@ -17,7 +17,9 @@ nothing.
                   dictionary's current meanings in keep_tr)
     examples and context sentences: under the sense they show ("more"), and
                   in exs for the word, shown before the Tatoeba ones
-    phrases: own_expr for a known phrase, a new expr row for a new one
+    phrases: own_expr for a known phrase, a new expr row for a new one; a
+             phrase from a filter sheet goes in that filter ("cat"), so the
+             same phrase can be in two filters, as "actually" already is
 
 usage: python3 tools/contrib/apply.py tools/contrib/storilex_contrib.json assets/tr_en.db assets/dict.db
 """
@@ -257,10 +259,12 @@ en_new_exs = defaultdict(list)
 
 def en_phrase(p):
     phrase, meaning, ex, ex_tr = p['phrase'].strip(), p['meaning'].strip(), p.get('ex', ''), p.get('ex_tr', '')
-    rows = en_db.execute('SELECT id, cat, tr, entr, ex, extr FROM expr WHERE phrase=?', (phrase,)).fetchall()
+    want = p.get('cat')
+    rows = en_db.execute('SELECT id, cat, tr, entr, ex, extr FROM expr WHERE phrase=?' + (' AND cat=?' if want else ''),
+                         (phrase, want) if want else (phrase,)).fetchall()
     if not rows:
         words = phrase.split()
-        cat = 'phrasal_verbs' if len(words) == 2 and words[1] in {'up', 'down', 'over', 'out', 'off', 'on', 'in', 'away', 'back'} else 'idioms'
+        cat = want or ('phrasal_verbs' if len(words) == 2 and words[1] in {'up', 'down', 'over', 'out', 'off', 'on', 'in', 'away', 'back'} else 'idioms')
         nid = en_db.execute('SELECT max(id) FROM expr').fetchone()[0] + 1
         en_db.execute('INSERT INTO expr(id, phrase, cat, tr, en, forms, ex, entr, extr) VALUES (?,?,?,?,?,?,?,?,?)',
                       (nid, phrase, cat, meaning, None, None, ex or None, None, ex_tr or None))
@@ -323,7 +327,7 @@ for c in data['context']:
 
 for p in data['phrases']:
     if p['lang'] == 'tr':
-        tr_add_meaning(p['phrase'], 'phrase', p['meaning'])
+        tr_add_meaning(p['phrase'], 'verb' if p.get('cat') == 'tr_compound_verbs' else 'phrase', p['meaning'])
         tr_example(p['phrase'], p.get('ex', ''), p.get('ex_tr', ''))
     else:
         en_phrase(p)

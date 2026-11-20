@@ -96,6 +96,54 @@ const categories = <CategoryInfo>[
     'V2/V3 biçimleri kurala uymayan fiiller (go-went-gone).',
     'Verbs whose V2/V3 forms do not follow the rule (go-went-gone).',
   ),
+  CategoryInfo(
+    'dependent_prepositions',
+    'Dependent Prepositions',
+    'Fiil/sıfat + edat',
+    Color(0xFF00897B),
+    'Belli bir edatla kullanılan fiil ve sıfatlar (depend on, interested in, good at).',
+    'Verbs and adjectives that take a fixed preposition (depend on, interested in, good at).',
+  ),
+  CategoryInfo(
+    'similes',
+    'Similes',
+    'Benzetmeler',
+    Color(0xFFF4511E),
+    'as … as ile kalıp benzetmeler (as busy as a bee: arı gibi çalışkan).',
+    'Fixed comparisons with as … as (as busy as a bee).',
+  ),
+  CategoryInfo(
+    'polite_phrases',
+    'Polite Phrases',
+    'Kibar istek ve cevaplar',
+    Color(0xFF7CB342),
+    'Rica, izin, özür ve teşekkür kalıpları (Could you please …, Would you mind …).',
+    'Phrases for requests, permission, apologies and thanks (Could you please …, Would you mind …).',
+  ),
+  CategoryInfo(
+    'informal_slang',
+    'Informal & Slang',
+    'Gündelik konuşma ve argo',
+    Color(0xFFFFB300),
+    'Konuşma dilinde geçen gayriresmî sözler (no big deal, grab a bite).',
+    'Informal words of everyday speech (no big deal, grab a bite).',
+  ),
+  CategoryInfo(
+    'confusables',
+    'Confusable Words',
+    'Karıştırılan kelimeler',
+    Color(0xFF6D4C41),
+    'Birbirine benzeyip sık karıştırılan kelimeler (affect / effect, borrow / lend).',
+    'Words that look alike and are often mixed up (affect / effect, borrow / lend).',
+  ),
+  CategoryInfo(
+    'uk_us',
+    'British / American',
+    'İngiliz / Amerikan farkı',
+    Color(0xFF3949AB),
+    'Aynı şeyin İngiltere ve Amerika\'daki farklı adı (lorry / truck, autumn / fall).',
+    'The British and the American word for the same thing (lorry / truck, autumn / fall).',
+  ),
 ];
 
 /// Grammar highlights in the Filters menu (see nlp/grammar_marks.dart). They
@@ -209,7 +257,25 @@ const grammarFilters = <CategoryInfo>[
 
 /// The Filters menu in three groups; the colour priority still follows [allCategories].
 const filterGroups = <(String, String, List<String>)>[
-  ('Kalıplar ve deyimler', 'Phrases & idioms', ['phrasal_verbs', 'idioms', 'collocations', 'chunks', 'binomials', 'prepositional_phrases', 'proverbs', 'conjunctions', 'discourse_markers']),
+  (
+    'Kalıplar ve deyimler',
+    'Phrases & idioms',
+    [
+      'phrasal_verbs',
+      'idioms',
+      'collocations',
+      'dependent_prepositions',
+      'chunks',
+      'polite_phrases',
+      'informal_slang',
+      'binomials',
+      'similes',
+      'prepositional_phrases',
+      'proverbs',
+      'conjunctions',
+      'discourse_markers',
+    ],
+  ),
   (
     'Gramer yapıları',
     'Grammar structures',
@@ -230,7 +296,7 @@ const filterGroups = <(String, String, List<String>)>[
       'g_tags',
     ],
   ),
-  ('Kelime türleri', 'Word types', ['false_friends', 'irregular_verbs']),
+  ('Kelime türleri', 'Word types', ['false_friends', 'confusables', 'uk_us', 'irregular_verbs']),
 ];
 
 /// Colours of the tenses filter: present, past, future.

@@ -30,6 +30,7 @@ class FakeBundle extends CachingAssetBundle {
 
 const en = ('assets/library/catalog.json', 'assets/library/stories.json.gz');
 const tr = ('assets/library/catalog_tr.json', 'assets/library/stories_tr.json.gz');
+const trBooks = 'assets/library/catalog_tr_books.json';
 
 Future<FreeLibrary> loadWith(FakeBundle b) {
   FreeLibrary.debugReset();
@@ -54,7 +55,9 @@ void main() {
   test('a missing or broken Turkish file keeps the English texts, and the other way round', () async {
     var lib = await loadWith(FakeBundle(missing: {tr.$1}));
     expect(lib.items.where((it) => it.lang == 'en'), isNotEmpty);
-    expect(lib.items.where((it) => it.lang == 'tr'), isEmpty);
+    // The Turkish books have a list of their own.
+    expect(lib.items.where((it) => it.lang == 'tr' && !it.isBook), isEmpty);
+    expect(lib.items.where((it) => it.lang == 'tr' && it.isBook), isNotEmpty);
     expect(lib.problems.single, contains('catalog_tr.json'));
 
     lib = await loadWith(FakeBundle(broken: {en.$1}));
@@ -75,7 +78,7 @@ void main() {
     final u = UserDb.open(Directory.systemTemp.createTempSync('vb_libload'));
     final app = AppState(d, u)..localAi = KeyAi(u);
     FreeLibrary.debugReset();
-    FreeLibrary.debugBundle = FakeBundle(missing: {en.$1, tr.$1});
+    FreeLibrary.debugBundle = FakeBundle(missing: {en.$1, tr.$1, trBooks});
 
     await tester.pumpWidget(MaterialApp(home: FreeLibraryPage(app: app)));
     await tester.runAsync(() => Future.delayed(const Duration(milliseconds: 200)));
