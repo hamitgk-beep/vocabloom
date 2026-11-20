@@ -32,7 +32,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v20.xlsx
+         tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx
 """
 import json
 import re
@@ -979,7 +979,50 @@ D22_EDITS = {
     'fool away': {'action': 'meaning', 'meaning': '(vakit, para) boşa harcamak, çarçur etmek'},
 }
 
-AUDIT_FIX = {'hamit_denetim22_2026-11-20.xlsx': (D22_EX_FIX, D22_EDITS),
+# --- Audit sheet 23 -------------------------------------------------------------
+# Rows 203-214 wrote "someone's" into the sentence itself; they get a real owner and
+# the heading takes "one's", which matches any. Row 209: "too spicy to my taste"
+# is not English ("for my taste"), so it gets a sentence where "to my taste" is.
+D23_EX_FIX = {
+    2: {'phrase': 'within reason', 'ex': 'You can ask for changes within reason, but the deadline cannot move.'},
+    64: {'phrase': 'behind closed doors', 'ex': 'The committee met behind closed doors to discuss the confidential report.'},
+    120: {'phrase': 'all of a sudden'},
+    203: {'ex': '"I did not mean to hurt your feelings," he said after the awkward silence.',
+          'ex_tr': "Mahcup sessizlikten sonra 'Duygularını incitmek istemedim' dedi."},
+    204: {'ex': 'The teacher promised to take his part only after hearing both sides.',
+          'ex_tr': 'Öğretmen ancak iki tarafı da dinledikten sonra onun tarafını tutacağına söz verdi.'},
+    209: {'ex': 'The new flat was not quite to my taste, so we kept looking.',
+          'ex_tr': 'Yeni daire pek zevkime göre değildi, o yüzden aramaya devam ettik.'},
+    214: {'ex': 'When the bicycle crashed, two strangers rushed to come to her aid.',
+          'ex_tr': 'Bisiklet devrilince iki yabancı onun yardımına koştu.'},
+}
+D23_EDITS = {
+    **{p: {'action': 'rename', 'to': t} for p, t in (
+        ('drop like a bad habit', 'drop sb like a bad habit'), ("caught with one's pants down", "catch sb with one's pants down"),
+        ("to someone's taste", "to one's taste"), ("hurt someone's feelings", "hurt one's feelings"),
+        ("take someone's part", "take one's part"), ("come to someone's aid", "come to one's aid"),
+        ('for any price', 'at any price'))},
+    **{p: {'action': 'merge', 'to': t} for p, t in (
+        ('in reason', 'within reason'), ('with closed doors', 'behind closed doors'))},
+    # Review sheet: not a set phrase ("rain death", "party cry") or a free adjective + noun.
+    **{p: {'action': 'delete'} for p in ('rain death', 'party cry', 'heavy door', 'bright yellow')},
+    **{p: {'action': 'meaning', 'meaning': m} for p, m in (
+        ("catch sb with one's pants down", 'birini hazırlıksız yakalamak, rezil durumda bırakmak'),
+        ('in a major key', '(müzik) majör tonda'),
+        ('buy nice or buy twice', 'kaliteli al, iki kez alma; ucuz alan iki kez alır'),
+        ('whatever helps you sleep at night', '(alaycı) sen öyle düşünmeye devam et, kendini nasıl rahatlatıyorsa'),
+        ('ship and let ship', '(hayran dili) herkes istediği çifti desteklesin'),
+        ('close the face', '(golf) sopanın yüzünü kapatmak'),
+        ('page in', '(bilişim) bellekten yüklemek'),
+        ('daughter out', '(soyağacı) kız soyundan tükenmek'),
+        ('get the bullet', '(İngiliz, gündelik) işten atılmak, kovulmak'),
+        ('have a thin time of it', '(İngiliz, eskice) zor bir dönem geçirmek'),
+        ('blue and green should never be seen', '(eski moda giyim sözü) mavi ile yeşil yan yana giyilmez'),
+        ('in a fog', 'kafası karışık, şaşkın; sis içinde'))},
+}
+
+AUDIT_FIX = {'hamit_denetim23_2026-11-20.xlsx': (D23_EX_FIX, D23_EDITS),
+             'hamit_denetim22_2026-11-20.xlsx': (D22_EX_FIX, D22_EDITS),
              'hamit_denetim21_2026-11-20.xlsx': (D21_EX_FIX, D21_EDITS),
              'hamit_denetim20_2026-11-20.xlsx': (D20_EX_FIX, D20_EDITS),
              'hamit_denetim19_2026-11-20.xlsx': (D19_EX_FIX, D19_EDITS),
@@ -1182,6 +1225,10 @@ _ren = {e['phrase']: e['to'] for e in edits if e['action'] in ('rename', 'merge'
 for _p in phrases:
     if _p.get('lang') == 'en' and _p['phrase'] in _ren:
         _p['phrase'] = _ren[_p['phrase']]
+# A heading an audit deleted is not brought back by an older row that still has it.
+_del = {e['phrase'] for e in edits if e['action'] == 'delete'}
+print('rows of deleted headings dropped:', sorted({_p['phrase'] for _p in phrases if _p.get('lang') == 'en' and _p['phrase'] in _del}))
+phrases = [_p for _p in phrases if not (_p.get('lang') == 'en' and _p['phrase'] in _del)]
 
 data = {'source': 'Storilex contributors (Hamit), ' + ', '.join(s.split('/')[-1] for s in srcs),
         'context': ctx, 'words': words, 'examples': examples, 'phrases': phrases, 'phrase_edits': edits,
