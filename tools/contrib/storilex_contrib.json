@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -9903,6 +9903,342 @@
    "lemma": "potter",
    "lang": "en",
    "meaning": "oyalanmak, vakit geçirmek, işle uğraşmak",
+   "translation": ""
+  },
+  {
+   "sentence": "Düşman birliği sabahın erken saatlerinde ani bir hamleyle şehre girdi.",
+   "form": "hamleyle",
+   "lemma": "hamle",
+   "lang": "tr",
+   "meaning": "attack, assault",
+   "translation": ""
+  },
+  {
+   "sentence": "Krizden çıkmak için şirket yönetiminin yaptığı son hamle de başarısız oldu.",
+   "form": "hamle",
+   "lemma": "hamle",
+   "lang": "tr",
+   "meaning": "effort, move",
+   "translation": ""
+  },
+  {
+   "sentence": "Satrançta yaptığı o akıllıca hamle sayesinde oyunu tek seferde kazandı.",
+   "form": "hamle",
+   "lemma": "hamle",
+   "lang": "tr",
+   "meaning": "turn (of a game)",
+   "translation": ""
+  },
+  {
+   "sentence": "Korodaki şarkıcıların sesleri birbirleriyle o kadar uyumlu ki dinlemek harika.",
+   "form": "uyumlu",
+   "lemma": "uyumlu",
+   "lang": "tr",
+   "meaning": "harmonic",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu yeni yazılım eski bilgisayarımın işletim sistemiyle tam olarak uyumlu çalışıyor.",
+   "form": "uyumlu",
+   "lemma": "uyumlu",
+   "lang": "tr",
+   "meaning": "compatible",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni iş arkadaşımız takım çalışmasına çok uyumlu, hiç sorun çıkarmıyor.",
+   "form": "uyumlu",
+   "lemma": "uyumlu",
+   "lang": "tr",
+   "meaning": "adaptable",
+   "translation": ""
+  },
+  {
+   "sentence": "Çevre kirliliğine karşı genç neslin sosyal duyarının artması hepimizi sevindiriyor.",
+   "form": "duyarının",
+   "lemma": "duyar",
+   "lang": "tr",
+   "meaning": "awareness, consciousness",
+   "translation": ""
+  },
+  {
+   "sentence": "O kadar ince ve duyar bir insandır ki kimsenin kalbini kırmak istemez.",
+   "form": "duyar",
+   "lemma": "duyar",
+   "lang": "tr",
+   "meaning": "sensitive, sentimental",
+   "translation": ""
+  },
+  {
+   "sentence": "Küçük çocuğun ayası oynamaktan sıyrılmış, biraz kanıyordu.",
+   "form": "ayası",
+   "lemma": "aya",
+   "lang": "tr",
+   "meaning": "palm (of hand)",
+   "translation": ""
+  },
+  {
+   "sentence": "Tarihi binanın girişinde saygıdeğer bir ayanın mozaik portresi bulunuyor.",
+   "form": "ayanın",
+   "lemma": "aya",
+   "lang": "tr",
+   "meaning": "saint (Orthodox)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu kitap, sınava hazırlanan öğrenciler için son derece faydalı bilgiler içeriyor.",
+   "form": "faydalı",
+   "lemma": "faydalı",
+   "lang": "tr",
+   "meaning": "useful, beneficial",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirket, bu yıl yaptığı yatırımlardan oldukça faydalı sonuçlar elde etti.",
+   "form": "faydalı",
+   "lemma": "faydalı",
+   "lang": "tr",
+   "meaning": "profitable",
+   "translation": ""
+  },
+  {
+   "sentence": "Kışın en sert aylarında burada hava sıcaklığı genellikle negatif değerlerde seyreder.",
+   "form": "negatif",
+   "lemma": "negatif",
+   "lang": "tr",
+   "meaning": "negative (less than zero)",
+   "translation": ""
+  },
+  {
+   "sentence": "Her şeye sürekli negatif yaklaşması tüm ekibin enerjisini yavaş yavaş düşürüyor.",
+   "form": "negatif",
+   "lemma": "negatif",
+   "lang": "tr",
+   "meaning": "negative (not constructive)",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski fotoğrafların orijinallerini bulamayınca tab etmek için negatiflerine baktı.",
+   "form": "negatiflerine",
+   "lemma": "negatif",
+   "lang": "tr",
+   "meaning": "negative (film/photo)",
+   "translation": ""
+  },
+  {
+   "sentence": "Hastaneye yetiştirilirken hastanın nefes alışverişleri iyice kesik bir hal almıştı.",
+   "form": "kesik",
+   "lemma": "kesik",
+   "lang": "tr",
+   "meaning": "short, intermittent",
+   "translation": ""
+  },
+  {
+   "sentence": "Sıcakta unutulan sütün kesik olduğunu kokusundan anladı.",
+   "form": "kesik",
+   "lemma": "kesik",
+   "lang": "tr",
+   "meaning": "turned sour, curdled",
+   "translation": ""
+  },
+  {
+   "sentence": "Mahallenin fırıncısının kızına aylardır fena halde kesik, sürekli onu izliyor.",
+   "form": "kesik",
+   "lemma": "kesik",
+   "lang": "tr",
+   "meaning": "enamored, in love with",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu yıl aralık ayında şehre son yılların en büyük karı yağdı.",
+   "form": "aralık",
+   "lemma": "aralık",
+   "lang": "tr",
+   "meaning": "December",
+   "translation": ""
+  },
+  {
+   "sentence": "İki eski binanın arasındaki dar ve karanlık aralık yaya trafiğine kapatıldı.",
+   "form": "aralık",
+   "lemma": "aralık",
+   "lang": "tr",
+   "meaning": "passageway, corridor",
+   "translation": ""
+  },
+  {
+   "sentence": "Ağır koliyi yerden yanlış bir şekilde kaldırdığı için belini fena incitti.",
+   "form": "belini",
+   "lemma": "bel",
+   "lang": "tr",
+   "meaning": "waist",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahçıvan toprağı daha iyi havalandırmak için büyük bir belle bahçeyi kazdı.",
+   "form": "belle",
+   "lemma": "bel",
+   "lang": "tr",
+   "meaning": "spade",
+   "translation": ""
+  },
+  {
+   "sentence": "Askeri tatbikatta denize doğru yeni nesil bir füze ateşlendi.",
+   "form": "füze",
+   "lemma": "füze",
+   "lang": "tr",
+   "meaning": "rocket, missile",
+   "translation": ""
+  },
+  {
+   "sentence": "Askerler tankı durdurmak için omuzdan ateşlemeli füze kullandılar.",
+   "form": "füze",
+   "lemma": "füze",
+   "lang": "tr",
+   "meaning": "bazooka",
+   "translation": ""
+  },
+  {
+   "sentence": "Geceleri sokaklarda yalnız dolaşan köpekler havlamaya başladı.",
+   "form": "dolaşan",
+   "lemma": "dolaşan",
+   "lang": "tr",
+   "meaning": "wandering",
+   "translation": ""
+  },
+  {
+   "sentence": "Vücutta dolaşan kanın oksijen seviyesi düzenli olarak ölçüldü.",
+   "form": "dolaşan",
+   "lemma": "dolaşan",
+   "lang": "tr",
+   "meaning": "circulating",
+   "translation": ""
+  },
+  {
+   "sentence": "Sakat sporcular için özel olarak tasarlanmış bir turnuva düzenlendi.",
+   "form": "Sakat",
+   "lemma": "sakat",
+   "lang": "tr",
+   "meaning": "disabled",
+   "translation": ""
+  },
+  {
+   "sentence": "Böyle fırtınalı bir havada denize açılmak çok sakat bir karardı.",
+   "form": "sakat",
+   "lemma": "sakat",
+   "lang": "tr",
+   "meaning": "risky, hazardous",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu binanın temeli sakat olduğu için yıkım kararı alındı.",
+   "form": "sakat",
+   "lemma": "sakat",
+   "lang": "tr",
+   "meaning": "unsound, likely to fail",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu bölgedeki yaban hayatını korumak için yeni yasalar çıkarıldı.",
+   "form": "yaban",
+   "lemma": "yaban",
+   "lang": "tr",
+   "meaning": "wilderness, wild",
+   "translation": ""
+  },
+  {
+   "sentence": "Köy halkı, dışarıdan gelen bu yabana ilk başta çok şüpheyle yaklaştı.",
+   "form": "yabana",
+   "lemma": "yaban",
+   "lang": "tr",
+   "meaning": "stranger, foreigner",
+   "translation": ""
+  },
+  {
+   "sentence": "Arenadaki kızgın boğa, matadorun kırmızı pelerinine doğru hızla koştu.",
+   "form": "boğa",
+   "lemma": "boğa",
+   "lang": "tr",
+   "meaning": "bull",
+   "translation": ""
+  },
+  {
+   "sentence": "Benim burcum boğa olduğu için genellikle sakin ve inatçı bir yapıya sahibim.",
+   "form": "boğa",
+   "lemma": "boğa",
+   "lang": "tr",
+   "meaning": "Taurus (astrology)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu baharatlı yemek sadece bizim yöremize özgü bir lezzettir.",
+   "form": "özgü",
+   "lemma": "özgü",
+   "lang": "tr",
+   "meaning": "peculiar to, characteristic",
+   "translation": ""
+  },
+  {
+   "sentence": "Beklemediği bu ani ayrılık haberiyle kalbi paramparça olmuştu.",
+   "form": "paramparça",
+   "lemma": "paramparça",
+   "lang": "tr",
+   "meaning": "devastated, miserable",
+   "translation": ""
+  },
+  {
+   "sentence": "Gökyüzünde yükseklerde süzülen kartal, avını keskin gözleriyle arıyordu.",
+   "form": "kartal",
+   "lemma": "kartal",
+   "lang": "tr",
+   "meaning": "eagle",
+   "translation": ""
+  },
+  {
+   "sentence": "Hafta sonu Kartal sahiline inip uzun bir yürüyüş yapmaya karar verdik.",
+   "form": "Kartal",
+   "lemma": "kartal",
+   "lang": "tr",
+   "meaning": "district of Istanbul",
+   "translation": ""
+  },
+  {
+   "sentence": "Kartal, dürüstlüğü ve çalışkanlığıyla tüm ekibe örnek olan bir mühendistir.",
+   "form": "Kartal",
+   "lemma": "kartal",
+   "lang": "tr",
+   "meaning": "male given name",
+   "translation": ""
+  },
+  {
+   "sentence": "O bu sektörde henüz bir çaylak olduğu için bazı hatalar yapması çok normal.",
+   "form": "çaylak",
+   "lemma": "çaylak",
+   "lang": "tr",
+   "meaning": "newbie, rookie",
+   "translation": ""
+  },
+  {
+   "sentence": "Ağacın dalına konan çaylak, etraftaki küçük kuşları korkutarak kaçırdı.",
+   "form": "çaylak",
+   "lemma": "çaylak",
+   "lang": "tr",
+   "meaning": "kite (bird)",
+   "translation": ""
+  },
+  {
+   "sentence": "Toplantıda sunulan rapor, şirketin yüksek düzeydeki başarısını kanıtlıyor.",
+   "form": "düzeydeki",
+   "lemma": "düzey",
+   "lang": "tr",
+   "meaning": "level, degree (abstract)",
+   "translation": ""
+  },
+  {
+   "sentence": "Su seviyesi hızla artarak nehrin kıyısındaki setin düzeyine ulaştı.",
+   "form": "düzeyine",
+   "lemma": "düzey",
+   "lang": "tr",
+   "meaning": "horizontal boundary, level",
    "translation": ""
   }
  ],
@@ -37425,6 +37761,278 @@
    "tr": "Sessiz pazar sabahları, arka bahçede yeni renkli çiçekler dikerek rahatça oyalanmayı gerçekten çok sever.",
    "en": "On quiet Sunday mornings, he really likes to potter around the backyard casually planting new colorful flowers.",
    "level": "C1"
+  },
+  {
+   "word": "hamle",
+   "lang": "tr",
+   "meaning": "attack, assault",
+   "tr": "Düşman birliği sabahın erken saatlerinde ani bir hamleyle şehre girdi.",
+   "en": "The enemy unit entered the city in a sudden attack early in the morning.",
+   "level": "B2"
+  },
+  {
+   "word": "hamle",
+   "lang": "tr",
+   "meaning": "effort, move",
+   "tr": "Krizden çıkmak için şirket yönetiminin yaptığı son hamle de başarısız oldu.",
+   "en": "The last move made by the company management to get out of the crisis also failed.",
+   "level": "B1"
+  },
+  {
+   "word": "hamle",
+   "lang": "tr",
+   "meaning": "turn (of a game)",
+   "tr": "Satrançta yaptığı o akıllıca hamle sayesinde oyunu tek seferde kazandı.",
+   "en": "Thanks to that one clever move, he won the chess game.",
+   "level": "A2"
+  },
+  {
+   "word": "uyumlu",
+   "lang": "tr",
+   "meaning": "harmonic",
+   "tr": "Korodaki şarkıcıların sesleri birbirleriyle o kadar uyumlu ki dinlemek harika.",
+   "en": "The voices of the singers in the choir are in such harmony that it is wonderful to listen to them.",
+   "level": "B1"
+  },
+  {
+   "word": "uyumlu",
+   "lang": "tr",
+   "meaning": "compatible",
+   "tr": "Bu yeni yazılım eski bilgisayarımın işletim sistemiyle tam olarak uyumlu çalışıyor.",
+   "en": "This new software is fully compatible with my old computer's operating system.",
+   "level": "B2"
+  },
+  {
+   "word": "uyumlu",
+   "lang": "tr",
+   "meaning": "adaptable",
+   "tr": "Yeni iş arkadaşımız takım çalışmasına çok uyumlu, hiç sorun çıkarmıyor.",
+   "en": "Our new colleague fits in very well with the team and never causes any problems.",
+   "level": "C1"
+  },
+  {
+   "word": "duyar",
+   "lang": "tr",
+   "meaning": "awareness, consciousness",
+   "tr": "Çevre kirliliğine karşı genç neslin sosyal duyarının artması hepimizi sevindiriyor.",
+   "en": "The increase in the social awareness of the young generation against environmental pollution pleases us all.",
+   "level": "B2"
+  },
+  {
+   "word": "duyar",
+   "lang": "tr",
+   "meaning": "sensitive, sentimental",
+   "tr": "O kadar ince ve duyar bir insandır ki kimsenin kalbini kırmak istemez.",
+   "en": "He is such a delicate and sensitive person that he doesn't want to break anyone's heart.",
+   "level": "C1"
+  },
+  {
+   "word": "aya",
+   "lang": "tr",
+   "meaning": "palm (of hand)",
+   "tr": "Küçük çocuğun ayası oynamaktan sıyrılmış, biraz kanıyordu.",
+   "en": "The little boy's palm was grazed from playing and bleeding a little.",
+   "level": "B1"
+  },
+  {
+   "word": "aya",
+   "lang": "tr",
+   "meaning": "saint (Orthodox)",
+   "tr": "Tarihi binanın girişinde saygıdeğer bir ayanın mozaik portresi bulunuyor.",
+   "en": "There is a mosaic portrait of a venerable saint at the entrance of the historical building.",
+   "level": "C2"
+  },
+  {
+   "word": "faydalı",
+   "lang": "tr",
+   "meaning": "useful, beneficial",
+   "tr": "Bu kitap, sınava hazırlanan öğrenciler için son derece faydalı bilgiler içeriyor.",
+   "en": "This book contains highly useful information for students preparing for the exam.",
+   "level": "A2"
+  },
+  {
+   "word": "faydalı",
+   "lang": "tr",
+   "meaning": "profitable",
+   "tr": "Şirket, bu yıl yaptığı yatırımlardan oldukça faydalı sonuçlar elde etti.",
+   "en": "The company got very good returns from the investments it made this year.",
+   "level": "B2"
+  },
+  {
+   "word": "negatif",
+   "lang": "tr",
+   "meaning": "negative (less than zero)",
+   "tr": "Kışın en sert aylarında burada hava sıcaklığı genellikle negatif değerlerde seyreder.",
+   "en": "In the harshest months of winter, the temperature here usually stays below zero.",
+   "level": "A2"
+  },
+  {
+   "word": "negatif",
+   "lang": "tr",
+   "meaning": "negative (not constructive)",
+   "tr": "Her şeye sürekli negatif yaklaşması tüm ekibin enerjisini yavaş yavaş düşürüyor.",
+   "en": "His constantly negative approach to everything slowly lowers the energy of the entire team.",
+   "level": "B1"
+  },
+  {
+   "word": "negatif",
+   "lang": "tr",
+   "meaning": "negative (film/photo)",
+   "tr": "Eski fotoğrafların orijinallerini bulamayınca tab etmek için negatiflerine baktı.",
+   "en": "When he couldn't find the original photos, he looked for their negatives to make new prints.",
+   "level": "B2"
+  },
+  {
+   "word": "kesik",
+   "lang": "tr",
+   "meaning": "short, intermittent",
+   "tr": "Hastaneye yetiştirilirken hastanın nefes alışverişleri iyice kesik bir hal almıştı.",
+   "en": "On the way to the hospital, the patient's breathing had become short and broken.",
+   "level": "B2"
+  },
+  {
+   "word": "kesik",
+   "lang": "tr",
+   "meaning": "turned sour, curdled",
+   "tr": "Sıcakta unutulan sütün kesik olduğunu kokusundan anladı.",
+   "en": "She could tell from the smell that the milk left in the heat had curdled.",
+   "level": "C1"
+  },
+  {
+   "word": "kesik",
+   "lang": "tr",
+   "meaning": "enamored, in love with",
+   "tr": "Mahallenin fırıncısının kızına aylardır fena halde kesik, sürekli onu izliyor.",
+   "en": "He has been crazy about the neighbourhood baker's daughter for months; he can't take his eyes off her.",
+   "level": "C2"
+  },
+  {
+   "word": "aralık",
+   "lang": "tr",
+   "meaning": "December",
+   "tr": "Bu yıl aralık ayında şehre son yılların en büyük karı yağdı.",
+   "en": "The biggest snow of recent years fell on the city in December this year.",
+   "level": "A1"
+  },
+  {
+   "word": "aralık",
+   "lang": "tr",
+   "meaning": "passageway, corridor",
+   "tr": "İki eski binanın arasındaki dar ve karanlık aralık yaya trafiğine kapatıldı.",
+   "en": "The narrow and dark passageway between the two old buildings was closed to pedestrian traffic.",
+   "level": "B2"
+  },
+  {
+   "word": "bel",
+   "lang": "tr",
+   "meaning": "waist",
+   "tr": "Ağır koliyi yerden yanlış bir şekilde kaldırdığı için belini fena incitti.",
+   "en": "He badly hurt his lower back lifting the heavy box the wrong way.",
+   "level": "A2"
+  },
+  {
+   "word": "bel",
+   "lang": "tr",
+   "meaning": "spade",
+   "tr": "Bahçıvan toprağı daha iyi havalandırmak için büyük bir belle bahçeyi kazdı.",
+   "en": "The gardener dug the garden with a large spade to aerate the soil better.",
+   "level": "C1"
+  },
+  {
+   "word": "füze",
+   "lang": "tr",
+   "meaning": "rocket, missile",
+   "tr": "Askeri tatbikatta denize doğru yeni nesil bir füze ateşlendi.",
+   "en": "During the military exercise, a new-generation missile was fired towards the sea.",
+   "level": "B2"
+  },
+  {
+   "word": "füze",
+   "lang": "tr",
+   "meaning": "bazooka",
+   "tr": "Askerler tankı durdurmak için omuzdan ateşlemeli füze kullandılar.",
+   "en": "The soldiers used a shoulder-fired bazooka to stop the tank.",
+   "level": "C1"
+  },
+  {
+   "word": "dolaşan",
+   "lang": "tr",
+   "meaning": "wandering",
+   "tr": "Geceleri sokaklarda yalnız dolaşan köpekler havlamaya başladı.",
+   "en": "The dogs wandering alone in the streets at night started barking.",
+   "level": "B1"
+  },
+  {
+   "word": "dolaşan",
+   "lang": "tr",
+   "meaning": "circulating",
+   "tr": "Vücutta dolaşan kanın oksijen seviyesi düzenli olarak ölçüldü.",
+   "en": "The oxygen level of the blood circulating in the body was measured regularly.",
+   "level": "B2"
+  },
+  {
+   "word": "sakat",
+   "lang": "tr",
+   "meaning": "disabled",
+   "tr": "Sakat sporcular için özel olarak tasarlanmış bir turnuva düzenlendi.",
+   "en": "A tournament specifically designed for disabled athletes was organized.",
+   "level": "B1"
+  },
+  {
+   "word": "sakat",
+   "lang": "tr",
+   "meaning": "risky, hazardous",
+   "tr": "Böyle fırtınalı bir havada denize açılmak çok sakat bir karardı.",
+   "en": "Setting sail in such stormy weather was a very risky decision.",
+   "level": "C1"
+  },
+  {
+   "word": "sakat",
+   "lang": "tr",
+   "meaning": "unsound, likely to fail",
+   "tr": "Bu binanın temeli sakat olduğu için yıkım kararı alındı.",
+   "en": "Because the foundation of this building is unsound, a demolition order was issued.",
+   "level": "C2"
+  },
+  {
+   "word": "yaban",
+   "lang": "tr",
+   "meaning": "wilderness, wild",
+   "tr": "Bu bölgedeki yaban hayatını korumak için yeni yasalar çıkarıldı.",
+   "en": "New laws were enacted to protect the wildlife in this region.",
+   "level": "B1"
+  },
+  {
+   "word": "yaban",
+   "lang": "tr",
+   "meaning": "stranger, foreigner",
+   "tr": "Köy halkı, dışarıdan gelen bu yabana ilk başta çok şüpheyle yaklaştı.",
+   "en": "The villagers initially approached this stranger from outside with great suspicion.",
+   "level": "C1"
+  },
+  {
+   "word": "boğa",
+   "lang": "tr",
+   "meaning": "bull",
+   "tr": "Arenadaki kızgın boğa, matadorun kırmızı pelerinine doğru hızla koştu.",
+   "en": "The angry bull in the arena ran swiftly towards the matador's red cape.",
+   "level": "A2"
+  },
+  {
+   "word": "boğa",
+   "lang": "tr",
+   "meaning": "Taurus (astrology)",
+   "tr": "Benim burcum boğa olduğu için genellikle sakin ve inatçı bir yapıya sahibim.",
+   "en": "Because my zodiac sign is Taurus, I generally have a calm and stubborn nature.",
+   "level": "B1"
+  },
+  {
+   "word": "özgü",
+   "lang": "tr",
+   "meaning": "peculiar to, characteristic",
+   "tr": "Bu baharatlı yemek sadece bizim yöremize özgü bir lezzettir.",
+   "en": "This spicy dish is a flavour found only in our region.",
+   "level": "B2"
   }
  ],
  "phrases": [
@@ -37884,7 +38492,7 @@
    "ex_tr": "Herkesin aynı fikirde olduğundan emin olmak için planı gözden geçirelim."
   },
   {
-   "phrase": "pull someone's leg",
+   "phrase": "pull one's leg",
    "lang": "en",
    "meaning": "biriyle kafa bulmak, şaka yapmak",
    "ex": "Don't worry, he isn't serious; he is just pulling your leg.",
@@ -40019,7 +40627,7 @@
    "ex_tr": "Lütfen lafı dolandırmayı bırak ve bana ne olduğunu söyle."
   },
   {
-   "phrase": "bite off more than one can chew",
+   "phrase": "bite off more than sb can chew",
    "lang": "en",
    "meaning": "boyundan büyük işe kalkışmak",
    "ex": "Taking on three projects at once meant biting off more than he could chew.",
@@ -41951,7 +42559,7 @@
    "ex_tr": "Yeni asistanımız gerçekten işini biliyor ve çok dikkatli."
   },
   {
-   "phrase": "pull someone's leg",
+   "phrase": "pull one's leg",
    "lang": "en",
    "meaning": "biriyle kafa bulmak, şaka yapmak",
    "ex": "Stop pulling my leg! I know you are joking.",
@@ -41986,7 +42594,7 @@
    "ex_tr": "Sonunda partiye geldi; neyse, geç olsun güç olmasın."
   },
   {
-   "phrase": "bite off more than one can chew",
+   "phrase": "bite off more than sb can chew",
    "lang": "en",
    "meaning": "boyundan büyük işe kalkışmak",
    "ex": "By taking on three jobs, she definitely bit off more than she could chew.",
@@ -47130,7 +47738,7 @@
    "cat": "idioms"
   },
   {
-   "phrase": "pull someone's leg",
+   "phrase": "pull one's leg",
    "lang": "en",
    "meaning": "birisiyle şakalaşmak",
    "ex": "Relax, I'm just pulling your leg.",
@@ -50480,7 +51088,7 @@
    "cat": "idioms"
   },
   {
-   "phrase": "bite off more than you can chew",
+   "phrase": "bite off more than sb can chew",
    "lang": "en",
    "meaning": "altından kalkabileceğinden fazla işe girişmek",
    "ex": "I bit off more than I could chew when I accepted three projects.",
@@ -66088,7 +66696,7 @@
    "ex_tr": "Lafı dolandırmayı bırak ve bana tam olarak neyin yanlış gittiğini söyle."
   },
   {
-   "phrase": "bite off more than one can chew",
+   "phrase": "bite off more than sb can chew",
    "lang": "en",
    "meaning": "boyundan büyük işe kalkışmak",
    "ex": "By taking on three complex projects at once, she bit off more than she could chew.",
@@ -70264,7 +70872,7 @@
    "ex_tr": "Polis kayıp belgeleri bulmak için bakmadık yer bırakmayacak."
   },
   {
-   "phrase": "pull someone's leg",
+   "phrase": "pull one's leg",
    "lang": "en",
    "meaning": "biriyle kafa bulmak, işletmek",
    "ex": "Don't get angry immediately; he is just pulling your leg.",
@@ -74014,6 +74622,181 @@
    "meaning": "",
    "ex": "The ferry stayed in port while a severe storm battered the coast.",
    "ex_tr": "Şiddetli fırtına kıyıyı döverken feribot limanda kaldı."
+  },
+  {
+   "phrase": "canı burnuna gelmek",
+   "lang": "tr",
+   "meaning": "to be fed up, to be sick and tired",
+   "ex": "Bitmek bilmeyen bu inşaat gürültüsünden artık gerçekten canım burnuma geldi.",
+   "ex_tr": "I'm really fed up with this never-ending construction noise."
+  },
+  {
+   "phrase": "çizmeyi aşmak",
+   "lang": "tr",
+   "meaning": "to overstep the mark, to go too far",
+   "ex": "Son toplantıdaki o kaba yorumuyla yeni yönetici artık gerçekten çizmeyi aştı.",
+   "ex_tr": "With that rude comment in the last meeting, the new manager really overstepped the mark."
+  },
+  {
+   "phrase": "damarına basmak",
+   "lang": "tr",
+   "meaning": "to touch a nerve, to provoke",
+   "ex": "Özellikle onun hassas olduğu o konulardan bahsedip bilerek damarına basıyor.",
+   "ex_tr": "He deliberately talks about those subjects she is sensitive to and touches a nerve."
+  },
+  {
+   "phrase": "etekleri zil çalmak",
+   "lang": "tr",
+   "meaning": "to be thrilled to bits, to be overjoyed",
+   "ex": "Zorlu üniversite sınavını kazandığını öğrenince kızın etekleri zil çaldı.",
+   "ex_tr": "When she found out she passed the difficult university exam, the girl was thrilled to bits."
+  },
+  {
+   "phrase": "havanda su dövmek",
+   "lang": "tr",
+   "meaning": "to beat the air, to waste time on a futile task",
+   "ex": "Çözüm üretmeden masada saatlerce tartışmak aslında havanda su dövmekten farksızdır.",
+   "ex_tr": "Arguing at the table for hours without finding a solution is just a waste of breath."
+  },
+  {
+   "phrase": "nabza göre şerbet vermek",
+   "lang": "tr",
+   "meaning": "to play to the gallery, to tell people what they want to hear",
+   "ex": "İyi bir satıcı müşterisini çok iyi tanır ve daima nabza göre şerbet verir.",
+   "ex_tr": "A good salesman knows his customer very well and always tells them what they want to hear."
+  },
+  {
+   "phrase": "ok yaydan çıkmak",
+   "lang": "tr",
+   "meaning": "the die is cast, past the point of no return",
+   "ex": "Sözleşmeyi çoktan imzaladık, artık ok yaydan çıktı geri dönemeyiz.",
+   "ex_tr": "We have already signed the contract; the die is cast now, we cannot turn back."
+  },
+  {
+   "phrase": "kül yutmamak",
+   "lang": "tr",
+   "meaning": "not to be easily fooled, to be nobody's fool",
+   "ex": "O çok tecrübeli bir tüccardır, piyasadaki öyle ucuz yalanlarla kül yutmaz.",
+   "ex_tr": "He is a very experienced merchant; he is not easily fooled by such cheap lies in the market."
+  },
+  {
+   "phrase": "mangalda kül bırakmamak",
+   "lang": "tr",
+   "meaning": "to talk big, to boast empty words",
+   "ex": "İş konuşmaya gelince mangalda kül bırakmaz ama icraata gelince asla ortada yoktur.",
+   "ex_tr": "When it comes to talking, he talks big, but when it comes to action, he is never to be found."
+  },
+  {
+   "phrase": "abayı yakmak",
+   "lang": "tr",
+   "meaning": "to fall head over heels in love",
+   "ex": "Yeni komşunun kızını görür görmez abayı yaktı.",
+   "ex_tr": "As soon as he saw the new neighbor's daughter, he fell head over heels in love with her."
+  },
+  {
+   "phrase": "aklı başından gitmek",
+   "lang": "tr",
+   "meaning": "to lose one's mind (with joy/fear/surprise)",
+   "ex": "Sürpriz doğum günü partisini görünce sevinçten aklı başından gitti.",
+   "ex_tr": "When she saw the surprise birthday party, she lost her mind with joy."
+  },
+  {
+   "phrase": "balıklama atlamak",
+   "lang": "tr",
+   "meaning": "to jump at the chance, to dive right in",
+   "ex": "Şirketin sunduğu bu harika iş teklifine hiç düşünmeden balıklama atladı.",
+   "ex_tr": "He jumped at this wonderful job offer from the company without thinking twice."
+  },
+  {
+   "phrase": "ceviz kabuğunu doldurmaz",
+   "lang": "tr",
+   "meaning": "a storm in a teacup, trivial",
+   "ex": "İki kardeş ceviz kabuğunu doldurmayacak bir mesele yüzünden günlerce küs kaldı.",
+   "ex_tr": "The two siblings didn't speak to each other for days over a trivial matter."
+  },
+  {
+   "phrase": "dağ fare doğurdu",
+   "lang": "tr",
+   "meaning": "much ado about nothing",
+   "ex": "Günlerce övülen o büyük proje sonunda tam bir hayal kırıklığı oldu, dağ fare doğurdu.",
+   "ex_tr": "That great project praised for days turned out to be a complete disappointment in the end; much ado about nothing."
+  },
+  {
+   "phrase": "add fuel to the fire",
+   "lang": "en",
+   "meaning": "yangına körükle gitmek",
+   "ex": "Arguing with him while he's already furious will only add fuel to the fire.",
+   "ex_tr": "O zaten öfkeliyken onunla tartışmak sadece yangına körükle gitmek olur."
+  },
+  {
+   "phrase": "back to square one",
+   "lang": "en",
+   "meaning": "en başa dönmek, sıfırdan başlamak",
+   "ex": "The prototype failed the safety test entirely, so we are back to square one.",
+   "ex_tr": "Prototip güvenlik testinden tamamen başarısız oldu, bu yüzden en başa döndük."
+  },
+  {
+   "phrase": "beat around the bush",
+   "lang": "en",
+   "meaning": "lafı dolandırmak",
+   "ex": "Stop beating around the bush and just tell me exactly what went wrong.",
+   "ex_tr": "Lafı dolandırmayı bırak ve bana tam olarak neyin yanlış gittiğini söyle."
+  },
+  {
+   "phrase": "bite off more than sb can chew",
+   "lang": "en",
+   "meaning": "boyundan büyük işe kalkışmak",
+   "ex": "By taking on three complex projects at once, she has bitten off more than she can chew.",
+   "ex_tr": "Aynı anda üç karmaşık proje alarak boyundan büyük bir işe kalkıştı."
+  },
+  {
+   "phrase": "call it a day",
+   "lang": "en",
+   "meaning": "paydos etmek, o günlük işi bitirmek",
+   "ex": "We've been working for ten hours straight; let's call it a day.",
+   "ex_tr": "On saattir aralıksız çalışıyoruz; hadi paydos edelim."
+  },
+  {
+   "phrase": "kulağına kar suyu kaçırmak",
+   "lang": "tr",
+   "meaning": "to sow seeds of doubt in someone's mind",
+   "ex": "Rakipleri hakkında anlattığı o garip hikayeyle yöneticinin kulağına kar suyu kaçırdı.",
+   "ex_tr": "With that strange story he told about the rivals, he sowed seeds of doubt in the manager's mind."
+  },
+  {
+   "phrase": "yüzsüzlük etmek",
+   "lang": "tr",
+   "meaning": "to have the audacity, to act shamelessly",
+   "ex": "Bunca büyük hatasından sonra bir de zam isteyerek büyük bir yüzsüzlük etti.",
+   "ex_tr": "After all his big mistakes, he had the audacity to ask for a raise."
+  },
+  {
+   "phrase": "barking up the wrong tree",
+   "lang": "en",
+   "meaning": "yanlış kişiyi suçlamak, yanlış kapıyı çalmak",
+   "ex": "If you think I broke the printer, you're definitely barking up the wrong tree.",
+   "ex_tr": "Yazıcıyı benim kırdığımı düşünüyorsan, kesinlikle yanlış kapıyı çalıyorsun."
+  },
+  {
+   "phrase": "blessing in disguise",
+   "lang": "en",
+   "meaning": "başlangıçta kötü görünüp sonradan iyi olan şey",
+   "ex": "Losing my job was a blessing in disguise because it pushed me to start my own business.",
+   "ex_tr": "İşimi kaybetmek aslında iyi bir şeymiş çünkü bu beni kendi işimi kurmaya itti."
+  },
+  {
+   "phrase": "off the top of one's head",
+   "lang": "en",
+   "meaning": "ilk aklına gelen, düşünmeden",
+   "ex": "I can't remember the exact numbers off the top of my head right now.",
+   "ex_tr": "Kesin rakamları şu an ezbere söyleyemem."
+  },
+  {
+   "phrase": "take a rain check",
+   "lang": "en",
+   "meaning": "başka bir zamana ertelemek (daveti)",
+   "ex": "I'm too busy tonight, but I'd love to take a rain check on that dinner.",
+   "ex_tr": "Bu akşam çok meşgulüm ama o akşam yemeğini başka bir zamana ertelemeyi çok isterim."
   }
  ],
  "phrase_edits": [
@@ -74323,6 +75106,21 @@
    "action": "meaning",
    "meaning": "bir süre daha kalmak, etrafta beklemek",
    "phrase": "stick about"
+  },
+  {
+   "action": "rename",
+   "to": "bite off more than sb can chew",
+   "phrase": "bite off more than one can chew"
+  },
+  {
+   "action": "merge",
+   "to": "pull one's leg",
+   "phrase": "pull someone's leg"
+  },
+  {
+   "action": "merge",
+   "to": "bite off more than sb can chew",
+   "phrase": "bite off more than you can chew"
   }
  ],
  "word_drops": [

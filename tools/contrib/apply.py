@@ -374,7 +374,8 @@ for p in data.get('phrase_edits', []):
         for c in cats:
             en_db.execute('UPDATE exs SET key=? WHERE key=?', (f'{to}|{c}', f'{phrase}|{c}'))
         stats['en phrases renamed'] += len(cats)
-    elif p['action'] == 'delete':
+    elif p['action'] in ('delete', 'merge'):
+        # merge: a second heading of a phrase that is there; its rows go to that one (clean.py).
         cats = [c for c, in en_db.execute('SELECT cat FROM expr WHERE phrase=?', (phrase,))]
         en_db.execute('DELETE FROM expr WHERE phrase=?', (phrase,))
         for t in ('own_expr', 'exd', 'exfreq'):

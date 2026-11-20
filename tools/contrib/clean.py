@@ -30,7 +30,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx \
          tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
          tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v19.xlsx
 """
 import json
 import re
@@ -564,7 +565,54 @@ V18_PH_FIX = {
          'ex_tr': 'Sık sık abartır; sana bir hikâye anlattığında ona ihtiyatla yaklaş.'},
 }
 
+# --- Dictionary v19 (hamit_2026-11-20_v19.xlsx) ----------------------------------
+# Rows 24-43 (sacred ... toe) and the second copies of rows 44-55 and of the
+# idioms are earlier rows again, and the word sheets hold the template's sample
+# rows: all left out. English made idiomatic ("so harmonic", "works perfectly
+# compatible", "hurt his waist").
+V19_KEEP = {'Cümlede anlam': set(range(2, 24)) | set(range(44, 64)), 'Örnek cümleler': set(range(2, 24)) | set(range(44, 56)),
+            'TR-EN kelimeler': set(), 'EN-TR kelimeler': set(), 'Deyim ve kalıplar': set(range(2, 32)) | set(range(43, 49))}
+V19_CTX_FIX = {18: ('Sıcakta unutulan sütün kesik olduğunu kokusundan anladı.', 'kesik', None, None)}
+V19_EX_FIX = {
+    2: {'en': 'The enemy unit entered the city in a sudden attack early in the morning.'},
+    4: {'en': 'Thanks to that one clever move, he won the chess game.'},
+    5: {'en': 'The voices of the singers in the choir are in such harmony that it is wonderful to listen to them.'},
+    6: {'en': "This new software is fully compatible with my old computer's operating system."},
+    7: {'en': 'Our new colleague fits in very well with the team and never causes any problems.'},
+    13: {'en': 'The company got very good returns from the investments it made this year.'},
+    14: {'en': 'In the harshest months of winter, the temperature here usually stays below zero.'},
+    16: {'en': "When he couldn't find the original photos, he looked for their negatives to make new prints."},
+    17: {'en': "On the way to the hospital, the patient's breathing had become short and broken."},
+    18: {'tr': 'Sıcakta unutulan sütün kesik olduğunu kokusundan anladı.',
+         'en': 'She could tell from the smell that the milk left in the heat had curdled.'},
+    19: {'en': "He has been crazy about the neighbourhood baker's daughter for months; he can't take his eyes off her."},
+    22: {'en': 'He badly hurt his lower back lifting the heavy box the wrong way.'},
+    44: {'en': 'During the military exercise, a new-generation missile was fired towards the sea.'},
+    55: {'en': 'This spicy dish is a flavour found only in our region.'},
+}
+V19_EDITS = {
+    # "one can" stands for any subject ("she could"); "pull someone's leg" is
+    # "pull one's leg", which is there.
+    'bite off more than one can chew': {'action': 'rename', 'to': 'bite off more than sb can chew'},
+    "pull someone's leg": {'action': 'merge', 'to': "pull one's leg"},
+    'bite off more than you can chew': {'action': 'merge', 'to': 'bite off more than sb can chew'},
+}
+V19_PH_FIX = {
+    5: {'ex_tr': 'The editor checked every tiny detail of the book before publication to avoid any mistakes.'},
+    8: {'ex': 'When he saw the huge scratch on his new car, he hit the roof.'},
+    13: {'ex_tr': "I'm really fed up with this never-ending construction noise."},
+    17: {'ex_tr': 'Arguing at the table for hours without finding a solution is just a waste of breath.'},
+    22: {'ex': 'Yeni komşunun kızını görür görmez abayı yaktı.'},
+    25: {'ex_tr': "The two siblings didn't speak to each other for days over a trivial matter."},
+    30: {'ex': "By taking on three complex projects at once, she has bitten off more than she can chew.",
+         'ex_tr': 'Aynı anda üç karmaşık proje alarak boyundan büyük bir işe kalkıştı.'},
+    31: {'ex': "We've been working for ten hours straight; let's call it a day.", 'ex_tr': 'On saattir aralıksız çalışıyoruz; hadi paydos edelim.'},
+    47: {'ex_tr': 'Kesin rakamları şu an ezbere söyleyemem.'},
+}
+
 FIXES = {
+    'hamit_2026-11-20_v19.xlsx': dict(ctx_fix=V19_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split={}, tr_split={}, ex_fix=V19_EX_FIX, ph_fix=V19_PH_FIX),
     'hamit_2026-11-20_v18.xlsx': dict(ctx_fix=V18_CTX_FIX, ctx_to_phrase=set(), ctx_add=[],
                                       ctx_phrase={34: 'hold the fort', 46: 'harp on', 56: 'feet of clay'},
                                       ctx_tr={34: V18_EX_FIX[34]['tr'],
@@ -885,7 +933,7 @@ seen = set()  # (sheet, row contents) already read from an earlier file
 
 def rows(wb, sheet):
     keep, drop = {'hamit_2026-11-20_v4.xlsx': (V4_KEEP, V4_DROP), 'hamit_2026-11-20_v12.xlsx': (V12_KEEP, set()),
-                  'hamit_2026-11-20_v13.xlsx': (V13_KEEP, set()), 'hamit_2026-11-20_v14.xlsx': (V14_KEEP, set())}.get(wb_name, (None, None))
+                  'hamit_2026-11-20_v13.xlsx': (V13_KEEP, set()), 'hamit_2026-11-20_v14.xlsx': (V14_KEEP, set()), 'hamit_2026-11-20_v19.xlsx': (V19_KEEP, set())}.get(wb_name, (None, None))
     for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
         r = ['' if v is None else str(v).strip() for v in r]
         if keep is not None and (i not in keep.get(sheet, set()) or i in drop):
@@ -1052,7 +1100,8 @@ for src in srcs:
                         'ex': 'Be careful not to let the bathwater run over.', 'ex_tr': 'Banyo suyunun taşmamasına dikkat et.'})
 
 # A heading renamed by hand: rows of any sheet that use the old one go to the new one.
-_ren = {e['phrase']: e['to'] for e in edits if e['action'] == 'rename'}
+edits += [dict(v, phrase=k) for k, v in V19_EDITS.items()]
+_ren = {e['phrase']: e['to'] for e in edits if e['action'] in ('rename', 'merge')}
 for _p in phrases:
     if _p.get('lang') == 'en' and _p['phrase'] in _ren:
         _p['phrase'] = _ren[_p['phrase']]

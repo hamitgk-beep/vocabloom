@@ -65,5 +65,6 @@ void main() {
     // Audit 21: an object before the particle; a heading in the form texts use.
     expect(found("Don't boss the volunteers about.", 'phrasal_verbs'), contains('boss about'));
     expect(found('The kids ran me off my feet.', 'idioms'), contains("run someone off one's feet"));
+    expect(found('He bit off more than he can chew.', 'idioms'), contains('bite off more than sb can chew'));
   });
 }
