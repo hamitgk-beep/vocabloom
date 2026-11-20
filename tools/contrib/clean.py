@@ -1132,6 +1132,7 @@ Y1_MEANING = {
     'blow sth out of the water': '(bir iddiayı) tamamen çürütmek; açık ara geride bırakmak',
     "wash one's dirty laundry in public": 'kirli çamaşırlarını ortaya dökmek, özel meseleleri herkesin önünde konuşmak',
     'buy straw hats in winter': '(borsa) ucuzken alıp değerlenmesini beklemek',
+    'go climb a tree': '(Amerikan, kaba) defol git, başımdan git',
 }
 # Usage and field labels from the notes ("(İngiliz, eskice); ...") go in front of the meaning.
 Y1_LABELS = {'Amerikan', 'eskice', 'İngiliz', 'argo', 'konuşma dili', 'bölgesel', 'edebî', 'hukuk', 'alaycı', 'spor',
