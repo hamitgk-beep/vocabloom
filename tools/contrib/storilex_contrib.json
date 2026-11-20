@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -8127,6 +8127,262 @@
    "lemma": "lion",
    "lang": "en",
    "meaning": "sosyete yıldızı, ilgi odağı",
+   "translation": ""
+  },
+  {
+   "sentence": "Biz yolda sakince yürüyorduk, derken aniden şiddetli bir yağmur bastırdı.",
+   "form": "derken",
+   "lemma": "derken",
+   "lang": "tr",
+   "meaning": "just then, suddenly",
+   "translation": ""
+  },
+  {
+   "sentence": "Toplantıda 'bu projeyi bitirmeliyiz' derken aslında hepimizden yardım istiyordu.",
+   "form": "derken",
+   "lemma": "derken",
+   "lang": "tr",
+   "meaning": "while saying",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahar gelince penceremizin önündeki ağaca küçük bir kuş yuva yaptı.",
+   "form": "kuş",
+   "lemma": "kuş",
+   "lang": "tr",
+   "meaning": "bird",
+   "translation": ""
+  },
+  {
+   "sentence": "O kadar saftır ki o dolandırıcılar için tam bir kuştu.",
+   "form": "kuştu",
+   "lemma": "kuş",
+   "lang": "tr",
+   "meaning": "gullible, easy mark",
+   "translation": ""
+  },
+  {
+   "sentence": "Kazandığı o büyük zaferden sonra kahramanın şanı bütün ülkeye yayıldı.",
+   "form": "şanı",
+   "lemma": "şan",
+   "lang": "tr",
+   "meaning": "fame, glory",
+   "translation": ""
+  },
+  {
+   "sentence": "Tarihte bazı yöneticilere başarılarından dolayı özel sanlar verilmiştir.",
+   "form": "sanlar",
+   "lemma": "san",
+   "lang": "tr",
+   "meaning": "title",
+   "translation": ""
+  },
+  {
+   "sentence": "Onca emeğe ve çabaya rağmen maalesef projeyi zamanında bitiremedik.",
+   "form": "Onca",
+   "lemma": "onca",
+   "lang": "tr",
+   "meaning": "so much, all that",
+   "translation": ""
+  },
+  {
+   "sentence": "Güneş her akşam dağların arkasından, batı ufkundan yavaşça batar.",
+   "form": "batı",
+   "lemma": "batı",
+   "lang": "tr",
+   "meaning": "west",
+   "translation": ""
+  },
+  {
+   "sentence": "Son yıllarda Batı, teknoloji konusunda doğu ülkeleriyle büyük bir rekabet içinde.",
+   "form": "Batı",
+   "lemma": "batı",
+   "lang": "tr",
+   "meaning": "the West",
+   "translation": ""
+  },
+  {
+   "sentence": "Gökyüzünde aniden beliren acayip ışıklar kasabadaki herkesi çok korkuttu.",
+   "form": "acayip",
+   "lemma": "acayip",
+   "lang": "tr",
+   "meaning": "strange, weird",
+   "translation": ""
+  },
+  {
+   "sentence": "Bugün hava acayip sıcak, dışarıda on dakika bile yürünmüyor.",
+   "form": "acayip",
+   "lemma": "acayip",
+   "lang": "tr",
+   "meaning": "extremely, incredibly",
+   "translation": ""
+  },
+  {
+   "sentence": "Kral, düşman saldırısına karşı koymak için güçlü bir ordu hazırladı.",
+   "form": "ordu",
+   "lemma": "ordu",
+   "lang": "tr",
+   "meaning": "army",
+   "translation": ""
+  },
+  {
+   "sentence": "Konser alanına girmek için kapıda bekleyen devasa bir ordu vardı.",
+   "form": "ordu",
+   "lemma": "ordu",
+   "lang": "tr",
+   "meaning": "horde, multitude",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazlık kasabada turizm sezonu genellikle mayıs ayında başlar.",
+   "form": "sezonu",
+   "lemma": "sezon",
+   "lang": "tr",
+   "meaning": "season",
+   "translation": ""
+  },
+  {
+   "sentence": "En sevdiğim dizinin yeni sezonu önümüzdeki hafta yayınlanacak.",
+   "form": "sezonu",
+   "lemma": "sezon",
+   "lang": "tr",
+   "meaning": "season (of a TV show)",
+   "translation": ""
+  },
+  {
+   "sentence": "The charity organization collected donations to help the suffering families in the war zone.",
+   "form": "suffering",
+   "lemma": "suffering",
+   "lang": "en",
+   "meaning": "acı çeken, ıstıraplı",
+   "translation": ""
+  },
+  {
+   "sentence": "They are chasing the almighty dollar instead of focusing on the quality of their work.",
+   "form": "dollar",
+   "lemma": "dollar",
+   "lang": "en",
+   "meaning": "para, zenginlik",
+   "translation": ""
+  },
+  {
+   "sentence": "His sudden explosion of anger during the calm meeting shocked all his colleagues.",
+   "form": "explosion",
+   "lemma": "explosion",
+   "lang": "en",
+   "meaning": "öfke patlaması",
+   "translation": ""
+  },
+  {
+   "sentence": "The country is currently facing a severe economic crisis due to high inflation.",
+   "form": "economic",
+   "lemma": "economic",
+   "lang": "en",
+   "meaning": "ekonomik, iktisadi",
+   "translation": ""
+  },
+  {
+   "sentence": "It is no longer economic to keep operating this old and inefficient factory.",
+   "form": "economic",
+   "lemma": "economic",
+   "lang": "en",
+   "meaning": "kârlı, kazançlı",
+   "translation": ""
+  },
+  {
+   "sentence": "The professor asked the students to write a five-page essay on climate change.",
+   "form": "essay",
+   "lemma": "essay",
+   "lang": "en",
+   "meaning": "makale, deneme",
+   "translation": ""
+  },
+  {
+   "sentence": "His first essay in the world of politics ended in a disappointing failure.",
+   "form": "essay",
+   "lemma": "essay",
+   "lang": "en",
+   "meaning": "girişim, deneme",
+   "translation": ""
+  },
+  {
+   "sentence": "We asked the polite waiter to bring us the dessert menu after dinner.",
+   "form": "menu",
+   "lemma": "menu",
+   "lang": "en",
+   "meaning": "yemek listesi, menü",
+   "translation": ""
+  },
+  {
+   "sentence": "You can easily change the language settings from the main menu of the app.",
+   "form": "menu",
+   "lemma": "menu",
+   "lang": "en",
+   "meaning": "seçenekler listesi",
+   "translation": ""
+  },
+  {
+   "sentence": "The children's boots were completely covered in thick mud after playing outside.",
+   "form": "mud",
+   "lemma": "mud",
+   "lang": "en",
+   "meaning": "çamur",
+   "translation": ""
+  },
+  {
+   "sentence": "The rival politicians started throwing mud at each other right before the election.",
+   "form": "mud",
+   "lemma": "mud",
+   "lang": "en",
+   "meaning": "iftira, karalama",
+   "translation": ""
+  },
+  {
+   "sentence": "When the power went out, the entire house was instantly plunged into complete darkness.",
+   "form": "darkness",
+   "lemma": "darkness",
+   "lang": "en",
+   "meaning": "karanlık",
+   "translation": ""
+  },
+  {
+   "sentence": "There was a deep sense of darkness and despair in his later paintings.",
+   "form": "darkness",
+   "lemma": "darkness",
+   "lang": "en",
+   "meaning": "kötülük, karamsarlık",
+   "translation": ""
+  },
+  {
+   "sentence": "Make sure you fill out the official application form in black ink.",
+   "form": "ink",
+   "lemma": "ink",
+   "lang": "en",
+   "meaning": "mürekkep",
+   "translation": ""
+  },
+  {
+   "sentence": "The talented young player finally inked a five-year contract with the club.",
+   "form": "inked",
+   "lemma": "ink",
+   "lang": "en",
+   "meaning": "imzalamak",
+   "translation": ""
+  },
+  {
+   "sentence": "Tourists eagerly visited the ancient Buddhist temple hidden deep in the forest.",
+   "form": "temple",
+   "lemma": "temple",
+   "lang": "en",
+   "meaning": "tapınak",
+   "translation": ""
+  },
+  {
+   "sentence": "He nervously rubbed his left temple because he had a terrible headache.",
+   "form": "temple",
+   "lemma": "temple",
+   "lang": "en",
+   "meaning": "şakak",
    "translation": ""
   }
  ],
@@ -24174,6 +24430,216 @@
    "pos": "noun",
    "meaning": "sosyete yıldızı, ilgi odağı",
    "note": ""
+  },
+  {
+   "word": "derken",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "just then, suddenly",
+   "note": "beklenmedik bir anda"
+  },
+  {
+   "word": "derken",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "while saying",
+   "note": "bir şeyi ifade ederken"
+  },
+  {
+   "word": "kuş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "bird",
+   "note": "uçan hayvan"
+  },
+  {
+   "word": "kuş",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "gullible, easy mark",
+   "note": "hemen inanan"
+  },
+  {
+   "word": "san",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "title",
+   "note": "isimle kullanılan saygı ifadesi"
+  },
+  {
+   "word": "onca",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "so much, all that",
+   "note": "miktarın fazlalığı"
+  },
+  {
+   "word": "batı",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "west",
+   "note": "pusula yönü"
+  },
+  {
+   "word": "batı",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "the West",
+   "note": "gelişmiş batılı ülkeler"
+  },
+  {
+   "word": "acayip",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "strange, weird",
+   "note": "alışılmadık"
+  },
+  {
+   "word": "acayip",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "extremely, incredibly",
+   "note": "miktarı çok (argo)"
+  },
+  {
+   "word": "ordu",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "army",
+   "note": "silahlı kuvvet"
+  },
+  {
+   "word": "ordu",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "horde, multitude",
+   "note": "çok sayıda insan"
+  },
+  {
+   "word": "sezon",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "season",
+   "note": "yılın bir bölümü"
+  },
+  {
+   "word": "sezon",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "season (of a TV show)",
+   "note": "yayın periyodu"
+  },
+  {
+   "word": "dollar",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "para, zenginlik",
+   "note": "maddi güç"
+  },
+  {
+   "word": "explosion",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "öfke patlaması",
+   "note": "ani sinirlenme"
+  },
+  {
+   "word": "economic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "ekonomik, iktisadi",
+   "note": "ekonomiyle ilgili"
+  },
+  {
+   "word": "economic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kârlı, kazançlı",
+   "note": "maddi getirisi olan"
+  },
+  {
+   "word": "essay",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "makale, deneme",
+   "note": "yazı türü"
+  },
+  {
+   "word": "essay",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "girişim, deneme",
+   "note": "bir şeyi başarma çabası"
+  },
+  {
+   "word": "menu",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yemek listesi, menü",
+   "note": "restoran listesi"
+  },
+  {
+   "word": "menu",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "seçenekler listesi",
+   "note": "yazılım menüsü"
+  },
+  {
+   "word": "mud",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "çamur",
+   "note": "ıslak toprak"
+  },
+  {
+   "word": "mud",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "iftira, karalama",
+   "note": "kötüleme"
+  },
+  {
+   "word": "darkness",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "karanlık",
+   "note": "ışık yokluğu"
+  },
+  {
+   "word": "darkness",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kötülük, karamsarlık",
+   "note": "kötü ruh hali"
+  },
+  {
+   "word": "ink",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mürekkep",
+   "note": "yazı sıvısı"
+  },
+  {
+   "word": "ink",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "imzalamak",
+   "note": "sözleşme imzalamak"
+  },
+  {
+   "word": "temple",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tapınak",
+   "note": "dini yapı"
+  },
+  {
+   "word": "temple",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "şakak",
+   "note": "başın yan kısmı"
   }
  ],
  "examples": [
@@ -33192,6 +33658,262 @@
    "tr": "Ünlü bir yazar olarak başkentte edebiyat dünyasının gözdesi gibi ağırlandı.",
    "en": "As a famous author, he was treated as a literary lion in the capital.",
    "level": "C2"
+  },
+  {
+   "word": "derken",
+   "lang": "tr",
+   "meaning": "just then, suddenly",
+   "tr": "Biz yolda sakince yürüyorduk, derken aniden şiddetli bir yağmur bastırdı.",
+   "en": "We were walking calmly along the road when, all of a sudden, heavy rain started.",
+   "level": "B1"
+  },
+  {
+   "word": "derken",
+   "lang": "tr",
+   "meaning": "while saying",
+   "tr": "Toplantıda 'bu projeyi bitirmeliyiz' derken aslında hepimizden yardım istiyordu.",
+   "en": "While saying 'we must finish this project' at the meeting, he was actually asking us all for help.",
+   "level": "B2"
+  },
+  {
+   "word": "kuş",
+   "lang": "tr",
+   "meaning": "bird",
+   "tr": "Bahar gelince penceremizin önündeki ağaca küçük bir kuş yuva yaptı.",
+   "en": "When spring came, a small bird built a nest in the tree in front of our window.",
+   "level": "A1"
+  },
+  {
+   "word": "kuş",
+   "lang": "tr",
+   "meaning": "gullible, easy mark",
+   "tr": "O kadar saftır ki o dolandırıcılar için tam bir kuştu.",
+   "en": "He is so naive that he was a perfect easy mark for those scammers.",
+   "level": "C1"
+  },
+  {
+   "word": "şan",
+   "lang": "tr",
+   "meaning": "fame, glory",
+   "tr": "Kazandığı o büyük zaferden sonra kahramanın şanı bütün ülkeye yayıldı.",
+   "en": "After that great victory he won, the hero's fame spread all over the country.",
+   "level": "B2"
+  },
+  {
+   "word": "san",
+   "lang": "tr",
+   "meaning": "title",
+   "tr": "Tarihte bazı yöneticilere başarılarından dolayı özel sanlar verilmiştir.",
+   "en": "In history, special titles were given to some rulers because of their successes.",
+   "level": "C1"
+  },
+  {
+   "word": "onca",
+   "lang": "tr",
+   "meaning": "so much, all that",
+   "tr": "Onca emeğe ve çabaya rağmen maalesef projeyi zamanında bitiremedik.",
+   "en": "Despite all that effort and hard work, we unfortunately couldn't finish the project on time.",
+   "level": "B1"
+  },
+  {
+   "word": "batı",
+   "lang": "tr",
+   "meaning": "west",
+   "tr": "Güneş her akşam dağların arkasından, batı ufkundan yavaşça batar.",
+   "en": "Every evening the sun sets slowly behind the mountains on the western horizon.",
+   "level": "A1"
+  },
+  {
+   "word": "batı",
+   "lang": "tr",
+   "meaning": "the West",
+   "tr": "Son yıllarda Batı, teknoloji konusunda doğu ülkeleriyle büyük bir rekabet içinde.",
+   "en": "In recent years, the West has been in great competition with eastern countries in technology.",
+   "level": "B2"
+  },
+  {
+   "word": "acayip",
+   "lang": "tr",
+   "meaning": "strange, weird",
+   "tr": "Gökyüzünde aniden beliren acayip ışıklar kasabadaki herkesi çok korkuttu.",
+   "en": "The strange lights that suddenly appeared in the sky scared everyone in the town very much.",
+   "level": "A2"
+  },
+  {
+   "word": "acayip",
+   "lang": "tr",
+   "meaning": "extremely, incredibly",
+   "tr": "Bugün hava acayip sıcak, dışarıda on dakika bile yürünmüyor.",
+   "en": "The weather is incredibly hot today; you can't even walk outside for ten minutes.",
+   "level": "B1"
+  },
+  {
+   "word": "ordu",
+   "lang": "tr",
+   "meaning": "army",
+   "tr": "Kral, düşman saldırısına karşı koymak için güçlü bir ordu hazırladı.",
+   "en": "The king prepared a strong army to resist the enemy attack.",
+   "level": "A2"
+  },
+  {
+   "word": "ordu",
+   "lang": "tr",
+   "meaning": "horde, multitude",
+   "tr": "Konser alanına girmek için kapıda bekleyen devasa bir ordu vardı.",
+   "en": "There was a massive horde waiting at the gate to enter the concert area.",
+   "level": "C1"
+  },
+  {
+   "word": "sezon",
+   "lang": "tr",
+   "meaning": "season",
+   "tr": "Yazlık kasabada turizm sezonu genellikle mayıs ayında başlar.",
+   "en": "The tourism season in the summer town usually starts in May.",
+   "level": "A2"
+  },
+  {
+   "word": "sezon",
+   "lang": "tr",
+   "meaning": "season (of a TV show)",
+   "tr": "En sevdiğim dizinin yeni sezonu önümüzdeki hafta yayınlanacak.",
+   "en": "The new season of my favorite TV show will air next week.",
+   "level": "A2"
+  },
+  {
+   "word": "suffering",
+   "lang": "en",
+   "meaning": "acı çeken, ıstıraplı",
+   "tr": "Yardım kuruluşu, savaş bölgesinde acı çeken ailelere yardım etmek için bağış topladı.",
+   "en": "The charity organization collected donations to help the suffering families in the war zone.",
+   "level": "C1"
+  },
+  {
+   "word": "dollar",
+   "lang": "en",
+   "meaning": "para, zenginlik",
+   "tr": "İşlerinin kalitesine odaklanmak yerine paranın peşinden koşuyorlar.",
+   "en": "They are chasing the almighty dollar instead of focusing on the quality of their work.",
+   "level": "C1"
+  },
+  {
+   "word": "explosion",
+   "lang": "en",
+   "meaning": "öfke patlaması",
+   "tr": "Sakin toplantı sırasındaki ani öfke patlaması tüm meslektaşlarını şok etti.",
+   "en": "His sudden explosion of anger during the calm meeting shocked all his colleagues.",
+   "level": "B2"
+  },
+  {
+   "word": "economic",
+   "lang": "en",
+   "meaning": "ekonomik, iktisadi",
+   "tr": "Ülke şu anda yüksek enflasyon nedeniyle şiddetli bir ekonomik krizle karşı karşıya.",
+   "en": "The country is currently facing a severe economic crisis due to high inflation.",
+   "level": "B1"
+  },
+  {
+   "word": "economic",
+   "lang": "en",
+   "meaning": "kârlı, kazançlı",
+   "tr": "Bu eski ve verimsiz fabrikayı çalıştırmaya devam etmek artık kârlı değil.",
+   "en": "It is no longer economic to keep operating this old and inefficient factory.",
+   "level": "C1"
+  },
+  {
+   "word": "essay",
+   "lang": "en",
+   "meaning": "makale, deneme",
+   "tr": "Profesör, öğrencilerden iklim değişikliği üzerine beş sayfalık bir makale yazmalarını istedi.",
+   "en": "The professor asked the students to write a five-page essay on climate change.",
+   "level": "B1"
+  },
+  {
+   "word": "essay",
+   "lang": "en",
+   "meaning": "girişim, deneme",
+   "tr": "Siyaset dünyasındaki ilk girişimi hayal kırıklığı yaratan bir başarısızlıkla sonuçlandı.",
+   "en": "His first essay in the world of politics ended in a disappointing failure.",
+   "level": "C2"
+  },
+  {
+   "word": "menu",
+   "lang": "en",
+   "meaning": "yemek listesi, menü",
+   "tr": "Kibar garsondan akşam yemeğinden sonra bize tatlı menüsünü getirmesini istedik.",
+   "en": "We asked the polite waiter to bring us the dessert menu after dinner.",
+   "level": "A1"
+  },
+  {
+   "word": "menu",
+   "lang": "en",
+   "meaning": "seçenekler listesi",
+   "tr": "Uygulamanın ana menüsünden dil ayarlarını kolayca değiştirebilirsiniz.",
+   "en": "You can easily change the language settings from the main menu of the app.",
+   "level": "A2"
+  },
+  {
+   "word": "mud",
+   "lang": "en",
+   "meaning": "çamur",
+   "tr": "Dışarıda oynadıktan sonra çocukların botları tamamen kalın çamurla kaplanmıştı.",
+   "en": "The children's boots were completely covered in thick mud after playing outside.",
+   "level": "A2"
+  },
+  {
+   "word": "mud",
+   "lang": "en",
+   "meaning": "iftira, karalama",
+   "tr": "Rakip politikacılar seçimden hemen önce birbirlerine iftira atmaya başladılar.",
+   "en": "The rival politicians started throwing mud at each other right before the election.",
+   "level": "C1"
+  },
+  {
+   "word": "darkness",
+   "lang": "en",
+   "meaning": "karanlık",
+   "tr": "Elektrikler kesildiğinde, bütün ev anında tam bir karanlığa gömüldü.",
+   "en": "When the power went out, the entire house was instantly plunged into complete darkness.",
+   "level": "B1"
+  },
+  {
+   "word": "darkness",
+   "lang": "en",
+   "meaning": "kötülük, karamsarlık",
+   "tr": "Onun sonraki resimlerinde derin bir karamsarlık ve umutsuzluk hissi vardı.",
+   "en": "There was a deep sense of darkness and despair in his later paintings.",
+   "level": "C1"
+  },
+  {
+   "word": "ink",
+   "lang": "en",
+   "meaning": "mürekkep",
+   "tr": "Resmi başvuru formunu mutlaka siyah mürekkeple doldurduğunuzdan emin olun.",
+   "en": "Make sure you fill out the official application form in black ink.",
+   "level": "B1"
+  },
+  {
+   "word": "ink",
+   "lang": "en",
+   "meaning": "imzalamak",
+   "tr": "Yetenekli genç oyuncu sonunda kulüple beş yıllık bir sözleşme imzaladı.",
+   "en": "The talented young player finally inked a five-year contract with the club.",
+   "level": "C2"
+  },
+  {
+   "word": "temple",
+   "lang": "en",
+   "meaning": "tapınak",
+   "tr": "Turistler ormanın derinliklerinde gizlenmiş antik Budist tapınağını hevesle ziyaret ettiler.",
+   "en": "Tourists eagerly visited the ancient Buddhist temple hidden deep in the forest.",
+   "level": "B1"
+  },
+  {
+   "word": "temple",
+   "lang": "en",
+   "meaning": "şakak",
+   "tr": "Korkunç bir baş ağrısı olduğu için gergin bir şekilde sol şakağını ovdu.",
+   "en": "He nervously rubbed his left temple because he had a terrible headache.",
+   "level": "C1"
   }
  ],
  "phrases": [
@@ -65931,6 +66653,48 @@
    "ex": "",
    "ex_tr": "",
    "cat": "collocations"
+  },
+  {
+   "phrase": "ateşle oynamak",
+   "lang": "tr",
+   "meaning": "to play with fire",
+   "ex": "Müdürün kararına karşı gelmek resmen ateşle oynamaktır.",
+   "ex_tr": "Going against the manager's decision is literally playing with fire."
+  },
+  {
+   "phrase": "boş bulunmak",
+   "lang": "tr",
+   "meaning": "to be caught off guard",
+   "ex": "Toplantıda o an boş bulundum ve yanlışlıkla eski projeden bahsettim.",
+   "ex_tr": "I was caught off guard at the meeting and accidentally mentioned the old project."
+  },
+  {
+   "phrase": "canına tak etmek",
+   "lang": "tr",
+   "meaning": "to reach one's limit, to be sick of",
+   "ex": "Komşunun bitmek bilmeyen inşaat gürültüsü artık canıma tak etti.",
+   "ex_tr": "I've finally had enough of the neighbour's endless construction noise."
+  },
+  {
+   "phrase": "çileden çıkmak",
+   "lang": "tr",
+   "meaning": "to hit the roof, to be driven crazy",
+   "ex": "Trafikteki o saygısız sürücü onu gerçekten çileden çıkardı.",
+   "ex_tr": "That disrespectful driver in traffic really drove him crazy."
+  },
+  {
+   "phrase": "gözdağı vermek",
+   "lang": "tr",
+   "meaning": "to intimidate, to threaten",
+   "ex": "Rakiplerine gözdağı vermek için çok sert bir basın açıklaması yaptı.",
+   "ex_tr": "He made a very harsh press statement to intimidate his rivals."
+  },
+  {
+   "phrase": "tepesi atmak",
+   "lang": "tr",
+   "meaning": "to blow one's top",
+   "ex": "Bütün uyarılara rağmen aynı hatayı görünce patronun tepesi attı.",
+   "ex_tr": "When he saw the same mistake despite all the warnings, the boss blew his top."
   }
  ],
  "phrase_edits": [

@@ -26,7 +26,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v12.xlsx tools/contrib/hamit_filtre17_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v14.xlsx
 """
 import json
 import re
@@ -439,7 +440,25 @@ V13_TR_SPLIT = {41: [('isim', 'bastard, illegitimate child', 'kaba')], 42: [('is
                 43: [('isim', V13_PIC_SPROUT, '')]}
 V13_EN_SPLIT = {38: [('isim', V13_LION, '')]}
 
+# --- Dictionary v14 (hamit_2026-11-20_v14.xlsx) ----------------------------------
+# Earlier words again (left out) and new ones. "şanı" is "şan" (fame), not "san"
+# (title); "onca" as "ona göre" is old and its sentence is not Turkish.
+_V14_ROWS = (set(range(16, 32)) - {23}) | {33, 35, 41} | set(range(44, 58))
+V14_KEEP = {'Cümlede anlam': _V14_ROWS, 'Örnek cümleler': _V14_ROWS, 'TR-EN kelimeler': set(range(16, 32)) - {20, 23},
+            'EN-TR kelimeler': {5, 11} | set(range(14, 28)), 'Deyim ve kalıplar': {2, 3, 4, 5, 6, 8}}
+V14_CTX_FIX = {20: (None, None, 'şan', 'fame, glory')}
+V14_EX_FIX = {
+    16: {'en': 'We were walking calmly along the road when, all of a sudden, heavy rain started.'},
+    20: {'word': 'şan', 'meaning': 'fame, glory'},
+    24: {'en': 'Every evening the sun sets slowly behind the mountains on the western horizon.'},
+    35: {'tr': 'İşlerinin kalitesine odaklanmak yerine paranın peşinden koşuyorlar.'},
+}
+V14_TR_SPLIT = {22: [('sıfat', 'so much, all that', 'miktarın fazlalığı')]}
+V14_PH_FIX = {4: {'ex_tr': "I've finally had enough of the neighbour's endless construction noise."}}
+
 FIXES = {
+    'hamit_2026-11-20_v14.xlsx': dict(ctx_fix=V14_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split={}, tr_split=V14_TR_SPLIT, ex_fix=V14_EX_FIX, ph_fix=V14_PH_FIX),
     'hamit_2026-11-20_v13.xlsx': dict(ctx_fix={42: (None, None, None, V13_PIC_RASCAL), 43: (None, None, None, V13_PIC_SPROUT),
                                                80: (None, None, None, V13_LION)}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                       en_split=V13_EN_SPLIT, tr_split=V13_TR_SPLIT, ex_fix=V13_EX_FIX, ph_fix={}),
@@ -677,7 +696,7 @@ seen = set()  # (sheet, row contents) already read from an earlier file
 
 def rows(wb, sheet):
     keep, drop = {'hamit_2026-11-20_v4.xlsx': (V4_KEEP, V4_DROP), 'hamit_2026-11-20_v12.xlsx': (V12_KEEP, set()),
-                  'hamit_2026-11-20_v13.xlsx': (V13_KEEP, set())}.get(wb_name, (None, None))
+                  'hamit_2026-11-20_v13.xlsx': (V13_KEEP, set()), 'hamit_2026-11-20_v14.xlsx': (V14_KEEP, set())}.get(wb_name, (None, None))
     for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
         r = ['' if v is None else str(v).strip() for v in r]
         if keep is not None and (i not in keep.get(sheet, set()) or i in drop):
