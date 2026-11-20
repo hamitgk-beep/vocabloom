@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_filtre_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_filtre_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -4839,6 +4839,278 @@
    "lemma": "state",
    "lang": "en",
    "meaning": "devlet",
+   "translation": ""
+  },
+  {
+   "sentence": "Bilgisayarındaki önemli verilerin hepsini harici diske aktardı.",
+   "form": "aktardı",
+   "lemma": "aktarmak",
+   "lang": "tr",
+   "meaning": "to transfer, to copy",
+   "translation": ""
+  },
+  {
+   "sentence": "Uzun süre kaynayan süt sonunda tencereden taştı.",
+   "form": "taştı",
+   "lemma": "taşmak",
+   "lang": "tr",
+   "meaning": "to overflow, to boil over",
+   "translation": ""
+  },
+  {
+   "sentence": "Törende okunan duygu yüklü şiir herkesin kalbine işledi.",
+   "form": "işledi",
+   "lemma": "işlemek",
+   "lang": "tr",
+   "meaning": "to touch deeply, to penetrate",
+   "translation": ""
+  },
+  {
+   "sentence": "Genç araştırmacı bilim dünyasında yeni bir çığır açtı.",
+   "form": "açtı",
+   "lemma": "açmak",
+   "lang": "tr",
+   "meaning": "to pioneer, to break new ground",
+   "translation": ""
+  },
+  {
+   "sentence": "Yolculuk sırasında arabanın lastiği aniden patladı.",
+   "form": "patladı",
+   "lemma": "patlamak",
+   "lang": "tr",
+   "meaning": "to burst, to go flat",
+   "translation": ""
+  },
+  {
+   "sentence": "Kuşatılan kalenin kapıları sabaha karşı kırıldı.",
+   "form": "kırıldı",
+   "lemma": "kırılmak",
+   "lang": "tr",
+   "meaning": "to be breached, to be broken",
+   "translation": ""
+  },
+  {
+   "sentence": "Tarlada büyüyen zararlı otları tek tek kökünden yoldu.",
+   "form": "yoldu",
+   "lemma": "yolmak",
+   "lang": "tr",
+   "meaning": "to pull out, to pluck",
+   "translation": ""
+  },
+  {
+   "sentence": "Misafirlerin gelişiyle evdeki durgun hava birden şenlendi.",
+   "form": "şenlendi",
+   "lemma": "şenlenmek",
+   "lang": "tr",
+   "meaning": "to liven up, to become cheerful",
+   "translation": ""
+  },
+  {
+   "sentence": "Kitaptaki bazı bölümler yazarın gençlik anılarına dayanıyor.",
+   "form": "dayanıyor",
+   "lemma": "dayanmak",
+   "lang": "tr",
+   "meaning": "to be based on",
+   "translation": ""
+  },
+  {
+   "sentence": "Küçük bir tartışma yüzünden iki eski dostun arası açıldı.",
+   "form": "açıldı",
+   "lemma": "açılmak",
+   "lang": "tr",
+   "meaning": "to fall out, to drift apart",
+   "translation": ""
+  },
+  {
+   "sentence": "Aşırı yorgunluktan dolayı toplantı sırasında dikkati dağıldı.",
+   "form": "dağıldı",
+   "lemma": "dağılmak",
+   "lang": "tr",
+   "meaning": "to be distracted",
+   "translation": ""
+  },
+  {
+   "sentence": "Deneyimli usta çıraklarına mesleğin bütün inceliklerini aktardı.",
+   "form": "aktardı",
+   "lemma": "aktarmak",
+   "lang": "tr",
+   "meaning": "to pass on, to impart",
+   "translation": ""
+  },
+  {
+   "sentence": "Sabahın erken saatlerinde sis vadinin üzerine çöktü.",
+   "form": "çöktü",
+   "lemma": "çökmek",
+   "lang": "tr",
+   "meaning": "to descend, to settle",
+   "translation": ""
+  },
+  {
+   "sentence": "Eski ahşap bina yılların yorgunluğuna dayanamayıp çöktü.",
+   "form": "çöktü",
+   "lemma": "çökmek",
+   "lang": "tr",
+   "meaning": "to collapse, to cave in",
+   "translation": ""
+  },
+  {
+   "sentence": "Dedektif ipuçlarını takip ederek olayın üzerindeki sır perdesini kaldırdı.",
+   "form": "kaldırdı",
+   "lemma": "kaldırmak",
+   "lang": "tr",
+   "meaning": "to lift, to remove (mystery)",
+   "translation": ""
+  },
+  {
+   "sentence": "Yönetici çalışanların performansını artırmak için yeni kurallar koydu.",
+   "form": "koydu",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to set, to establish (rules)",
+   "translation": ""
+  },
+  {
+   "sentence": "Haftalarca yağan kar dağ köylerinin yollarını kapattı.",
+   "form": "kapattı",
+   "lemma": "kapatmak",
+   "lang": "tr",
+   "meaning": "to block, to close off",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirket yıl sonunda oluşan tüm zararı kendi bütçesinden karşıladı.",
+   "form": "karşıladı",
+   "lemma": "karşılamak",
+   "lang": "tr",
+   "meaning": "to cover, to pay for",
+   "translation": ""
+  },
+  {
+   "sentence": "İki rakip takım arasındaki gerginlik maçın son dakikalarında tırmandı.",
+   "form": "tırmandı",
+   "lemma": "tırmanmak",
+   "lang": "tr",
+   "meaning": "to escalate",
+   "translation": ""
+  },
+  {
+   "sentence": "Bahçedeki sarmaşık evin dış duvarına boydan boya tırmandı.",
+   "form": "tırmandı",
+   "lemma": "tırmanmak",
+   "lang": "tr",
+   "meaning": "to climb, to creep up",
+   "translation": ""
+  },
+  {
+   "sentence": "Uzun süre devam eden kuraklık göldeki su seviyesini düşürdü.",
+   "form": "düşürdü",
+   "lemma": "düşürmek",
+   "lang": "tr",
+   "meaning": "to lower, to reduce",
+   "translation": ""
+  },
+  {
+   "sentence": "Büyükannenin anlattığı masal çocukların hayal dünyasını besledi.",
+   "form": "besledi",
+   "lemma": "beslemek",
+   "lang": "tr",
+   "meaning": "to nourish, to feed (imagination)",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu topraklar yüzyıllar boyunca nice farklı medeniyeti besledi.",
+   "form": "besledi",
+   "lemma": "beslemek",
+   "lang": "tr",
+   "meaning": "to foster, to nurture",
+   "translation": ""
+  },
+  {
+   "sentence": "İzleyicilerin coşkusu sahnede performans sergileyen sanatçıyı ateşledi.",
+   "form": "ateşledi",
+   "lemma": "ateşlemek",
+   "lang": "tr",
+   "meaning": "to fire up, to inspire",
+   "translation": ""
+  },
+  {
+   "sentence": "Motorun bujilerinden biri bozulduğu için araç zor çalıştı.",
+   "form": "çalıştı",
+   "lemma": "çalışmak",
+   "lang": "tr",
+   "meaning": "to start (an engine)",
+   "translation": ""
+  },
+  {
+   "sentence": "Taze kahve kokusu bütün sokağa yayılıp insanları cezbetti.",
+   "form": "cezbetti",
+   "lemma": "cezbetmek",
+   "lang": "tr",
+   "meaning": "to attract, to entice",
+   "translation": ""
+  },
+  {
+   "sentence": "Yoğun çalışma temposu genç mühendisin sağlığını sarstı.",
+   "form": "sarstı",
+   "lemma": "sarsmak",
+   "lang": "tr",
+   "meaning": "to shake, to damage (health)",
+   "translation": ""
+  },
+  {
+   "sentence": "Beklenmedik haber bütün piyasaları derinden sarstı.",
+   "form": "sarstı",
+   "lemma": "sarsmak",
+   "lang": "tr",
+   "meaning": "to rock, to jolt",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazar bu romanda modern yaşamın çelişkilerini eleştirdi.",
+   "form": "eleştirdi",
+   "lemma": "eleştirmek",
+   "lang": "tr",
+   "meaning": "to criticize",
+   "translation": ""
+  },
+  {
+   "sentence": "Toplantıda alınan karar şirket içindeki tüm tartışmaları noktaladı.",
+   "form": "noktaladı",
+   "lemma": "noktalamak",
+   "lang": "tr",
+   "meaning": "to put an end to, to conclude",
+   "translation": ""
+  },
+  {
+   "sentence": "The intense heat caused the plastic panels to warp.",
+   "form": "warp",
+   "lemma": "warp",
+   "lang": "en",
+   "meaning": "çarpılmak, eğrilmek",
+   "translation": ""
+  },
+  {
+   "sentence": "The story revolves around a young wizard's adventures.",
+   "form": "revolves",
+   "lemma": "revolve",
+   "lang": "en",
+   "meaning": "etrafında dönmek, konu almak",
+   "translation": ""
+  },
+  {
+   "sentence": "The sudden noise startled the flock of birds.",
+   "form": "startled",
+   "lemma": "startle",
+   "lang": "en",
+   "meaning": "ürkütmek, sıçratmak",
+   "translation": ""
+  },
+  {
+   "sentence": "She always strives to exceed her customers' expectations.",
+   "form": "strives",
+   "lemma": "strive",
+   "lang": "en",
+   "meaning": "çabalamak, gayret etmek",
    "translation": ""
   }
  ],
@@ -13998,6 +14270,286 @@
    "pos": "verb",
    "meaning": "tüketmek",
    "note": "kaynağı bitirmek"
+  },
+  {
+   "word": "müsamaha",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "tolerance",
+   "note": "hoşgörü"
+  },
+  {
+   "word": "zıtlık",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "contrast, contradiction",
+   "note": "karşıtlık"
+  },
+  {
+   "word": "örtbas etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to cover up, to gloss over",
+   "note": "gizlemek"
+  },
+  {
+   "word": "bağdaşmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to be compatible, to correspond",
+   "note": "uyuşmak"
+  },
+  {
+   "word": "muamma",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "enigma, mystery",
+   "note": "bilmece, sır"
+  },
+  {
+   "word": "kapsamlı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "comprehensive, extensive",
+   "note": "geniş çaplı"
+  },
+  {
+   "word": "noksan",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "deficiency, lack",
+   "note": "eksiklik"
+  },
+  {
+   "word": "pekiştirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to reinforce, to consolidate",
+   "note": "sağlamlaştırmak"
+  },
+  {
+   "word": "öngörü",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "foresight, anticipation",
+   "note": "ileriyi görme"
+  },
+  {
+   "word": "çelişki",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "discrepancy",
+   "note": "tutarsızlık"
+  },
+  {
+   "word": "vazgeçilmez",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "indispensable",
+   "note": "gerekli, elzem"
+  },
+  {
+   "word": "feragat etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to waive, to renounce",
+   "note": "hakkından vazgeçmek"
+  },
+  {
+   "word": "ayrıcalık",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "privilege, prerogative",
+   "note": "imtiyaz"
+  },
+  {
+   "word": "somut",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "concrete, tangible",
+   "note": "elle tutulur"
+  },
+  {
+   "word": "soyut",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "intangible",
+   "note": "dokunulmaz"
+  },
+  {
+   "word": "saptamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to determine, to identify",
+   "note": "tespit etmek"
+  },
+  {
+   "word": "özveri",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "dedication, self-sacrifice",
+   "note": "fedakarlık"
+  },
+  {
+   "word": "bunalım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "crisis, depression",
+   "note": "kriz"
+  },
+  {
+   "word": "safsata",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "fallacy",
+   "note": "yanıltıcı argüman"
+  },
+  {
+   "word": "taviz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "concession, compromise",
+   "note": "ödün"
+  },
+  {
+   "word": "abide by",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "uymak, itaat etmek",
+   "note": "kurallara riayet etmek"
+  },
+  {
+   "word": "abstain",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çekinmek, uzak durmak",
+   "note": "kaçınmak"
+  },
+  {
+   "word": "accountable",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sorumlu, hesap verebilir",
+   "note": "mesul"
+  },
+  {
+   "word": "alleviate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "hafifletmek, dindirmek",
+   "note": "acıyı/sıkıntıyı azaltmak"
+  },
+  {
+   "word": "ambiguous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "belirsiz, iki anlamlı",
+   "note": "net olmayan"
+  },
+  {
+   "word": "amend",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "değiştirmek, düzeltmek",
+   "note": "kanun/kural güncellemek"
+  },
+  {
+   "word": "authentic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "otantik, asıl, gerçek",
+   "note": "sahte olmayan"
+  },
+  {
+   "word": "back out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sözünden dönmek, vazgeçmek",
+   "note": "caymak"
+  },
+  {
+   "word": "break down",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ruhen yıkılmak, ağlamak",
+   "note": "duygusal çöküntü"
+  },
+  {
+   "word": "carry out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "gerçekleştirmek, uygulamak",
+   "note": "bir görevi ifa etmek"
+  },
+  {
+   "word": "coherent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "tutarlı, mantıklı",
+   "note": "uyumlu"
+  },
+  {
+   "word": "compensate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "telafi etmek",
+   "note": "zararı karşılamak"
+  },
+  {
+   "word": "compile",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "derlemek",
+   "note": "bilgi/veri toplamak"
+  },
+  {
+   "word": "conceal",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "gizlemek, saklamak",
+   "note": "görünmez kılmak"
+  },
+  {
+   "word": "crucial",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "elzem, kritik",
+   "note": "hayati derecede önemli"
+  },
+  {
+   "word": "deplete",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "tüketmek, bitirmek",
+   "note": "kaynakları kurutmak"
+  },
+  {
+   "word": "deteriorate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kötüleşmek, bozulmak",
+   "note": "gerilemek"
+  },
+  {
+   "word": "deviate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sapmak, ayrılmak",
+   "note": "yoldan çıkmak"
+  },
+  {
+   "word": "discrepancy",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tutarsızlık, farklılık",
+   "note": "aykırılık"
+  },
+  {
+   "word": "elaborate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ayrıntılı açıklamak",
+   "note": "detaylandırmak"
   }
  ],
  "examples": [
@@ -18824,6 +19376,46 @@
    "tr": "Kayıp anahtarı bulmak için bütün çekmeceleri tek tek aradık.",
    "en": "We searched all the drawers one by one to find the lost key.",
    "level": "A2"
+  },
+  {
+   "word": "aktarmak",
+   "lang": "tr",
+   "meaning": "to transfer",
+   "tr": "Tüm dosyaları yeni bilgisayara güvenle aktardık.",
+   "en": "We securely transferred all files to the new computer.",
+   "level": "B2"
+  },
+  {
+   "word": "işlemek",
+   "lang": "tr",
+   "meaning": "to touch deeply",
+   "tr": "Hikayenin hüznü hepimizin kalbine işledi.",
+   "en": "The sorrow of the story touched all of our hearts deeply.",
+   "level": "C1"
+  },
+  {
+   "word": "açmak",
+   "lang": "tr",
+   "meaning": "to pioneer",
+   "tr": "Bu teknoloji tıp biliminde çığır açtı.",
+   "en": "This technology broke new ground in medical science.",
+   "level": "C1"
+  },
+  {
+   "word": "patlamak",
+   "lang": "tr",
+   "meaning": "to burst",
+   "tr": "Otoyolda giderken arabanın sağ ön lastiği patladı.",
+   "en": "The car's front right tire burst while driving on the highway.",
+   "level": "B1"
+  },
+  {
+   "word": "şenlenmek",
+   "lang": "tr",
+   "meaning": "to liven up",
+   "tr": "Müzik başlayınca salon birden şenlendi.",
+   "en": "When the music started, the hall suddenly livened up.",
+   "level": "B2"
   }
  ],
  "phrases": [
@@ -23082,6 +23674,188 @@
    "meaning": "incelemek, çıkış yapmak",
    "ex": "Check out the updated examples in the fifth tab of the workbook.",
    "ex_tr": "Çalışma kitabının beşinci sekmesindeki güncellenmiş örneklere göz atın."
+  },
+  {
+   "phrase": "bring about",
+   "lang": "en",
+   "meaning": "sebep olmak, yol açmak",
+   "ex": "The new policy will bring about significant changes in the industry.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "brush off",
+   "lang": "en",
+   "meaning": "umursamamak, kulak ardı etmek",
+   "ex": "She tried to brush off the criticism and focus on her work.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "iron out",
+   "lang": "en",
+   "meaning": "pürüzleri gidermek, çözmek",
+   "ex": "They finally managed to iron out the details of the contract.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "wipe out",
+   "lang": "en",
+   "meaning": "yok etmek, silip süpürmek",
+   "ex": "The storm wiped out the entire coastal settlement.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "rule out",
+   "lang": "en",
+   "meaning": "ihtimal dışı bırakmak",
+   "ex": "He completely ruled out the possibility of a system failure.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "phase out",
+   "lang": "en",
+   "meaning": "kademeli olarak kaldırmak",
+   "ex": "The company decided to phase out the older models gradually.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "single out",
+   "lang": "en",
+   "meaning": "ayırıp seçmek, öne çıkarmak",
+   "ex": "We need to single out the most promising candidates.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "boil down to",
+   "lang": "en",
+   "meaning": "özünde ...'a dayanmak",
+   "ex": "The discussion boiled down to a simple disagreement over budget.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "piece together",
+   "lang": "en",
+   "meaning": "birleştirmek, anlamlı hale getirmek",
+   "ex": "The detectives pieced together the clues to solve the mystery.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "fall back on",
+   "lang": "en",
+   "meaning": "güvenmek, başvurmak (son çare)",
+   "ex": "She had to fall back on her savings when she lost her job.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "fade away",
+   "lang": "en",
+   "meaning": "yavaşça kaybolmak, silinmek",
+   "ex": "The sound of the violin faded away into the night.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "step down",
+   "lang": "en",
+   "meaning": "istifa etmek, görevi bırakmak",
+   "ex": "The manager stepped down after twenty years of service.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "set out",
+   "lang": "en",
+   "meaning": "yola çıkmak, girişmek",
+   "ex": "They set out to map the uncharted territories of the island.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "ward off",
+   "lang": "en",
+   "meaning": "uzak tutmak, korumak",
+   "ex": "The medication helps to ward off seasonal infections.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "gloss over",
+   "lang": "en",
+   "meaning": "geçiştirmek, örtbas etmek",
+   "ex": "He tried to gloss over the mistakes in his final report.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "band together",
+   "lang": "en",
+   "meaning": "birleşmek, kenetlenmek",
+   "ex": "The community banded together to rebuild the ruined library.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "akla karayı seçmek",
+   "lang": "tr",
+   "meaning": "to have a very hard time doing something",
+   "ex": "Bu karmaşık dosyayı düzenleyene kadar akla karayı seçtim.",
+   "ex_tr": "I had a very hard time until I organized this complex file."
+  },
+  {
+   "phrase": "alıkoymak",
+   "lang": "tr",
+   "meaning": "to detain, to keep someone from doing something",
+   "ex": "Sizi işinizden alıkoymak istemem, hemen sadede geleyim.",
+   "ex_tr": "I don't want to keep you from your work; let me get straight to the point."
+  },
+  {
+   "phrase": "baştan savma",
+   "lang": "tr",
+   "meaning": "sloppy, half-hearted, carelessly done",
+   "ex": "Bu rapor baştan savma hazırlanmış, yeniden yazılması gerek.",
+   "ex_tr": "This report has been prepared sloppily; it needs to be rewritten."
+  },
+  {
+   "phrase": "çamur atmak",
+   "lang": "tr",
+   "meaning": "to sling mud at, to slander",
+   "ex": "Rakipleri dürüst adaya çamur atmaya çalıştı.",
+   "ex_tr": "The rivals tried to sling mud at the honest candidate."
+  },
+  {
+   "phrase": "içine kurt düşmek",
+   "lang": "tr",
+   "meaning": "to become suspicious, to have misgivings",
+   "ex": "Onun bu tuhaf tavırlarını görünce içime kurt düştü.",
+   "ex_tr": "Seeing his strange behavior, I became suspicious."
+  },
+  {
+   "phrase": "cut to the quick",
+   "lang": "en",
+   "meaning": "can evinden vurmak, çok incitmek",
+   "ex": "Her harsh criticism cut him to the quick.",
+   "ex_tr": "Onun sert eleştirisi onu can evinden vurdu."
+  },
+  {
+   "phrase": "jump on the bandwagon",
+   "lang": "en",
+   "meaning": "herkesin yaptığına uymak, modaya uymak",
+   "ex": "Many tech companies jumped on the bandwagon of artificial intelligence.",
+   "ex_tr": "Birçok teknoloji şirketi yapay zeka modasına uydu."
+  },
+  {
+   "phrase": "keep at bay",
+   "lang": "en",
+   "meaning": "uzak tutmak, yaklaşmasına izin vermemek",
+   "ex": "Regular exercise helps keep heart disease at bay.",
+   "ex_tr": "Düzenli egzersiz kalp hastalıklarını uzak tutmaya yardımcı olur."
+  },
+  {
+   "phrase": "leave someone in the lurch",
+   "lang": "en",
+   "meaning": "birini yüzüstü bırakmak, zor durumda terk etmek",
+   "ex": "He promised to help but left us in the lurch at the last minute.",
+   "ex_tr": "Yardım edeceğine söz verdi ama son dakikada bizi yüzüstü bıraktı."
+  },
+  {
+   "phrase": "turn a deaf ear",
+   "lang": "en",
+   "meaning": "kulak tıkamak, görmezden gelmek",
+   "ex": "The management turned a deaf ear to the employees' complaints.",
+   "ex_tr": "Yönetim çalışanların şikayetlerine kulak tıkadı."
   },
   {
    "phrase": "heavy rain",

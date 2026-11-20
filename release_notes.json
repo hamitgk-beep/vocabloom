@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "contrib-dictionary-hamit-3",
+      "area": "dictionary",
+      "tr": "Sözlüğe yeni elle hazırlanmış veri eklendi: 24 yeni Türkçe anlam (örneğin \"tırmanmak\": to escalate), müsamaha, muamma, safsata gibi kelimeler, 30 bağlam cümlesi; İngilizcede abide by, alleviate, discrepancy gibi kelimeler ve bring about, iron out, rule out gibi öbek fiillerin örnek cümleleri.",
+      "en": "More hand-made dictionary data: 24 new Turkish meanings (e.g. \"tırmanmak\": to escalate), words such as müsamaha, muamma, safsata, 30 context sentences; in English, words such as abide by, alleviate, discrepancy and example sentences for phrasal verbs such as bring about, iron out, rule out."
+    },
+    {
       "id": "filters-contrib-hamit-1",
       "area": "reader",
       "tr": "Okuma ekranına altı yeni filtre eklendi: Fiil/sıfat + edat (interested in), Benzetmeler (as busy as a bee), Kibar istek ve cevaplar (Could you please …), Gündelik konuşma ve argo, Karıştırılan kelimeler (affect / effect) ve İngiliz / Amerikan farkı (lorry / truck). Eşdizimler filtresine de 95 yeni kalıp geldi (heavy rain, strong coffee …). Her birinin Gramer'de kısa bir dersi var.",

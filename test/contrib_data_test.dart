@@ -66,4 +66,11 @@ void main() {
     expect(tr('as busy as a bee', 'similes'), 'arı gibi çalışkan');
     expect(tr('do', 'confusables'), isNull);
   });
+
+  test('Third sheet: stand-in rows are left out, a phrasal verb keeps its own meaning', () {
+    expect(tr.entry('tr_word_499'), isNull);
+    expect(en.ownSenses('bring').map((s) => s.tr), isNot(contains('sebep olmak, yol açmak')));
+    final st = tr.entry('tırmanmak')!.senses.where((s) => s.source == 'st').expand((s) => s.glosses);
+    expect(st, contains('to escalate'));
+  });
 }
