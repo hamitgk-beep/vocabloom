@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Sources
+        timeout-minutes: 15
         run: |
           set -e
           curl -sSfL --connect-timeout 30 --max-time 300 --retry 5 --retry-all-errors --retry-delay 10 -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
@@ -24,18 +25,24 @@ jobs:
             || curl -sSfL --connect-timeout 30 --max-time 900 --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://wikimedia.bringyour.com/trwikisource/latest/$f
           ls -la trws.xml.bz2
           echo '::notice::dump downloaded'
-          # Gutenberg is a bonus: without its catalog only the Wikisource books are made.
-          curl -sSfL --connect-timeout 30 --max-time 300 --retry 5 --retry-all-errors --retry-delay 15 -o pg_catalog.csv https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv \
-            || printf 'Text#,Type,Issued,Title,Language,Authors\n' > pg_catalog.csv
-          echo "Gutenberg Turkish candidates: $(python3 tools/library_tr/build_books_tr.py --list pg_catalog.csv | wc -l)"
+      - name: Gutenberg
+        # A bonus: if gutenberg.org is slow or refuses the runner, only the
+        # Wikisource books are made.
+        continue-on-error: true
+        timeout-minutes: 12
+        run: |
           mkdir -p pg_texts
+          curl -sSfL --connect-timeout 20 --max-time 180 --retry 2 --retry-all-errors --retry-delay 10 -o pg_catalog.csv https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv
+          echo "Gutenberg Turkish candidates: $(python3 tools/library_tr/build_books_tr.py --list pg_catalog.csv | wc -l)"
           for n in $(python3 tools/library_tr/build_books_tr.py --list pg_catalog.csv); do
-            curl -sSfL --connect-timeout 20 --max-time 120 --retry 3 --retry-all-errors --retry-delay 10 -o pg_texts/pg$n.txt https://www.gutenberg.org/cache/epub/$n/pg$n.txt || echo "no text for $n"
+            curl -sSfL --connect-timeout 15 --max-time 60 --retry 1 --retry-delay 5 -o pg_texts/pg$n.txt https://www.gutenberg.org/cache/epub/$n/pg$n.txt || echo "no text for $n"
             sleep 1
           done
           ls -la pg_texts
       - name: Build
         run: |
+          [ -s pg_catalog.csv ] || printf 'Text#,Type,Issued,Title,Language,Authors\n' > pg_catalog.csv
+          mkdir -p pg_texts
           python3 tools/library_tr/build_books_tr.py tr_full.txt trws.xml.bz2 pg_catalog.csv pg_texts . > tools/library_tr/books_report.md
           cat tools/library_tr/books_report.md
       - name: Commit
