@@ -32,7 +32,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v18.xlsx tools/contrib/hamit_denetim21_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v19.xlsx tools/contrib/hamit_denetim22_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v20.xlsx tools/contrib/hamit_denetim23_2026-11-20.xlsx \
+         tools/contrib/hamit_obek1_2026-11-20.xlsx
 """
 import json
 import re
@@ -1021,7 +1022,51 @@ D23_EDITS = {
         ('in a fog', 'kafası karışık, şaşkın; sis içinde'))},
 }
 
-AUDIT_FIX = {'hamit_denetim23_2026-11-20.xlsx': (D23_EX_FIX, D23_EDITS),
+# --- Phrasal verb work sheet 1 (all 1147 phrasal verbs with no example) -------------
+# Hamit wrote 37 sentences and marked 43 headings "sil"; rows he left empty are skipped.
+# "moderned up" and "flat the fabric down" are not how the verbs are used; the balloon
+# sentence for "gas out" goes with his new meaning, which is not what "gassed out" means
+# (worn out), so those three stay without a sentence. "rule off" draws a line under,
+# it does not strike out: the sentence shows that.
+# Fourteen sentences put a long object between verb and particle ("glass the balcony
+# in to use it"); the reader only finds that split when the particle ends the clause,
+# so verb and particle are put side by side.
+O1_EX_FIX = {32: None, 54: None, 63: None,
+             2: {'ex': "We shouldn't end off the meeting without reaching a final decision."},
+             6: {'ex': 'Please key your voice down; everyone is sleeping.', 'ex_tr': 'Lütfen sesini alçalt; herkes uyuyor.'},
+             7: {'ex': 'Using a field guide, the botanist quickly keyed out the rare plant.'},
+             9: {'ex': 'They decided to glass in the balcony so they could use it in winter.'},
+             19: {'ex': 'Every month she bottles away some money for her summer vacation.'},
+             20: {'ex': 'Right after fermentation, the brewery bottles off the fresh beer.'},
+             21: {'ex': 'The referee lined off the penalty area with white paint.'},
+             25: {'ex': 'To make the new jacket look old, the prop designer dirtied it down.'},
+             39: {'ex': 'The farmer barred off the dangerous area to keep the animals safe.'},
+             42: {'ex': 'On the deck, the sailor cheesed down the heavy rope.'},
+             60: {'ex': 'We should prepare ahead so that we save time while cooking.',
+                  'ex_tr': 'Yemek yaparken zaman kazanmak için önceden hazırlık yapmalıyız.'},
+             66: {'ex': 'The municipality grassed over the dusty area to create a new park.'},
+             71: {'ex': 'The toy box was heavy, but the little girl pulled it along with great difficulty.',
+                  'ex_tr': 'Oyuncak kutusu ağırdı ama küçük kız onu büyük bir zorlukla sürükledi.'},
+             78: {'ex': 'After the cold swim, she toweled up quickly on the beach.'},
+             44: {'ex': 'Rule off the last answer before you start the next exercise.',
+                  'ex_tr': 'Bir sonraki alıştırmaya başlamadan önce son cevabın altına cetvelle çizgi çek.'}}
+O1_EDITS = {
+    **{p: {'action': 'delete'} for p in (
+        'front off', 'front on', 'daughter out', 'bag off', 'sell away', 'gun up', 'seat out', 'blood in', 'blood out',
+        'date out', 'ride by', 'sugar down', 'handle up', 'cream up', 'leg out', 'moon on', 'bridge up', 'rice out',
+        'land down', 'fool along', 'farm down', 'cheese out', 'salt up', 'mess over', 'jim up', 'contract in',
+        'yellow out', 'yellow up', 'couch down', 'wise off', 'jack off', 'lead out', 'mike off', 'medical out',
+        'rope out', 'hell around', 'neck up', 'sex in', 'draw through', 'thin up', 'queen up', 'flag away', 'bomb around')},
+    'battle out': {'action': 'rename', 'to': 'battle it out'},
+    **{p: {'action': 'meaning', 'meaning': m} for p, m in (
+        ('bar off', 'engelle kapatmak, çitle çevirmek'), ('rough in', 'kaba taslağını hazırlamak'),
+        ('rule off', 'altına cetvelle çizgi çekip ayırmak'),
+        ('single up', '(denizcilik) halatları tekleştirip kalkışa hazırlanmak; tek başına hareket etmek'),
+        ('cheese down', '(denizcilik) halatı düzenli sarmak'))},
+}
+
+AUDIT_FIX = {'hamit_obek1_2026-11-20.xlsx': (O1_EX_FIX, O1_EDITS),
+             'hamit_denetim23_2026-11-20.xlsx': (D23_EX_FIX, D23_EDITS),
              'hamit_denetim22_2026-11-20.xlsx': (D22_EX_FIX, D22_EDITS),
              'hamit_denetim21_2026-11-20.xlsx': (D21_EX_FIX, D21_EDITS),
              'hamit_denetim20_2026-11-20.xlsx': (D20_EX_FIX, D20_EDITS),
@@ -1092,7 +1137,7 @@ for src in srcs:
                 r = r[1:]  # sheet 15 starts with the row in the full list
             ph, cat, mean, ex, ex_tr = [str(x or '').strip() for x in (r + [''] * 5)[:5]]
             fix = ex_fix.get(i, {})
-            if fix is None or not ph:
+            if fix is None or not ph or not (ex or fix.get('ex')):
                 continue
             e = {'phrase': re.sub(r'\s*…\s*', ' sb ', ph).strip(), 'lang': 'en', 'meaning': '', 'ex': ex, 'ex_tr': ex_tr}
             e.update(fix)

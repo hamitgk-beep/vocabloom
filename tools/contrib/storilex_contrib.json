@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx, hamit_denetim22_2026-11-20.xlsx, hamit_2026-11-20_v20.xlsx, hamit_denetim23_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx, hamit_2026-11-20_v18.xlsx, hamit_denetim21_2026-11-20.xlsx, hamit_2026-11-20_v19.xlsx, hamit_denetim22_2026-11-20.xlsx, hamit_2026-11-20_v20.xlsx, hamit_denetim23_2026-11-20.xlsx, hamit_obek1_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -78822,6 +78822,244 @@
    "meaning": "",
    "ex": "The long climb pushed both hikers to the limit.",
    "ex_tr": "Uzun tırmanış iki yürüyüşçüyü de dayanma sınırına getirdi."
+  },
+  {
+   "phrase": "end off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We shouldn't end off the meeting without reaching a final decision.",
+   "ex_tr": "Nihai bir karara varmadan toplantıyı bitirmemeliyiz."
+  },
+  {
+   "phrase": "key down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Please key your voice down; everyone is sleeping.",
+   "ex_tr": "Lütfen sesini alçalt; herkes uyuyor."
+  },
+  {
+   "phrase": "key out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Using a field guide, the botanist quickly keyed out the rare plant.",
+   "ex_tr": "Botanikçi bir arazi rehberi kullanarak nadir bitkiyi hızla teşhis etti."
+  },
+  {
+   "phrase": "couple on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "They coupled the heavy trailer on and drove away.",
+   "ex_tr": "Ağır römorku bağladılar ve arabayla uzaklaştılar."
+  },
+  {
+   "phrase": "glass in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "They decided to glass in the balcony so they could use it in winter.",
+   "ex_tr": "Kışın kullanabilmek için balkonu camla kapatmaya karar verdiler."
+  },
+  {
+   "phrase": "single up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The crew singled the lines up as the ship prepared to leave the port.",
+   "ex_tr": "Gemi limandan ayrılmaya hazırlanırken mürettebat halatları tekleştirdi."
+  },
+  {
+   "phrase": "bottle away",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Every month she bottles away some money for her summer vacation.",
+   "ex_tr": "Yaz tatili için her ay bir miktar para biriktiriyor."
+  },
+  {
+   "phrase": "bottle off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Right after fermentation, the brewery bottles off the fresh beer.",
+   "ex_tr": "Bira fabrikası fermantasyondan hemen sonra taze birayı şişeye doldurur."
+  },
+  {
+   "phrase": "line off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The referee lined off the penalty area with white paint.",
+   "ex_tr": "Hakem ceza sahasını beyaz boyayla çizgilerle ayırdı."
+  },
+  {
+   "phrase": "dirty down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "To make the new jacket look old, the prop designer dirtied it down.",
+   "ex_tr": "Aksesuar tasarımcısı eski görünmesi için yeni ceketi eskitip yıprattı."
+  },
+  {
+   "phrase": "fat up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The farmer fatted the chickens up before sending them to the market.",
+   "ex_tr": "Çiftçi tavukları pazara göndermeden önce besleyip kilo aldırdı."
+  },
+  {
+   "phrase": "art up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We should art the living room up with some colorful paintings.",
+   "ex_tr": "Oturma odasını renkli tablolarla süsleyip güzelleştirmeliyiz."
+  },
+  {
+   "phrase": "post off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I will post the letter off as soon as I reach the post office.",
+   "ex_tr": "Postaneye varır varmaz mektubu postalayacağım."
+  },
+  {
+   "phrase": "brown up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The meat will brown up nicely if you bake it at a high temperature.",
+   "ex_tr": "Yüksek sıcaklıkta pişirirseniz et güzelce kahverengileşir."
+  },
+  {
+   "phrase": "slow in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The heavy train slowed in as it approached the central station.",
+   "ex_tr": "Ağır tren merkez istasyona yaklaşırken yavaşlayarak durdu."
+  },
+  {
+   "phrase": "fly up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "A flock of startled birds suddenly flew up from the bushes.",
+   "ex_tr": "Ürkmüş bir kuş sürüsü çalılıklardan aniden hızla yükseldi."
+  },
+  {
+   "phrase": "bar off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The farmer barred off the dangerous area to keep the animals safe.",
+   "ex_tr": "Çiftçi hayvanları güvende tutmak için tehlikeli alanı çitle çevirdi."
+  },
+  {
+   "phrase": "remain down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The boxer remained down after receiving a heavy blow to the head.",
+   "ex_tr": "Boksör kafasına ağır bir darbe aldıktan sonra sayımda yerde kaldı."
+  },
+  {
+   "phrase": "cheese down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On the deck, the sailor cheesed down the heavy rope.",
+   "ex_tr": "Denizci güvertedeki ağır halatı düzenli sardı."
+  },
+  {
+   "phrase": "rule off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Rule off the last answer before you start the next exercise.",
+   "ex_tr": "Bir sonraki alıştırmaya başlamadan önce son cevabın altına cetvelle çizgi çek."
+  },
+  {
+   "phrase": "yellow off",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The old newspaper pages had yellowed off over the years.",
+   "ex_tr": "Eski gazete sayfaları yıllar içinde sararıp solmuştu."
+  },
+  {
+   "phrase": "corner up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The police officers cornered the suspect up in a blind alley.",
+   "ex_tr": "Polis memurları şüpheliyi çıkmaz bir sokakta köşeye sıkıştırdı."
+  },
+  {
+   "phrase": "battle it out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The two teams had to battle it out on the field for the championship.",
+   "ex_tr": "İki takım şampiyonluk için sahada kafa kafaya mücadele etmek zorundaydı."
+  },
+  {
+   "phrase": "prepare ahead",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We should prepare ahead so that we save time while cooking.",
+   "ex_tr": "Yemek yaparken zaman kazanmak için önceden hazırlık yapmalıyız."
+  },
+  {
+   "phrase": "know apart",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The identical twins look so similar that I can't know them apart.",
+   "ex_tr": "Tek yumurta ikizleri o kadar benziyor ki onları birbirinden ayırt edemiyorum."
+  },
+  {
+   "phrase": "butter down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The baker buttered the baking tray down before pouring the cake batter.",
+   "ex_tr": "Fırıncı kek hamurunu dökmeden önce fırın tepsisini yağladı."
+  },
+  {
+   "phrase": "grass over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The municipality grassed over the dusty area to create a new park.",
+   "ex_tr": "Belediye yeni bir park yaratmak için tozlu alanı çimle örttü."
+  },
+  {
+   "phrase": "pull along",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The toy box was heavy, but the little girl pulled it along with great difficulty.",
+   "ex_tr": "Oyuncak kutusu ağırdı ama küçük kız onu büyük bir zorlukla sürükledi."
+  },
+  {
+   "phrase": "swear down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He swore down that he didn't steal the money from the safe.",
+   "ex_tr": "Kasadan parayı çalmadığına yemin etti."
+  },
+  {
+   "phrase": "board out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Because the dorms were full, the university boarded the students out in local hotels.",
+   "ex_tr": "Yurtlar dolu olduğu için üniversite öğrencileri yerel otellerde konaklattı."
+  },
+  {
+   "phrase": "rough in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The architect roughed the initial design in before showing it to the client.",
+   "ex_tr": "Mimar, müşteriye göstermeden önce ilk tasarımın kaba taslağını hazırladı."
+  },
+  {
+   "phrase": "towel up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After the cold swim, she toweled up quickly on the beach.",
+   "ex_tr": "Soğuk yüzüşten sonra kumsalda hızla havluyla kurulandı."
+  },
+  {
+   "phrase": "square around",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The baseball player squared around to bunt the ball.",
+   "ex_tr": "Beyzbol oyuncusu topa hafifçe vurmak için vuruş pozisyonu aldı."
+  },
+  {
+   "phrase": "yard up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The farmer yarded the sheep up before the heavy snow started.",
+   "ex_tr": "Çiftçi yoğun kar başlamadan önce koyunları avluya kapattı."
   }
  ],
  "phrase_edits": [
@@ -79407,6 +79645,208 @@
    "action": "meaning",
    "meaning": "kafası karışık, şaşkın; sis içinde",
    "phrase": "in a fog"
+  },
+  {
+   "action": "delete",
+   "phrase": "front off"
+  },
+  {
+   "action": "delete",
+   "phrase": "front on"
+  },
+  {
+   "action": "delete",
+   "phrase": "daughter out"
+  },
+  {
+   "action": "delete",
+   "phrase": "bag off"
+  },
+  {
+   "action": "delete",
+   "phrase": "sell away"
+  },
+  {
+   "action": "delete",
+   "phrase": "gun up"
+  },
+  {
+   "action": "delete",
+   "phrase": "seat out"
+  },
+  {
+   "action": "delete",
+   "phrase": "blood in"
+  },
+  {
+   "action": "delete",
+   "phrase": "blood out"
+  },
+  {
+   "action": "delete",
+   "phrase": "date out"
+  },
+  {
+   "action": "delete",
+   "phrase": "ride by"
+  },
+  {
+   "action": "delete",
+   "phrase": "sugar down"
+  },
+  {
+   "action": "delete",
+   "phrase": "handle up"
+  },
+  {
+   "action": "delete",
+   "phrase": "cream up"
+  },
+  {
+   "action": "delete",
+   "phrase": "leg out"
+  },
+  {
+   "action": "delete",
+   "phrase": "moon on"
+  },
+  {
+   "action": "delete",
+   "phrase": "bridge up"
+  },
+  {
+   "action": "delete",
+   "phrase": "rice out"
+  },
+  {
+   "action": "delete",
+   "phrase": "land down"
+  },
+  {
+   "action": "delete",
+   "phrase": "fool along"
+  },
+  {
+   "action": "delete",
+   "phrase": "farm down"
+  },
+  {
+   "action": "delete",
+   "phrase": "cheese out"
+  },
+  {
+   "action": "delete",
+   "phrase": "salt up"
+  },
+  {
+   "action": "delete",
+   "phrase": "mess over"
+  },
+  {
+   "action": "delete",
+   "phrase": "jim up"
+  },
+  {
+   "action": "delete",
+   "phrase": "contract in"
+  },
+  {
+   "action": "delete",
+   "phrase": "yellow out"
+  },
+  {
+   "action": "delete",
+   "phrase": "yellow up"
+  },
+  {
+   "action": "delete",
+   "phrase": "couch down"
+  },
+  {
+   "action": "delete",
+   "phrase": "wise off"
+  },
+  {
+   "action": "delete",
+   "phrase": "jack off"
+  },
+  {
+   "action": "delete",
+   "phrase": "lead out"
+  },
+  {
+   "action": "delete",
+   "phrase": "mike off"
+  },
+  {
+   "action": "delete",
+   "phrase": "medical out"
+  },
+  {
+   "action": "delete",
+   "phrase": "rope out"
+  },
+  {
+   "action": "delete",
+   "phrase": "hell around"
+  },
+  {
+   "action": "delete",
+   "phrase": "neck up"
+  },
+  {
+   "action": "delete",
+   "phrase": "sex in"
+  },
+  {
+   "action": "delete",
+   "phrase": "draw through"
+  },
+  {
+   "action": "delete",
+   "phrase": "thin up"
+  },
+  {
+   "action": "delete",
+   "phrase": "queen up"
+  },
+  {
+   "action": "delete",
+   "phrase": "flag away"
+  },
+  {
+   "action": "delete",
+   "phrase": "bomb around"
+  },
+  {
+   "action": "rename",
+   "to": "battle it out",
+   "phrase": "battle out"
+  },
+  {
+   "action": "meaning",
+   "meaning": "engelle kapatmak, çitle çevirmek",
+   "phrase": "bar off"
+  },
+  {
+   "action": "meaning",
+   "meaning": "kaba taslağını hazırlamak",
+   "phrase": "rough in"
+  },
+  {
+   "action": "meaning",
+   "meaning": "altına cetvelle çizgi çekip ayırmak",
+   "phrase": "rule off"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(denizcilik) halatları tekleştirip kalkışa hazırlanmak; tek başına hareket etmek",
+   "phrase": "single up"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(denizcilik) halatı düzenli sarmak",
+   "phrase": "cheese down"
   },
   {
    "action": "rename",
