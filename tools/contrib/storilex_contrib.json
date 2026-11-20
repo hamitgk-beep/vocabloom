@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -5359,6 +5359,134 @@
    "lemma": "put off",
    "lang": "en",
    "meaning": "soğutmak, itici gelmek",
+   "translation": ""
+  },
+  {
+   "sentence": "Sabah uyanamayınca işe gitmek için bindiği vapuru kaçırdı.",
+   "form": "kaçırdı",
+   "lemma": "kaçırmak",
+   "lang": "tr",
+   "meaning": "to miss (a vehicle/transport)",
+   "translation": ""
+  },
+  {
+   "sentence": "İndirim dönemini takip etmeyerek çok iyi bir fırsatı kaçırdı.",
+   "form": "kaçırdı",
+   "lemma": "kaçırmak",
+   "lang": "tr",
+   "meaning": "to let slip, to miss (an opportunity)",
+   "translation": ""
+  },
+  {
+   "sentence": "Patronun sert tepkisi, ofisteki herkesin huzurunu kaçırdı.",
+   "form": "kaçırdı",
+   "lemma": "kaçırmak",
+   "lang": "tr",
+   "meaning": "to drive away, to spoil (peace/joy)",
+   "translation": ""
+  },
+  {
+   "sentence": "Kitabı okurken daldığı için sayfadaki en önemli detayı kaçırmış.",
+   "form": "kaçırmış",
+   "lemma": "kaçırmak",
+   "lang": "tr",
+   "meaning": "to overlook, to miss (a detail)",
+   "translation": ""
+  },
+  {
+   "sentence": "Suç örgütü, ünlü iş insanını fidye istemek için kaçırdı.",
+   "form": "kaçırdı",
+   "lemma": "kaçırmak",
+   "lang": "tr",
+   "meaning": "to kidnap, to abduct",
+   "translation": ""
+  },
+  {
+   "sentence": "Düşmemek için otobüsteki demiri iki eliyle sıkıca kavradı.",
+   "form": "kavradı",
+   "lemma": "kavramak",
+   "lang": "tr",
+   "meaning": "to grasp, to grip firmly",
+   "translation": ""
+  },
+  {
+   "sentence": "Öğretmenin anlattığı karmaşık fizik teorisini nihayet kavradı.",
+   "form": "kavradı",
+   "lemma": "kavramak",
+   "lang": "tr",
+   "meaning": "to comprehend, to fully understand",
+   "translation": ""
+  },
+  {
+   "sentence": "Yeni işin getirdiği tüm sorumlulukları kısa sürede kavradı.",
+   "form": "kavradı",
+   "lemma": "kavramak",
+   "lang": "tr",
+   "meaning": "to get the hang of, to grasp (a concept)",
+   "translation": ""
+  },
+  {
+   "sentence": "Gölün durgun yüzeyi, etraftaki sonbahar ağaçlarını ayna gibi yansıtıyordu.",
+   "form": "yansıtıyordu",
+   "lemma": "yansıtmak",
+   "lang": "tr",
+   "meaning": "to reflect (image/light)",
+   "translation": ""
+  },
+  {
+   "sentence": "Yazar, toplumun içindeki gelir eşitsizliğini son romanına başarıyla yansıtmış.",
+   "form": "yansıtmış",
+   "lemma": "yansıtmak",
+   "lang": "tr",
+   "meaning": "to reflect, to portray (ideas/feelings)",
+   "translation": ""
+  },
+  {
+   "sentence": "Artan hammadde fiyatlarını mecburen ürünlerin perakende fiyatlarına yansıttılar.",
+   "form": "yansıttılar",
+   "lemma": "yansıtmak",
+   "lang": "tr",
+   "meaning": "to pass on (a cost)",
+   "translation": ""
+  },
+  {
+   "sentence": "Yerdeki ağır koliyi tek başına kaldırmaya çalışırken belini incitti.",
+   "form": "kaldırmaya",
+   "lemma": "kaldırmak",
+   "lang": "tr",
+   "meaning": "to lift, to heave",
+   "translation": ""
+  },
+  {
+   "sentence": "Meclis, yıllardır tartışılan bu eski yasayı dün gece tamamen kaldırdı.",
+   "form": "kaldırdı",
+   "lemma": "kaldırmak",
+   "lang": "tr",
+   "meaning": "to abolish, to repeal",
+   "translation": ""
+  },
+  {
+   "sentence": "Çocuklar uyanmasın diye sabahki toplantıyı öğleden sonraya kaldırdılar.",
+   "form": "kaldırdılar",
+   "lemma": "kaldırmak",
+   "lang": "tr",
+   "meaning": "to postpone, to put off",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu yaşlı motor, bu kadar ağır bir yükü yokuş yukarı kaldırmaz.",
+   "form": "kaldırmaz",
+   "lemma": "kaldırmak",
+   "lang": "tr",
+   "meaning": "to endure, to handle, to bear",
+   "translation": ""
+  },
+  {
+   "sentence": "Misafirler gittikten sonra masadaki boş tabakları mutfağa kaldırdı.",
+   "form": "kaldırdı",
+   "lemma": "kaldırmak",
+   "lang": "tr",
+   "meaning": "to clear away, to put away",
    "translation": ""
   }
  ],
@@ -17871,6 +17999,811 @@
    "pos": "verb",
    "meaning": "teslim etmek (belge/ödev)",
    "note": "sunmak"
+  },
+  {
+   "word": "çağdaş",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "contemporary",
+   "note": "aynı çağda yaşayan, günümüze uygun"
+  },
+  {
+   "word": "çağdaş",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "modern",
+   "note": "çağın şartlarına uygun"
+  },
+  {
+   "word": "bağnaz",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "bigoted",
+   "note": "kendi düşüncesine körü körüne bağlı"
+  },
+  {
+   "word": "bağnaz",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "fanatical",
+   "note": "aşırı tutucu"
+  },
+  {
+   "word": "ivedilik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "urgency",
+   "note": "acele olma durumu"
+  },
+  {
+   "word": "sömürü",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "exploitation",
+   "note": "kendi çıkarı için başkasını kullanma"
+  },
+  {
+   "word": "dayatma",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "imposition",
+   "note": "zorla kabul ettirme"
+  },
+  {
+   "word": "yapılandırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to structure",
+   "note": "belirli bir düzen vermek"
+  },
+  {
+   "word": "yapılandırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to configure",
+   "note": "biçimlendirmek"
+  },
+  {
+   "word": "farkındalık",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "awareness",
+   "note": "bir şeyin bilincinde olma durumu"
+  },
+  {
+   "word": "hoşnutsuzluk",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "dissatisfaction",
+   "note": "memnun olmama durumu"
+  },
+  {
+   "word": "hoşnutsuzluk",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "discontent",
+   "note": "tatminsizlik"
+  },
+  {
+   "word": "çekimser",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "abstaining, neutral (in a vote)",
+   "note": "oy vermekten veya karar bildirmekten kaçınan"
+  },
+  {
+   "word": "uzlaşma",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "compromise",
+   "note": "ortak bir noktada anlaşma"
+  },
+  {
+   "word": "uzlaşma",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "consensus",
+   "note": "fikir birliği"
+  },
+  {
+   "word": "tevazu",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "humility",
+   "note": "alçakgönüllülük"
+  },
+  {
+   "word": "saptamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to determine",
+   "note": "kesin olarak belirlemek"
+  },
+  {
+   "word": "saptamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to identify",
+   "note": "tespit etmek"
+  },
+  {
+   "word": "gözlemlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to observe",
+   "note": "dikkatle incelemek, izlemek"
+  },
+  {
+   "word": "algı",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "perception",
+   "note": "bir şeyi anlama ve kavrama biçimi"
+  },
+  {
+   "word": "önlem",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "precaution",
+   "note": "kötü bir durumu engellemek için yapılan hazırlık"
+  },
+  {
+   "word": "önlem",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "measure",
+   "note": "tedbir"
+  },
+  {
+   "word": "ihtimal",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "probability",
+   "note": "olabilirlik"
+  },
+  {
+   "word": "ihtimal",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "likelihood",
+   "note": "olasılık"
+  },
+  {
+   "word": "varsayım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "assumption",
+   "note": "doğruluğu kanıtlanmamış kabul"
+  },
+  {
+   "word": "varsayım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "hypothesis",
+   "note": "hipotez"
+  },
+  {
+   "word": "çaba",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "endeavor",
+   "note": "gayret"
+  },
+  {
+   "word": "kargaşa",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "chaos",
+   "note": "düzensizlik, karmaşa"
+  },
+  {
+   "word": "kargaşa",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "disorder",
+   "note": "karmaşıklık"
+  },
+  {
+   "word": "nitelik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "quality",
+   "note": "bir şeyin nasıl olduğunu belirten özellik"
+  },
+  {
+   "word": "nitelik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "characteristic",
+   "note": "vasıf"
+  },
+  {
+   "word": "nicelik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "quantity",
+   "note": "sayılabilen veya ölçülebilen miktar"
+  },
+  {
+   "word": "muazzam",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "enormous",
+   "note": "çok büyük"
+  },
+  {
+   "word": "muazzam",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "magnificent",
+   "note": "olağanüstü"
+  },
+  {
+   "word": "şefkat",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "affection",
+   "note": "sevecenlik, içten sevgi"
+  },
+  {
+   "word": "şefkat",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "tenderness",
+   "note": "şefkatli yaklaşım"
+  },
+  {
+   "word": "merhamet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "mercy",
+   "note": "acıma duygusu"
+  },
+  {
+   "word": "merhamet",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "compassion",
+   "note": ""
+  },
+  {
+   "word": "müphem",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "vague",
+   "note": "anlamı belirsiz"
+  },
+  {
+   "word": "müphem",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "ambiguous",
+   "note": "net olmayan"
+  },
+  {
+   "word": "tutarlılık",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "consistency",
+   "note": "çelişkisiz olma, mantıklı uyum"
+  },
+  {
+   "word": "yozlaşmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to degenerate",
+   "note": "özünü kaybetmek"
+  },
+  {
+   "word": "yozlaşmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to become corrupt",
+   "note": "değerlerini yitirmek"
+  },
+  {
+   "word": "pekiştirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to reinforce",
+   "note": "sağlamlaştırmak"
+  },
+  {
+   "word": "pekiştirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to consolidate",
+   "note": "daha güçlü hale getirmek"
+  },
+  {
+   "word": "idrak etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to comprehend",
+   "note": "kavramak"
+  },
+  {
+   "word": "idrak etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to realize",
+   "note": "akıl erdirmek"
+  },
+  {
+   "word": "özümsemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to assimilate",
+   "note": "tamamen sindirmek"
+  },
+  {
+   "word": "özümsemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to internalize",
+   "note": "benimsemek"
+  },
+  {
+   "word": "ilişkilendirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to associate",
+   "note": "aralarında bağ kurmak"
+  },
+  {
+   "word": "ilişkilendirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to link",
+   "note": "bağlantı kurmak"
+  },
+  {
+   "word": "betimlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to describe",
+   "note": "kelimelerle tasvir etmek"
+  },
+  {
+   "word": "betimlemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to depict",
+   "note": "çizerek veya anlatarak göstermek"
+  },
+  {
+   "word": "vurgulamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to emphasize",
+   "note": "önemini belirtmek"
+  },
+  {
+   "word": "vurgulamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to highlight",
+   "note": "dikkati çekmek"
+  },
+  {
+   "word": "aşikar",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "obvious",
+   "note": "açık"
+  },
+  {
+   "word": "aşikar",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "evident",
+   "note": "ortada olan"
+  },
+  {
+   "word": "diligent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çalışkan",
+   "note": "işine özen gösteren"
+  },
+  {
+   "word": "diligent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "gayretli",
+   "note": "sebatkar"
+  },
+  {
+   "word": "meticulous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "titiz",
+   "note": "kılı kırk yaran"
+  },
+  {
+   "word": "meticulous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "özenli",
+   "note": "çok dikkatli"
+  },
+  {
+   "word": "prevalent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yaygın",
+   "note": "çok rastlanan"
+  },
+  {
+   "word": "prevalent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "hakim",
+   "note": "baskın olan"
+  },
+  {
+   "word": "prominent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "öne çıkan",
+   "note": "dikkat çekici"
+  },
+  {
+   "word": "prominent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "ünlü",
+   "note": "önemli, tanınmış"
+  },
+  {
+   "word": "arbitrary",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "keyfi",
+   "note": "kurallara dayanmayan"
+  },
+  {
+   "word": "arbitrary",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "rastgele",
+   "note": "gelişigüzel"
+  },
+  {
+   "word": "lucrative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kârlı",
+   "note": "çok para getiren"
+  },
+  {
+   "word": "lucrative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kazançlı",
+   "note": "getirisi yüksek"
+  },
+  {
+   "word": "rigorous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "zorlu",
+   "note": "katı kuralları olan"
+  },
+  {
+   "word": "rigorous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "titiz",
+   "note": "kesin ve sert"
+  },
+  {
+   "word": "tenacious",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "inatçı",
+   "note": "kolay vazgeçmeyen"
+  },
+  {
+   "word": "tenacious",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "azimli",
+   "note": "kararlı"
+  },
+  {
+   "word": "adept",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "usta",
+   "note": "becerikli"
+  },
+  {
+   "word": "adept",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yetenekli",
+   "note": "uzman"
+  },
+  {
+   "word": "ambiguous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "belirsiz",
+   "note": "birden fazla anlama gelebilen"
+  },
+  {
+   "word": "ambiguous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "muğlak",
+   "note": "net olmayan"
+  },
+  {
+   "word": "comprehensive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kapsamlı",
+   "note": "geniş içerikli"
+  },
+  {
+   "word": "comprehensive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "detaylı",
+   "note": "her şeyi kapsayan"
+  },
+  {
+   "word": "imperative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "zorunlu",
+   "note": "kaçınılmaz"
+  },
+  {
+   "word": "imperative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "elzem",
+   "note": "şart olan"
+  },
+  {
+   "word": "tentative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "geçici",
+   "note": "deneme niteliğinde"
+  },
+  {
+   "word": "tentative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kesin olmayan",
+   "note": "değişebilir"
+  },
+  {
+   "word": "empirical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "deneysel",
+   "note": "gözleme ve deneye dayanan"
+  },
+  {
+   "word": "erratic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "düzensiz",
+   "note": "önceden tahmin edilemeyen"
+  },
+  {
+   "word": "erratic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "dengesiz",
+   "note": "kararsız hareket eden"
+  },
+  {
+   "word": "pragmatic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "faydacı",
+   "note": "gerçekçi çözümler arayan"
+  },
+  {
+   "word": "pragmatic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "pratik",
+   "note": "uygulamaya yönelik"
+  },
+  {
+   "word": "cynical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "alaycı",
+   "note": "insanların iyiliğine inanmayan"
+  },
+  {
+   "word": "cynical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kötümser",
+   "note": "şüpheci ve negatif"
+  },
+  {
+   "word": "skeptical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "şüpheci",
+   "note": "kuşkuyla yaklaşan"
+  },
+  {
+   "word": "robust",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sağlam",
+   "note": "dayanıklı"
+  },
+  {
+   "word": "robust",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "güçlü",
+   "note": "zorluklara dayanan"
+  },
+  {
+   "word": "sheer",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sırf",
+   "note": "tamamen"
+  },
+  {
+   "word": "sheer",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "katıksız",
+   "note": "yalnızca, tek"
+  },
+  {
+   "word": "stark",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sert",
+   "note": "kesin ve net (zıtlık)"
+  },
+  {
+   "word": "stark",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çıplak",
+   "note": "süslenmemiş, apaçık (gerçek)"
+  },
+  {
+   "word": "vivid",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "canlı",
+   "note": "net ve güçlü (renk/hatıra)"
+  },
+  {
+   "word": "vivid",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "parlak",
+   "note": "göz alıcı"
+  },
+  {
+   "word": "concrete",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "somut",
+   "note": "gerçek ve fiziksel"
+  },
+  {
+   "word": "scarce",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kıt",
+   "note": "yetersiz miktarda olan"
+  },
+  {
+   "word": "scarce",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "nadir",
+   "note": "zor bulunan"
+  },
+  {
+   "word": "abundant",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "bol",
+   "note": "çok miktarda bulunan"
+  },
+  {
+   "word": "abundant",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "bereketli",
+   "note": "bolca olan"
+  },
+  {
+   "word": "mere",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sadece",
+   "note": "yalnızca"
+  },
+  {
+   "word": "profound",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "derin",
+   "note": "yoğun (duygu veya bilgi)"
+  },
+  {
+   "word": "profound",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çok etkili",
+   "note": "kapsamlı ve büyük"
+  },
+  {
+   "word": "superficial",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yüzeysel",
+   "note": "derinliği olmayan, sığ"
+  },
+  {
+   "word": "coherent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "tutarlı",
+   "note": "uyumlu"
+  },
+  {
+   "word": "coherent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "mantıklı",
+   "note": "anlaşılır"
+  },
+  {
+   "word": "inherent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "doğasında olan",
+   "note": "ayrılmaz bir parçası olan"
+  },
+  {
+   "word": "vulnerable",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "savunmasız",
+   "note": "kolay zarar görebilen"
+  },
+  {
+   "word": "vulnerable",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "hassas",
+   "note": "korunmasız"
+  },
+  {
+   "word": "resilient",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "dirençli",
+   "note": "zorluklardan çabuk toparlanan"
+  },
+  {
+   "word": "resilient",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "esnek",
+   "note": "dayanıklı"
   }
  ],
  "examples": [
@@ -23201,6 +24134,238 @@
    "tr": "Older adults are more susceptible to seasonal infections.",
    "en": "Yaşlı yetişkinler mevsimsel enfeksiyonlara karşı daha savunmasızdır.",
    "level": "C2"
+  },
+  {
+   "word": "çağdaş",
+   "lang": "tr",
+   "meaning": "contemporary",
+   "tr": "Müze, çağdaş sanat eserlerinden oluşan geniş bir koleksiyona ev sahipliği yapıyor.",
+   "en": "The museum hosts a vast collection of contemporary artworks.",
+   "level": "B2"
+  },
+  {
+   "word": "bağnaz",
+   "lang": "tr",
+   "meaning": "bigoted",
+   "tr": "Bu kadar bağnaz bir düşünce yapısıyla yeniliklere ayak uyduramazsınız.",
+   "en": "You cannot keep up with innovations with such a bigoted mindset.",
+   "level": "C1"
+  },
+  {
+   "word": "ivedilik",
+   "lang": "tr",
+   "meaning": "urgency",
+   "tr": "Deprem bölgesine çadır ve temiz suyun ivedilikle ulaştırılması gerekiyor.",
+   "en": "Tents and clean water need to be delivered to the earthquake zone with urgency.",
+   "level": "B2"
+  },
+  {
+   "word": "yapılandırmak",
+   "lang": "tr",
+   "meaning": "to structure",
+   "tr": "Kredilerini ödemekte zorlanan müşteriler için borçları yeniden yapılandırdılar.",
+   "en": "They restructured the debts for customers who had difficulty paying their loans.",
+   "level": "C1"
+  },
+  {
+   "word": "farkındalık",
+   "lang": "tr",
+   "meaning": "awareness",
+   "tr": "Kampanya, çevre kirliliği konusunda toplumsal farkındalığı artırmayı başardı.",
+   "en": "The campaign succeeded in raising public awareness about environmental pollution.",
+   "level": "B2"
+  },
+  {
+   "word": "hoşnutsuzluk",
+   "lang": "tr",
+   "meaning": "dissatisfaction",
+   "tr": "Maaşlardaki kesinti, fabrika işçileri arasında büyük bir hoşnutsuzluk yarattı.",
+   "en": "The cut in salaries created great dissatisfaction among the factory workers.",
+   "level": "C1"
+  },
+  {
+   "word": "uzlaşma",
+   "lang": "tr",
+   "meaning": "compromise",
+   "tr": "Uzun süren diplomatik görüşmelerin ardından iki ülke arasında uzlaşma sağlandı.",
+   "en": "After long diplomatic talks, a compromise was reached between the two countries.",
+   "level": "C1"
+  },
+  {
+   "word": "saptamak",
+   "lang": "tr",
+   "meaning": "to determine",
+   "tr": "Mühendisler, köprüdeki çökmenin ana nedenini detaylı incelemelerle saptadı.",
+   "en": "The engineers determined the main cause of the bridge's collapse through detailed inspections.",
+   "level": "B2"
+  },
+  {
+   "word": "algı",
+   "lang": "tr",
+   "meaning": "perception",
+   "tr": "Sosyal medya, gençlerin güzellik ve başarı algısını derinden etkiliyor.",
+   "en": "Social media deeply affects young people's perception of beauty and success.",
+   "level": "C1"
+  },
+  {
+   "word": "önlem",
+   "lang": "tr",
+   "meaning": "precaution",
+   "tr": "Olası bir yangına karşı fabrikada tüm güvenlik önlemleri eksiksiz alındı.",
+   "en": "All safety precautions against a possible fire have been thoroughly taken in the factory.",
+   "level": "B2"
+  },
+  {
+   "word": "tutarlılık",
+   "lang": "tr",
+   "meaning": "consistency",
+   "tr": "Yazarın ilk kitabı ile son eseri arasındaki üslup tutarlılığı dikkat çekici.",
+   "en": "The stylistic consistency between the author's first book and his latest work is remarkable.",
+   "level": "C1"
+  },
+  {
+   "word": "yozlaşmak",
+   "lang": "tr",
+   "meaning": "to degenerate",
+   "tr": "Geleneksel değerlerin yozlaşması, toplumun temel bağlarını zayıflatır.",
+   "en": "The degeneration of traditional values weakens the foundational bonds of society.",
+   "level": "C2"
+  },
+  {
+   "word": "özümsemek",
+   "lang": "tr",
+   "meaning": "to internalize",
+   "tr": "Yeni bir dili öğrenirken sadece kuralları ezberlemek yetmez, kültürü de özümsemek gerekir.",
+   "en": "When learning a new language, memorizing rules is not enough; one must also internalize the culture.",
+   "level": "C2"
+  },
+  {
+   "word": "betimlemek",
+   "lang": "tr",
+   "meaning": "to describe",
+   "tr": "Yazar, romanında 19. yüzyıl İstanbul'unu canlı ve etkileyici bir dille betimliyor.",
+   "en": "The author describes 19th-century Istanbul in a vivid and impressive language in his novel.",
+   "level": "B2"
+  },
+  {
+   "word": "diligent",
+   "lang": "en",
+   "meaning": "çalışkan",
+   "tr": "A diligent student always reviews her notes before the final exams.",
+   "en": "Çalışkan bir öğrenci final sınavlarından önce her zaman notlarını gözden geçirir.",
+   "level": "B2"
+  },
+  {
+   "word": "ubiquitous",
+   "lang": "en",
+   "meaning": "yaygın",
+   "tr": "Smartphones have become ubiquitous in almost every aspect of modern life.",
+   "en": "Akıllı telefonlar modern yaşamın neredeyse her alanında yaygın hale geldi.",
+   "level": "C1"
+  },
+  {
+   "word": "meticulous",
+   "lang": "en",
+   "meaning": "titiz",
+   "tr": "The accountant kept meticulous records of every single company expense.",
+   "en": "Muhasebeci, şirketin her bir harcamasının titiz kayıtlarını tuttu.",
+   "level": "C1"
+  },
+  {
+   "word": "prevalent",
+   "lang": "en",
+   "meaning": "yaygın, hakim",
+   "tr": "This type of architectural design was very prevalent during the Renaissance.",
+   "en": "Bu tür mimari tasarım Rönesans döneminde çok yaygındı.",
+   "level": "B2"
+  },
+  {
+   "word": "prominent",
+   "lang": "en",
+   "meaning": "öne çıkan",
+   "tr": "She is a prominent scientist who has published dozens of influential papers.",
+   "en": "Düzinelerce etkili makale yayınlamış öne çıkan bir bilim insanıdır.",
+   "level": "B2"
+  },
+  {
+   "word": "lucrative",
+   "lang": "en",
+   "meaning": "kazançlı",
+   "tr": "Real estate investment can be a highly lucrative business if done correctly.",
+   "en": "Gayrimenkul yatırımı, doğru yapıldığında son derece kazançlı bir iş olabilir.",
+   "level": "C1"
+  },
+  {
+   "word": "rigorous",
+   "lang": "en",
+   "meaning": "titiz, zorlu",
+   "tr": "The new software went through rigorous testing before it was released to the public.",
+   "en": "Yeni yazılım halka sunulmadan önce zorlu testlerden geçti.",
+   "level": "C1"
+  },
+  {
+   "word": "tenacious",
+   "lang": "en",
+   "meaning": "inatçı, azimli",
+   "tr": "Despite countless rejections, the tenacious inventor never gave up on his dream.",
+   "en": "Sayısız redde rağmen azimli mucit hayalinden asla vazgeçmedi.",
+   "level": "C2"
+  },
+  {
+   "word": "ambiguous",
+   "lang": "en",
+   "meaning": "belirsiz",
+   "tr": "The wording in the contract is too ambiguous and could cause legal disputes.",
+   "en": "Sözleşmedeki ifade çok belirsiz ve hukuki anlaşmazlıklara yol açabilir.",
+   "level": "C1"
+  },
+  {
+   "word": "imperative",
+   "lang": "en",
+   "meaning": "elzem",
+   "tr": "It is imperative that we evacuate the building immediately.",
+   "en": "Binayı derhal tahliye etmemiz elzemdir.",
+   "level": "C1"
+  },
+  {
+   "word": "empirical",
+   "lang": "en",
+   "meaning": "deneysel",
+   "tr": "They lack empirical evidence to support their controversial claims.",
+   "en": "Tartışmalı iddialarını destekleyecek deneysel kanıttan yoksunlar.",
+   "level": "C2"
+  },
+  {
+   "word": "erratic",
+   "lang": "en",
+   "meaning": "düzensiz",
+   "tr": "His erratic behavior at the meeting made everyone feel uncomfortable.",
+   "en": "Toplantıdaki düzensiz davranışları herkesin rahatsız hissetmesine neden oldu.",
+   "level": "C1"
+  },
+  {
+   "word": "pragmatic",
+   "lang": "en",
+   "meaning": "faydacı, pratik",
+   "tr": "We need a pragmatic approach to solve this economic crisis, not just theories.",
+   "en": "Bu ekonomik krizi çözmek için sadece teorilere değil, pratik bir yaklaşıma ihtiyacımız var.",
+   "level": "C1"
+  },
+  {
+   "word": "robust",
+   "lang": "en",
+   "meaning": "sağlam",
+   "tr": "The country has a robust economy that can withstand global shocks.",
+   "en": "Ülkenin küresel şoklara dayanabilen sağlam bir ekonomisi var.",
+   "level": "C1"
+  },
+  {
+   "word": "scarce",
+   "lang": "en",
+   "meaning": "kıt, nadir",
+   "tr": "Clean drinking water is becoming increasingly scarce in this region.",
+   "en": "Temiz içme suyu bu bölgede giderek daha kıt hale geliyor.",
+   "level": "B2"
   }
  ],
  "phrases": [
@@ -36072,6 +37237,2772 @@
    "ex": "Don't take reliable internet access for granted.",
    "ex_tr": "Güvenilir internet erişimini cepte görme.",
    "cat": "chunks"
+  },
+  {
+   "phrase": "give away",
+   "lang": "en",
+   "meaning": "bağışlamak, bedava dağıtmak",
+   "ex": "The billionaire decided to give away most of his fortune to charity.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "give away",
+   "lang": "en",
+   "meaning": "ele vermek, sırrını açığa çıkarmak",
+   "ex": "She tried to look calm, but her trembling hands gave her away.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "hold up",
+   "lang": "en",
+   "meaning": "geciktirmek, alıkoymak",
+   "ex": "Sorry I'm late; a terrible traffic jam held me up for an hour.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "hold up",
+   "lang": "en",
+   "meaning": "silahla soymak",
+   "ex": "Armed robbers held up the local bank early this morning.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "hold up",
+   "lang": "en",
+   "meaning": "ayakta tutmak, desteklemek",
+   "ex": "The old wooden beams won't hold up the roof much longer.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "make out",
+   "lang": "en",
+   "meaning": "güçlükle seçmek, fark etmek",
+   "ex": "It was so foggy that I couldn't make out the road signs.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "make out",
+   "lang": "en",
+   "meaning": "anlamak, çözmek (anlamını)",
+   "ex": "I can't make out what this complex legal document is trying to say.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "put out",
+   "lang": "en",
+   "meaning": "söndürmek (ateş/yangın)",
+   "ex": "The firefighters managed to put out the forest fire before it reached the town.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "put out",
+   "lang": "en",
+   "meaning": "zahmet vermek, rahatsız etmek",
+   "ex": "I hope our sudden visit didn't put you out too much.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "take up",
+   "lang": "en",
+   "meaning": "yeni bir hobiye/işe başlamak",
+   "ex": "He decided to take up photography as a hobby after retiring.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "take up",
+   "lang": "en",
+   "meaning": "kaplamak, yer/zaman tutmak",
+   "ex": "That giant antique sofa takes up far too much space in the living room.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "work out",
+   "lang": "en",
+   "meaning": "antrenman yapmak, egzersiz yapmak",
+   "ex": "She goes to the gym to work out at least three times a week.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "work out",
+   "lang": "en",
+   "meaning": "çözmek, tasarlamak, halletmek",
+   "ex": "We need to sit down and work out a plan to launch the new app.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "work out",
+   "lang": "en",
+   "meaning": "yolunda gitmek, iyi sonuçlanmak",
+   "ex": "Don't worry about the travel arrangements; everything will work out fine.",
+   "ex_tr": ""
+  },
+  {
+   "phrase": "göz dikmek",
+   "lang": "tr",
+   "meaning": "to set one's sights on, to covet",
+   "ex": "Rakip şirket, bizim en başarılı projemize göz dikti.",
+   "ex_tr": "The rival company has set its sights on our most successful project."
+  },
+  {
+   "phrase": "a dime a dozen",
+   "lang": "en",
+   "meaning": "sıradan, çok yaygın, ucuz",
+   "ex": "In this tourist town, souvenir shops are a dime a dozen.",
+   "ex_tr": "Bu turistik kasabada hediyelik eşya dükkanları çok sıradan ve yaygındır."
+  },
+  {
+   "phrase": "elephant in the room",
+   "lang": "en",
+   "meaning": "görmezden gelinen bariz sorun",
+   "ex": "The massive budget deficit was the elephant in the room during the meeting.",
+   "ex_tr": "Devasa bütçe açığı, toplantı sırasında kimsenin konuşmak istemediği bariz bir sorundu."
+  },
+  {
+   "phrase": "jump the gun",
+   "lang": "en",
+   "meaning": "erken davranmak, acele etmek",
+   "ex": "We shouldn't jump the gun and book the flights before the visa is approved.",
+   "ex_tr": "Aceleci davranıp vize onaylanmadan uçak biletlerini ayırtmamalıyız."
+  },
+  {
+   "phrase": "a storm in a teacup",
+   "lang": "en",
+   "meaning": "pireyi deve yapmak; küçük meseleyi büyütmek",
+   "ex": "The argument over the seating plan was a storm in a teacup.",
+   "ex_tr": "Oturma düzeni üzerine çıkan tartışma gereksiz yere büyütülmüş küçük bir meseleydi.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "the tip of the iceberg",
+   "lang": "en",
+   "meaning": "buzdağının görünen kısmı",
+   "ex": "The missing files were only the tip of the iceberg.",
+   "ex_tr": "Eksik dosyalar buzdağının yalnızca görünen kısmıydı.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "a fish out of water",
+   "lang": "en",
+   "meaning": "kendini yabancı ve rahatsız hisseden kişi",
+   "ex": "I felt like a fish out of water at the formal reception.",
+   "ex_tr": "Resmî davette kendimi ortama yabancı hissettim.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "a shot in the dark",
+   "lang": "en",
+   "meaning": "rastgele tahmin; körlemesine deneme",
+   "ex": "My answer was a shot in the dark, but it turned out to be right.",
+   "ex_tr": "Cevabım tamamen tahmindi ama doğru çıktı.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "a double-edged sword",
+   "lang": "en",
+   "meaning": "iki ucu keskin bıçak",
+   "ex": "Working from home can be a double-edged sword for new employees.",
+   "ex_tr": "Evden çalışmak yeni çalışanlar için iki ucu keskin bıçak olabilir.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "a hard pill to swallow",
+   "lang": "en",
+   "meaning": "kabullenmesi zor gerçek",
+   "ex": "Losing the final was a hard pill to swallow.",
+   "ex_tr": "Finali kaybetmek kabullenmesi zor bir durumdu.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "bend over backwards",
+   "lang": "en",
+   "meaning": "elinden gelenin fazlasını yapmak",
+   "ex": "The staff bent over backwards to help our guests.",
+   "ex_tr": "Personel misafirlerimize yardımcı olmak için elinden gelenin fazlasını yaptı.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "bite off more than you can chew",
+   "lang": "en",
+   "meaning": "altından kalkabileceğinden fazla işe girişmek",
+   "ex": "I bit off more than I could chew when I accepted three projects.",
+   "ex_tr": "Üç projeyi kabul edince altından kalkabileceğimden fazla işe giriştim.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "draw the line",
+   "lang": "en",
+   "meaning": "sınır koymak",
+   "ex": "I can work late occasionally, but I draw the line at working every weekend.",
+   "ex_tr": "Ara sıra geç çalışabilirim ama her hafta sonu çalışmaya sınır koyarım.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "hit the nail on the head",
+   "lang": "en",
+   "meaning": "tam isabetle doğruyu söylemek",
+   "ex": "You hit the nail on the head when you identified the cause.",
+   "ex_tr": "Nedeni belirlediğinde tam isabet ettirdin.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "in the same boat",
+   "lang": "en",
+   "meaning": "aynı durumda olmak",
+   "ex": "We're all in the same boat while the system is offline.",
+   "ex_tr": "Sistem çevrimdışıyken hepimiz aynı durumdayız.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "keep an eye on",
+   "lang": "en",
+   "meaning": "göz kulak olmak; takip etmek",
+   "ex": "Could you keep an eye on the oven while I answer the phone?",
+   "ex_tr": "Ben telefona bakarken fırına göz kulak olur musun?",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "leave no stone unturned",
+   "lang": "en",
+   "meaning": "her yolu denemek",
+   "ex": "The team left no stone unturned in its search for the fault.",
+   "ex_tr": "Ekip arızayı ararken her yolu denedi.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "out of the blue",
+   "lang": "en",
+   "meaning": "hiç beklenmedik anda",
+   "ex": "She called me out of the blue after ten years.",
+   "ex_tr": "On yıl sonra hiç beklemediğim bir anda beni aradı.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "sit on the fence",
+   "lang": "en",
+   "meaning": "taraf tutmamak; kararsız kalmak",
+   "ex": "You can't sit on the fence forever; we need a decision.",
+   "ex_tr": "Sonsuza kadar kararsız kalamazsın; karar vermemiz gerekiyor.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "turn a blind eye",
+   "lang": "en",
+   "meaning": "görmezden gelmek",
+   "ex": "The manager refused to turn a blind eye to the safety issue.",
+   "ex_tr": "Müdür güvenlik sorununu görmezden gelmeyi reddetti.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "walk on eggshells",
+   "lang": "en",
+   "meaning": "çok dikkatli davranmak; diken üstünde olmak",
+   "ex": "Everyone was walking on eggshells after the disagreement.",
+   "ex_tr": "Anlaşmazlıktan sonra herkes diken üstündeydi.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "wear many hats",
+   "lang": "en",
+   "meaning": "birden fazla rol üstlenmek",
+   "ex": "At a small company, employees often wear many hats.",
+   "ex_tr": "Küçük bir şirkette çalışanlar çoğu zaman birden fazla rol üstlenir.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "when pigs fly",
+   "lang": "en",
+   "meaning": "çıkmaz ayın son çarşambasında; asla",
+   "ex": "He says he'll clean his room when pigs fly.",
+   "ex_tr": "Odasını ancak çıkmaz ayın son çarşambasında temizler.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "your guess is as good as mine",
+   "lang": "en",
+   "meaning": "ben de bilmiyorum",
+   "ex": "When will the network be restored? Your guess is as good as mine.",
+   "ex_tr": "Ağ ne zaman düzelecek? Ben de bilmiyorum.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "as an illustration",
+   "lang": "en",
+   "meaning": "örnek vermek gerekirse",
+   "ex": "As an illustration, consider what happens when demand doubles.",
+   "ex_tr": "Örnek vermek gerekirse talep iki katına çıktığında ne olduğuna bakalım.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "more specifically",
+   "lang": "en",
+   "meaning": "daha özel olarak",
+   "ex": "We need additional tools, more specifically a calibrated meter.",
+   "ex_tr": "Ek aletlere, daha özel olarak kalibre edilmiş bir ölçü aletine ihtiyacımız var.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "what is more",
+   "lang": "en",
+   "meaning": "üstelik",
+   "ex": "The hotel is quiet. What's more, it's close to the station.",
+   "ex_tr": "Otel sessiz. Üstelik istasyona yakın.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "what's more",
+   "lang": "en",
+   "meaning": "üstelik",
+   "ex": "The hotel is quiet. What's more, it's close to the station.",
+   "ex_tr": "Otel sessiz. Üstelik istasyona yakın.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "by contrast",
+   "lang": "en",
+   "meaning": "buna karşılık",
+   "ex": "The first room was noisy. By contrast, the second was very quiet.",
+   "ex_tr": "İlk oda gürültülüydü. Buna karşılık ikincisi çok sessizdi.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "conversely",
+   "lang": "en",
+   "meaning": "tersine",
+   "ex": "A low price may attract buyers; conversely, a high price may discourage them.",
+   "ex_tr": "Düşük fiyat alıcıları çekebilir; tersine yüksek fiyat onları caydırabilir.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "all the same",
+   "lang": "en",
+   "meaning": "yine de",
+   "ex": "The task was difficult, but we finished it all the same.",
+   "ex_tr": "Görev zordu ama yine de tamamladık.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "having said that",
+   "lang": "en",
+   "meaning": "bununla birlikte",
+   "ex": "The proposal looks promising. Having said that, we need more data.",
+   "ex_tr": "Teklif umut verici görünüyor. Bununla birlikte daha fazla veriye ihtiyacımız var.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "despite this",
+   "lang": "en",
+   "meaning": "buna rağmen",
+   "ex": "The first test failed. Despite this, we remained optimistic.",
+   "ex_tr": "İlk test başarısız oldu. Buna rağmen iyimserliğimizi koruduk.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "as a consequence",
+   "lang": "en",
+   "meaning": "bunun sonucunda",
+   "ex": "The server overheated. As a consequence, several services stopped.",
+   "ex_tr": "Sunucu aşırı ısındı. Bunun sonucunda birkaç hizmet durdu.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "from then on",
+   "lang": "en",
+   "meaning": "o andan itibaren",
+   "ex": "We changed the procedure, and from then on, errors became rare.",
+   "ex_tr": "Prosedürü değiştirdik ve o andan itibaren hatalar seyrekleşti.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "to some extent",
+   "lang": "en",
+   "meaning": "bir ölçüde",
+   "ex": "To some extent, the new policy has reduced delays.",
+   "ex_tr": "Yeni politika gecikmeleri bir ölçüde azalttı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "up to a point",
+   "lang": "en",
+   "meaning": "bir yere kadar",
+   "ex": "I agree with you up to a point, but the budget is limited.",
+   "ex_tr": "Sana bir yere kadar katılıyorum ama bütçe sınırlı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "technically speaking",
+   "lang": "en",
+   "meaning": "teknik açıdan bakıldığında",
+   "ex": "Technically speaking, the device is still under warranty.",
+   "ex_tr": "Teknik açıdan bakıldığında cihaz hâlâ garanti kapsamında.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "oddly enough",
+   "lang": "en",
+   "meaning": "işin tuhafı",
+   "ex": "Oddly enough, the problem disappeared after the restart.",
+   "ex_tr": "İşin tuhafı, yeniden başlatmadan sonra sorun kayboldu.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "interestingly enough",
+   "lang": "en",
+   "meaning": "ilginçtir ki",
+   "ex": "Interestingly enough, both teams reached the same conclusion.",
+   "ex_tr": "İlginçtir ki iki ekip de aynı sonuca vardı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "to be fair",
+   "lang": "en",
+   "meaning": "hakkını vermek gerekirse",
+   "ex": "To be fair, they did warn us about the delay.",
+   "ex_tr": "Hakkını vermek gerekirse bizi gecikme konusunda uyarmışlardı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "in hindsight",
+   "lang": "en",
+   "meaning": "geriye dönüp bakınca",
+   "ex": "In hindsight, we should have tested the backup system earlier.",
+   "ex_tr": "Geriye dönüp bakınca yedek sistemi daha önce test etmeliydik.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "looking back",
+   "lang": "en",
+   "meaning": "geriye dönüp bakınca",
+   "ex": "Looking back, that decision saved us a lot of time.",
+   "ex_tr": "Geriye dönüp bakınca o karar bize çok zaman kazandırdı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "in any event",
+   "lang": "en",
+   "meaning": "her hâlükârda",
+   "ex": "In any event, the doors must remain locked.",
+   "ex_tr": "Her hâlükârda kapılar kilitli kalmalı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "either way",
+   "lang": "en",
+   "meaning": "her iki durumda da",
+   "ex": "We may finish today or tomorrow; either way, I'll call you.",
+   "ex_tr": "Bugün ya da yarın bitirebiliriz; her iki durumda da seni arayacağım.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "in summary",
+   "lang": "en",
+   "meaning": "özetle",
+   "ex": "In summary, the system is safe but needs maintenance.",
+   "ex_tr": "Özetle sistem güvenli ancak bakıma ihtiyacı var.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "it's good to see you",
+   "lang": "en",
+   "meaning": "Seni görmek güzel",
+   "ex": "It's good to see you again after all these years.",
+   "ex_tr": "Bunca yıldan sonra seni yeniden görmek güzel.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "the pleasure is mine",
+   "lang": "en",
+   "meaning": "Asıl ben memnun oldum",
+   "ex": "The pleasure is mine. Thank you for inviting me.",
+   "ex_tr": "Asıl ben memnun oldum. Beni davet ettiğiniz için teşekkür ederim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "don't mention it",
+   "lang": "en",
+   "meaning": "Lafı bile olmaz",
+   "ex": "Thanks for carrying the boxes. Don't mention it.",
+   "ex_tr": "Kutuları taşıdığın için teşekkürler. Lafı bile olmaz.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "much appreciated",
+   "lang": "en",
+   "meaning": "Çok makbule geçti; çok teşekkürler",
+   "ex": "You fixed the issue so quickly. Much appreciated.",
+   "ex_tr": "Sorunu çok hızlı çözdün. Çok makbule geçti.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i owe you one",
+   "lang": "en",
+   "meaning": "Sana bir iyilik borçluyum",
+   "ex": "Thanks for covering my shift. I owe you one.",
+   "ex_tr": "Vardiyamı üstlendiğin için teşekkürler. Sana bir iyilik borçluyum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "if you don't mind",
+   "lang": "en",
+   "meaning": "Sakıncası yoksa",
+   "ex": "I'd like to open the window, if you don't mind.",
+   "ex_tr": "Sakıncası yoksa pencereyi açmak istiyorum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "would you mind giving me a hand",
+   "lang": "en",
+   "meaning": "Bana yardım eder misin?",
+   "ex": "Would you mind giving me a hand with these boxes?",
+   "ex_tr": "Bu kutularda bana yardım eder misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "could you do me a favor",
+   "lang": "en",
+   "meaning": "Bana bir iyilik yapabilir misin?",
+   "ex": "Could you do me a favor and send the address again?",
+   "ex_tr": "Bana bir iyilik yapıp adresi tekrar gönderebilir misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i'd really appreciate it",
+   "lang": "en",
+   "meaning": "Gerçekten çok memnun olurum",
+   "ex": "If you could reply today, I'd really appreciate it.",
+   "ex_tr": "Bugün yanıt verebilirsen gerçekten çok memnun olurum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "that would be great",
+   "lang": "en",
+   "meaning": "Bu harika olur",
+   "ex": "If you can bring the drawings tomorrow, that would be great.",
+   "ex_tr": "Çizimleri yarın getirebilirsen harika olur.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "that works for me",
+   "lang": "en",
+   "meaning": "Bu bana uyar",
+   "ex": "Thursday at ten? That works for me.",
+   "ex_tr": "Perşembe saat onda mı? Bu bana uyar.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "sounds like a plan",
+   "lang": "en",
+   "meaning": "Anlaştık; kulağa iyi geliyor",
+   "ex": "Let's meet at the entrance at nine. Sounds like a plan.",
+   "ex_tr": "Saat dokuzda girişte buluşalım. Anlaştık.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i'm up for it",
+   "lang": "en",
+   "meaning": "Varım; bana uyar",
+   "ex": "A quick coffee after work? I'm up for it.",
+   "ex_tr": "İşten sonra kısa bir kahve mi? Varım.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "maybe another time",
+   "lang": "en",
+   "meaning": "Belki başka zaman",
+   "ex": "I can't join you tonight. Maybe another time.",
+   "ex_tr": "Bu akşam size katılamam. Belki başka zaman.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i'm afraid i can't",
+   "lang": "en",
+   "meaning": "Maalesef yapamam",
+   "ex": "I'm afraid I can't attend the meeting on Monday.",
+   "ex_tr": "Maalesef pazartesi toplantıya katılamam.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i wish i could",
+   "lang": "en",
+   "meaning": "Keşke yapabilsem",
+   "ex": "Can you come with us? I wish I could, but I'm working.",
+   "ex_tr": "Bizimle gelebilir misin? Keşke gelebilsem ama çalışıyorum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it can't hurt to ask",
+   "lang": "en",
+   "meaning": "Sormaktan zarar gelmez",
+   "ex": "We don't know if they'll approve it, but it can't hurt to ask.",
+   "ex_tr": "Onaylayıp onaylamayacaklarını bilmiyoruz ama sormaktan zarar gelmez.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's give it a shot",
+   "lang": "en",
+   "meaning": "Hadi bir deneyelim",
+   "ex": "We haven't tried restarting the controller. Let's give it a shot.",
+   "ex_tr": "Kontrol cihazını yeniden başlatmayı denemedik. Hadi bir deneyelim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "just to clarify",
+   "lang": "en",
+   "meaning": "Sadece açıklığa kavuşturmak için",
+   "ex": "Just to clarify, do you need two copies or three?",
+   "ex_tr": "Sadece açıklığa kavuşturmak için soruyorum: İki kopya mı üç mü gerekiyor?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "correct me if i'm wrong",
+   "lang": "en",
+   "meaning": "Yanılıyorsam düzelt",
+   "ex": "Correct me if I'm wrong, but didn't we order this last month?",
+   "ex_tr": "Yanılıyorsam düzelt ama bunu geçen ay sipariş etmedik mi?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "as far as i can tell",
+   "lang": "en",
+   "meaning": "Anlayabildiğim kadarıyla",
+   "ex": "As far as I can tell, the cable isn't damaged.",
+   "ex_tr": "Anlayabildiğim kadarıyla kablo hasarlı değil.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "what do you mean by that",
+   "lang": "en",
+   "meaning": "Bununla ne demek istiyorsun?",
+   "ex": "What do you mean by that? Could you give an example?",
+   "ex_tr": "Bununla ne demek istiyorsun? Bir örnek verebilir misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "could you elaborate",
+   "lang": "en",
+   "meaning": "Biraz daha ayrıntı verebilir misin?",
+   "ex": "You mentioned a fault in the panel. Could you elaborate?",
+   "ex_tr": "Panoda bir arızadan söz ettin. Biraz daha ayrıntı verebilir misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "good point",
+   "lang": "en",
+   "meaning": "İyi noktaya değindin",
+   "ex": "Good point. We should include the delivery cost too.",
+   "ex_tr": "İyi noktaya değindin. Teslimat maliyetini de eklemeliyiz.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "that's a relief",
+   "lang": "en",
+   "meaning": "Oh, içim rahatladı",
+   "ex": "The test came back negative. That's a relief.",
+   "ex_tr": "Test sonucu negatif çıktı. Oh, içim rahatladı.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "what a shame",
+   "lang": "en",
+   "meaning": "Ne yazık; çok yazık",
+   "ex": "The concert was canceled? What a shame.",
+   "ex_tr": "Konser iptal mi edildi? Ne yazık.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "fingers crossed",
+   "lang": "en",
+   "meaning": "Umarım iyi gider; şansımız yaver gider inşallah",
+   "ex": "The results come out tomorrow. Fingers crossed!",
+   "ex_tr": "Sonuçlar yarın açıklanıyor. Umarım iyi gelir!",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "wish me luck",
+   "lang": "en",
+   "meaning": "Bana şans dile",
+   "ex": "I've got my driving test tomorrow. Wish me luck!",
+   "ex_tr": "Yarın direksiyon sınavım var. Bana şans dile!",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "good for you",
+   "lang": "en",
+   "meaning": "Senin adına sevindim; aferin sana",
+   "ex": "You got the promotion? Good for you!",
+   "ex_tr": "Terfi mi aldın? Senin adına sevindim!",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "you made my day",
+   "lang": "en",
+   "meaning": "Günümü güzelleştirdin",
+   "ex": "That message really made my day.",
+   "ex_tr": "O mesaj gerçekten günümü güzelleştirdi.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i can't believe it",
+   "lang": "en",
+   "meaning": "İnanamıyorum",
+   "ex": "I can't believe it! We actually won the competition.",
+   "ex_tr": "İnanamıyorum! Yarışmayı gerçekten kazandık.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "are you serious",
+   "lang": "en",
+   "meaning": "Ciddi misin?",
+   "ex": "Are you serious? The tickets sold out already?",
+   "ex_tr": "Ciddi misin? Biletler şimdiden tükendi mi?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "you've got to be kidding",
+   "lang": "en",
+   "meaning": "Şaka yapıyor olmalısın",
+   "ex": "You've got to be kidding. The lift is broken again?",
+   "ex_tr": "Şaka yapıyor olmalısın. Asansör yine mi bozuldu?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it's not a big deal",
+   "lang": "en",
+   "meaning": "Büyütülecek bir şey değil",
+   "ex": "It's not a big deal; we can fix it tomorrow.",
+   "ex_tr": "Büyütülecek bir şey değil; yarın düzeltebiliriz.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "these things happen",
+   "lang": "en",
+   "meaning": "Böyle şeyler olur",
+   "ex": "Don't worry about the mistake. These things happen.",
+   "ex_tr": "Hata için endişelenme. Böyle şeyler olur.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it happens to the best of us",
+   "lang": "en",
+   "meaning": "En iyilerimizin bile başına gelir",
+   "ex": "You forgot the password? It happens to the best of us.",
+   "ex_tr": "Şifreyi mi unuttun? En iyilerimizin bile başına gelir.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "don't be so hard on yourself",
+   "lang": "en",
+   "meaning": "Kendine bu kadar yüklenme",
+   "ex": "You did your best. Don't be so hard on yourself.",
+   "ex_tr": "Elinden geleni yaptın. Kendine bu kadar yüklenme.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "take care",
+   "lang": "en",
+   "meaning": "Kendine iyi bak",
+   "ex": "It was great talking to you. Take care!",
+   "ex_tr": "Seninle konuşmak güzeldi. Kendine iyi bak!",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "have a safe trip",
+   "lang": "en",
+   "meaning": "İyi yolculuklar",
+   "ex": "Have a safe trip, and text me when you arrive.",
+   "ex_tr": "İyi yolculuklar, varınca bana mesaj at.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "see you around",
+   "lang": "en",
+   "meaning": "Görüşürüz",
+   "ex": "I have to go now. See you around!",
+   "ex_tr": "Artık gitmem gerek. Görüşürüz!",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "keep in touch",
+   "lang": "en",
+   "meaning": "İletişimde kalalım",
+   "ex": "It was lovely meeting you. Keep in touch.",
+   "ex_tr": "Seninle tanışmak çok güzeldi. İletişimde kalalım.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's catch up sometime",
+   "lang": "en",
+   "meaning": "Bir ara görüşüp sohbet edelim",
+   "ex": "It's been ages. Let's catch up sometime.",
+   "ex_tr": "Çok uzun zaman oldu. Bir ara görüşüp sohbet edelim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it's on me",
+   "lang": "en",
+   "meaning": "Benden; hesabı ben öderim",
+   "ex": "You paid last time, so coffee is on me today.",
+   "ex_tr": "Geçen sefer sen ödedin, bugün kahveler benden.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's split the bill",
+   "lang": "en",
+   "meaning": "Hesabı bölüşelim",
+   "ex": "We ordered separately, so let's split the bill.",
+   "ex_tr": "Ayrı ayrı sipariş verdik, o yüzden hesabı bölüşelim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "keep the change",
+   "lang": "en",
+   "meaning": "Üstü kalsın",
+   "ex": "Here's twenty dollars. Keep the change.",
+   "ex_tr": "İşte yirmi dolar. Üstü kalsın.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "can i get the bill, please",
+   "lang": "en",
+   "meaning": "Hesabı alabilir miyim, lütfen?",
+   "ex": "Excuse me, can I get the bill, please?",
+   "ex_tr": "Affedersiniz, hesabı alabilir miyim, lütfen?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "is this seat taken",
+   "lang": "en",
+   "meaning": "Bu yer dolu mu?",
+   "ex": "Excuse me, is this seat taken?",
+   "ex_tr": "Affedersiniz, bu yer dolu mu?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "you first",
+   "lang": "en",
+   "meaning": "Önce sen",
+   "ex": "We both have ideas, but you first.",
+   "ex_tr": "İkimizin de fikri var ama önce sen.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i didn't mean to",
+   "lang": "en",
+   "meaning": "İstemeden yaptım",
+   "ex": "I'm sorry I interrupted you. I didn't mean to.",
+   "ex_tr": "Sözünü kestiğim için özür dilerim. İstemeden yaptım.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it slipped my mind",
+   "lang": "en",
+   "meaning": "Aklımdan çıkmış; unutmuşum",
+   "ex": "I meant to call you, but it slipped my mind.",
+   "ex_tr": "Seni arayacaktım ama aklımdan çıkmış.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "my mistake",
+   "lang": "en",
+   "meaning": "Benim hatam",
+   "ex": "I sent the wrong attachment. My mistake.",
+   "ex_tr": "Yanlış eki gönderdim. Benim hatam.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i stand corrected",
+   "lang": "en",
+   "meaning": "Yanıldığımı kabul ediyorum",
+   "ex": "You're right about the date. I stand corrected.",
+   "ex_tr": "Tarih konusunda haklısın. Yanıldığımı kabul ediyorum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's put it behind us",
+   "lang": "en",
+   "meaning": "Bunu geride bırakalım",
+   "ex": "The argument is over. Let's put it behind us.",
+   "ex_tr": "Tartışma bitti. Bunu geride bırakalım.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "keep one's chin up",
+   "lang": "en",
+   "meaning": "moralini yüksek tutmak",
+   "ex": "Keep your chin up; tomorrow may be easier.",
+   "ex_tr": "Moralini yüksek tut; yarın daha kolay olabilir.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "wrap one's head around",
+   "lang": "en",
+   "meaning": "zor bir şeyi kavramak",
+   "ex": "It took me a while to wrap my head around the new rules.",
+   "ex_tr": "Yeni kuralları kavramam biraz zaman aldı.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "come rain or shine",
+   "lang": "en",
+   "meaning": "ne olursa olsun",
+   "ex": "She walks to work come rain or shine.",
+   "ex_tr": "Hava nasıl olursa olsun işe yürüyerek gider.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "cost an arm and a leg",
+   "lang": "en",
+   "meaning": "çok pahalıya mal olmak",
+   "ex": "Replacing the entire system would cost an arm and a leg.",
+   "ex_tr": "Sistemin tamamını değiştirmek çok pahalıya mal olurdu.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "get a taste of one's own medicine",
+   "lang": "en",
+   "meaning": "başkalarına yaptığının aynısını yaşamak",
+   "ex": "After years of teasing others, he got a taste of his own medicine.",
+   "ex_tr": "Yıllarca başkalarıyla alay ettikten sonra aynı muameleyi kendisi gördü.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "give someone the benefit of the doubt",
+   "lang": "en",
+   "meaning": "birinin lehine şüpheyi yorumlamak",
+   "ex": "I'll give her the benefit of the doubt until we know more.",
+   "ex_tr": "Daha fazla bilgi edinene kadar ona iyi niyetle yaklaşacağım.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "have second thoughts",
+   "lang": "en",
+   "meaning": "fikrini yeniden değerlendirmek",
+   "ex": "I'm having second thoughts about buying the larger model.",
+   "ex_tr": "Daha büyük modeli satın alma konusunda yeniden düşünüyorum.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "make a long story short",
+   "lang": "en",
+   "meaning": "uzun lafın kısası",
+   "ex": "To make a long story short, we found the missing key.",
+   "ex_tr": "Uzun lafın kısası, kayıp anahtarı bulduk.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "once in a blue moon",
+   "lang": "en",
+   "meaning": "kırk yılda bir",
+   "ex": "We eat at that expensive restaurant once in a blue moon.",
+   "ex_tr": "O pahalı restoranda kırk yılda bir yemek yeriz.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "put all one's eggs in one basket",
+   "lang": "en",
+   "meaning": "bütün umudunu tek seçeneğe bağlamak",
+   "ex": "Don't put all your eggs in one basket when applying for jobs.",
+   "ex_tr": "İş başvurularında bütün umudunu tek bir seçeneğe bağlama.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "speak of the devil",
+   "lang": "en",
+   "meaning": "iti an çomağı hazırla",
+   "ex": "Speak of the devil—here comes Deniz now.",
+   "ex_tr": "İti an çomağı hazırla; Deniz de geldi.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "the best of both worlds",
+   "lang": "en",
+   "meaning": "iki seçeneğin de avantajlarından yararlanmak",
+   "ex": "Working remotely two days a week gives her the best of both worlds.",
+   "ex_tr": "Haftada iki gün uzaktan çalışmak ona iki düzenin de avantajlarını sağlıyor.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "water under the bridge",
+   "lang": "en",
+   "meaning": "geçmişte kalmış ve artık önemini yitirmiş mesele",
+   "ex": "We argued last year, but it's water under the bridge now.",
+   "ex_tr": "Geçen yıl tartıştık ama artık o konu geride kaldı.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "worth one's weight in gold",
+   "lang": "en",
+   "meaning": "çok değerli olmak",
+   "ex": "An experienced mentor is worth their weight in gold.",
+   "ex_tr": "Deneyimli bir akıl hocası paha biçilmezdir.",
+   "cat": "idioms"
+  },
+  {
+   "phrase": "that being said",
+   "lang": "en",
+   "meaning": "bununla birlikte",
+   "ex": "The plan is ambitious. That being said, we have enough time.",
+   "ex_tr": "Plan iddialı. Bununla birlikte yeterli zamanımız var.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "with that in mind",
+   "lang": "en",
+   "meaning": "bunu göz önünde bulundurarak",
+   "ex": "The roads may be icy. With that in mind, leave early.",
+   "ex_tr": "Yollar buzlu olabilir. Bunu göz önünde bulundurarak erken çık.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "to put it another way",
+   "lang": "en",
+   "meaning": "başka bir deyişle",
+   "ex": "The device is obsolete. To put it another way, we can no longer get parts.",
+   "ex_tr": "Cihaz artık kullanılmıyor. Başka bir deyişle, artık yedek parça bulamıyoruz.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "in retrospect",
+   "lang": "en",
+   "meaning": "geriye dönüp bakınca",
+   "ex": "In retrospect, we should have tested the battery first.",
+   "ex_tr": "Geriye dönüp bakınca önce bataryayı test etmeliydik.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "in comparison",
+   "lang": "en",
+   "meaning": "karşılaştırıldığında",
+   "ex": "The older unit is noisy. In comparison, the new one is quiet.",
+   "ex_tr": "Eski ünite gürültülü. Karşılaştırıldığında yenisi sessiz.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "more to the point",
+   "lang": "en",
+   "meaning": "daha önemlisi",
+   "ex": "The room looks better. More to the point, it's now safer.",
+   "ex_tr": "Oda daha iyi görünüyor. Daha önemlisi, artık daha güvenli.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "to say the least",
+   "lang": "en",
+   "meaning": "en hafif tabirle",
+   "ex": "The instructions were confusing, to say the least.",
+   "ex_tr": "Talimatlar en hafif tabirle kafa karıştırıcıydı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "if anything",
+   "lang": "en",
+   "meaning": "aksine",
+   "ex": "The new schedule hasn't slowed us down; if anything, we're faster.",
+   "ex_tr": "Yeni program bizi yavaşlatmadı; aksine daha hızlıyız.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "if need be",
+   "lang": "en",
+   "meaning": "gerekirse",
+   "ex": "We can extend the deadline if need be.",
+   "ex_tr": "Gerekirse son tarihi uzatabiliriz.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "by the same token",
+   "lang": "en",
+   "meaning": "aynı mantıkla",
+   "ex": "Training improves safety. By the same token, regular practice reduces mistakes.",
+   "ex_tr": "Eğitim güvenliği artırır. Aynı mantıkla düzenli uygulama da hataları azaltır.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "in other respects",
+   "lang": "en",
+   "meaning": "diğer açılardan",
+   "ex": "The design is costly but excellent in other respects.",
+   "ex_tr": "Tasarım pahalı ama diğer açılardan mükemmel.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "so to speak",
+   "lang": "en",
+   "meaning": "tabiri caizse",
+   "ex": "She's the heart of the team, so to speak.",
+   "ex_tr": "O, tabiri caizse ekibin kalbi.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "for all practical purposes",
+   "lang": "en",
+   "meaning": "uygulamada",
+   "ex": "For all practical purposes, the old server is retired.",
+   "ex_tr": "Eski sunucu fiilen kullanım dışı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "under the circumstances",
+   "lang": "en",
+   "meaning": "bu koşullar altında",
+   "ex": "Under the circumstances, postponing the test was sensible.",
+   "ex_tr": "Bu koşullar altında testi ertelemek mantıklıydı.",
+   "cat": "discourse_markers"
+  },
+  {
+   "phrase": "what have you been up to",
+   "lang": "en",
+   "meaning": "Son zamanlarda neler yapıyorsun?",
+   "ex": "What have you been up to since graduation?",
+   "ex_tr": "Mezuniyetten beri neler yapıyorsun?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "how have things been",
+   "lang": "en",
+   "meaning": "İşler nasıl gidiyor?",
+   "ex": "How have things been at your new job?",
+   "ex_tr": "Yeni işinde işler nasıl gidiyor?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "can't complain",
+   "lang": "en",
+   "meaning": "Şikâyetim yok; fena değil",
+   "ex": "How's work? Can't complain, thanks.",
+   "ex_tr": "İş nasıl? Şikâyetim yok, sağ ol.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "same old, same old",
+   "lang": "en",
+   "meaning": "Her zamanki gibi",
+   "ex": "Anything new? Same old, same old.",
+   "ex_tr": "Yeni bir şey var mı? Her zamanki gibi.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "good to see you again",
+   "lang": "en",
+   "meaning": "Seni yeniden görmek güzel",
+   "ex": "Good to see you again after all these years.",
+   "ex_tr": "Bunca yıldan sonra seni yeniden görmek güzel.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it was nice catching up",
+   "lang": "en",
+   "meaning": "Hasret gidermek güzeldi",
+   "ex": "It was nice catching up over coffee.",
+   "ex_tr": "Kahve içerken hasret gidermek güzeldi.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "give my regards to your family",
+   "lang": "en",
+   "meaning": "Ailene selamlarımı ilet",
+   "ex": "Give my regards to your family when you call them.",
+   "ex_tr": "Onları aradığında ailene selamlarımı ilet.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "sorry to keep you waiting",
+   "lang": "en",
+   "meaning": "Seni beklettiğim için özür dilerim",
+   "ex": "Sorry to keep you waiting; the meeting ran late.",
+   "ex_tr": "Seni beklettiğim için özür dilerim; toplantı uzadı.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it's the least i could do",
+   "lang": "en",
+   "meaning": "Yapabileceğim en az şey buydu",
+   "ex": "You helped me last week; it's the least I could do.",
+   "ex_tr": "Geçen hafta bana yardım ettin; yapabileceğim en az şey buydu.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i didn't mean it that way",
+   "lang": "en",
+   "meaning": "Onu o anlamda söylemedim",
+   "ex": "I didn't mean it that way; I was trying to help.",
+   "ex_tr": "Onu o anlamda söylemedim; yardım etmeye çalışıyordum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i'm not so sure about that",
+   "lang": "en",
+   "meaning": "Bundan pek emin değilim",
+   "ex": "I'm not so sure about that estimate.",
+   "ex_tr": "O tahminden pek emin değilim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "whatever works best for you",
+   "lang": "en",
+   "meaning": "Senin için hangisi uygunsa",
+   "ex": "We can meet online or in person, whatever works best for you.",
+   "ex_tr": "Çevrim içi ya da yüz yüze görüşebiliriz, senin için hangisi uygunsa.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i'll leave it to you",
+   "lang": "en",
+   "meaning": "Kararı sana bırakıyorum",
+   "ex": "You know the equipment best, so I'll leave it to you.",
+   "ex_tr": "Ekipmanı en iyi sen biliyorsun, bu yüzden kararı sana bırakıyorum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's play it by ear",
+   "lang": "en",
+   "meaning": "Duruma göre karar verelim",
+   "ex": "We don't know when the rain will stop, so let's play it by ear.",
+   "ex_tr": "Yağmurun ne zaman duracağını bilmiyoruz, o yüzden duruma göre karar verelim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's take it from there",
+   "lang": "en",
+   "meaning": "Sonrasına o zaman karar veririz",
+   "ex": "Finish the first test and let's take it from there.",
+   "ex_tr": "İlk testi bitir, sonrasına o zaman karar veririz.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "we'll cross that bridge when we come to it",
+   "lang": "en",
+   "meaning": "O sorun ortaya çıkınca düşünürüz",
+   "ex": "We may need another permit, but we'll cross that bridge when we come to it.",
+   "ex_tr": "Başka bir izne ihtiyacımız olabilir ama o sorun ortaya çıkınca düşünürüz.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "i'll let you know",
+   "lang": "en",
+   "meaning": "Sana haber vereceğim",
+   "ex": "I'll let you know as soon as the package arrives.",
+   "ex_tr": "Paket gelir gelmez sana haber vereceğim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "keep me in the loop",
+   "lang": "en",
+   "meaning": "Beni gelişmelerden haberdar et",
+   "ex": "Keep me in the loop about any schedule changes.",
+   "ex_tr": "Takvimdeki değişikliklerden beni haberdar et.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "just a heads-up",
+   "lang": "en",
+   "meaning": "Önceden küçük bir bilgilendirme",
+   "ex": "Just a heads-up: the entrance will be closed tomorrow.",
+   "ex_tr": "Önceden haber vereyim: giriş yarın kapalı olacak.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let me double-check",
+   "lang": "en",
+   "meaning": "Bir kez daha kontrol edeyim",
+   "ex": "Let me double-check the serial number before we order.",
+   "ex_tr": "Sipariş vermeden önce seri numarasını bir kez daha kontrol edeyim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "could you walk me through it",
+   "lang": "en",
+   "meaning": "Bana adım adım anlatabilir misin?",
+   "ex": "Could you walk me through the setup process?",
+   "ex_tr": "Kurulum sürecini bana adım adım anlatabilir misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "could you give me a hand",
+   "lang": "en",
+   "meaning": "Bana yardım edebilir misin?",
+   "ex": "Could you give me a hand with this heavy box?",
+   "ex_tr": "Bu ağır kutuyla ilgili bana yardım edebilir misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "would you mind repeating that",
+   "lang": "en",
+   "meaning": "Bunu tekrar eder misiniz?",
+   "ex": "Would you mind repeating that last number?",
+   "ex_tr": "Son numarayı tekrar eder misiniz?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "would you mind speaking more slowly",
+   "lang": "en",
+   "meaning": "Biraz daha yavaş konuşur musunuz?",
+   "ex": "Would you mind speaking more slowly during the instructions?",
+   "ex_tr": "Talimatları verirken biraz daha yavaş konuşur musunuz?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "can you hear me clearly",
+   "lang": "en",
+   "meaning": "Beni net duyabiliyor musunuz?",
+   "ex": "Can you hear me clearly on this call?",
+   "ex_tr": "Bu görüşmede beni net duyabiliyor musunuz?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "you're breaking up",
+   "lang": "en",
+   "meaning": "Sesin kesik kesik geliyor",
+   "ex": "You're breaking up; could you call me back?",
+   "ex_tr": "Sesin kesik kesik geliyor; beni tekrar arayabilir misin?",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "the line got cut off",
+   "lang": "en",
+   "meaning": "Bağlantı kesildi",
+   "ex": "Sorry, the line got cut off during your explanation.",
+   "ex_tr": "Üzgünüm, açıklaman sırasında bağlantı kesildi.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's not jump to conclusions",
+   "lang": "en",
+   "meaning": "Hemen sonuca varmayalım",
+   "ex": "Let's not jump to conclusions before seeing the test results.",
+   "ex_tr": "Test sonuçlarını görmeden hemen sonuca varmayalım.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "let's get straight to the point",
+   "lang": "en",
+   "meaning": "Doğrudan konuya gelelim",
+   "ex": "We have little time, so let's get straight to the point.",
+   "ex_tr": "Az zamanımız var, o yüzden doğrudan konuya gelelim.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "that rings a bell",
+   "lang": "en",
+   "meaning": "Bu bana tanıdık geliyor",
+   "ex": "That company name rings a bell, but I can't place it.",
+   "ex_tr": "O şirketin adı bana tanıdık geliyor ama nereden bildiğimi çıkaramıyorum.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "it's on the tip of my tongue",
+   "lang": "en",
+   "meaning": "Dilimin ucunda",
+   "ex": "Her name is on the tip of my tongue.",
+   "ex_tr": "Adı dilimin ucunda.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "that's easier said than done",
+   "lang": "en",
+   "meaning": "Söylemesi kolay, yapması zor",
+   "ex": "Replacing the pipe sounds simple, but that's easier said than done.",
+   "ex_tr": "Boruyu değiştirmek kulağa basit geliyor ama söylemesi kolay, yapması zor.",
+   "cat": "chunks"
+  },
+  {
+   "phrase": "reach a verdict",
+   "lang": "en",
+   "meaning": "karara varmak",
+   "ex": "The jury reached a verdict after two days of discussion.",
+   "ex_tr": "Jüri iki günlük görüşmenin ardından karara vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "raise awareness",
+   "lang": "en",
+   "meaning": "farkındalığı artırmak",
+   "ex": "The campaign aims to raise awareness of water waste.",
+   "ex_tr": "Kampanya su israfına ilişkin farkındalığı artırmayı amaçlıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "pose a threat",
+   "lang": "en",
+   "meaning": "tehdit oluşturmak",
+   "ex": "The damaged bridge poses a threat to drivers.",
+   "ex_tr": "Hasarlı köprü sürücüler için tehdit oluşturuyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "meet a deadline",
+   "lang": "en",
+   "meaning": "son teslim tarihine yetişmek",
+   "ex": "Our team worked late to meet the deadline.",
+   "ex_tr": "Ekibimiz son teslim tarihine yetişmek için geç saatlere kadar çalıştı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make an exception",
+   "lang": "en",
+   "meaning": "istisna yapmak",
+   "ex": "The manager made an exception for the urgent request.",
+   "ex_tr": "Müdür acil talep için bir istisna yaptı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "come to a conclusion",
+   "lang": "en",
+   "meaning": "sonuca varmak",
+   "ex": "After reviewing the evidence, we came to a conclusion.",
+   "ex_tr": "Kanıtları inceledikten sonra bir sonuca vardık.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "draw a distinction",
+   "lang": "en",
+   "meaning": "ayrım yapmak",
+   "ex": "The report draws a distinction between risk and uncertainty.",
+   "ex_tr": "Rapor risk ile belirsizlik arasında ayrım yapıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "strike a balance",
+   "lang": "en",
+   "meaning": "denge kurmak",
+   "ex": "She tries to strike a balance between work and family.",
+   "ex_tr": "İş ile aile arasında denge kurmaya çalışıyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "face a challenge",
+   "lang": "en",
+   "meaning": "zorlukla karşılaşmak",
+   "ex": "Small businesses face a challenge when costs rise.",
+   "ex_tr": "Maliyetler arttığında küçük işletmeler zorlukla karşılaşır.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "express concern",
+   "lang": "en",
+   "meaning": "endişe dile getirmek",
+   "ex": "Several residents expressed concern about the noise.",
+   "ex_tr": "Birkaç sakin gürültüyle ilgili endişelerini dile getirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "provide evidence",
+   "lang": "en",
+   "meaning": "kanıt sunmak",
+   "ex": "The researcher provided evidence for her claim.",
+   "ex_tr": "Araştırmacı iddiasını destekleyen kanıtlar sundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "conduct research",
+   "lang": "en",
+   "meaning": "araştırma yürütmek",
+   "ex": "The university conducts research on renewable energy.",
+   "ex_tr": "Üniversite yenilenebilir enerji üzerine araştırmalar yürütüyor.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "launch an investigation",
+   "lang": "en",
+   "meaning": "soruşturma başlatmak",
+   "ex": "The agency launched an investigation into the accident.",
+   "ex_tr": "Kurum kazayla ilgili soruşturma başlattı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "submit a proposal",
+   "lang": "en",
+   "meaning": "teklif sunmak",
+   "ex": "We submitted a proposal for the lighting upgrade.",
+   "ex_tr": "Aydınlatma iyileştirmesi için teklif sunduk.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make a commitment",
+   "lang": "en",
+   "meaning": "taahhütte bulunmak",
+   "ex": "The company made a commitment to reduce emissions.",
+   "ex_tr": "Şirket emisyonları azaltma taahhüdünde bulundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "fulfill a promise",
+   "lang": "en",
+   "meaning": "sözünü tutmak",
+   "ex": "He fulfilled his promise to help the new employee.",
+   "ex_tr": "Yeni çalışana yardım etme sözünü tuttu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "issue a warning",
+   "lang": "en",
+   "meaning": "uyarı yayımlamak",
+   "ex": "Officials issued a warning before the storm arrived.",
+   "ex_tr": "Yetkililer fırtına gelmeden önce uyarı yayımladı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "file a complaint",
+   "lang": "en",
+   "meaning": "şikâyette bulunmak",
+   "ex": "The tenant filed a complaint about the heating system.",
+   "ex_tr": "Kiracı ısıtma sistemiyle ilgili şikâyette bulundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reach an agreement",
+   "lang": "en",
+   "meaning": "anlaşmaya varmak",
+   "ex": "Both sides reached an agreement on the schedule.",
+   "ex_tr": "İki taraf takvim konusunda anlaşmaya vardı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "make progress",
+   "lang": "en",
+   "meaning": "ilerleme kaydetmek",
+   "ex": "The students made progress after practicing daily.",
+   "ex_tr": "Öğrenciler her gün pratik yapınca ilerleme kaydetti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "severe drought",
+   "lang": "en",
+   "meaning": "şiddetli kuraklık",
+   "ex": "The region suffered a severe drought last summer.",
+   "ex_tr": "Bölge geçen yaz şiddetli kuraklık yaşadı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "mutual respect",
+   "lang": "en",
+   "meaning": "karşılıklı saygı",
+   "ex": "Mutual respect makes teamwork easier.",
+   "ex_tr": "Karşılıklı saygı ekip çalışmasını kolaylaştırır.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "lasting impression",
+   "lang": "en",
+   "meaning": "kalıcı izlenim",
+   "ex": "Her speech left a lasting impression on the audience.",
+   "ex_tr": "Konuşması dinleyiciler üzerinde kalıcı bir izlenim bıraktı.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "reasonable doubt",
+   "lang": "en",
+   "meaning": "makul şüphe",
+   "ex": "The lawyer argued that reasonable doubt remained.",
+   "ex_tr": "Avukat makul şüphenin sürdüğünü savundu.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "annual revenue",
+   "lang": "en",
+   "meaning": "yıllık gelir",
+   "ex": "The company reported higher annual revenue this year.",
+   "ex_tr": "Şirket bu yıl daha yüksek yıllık gelir bildirdi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "public opinion",
+   "lang": "en",
+   "meaning": "kamuoyu",
+   "ex": "Public opinion changed after the announcement.",
+   "ex_tr": "Duyurudan sonra kamuoyu değişti.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "urgent need",
+   "lang": "en",
+   "meaning": "acil ihtiyaç",
+   "ex": "There is an urgent need for clean drinking water.",
+   "ex_tr": "Temiz içme suyuna acil ihtiyaç var.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "key factor",
+   "lang": "en",
+   "meaning": "temel etken",
+   "ex": "Experience was a key factor in her promotion.",
+   "ex_tr": "Deneyim terfisinde temel bir etkendi.",
+   "cat": "collocations"
+  },
+  {
+   "phrase": "apologize to someone for",
+   "lang": "en",
+   "meaning": "birinden bir şey için özür dilemek",
+   "ex": "I apologized to my neighbor for the noise.",
+   "ex_tr": "Komşumdan gürültü için özür diledim.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "blame someone for",
+   "lang": "en",
+   "meaning": "birini bir şeyden sorumlu tutmak",
+   "ex": "Don't blame your colleague for the delay.",
+   "ex_tr": "Gecikme için iş arkadaşını suçlama.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "congratulate someone on",
+   "lang": "en",
+   "meaning": "birini bir şey için tebrik etmek",
+   "ex": "We congratulated her on her promotion.",
+   "ex_tr": "Onu terfisi için tebrik ettik.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "prevent someone from",
+   "lang": "en",
+   "meaning": "birinin bir şey yapmasını engellemek",
+   "ex": "The lock prevents children from opening the cabinet.",
+   "ex_tr": "Kilit çocukların dolabı açmasını engelliyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "protect someone from",
+   "lang": "en",
+   "meaning": "birini bir şeyden korumak",
+   "ex": "These gloves protect workers from sharp edges.",
+   "ex_tr": "Bu eldivenler çalışanları keskin kenarlardan korur.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "remind someone of",
+   "lang": "en",
+   "meaning": "birine bir şeyi hatırlatmak",
+   "ex": "This song reminds me of my childhood.",
+   "ex_tr": "Bu şarkı bana çocukluğumu hatırlatıyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "remind someone about",
+   "lang": "en",
+   "meaning": "birine bir konuyu hatırlatmak",
+   "ex": "Please remind me about the appointment tomorrow.",
+   "ex_tr": "Lütfen yarınki randevuyu bana hatırlat.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "thank someone for",
+   "lang": "en",
+   "meaning": "birine bir şey için teşekkür etmek",
+   "ex": "She thanked the volunteers for their support.",
+   "ex_tr": "Gönüllülere destekleri için teşekkür etti.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "warn someone about",
+   "lang": "en",
+   "meaning": "birini bir konuda uyarmak",
+   "ex": "The guide warned us about falling rocks.",
+   "ex_tr": "Rehber bizi düşen kayalar konusunda uyardı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "warn someone against",
+   "lang": "en",
+   "meaning": "birini bir şeyi yapmaması için uyarmak",
+   "ex": "Doctors warned him against skipping meals.",
+   "ex_tr": "Doktorlar onu öğün atlamaması için uyardı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "provide someone with",
+   "lang": "en",
+   "meaning": "birine bir şey sağlamak",
+   "ex": "The school provided students with free textbooks.",
+   "ex_tr": "Okul öğrencilere ücretsiz ders kitapları sağladı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "supply something to",
+   "lang": "en",
+   "meaning": "birine bir şey tedarik etmek",
+   "ex": "The factory supplies parts to local businesses.",
+   "ex_tr": "Fabrika yerel işletmelere parça tedarik ediyor.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "borrow something from",
+   "lang": "en",
+   "meaning": "birinden bir şey ödünç almak",
+   "ex": "I borrowed a ladder from my neighbor.",
+   "ex_tr": "Komşumdan bir merdiven ödünç aldım.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "lend something to",
+   "lang": "en",
+   "meaning": "birine bir şey ödünç vermek",
+   "ex": "Could you lend your charger to me?",
+   "ex_tr": "Şarj cihazını bana ödünç verir misin?",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "translate something into",
+   "lang": "en",
+   "meaning": "bir şeyi bir dile çevirmek",
+   "ex": "She translated the instructions into Turkish.",
+   "ex_tr": "Talimatları Türkçeye çevirdi.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "compare something with",
+   "lang": "en",
+   "meaning": "bir şeyi başka bir şeyle karşılaştırmak",
+   "ex": "Compare this month's figures with last month's.",
+   "ex_tr": "Bu ayın rakamlarını geçen ayınkilerle karşılaştır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "associate something with",
+   "lang": "en",
+   "meaning": "bir şeyi başka bir şeyle ilişkilendirmek",
+   "ex": "Many people associate this smell with summer.",
+   "ex_tr": "Birçok insan bu kokuyu yazla ilişkilendirir.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "attribute something to",
+   "lang": "en",
+   "meaning": "bir şeyi bir nedene bağlamak",
+   "ex": "The team attributed the failure to a wiring fault.",
+   "ex_tr": "Ekip arızayı bir kablolama hatasına bağladı.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "specialize in",
+   "lang": "en",
+   "meaning": "...alanında uzmanlaşmak",
+   "ex": "The company specializes in industrial automation.",
+   "ex_tr": "Şirket endüstriyel otomasyon alanında uzmanlaşmıştır.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "be unfamiliar with",
+   "lang": "en",
+   "meaning": "...e aşina olmamak",
+   "ex": "I'm unfamiliar with this software version.",
+   "ex_tr": "Bu yazılım sürümüne aşina değilim.",
+   "cat": "dependent_prepositions"
+  },
+  {
+   "phrase": "all or nothing",
+   "lang": "en",
+   "meaning": "ya hep ya hiç",
+   "ex": "He treats every negotiation as an all-or-nothing contest.",
+   "ex_tr": "Her görüşmeyi ya hep ya hiç mücadelesi olarak görüyor.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "safe and secure",
+   "lang": "en",
+   "meaning": "güvende ve emniyette",
+   "ex": "The documents are safe and secure in the cabinet.",
+   "ex_tr": "Belgeler dolapta güvende.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "if and when",
+   "lang": "en",
+   "meaning": "olursa ve olduğunda; gerçekleşirse",
+   "ex": "We'll review the plan if and when funding arrives.",
+   "ex_tr": "Finansman gelirse o zaman planı gözden geçireceğiz.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "through thick and thin",
+   "lang": "en",
+   "meaning": "iyi günde kötü günde",
+   "ex": "They supported each other through thick and thin.",
+   "ex_tr": "İyi günde kötü günde birbirlerine destek oldular.",
+   "cat": "binomials"
+  },
+  {
+   "phrase": "even though",
+   "lang": "en",
+   "meaning": "...olmasına rağmen",
+   "ex": "Even though it was raining, we continued the inspection.",
+   "ex_tr": "Yağmur yağmasına rağmen denetime devam ettik.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "provided that",
+   "lang": "en",
+   "meaning": "...şartıyla",
+   "ex": "You can use the room provided that you leave it clean.",
+   "ex_tr": "Odayı temiz bırakman şartıyla kullanabilirsin.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "as long as",
+   "lang": "en",
+   "meaning": "...dığı sürece; şartıyla",
+   "ex": "You may stay as long as you follow the rules.",
+   "ex_tr": "Kurallara uyduğun sürece kalabilirsin.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "in case",
+   "lang": "en",
+   "meaning": "...ihtimaline karşı",
+   "ex": "Take a flashlight in case the power goes out.",
+   "ex_tr": "Elektrik kesilme ihtimaline karşı el feneri al.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "so that",
+   "lang": "en",
+   "meaning": "...ebilmek için",
+   "ex": "I wrote the number down so that I wouldn't forget it.",
+   "ex_tr": "Unutmamak için numarayı yazdım.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "whereas",
+   "lang": "en",
+   "meaning": "oysa; buna karşılık",
+   "ex": "The first model is cheaper, whereas the second is quieter.",
+   "ex_tr": "İlk model daha ucuzken ikincisi daha sessiz.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "although",
+   "lang": "en",
+   "meaning": "...olmasına rağmen",
+   "ex": "Although the test passed, we checked the wiring again.",
+   "ex_tr": "Test başarılı olmasına rağmen kabloları yeniden kontrol ettik.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "unless",
+   "lang": "en",
+   "meaning": "...medikçe; ...mezse",
+   "ex": "Don't open the panel unless the power is isolated.",
+   "ex_tr": "Enerji kesilmedikçe panoyu açma.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "now that",
+   "lang": "en",
+   "meaning": "madem ki; artık ...dığına göre",
+   "ex": "Now that the parts have arrived, we can begin.",
+   "ex_tr": "Parçalar geldiğine göre başlayabiliriz.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "even if",
+   "lang": "en",
+   "meaning": "...olsa bile",
+   "ex": "Even if we finish early, we should test the system.",
+   "ex_tr": "Erken bitirsek bile sistemi test etmeliyiz.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "rather than",
+   "lang": "en",
+   "meaning": "...mek yerine",
+   "ex": "Rather than replace the whole unit, we repaired the switch.",
+   "ex_tr": "Bütün üniteyi değiştirmek yerine anahtarı onardık.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "in order that",
+   "lang": "en",
+   "meaning": "...mesi için",
+   "ex": "The instructions were simplified in order that everyone could follow them.",
+   "ex_tr": "Herkes uygulayabilsin diye talimatlar sadeleştirildi.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "assuming that",
+   "lang": "en",
+   "meaning": "...olduğunu varsayarsak",
+   "ex": "Assuming that the weather improves, we'll work outside.",
+   "ex_tr": "Havanın düzeleceğini varsayarsak dışarıda çalışacağız.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "given that",
+   "lang": "en",
+   "meaning": "...göz önüne alındığında",
+   "ex": "Given that the road is closed, we should leave earlier.",
+   "ex_tr": "Yolun kapalı olduğu düşünülürse daha erken çıkmalıyız.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "not only sth but also",
+   "lang": "en",
+   "meaning": "yalnızca ... değil, aynı zamanda",
+   "ex": "The update not only fixed the error but also improved speed.",
+   "ex_tr": "Güncelleme yalnızca hatayı düzeltmekle kalmadı, hızı da artırdı.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "whether sth or not",
+   "lang": "en",
+   "meaning": "...olup olmadığı; ...se de ...mese de",
+   "ex": "We need to know whether the equipment is working or not.",
+   "ex_tr": "Ekipmanın çalışıp çalışmadığını bilmemiz gerekiyor.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "no sooner sth than",
+   "lang": "en",
+   "meaning": "...yapar yapmaz",
+   "ex": "No sooner had we left than the alarm sounded.",
+   "ex_tr": "Biz çıkar çıkmaz alarm çaldı.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "hardly sth when",
+   "lang": "en",
+   "meaning": "...yapar yapmaz",
+   "ex": "Hardly had I sat down when the phone rang.",
+   "ex_tr": "Daha yeni oturmuştum ki telefon çaldı.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "as if",
+   "lang": "en",
+   "meaning": "...mış gibi",
+   "ex": "He spoke as if he knew the answer already.",
+   "ex_tr": "Cevabı zaten biliyormuş gibi konuştu.",
+   "cat": "conjunctions"
+  },
+  {
+   "phrase": "in accordance with",
+   "lang": "en",
+   "meaning": "...e uygun olarak",
+   "ex": "The work was completed in accordance with the safety plan.",
+   "ex_tr": "İş güvenlik planına uygun olarak tamamlandı.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "with regard to",
+   "lang": "en",
+   "meaning": "...ile ilgili olarak",
+   "ex": "With regard to your request, we need more details.",
+   "ex_tr": "Talebinizle ilgili olarak daha fazla ayrıntıya ihtiyacımız var.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in response to",
+   "lang": "en",
+   "meaning": "...e yanıt olarak",
+   "ex": "We updated the schedule in response to staff feedback.",
+   "ex_tr": "Personel geri bildirimlerine yanıt olarak takvimi güncelledik.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in addition to",
+   "lang": "en",
+   "meaning": "...e ek olarak",
+   "ex": "In addition to the report, please send the photos.",
+   "ex_tr": "Rapora ek olarak lütfen fotoğrafları da gönderin.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in contrast to",
+   "lang": "en",
+   "meaning": "...in aksine",
+   "ex": "In contrast to the old unit, this one runs quietly.",
+   "ex_tr": "Eski ünitenin aksine bu sessiz çalışıyor.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in favor of",
+   "lang": "en",
+   "meaning": "...den yana; ...i destekleyen",
+   "ex": "Most members voted in favor of the proposal.",
+   "ex_tr": "Üyelerin çoğu teklif lehine oy verdi.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "on behalf of",
+   "lang": "en",
+   "meaning": "...adına",
+   "ex": "I'm writing on behalf of the maintenance team.",
+   "ex_tr": "Bakım ekibi adına yazıyorum.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in place of",
+   "lang": "en",
+   "meaning": "...yerine",
+   "ex": "We installed an LED lamp in place of the old bulb.",
+   "ex_tr": "Eski ampul yerine LED lamba taktık.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "by means of",
+   "lang": "en",
+   "meaning": "...aracılığıyla",
+   "ex": "The sensor communicates by means of a wireless signal.",
+   "ex_tr": "Sensör kablosuz sinyal aracılığıyla iletişim kurar.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in the absence of",
+   "lang": "en",
+   "meaning": "...olmadığında; yokluğunda",
+   "ex": "In the absence of instructions, we postponed the test.",
+   "ex_tr": "Talimat olmadığından testi erteledik.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "for the purpose of",
+   "lang": "en",
+   "meaning": "...amacıyla",
+   "ex": "The room was closed for the purpose of inspection.",
+   "ex_tr": "Oda denetim amacıyla kapatıldı.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in the event of",
+   "lang": "en",
+   "meaning": "...durumunda",
+   "ex": "In the event of a fire, use the nearest exit.",
+   "ex_tr": "Yangın durumunda en yakın çıkışı kullanın.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "with the exception of",
+   "lang": "en",
+   "meaning": "...hariç",
+   "ex": "All lights are working, with the exception of one fixture.",
+   "ex_tr": "Bir armatür hariç tüm lambalar çalışıyor.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "in comparison with",
+   "lang": "en",
+   "meaning": "...ile karşılaştırıldığında",
+   "ex": "Costs fell in comparison with last year.",
+   "ex_tr": "Geçen yılla karşılaştırıldığında maliyetler düştü.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "at the expense of",
+   "lang": "en",
+   "meaning": "...pahasına",
+   "ex": "Don't improve speed at the expense of safety.",
+   "ex_tr": "Güvenlik pahasına hızı artırma.",
+   "cat": "prepositional_phrases"
+  },
+  {
+   "phrase": "as quiet as a mouse",
+   "lang": "en",
+   "meaning": "fare kadar sessiz",
+   "ex": "The children were as quiet as mice during the story.",
+   "ex_tr": "Çocuklar hikâye sırasında fare gibi sessizdi.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as slippery as an eel",
+   "lang": "en",
+   "meaning": "yılan balığı gibi kaygan; ele avuca sığmaz",
+   "ex": "The wet fish was as slippery as an eel.",
+   "ex_tr": "Islak balık yılan balığı gibi kaygandı.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as red as a beet",
+   "lang": "en",
+   "meaning": "pancar gibi kıpkırmızı",
+   "ex": "His face turned as red as a beet when everyone applauded.",
+   "ex_tr": "Herkes alkışlayınca yüzü pancar gibi kızardı.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as fit as a fiddle",
+   "lang": "en",
+   "meaning": "turp gibi sağlıklı",
+   "ex": "My grandfather is eighty and still as fit as a fiddle.",
+   "ex_tr": "Dedem seksen yaşında ve hâlâ turp gibi sağlıklı.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as slow as a snail",
+   "lang": "en",
+   "meaning": "salyangoz kadar yavaş",
+   "ex": "Traffic was moving as slow as a snail.",
+   "ex_tr": "Trafik salyangoz kadar yavaş ilerliyordu.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as hard as a rock",
+   "lang": "en",
+   "meaning": "taş gibi sert",
+   "ex": "The bread had become as hard as a rock.",
+   "ex_tr": "Ekmek taş gibi sertleşmişti.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "as smooth as silk",
+   "lang": "en",
+   "meaning": "ipek gibi pürüzsüz",
+   "ex": "The polished surface felt as smooth as silk.",
+   "ex_tr": "Cilalı yüzey ipek gibi pürüzsüzdü.",
+   "cat": "similes"
+  },
+  {
+   "phrase": "economic",
+   "lang": "en",
+   "meaning": "ekonomiyle ilgili (≠ economical: tasarruflu)",
+   "ex": "The economic outlook is uncertain, so we bought an economical car.",
+   "ex_tr": "Ekonomik görünüm belirsiz olduğu için az yakıt tüketen bir araba aldık.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "economical",
+   "lang": "en",
+   "meaning": "tasarruflu (≠ economic: ekonomiyle ilgili)",
+   "ex": "The economic outlook is uncertain, so we bought an economical car.",
+   "ex_tr": "Ekonomik görünüm belirsiz olduğu için az yakıt tüketen bir araba aldık.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "classic",
+   "lang": "en",
+   "meaning": "klasikleşmiş (≠ classical: klasik sanatla ilgili)",
+   "ex": "She bought a classic novel and a classical music album.",
+   "ex_tr": "Klasikleşmiş bir roman ve klasik müzik albümü aldı.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "classical",
+   "lang": "en",
+   "meaning": "klasik sanatla ilgili (≠ classic: klasikleşmiş)",
+   "ex": "She bought a classic novel and a classical music album.",
+   "ex_tr": "Klasikleşmiş bir roman ve klasik müzik albümü aldı.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "respectful",
+   "lang": "en",
+   "meaning": "saygılı (≠ respectable: saygın)",
+   "ex": "The respectful student thanked the respectable professor.",
+   "ex_tr": "Saygılı öğrenci saygın profesöre teşekkür etti.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "respectable",
+   "lang": "en",
+   "meaning": "saygın (≠ respectful: saygılı)",
+   "ex": "The respectful student thanked the respectable professor.",
+   "ex_tr": "Saygılı öğrenci saygın profesöre teşekkür etti.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "credible",
+   "lang": "en",
+   "meaning": "inandırıcı (≠ credulous: kolay inanan)",
+   "ex": "The story sounded credible, but the credulous audience believed every detail.",
+   "ex_tr": "Hikâye inandırıcı geliyordu ama kolay inanan dinleyiciler her ayrıntıya inandı.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "credulous",
+   "lang": "en",
+   "meaning": "kolay inanan (≠ credible: inandırıcı)",
+   "ex": "The story sounded credible, but the credulous audience believed every detail.",
+   "ex_tr": "Hikâye inandırıcı geliyordu ama kolay inanan dinleyiciler her ayrıntıya inandı.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "continual",
+   "lang": "en",
+   "meaning": "sık sık tekrarlanan (≠ continuous: kesintisiz)",
+   "ex": "Continual interruptions disrupted the continuous recording.",
+   "ex_tr": "Tekrarlanan kesintiler kesintisiz kaydı bozdu.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "continuous",
+   "lang": "en",
+   "meaning": "kesintisiz (≠ continual: sık sık tekrarlanan)",
+   "ex": "Continual interruptions disrupted the continuous recording.",
+   "ex_tr": "Tekrarlanan kesintiler kesintisiz kaydı bozdu.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "imply",
+   "lang": "en",
+   "meaning": "ima etmek (≠ infer: çıkarım yapmak)",
+   "ex": "Her tone implied doubt, and I inferred that she disagreed.",
+   "ex_tr": "Ses tonu şüphe ima ediyordu; ben de katılmadığı sonucunu çıkardım.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "infer",
+   "lang": "en",
+   "meaning": "çıkarım yapmak (≠ imply: ima etmek)",
+   "ex": "Her tone implied doubt, and I inferred that she disagreed.",
+   "ex_tr": "Ses tonu şüphe ima ediyordu; ben de katılmadığı sonucunu çıkardım.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "assure",
+   "lang": "en",
+   "meaning": "birine güvence vermek (≠ ensure: sağlamak)",
+   "ex": "I assured the client that we would test the system to ensure safety.",
+   "ex_tr": "Müşteriye güvenliği sağlamak için sistemi test edeceğimize dair güvence verdim.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "ensure",
+   "lang": "en",
+   "meaning": "sağlamak (≠ assure: birine güvence vermek)",
+   "ex": "I assured the client that we would test the system to ensure safety.",
+   "ex_tr": "Müşteriye güvenliği sağlamak için sistemi test edeceğimize dair güvence verdim.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "adapt",
+   "lang": "en",
+   "meaning": "uyarlamak (≠ adopt: benimsemek)",
+   "ex": "We adapted the instructions and adopted a new procedure.",
+   "ex_tr": "Talimatları uyarladık ve yeni bir prosedür benimsedik.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "adopt",
+   "lang": "en",
+   "meaning": "benimsemek (≠ adapt: uyarlamak)",
+   "ex": "We adapted the instructions and adopted a new procedure.",
+   "ex_tr": "Talimatları uyarladık ve yeni bir prosedür benimsedik.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "precede",
+   "lang": "en",
+   "meaning": "önce gelmek (≠ proceed: devam etmek)",
+   "ex": "A short briefing will precede the inspection; then we will proceed.",
+   "ex_tr": "Denetimden önce kısa bir bilgilendirme yapılacak; ardından devam edeceğiz.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "proceed",
+   "lang": "en",
+   "meaning": "devam etmek (≠ precede: önce gelmek)",
+   "ex": "A short briefing will precede the inspection; then we will proceed.",
+   "ex_tr": "Denetimden önce kısa bir bilgilendirme yapılacak; ardından devam edeceğiz.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "allusion",
+   "lang": "en",
+   "meaning": "gönderme (≠ illusion: yanılsama)",
+   "ex": "The painting contains an allusion to a myth and creates an illusion of depth.",
+   "ex_tr": "Resimde bir mite gönderme var ve derinlik yanılsaması yaratıyor.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "illusion",
+   "lang": "en",
+   "meaning": "yanılsama (≠ allusion: gönderme)",
+   "ex": "The painting contains an allusion to a myth and creates an illusion of depth.",
+   "ex_tr": "Resimde bir mite gönderme var ve derinlik yanılsaması yaratıyor.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "emigrate",
+   "lang": "en",
+   "meaning": "ülkeden göç etmek (≠ immigrate: ülkeye göç etmek)",
+   "ex": "Her grandparents emigrated from Italy and immigrated to Canada.",
+   "ex_tr": "Büyükanne ve büyükbabası İtalya'dan göç edip Kanada'ya yerleşti.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "immigrate",
+   "lang": "en",
+   "meaning": "ülkeye göç etmek (≠ emigrate: ülkeden göç etmek)",
+   "ex": "Her grandparents emigrated from Italy and immigrated to Canada.",
+   "ex_tr": "Büyükanne ve büyükbabası İtalya'dan göç edip Kanada'ya yerleşti.",
+   "cat": "confusables"
+  },
+  {
+   "phrase": "pavement",
+   "lang": "en",
+   "meaning": "kaldırım (UK; US: sidewalk)",
+   "ex": "In London, she walked along the pavement; in New York, she used the sidewalk.",
+   "ex_tr": "Londra'da kaldırımda yürüdü; New York'ta da kaldırımda yürüdü.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "sidewalk",
+   "lang": "en",
+   "meaning": "kaldırım (US; UK: pavement)",
+   "ex": "In London, she walked along the pavement; in New York, she used the sidewalk.",
+   "ex_tr": "Londra'da kaldırımda yürüdü; New York'ta da kaldırımda yürüdü.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "petrol station",
+   "lang": "en",
+   "meaning": "benzin istasyonu (UK; US: gas station)",
+   "ex": "We stopped at a petrol station in England and a gas station in California.",
+   "ex_tr": "İngiltere'de ve Kaliforniya'da birer benzin istasyonunda durduk.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "gas station",
+   "lang": "en",
+   "meaning": "benzin istasyonu (US; UK: petrol station)",
+   "ex": "We stopped at a petrol station in England and a gas station in California.",
+   "ex_tr": "İngiltere'de ve Kaliforniya'da birer benzin istasyonunda durduk.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "postbox",
+   "lang": "en",
+   "meaning": "posta kutusu (UK; US: mailbox)",
+   "ex": "He put the letter in a postbox in Britain and a mailbox in the US.",
+   "ex_tr": "Mektubu Britanya'da posta kutusuna, ABD'de de posta kutusuna attı.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "mailbox",
+   "lang": "en",
+   "meaning": "posta kutusu (US; UK: postbox)",
+   "ex": "He put the letter in a postbox in Britain and a mailbox in the US.",
+   "ex_tr": "Mektubu Britanya'da posta kutusuna, ABD'de de posta kutusuna attı.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "chemist's",
+   "lang": "en",
+   "meaning": "eczane (UK; US: drugstore)",
+   "ex": "She bought sunscreen at the chemist's in London and at a drugstore in Chicago.",
+   "ex_tr": "Londra'da eczaneden, Chicago'da da eczaneden güneş kremi aldı.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "drugstore",
+   "lang": "en",
+   "meaning": "eczane (US; UK: chemist's)",
+   "ex": "She bought sunscreen at the chemist's in London and at a drugstore in Chicago.",
+   "ex_tr": "Londra'da eczaneden, Chicago'da da eczaneden güneş kremi aldı.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "nappy",
+   "lang": "en",
+   "meaning": "bebek bezi (UK; US: diaper)",
+   "ex": "The baby needs a clean nappy, or a diaper in American English.",
+   "ex_tr": "Bebeğin temiz bir beze ihtiyacı var; Amerikan İngilizcesinde buna diaper denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "diaper",
+   "lang": "en",
+   "meaning": "bebek bezi (US; UK: nappy)",
+   "ex": "The baby needs a clean nappy, or a diaper in American English.",
+   "ex_tr": "Bebeğin temiz bir beze ihtiyacı var; Amerikan İngilizcesinde buna diaper denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "trainers",
+   "lang": "en",
+   "meaning": "spor ayakkabı (UK; US: sneakers)",
+   "ex": "He calls them trainers, but his American friend says sneakers.",
+   "ex_tr": "O spor ayakkabılara trainers diyor, Amerikalı arkadaşı ise sneakers diyor.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "sneakers",
+   "lang": "en",
+   "meaning": "spor ayakkabı (US; UK: trainers)",
+   "ex": "He calls them trainers, but his American friend says sneakers.",
+   "ex_tr": "O spor ayakkabılara trainers diyor, Amerikalı arkadaşı ise sneakers diyor.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "torch",
+   "lang": "en",
+   "meaning": "el feneri (UK; US: flashlight)",
+   "ex": "Take a torch on the hike; Americans would call it a flashlight.",
+   "ex_tr": "Yürüyüşe el feneri al; Amerikalılar buna flashlight der.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "flashlight",
+   "lang": "en",
+   "meaning": "el feneri (US; UK: torch)",
+   "ex": "Take a torch on the hike; Americans would call it a flashlight.",
+   "ex_tr": "Yürüyüşe el feneri al; Amerikalılar buna flashlight der.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "timetable",
+   "lang": "en",
+   "meaning": "zaman çizelgesi (UK; US: schedule)",
+   "ex": "Check the train timetable, or schedule as Americans often say.",
+   "ex_tr": "Tren tarifesini kontrol et; Amerikalılar genellikle schedule der.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "rubbish bin",
+   "lang": "en",
+   "meaning": "çöp kutusu (UK; US: trash can)",
+   "ex": "Put the wrapper in the rubbish bin, or trash can in the US.",
+   "ex_tr": "Ambalajı çöp kutusuna at; ABD'de buna trash can denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "trash can",
+   "lang": "en",
+   "meaning": "çöp kutusu (US; UK: rubbish bin)",
+   "ex": "Put the wrapper in the rubbish bin, or trash can in the US.",
+   "ex_tr": "Ambalajı çöp kutusuna at; ABD'de buna trash can denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "car park",
+   "lang": "en",
+   "meaning": "otopark (UK; US: parking lot)",
+   "ex": "The hotel has a car park, called a parking lot in the US.",
+   "ex_tr": "Otelin otoparkı var; ABD'de buna parking lot denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "parking lot",
+   "lang": "en",
+   "meaning": "otopark (US; UK: car park)",
+   "ex": "The hotel has a car park, called a parking lot in the US.",
+   "ex_tr": "Otelin otoparkı var; ABD'de buna parking lot denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "return ticket",
+   "lang": "en",
+   "meaning": "gidiş dönüş bileti (UK; US: round-trip ticket)",
+   "ex": "I booked a return ticket, which Americans call a round-trip ticket.",
+   "ex_tr": "Gidiş dönüş bileti aldım; Amerikalılar buna round-trip ticket der.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "round-trip ticket",
+   "lang": "en",
+   "meaning": "gidiş dönüş bileti (US; UK: return ticket)",
+   "ex": "I booked a return ticket, which Americans call a round-trip ticket.",
+   "ex_tr": "Gidiş dönüş bileti aldım; Amerikalılar buna round-trip ticket der.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "single ticket",
+   "lang": "en",
+   "meaning": "tek yön bileti (UK; US: one-way ticket)",
+   "ex": "She asked for a single ticket, or a one-way ticket in the US.",
+   "ex_tr": "Tek yön bileti istedi; ABD'de buna one-way ticket denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "one-way ticket",
+   "lang": "en",
+   "meaning": "tek yön bileti (US; UK: single ticket)",
+   "ex": "She asked for a single ticket, or a one-way ticket in the US.",
+   "ex_tr": "Tek yön bileti istedi; ABD'de buna one-way ticket denir.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "mobile phone",
+   "lang": "en",
+   "meaning": "cep telefonu (UK; US: cell phone)",
+   "ex": "My mobile phone is charging; my American colleague calls it a cell phone.",
+   "ex_tr": "Cep telefonum şarj oluyor; Amerikalı iş arkadaşım buna cell phone diyor.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "cell phone",
+   "lang": "en",
+   "meaning": "cep telefonu (US; UK: mobile phone)",
+   "ex": "My mobile phone is charging; my American colleague calls it a cell phone.",
+   "ex_tr": "Cep telefonum şarj oluyor; Amerikalı iş arkadaşım buna cell phone diyor.",
+   "cat": "uk_us"
+  },
+  {
+   "phrase": "would you mind if i",
+   "lang": "en",
+   "meaning": "...yapmamın sakıncası var mı?",
+   "ex": "Would you mind if I opened the window?",
+   "ex_tr": "Pencereyi açmamın sakıncası var mı?",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "i was wondering whether",
+   "lang": "en",
+   "meaning": "Acaba ...olup olmadığını merak ediyordum",
+   "ex": "I was wondering whether you had received my email.",
+   "ex_tr": "E-postamı alıp almadığınızı merak ediyordum.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "i'd appreciate it if",
+   "lang": "en",
+   "meaning": "...yaparsanız memnun olurum",
+   "ex": "I'd appreciate it if you could reply by Friday.",
+   "ex_tr": "Cuma gününe kadar yanıt verebilirseniz memnun olurum.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "if it's not too much trouble",
+   "lang": "en",
+   "meaning": "çok zahmet olmayacaksa",
+   "ex": "If it's not too much trouble, could you print another copy?",
+   "ex_tr": "Çok zahmet olmayacaksa bir kopya daha yazdırabilir misiniz?",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "at your earliest convenience",
+   "lang": "en",
+   "meaning": "size uygun olan en kısa zamanda",
+   "ex": "Please review the document at your earliest convenience.",
+   "ex_tr": "Lütfen belgeyi size uygun olan en kısa zamanda inceleyin.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "thank you for your understanding",
+   "lang": "en",
+   "meaning": "anlayışınız için teşekkür ederiz",
+   "ex": "The office will be closed tomorrow. Thank you for your understanding.",
+   "ex_tr": "Ofis yarın kapalı olacak. Anlayışınız için teşekkür ederiz.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "i beg your pardon",
+   "lang": "en",
+   "meaning": "affedersiniz; tekrar eder misiniz?",
+   "ex": "I beg your pardon, could you repeat the last part?",
+   "ex_tr": "Affedersiniz, son kısmı tekrar eder misiniz?",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "with all due respect",
+   "lang": "en",
+   "meaning": "tüm saygımla; saygısızlık etmek istemem ama",
+   "ex": "With all due respect, I think the figures need checking.",
+   "ex_tr": "Tüm saygımla, rakamların kontrol edilmesi gerektiğini düşünüyorum.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "please accept my apologies",
+   "lang": "en",
+   "meaning": "lütfen özrümü kabul edin",
+   "ex": "Please accept my apologies for the confusion.",
+   "ex_tr": "Karışıklık için lütfen özrümü kabul edin.",
+   "cat": "polite_phrases"
+  },
+  {
+   "phrase": "give me a heads-up",
+   "lang": "en",
+   "meaning": "önceden haber vermek",
+   "ex": "Give me a heads-up if the meeting time changes.",
+   "ex_tr": "Toplantı saati değişirse bana önceden haber ver.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "i'm all ears",
+   "lang": "en",
+   "meaning": "can kulağıyla dinliyorum",
+   "ex": "You said you have an idea; I'm all ears.",
+   "ex_tr": "Bir fikrin olduğunu söyledin; can kulağıyla dinliyorum.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "i'm beat",
+   "lang": "en",
+   "meaning": "çok yoruldum",
+   "ex": "I'm beat after carrying those boxes upstairs.",
+   "ex_tr": "Kutuları yukarı taşıdıktan sonra çok yoruldum.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "that's a bummer",
+   "lang": "en",
+   "meaning": "bu kötü olmuş; ne yazık",
+   "ex": "Your flight was canceled? That's a bummer.",
+   "ex_tr": "Uçuşun iptal mi edildi? Ne kötü olmuş.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "i'm in",
+   "lang": "en",
+   "meaning": "ben varım",
+   "ex": "We're going hiking on Sunday. I'm in!",
+   "ex_tr": "Pazar yürüyüşe gidiyoruz. Ben varım!",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "count me out",
+   "lang": "en",
+   "meaning": "beni dahil etme",
+   "ex": "If you're going out that late, count me out.",
+   "ex_tr": "O kadar geç çıkacaksanız beni dahil etmeyin.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "cut me some slack",
+   "lang": "en",
+   "meaning": "biraz anlayış göster",
+   "ex": "I'm still learning the system, so cut me some slack.",
+   "ex_tr": "Sistemi hâlâ öğreniyorum, biraz anlayış göster.",
+   "cat": "informal_slang"
+  },
+  {
+   "phrase": "a stitch in time saves nine",
+   "lang": "en",
+   "meaning": "Zamanında alınan önlem büyük sorunu önler",
+   "ex": "Fix the small leak now; a stitch in time saves nine.",
+   "ex_tr": "Küçük sızıntıyı şimdi onar; zamanında önlem almak büyük sorunu önler.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the grass is always greener on the other side",
+   "lang": "en",
+   "meaning": "Komşunun tavuğu komşuya kaz görünür",
+   "ex": "He thinks every other job is easier, but the grass is always greener on the other side.",
+   "ex_tr": "Her başka işin daha kolay olduğunu sanıyor ama komşunun tavuğu komşuya kaz görünür.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "a watched pot never boils",
+   "lang": "en",
+   "meaning": "Beklerken zaman geçmek bilmez",
+   "ex": "Stop checking the download every minute; a watched pot never boils.",
+   "ex_tr": "İndirmeyi her dakika kontrol etme; beklerken zaman geçmek bilmez.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "many hands make light work",
+   "lang": "en",
+   "meaning": "Bir elin nesi var, iki elin sesi var",
+   "ex": "Let's carry the equipment together; many hands make light work.",
+   "ex_tr": "Ekipmanı birlikte taşıyalım; birlikten kuvvet doğar.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "you can't have your cake and eat it too",
+   "lang": "en",
+   "meaning": "İki zıt avantajı aynı anda elde edemezsin",
+   "ex": "You can't spend all your savings and still keep them; you can't have your cake and eat it too.",
+   "ex_tr": "Hem bütün birikimini harcayıp hem de elinde tutamazsın.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "where there's smoke, there's fire",
+   "lang": "en",
+   "meaning": "Ateş olmayan yerden duman çıkmaz",
+   "ex": "There may be some truth to the rumors; where there's smoke, there's fire.",
+   "ex_tr": "Söylentilerde gerçek payı olabilir; ateş olmayan yerden duman çıkmaz.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "don't judge a book by its cover",
+   "lang": "en",
+   "meaning": "İnsanları dış görünüşlerine göre yargılama",
+   "ex": "The small shop sells excellent food; don't judge a book by its cover.",
+   "ex_tr": "Küçük dükkân harika yemek yapıyor; dış görünüşe aldanma.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "the pen is mightier than the sword",
+   "lang": "en",
+   "meaning": "Kalem kılıçtan keskindir",
+   "ex": "Her article changed public opinion; the pen is mightier than the sword.",
+   "ex_tr": "Yazısı kamuoyunu değiştirdi; kalem kılıçtan keskindir.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "necessity is the mother of invention",
+   "lang": "en",
+   "meaning": "İhtiyaç icadın anasıdır",
+   "ex": "They designed a simple tool when nothing else worked; necessity is the mother of invention.",
+   "ex_tr": "Başka hiçbir şey işe yaramayınca basit bir alet tasarladılar; ihtiyaç icadın anasıdır.",
+   "cat": "proverbs"
+  },
+  {
+   "phrase": "üst üste",
+   "lang": "tr",
+   "meaning": "consecutively; on top of each other",
+   "ex": "Üç gün üst üste yağmur yağdı.",
+   "ex_tr": "It rained for three days in a row.",
+   "cat": "tr_reduplication"
+  },
+  {
+   "phrase": "peş peşe",
+   "lang": "tr",
+   "meaning": "one after another",
+   "ex": "Toplantıda peş peşe sorular geldi.",
+   "ex_tr": "Questions came one after another during the meeting.",
+   "cat": "tr_reduplication"
+  },
+  {
+   "phrase": "tertemiz",
+   "lang": "tr",
+   "meaning": "spotlessly clean",
+   "ex": "Odayı tertemiz bıraktık.",
+   "ex_tr": "We left the room spotlessly clean.",
+   "cat": "tr_reduplication"
+  },
+  {
+   "phrase": "kapkara",
+   "lang": "tr",
+   "meaning": "pitch-black",
+   "ex": "Fırtınadan önce gökyüzü kapkara oldu.",
+   "ex_tr": "The sky turned pitch-black before the storm.",
+   "cat": "tr_reduplication"
+  },
+  {
+   "phrase": "masmavi",
+   "lang": "tr",
+   "meaning": "deep blue",
+   "ex": "Deniz bugün masmavi görünüyor.",
+   "ex_tr": "The sea looks deep blue today.",
+   "cat": "tr_reduplication"
+  },
+  {
+   "phrase": "yemyeşil",
+   "lang": "tr",
+   "meaning": "lush green",
+   "ex": "İlkbaharda bahçe yemyeşil oluyor.",
+   "ex_tr": "The garden becomes lush green in spring.",
+   "cat": "tr_reduplication"
+  },
+  {
+   "phrase": "teşekkür etmek",
+   "lang": "tr",
+   "meaning": "to thank",
+   "ex": "Desteğiniz için teşekkür ederim.",
+   "ex_tr": "Thank you for your support.",
+   "cat": "tr_compound_verbs"
+  },
+  {
+   "phrase": "reddetmek",
+   "lang": "tr",
+   "meaning": "to reject; refuse",
+   "ex": "Müşteri ilk teklifi reddetti.",
+   "ex_tr": "The customer rejected the first offer.",
+   "cat": "tr_compound_verbs"
+  },
+  {
+   "phrase": "tahmin etmek",
+   "lang": "tr",
+   "meaning": "to estimate; guess",
+   "ex": "Onarımın iki saat süreceğini tahmin ediyoruz.",
+   "ex_tr": "We estimate that the repair will take two hours.",
+   "cat": "tr_compound_verbs"
+  },
+  {
+   "phrase": "şikâyet etmek",
+   "lang": "tr",
+   "meaning": "to complain",
+   "ex": "Sakinler gece gürültüsünden şikâyet etti.",
+   "ex_tr": "Residents complained about noise at night.",
+   "cat": "tr_compound_verbs"
   }
  ]
 }

@@ -280,14 +280,15 @@ const placeholderWords = {'sb', 'sth'};
 
 /// How an expression is written for people. The dictionary keeps "sb" / "sth"
 /// as wildcards for matching; on screen "neither sb nor" reads as a typo, so a
-/// gap before and / or / nor / but becomes "…" ("neither … nor") and the rest
+/// gap before and / or / nor / but / than / when becomes "…" ("neither … nor",
+/// "no sooner … than") and the rest
 /// become "someone" / "something" ("give someone the cold shoulder").
 String displayPhrase(String phrase) {
   final w = phrase.split(' ');
   for (var i = 0; i < w.length; i++) {
     if (!placeholderWords.contains(w[i])) continue;
     final next = i + 1 < w.length ? w[i + 1] : '';
-    w[i] = const {'and', 'or', 'nor', 'but'}.contains(next) ? '…' : (w[i] == 'sb' ? 'someone' : 'something');
+    w[i] = const {'and', 'or', 'nor', 'but', 'than', 'when'}.contains(next) ? '…' : (w[i] == 'sb' ? 'someone' : 'something');
   }
   return w.join(' ');
 }

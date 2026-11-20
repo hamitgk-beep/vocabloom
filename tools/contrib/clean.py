@@ -16,7 +16,9 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx \
          tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_2026-11-20_v4.xlsx \
          tools/contrib/hamit_2026-11-20_v5.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx \
-         tools/contrib/hamit_filtre2_2026-11-20.xlsx tools/contrib/hamit_filtre3_2026-11-20.xlsx
+         tools/contrib/hamit_filtre2_2026-11-20.xlsx tools/contrib/hamit_filtre3_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v6.xlsx tools/contrib/hamit_filtre4_2026-11-20.xlsx tools/contrib/hamit_filtre5_2026-11-20.xlsx \
+         tools/contrib/hamit_filtre6_2026-11-20.xlsx
 """
 import json
 import re
@@ -301,6 +303,18 @@ V5_EX_FIX = {
     43: {'tr': 'Şirket, geciken teslimat için müşterilerin zararını telafi edecek.'},
 }
 
+# Sixth dictionary file (hamit_2026-11-20_v6.xlsx).
+V6_CTX_FIX = {
+    13: ('Yerdeki ağır koliyi tek başına kaldırmaya çalışırken belini incitti.', None, None, None),
+}
+V6_TR_SPLIT = {
+    14: [('sıfat', 'abstaining, neutral (in a vote)', 'oy vermekten veya karar bildirmekten kaçınan')],
+    39: [('isim', 'compassion', '')],
+}
+V6_EN_SPLIT = {
+    51: [],  # mere ≠ önemsiz
+}
+
 FIXES = {
     'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
                                   en_split=EN_SPLIT, tr_split=TR_SPLIT, ex_fix={i: {'en': e} for i, e in EX_EN_FIX.items()},
@@ -309,6 +323,8 @@ FIXES = {
                                      en_split=V2_EN_SPLIT, tr_split=V2_TR_SPLIT, ex_fix=V2_EX_FIX, ph_fix=V2_PH_FIX),
     'hamit_2026-11-20_v5.xlsx': dict(ctx_fix=V5_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                      en_split={}, tr_split={}, ex_fix=V5_EX_FIX, ph_fix={}),
+    'hamit_2026-11-20_v6.xlsx': dict(ctx_fix=V6_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                     en_split=V6_EN_SPLIT, tr_split=V6_TR_SPLIT, ex_fix={}, ph_fix={}),
     'hamit_2026-11-20_v3.xlsx': dict(ctx_fix=V3_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[], ctx_phrase=V3_CTX_PHRASE,
                                      en_split={}, tr_split={}, ex_fix=V3_EX_FIX, ph_fix={}),
 }
@@ -334,7 +350,14 @@ F1_FIX = {
     204: {'meaning': 'tükenmek, bitmek'},
 }
 # "a / b" rows: halves that are left out, because the word has other common meanings.
-F1_SKIP_HALF = {'lift', 'flat', 'gas', 'line', 'fall', 'do'}
+F1_SKIP_HALF = {'lift', 'flat', 'gas', 'line', 'fall', 'do', 'schedule'}
+# Filter sheets 4-6: "your" in an idiom is any possessive ("keep one's chin up");
+# a phrase given twice keeps one row; "once" alone is mostly "bir kez".
+F4_FIX = {24: {'phrases': ['what is more', "what's more"]}}
+F5_FIX = {2: {'phrase': "keep one's chin up"}, 3: {'phrase': "wrap one's head around"}, 4: None,
+          7: {'phrase': "get a taste of one's own medicine"}, 12: {'phrase': "put all one's eggs in one basket"},
+          16: {'phrase': "worth one's weight in gold"}}
+F6_FIX = {52: {'meaning': 'olursa ve olduğunda; gerçekleşirse'}, 62: None, 136: None, 138: None}
 # Second filter sheet (hamit_filtre2_2026-11-20.xlsx).
 # False friends: the meaning in the form the filter shows, "meaning (≠ the look-alike)".
 F2_FIX = {
@@ -408,14 +431,20 @@ for src in srcs:
             cat, ph, lang, mean, forms, sep, ex, ex_tr, note = (r + [''] * 9)[:9]
             if not cat or not ph:
                 continue
-            fix = {'hamit_filtre_2026-11-20.xlsx': F1_FIX, 'hamit_filtre2_2026-11-20.xlsx': F2_FIX}.get(name, {}).get(i, {})
+            fix = {'hamit_filtre_2026-11-20.xlsx': F1_FIX, 'hamit_filtre2_2026-11-20.xlsx': F2_FIX, 'hamit_filtre4_2026-11-20.xlsx': F4_FIX,
+                   'hamit_filtre5_2026-11-20.xlsx': F5_FIX, 'hamit_filtre6_2026-11-20.xlsx': F6_FIX}.get(name, {}).get(i, {})
             if cat == 'discourse_markers' and ';' in mean:
                 # "bu arada; konu değiştirirken": the part after ";" says when it is used.
                 mean, note = [x.strip() for x in mean.split(';', 1)]
             if fix is None:
                 continue
             e = {'phrase': ph, 'lang': lang, 'meaning': mean.rstrip('.') if cat == 'chunks' else mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': cat}
+            alts = fix.pop('phrases', None) if fix else None
             e.update(fix)
+            ph = e['phrase']
+            if cat == 'dependent_prepositions':
+                # "blame someone for something" is matched up to its preposition.
+                ph = re.sub(r'(?: doing)? (?:something|someone|a language)$', '', ph)
             if e['ex'].startswith(F1_TEMPLATE):
                 e['ex'] = e['ex_tr'] = ''
             if lang == 'tr':
@@ -424,7 +453,16 @@ for src in srcs:
             if ' / ' in ph:
                 # Two easily mixed words: each one, with the other named (like the false friends).
                 a, b = [x.strip() for x in ph.split(' / ', 1)]
-                ma, mb = ([x.strip() for x in e['meaning'].split(' / ', 1)] + [e['meaning']])[:2]
+                mean2 = e['meaning']
+                pair = re.match(rf'{re.escape(a)}:\s*(.*?);\s*{re.escape(b)}:\s*(.*)$', mean2)
+                if cat == 'uk_us' and re.search(r'\s*\(UK\b.*\)$', mean2):
+                    # "kaldırım (UK: pavement; US: sidewalk)": one meaning for both words.
+                    ma = mb = re.sub(r'\s*\(UK\b.*\)$', '', mean2)
+                elif pair:
+                    # "economic: ekonomiyle ilgili; economical: tasarruflu"
+                    ma, mb = pair.group(1).strip(), pair.group(2).strip()
+                else:
+                    ma, mb = ([x.strip() for x in mean2.split(' / ', 1)] + [mean2])[:2]
                 tag = ('UK', 'US') if cat == 'uk_us' else ('', '')
                 for w, m, o, om, t, ot in [(a, ma, b, mb, tag[0], tag[1]), (b, mb, a, ma, tag[1], tag[0])]:
                     if w.lower() in F1_SKIP_HALF:
@@ -433,8 +471,12 @@ for src in srcs:
                     phrases.append(dict(e, phrase=w.lower(), meaning=m2))
                 continue
             key = ph.lower().strip().rstrip('.')
-            # A chunk is matched by its words: "Would you mind if I...?" → "would you mind if i".
-            for p2 in F1_PHRASE.get(key, [re.sub(r'[\s.!?…]+$', '', key.replace('...', ' ').replace('…', ' ')).strip()]):
+            # A chunk is matched by its words: "Would you mind if I...?" → "would you mind if i";
+            # a gap inside ("not only ... but also") is a wildcard.
+            plain = re.sub(r'[\s.!?…]+$', '', key)
+            plain = re.sub(r'\s*(?:\.\.\.|…)\s*', ' sth ', plain).strip() if re.search(r'\w\s*(?:\.\.\.|…)\s*\w', plain) else plain
+            plain = re.sub(r'\s+', ' ', plain.replace('...', ' ').replace('…', ' ')).strip()
+            for p2 in alts or F1_PHRASE.get(key, [plain]):
                 phrases.append(dict(e, phrase=p2))
         continue
 

@@ -157,6 +157,7 @@ void main() {
   test('placeholders read as words, correlatives as gaps', () {
     expect(displayPhrase('neither sb nor'), 'neither … nor');
     expect(displayPhrase('not only sb but also'), 'not only … but also');
+    expect(displayPhrase('no sooner sth than'), 'no sooner … than');
     expect(displayPhrase('give sb the cold shoulder'), 'give someone the cold shoulder');
     expect(displayPhrase('take sth for granted'), 'take something for granted');
     expect(displayPhrase('inasmuch as'), 'inasmuch as');

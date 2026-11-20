@@ -29,5 +29,11 @@ void main() {
     expect(found('Hey Tom, long time no see!', 'chunks'), contains('long time no see'));
     expect(found("I'll get back to you tomorrow.", 'chunks'), contains("i'll get back to you"));
     expect(found('To be honest, I did not like the film.', 'discourse_markers'), contains('to be honest'));
+    // Sheets 4-6: a possessive slot, a gap inside a conjunction, a slot before the preposition, a UK word.
+    expect(found('Keep your chin up; tomorrow may be easier.', 'idioms'), contains("keep one's chin up"));
+    expect(found('No sooner had we left than the alarm sounded.', 'conjunctions'), contains('no sooner sth than'));
+    expect(found('I apologized to my neighbor for the noise.', 'dependent_prepositions'), contains('apologize to someone for'));
+    expect(found('We stopped at a petrol station in England.', 'uk_us'), contains('petrol station'));
+    expect(found('What is more, it is close to the station.', 'discourse_markers'), contains('what is more'));
   });
 }
