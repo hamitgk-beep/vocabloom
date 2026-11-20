@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "free-library-never-spins",
+      "area": "app",
+      "tr": "Ücretsiz kütüphane düzeltildi: bazı bilgisayarlarda sürekli yükleniyor gösterip hiçbir şey açmıyordu. Artık metinler doğrudan okunuyor; bir dosya okunamazsa diğer dildeki metinler yine açılıyor, hiçbiri okunamazsa sebebi ve \"Tekrar dene\" düğmesi gösteriliyor.",
+      "en": "Free library fixed: on some computers it kept showing the loading circle and never opened. The texts are now read directly; if one file can't be read the other language's texts still open, and if none can, the reason and a Try again button are shown."
+    },
+    {
       "id": "tr-en-reverse-words-examples",
       "area": "dictionary",
       "tr": "Türkçe → İngilizce sözlük büyüdü: 29 bin yeni kelimeyle 55 bini aştı (KeNet Türkçe WordNet ve FreeDict'ten). Çevirili örnek cümle sayısı 29 binden 83 bine çıktı, kelime başına 10 örneğe kadar. Cümledeki anlamı seçilen kelime sayısı 4 bini geçti.",
