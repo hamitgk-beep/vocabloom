@@ -282,7 +282,15 @@ def en_phrase(p):
     own = en_db.execute('SELECT senses FROM own_expr WHERE phrase=? AND cat=?', (phrase, cat)).fetchone()
     senses = json.loads(own[0]) if own else []
     texts = [s.get('tr', '') for s in senses] + [tr or '']
-    if not covered(meaning, texts):
+    exd = en_db.execute('SELECT json FROM exd WHERE phrase=? AND cat=?', (phrase, cat)).fetchone()
+    if exd and not own:
+        # The phrase has its own explained senses ("make up": oluşturmak,
+        # uydurmak, barışmak …); an own_expr row would take their place.
+        texts += [x.get('title_tr', '') for x in json.loads(exd[0])]
+        if not covered(meaning, texts):
+            stats['en phrase meanings skipped (explained senses)'] += 1
+        meaning = None
+    if meaning is not None and not covered(meaning, texts):
         if not senses and tr:
             # own_expr takes the place of expr's meaning: keep that one first.
             senses.append({'pos': 'deyim', 'tr': tr, 'note': '', 'en': '', 'ex': ex0 or '', 'ex_tr': extr0 or ''})

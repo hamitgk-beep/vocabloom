@@ -25,5 +25,9 @@ void main() {
     expect(found('They accused him of lying.', 'dependent_prepositions'), contains('accuse someone of'));
     expect(found('The village is famous for its olive oil.', 'dependent_prepositions'), contains('be famous for'));
     expect(found('Well, better late than never.', 'proverbs'), contains('better late than never'));
+    // Third sheet: everyday chunks and discourse markers.
+    expect(found('Hey Tom, long time no see!', 'chunks'), contains('long time no see'));
+    expect(found("I'll get back to you tomorrow.", 'chunks'), contains("i'll get back to you"));
+    expect(found('To be honest, I did not like the film.', 'discourse_markers'), contains('to be honest'));
   });
 }

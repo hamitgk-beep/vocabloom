@@ -15,8 +15,8 @@ earlier file is read only once, with that file's corrections.
 usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx \
          tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_2026-11-20_v4.xlsx \
-         tools/contrib/hamit_filtre_2026-11-20.xlsx \
-         tools/contrib/hamit_filtre2_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v5.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx \
+         tools/contrib/hamit_filtre2_2026-11-20.xlsx tools/contrib/hamit_filtre3_2026-11-20.xlsx
 """
 import json
 import re
@@ -292,12 +292,23 @@ V4_KEEP = {
 # Word families: the made-up verb of a noun ("science: bilim yapmak", "nation: ulusallaşmak").
 V4_DROP = {22, 46, 50, 54, 58, 62, 66, 70, 74, 78, 102, 106, 118, 126, 130, 134, 138, 142, 146, 154, 158}
 
+# --- Fifth file, hamit_2026-11-20_v5.xlsx ("300 gerçek kayıt") ---------------------
+V5_CTX_FIX = {
+    41: (None, None, None, 'soğutmak, itici gelmek'),
+}
+V5_EX_FIX = {
+    2: {'en': 'Tolerating different views is the basis of a healthy society.'},
+    43: {'tr': 'Şirket, geciken teslimat için müşterilerin zararını telafi edecek.'},
+}
+
 FIXES = {
     'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
                                   en_split=EN_SPLIT, tr_split=TR_SPLIT, ex_fix={i: {'en': e} for i, e in EX_EN_FIX.items()},
                                   ph_fix=PH_FIX),
     'hamit_2026-11-20_v2.xlsx': dict(ctx_fix=V2_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=V2_CTX_ADD,
                                      en_split=V2_EN_SPLIT, tr_split=V2_TR_SPLIT, ex_fix=V2_EX_FIX, ph_fix=V2_PH_FIX),
+    'hamit_2026-11-20_v5.xlsx': dict(ctx_fix=V5_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                     en_split={}, tr_split={}, ex_fix=V5_EX_FIX, ph_fix={}),
     'hamit_2026-11-20_v3.xlsx': dict(ctx_fix=V3_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[], ctx_phrase=V3_CTX_PHRASE,
                                      en_split={}, tr_split={}, ex_fix=V3_EX_FIX, ph_fix={}),
 }
@@ -398,9 +409,12 @@ for src in srcs:
             if not cat or not ph:
                 continue
             fix = {'hamit_filtre_2026-11-20.xlsx': F1_FIX, 'hamit_filtre2_2026-11-20.xlsx': F2_FIX}.get(name, {}).get(i, {})
+            if cat == 'discourse_markers' and ';' in mean:
+                # "bu arada; konu değiştirirken": the part after ";" says when it is used.
+                mean, note = [x.strip() for x in mean.split(';', 1)]
             if fix is None:
                 continue
-            e = {'phrase': ph, 'lang': lang, 'meaning': mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': cat}
+            e = {'phrase': ph, 'lang': lang, 'meaning': mean.rstrip('.') if cat == 'chunks' else mean, 'ex': ex, 'ex_tr': ex_tr, 'cat': cat}
             e.update(fix)
             if e['ex'].startswith(F1_TEMPLATE):
                 e['ex'] = e['ex_tr'] = ''
@@ -419,7 +433,8 @@ for src in srcs:
                     phrases.append(dict(e, phrase=w.lower(), meaning=m2))
                 continue
             key = ph.lower().strip().rstrip('.')
-            for p2 in F1_PHRASE.get(key, [key.replace('...', '').strip(' ?').strip()]):
+            # A chunk is matched by its words: "Would you mind if I...?" → "would you mind if i".
+            for p2 in F1_PHRASE.get(key, [re.sub(r'[\s.!?…]+$', '', key.replace('...', ' ').replace('…', ' ')).strip()]):
                 phrases.append(dict(e, phrase=p2))
         continue
 
@@ -430,8 +445,9 @@ for src in srcs:
             phrases.append({'phrase': 'drop someone a line', 'lang': 'en', 'meaning': 'birine birkaç satır yazmak, haber vermek',
                             'ex': sent, 'ex_tr': 'Eve sağ salim vardığında bana bir haber ver.'})
             continue
-        if i in fx.get('ctx_phrase', {}):
-            phrases.append({'phrase': fx['ctx_phrase'][i], 'lang': 'en', 'meaning': mean, 'ex': sent, 'ex_tr': ''})
+        if i in fx.get('ctx_phrase', {}) or (lang == 'en' and ' ' in lemma and i not in fx['ctx_fix']):
+            phrases.append({'phrase': fx.get('ctx_phrase', {}).get(i, lemma), 'lang': 'en',
+                            'meaning': (fx['ctx_fix'].get(i) or (None,) * 4)[3] or mean, 'ex': sent, 'ex_tr': ''})
             continue
         if i in fx['ctx_fix']:
             s2, f2, l2, m2 = fx['ctx_fix'][i]
