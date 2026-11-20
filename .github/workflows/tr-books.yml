@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: write
     steps:
@@ -16,19 +17,20 @@ jobs:
       - name: Sources
         run: |
           set -e
-          curl -sSfL --retry 5 --retry-all-errors --retry-delay 10 -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
+          curl -sSfL --connect-timeout 30 --max-time 300 --retry 5 --retry-all-errors --retry-delay 10 -o tr_full.txt https://raw.githubusercontent.com/hermitdave/FrequencyWords/master/content/2018/tr/tr_full.txt
           f=trwikisource-latest-pages-articles.xml.bz2
-          curl -sSfL --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://dumps.wikimedia.org/trwikisource/latest/$f \
-            || curl -sSfL --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://mirror.accum.se/mirror/wikimedia.org/dumps/trwikisource/latest/$f \
-            || curl -sSfL --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://wikimedia.bringyour.com/trwikisource/latest/$f
+          curl -sSfL --connect-timeout 30 --max-time 900 --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://dumps.wikimedia.org/trwikisource/latest/$f \
+            || curl -sSfL --connect-timeout 30 --max-time 900 --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://mirror.accum.se/mirror/wikimedia.org/dumps/trwikisource/latest/$f \
+            || curl -sSfL --connect-timeout 30 --max-time 900 --retry 4 --retry-all-errors --retry-delay 15 -o trws.xml.bz2 https://wikimedia.bringyour.com/trwikisource/latest/$f
           ls -la trws.xml.bz2
+          echo '::notice::dump downloaded'
           # Gutenberg is a bonus: without its catalog only the Wikisource books are made.
-          curl -sSfL --retry 5 --retry-all-errors --retry-delay 15 -o pg_catalog.csv https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv \
+          curl -sSfL --connect-timeout 30 --max-time 300 --retry 5 --retry-all-errors --retry-delay 15 -o pg_catalog.csv https://www.gutenberg.org/cache/epub/feeds/pg_catalog.csv \
             || printf 'Text#,Type,Issued,Title,Language,Authors\n' > pg_catalog.csv
           echo "Gutenberg Turkish candidates: $(python3 tools/library_tr/build_books_tr.py --list pg_catalog.csv | wc -l)"
           mkdir -p pg_texts
           for n in $(python3 tools/library_tr/build_books_tr.py --list pg_catalog.csv); do
-            curl -sSfL --retry 3 --retry-all-errors --retry-delay 10 -o pg_texts/pg$n.txt https://www.gutenberg.org/cache/epub/$n/pg$n.txt || echo "no text for $n"
+            curl -sSfL --connect-timeout 20 --max-time 120 --retry 3 --retry-all-errors --retry-delay 10 -o pg_texts/pg$n.txt https://www.gutenberg.org/cache/epub/$n/pg$n.txt || echo "no text for $n"
             sleep 1
           done
           ls -la pg_texts
