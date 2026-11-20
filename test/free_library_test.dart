@@ -171,8 +171,8 @@ void main() {
     await tester.pump();
     expect(find.textContaining('A1 · Başlangıç'), findsOneWidget);
     await shot(tester, 'free_library_a1');
-    final first = lib.items.firstWhere((it) => it.level == 'A1' && !it.isBook);
-    await tester.ensureVisible(find.byKey(ValueKey('lib-${first.id}')));
+    final first = lib.items.firstWhere((it) => it.level == 'A1' && !it.isBook && it.lang == 'en');
+    await tester.scrollUntilVisible(find.byKey(ValueKey('lib-${first.id}')), 200, scrollable: find.byType(Scrollable).first);
     await tester.pump();
     await tester.tap(find.byKey(ValueKey('lib-${first.id}')));
     for (var i = 0; i < 20 && find.byType(ReaderPage).evaluate().isEmpty; i++) {
@@ -256,5 +256,37 @@ void main() {
     expect(u.books().length, 1);
     expect(u.pictureCount(b.id), it.pics);
     expect(lacksPictures(u, it), isFalse);
+  });
+
+  testWidgets('Turkish and English buttons pick the texts listed; the choice is kept', (tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    addTearDown(() => app.user.setSetting('library_lang', null));
+    await tester.pumpWidget(shell(FreeLibraryPage(app: app)));
+    for (var i = 0; i < 10 && find.byType(ListView).evaluate().isEmpty; i++) {
+      await tester.runAsync(() => Future.delayed(const Duration(milliseconds: 50)));
+      await tester.pump();
+    }
+    final en = lib.items.firstWhere((x) => x.lang == 'en' && !x.isBook);
+    final tr = lib.items.firstWhere((x) => x.lang == 'tr' && !x.isBook);
+    await tester.tap(find.byKey(const ValueKey('lib-level-${'A1'}')));
+    await tester.pump();
+    final enA1 = lib.items.firstWhere((x) => x.lang == 'en' && x.level == 'A1');
+    final trA1 = lib.items.firstWhere((x) => x.lang == 'tr' && x.level == 'A1');
+    expect(find.text(enA1.title), findsOneWidget);
+    expect(find.text(trA1.title), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('lib-lang-tr')));
+    await tester.pump();
+    expect(find.text(trA1.title), findsOneWidget);
+    expect(find.text(enA1.title), findsNothing);
+    expect(app.user.getSetting('library_lang'), 'tr');
+    // Opened again, the page remembers the choice.
+    await tester.pumpWidget(shell(FreeLibraryPage(app: app)));
+    await tester.pump();
+    expect(find.text(trA1.title), findsOneWidget);
+    expect(en.lang != tr.lang, isTrue);
+    await shot(tester, 'free_library_turkish');
+    app.user.setSetting('library_level', null);
   });
 }
