@@ -6,10 +6,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-/// The opening film: a book flies in with gold dust, shuts, shows
-/// "Storilex", then the gold S. The app then comes out of the book: the S
-/// lights up, the camera flies into the cover and the panel inside its gold
-/// frame opens into the app. A tap jumps to that last step.
+/// The opening film: "Storilex" on the book's cover turns into the gold S,
+/// then the book opens and light pours out of its pages. The app comes out
+/// of that light: the view flies in and the bright pages open into the app.
+/// A tap jumps to that last step.
 ///
 /// The film is a silent animated WebP: Flutter decodes it on every
 /// platform with no video plugin.
@@ -169,7 +169,7 @@ class _IntroAnimationState extends State<IntroAnimation> with TickerProviderStat
 
 /// Paints one frame of the film, fitted to the screen on a matching
 /// background, and the app's way out of the book: from [reveal] 0 to 1 the
-/// S lights up, the view flies into the cover, and the cover's panel opens
+/// light swells, the view flies into the book, and the bright pages open
 /// up into the screen, showing what lies under this painter.
 double _ramp(double t, double a, double b, [Curve curve = Curves.linear]) => curve.transform(((t - a) / (b - a)).clamp(0.0, 1.0));
 
@@ -179,10 +179,10 @@ class IntroFilmPainter extends CustomPainter {
   final Color edge;
   IntroFilmPainter(this.frame, {this.reveal = 0, this.edge = const Color(0xFF1B120C)});
 
-  /// The panel inside the cover's gold frame in the last frame, and the S
-  /// at its heart, as fractions of the film.
-  static const door = Rect.fromLTRB(.15, .21, .90, .80);
-  static const focus = Offset(.51, .47);
+  /// The bright pages in the film's last frame, and the heart of their
+  /// light, as fractions of the film.
+  static const door = Rect.fromLTRB(.18, .18, .82, .80);
+  static const focus = Offset(.5, .48);
 
   /// Where the film sits on a screen of [size] (the whole film shows).
   static Rect filmRect(Size size, Size film) {
@@ -213,7 +213,7 @@ class IntroFilmPainter extends CustomPainter {
       canvas.restore();
       canvas.drawRect(screen, Paint()..color = edge.withValues(alpha: .55));
     }
-    // On the way out the camera flies into the cover, towards the S.
+    // On the way out the camera flies into the book, towards its light.
     final r = Curves.easeInCubic.transform(reveal);
     final focus = Offset(film.left + IntroFilmPainter.focus.dx * film.width, film.top + IntroFilmPainter.focus.dy * film.height);
     final zoom = 1 + 1.3 * r;
@@ -228,7 +228,7 @@ class IntroFilmPainter extends CustomPainter {
     canvas.restore();
     if (reveal > 0) {
       Offset at(Offset p) => focus + (p - focus) * zoom;
-      // The S lights up first, its gold light spreading over the cover.
+      // The light swells first, spreading over the frame.
       final light = (math.sin(math.min(1, reveal * 1.5) * math.pi / 2) * (1 - _ramp(reveal, .55, 1))).clamp(0.0, 1.0);
       final reach = film.width * (.35 + 1.4 * r) * zoom;
       canvas.drawCircle(
@@ -242,7 +242,7 @@ class IntroFilmPainter extends CustomPainter {
             const [0, .45, 1],
           ),
       );
-      // Then the cover's panel becomes a door into the app and opens up
+      // Then the bright pages become a door into the app and open up
       // until it is the whole screen.
       final p = Rect.fromPoints(
         at(Offset(film.left + door.left * film.width, film.top + door.top * film.height)),
