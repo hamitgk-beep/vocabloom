@@ -1,0 +1,4044 @@
+{
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx",
+ "context": [
+  {
+   "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
+   "form": "sürmüştür",
+   "lemma": "sürmek",
+   "lang": "tr",
+   "meaning": "to last",
+   "translation": "The programme that was broadcast lasted about ten years."
+  },
+  {
+   "sentence": "Arabayı çok hızlı sürüyor.",
+   "form": "sürüyor",
+   "lemma": "sürmek",
+   "lang": "tr",
+   "meaning": "to drive",
+   "translation": "He drives the car very fast."
+  },
+  {
+   "sentence": "It took two hours to get there.",
+   "form": "took",
+   "lemma": "take",
+   "lang": "en",
+   "meaning": "sürmek (zaman)",
+   "translation": "Oraya varmak iki saat sürdü."
+  },
+  {
+   "sentence": "Çocuk bahçede elindeki topu hızla yere vurdu.",
+   "form": "vurdu",
+   "lemma": "vurmak",
+   "lang": "tr",
+   "meaning": "to hit, to strike",
+   "translation": "The child hit the ball in his hand hard against the ground in the garden."
+  },
+  {
+   "sentence": "Kışın soğuğu sabaha karşı iyice yüzümüze vurdu.",
+   "form": "vurdu",
+   "lemma": "vurmak",
+   "lang": "tr",
+   "meaning": "to strike (cold/wind)",
+   "translation": "Towards morning the winter cold really struck our faces."
+  },
+  {
+   "sentence": "Denizin dalgaları kayalıklara sertçe vuruyordu.",
+   "form": "vuruyordu",
+   "lemma": "vurmak",
+   "lang": "tr",
+   "meaning": "to crash against, to beat",
+   "translation": "The sea waves were crashing hard against the rocks."
+  },
+  {
+   "sentence": "Güneş ışığı doğrudan çalışma masamın üzerine vuruyor.",
+   "form": "vuruyor",
+   "lemma": "vurmak",
+   "lang": "tr",
+   "meaning": "to shine on, to fall on",
+   "translation": "Sunlight falls directly on my desk."
+  },
+  {
+   "sentence": "Korkusu yüzüne vurmuştu.",
+   "form": "vurmuştu",
+   "lemma": "vurmak",
+   "lang": "tr",
+   "meaning": "to show on (one's face)",
+   "translation": "His fear showed on his face."
+  },
+  {
+   "sentence": "Masadaki su bardağını yanlışlıkla dirseğiyle kırdı.",
+   "form": "kırdı",
+   "lemma": "kırmak",
+   "lang": "tr",
+   "meaning": "to break",
+   "translation": "He accidentally broke the glass of water on the table with his elbow."
+  },
+  {
+   "sentence": "Bu sözleriyle en yakın arkadaşının kalbini çok kırdı.",
+   "form": "kırdı",
+   "lemma": "kırmak",
+   "lang": "tr",
+   "meaning": "to hurt (feelings)",
+   "translation": "With these words he deeply hurt his best friend's feelings."
+  },
+  {
+   "sentence": "Direksiyonu aniden sağa kırarak kazadan kurtuldu.",
+   "form": "kırarak",
+   "lemma": "kırmak",
+   "lang": "tr",
+   "meaning": "to turn sharply, to swerve",
+   "translation": "He avoided the accident by suddenly swerving to the right."
+  },
+  {
+   "sentence": "Soğuk algınlığı ilacı ateşini biraz olsun kırdı.",
+   "form": "kırdı",
+   "lemma": "kırmak",
+   "lang": "tr",
+   "meaning": "to bring down, to reduce",
+   "translation": "The cold medicine brought his fever down a little."
+  },
+  {
+   "sentence": "Şirket bu yıl satış rekorunu açık ara kırdı.",
+   "form": "kırdı",
+   "lemma": "kırmak",
+   "lang": "tr",
+   "meaning": "to break (a record)",
+   "translation": "This year the company clearly broke its sales record."
+  },
+  {
+   "sentence": "Yaşlı adam bastonuna dayanarak yavaşça ayağa kalktı.",
+   "form": "kalktı",
+   "lemma": "kalkmak",
+   "lang": "tr",
+   "meaning": "to stand up, to get up",
+   "translation": "The old man slowly stood up, leaning on his walking stick."
+  },
+  {
+   "sentence": "Ankara treni birazdan birinci perondan kalkacak.",
+   "form": "kalkacak",
+   "lemma": "kalkmak",
+   "lang": "tr",
+   "meaning": "to depart, to leave",
+   "translation": "The Ankara train will depart from platform one shortly."
+  },
+  {
+   "sentence": "Bu eski kural geçen yıl yürürlükten tamamen kalktı.",
+   "form": "kalktı",
+   "lemma": "kalkmak",
+   "lang": "tr",
+   "meaning": "to be abolished, to be lifted",
+   "translation": "This old rule was completely abolished last year."
+  },
+  {
+   "sentence": "Sabahları saat altıda yataktan kalkmaya alışkınım.",
+   "form": "kalkmaya",
+   "lemma": "kalkmak",
+   "lang": "tr",
+   "meaning": "to wake up, to get out of bed",
+   "translation": "I am used to getting out of bed at six in the morning."
+  },
+  {
+   "sentence": "Tek başına bu kadar ağır bir işi yapmaya kalktı.",
+   "form": "kalktı",
+   "lemma": "kalkmak",
+   "lang": "tr",
+   "meaning": "to attempt, to venture",
+   "translation": "He tried to do such a heavy job all by himself."
+  },
+  {
+   "sentence": "Kapıyı anahtarla sessizce açıp içeri girdi.",
+   "form": "açıp",
+   "lemma": "açmak",
+   "lang": "tr",
+   "meaning": "to open",
+   "translation": "He quietly opened the door with the key and went in."
+  },
+  {
+   "sentence": "Televizyonu açıp akşam haberlerini izlemeye başladı.",
+   "form": "açıp",
+   "lemma": "açmak",
+   "lang": "tr",
+   "meaning": "to turn on, to switch on",
+   "translation": "He turned on the television and started watching the evening news."
+  },
+  {
+   "sentence": "Baharın gelmesiyle bahçedeki tüm çiçekler açtı.",
+   "form": "açtı",
+   "lemma": "açmak",
+   "lang": "tr",
+   "meaning": "to bloom, to blossom",
+   "translation": "With the arrival of spring, all the flowers in the garden bloomed."
+  },
+  {
+   "sentence": "Bu açık mavi gömlek senin yüzünü çok açmış.",
+   "form": "açmış",
+   "lemma": "açmak",
+   "lang": "tr",
+   "meaning": "to suit, to brighten up",
+   "translation": "This light blue shirt really brightens up your face."
+  },
+  {
+   "sentence": "Belediye ekipleri kapanan köy yolunu nihayet açtı.",
+   "form": "açtı",
+   "lemma": "açmak",
+   "lang": "tr",
+   "meaning": "to clear, to reopen",
+   "translation": "The municipal crews finally reopened the closed village road."
+  },
+  {
+   "sentence": "Bütün gün ayakta durmaktan bacakları çok ağrıdı.",
+   "form": "durmaktan",
+   "lemma": "durmak",
+   "lang": "tr",
+   "meaning": "to stand",
+   "translation": "His legs ached a lot from standing all day."
+  },
+  {
+   "sentence": "Kırmızı ışık yanınca bütün araçlar çizgide durdu.",
+   "form": "durdu",
+   "lemma": "durmak",
+   "lang": "tr",
+   "meaning": "to stop, to halt",
+   "translation": "When the light turned red, all the vehicles stopped at the line."
+  },
+  {
+   "sentence": "Eski duvar saati pili bittiği için gece durmuş.",
+   "form": "durmuş",
+   "lemma": "durmak",
+   "lang": "tr",
+   "meaning": "to stop working",
+   "translation": "The old wall clock stopped during the night because its battery ran out."
+  },
+  {
+   "sentence": "Bu ceket omuzlarına tam oturdu, üzerinde çok şık durdu.",
+   "form": "durdu",
+   "lemma": "durmak",
+   "lang": "tr",
+   "meaning": "to look, to fit (on someone)",
+   "translation": "This jacket fitted his shoulders perfectly and looked very smart on him."
+  },
+  {
+   "sentence": "Toplantıda özellikle bütçe kesintileri üzerinde durduk.",
+   "form": "durduk",
+   "lemma": "durmak",
+   "lang": "tr",
+   "meaning": "to emphasize, to dwell on",
+   "translation": "In the meeting we dwelt especially on the budget cuts."
+  },
+  {
+   "sentence": "Ağır çantayı masanın üzerine yavaşça bıraktı.",
+   "form": "bıraktı",
+   "lemma": "bırakmak",
+   "lang": "tr",
+   "meaning": "to put down, to place",
+   "translation": "She slowly put the heavy bag down on the table."
+  },
+  {
+   "sentence": "Sağlığına dikkat etmek için sigarayı tamamen bıraktı.",
+   "form": "bıraktı",
+   "lemma": "bırakmak",
+   "lang": "tr",
+   "meaning": "to quit, to give up",
+   "translation": "He gave up smoking completely to look after his health."
+  },
+  {
+   "sentence": "Kardeşimi sabah okula arabayla ben bıraktım.",
+   "form": "bıraktım",
+   "lemma": "bırakmak",
+   "lang": "tr",
+   "meaning": "to drop off",
+   "translation": "I dropped my brother off at school by car this morning."
+  },
+  {
+   "sentence": "Sınavdaki en zor soruyu en sona bıraktım.",
+   "form": "bıraktım",
+   "lemma": "bırakmak",
+   "lang": "tr",
+   "meaning": "to leave (for later)",
+   "translation": "I left the hardest question in the exam until the end."
+  },
+  {
+   "sentence": "Dedesi ona merkezde küçük bir dükkan bırakmış.",
+   "form": "bırakmış",
+   "lemma": "bırakmak",
+   "lang": "tr",
+   "meaning": "to leave behind, to bequeath",
+   "translation": "His grandfather left him a small shop in the city centre."
+  },
+  {
+   "sentence": "Kitaplıktan en kalın romanı çekip aldı.",
+   "form": "aldı",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to take",
+   "translation": "He pulled the thickest novel out of the bookcase."
+  },
+  {
+   "sentence": "Marketten taze ekmek ve süt alıp eve döndüm.",
+   "form": "alıp",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to buy",
+   "translation": "I bought fresh bread and milk at the market and went home."
+  },
+  {
+   "sentence": "Doğum gününde arkadaşından çok güzel bir hediye aldı.",
+   "form": "aldı",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to receive, to get",
+   "translation": "On her birthday she got a very nice present from her friend."
+  },
+  {
+   "sentence": "Bu salon kırk kişiyi rahatlıkla alır.",
+   "form": "alır",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to hold, to accommodate",
+   "translation": "This hall easily holds forty people."
+  },
+  {
+   "sentence": "Odayı birdenbire yoğun bir kahve kokusu aldı.",
+   "form": "aldı",
+   "lemma": "almak",
+   "lang": "tr",
+   "meaning": "to fill, to pervade",
+   "translation": "Suddenly a strong smell of coffee filled the room."
+  },
+  {
+   "sentence": "Pencereden dışarıya doğru uzun uzun baktı.",
+   "form": "baktı",
+   "lemma": "bakmak",
+   "lang": "tr",
+   "meaning": "to look",
+   "translation": "He looked out of the window for a long time."
+  },
+  {
+   "sentence": "Biz tatildeyken kedimize komşumuz özenle baktı.",
+   "form": "baktı",
+   "lemma": "bakmak",
+   "lang": "tr",
+   "meaning": "to look after, to take care of",
+   "translation": "While we were on holiday, our neighbour looked after our cat carefully."
+  },
+  {
+   "sentence": "Bu davanın dosyasına deneyimli bir avukat bakıyor.",
+   "form": "bakıyor",
+   "lemma": "bakmak",
+   "lang": "tr",
+   "meaning": "to handle, to deal with",
+   "translation": "An experienced lawyer is handling this case."
+  },
+  {
+   "sentence": "Evimizin balkonu doğrudan güney cepheye bakıyor.",
+   "form": "bakıyor",
+   "lemma": "bakmak",
+   "lang": "tr",
+   "meaning": "to face (a direction)",
+   "translation": "Our balcony faces south."
+  },
+  {
+   "sentence": "Doktor hastanın boğazına bakıp reçete yazdı.",
+   "form": "bakıp",
+   "lemma": "bakmak",
+   "lang": "tr",
+   "meaning": "to examine, to check",
+   "translation": "The doctor examined the patient's throat and wrote a prescription."
+  },
+  {
+   "sentence": "Eski mektupları çekmecenin en dibine koydu.",
+   "form": "koydu",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to put, to place",
+   "translation": "She put the old letters at the very bottom of the drawer."
+  },
+  {
+   "sentence": "Çorbaya biraz daha tuz koyarsan tadı düzelir.",
+   "form": "koyarsan",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to add",
+   "translation": "If you add a little more salt to the soup, it will taste better."
+  },
+  {
+   "sentence": "Yeni doğan bebeklerine dedesinin adını koydular.",
+   "form": "koydular",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to name",
+   "translation": "They named their newborn baby after his grandfather."
+  },
+  {
+   "sentence": "Yarın sabah erkenden yola koyulmaya karar verdik.",
+   "form": "koyulmaya",
+   "lemma": "koyulmak",
+   "lang": "tr",
+   "meaning": "to set out, to start",
+   "translation": "We decided to set out early tomorrow morning."
+  },
+  {
+   "sentence": "Bu kuralı şirket yönetimi geçen ay koydu.",
+   "form": "koydu",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to set, to establish",
+   "translation": "The company management set this rule last month."
+  },
+  {
+   "sentence": "Kışlık kalın kazakları üst rafa çıkardı.",
+   "form": "çıkardı",
+   "lemma": "çıkarmak",
+   "lang": "tr",
+   "meaning": "to put up (on a shelf)",
+   "translation": "She put the thick winter sweaters up on the top shelf."
+  },
+  {
+   "sentence": "Eve girer girmez ıslak ayakkabılarını çıkardı.",
+   "form": "çıkardı",
+   "lemma": "çıkarmak",
+   "lang": "tr",
+   "meaning": "to take off (clothes/shoes)",
+   "translation": "As soon as he came in, he took off his wet shoes."
+  },
+  {
+   "sentence": "Yazar bu sonbaharda yeni bir öykü kitabı çıkardı.",
+   "form": "çıkardı",
+   "lemma": "çıkarmak",
+   "lang": "tr",
+   "meaning": "to publish, to release",
+   "translation": "This autumn the writer published a new book of stories."
+  },
+  {
+   "sentence": "Bu küçük kasabadan pek çok ünlü sanatçı çıktı.",
+   "form": "çıktı",
+   "lemma": "çıkmak",
+   "lang": "tr",
+   "meaning": "to emerge, to come from",
+   "translation": "Many famous artists came from this small town."
+  },
+  {
+   "sentence": "Fatura beklediğimizden çok daha yüksek çıktı.",
+   "form": "çıktı",
+   "lemma": "çıkmak",
+   "lang": "tr",
+   "meaning": "to turn out to be",
+   "translation": "The bill turned out to be much higher than we expected."
+  },
+  {
+   "sentence": "She runs five kilometers every morning before work.",
+   "form": "runs",
+   "lemma": "run",
+   "lang": "en",
+   "meaning": "koşmak",
+   "translation": "İşten önce her sabah beş kilometre koşar."
+  },
+  {
+   "sentence": "He runs a small family bakery in the city center.",
+   "form": "runs",
+   "lemma": "run",
+   "lang": "en",
+   "meaning": "işletmek, yönetmek",
+   "translation": "Şehir merkezinde küçük bir aile fırını işletiyor."
+  },
+  {
+   "sentence": "The local bus runs every fifteen minutes on weekdays.",
+   "form": "runs",
+   "lemma": "run",
+   "lang": "en",
+   "meaning": "sefer yapmak, çalışmak",
+   "translation": "Yerel otobüs hafta içi on beş dakikada bir kalkıyor."
+  },
+  {
+   "sentence": "Be careful not to let the bathwater run over.",
+   "form": "run over",
+   "lemma": "run over",
+   "lang": "en",
+   "meaning": "taşmak",
+   "translation": "Banyo suyunun taşmamasına dikkat et."
+  },
+  {
+   "sentence": "Our contract with the supplier runs until December.",
+   "form": "runs",
+   "lemma": "run",
+   "lang": "en",
+   "meaning": "geçerli olmak, sürmek",
+   "translation": "Tedarikçiyle sözleşmemiz aralık ayına kadar geçerli."
+  },
+  {
+   "sentence": "Please set the heavy box down near the front door.",
+   "form": "set",
+   "lemma": "set",
+   "lang": "en",
+   "meaning": "koymak, yerleştirmek",
+   "translation": "Lütfen ağır kutuyu ön kapının yanına bırakın."
+  },
+  {
+   "sentence": "Don't forget to set your alarm for six o'clock.",
+   "form": "set",
+   "lemma": "set",
+   "lang": "en",
+   "meaning": "kurmak, ayarlamak",
+   "translation": "Alarmını saat altıya kurmayı unutma."
+  },
+  {
+   "sentence": "The sun sets behind the mountains around seven.",
+   "form": "sets",
+   "lemma": "set",
+   "lang": "en",
+   "meaning": "batmak (güneş)",
+   "translation": "Güneş yedi sularında dağların arkasında batar."
+  },
+  {
+   "sentence": "The director set a strict deadline for the project.",
+   "form": "set",
+   "lemma": "set",
+   "lang": "en",
+   "meaning": "belirlemek, koymak",
+   "translation": "Yönetmen proje için kesin bir son tarih belirledi."
+  },
+  {
+   "sentence": "The novel is set in nineteenth-century Istanbul.",
+   "form": "set",
+   "lemma": "set",
+   "lang": "en",
+   "meaning": "geçmek (hikaye/olay)",
+   "translation": "Roman on dokuzuncu yüzyıl İstanbul'unda geçiyor."
+  },
+  {
+   "sentence": "Can you hold my bag while I tie my shoelaces?",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "tutmak",
+   "translation": "Ben ayakkabılarımı bağlarken çantamı tutar mısın?"
+  },
+  {
+   "sentence": "The new conference hall can hold up to five hundred people.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "almak, kapasitesi olmak",
+   "translation": "Yeni konferans salonu beş yüz kişiye kadar alabiliyor."
+  },
+  {
+   "sentence": "They will hold the annual meeting next Tuesday.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "düzenlemek, yapmak",
+   "translation": "Yıllık toplantıyı önümüzdeki salı yapacaklar."
+  },
+  {
+   "sentence": "Please hold the line while I transfer your call.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "beklemek (telefonda)",
+   "translation": "Aramanızı aktarırken lütfen hatta bekleyin."
+  },
+  {
+   "sentence": "The old wooden bridge will not hold under heavy trucks.",
+   "form": "hold",
+   "lemma": "hold",
+   "lang": "en",
+   "meaning": "dayanmak, taşımak",
+   "translation": "Eski tahta köprü ağır kamyonları taşıyamaz."
+  },
+  {
+   "sentence": "She decided to turn left at the next traffic light.",
+   "form": "turn",
+   "lemma": "turn",
+   "lang": "en",
+   "meaning": "dönmek",
+   "translation": "Bir sonraki trafik ışığında sola dönmeye karar verdi."
+  },
+  {
+   "sentence": "The leaves turn bright yellow and orange in autumn.",
+   "form": "turn",
+   "lemma": "turn",
+   "lang": "en",
+   "meaning": "dönüşmek, rengi değişmek",
+   "translation": "Sonbaharda yapraklar parlak sarı ve turuncuya döner."
+  },
+  {
+   "sentence": "Please turn the music down because the baby is sleeping.",
+   "form": "turn",
+   "lemma": "turn",
+   "lang": "en",
+   "meaning": "kısmak, azaltmak",
+   "translation": "Bebek uyuyor, lütfen müziğin sesini kıs."
+  },
+  {
+   "sentence": "The weather turned unexpectedly cold overnight.",
+   "form": "turned",
+   "lemma": "turn",
+   "lang": "en",
+   "meaning": "haline gelmek, olmak",
+   "translation": "Hava gece birden soğudu."
+  },
+  {
+   "sentence": "He turned the key in the lock and opened the door.",
+   "form": "turned",
+   "lemma": "turn",
+   "lang": "en",
+   "meaning": "çevirmek",
+   "translation": "Anahtarı kilitte çevirip kapıyı açtı."
+  },
+  {
+   "sentence": "The light breeze blew softly through the open window.",
+   "form": "light",
+   "lemma": "light",
+   "lang": "en",
+   "meaning": "hafif",
+   "translation": "Açık pencereden hafif bir esinti yavaşça esti."
+  },
+  {
+   "sentence": "Please turn on the light so we can read clearly.",
+   "form": "light",
+   "lemma": "light",
+   "lang": "en",
+   "meaning": "ışık, lamba",
+   "translation": "Rahat okuyabilmemiz için lütfen ışığı aç."
+  },
+  {
+   "sentence": "We tried to light a campfire using dry branches.",
+   "form": "light",
+   "lemma": "light",
+   "lang": "en",
+   "meaning": "yakmak, tutuşturmak",
+   "translation": "Kuru dallarla kamp ateşi yakmaya çalıştık."
+  },
+  {
+   "sentence": "She prefers wearing light colors during the hot summer.",
+   "form": "light",
+   "lemma": "light",
+   "lang": "en",
+   "meaning": "açık (renk)",
+   "translation": "Sıcak yaz günlerinde açık renkler giymeyi tercih ediyor."
+  },
+  {
+   "sentence": "Traffic is usually quite light on Sunday mornings.",
+   "form": "light",
+   "lemma": "light",
+   "lang": "en",
+   "meaning": "az, sakin (trafik)",
+   "translation": "Pazar sabahları trafik genellikle oldukça sakin olur."
+  },
+  {
+   "sentence": "We decided to book a table by the window for dinner.",
+   "form": "book",
+   "lemma": "book",
+   "lang": "en",
+   "meaning": "yer ayırtmak, rezervasyon yapmak",
+   "translation": "Akşam yemeği için pencere kenarında bir masa ayırtmaya karar verdik."
+  },
+  {
+   "sentence": "I just finished reading a fascinating history book.",
+   "form": "book",
+   "lemma": "book",
+   "lang": "en",
+   "meaning": "kitap",
+   "translation": "Az önce çok ilginç bir tarih kitabı okumayı bitirdim."
+  },
+  {
+   "sentence": "The referee had to book the player for a late tackle.",
+   "form": "book",
+   "lemma": "book",
+   "lang": "en",
+   "meaning": "sarı kart göstermek, ceza yazmak",
+   "translation": "Hakem geç kalan bir müdahale yüzünden oyuncuya sarı kart göstermek zorunda kaldı."
+  },
+  {
+   "sentence": "Make sure to match the color of the paint to the wall.",
+   "form": "match",
+   "lemma": "match",
+   "lang": "en",
+   "meaning": "uydurmak, eşleştirmek",
+   "translation": "Boyanın rengini duvara uydurduğundan emin ol."
+  },
+  {
+   "sentence": "The final football match attracted thousands of fans.",
+   "form": "match",
+   "lemma": "match",
+   "lang": "en",
+   "meaning": "maç, karşılaşma",
+   "translation": "Final maçı binlerce taraftar çekti."
+  },
+  {
+   "sentence": "He struck a match to light the birthday candles.",
+   "form": "match",
+   "lemma": "match",
+   "lang": "en",
+   "meaning": "kibrit",
+   "translation": "Doğum günü mumlarını yakmak için bir kibrit çaktı."
+  },
+  {
+   "sentence": "The clear blue sky reflected in the calm lake.",
+   "form": "clear",
+   "lemma": "clear",
+   "lang": "en",
+   "meaning": "açık, bulutsuz",
+   "translation": "Berrak mavi gökyüzü sakin gölde yansıdı."
+  },
+  {
+   "sentence": "Her explanation was so clear that everyone understood.",
+   "form": "clear",
+   "lemma": "clear",
+   "lang": "en",
+   "meaning": "anlaşılır, net",
+   "translation": "Açıklaması o kadar netti ki herkes anladı."
+  },
+  {
+   "sentence": "We need to clear the table before serving dessert.",
+   "form": "clear",
+   "lemma": "clear",
+   "lang": "en",
+   "meaning": "toplamak, temizlemek",
+   "translation": "Tatlıyı servis etmeden önce masayı toplamamız gerekiyor."
+  },
+  {
+   "sentence": "The heavy fog finally began to clear around noon.",
+   "form": "clear",
+   "lemma": "clear",
+   "lang": "en",
+   "meaning": "dağılmak, açılmak",
+   "translation": "Yoğun sis nihayet öğleye doğru dağılmaya başladı."
+  },
+  {
+   "sentence": "He had to pay a heavy fine for parking illegally.",
+   "form": "fine",
+   "lemma": "fine",
+   "lang": "en",
+   "meaning": "para cezası",
+   "translation": "Kural dışı park ettiği için yüklü bir para cezası ödemek zorunda kaldı."
+  },
+  {
+   "sentence": "The weather looks fine for a walk in the park today.",
+   "form": "fine",
+   "lemma": "fine",
+   "lang": "en",
+   "meaning": "güzel, iyi",
+   "translation": "Bugün hava parkta yürüyüş için güzel görünüyor."
+  },
+  {
+   "sentence": "This scarf is made of very fine silk fabric.",
+   "form": "fine",
+   "lemma": "fine",
+   "lang": "en",
+   "meaning": "ince, kaliteli",
+   "translation": "Bu atkı çok ince ipek kumaştan yapılmış."
+  },
+  {
+   "sentence": "You have to bear the responsibility for your own choices.",
+   "form": "bear",
+   "lemma": "bear",
+   "lang": "en",
+   "meaning": "üstlenmek, taşımak",
+   "translation": "Kendi seçimlerinin sorumluluğunu taşımak zorundasın."
+  },
+  {
+   "sentence": "I cannot bear the noise of construction early in the morning.",
+   "form": "bear",
+   "lemma": "bear",
+   "lang": "en",
+   "meaning": "katlanmak, tahammül etmek",
+   "translation": "Sabahın erken saatlerindeki inşaat gürültüsüne katlanamıyorum."
+  },
+  {
+   "sentence": "We saw a large brown bear near the river in the forest.",
+   "form": "bear",
+   "lemma": "bear",
+   "lang": "en",
+   "meaning": "ayı",
+   "translation": "Ormanda nehrin yakınında büyük, kahverengi bir ayı gördük."
+  },
+  {
+   "sentence": "The tree bears sweet red apples every late summer.",
+   "form": "bears",
+   "lemma": "bear",
+   "lang": "en",
+   "meaning": "vermek (meyve)",
+   "translation": "Ağaç her yaz sonu tatlı kırmızı elmalar verir."
+  },
+  {
+   "sentence": "Be careful not to drop that fragile glass vase.",
+   "form": "drop",
+   "lemma": "drop",
+   "lang": "en",
+   "meaning": "düşürmek",
+   "translation": "O kırılgan cam vazoyu düşürmemeye dikkat et."
+  },
+  {
+   "sentence": "Temperatures usually drop sharply after sunset in the desert.",
+   "form": "drop",
+   "lemma": "drop",
+   "lang": "en",
+   "meaning": "düşmek, azalmak",
+   "translation": "Çölde güneş battıktan sonra sıcaklık genellikle hızla düşer."
+  },
+  {
+   "sentence": "She felt a single drop of rain on her forehead.",
+   "form": "drop",
+   "lemma": "drop",
+   "lang": "en",
+   "meaning": "damla",
+   "translation": "Alnına tek bir yağmur damlası düştüğünü hissetti."
+  },
+  {
+   "sentence": "The train arrived right on time at the central station.",
+   "form": "right",
+   "lemma": "right",
+   "lang": "en",
+   "meaning": "tam, tam olarak",
+   "translation": "Tren merkez istasyona tam vaktinde vardı."
+  },
+  {
+   "sentence": "You have every right to ask questions during the lecture.",
+   "form": "right",
+   "lemma": "right",
+   "lang": "en",
+   "meaning": "hak",
+   "translation": "Ders sırasında soru sormaya her türlü hakkın var."
+  },
+  {
+   "sentence": "Turn right at the corner and walk two blocks straight.",
+   "form": "right",
+   "lemma": "right",
+   "lang": "en",
+   "meaning": "sağa, sağ",
+   "translation": "Köşeden sağa dön ve iki sokak dümdüz yürü."
+  },
+  {
+   "sentence": "I think you made the right decision by accepting the offer.",
+   "form": "right",
+   "lemma": "right",
+   "lang": "en",
+   "meaning": "doğru, yerinde",
+   "translation": "Teklifi kabul ederek doğru karar verdiğini düşünüyorum."
+  }
+ ],
+ "words": [
+  {
+   "word": "sürmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to last, to take (time)",
+   "note": "bir şeyin belli bir süre devam etmesi"
+  },
+  {
+   "word": "sürmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to drive",
+   "note": "araç kullanmak"
+  },
+  {
+   "word": "sürmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to spread, to apply",
+   "note": "krem, yağ vb. sürmek"
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "face",
+   "note": ""
+  },
+  {
+   "word": "yüz",
+   "lang": "tr",
+   "pos": "num",
+   "meaning": "hundred",
+   "note": ""
+  },
+  {
+   "word": "vurmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to hit, to strike",
+   "note": "bir şeye darbe indirmek"
+  },
+  {
+   "word": "vurmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to shoot",
+   "note": "silahla yaralamak veya öldürmek"
+  },
+  {
+   "word": "vurmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to shine on, to fall on",
+   "note": "ışık veya güneşin bir yere düşmesi"
+  },
+  {
+   "word": "kırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to break, to smash",
+   "note": "sert bir şeyi parçalara ayırmak"
+  },
+  {
+   "word": "kırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to hurt, to offend",
+   "note": "birini üzmek, incitmek"
+  },
+  {
+   "word": "kırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to reduce, to lower",
+   "note": "fiyat, ateş vb. düşürmek"
+  },
+  {
+   "word": "kalkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to get up, to stand up",
+   "note": "oturduğu veya yattığı yerden doğrulmak"
+  },
+  {
+   "word": "kalkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to depart, to take off",
+   "note": "taşıtın hareket etmesi"
+  },
+  {
+   "word": "kalkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to be abolished, to end",
+   "note": "yürürlükten kaldırılmak"
+  },
+  {
+   "word": "açmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to open",
+   "note": "kapalı bir şeyi açık duruma getirmek"
+  },
+  {
+   "word": "açmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to turn on, to switch on",
+   "note": "elektrikli cihazı çalıştırmak"
+  },
+  {
+   "word": "açmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to bloom, to blossom",
+   "note": "çiçeğin yapraklarını yayması"
+  },
+  {
+   "word": "durmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to stop, to halt",
+   "note": "hareketi kesmek"
+  },
+  {
+   "word": "durmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to stand, to remain",
+   "note": "ayakta veya belli bir konumda kalmak"
+  },
+  {
+   "word": "durmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to look, to fit",
+   "note": "giysinin üzerinde görünüşü"
+  },
+  {
+   "word": "bırakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to leave, to put down",
+   "note": "elindekini bir yere koymak"
+  },
+  {
+   "word": "bırakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to quit, to give up",
+   "note": "alışkanlığı veya işi terk etmek"
+  },
+  {
+   "word": "bırakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to drop off",
+   "note": "birini gideceği yere ulaştırmak"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to take",
+   "note": "bir şeyi eline veya yanına geçirmek"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to buy, to purchase",
+   "note": "para karşılığı edinmek"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to receive, to get",
+   "note": "gönderilen veya verilen şeyi kabul etmek"
+  },
+  {
+   "word": "bakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to look, to watch",
+   "note": "bakışı bir şeye yöneltmek"
+  },
+  {
+   "word": "bakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to look after, to care for",
+   "note": "beslemek, ilgilenmek"
+  },
+  {
+   "word": "bakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to face",
+   "note": "bir yöne doğru konumlu olmak"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to put, to place",
+   "note": "bir şeyi bir yere bırakmak"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to add",
+   "note": "içine ilave etmek"
+  },
+  {
+   "word": "çıkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to go out, to exit",
+   "note": "içeriden dışarıya geçmek"
+  },
+  {
+   "word": "çıkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to climb, to go up",
+   "note": "yukarı doğru ilerlemek"
+  },
+  {
+   "word": "çıkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to turn out (to be)",
+   "note": "sonucunda anlaşılmak"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to fall, to drop",
+   "note": "yukarıdan aşağı inmek"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to decrease, to decline",
+   "note": "miktar veya değer olarak azalmak"
+  },
+  {
+   "word": "tutmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to hold, to catch",
+   "note": "elle kavramak veya yakalamak"
+  },
+  {
+   "word": "tutmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to keep, to retain",
+   "note": "elinde bulundurmak"
+  },
+  {
+   "word": "tutmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to rent, to hire",
+   "note": "kiralama yoluyla edinmek"
+  },
+  {
+   "word": "çekmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to pull, to drag",
+   "note": "kendine doğru hareket ettirmek"
+  },
+  {
+   "word": "çekmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to withdraw",
+   "note": "bankadan para almak"
+  },
+  {
+   "word": "çekmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to suffer, to endure",
+   "note": "sıkıntı veya acı yaşamak"
+  },
+  {
+   "word": "vermek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to give",
+   "note": "birine bir şey sunmak"
+  },
+  {
+   "word": "vermek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to pay",
+   "note": "ücret ödemek"
+  },
+  {
+   "word": "geçmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to pass, to cross",
+   "note": "bir yerden öteye gitmek"
+  },
+  {
+   "word": "geçmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to pass (time/exam)",
+   "note": "sürenin dolması veya sınavda başarılı olmak"
+  },
+  {
+   "word": "geçmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to recover, to stop (pain)",
+   "note": "ağrı veya hastalığın dinmesi"
+  },
+  {
+   "word": "kalmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to stay, to remain",
+   "note": "bulunduğu yeri terk etmemek"
+  },
+  {
+   "word": "kalmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to fail (an exam/class)",
+   "note": "sınıfta veya sınavda başarısız olmak"
+  },
+  {
+   "word": "bulmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to find, to discover",
+   "note": "aranan şeye ulaşmak"
+  },
+  {
+   "word": "bulmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to consider, to think",
+   "note": "bir yargıya varmak"
+  },
+  {
+   "word": "görmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to see",
+   "note": "gözle algılamak"
+  },
+  {
+   "word": "görmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to experience, to witness",
+   "note": "yaşamak, tanık olmak"
+  },
+  {
+   "word": "bilmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to know",
+   "note": "bilgi sahibi olmak"
+  },
+  {
+   "word": "bilmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to guess correctly",
+   "note": "doğru tahmin etmek"
+  },
+  {
+   "word": "istemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to want, to wish",
+   "note": "arzu etmek"
+  },
+  {
+   "word": "istemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to ask for, to request",
+   "note": "talep etmek"
+  },
+  {
+   "word": "gelmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to come, to arrive",
+   "note": "bulunulan yere ulaşmak"
+  },
+  {
+   "word": "gitmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to go, to leave",
+   "note": "bir yere doğru yönelmek"
+  },
+  {
+   "word": "yapmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to do, to make",
+   "note": "gerçekleştirmek, üretmek"
+  },
+  {
+   "word": "söylemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to say, to tell",
+   "note": "sözle ifade etmek"
+  },
+  {
+   "word": "anlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to understand, to comprehend",
+   "note": "kavramak"
+  },
+  {
+   "word": "beklemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to wait",
+   "note": "birinin gelmesini beklemek"
+  },
+  {
+   "word": "beklemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to expect",
+   "note": "bir şeyin olmasını ummak"
+  },
+  {
+   "word": "çalışmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to work",
+   "note": "emek harcamak, görev yapmak"
+  },
+  {
+   "word": "çalışmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to study",
+   "note": "ders öğrenmek"
+  },
+  {
+   "word": "çalışmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to function, to run",
+   "note": "makine veya sistemin işlemesi"
+  },
+  {
+   "word": "okumak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to read",
+   "note": "yazılı metni anlamak"
+  },
+  {
+   "word": "okumak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to study (at school/university)",
+   "note": "eğitim görmek"
+  },
+  {
+   "word": "yazmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to write",
+   "note": "harf ve sözcüklerle kaydetmek"
+  },
+  {
+   "word": "başlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to start, to begin",
+   "note": "bir işe girişmek"
+  },
+  {
+   "word": "bitirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to finish, to complete",
+   "note": "sona erdirmek"
+  },
+  {
+   "word": "açık",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "open",
+   "note": "kapalı olmayan"
+  },
+  {
+   "word": "açık",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "clear, obvious",
+   "note": "anlaşılır, net"
+  },
+  {
+   "word": "açık",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "light (color)",
+   "note": "koyu olmayan renk tonu"
+  },
+  {
+   "word": "kara",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "land, shore",
+   "note": "yeryüzünün denizle örtülü olmayan bölümü"
+  },
+  {
+   "word": "kara",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "black, dark",
+   "note": "siyah renkli"
+  },
+  {
+   "word": "ağır",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "heavy",
+   "note": "tartıda çok çeken"
+  },
+  {
+   "word": "ağır",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "slow",
+   "note": "yavaş hareket eden"
+  },
+  {
+   "word": "ağır",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "serious, severe",
+   "note": "tehlikeli veya ciddi durum"
+  },
+  {
+   "word": "ince",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "thin, slim",
+   "note": "kalın olmayan"
+  },
+  {
+   "word": "ince",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "polite, subtle, thoughtful",
+   "note": "kibar, nazik"
+  },
+  {
+   "word": "sıcak",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "hot, warm",
+   "note": "ısısı yüksek olan"
+  },
+  {
+   "word": "sıcak",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "friendly, affectionate",
+   "note": "samimi, içten"
+  },
+  {
+   "word": "soğuk",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "cold, chilly",
+   "note": "ısısı düşük olan"
+  },
+  {
+   "word": "soğuk",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "distant, unfriendly",
+   "note": "ilgisiz, samimiyetsiz"
+  },
+  {
+   "word": "derin",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "deep",
+   "note": "dibi yüzeyden uzak olan"
+  },
+  {
+   "word": "derin",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "profound, intense",
+   "note": "kapsamlı, yoğun"
+  },
+  {
+   "word": "boş",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "empty",
+   "note": "içinde hiçbir şey bulunmayan"
+  },
+  {
+   "word": "boş",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "free, unoccupied",
+   "note": "işi olmayan, müsait"
+  },
+  {
+   "word": "dolu",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "full, crowded",
+   "note": "içi tamamen kaplanmış"
+  },
+  {
+   "word": "dolu",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "hail",
+   "note": "buz taneleri şeklinde yağış"
+  },
+  {
+   "word": "güzel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "beautiful, pretty, nice",
+   "note": "hoşa giden, estetik"
+  },
+  {
+   "word": "büyük",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "big, large, great",
+   "note": "boyutça fazla olan"
+  },
+  {
+   "word": "küçük",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "small, little",
+   "note": "boyutça az olan"
+  },
+  {
+   "word": "yeni",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "new, recent",
+   "note": "kullanılmamış veya yakın zamanda ortaya çıkmış"
+  },
+  {
+   "word": "eski",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "old, ancient, former",
+   "note": "çoktan beri var olan"
+  },
+  {
+   "word": "hızlı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "fast, quick, rapid",
+   "note": "süratli"
+  },
+  {
+   "word": "yavaş",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "slow",
+   "note": "hızlı olmayan"
+  },
+  {
+   "word": "kolay",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "easy, simple",
+   "note": "zahmetsiz yapılan"
+  },
+  {
+   "word": "zor",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "difficult, hard",
+   "note": "sıkıntı ile yapılan"
+  },
+  {
+   "word": "doğru",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "true, correct, right",
+   "note": "gerçeğe uygun"
+  },
+  {
+   "word": "yanlış",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "wrong, incorrect, false",
+   "note": "gerçeğe aykırı"
+  },
+  {
+   "word": "önemli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "important, significant",
+   "note": "değeri ve etkisi büyük olan"
+  },
+  {
+   "word": "farklı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "different, distinct",
+   "note": "benzer olmayan"
+  },
+  {
+   "word": "ortak",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "common, shared, joint",
+   "note": "birden çok kimseyi ilgilendiren"
+  },
+  {
+   "word": "last",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sürmek, devam etmek",
+   "note": ""
+  },
+  {
+   "word": "last",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "son, sonuncu",
+   "note": ""
+  },
+  {
+   "word": "last",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "geçen (last week: geçen hafta)",
+   "note": ""
+  },
+  {
+   "word": "run",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "koşmak",
+   "note": "hızlı adımlarla ilerlemek"
+  },
+  {
+   "word": "run",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "işletmek, yönetmek",
+   "note": "bir iş yerini veya kurumu idare etmek"
+  },
+  {
+   "word": "run",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "akmak",
+   "note": "sıvı için"
+  },
+  {
+   "word": "run",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çalışmak",
+   "note": "makine, sistem için"
+  },
+  {
+   "word": "set",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "koymak, yerleştirmek",
+   "note": "bir nesneyi belirli bir yere bırakmak"
+  },
+  {
+   "word": "set",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kurmak, ayarlamak",
+   "note": "saat veya cihazı düzenlemek"
+  },
+  {
+   "word": "set",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "batmak",
+   "note": "güneşin ufuktan kaybolması"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "tutmak, kavramak",
+   "note": "elle veya kolla sıkıca almak"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "düzenlemek, yapmak",
+   "note": "toplantı veya etkinlik gerçekleştirmek"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "almak, kapasitesi olmak",
+   "note": "içine sığdırabilmek"
+  },
+  {
+   "word": "turn",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dönmek",
+   "note": "yön değiştirmek"
+  },
+  {
+   "word": "turn",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çevirmek",
+   "note": "bir şeyi döndürmek"
+  },
+  {
+   "word": "turn",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dönüşmek, haline gelmek",
+   "note": "durum veya renk değiştirmek"
+  },
+  {
+   "word": "light",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ışık, aydınlık",
+   "note": "görmeyi sağlayan enerji"
+  },
+  {
+   "word": "light",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "hafif",
+   "note": "ağırlığı az olan"
+  },
+  {
+   "word": "light",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yakmak, tutuşturmak",
+   "note": "ateş veya lamba yakmak"
+  },
+  {
+   "word": "book",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kitap",
+   "note": "basılı veya dijital eser"
+  },
+  {
+   "word": "book",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yer ayırtmak, rezervasyon yapmak",
+   "note": "önceden kayıt yaptırmak"
+  },
+  {
+   "word": "match",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "maç, karşılaşma",
+   "note": "spor müsabakası"
+  },
+  {
+   "word": "match",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kibrit",
+   "note": "ateş yakmaya yarayan çöp"
+  },
+  {
+   "word": "match",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "eşleşmek, uymak",
+   "note": "birbiriyle uyumlu olmak"
+  },
+  {
+   "word": "clear",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "açık, net, anlaşılır",
+   "note": "belirsizliği olmayan"
+  },
+  {
+   "word": "clear",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "temizlemek, toplamak",
+   "note": "engelleri veya dağınıklığı kaldırmak"
+  },
+  {
+   "word": "fine",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "iyi, güzel, hoş",
+   "note": "memnuniyet verici"
+  },
+  {
+   "word": "fine",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "para cezası",
+   "note": "kural ihlali karşılığı ödenen tutar"
+  },
+  {
+   "word": "bear",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ayı",
+   "note": "iri yapılı yabani hayvan"
+  },
+  {
+   "word": "bear",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "katlanmak, dayanmak",
+   "note": "zorluğa tahammül etmek"
+  },
+  {
+   "word": "bear",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "taşımak, üstlenmek",
+   "note": "sorumluluk veya yük almak"
+  },
+  {
+   "word": "drop",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "düşürmek",
+   "note": "elinden kaçırmak"
+  },
+  {
+   "word": "drop",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "düşmek, azalmak",
+   "note": "aşağı inmek, değeri azalmak"
+  },
+  {
+   "word": "drop",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "damla",
+   "note": "küçük sıvı tanesi"
+  },
+  {
+   "word": "right",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "doğru, haklı",
+   "note": "gerçeğe veya kurala uygun"
+  },
+  {
+   "word": "right",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "hak",
+   "note": "hukuken veya ahlaken tanınan yetki"
+  },
+  {
+   "word": "right",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "sağa",
+   "note": "sağ tarafa"
+  },
+  {
+   "word": "right",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "tam, tam olarak",
+   "note": "right on time: tam vaktinde"
+  },
+  {
+   "word": "left",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sol",
+   "note": "sağın karşıtı olan yön"
+  },
+  {
+   "word": "point",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "nokta, puan",
+   "note": "işaret veya skor birimi"
+  },
+  {
+   "word": "point",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "işaret etmek, göstermek",
+   "note": "parmakla veya bir araçla yöneltmek"
+  },
+  {
+   "word": "play",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "oynamak",
+   "note": "oyun oynamak"
+  },
+  {
+   "word": "play",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çalmak",
+   "note": "müzik aleti çalmak"
+  },
+  {
+   "word": "play",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tiyatro oyunu",
+   "note": "sahne eseri"
+  },
+  {
+   "word": "watch",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "izlemek, seyretmek",
+   "note": "dikkatle bakmak"
+  },
+  {
+   "word": "watch",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kol saati",
+   "note": "bileğe takılan saat"
+  },
+  {
+   "word": "spring",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ilkbahar, bahar",
+   "note": "kış ile yaz arasındaki mevsim"
+  },
+  {
+   "word": "spring",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yay",
+   "note": "esnek metal sarmal"
+  },
+  {
+   "word": "spring",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "pınar, kaynak",
+   "note": "yerden çıkan su"
+  },
+  {
+   "word": "fall",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "düşmek",
+   "note": "yer çekimiyle aşağı inmek"
+  },
+  {
+   "word": "fall",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sonbahar",
+   "note": "güz mevsimi"
+  },
+  {
+   "word": "park",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "park",
+   "note": "yeşil dinlenme alanı"
+  },
+  {
+   "word": "park",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "park etmek",
+   "note": "aracı durdurup bırakmak"
+  },
+  {
+   "word": "train",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tren",
+   "note": "demiryolu taşıtı"
+  },
+  {
+   "word": "train",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "eğitmek, antrenman yapmak",
+   "note": "beceri kazandırmak"
+  },
+  {
+   "word": "close",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kapatmak",
+   "note": "açık olanı örtmek"
+  },
+  {
+   "word": "close",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yakın, samimi",
+   "note": "mesafe veya ilişki bakımından uzak olmayan"
+  },
+  {
+   "word": "hard",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "zor",
+   "note": "kolay olmayan"
+  },
+  {
+   "word": "hard",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "sert, katı",
+   "note": "yumuşak olmayan"
+  },
+  {
+   "word": "hard",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "sıkı, çok",
+   "note": "yoğun çaba göstererek"
+  },
+  {
+   "word": "fast",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "hızlı, süratli",
+   "note": "kısa zamanda çok yol alan"
+  },
+  {
+   "word": "fast",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "oruç tutmak",
+   "note": "belli süre yemek içmekten kaçınmak"
+  },
+  {
+   "word": "kind",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tür, çeşit",
+   "note": "benzer özellik taşıyan grup"
+  },
+  {
+   "word": "kind",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "nazik, kibar, iyi kalpli",
+   "note": "başkalarına özen gösteren"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "anlamına gelmek, kastetmek",
+   "note": "bir sözün ifade ettiği şey"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kaba, kötü kalpli",
+   "note": "kötü niyetli"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "cimri",
+   "note": "eli sıkı"
+  },
+  {
+   "word": "mind",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "akıl, zihin",
+   "note": "düşünme ve anlama yetisi"
+  },
+  {
+   "word": "mind",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "aldırmak, önemsemek",
+   "note": "rahatsız olmak veya dikkat etmek"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "özlemek",
+   "note": "birinin yokluğunu hissetmek"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kaçırmak, ıskalamak",
+   "note": "yetişememek veya hedefi vuramamak"
+  },
+  {
+   "word": "note",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "not, kısa yazı",
+   "note": "hatırlatma amacıyla yazılan yazı"
+  },
+  {
+   "word": "note",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "fark etmek",
+   "note": "dikkat etmek"
+  },
+  {
+   "word": "note",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "belirtmek",
+   "note": "söz etmek"
+  },
+  {
+   "word": "order",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sipariş",
+   "note": "ısmarlanan şey"
+  },
+  {
+   "word": "order",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "düzen, sıra",
+   "note": "tertip"
+  },
+  {
+   "word": "order",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "emir",
+   "note": "buyruk"
+  },
+  {
+   "word": "order",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sipariş vermek",
+   "note": "ısmarlamak"
+  },
+  {
+   "word": "order",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "emretmek",
+   "note": "buyurmak"
+  },
+  {
+   "word": "part",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "parça, bölüm",
+   "note": "bütünün bir kısmı"
+  },
+  {
+   "word": "part",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "rol",
+   "note": "oyunda, filmde"
+  },
+  {
+   "word": "pass",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "geçmek",
+   "note": "bir yerden ilerlemek"
+  },
+  {
+   "word": "pass",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "uzatmak, vermek",
+   "note": "elden ele vermek"
+  },
+  {
+   "word": "place",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yer, mekan",
+   "note": "bulunulan konum"
+  },
+  {
+   "word": "place",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yerleştirmek, koymak",
+   "note": "bir konuma bırakmak"
+  },
+  {
+   "word": "plan",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "plan, tasarı",
+   "note": "önceden hazırlanan program"
+  },
+  {
+   "word": "plan",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "planlamak",
+   "note": "önceden düzenlemek"
+  },
+  {
+   "word": "post",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "posta",
+   "note": "mektup, koli"
+  },
+  {
+   "word": "post",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "görev, makam",
+   "note": "iş yerindeki konum"
+  },
+  {
+   "word": "post",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "direk",
+   "note": "dikili kazık"
+  },
+  {
+   "word": "post",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "postalamak",
+   "note": "postayla göndermek"
+  },
+  {
+   "word": "post",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "paylaşmak",
+   "note": "internette yayınlamak"
+  },
+  {
+   "word": "present",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "hediye, armağan",
+   "note": "birini sevindirmek için verilen şey"
+  },
+  {
+   "word": "present",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "mevcut, şimdiki",
+   "note": "şu anda var olan"
+  },
+  {
+   "word": "present",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sunmak, takdim etmek",
+   "note": "bir topluluğa anlatmak"
+  },
+  {
+   "word": "press",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "basmak, bastırmak",
+   "note": "üzerine kuvvet uygulamak"
+  },
+  {
+   "word": "press",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "basın, medya",
+   "note": "gazete ve yayın organları"
+  },
+  {
+   "word": "raise",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kaldırmak",
+   "note": "yukarı çıkarmak"
+  },
+  {
+   "word": "raise",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "artırmak",
+   "note": "miktarı yükseltmek"
+  },
+  {
+   "word": "raise",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yetiştirmek",
+   "note": "çocuk büyütmek"
+  },
+  {
+   "word": "reach",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ulaşmak, uzanmak",
+   "note": "bir noktaya varmak"
+  },
+  {
+   "word": "reason",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sebep, neden",
+   "note": "gerekçe"
+  },
+  {
+   "word": "reason",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "akıl",
+   "note": "düşünme yetisi"
+  },
+  {
+   "word": "record",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kayıt",
+   "note": "saklanan bilgi"
+  },
+  {
+   "word": "record",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "rekor",
+   "note": "en iyi derece"
+  },
+  {
+   "word": "record",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "plak",
+   "note": "müzik kaydı"
+  },
+  {
+   "word": "record",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kaydetmek",
+   "note": "ses, görüntü veya veri saklamak"
+  },
+  {
+   "word": "rest",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dinlenmek",
+   "note": "yorgunluğu gidermek"
+  },
+  {
+   "word": "rest",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "geri kalan",
+   "note": "artakalan kısım"
+  },
+  {
+   "word": "rest",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "dinlenme",
+   "note": "mola"
+  },
+  {
+   "word": "return",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dönmek",
+   "note": "geri gelmek"
+  },
+  {
+   "word": "return",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "iade etmek",
+   "note": "geri vermek"
+  },
+  {
+   "word": "ring",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yüzük, halka",
+   "note": "parmağa takılan takı veya daire"
+  },
+  {
+   "word": "ring",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çalmak (zil/telefon)",
+   "note": "ses çıkarmak"
+  },
+  {
+   "word": "rock",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kaya, taş",
+   "note": "büyük sert kütle"
+  },
+  {
+   "word": "rock",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sallamak, sallanmak",
+   "note": "ileri geri hareket etmek"
+  },
+  {
+   "word": "room",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "oda",
+   "note": "evin bölümlerinden her biri"
+  },
+  {
+   "word": "room",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yer, alan, boşluk",
+   "note": "sığacak kadar açıklık"
+  },
+  {
+   "word": "save",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kurtarmak",
+   "note": "tehlikeden korumak"
+  },
+  {
+   "word": "save",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "biriktirmek",
+   "note": "para saklamak"
+  },
+  {
+   "word": "save",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kaydetmek",
+   "note": "dosya, bilgisayar"
+  },
+  {
+   "word": "season",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mevsim, sezon",
+   "note": "yılın dört bölümünden biri"
+  },
+  {
+   "word": "sense",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "duyu",
+   "note": "algılama yetisi"
+  },
+  {
+   "word": "sense",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "anlam",
+   "note": "bir sözün anlamı"
+  },
+  {
+   "word": "sense",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sağduyu",
+   "note": "mantık"
+  },
+  {
+   "word": "serve",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "hizmet etmek",
+   "note": "görev yapmak"
+  },
+  {
+   "word": "serve",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "servis yapmak",
+   "note": "yemek sunmak"
+  },
+  {
+   "word": "share",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "paylaşmak",
+   "note": "bölüşmek veya ortak olmak"
+  },
+  {
+   "word": "sign",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "işaret, belirti",
+   "note": "iz, gösterge"
+  },
+  {
+   "word": "sign",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tabela, levha",
+   "note": "yol, dükkân tabelası"
+  },
+  {
+   "word": "sign",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "imzalamak",
+   "note": "adını yazarak onaylamak"
+  },
+  {
+   "word": "sound",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ses",
+   "note": "işitilen titreşim"
+  },
+  {
+   "word": "sound",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kulağa gelmek, gibi görünmek",
+   "note": "izlenim bırakmak"
+  }
+ ],
+ "examples": [
+  {
+   "word": "sürmek",
+   "lang": "tr",
+   "meaning": "to last",
+   "tr": "Toplantı iki saat sürdü.",
+   "en": "The meeting lasted two hours.",
+   "level": "A2"
+  },
+  {
+   "word": "take",
+   "lang": "en",
+   "meaning": "sürmek (zaman)",
+   "tr": "Oraya gitmek bir saat sürer.",
+   "en": "It takes an hour to get there.",
+   "level": "A2"
+  },
+  {
+   "word": "vurmak",
+   "lang": "tr",
+   "meaning": "to hit, to strike",
+   "tr": "Çekiçle çiviye yavaşça vurdu.",
+   "en": "He hit the nail gently with a hammer.",
+   "level": "A2"
+  },
+  {
+   "word": "vurmak",
+   "lang": "tr",
+   "meaning": "to shine on",
+   "tr": "Sabah güneşi pencereden içeri vuruyor.",
+   "en": "The morning sun shines through the window.",
+   "level": "B1"
+  },
+  {
+   "word": "kırmak",
+   "lang": "tr",
+   "meaning": "to break",
+   "tr": "Çocuk yanlışlıkla annesinin en sevdiği vazoyu kırdı.",
+   "en": "The child accidentally broke his mother's favorite vase.",
+   "level": "A2"
+  },
+  {
+   "word": "kırmak",
+   "lang": "tr",
+   "meaning": "to hurt (feelings)",
+   "tr": "Sert sözlerinle onu gerçekten çok kırdın.",
+   "en": "You really hurt her feelings with your harsh words.",
+   "level": "B1"
+  },
+  {
+   "word": "kalkmak",
+   "lang": "tr",
+   "meaning": "to get up",
+   "tr": "Her sabah saat yedide kalkıp kahvaltı yaparım.",
+   "en": "I get up at seven every morning and have breakfast.",
+   "level": "A1"
+  },
+  {
+   "word": "kalkmak",
+   "lang": "tr",
+   "meaning": "to depart",
+   "tr": "Uçağımız İstanbul'dan tam vaktinde kalktı.",
+   "en": "Our plane departed from Istanbul right on time.",
+   "level": "A2"
+  },
+  {
+   "word": "açmak",
+   "lang": "tr",
+   "meaning": "to open",
+   "tr": "Odayı havalandırmak için pencereyi açtım.",
+   "en": "I opened the window to air out the room.",
+   "level": "A1"
+  },
+  {
+   "word": "açmak",
+   "lang": "tr",
+   "meaning": "to turn on",
+   "tr": "Hava kararınca salondaki lambaları açtık.",
+   "en": "When it got dark, we turned on the lights in the living room.",
+   "level": "A2"
+  },
+  {
+   "word": "durmak",
+   "lang": "tr",
+   "meaning": "to stop",
+   "tr": "Otobüs durağa yaklaşınca yavaşça durdu.",
+   "en": "The bus stopped slowly as it approached the stop.",
+   "level": "A1"
+  },
+  {
+   "word": "durmak",
+   "lang": "tr",
+   "meaning": "to emphasize",
+   "tr": "Öğretmen sınavda çıkacak konuların üzerinde durdu.",
+   "en": "The teacher emphasized the topics that will be on the exam.",
+   "level": "B2"
+  },
+  {
+   "word": "bırakmak",
+   "lang": "tr",
+   "meaning": "to quit, to give up",
+   "tr": "Geçen yıl şeker tüketmeyi tamamen bıraktı.",
+   "en": "She completely gave up consuming sugar last year.",
+   "level": "B1"
+  },
+  {
+   "word": "bırakmak",
+   "lang": "tr",
+   "meaning": "to drop off",
+   "tr": "Seni yarın sabah havaalanına ben bırakabilirim.",
+   "en": "I can drop you off at the airport tomorrow morning.",
+   "level": "A2"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to buy",
+   "tr": "Kış için kendine sıcak tutan yeni bir mont aldı.",
+   "en": "He bought himself a warm new coat for winter.",
+   "level": "A1"
+  },
+  {
+   "word": "almak",
+   "lang": "tr",
+   "meaning": "to receive",
+   "tr": "Başvurusunun kabul edildiğine dair bir e-posta aldı.",
+   "en": "She received an email stating that her application was accepted.",
+   "level": "B1"
+  },
+  {
+   "word": "bakmak",
+   "lang": "tr",
+   "meaning": "to look after",
+   "tr": "Hafta sonu kardeşimin çocuklarına ben bakacağım.",
+   "en": "I will look after my sibling's children this weekend.",
+   "level": "A2"
+  },
+  {
+   "word": "bakmak",
+   "lang": "tr",
+   "meaning": "to face",
+   "tr": "Yeni taşındığımız daire doğrudan denize bakıyor.",
+   "en": "The apartment we just moved into faces the sea directly.",
+   "level": "B1"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "meaning": "to put, to place",
+   "tr": "Anahtarları her zaman girişteki masanın üzerine koyarım.",
+   "en": "I always put the keys on the table by the entrance.",
+   "level": "A1"
+  },
+  {
+   "word": "çıkmak",
+   "lang": "tr",
+   "meaning": "to go out",
+   "tr": "Akşam yemeğinden sonra yürüyüş yapmak için dışarı çıktık.",
+   "en": "We went out for a walk after dinner.",
+   "level": "A1"
+  },
+  {
+   "word": "çıkmak",
+   "lang": "tr",
+   "meaning": "to turn out to be",
+   "tr": "Başta zor görünen proje oldukça kolay çıktı.",
+   "en": "The project that seemed difficult at first turned out to be quite easy.",
+   "level": "B2"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to fall",
+   "tr": "Sonbaharda ağaçların yaprakları sararıp yere düşer.",
+   "en": "In autumn, tree leaves turn yellow and fall to the ground.",
+   "level": "A2"
+  },
+  {
+   "word": "düşmek",
+   "lang": "tr",
+   "meaning": "to decrease",
+   "tr": "Bu hafta hava sıcaklıkları beş derece birden düştü.",
+   "en": "Air temperatures dropped by five degrees at once this week.",
+   "level": "B1"
+  },
+  {
+   "word": "tutmak",
+   "lang": "tr",
+   "meaning": "to hold",
+   "tr": "Küçük çocuk annesinin elini sıkıca tuttu.",
+   "en": "The little child held his mother's hand tightly.",
+   "level": "A1"
+  },
+  {
+   "word": "tutmak",
+   "lang": "tr",
+   "meaning": "to rent",
+   "tr": "Üniversiteye yakın bir mahallede küçük bir ev tuttular.",
+   "en": "They rented a small house in a neighborhood close to the university.",
+   "level": "B1"
+  },
+  {
+   "word": "çekmek",
+   "lang": "tr",
+   "meaning": "to pull",
+   "tr": "Ağır kapıyı açmak için kendine doğru kuvvetle çekti.",
+   "en": "He pulled the heavy door firmly toward himself to open it.",
+   "level": "A2"
+  },
+  {
+   "word": "çekmek",
+   "lang": "tr",
+   "meaning": "to withdraw",
+   "tr": "Faturayı ödemek için bankamatikten biraz nakit çektim.",
+   "en": "I withdrew some cash from the ATM to pay the bill.",
+   "level": "B1"
+  },
+  {
+   "word": "vermek",
+   "lang": "tr",
+   "meaning": "to give",
+   "tr": "Arkadaşıma okuması için kendi kitabımı verdim.",
+   "en": "I gave my own book to my friend to read.",
+   "level": "A1"
+  },
+  {
+   "word": "geçmek",
+   "lang": "tr",
+   "meaning": "to pass",
+   "tr": "Zaman su gibi çok çabuk geçiyor.",
+   "en": "Time passes very quickly like water.",
+   "level": "A2"
+  },
+  {
+   "word": "geçmek",
+   "lang": "tr",
+   "meaning": "to recover, to stop (pain)",
+   "tr": "İlacı içtikten yarım saat sonra baş ağrım geçti.",
+   "en": "Half an hour after taking the medicine, my headache went away.",
+   "level": "B1"
+  },
+  {
+   "word": "kalmak",
+   "lang": "tr",
+   "meaning": "to stay",
+   "tr": "Tatil boyunca sahil kenarındaki küçük bir otelde kaldık.",
+   "en": "We stayed at a small hotel by the beach during the holiday.",
+   "level": "A1"
+  },
+  {
+   "word": "bulmak",
+   "lang": "tr",
+   "meaning": "to find",
+   "tr": "Kaybettiğim gözlüğümü koltuğun altında buldum.",
+   "en": "I found my lost glasses under the sofa.",
+   "level": "A1"
+  },
+  {
+   "word": "görmek",
+   "lang": "tr",
+   "meaning": "to see",
+   "tr": "Pencereden bakınca bahçede oynayan çocukları gördüm.",
+   "en": "When I looked out the window, I saw the children playing in the garden.",
+   "level": "A1"
+  },
+  {
+   "word": "bilmek",
+   "lang": "tr",
+   "meaning": "to know",
+   "tr": "Bu şehrin bütün sokaklarını avucunun içi gibi bilir.",
+   "en": "He knows all the streets of this city like the back of his hand.",
+   "level": "B1"
+  },
+  {
+   "word": "istemek",
+   "lang": "tr",
+   "meaning": "to want",
+   "tr": "Bu akşam evde kalıp dinlenmek istiyorum.",
+   "en": "I want to stay home and rest tonight.",
+   "level": "A1"
+  },
+  {
+   "word": "gelmek",
+   "lang": "tr",
+   "meaning": "to come",
+   "tr": "Misafirlerimiz yarın akşam yemeğine bize gelecek.",
+   "en": "Our guests are coming to our place for dinner tomorrow.",
+   "level": "A1"
+  },
+  {
+   "word": "gitmek",
+   "lang": "tr",
+   "meaning": "to go",
+   "tr": "Her yaz ailemle birlikte köyümüze gideriz.",
+   "en": "Every summer we go to our village together with my family.",
+   "level": "A1"
+  },
+  {
+   "word": "yapmak",
+   "lang": "tr",
+   "meaning": "to make",
+   "tr": "Annem pazar sabahları bize nefis krepler yapar.",
+   "en": "My mother makes delicious pancakes for us on Sunday mornings.",
+   "level": "A1"
+  },
+  {
+   "word": "söylemek",
+   "lang": "tr",
+   "meaning": "to tell",
+   "tr": "Bana gerçeği en başından söylemeliydin.",
+   "en": "You should have told me the truth from the very beginning.",
+   "level": "B1"
+  },
+  {
+   "word": "anlamak",
+   "lang": "tr",
+   "meaning": "to understand",
+   "tr": "Yabancı bir dilde kitap okudukça kelimeleri daha iyi anlıyorum.",
+   "en": "As I read books in a foreign language, I understand words better.",
+   "level": "B1"
+  },
+  {
+   "word": "beklemek",
+   "lang": "tr",
+   "meaning": "to wait",
+   "tr": "Durakta yaklaşık yirmi dakika otobüs bekledim.",
+   "en": "I waited for the bus at the stop for about twenty minutes.",
+   "level": "A1"
+  },
+  {
+   "word": "çalışmak",
+   "lang": "tr",
+   "meaning": "to work",
+   "tr": "Babam bu fabrikada yirmi yıldır mühendis olarak çalışıyor.",
+   "en": "My father has been working as an engineer at this factory for twenty years.",
+   "level": "A2"
+  },
+  {
+   "word": "çalışmak",
+   "lang": "tr",
+   "meaning": "to study",
+   "tr": "Final sınavlarına hazırlanmak için kütüphanede ders çalışıyoruz.",
+   "en": "We are studying at the library to prepare for final exams.",
+   "level": "A2"
+  },
+  {
+   "word": "okumak",
+   "lang": "tr",
+   "meaning": "to read",
+   "tr": "Uyumadan önce mutlaka yirmi sayfa kitap okurum.",
+   "en": "I always read twenty pages of a book before I go to sleep.",
+   "level": "A1"
+  },
+  {
+   "word": "yazmak",
+   "lang": "tr",
+   "meaning": "to write",
+   "tr": "Duygularını kağıda dökmek için her gün günlük yazıyor.",
+   "en": "She writes a diary every day to put her feelings on paper.",
+   "level": "A2"
+  },
+  {
+   "word": "başlamak",
+   "lang": "tr",
+   "meaning": "to start",
+   "tr": "Yeni işine önümüzdeki pazartesi günü başlayacak.",
+   "en": "He will start his new job next Monday.",
+   "level": "A1"
+  },
+  {
+   "word": "bitirmek",
+   "lang": "tr",
+   "meaning": "to finish",
+   "tr": "Ödevlerimi erken bitirip arkadaşlarımla buluştum.",
+   "en": "I finished my homework early and met with my friends.",
+   "level": "A2"
+  },
+  {
+   "word": "açık",
+   "lang": "tr",
+   "meaning": "clear, obvious",
+   "tr": "Kurallar herkes için gayet açık ve netti.",
+   "en": "The rules were quite clear and unambiguous for everyone.",
+   "level": "B1"
+  },
+  {
+   "word": "ağır",
+   "lang": "tr",
+   "meaning": "heavy",
+   "tr": "Bu valiz tek başına taşıyamayacağım kadar ağır.",
+   "en": "This suitcase is too heavy for me to carry alone.",
+   "level": "A2"
+  },
+  {
+   "word": "ince",
+   "lang": "tr",
+   "meaning": "polite, thoughtful",
+   "tr": "Bu ince düşünceniz için size çok teşekkür ederim.",
+   "en": "Thank you very much for this thoughtful gesture.",
+   "level": "B2"
+  },
+  {
+   "word": "sıcak",
+   "lang": "tr",
+   "meaning": "friendly, warm",
+   "tr": "Bizi kapıda çok sıcak bir gülümsemeyle karşıladılar.",
+   "en": "They welcomed us at the door with a very warm smile.",
+   "level": "B1"
+  },
+  {
+   "word": "derin",
+   "lang": "tr",
+   "meaning": "deep",
+   "tr": "Bu gölün bazı kısımları oldukça derin.",
+   "en": "Some parts of this lake are quite deep.",
+   "level": "A2"
+  },
+  {
+   "word": "run",
+   "lang": "en",
+   "meaning": "işletmek, yönetmek",
+   "tr": "Kendi yazılım şirketini beş yıldır başarıyla işletiyor.",
+   "en": "She has been successfully running her own software company for five years.",
+   "level": "B1"
+  },
+  {
+   "word": "run",
+   "lang": "en",
+   "meaning": "koşmak",
+   "tr": "Sağlıklı kalmak için haftada üç gün parkta koşuyor.",
+   "en": "He runs in the park three days a week to stay healthy.",
+   "level": "A1"
+  },
+  {
+   "word": "set",
+   "lang": "en",
+   "meaning": "kurmak, ayarlamak",
+   "tr": "Yarın erken uyanmak için saatimi altıya kurdum.",
+   "en": "I set my alarm for six to wake up early tomorrow.",
+   "level": "A2"
+  },
+  {
+   "word": "set",
+   "lang": "en",
+   "meaning": "batmak (güneş)",
+   "tr": "Yaz akşamlarında güneş deniz ufkunda harika batar.",
+   "en": "On summer evenings, the sun sets wonderfully on the sea horizon.",
+   "level": "B1"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "düzenlemek",
+   "tr": "Gelecek ay şehir merkezinde büyük bir kitap fuarı düzenleyecekler.",
+   "en": "They will hold a big book fair in the city center next month.",
+   "level": "B1"
+  },
+  {
+   "word": "hold",
+   "lang": "en",
+   "meaning": "tutmak",
+   "tr": "Lütfen kapıyı benim için bir saniye tutar mısın?",
+   "en": "Could you please hold the door for me for a second?",
+   "level": "A1"
+  },
+  {
+   "word": "turn",
+   "lang": "en",
+   "meaning": "dönmek",
+   "tr": "Köşeden sola döndüğünüzde eczaneyi göreceksiniz.",
+   "en": "When you turn left at the corner, you will see the pharmacy.",
+   "level": "A1"
+  },
+  {
+   "word": "turn",
+   "lang": "en",
+   "meaning": "dönüşmek",
+   "tr": "Hava aniden soğudu ve yağmur kara dönüştü.",
+   "en": "The weather suddenly turned cold and the rain turned into snow.",
+   "level": "B1"
+  },
+  {
+   "word": "light",
+   "lang": "en",
+   "meaning": "hafif",
+   "tr": "Yolculuk için yanına sadece hafif bir sırt çantası aldı.",
+   "en": "She only took a light backpack with her for the trip.",
+   "level": "A2"
+  },
+  {
+   "word": "light",
+   "lang": "en",
+   "meaning": "yakmak",
+   "tr": "Elektrikler kesilince salonda birkaç mum yaktık.",
+   "en": "When the power went out, we lit a few candles in the living room.",
+   "level": "B1"
+  },
+  {
+   "word": "book",
+   "lang": "en",
+   "meaning": "rezervasyon yapmak",
+   "tr": "Tatil sezonunda yer bulmak için oteli erken ayırtmalısın.",
+   "en": "You should book the hotel early to find a room during the holiday season.",
+   "level": "A2"
+  },
+  {
+   "word": "match",
+   "lang": "en",
+   "meaning": "uymak, eşleşmek",
+   "tr": "Bu kravat takım elbisene çok iyi uyuyor.",
+   "en": "This tie matches your suit very well.",
+   "level": "A2"
+  },
+  {
+   "word": "clear",
+   "lang": "en",
+   "meaning": "temizlemek, toplamak",
+   "tr": "Yemekten sonra tabakları toplamama yardım eder misin?",
+   "en": "Can you help me clear the plates after dinner?",
+   "level": "A2"
+  },
+  {
+   "word": "fine",
+   "lang": "en",
+   "meaning": "para cezası",
+   "tr": "Hız sınırını aştığı için yüksek bir para cezası ödedi.",
+   "en": "He paid a high fine for exceeding the speed limit.",
+   "level": "B1"
+  },
+  {
+   "word": "bear",
+   "lang": "en",
+   "meaning": "katlanmak",
+   "tr": "Bu kadar gürültüye daha fazla katlanamıyorum.",
+   "en": "I cannot bear this much noise anymore.",
+   "level": "B2"
+  },
+  {
+   "word": "drop",
+   "lang": "en",
+   "meaning": "düşürmek",
+   "tr": "Telefonunu beton zemine düşürünce ekranı çatladı.",
+   "en": "When she dropped her phone on the concrete floor, the screen cracked.",
+   "level": "A2"
+  },
+  {
+   "word": "right",
+   "lang": "en",
+   "meaning": "hak",
+   "tr": "Herkesin kaliteli eğitim alma hakkı vardır.",
+   "en": "Everyone has the right to receive quality education.",
+   "level": "B1"
+  },
+  {
+   "word": "point",
+   "lang": "en",
+   "meaning": "işaret etmek",
+   "tr": "Rehber uzaktaki tarihi kaleyi parmağıyla işaret etti.",
+   "en": "The guide pointed at the historic castle in the distance.",
+   "level": "A2"
+  },
+  {
+   "word": "play",
+   "lang": "en",
+   "meaning": "çalmak (enstrüman)",
+   "tr": "Küçük yaşlardan beri çok güzel piyano çalıyor.",
+   "en": "She has been playing the piano very well since a young age.",
+   "level": "A1"
+  },
+  {
+   "word": "watch",
+   "lang": "en",
+   "meaning": "izlemek",
+   "tr": "Hafta sonları evde belgesel izlemeyi çok severim.",
+   "en": "I really enjoy watching documentaries at home on weekends.",
+   "level": "A1"
+  },
+  {
+   "word": "spring",
+   "lang": "en",
+   "meaning": "ilkbahar",
+   "tr": "İlkbaharda doğa yeniden canlanır ve ağaçlar çiçek açar.",
+   "en": "In spring, nature comes alive again and trees blossom.",
+   "level": "A1"
+  },
+  {
+   "word": "fall",
+   "lang": "en",
+   "meaning": "sonbahar",
+   "tr": "Sonbaharda hava serinler ve okullar açılır.",
+   "en": "In fall, the weather cools down and schools open.",
+   "level": "A1"
+  },
+  {
+   "word": "park",
+   "lang": "en",
+   "meaning": "park etmek",
+   "tr": "Aracını binanın önündeki otoparka güvenle park etti.",
+   "en": "He safely parked his car in the parking lot in front of the building.",
+   "level": "A1"
+  },
+  {
+   "word": "train",
+   "lang": "en",
+   "meaning": "eğitmek",
+   "tr": "Yeni başlayan çalışanları iki hafta boyunca eğiteceğiz.",
+   "en": "We will train the newly hired employees for two weeks.",
+   "level": "B1"
+  },
+  {
+   "word": "close",
+   "lang": "en",
+   "meaning": "yakın",
+   "tr": "Çocukluk arkadaşımla hâlâ çok yakın görüşüyoruz.",
+   "en": "I am still very close with my childhood friend.",
+   "level": "A2"
+  },
+  {
+   "word": "hard",
+   "lang": "en",
+   "meaning": "sıkı, çok",
+   "tr": "Hedeflerine ulaşmak için her gün çok sıkı çalışıyor.",
+   "en": "She works very hard every day to reach her goals.",
+   "level": "A2"
+  },
+  {
+   "word": "fast",
+   "lang": "en",
+   "meaning": "hızlı",
+   "tr": "Yeni hızlı tren iki şehir arasını iki saate indirdi.",
+   "en": "The new fast train cut the journey between the two cities to two hours.",
+   "level": "A2"
+  },
+  {
+   "word": "kind",
+   "lang": "en",
+   "meaning": "nazik, kibar",
+   "tr": "Yaşlı kadına yer veren genç çok nazikti.",
+   "en": "The young man who gave his seat to the elderly woman was very kind.",
+   "level": "A2"
+  },
+  {
+   "word": "mean",
+   "lang": "en",
+   "meaning": "anlamına gelmek",
+   "tr": "Bu kelimenin cümle içinde ne anlama geldiğini biliyor musun?",
+   "en": "Do you know what this word means in the sentence?",
+   "level": "A2"
+  },
+  {
+   "word": "mind",
+   "lang": "en",
+   "meaning": "aldırmak, rahatsız olmak",
+   "tr": "Pencereyi biraz açsam senin için bir sakıncası olur mu?",
+   "en": "Would you mind if I opened the window a little?",
+   "level": "B1"
+  },
+  {
+   "word": "miss",
+   "lang": "en",
+   "meaning": "kaçırmak",
+   "tr": "Geç kaldığımız için sabahki ilk treni kaçırdık.",
+   "en": "Because we were late, we missed the first train in the morning.",
+   "level": "A2"
+  },
+  {
+   "word": "note",
+   "lang": "en",
+   "meaning": "fark etmek, belirtmek",
+   "tr": "Rapordaki küçük hatayı hemen fark etti.",
+   "en": "She immediately noted the small mistake in the report.",
+   "level": "B2"
+  },
+  {
+   "word": "order",
+   "lang": "en",
+   "meaning": "sipariş vermek",
+   "tr": "İnternetten yeni bir kulaklık sipariş ettim.",
+   "en": "I ordered a new pair of headphones online.",
+   "level": "A2"
+  },
+  {
+   "word": "part",
+   "lang": "en",
+   "meaning": "parça, bölüm",
+   "tr": "Filmin en heyecanlı bölümü henüz başlamadı.",
+   "en": "The most exciting part of the movie hasn't started yet.",
+   "level": "A2"
+  },
+  {
+   "word": "pass",
+   "lang": "en",
+   "meaning": "uzatmak",
+   "tr": "Tuzu bana uzatabilir misin lütfen?",
+   "en": "Could you pass me the salt, please?",
+   "level": "A2"
+  },
+  {
+   "word": "place",
+   "lang": "en",
+   "meaning": "yerleştirmek",
+   "tr": "Kitapları türlerine göre raflara yerleştirdik.",
+   "en": "We placed the books on the shelves according to their genres.",
+   "level": "B1"
+  },
+  {
+   "word": "plan",
+   "lang": "en",
+   "meaning": "planlamak",
+   "tr": "Önümüzdeki yaz için uzun bir Avrupa turu planlıyoruz.",
+   "en": "We are planning a long European tour for next summer.",
+   "level": "A2"
+  },
+  {
+   "word": "post",
+   "lang": "en",
+   "meaning": "paylaşmak",
+   "tr": "Geziden çektiği fotoğrafları sosyal medyada paylaştı.",
+   "en": "He posted the photos he took from the trip on social media.",
+   "level": "A2"
+  },
+  {
+   "word": "present",
+   "lang": "en",
+   "meaning": "sunmak",
+   "tr": "Proje sonuçlarını yarın yöneticilere sunacağız.",
+   "en": "We will present the project results to the managers tomorrow.",
+   "level": "B1"
+  },
+  {
+   "word": "press",
+   "lang": "en",
+   "meaning": "basmak",
+   "tr": "Asansörü çağırmak için düğmeye basmanız yeterli.",
+   "en": "You just need to press the button to call the elevator.",
+   "level": "A2"
+  },
+  {
+   "word": "raise",
+   "lang": "en",
+   "meaning": "yetiştirmek",
+   "tr": "Çocuklarını doğayla iç içe bir kasabada yetiştirdiler.",
+   "en": "They raised their children in a town surrounded by nature.",
+   "level": "B1"
+  },
+  {
+   "word": "reach",
+   "lang": "en",
+   "meaning": "ulaşmak",
+   "tr": "Uzun bir tırmanıştan sonra dağın zirvesine ulaştık.",
+   "en": "After a long climb, we reached the summit of the mountain.",
+   "level": "B1"
+  },
+  {
+   "word": "reason",
+   "lang": "en",
+   "meaning": "sebep",
+   "tr": "Toplantıya katılamamasının geçerli bir sebebi vardı.",
+   "en": "He had a valid reason for not being able to attend the meeting.",
+   "level": "B1"
+  },
+  {
+   "word": "record",
+   "lang": "en",
+   "meaning": "kaydetmek",
+   "tr": "Ders notlarını ses kaydı olarak telefonuna kaydetti.",
+   "en": "She recorded the lecture notes as an audio recording on her phone.",
+   "level": "B1"
+  },
+  {
+   "word": "rest",
+   "lang": "en",
+   "meaning": "dinlenmek",
+   "tr": "Uzun yürüyüşten sonra biraz oturup dinlendik.",
+   "en": "After the long walk, we sat down and rested for a while.",
+   "level": "A1"
+  },
+  {
+   "word": "return",
+   "lang": "en",
+   "meaning": "iade etmek",
+   "tr": "Beden uymadığı için ceketi mağazaya iade ettim.",
+   "en": "I returned the jacket to the store because the size didn't fit.",
+   "level": "B1"
+  },
+  {
+   "word": "ring",
+   "lang": "en",
+   "meaning": "çalmak (telefon)",
+   "tr": "Tam evden çıkarken telefonum çalmaya başladı.",
+   "en": "Just as I was leaving the house, my phone started to ring.",
+   "level": "A2"
+  },
+  {
+   "word": "save",
+   "lang": "en",
+   "meaning": "biriktirmek",
+   "tr": "Yeni bir bilgisayar almak için her ay para biriktiriyor.",
+   "en": "He saves money every month to buy a new computer.",
+   "level": "A2"
+  },
+  {
+   "word": "share",
+   "lang": "en",
+   "meaning": "paylaşmak",
+   "tr": "Bilgi paylaştıkça çoğalır ve değer kazanır.",
+   "en": "Knowledge multiplies and gains value as it is shared.",
+   "level": "B1"
+  },
+  {
+   "word": "sign",
+   "lang": "en",
+   "meaning": "imzalamak",
+   "tr": "Sözleşmeyi dikkatlice okuduktan sonra imzaladı.",
+   "en": "She signed the contract after reading it carefully.",
+   "level": "B1"
+  }
+ ],
+ "phrases": [
+  {
+   "phrase": "drop someone a line",
+   "lang": "en",
+   "meaning": "birine birkaç satır yazmak, haber vermek",
+   "ex": "Please drop me a line when you arrive safely at home.",
+   "ex_tr": "Eve sağ salim vardığında bana bir haber ver."
+  },
+  {
+   "phrase": "göz atmak",
+   "lang": "tr",
+   "meaning": "to take a look, to glance at",
+   "ex": "Rapora bir göz attım.",
+   "ex_tr": "I took a look at the report."
+  },
+  {
+   "phrase": "give up",
+   "lang": "en",
+   "meaning": "vazgeçmek, bırakmak",
+   "ex": "Don't give up now.",
+   "ex_tr": "Şimdi vazgeçme."
+  },
+  {
+   "phrase": "kulak misafiri olmak",
+   "lang": "tr",
+   "meaning": "to overhear, to eavesdrop unintentionally",
+   "ex": "Otobüste yan koltuktakilerin konuşmasına istemeden kulak misafiri oldum.",
+   "ex_tr": "I unintentionally overheard the conversation of the people in the next seat on the bus."
+  },
+  {
+   "phrase": "etekleri zil çalmak",
+   "lang": "tr",
+   "meaning": "to be thrilled, to be overjoyed",
+   "ex": "Sınavı kazandığını öğrenince sevinçten etekleri zil çaldı.",
+   "ex_tr": "When she learned she passed the exam, she was thrilled with joy."
+  },
+  {
+   "phrase": "gözden geçirmek",
+   "lang": "tr",
+   "meaning": "to review, to look over, to revise",
+   "ex": "Metni göndermeden önce son bir kez gözden geçirdim.",
+   "ex_tr": "I reviewed the text one last time before sending it."
+  },
+  {
+   "phrase": "ağzından kaçırmak",
+   "lang": "tr",
+   "meaning": "to let slip, to blurt out",
+   "ex": "Sürpriz partiyi yanlışlıkla ağzından kaçırdı.",
+   "ex_tr": "He accidentally let slip about the surprise party."
+  },
+  {
+   "phrase": "elinden geleni yapmak",
+   "lang": "tr",
+   "meaning": "to do one's best",
+   "ex": "Projeyi zamanında yetiştirmek için elimizden geleni yapıyoruz.",
+   "ex_tr": "We are doing our best to finish the project on time."
+  },
+  {
+   "phrase": "kafasına koymak",
+   "lang": "tr",
+   "meaning": "to set one's mind on",
+   "ex": "Bu yıl yeni bir dil öğrenmeyi kafasına koydu.",
+   "ex_tr": "She set her mind on learning a new language this year."
+  },
+  {
+   "phrase": "göze almak",
+   "lang": "tr",
+   "meaning": "to dare, to risk",
+   "ex": "Başarılı olmak için her türlü zorluğu göze aldı.",
+   "ex_tr": "He risked all kinds of difficulties in order to succeed."
+  },
+  {
+   "phrase": "burnu havada olmak",
+   "lang": "tr",
+   "meaning": "to be arrogant, to be snobbish",
+   "ex": "Terfi aldıktan sonra iyice burnu havada biri oldu.",
+   "ex_tr": "After getting promoted, he became quite an arrogant person."
+  },
+  {
+   "phrase": "can kulağıyla dinlemek",
+   "lang": "tr",
+   "meaning": "to listen intently, to be all ears",
+   "ex": "Öğrenciler öğretmenin anlattığı hikayeyi can kulağıyla dinledi.",
+   "ex_tr": "The students listened intently to the story the teacher told."
+  },
+  {
+   "phrase": "dört gözle beklemek",
+   "lang": "tr",
+   "meaning": "to look forward to",
+   "ex": "Yaz tatilinin gelmesini dört gözle bekliyoruz.",
+   "ex_tr": "We are looking forward to the arrival of the summer holiday."
+  },
+  {
+   "phrase": "eli kulağında olmak",
+   "lang": "tr",
+   "meaning": "to be imminent, to be about to happen",
+   "ex": "Kara bulutlar toplandı, yağmurun yağması eli kulağında.",
+   "ex_tr": "Dark clouds have gathered; it is about to rain any minute."
+  },
+  {
+   "phrase": "gönlünü almak",
+   "lang": "tr",
+   "meaning": "to appease, to make up with someone",
+   "ex": "Kırdığı arkadaşının gönlünü almak için ona çiçek aldı.",
+   "ex_tr": "He bought flowers to make up with his friend whose feelings he had hurt."
+  },
+  {
+   "phrase": "içine sinmek",
+   "lang": "tr",
+   "meaning": "to feel right about, to be satisfied with",
+   "ex": "Bu evi çok beğendim, gerçekten içime sindi.",
+   "ex_tr": "I liked this house very much; I feel really satisfied with it."
+  },
+  {
+   "phrase": "kılı kırk yarmak",
+   "lang": "tr",
+   "meaning": "to split hairs, to be overly meticulous",
+   "ex": "Sözleşme maddelerini hazırlarken adeta kılı kırk yardı.",
+   "ex_tr": "He was overly meticulous while preparing the contract clauses."
+  },
+  {
+   "phrase": "lafı ağzında gevelemek",
+   "lang": "tr",
+   "meaning": "to beat around the bush, to mumble",
+   "ex": "Gerçeği söylemek yerine lafı ağzında geveleyip durdu.",
+   "ex_tr": "Instead of telling the truth, he kept beating around the bush."
+  },
+  {
+   "phrase": "masrafa girmek",
+   "lang": "tr",
+   "meaning": "to incur expense, to spend a lot",
+   "ex": "Bizim için bu kadar masrafa girmenize hiç gerek yoktu.",
+   "ex_tr": "There was no need for you to go to so much expense for us."
+  },
+  {
+   "phrase": "nabzını yoklamak",
+   "lang": "tr",
+   "meaning": "to sound someone out, to test the waters",
+   "ex": "Teklifi sunmadan önce yöneticinin nabzını yokladı.",
+   "ex_tr": "He sounded out the manager before presenting the proposal."
+  },
+  {
+   "phrase": "ortaya çıkmak",
+   "lang": "tr",
+   "meaning": "to emerge, to turn up, to come to light",
+   "ex": "Kaybolan belgeler eski dolabın içinden ortaya çıktı.",
+   "ex_tr": "The missing documents turned up inside the old cabinet."
+  },
+  {
+   "phrase": "pabucu dama atılmak",
+   "lang": "tr",
+   "meaning": "to be out of favor, to be replaced",
+   "ex": "Yeni telefon çıkınca eskisinin pabucu dama atıldı.",
+   "ex_tr": "When the new phone came out, the old one fell out of favor."
+  },
+  {
+   "phrase": "renk vermemek",
+   "lang": "tr",
+   "meaning": "to keep a poker face, not to give oneself away",
+   "ex": "Haberi duyduğunda çok şaşırdı ama hiç renk vermedi.",
+   "ex_tr": "He was very surprised when he heard the news, but he didn't show it at all."
+  },
+  {
+   "phrase": "soğuk duş etkisi yaratmak",
+   "lang": "tr",
+   "meaning": "to come as a shock, to be a cold shower",
+   "ex": "Beklenmedik istifa haberi şirkette soğuk duş etkisi yarattı.",
+   "ex_tr": "The unexpected resignation news came as a shock in the company."
+  },
+  {
+   "phrase": "taş üstünde taş bırakmamak",
+   "lang": "tr",
+   "meaning": "to leave no stone unturned, to destroy completely",
+   "ex": "Şiddetli fırtına sahil kasabasında taş üstünde taş bırakmadı.",
+   "ex_tr": "The severe storm left nothing standing in the coastal town."
+  },
+  {
+   "phrase": "ucu ucuna yetişmek",
+   "lang": "tr",
+   "meaning": "to make it just in time, by a hair's breadth",
+   "ex": "Trafiğe rağmen kalkış saatinde uçağa ucu ucuna yetiştik.",
+   "ex_tr": "Despite the traffic, we caught the plane just in time for departure."
+  },
+  {
+   "phrase": "üstüne düşmek",
+   "lang": "tr",
+   "meaning": "to take a keen interest in, to fuss over",
+   "ex": "Bu konunun üstüne düşersen kısa sürede çözersin.",
+   "ex_tr": "If you focus closely on this issue, you will solve it in a short time."
+  },
+  {
+   "phrase": "vakit öldürmek",
+   "lang": "tr",
+   "meaning": "to kill time",
+   "ex": "Uçağı beklerken havaalanındaki kafede kitap okuyarak vakit öldürdüm.",
+   "ex_tr": "While waiting for the plane, I killed time by reading a book at the airport cafe."
+  },
+  {
+   "phrase": "yakayı ele vermek",
+   "lang": "tr",
+   "meaning": "to get caught",
+   "ex": "Kaçak sürücü güvenlik kameraları sayesinde yakayı ele verdi.",
+   "ex_tr": "The runaway driver got caught thanks to the security cameras."
+  },
+  {
+   "phrase": "yüzü gülmek",
+   "lang": "tr",
+   "meaning": "to be happy, to smile again",
+   "ex": "Aylardır süren çabalarının karşılığını alınca nihayet yüzü güldü.",
+   "ex_tr": "When his months-long efforts paid off, he finally smiled with happiness."
+  },
+  {
+   "phrase": "zaman kazanmak",
+   "lang": "tr",
+   "meaning": "to buy time",
+   "ex": "Karar vermeden önce düşünmek için biraz zaman kazanmak istedi.",
+   "ex_tr": "She wanted to buy some time to think before making a decision."
+  },
+  {
+   "phrase": "açık kapı bırakmak",
+   "lang": "tr",
+   "meaning": "to leave the door open (for future negotiation)",
+   "ex": "Teklifi hemen reddetmedi, gelecekteki görüşmeler için açık kapı bıraktı.",
+   "ex_tr": "He didn't reject the offer immediately; he left the door open for future talks."
+  },
+  {
+   "phrase": "ayak uydurmak",
+   "lang": "tr",
+   "meaning": "to keep up with, to adapt to",
+   "ex": "Teknolojideki hızlı değişimlere ayak uydurmak zorundayız.",
+   "ex_tr": "We have to keep up with the rapid changes in technology."
+  },
+  {
+   "phrase": "bağrına taş basmak",
+   "lang": "tr",
+   "meaning": "to grin and bear it, to suffer in silence",
+   "ex": "Ayrılığa çok üzüldü ama bağrına taş basıp yoluna devam etti.",
+   "ex_tr": "She was very saddened by the separation, but she suffered in silence and moved on."
+  },
+  {
+   "phrase": "canı burnuna gelmek",
+   "lang": "tr",
+   "meaning": "to be fed up, to be at the end of one's tether",
+   "ex": "Bitmeyen gürültü yüzünden artık canı burnuna gelmişti.",
+   "ex_tr": "Because of the endless noise, he was finally at the end of his tether."
+  },
+  {
+   "phrase": "çorbada tuzu bulunmak",
+   "lang": "tr",
+   "meaning": "to contribute a little bit",
+   "ex": "Bu güzel projede bizim de çorbada tuzumuz bulunsun istedik.",
+   "ex_tr": "We wanted to make a small contribution to this wonderful project as well."
+  },
+  {
+   "phrase": "damarına basmak",
+   "lang": "tr",
+   "meaning": "to touch a nerve, to provoke",
+   "ex": "Sürekli eski hatalarını hatırlatarak onun damarına basıyor.",
+   "ex_tr": "He touches a nerve by constantly reminding her of her past mistakes."
+  },
+  {
+   "phrase": "eli açık olmak",
+   "lang": "tr",
+   "meaning": "to be generous",
+   "ex": "İhtiyacı olan herkese yardım eden çok eli açık bir insandır.",
+   "ex_tr": "She is a very generous person who helps everyone in need."
+  },
+  {
+   "phrase": "fırsat kollamak",
+   "lang": "tr",
+   "meaning": "to bide one's time, to look for an opportunity",
+   "ex": "Fikrini yöneticisine sunmak için uygun bir fırsat kolluyordu.",
+   "ex_tr": "He was looking for a suitable opportunity to present his idea to his manager."
+  },
+  {
+   "phrase": "göz boyamak",
+   "lang": "tr",
+   "meaning": "to deceive by appearances, to put on a show",
+   "ex": "Yaptıkları yüzeysel değişiklikler sadece göz boyamaktan ibaretti.",
+   "ex_tr": "The superficial changes they made were merely meant to deceive by appearances."
+  },
+  {
+   "phrase": "hakkını vermek",
+   "lang": "tr",
+   "meaning": "to do justice to, to give due credit",
+   "ex": "Zorlu rolünün hakkını sonuna kadar verdi.",
+   "ex_tr": "She truly did justice to her challenging role."
+  },
+  {
+   "phrase": "ipiyle kuyuya inilmez",
+   "lang": "tr",
+   "meaning": "cannot be relied upon, untrustworthy",
+   "ex": "Sözünde durmayan biridir, onun ipiyle kuyuya inilmez.",
+   "ex_tr": "He is someone who doesn't keep his word; he cannot be relied upon."
+  },
+  {
+   "phrase": "kafa yormak",
+   "lang": "tr",
+   "meaning": "to rack one's brains, to think hard about",
+   "ex": "Bu problemin en pratik çözümü için günlerce kafa yorduk.",
+   "ex_tr": "We thought hard for days about the most practical solution to this problem."
+  },
+  {
+   "phrase": "laf taşımak",
+   "lang": "tr",
+   "meaning": "to gossip, to carry tales",
+   "ex": "İnsanlar arasında laf taşıyarak huzursuzluk çıkarıyor.",
+   "ex_tr": "She causes unrest by carrying tales between people."
+  },
+  {
+   "phrase": "merakını gidermek",
+   "lang": "tr",
+   "meaning": "to satisfy one's curiosity",
+   "ex": "Kitabın sonunu hemen okuyarak merakını giderdi.",
+   "ex_tr": "He satisfied his curiosity by reading the end of the book right away."
+  },
+  {
+   "phrase": "nefes tüketmek",
+   "lang": "tr",
+   "meaning": "to waste one's breath",
+   "ex": "Anlamak istemeyen birine laf anlatmak için boşuna nefes tüketme.",
+   "ex_tr": "Don't waste your breath trying to explain things to someone who doesn't want to understand."
+  },
+  {
+   "phrase": "oyuna gelmek",
+   "lang": "tr",
+   "meaning": "to be tricked, to fall into a trap",
+   "ex": "Dikkatli davranmadığı için dolandırıcıların oyununa geldi.",
+   "ex_tr": "Because he wasn't careful, he fell into the scammers' trap."
+  },
+  {
+   "phrase": "parmak ısırtmak",
+   "lang": "tr",
+   "meaning": "to amaze, to leave in awe",
+   "ex": "Genç piyanist performansı ile dinleyicilere parmak ısırttı.",
+   "ex_tr": "The young pianist amazed the audience with her performance."
+  },
+  {
+   "phrase": "gözünü kırpmamak",
+   "lang": "tr",
+   "meaning": "not to sleep a wink",
+   "ex": "Heyecandan sabaha kadar gözünü bile kırpmadı.",
+   "ex_tr": "Out of excitement, he didn't sleep a wink until morning."
+  },
+  {
+   "phrase": "tadı damağında kalmak",
+   "lang": "tr",
+   "meaning": "to leave a lasting pleasant impression",
+   "ex": "Yediğimiz tatlının tadı gerçekten damağımızda kaldı.",
+   "ex_tr": "The dessert we ate truly left a delicious lasting impression."
+  },
+  {
+   "phrase": "uykusu kaçmak",
+   "lang": "tr",
+   "meaning": "to be unable to sleep, to be wide awake",
+   "ex": "Gece geç saatte kahve içince bütün uykum kaçtı.",
+   "ex_tr": "When I drank coffee late at night, I became completely wide awake."
+  },
+  {
+   "phrase": "üstesinden gelmek",
+   "lang": "tr",
+   "meaning": "to overcome, to cope with",
+   "ex": "Ekip çalışması sayesinde en zorlu engellerin bile üstesinden geldik.",
+   "ex_tr": "Thanks to teamwork, we overcame even the toughest obstacles."
+  },
+  {
+   "phrase": "yolunu gözlemek",
+   "lang": "tr",
+   "meaning": "to await someone's arrival eagerly",
+   "ex": "Ailesi askerden döneceği günü hasretle yolunu gözlüyor.",
+   "ex_tr": "His family eagerly awaits the day he returns from military service."
+  },
+  {
+   "phrase": "break the ice",
+   "lang": "en",
+   "meaning": "buzları eritmek, ortamdaki gerginliği azaltmak",
+   "ex": "The host told a funny joke to break the ice at the party.",
+   "ex_tr": "Ev sahibi partideki buzları eritmek için komik bir şaka yaptı."
+  },
+  {
+   "phrase": "piece of cake",
+   "lang": "en",
+   "meaning": "çocuk oyuncağı, çok kolay",
+   "ex": "For an experienced programmer, fixing that bug was a piece of cake.",
+   "ex_tr": "Deneyimli bir programcı için o hatayı düzeltmek çocuk oyuncağıydı."
+  },
+  {
+   "phrase": "under the weather",
+   "lang": "en",
+   "meaning": "keyifsiz, hafif hasta hissetmek",
+   "ex": "I am feeling a bit under the weather today, so I will stay home.",
+   "ex_tr": "Bugün kendimi biraz halsiz hissediyorum, bu yüzden evde kalacağım."
+  },
+  {
+   "phrase": "hit the nail on the head",
+   "lang": "en",
+   "meaning": "tam isabet ettirmek, gerçeği tam olarak söylemek",
+   "ex": "You hit the nail on the head with your analysis of the problem.",
+   "ex_tr": "Sorunla ilgili analizinle tam isabet ettirdin."
+  },
+  {
+   "phrase": "once in a blue moon",
+   "lang": "en",
+   "meaning": "kırk yılda bir, çok nadiren",
+   "ex": "We live in different cities now, so we only meet once in a blue moon.",
+   "ex_tr": "Artık farklı şehirlerde yaşıyoruz, bu yüzden kırk yılda bir görüşüyoruz."
+  },
+  {
+   "phrase": "spill the beans",
+   "lang": "en",
+   "meaning": "baklayı ağzından çıkarmak, sırrı açığa vurmak",
+   "ex": "Who spilled the beans about the company's new product launch?",
+   "ex_tr": "Şirketin yeni ürün lansmanı hakkındaki sırrı kim ağzından kaçırdı?"
+  },
+  {
+   "phrase": "cost an arm and a leg",
+   "lang": "en",
+   "meaning": "ateş pahası olmak, çok pahalıya mal olmak",
+   "ex": "Repairing that luxury car will probably cost an arm and a leg.",
+   "ex_tr": "O lüks arabayı tamir ettirmek muhtemelen ateş pahasına mal olacak."
+  },
+  {
+   "phrase": "bite the bullet",
+   "lang": "en",
+   "meaning": "dişini sıkmak, zor bir duruma katlanmak",
+   "ex": "I hate going to the dentist, but I just have to bite the bullet.",
+   "ex_tr": "Dişçiye gitmekten nefret ederim ama dişimi sıkmak zorundayım."
+  },
+  {
+   "phrase": "cut corners",
+   "lang": "en",
+   "meaning": "işten çalmak, masraftan kaçıp kaliteyi düşürmek",
+   "ex": "They cut corners when building the bridge, and now it needs repairs.",
+   "ex_tr": "Köprüyü inşa ederken malzemeden çaldılar ve şimdi tamire ihtiyacı var."
+  },
+  {
+   "phrase": "get out of hand",
+   "lang": "en",
+   "meaning": "kontrolden çıkmak",
+   "ex": "The celebration got out of hand when too many uninvited guests arrived.",
+   "ex_tr": "Davetsiz misafirler çok fazla gelince kutlama kontrolden çıktı."
+  },
+  {
+   "phrase": "miss the boat",
+   "lang": "en",
+   "meaning": "fırsatı kaçırmak",
+   "ex": "If you don't apply for the scholarship today, you will miss the boat.",
+   "ex_tr": "Bugün bursa başvurmazsan fırsatı kaçıracaksın."
+  },
+  {
+   "phrase": "on the same page",
+   "lang": "en",
+   "meaning": "aynı fikirde olmak, anlaşmış olmak",
+   "ex": "Let's review the plan to make sure everyone is on the same page.",
+   "ex_tr": "Herkesin aynı fikirde olduğundan emin olmak için planı gözden geçirelim."
+  },
+  {
+   "phrase": "pull someone's leg",
+   "lang": "en",
+   "meaning": "biriyle kafa bulmak, şaka yapmak",
+   "ex": "Don't worry, he isn't serious; he is just pulling your leg.",
+   "ex_tr": "Endişelenme, ciddi değil; sadece seninle kafa buluyor."
+  },
+  {
+   "phrase": "see eye to eye",
+   "lang": "en",
+   "meaning": "hemfikir olmak, aynı görüşte olmak",
+   "ex": "My brother and I don't always see eye to eye on politics.",
+   "ex_tr": "Kardeşim ve ben siyasette her zaman aynı görüşte olmayız."
+  },
+  {
+   "phrase": "sit on the fence",
+   "lang": "en",
+   "meaning": "kararsız kalmak, taraf tutmamak",
+   "ex": "You can't sit on the fence forever; you need to make a choice.",
+   "ex_tr": "Sonsuza kadar kararsız kalamazsın; bir seçim yapmalısın."
+  },
+  {
+   "phrase": "speak of the devil",
+   "lang": "en",
+   "meaning": "iyi insan lafının üstüne gelir",
+   "ex": "Speak of the devil! We were just talking about you.",
+   "ex_tr": "İyi insan lafının üstüne gelir! Tam da senden bahsediyorduk."
+  },
+  {
+   "phrase": "take with a grain of salt",
+   "lang": "en",
+   "meaning": "ihtiyatla yaklaşmak, tamamen inanmamak",
+   "ex": "You should take his promises with a grain of salt.",
+   "ex_tr": "Onun vaatlerine biraz ihtiyatla yaklaşmalısın."
+  },
+  {
+   "phrase": "the best of both worlds",
+   "lang": "en",
+   "meaning": "iki durumun da en iyi yanlarına sahip olmak",
+   "ex": "Working from home gives me the best of both worlds.",
+   "ex_tr": "Evden çalışmak bana her iki dünyanın da en iyi yanlarını sunuyor."
+  },
+  {
+   "phrase": "time flies",
+   "lang": "en",
+   "meaning": "zaman su gibi akıp geçiyor",
+   "ex": "Time flies when you are having fun with good friends.",
+   "ex_tr": "İyi arkadaşlarla eğlenirken zaman su gibi akıp geçiyor."
+  },
+  {
+   "phrase": "up in the air",
+   "lang": "en",
+   "meaning": "belirsiz, havada kalmış",
+   "ex": "Our vacation plans are still up in the air until I get approval.",
+   "ex_tr": "Ben onay alana kadar tatil planlarımız hâlâ belirsiz."
+  },
+  {
+   "phrase": "burn the midnight oil",
+   "lang": "en",
+   "meaning": "gece geç saatlere kadar çalışmak",
+   "ex": "She had to burn the midnight oil to finish her thesis on time.",
+   "ex_tr": "Tezini zamanında bitirmek için gece geç saatlere kadar çalışmak zorunda kaldı."
+  },
+  {
+   "phrase": "call it a day",
+   "lang": "en",
+   "meaning": "paydos etmek, günü tamamlamak",
+   "ex": "We have been working for ten hours; let's call it a day.",
+   "ex_tr": "On saattir çalışıyoruz; artık paydos edelim."
+  },
+  {
+   "phrase": "catch someone's eye",
+   "lang": "en",
+   "meaning": "birinin dikkatini çekmek",
+   "ex": "A colorful painting in the gallery window caught my eye.",
+   "ex_tr": "Galeri vitrinindeki renkli bir tablo dikkatimi çekti."
+  },
+  {
+   "phrase": "cross that bridge when we come to it",
+   "lang": "en",
+   "meaning": "dereyi görmeden paçayı sıvamamak",
+   "ex": "We don't need to worry about next year's budget yet; we'll cross that bridge when we come to it.",
+   "ex_tr": "Gelecek yılın bütçesi için henüz endişelenmemize gerek yok; zamanı gelince düşünürüz."
+  },
+  {
+   "phrase": "every cloud has a silver lining",
+   "lang": "en",
+   "meaning": "her şerde bir hayır vardır",
+   "ex": "Losing that job led me to a better career; every cloud has a silver lining.",
+   "ex_tr": "O işi kaybetmem daha iyi bir kariyere yol açtı; her şerde bir hayır vardır."
+  },
+  {
+   "phrase": "face the music",
+   "lang": "en",
+   "meaning": "yaptıklarının sonucuna katlanmak",
+   "ex": "He knew he made a mistake and was ready to face the music.",
+   "ex_tr": "Hata yaptığını biliyordu ve sonuçlarına katlanmaya hazırdı."
+  },
+  {
+   "phrase": "get cold feet",
+   "lang": "en",
+   "meaning": "son anda vazgeçmek, cesaretini kaybetmek",
+   "ex": "He was going to invest in the startup, but he got cold feet.",
+   "ex_tr": "Girişime yatırım yapacaktı ama son anda cesaretini kaybetti."
+  },
+  {
+   "phrase": "give someone the benefit of the doubt",
+   "lang": "en",
+   "meaning": "aksine kanıt olana kadar birine güvenmek",
+   "ex": "Even though his story sounded strange, I gave him the benefit of the doubt.",
+   "ex_tr": "Hikayesi garip gelse de ona güvenmeyi tercih ettim."
+  },
+  {
+   "phrase": "go the extra mile",
+   "lang": "en",
+   "meaning": "beklenenden fazlasını yapmak, ekstra çaba göstermek",
+   "ex": "Our customer support team always goes the extra mile to help users.",
+   "ex_tr": "Müşteri destek ekibimiz kullanıcılara yardımcı olmak için her zaman ekstra çaba gösterir."
+  },
+  {
+   "phrase": "hang in there",
+   "lang": "en",
+   "meaning": "dayan, sabret, pes etme",
+   "ex": "I know the exams are tough, but hang in there; you're almost done.",
+   "ex_tr": "Sınavların zor olduğunu biliyorum ama sabret; neredeyse bitti."
+  },
+  {
+   "phrase": "in the long run",
+   "lang": "en",
+   "meaning": "uzun vadede",
+   "ex": "Buying quality materials saves money in the long run.",
+   "ex_tr": "Kaliteli malzeme almak uzun vadede para tasarrufu sağlar."
+  },
+  {
+   "phrase": "keep an eye on",
+   "lang": "en",
+   "meaning": "göz kulak olmak",
+   "ex": "Can you keep an eye on my luggage while I buy a ticket?",
+   "ex_tr": "Ben bilet alırken bavuluma göz kulak olabilir misin?"
+  },
+  {
+   "phrase": "let the cat out of the bag",
+   "lang": "en",
+   "meaning": "sırrı istemeden ağzından kaçırmak",
+   "ex": "We wanted to keep it a secret, but Tom let the cat out of the bag.",
+   "ex_tr": "Bunu sır olarak saklamak istiyorduk ama Tom sırrı ağzından kaçırdı."
+  },
+  {
+   "phrase": "make up one's mind",
+   "lang": "en",
+   "meaning": "karar vermek",
+   "ex": "I can't make up my mind between the blue shirt and the white one.",
+   "ex_tr": "Mavi gömlek ile beyaz gömlek arasında karar veremiyorum."
+  },
+  {
+   "phrase": "no pain, no gain",
+   "lang": "en",
+   "meaning": "emek olmadan yemek olmaz",
+   "ex": "Training for a marathon is exhausting, but no pain, no gain.",
+   "ex_tr": "Maraton için antrenman yapmak yorucu ama emek olmadan yemek olmaz."
+  },
+  {
+   "phrase": "on cloud nine",
+   "lang": "en",
+   "meaning": "sevinçten havalara uçmak, çok mutlu olmak",
+   "ex": "She has been on cloud nine ever since she heard the good news.",
+   "ex_tr": "İyi haberi duyduğundan beri sevinçten havalara uçuyor."
+  },
+  {
+   "phrase": "out of the blue",
+   "lang": "en",
+   "meaning": "beklenmedik bir anda, durup dururken",
+   "ex": "An old high school friend called me out of the blue yesterday.",
+   "ex_tr": "Eski bir lise arkadaşım dün durup dururken beni aradı."
+  },
+  {
+   "phrase": "read between the lines",
+   "lang": "en",
+   "meaning": "satır aralarını okumak, gizli anlamı kavramak",
+   "ex": "If you read between the lines, you'll see he isn't happy with the deal.",
+   "ex_tr": "Satır aralarını okursan anlaşmadan memnun olmadığını görürsün."
+  },
+  {
+   "phrase": "ring a bell",
+   "lang": "en",
+   "meaning": "tanıdık gelmek, bir şey çağrıştırmak",
+   "ex": "That name rings a bell, but I can't remember where I heard it.",
+   "ex_tr": "O isim tanıdık geliyor ama nerede duyduğumu hatırlayamıyorum."
+  },
+  {
+   "phrase": "rule of thumb",
+   "lang": "en",
+   "meaning": "pratik kural, genel geçer ölçü",
+   "ex": "As a rule of thumb, you should save twenty percent of your income.",
+   "ex_tr": "Genel bir kural olarak gelirinizin yüzde yirmisini biriktirmelisiniz."
+  },
+  {
+   "phrase": "save for a rainy day",
+   "lang": "en",
+   "meaning": "kara gün için para biriktirmek",
+   "ex": "It is always wise to save some money for a rainy day.",
+   "ex_tr": "Kara gün için bir miktar para biriktirmek her zaman akıllıcadır."
+  },
+  {
+   "phrase": "steal someone's thunder",
+   "lang": "en",
+   "meaning": "birinin rolünü çalmak, gölgede bırakmak",
+   "ex": "She announced her engagement at my party and completely stole my thunder.",
+   "ex_tr": "Partimde nişanlandığını duyurdu ve beni tamamen gölgede bıraktı."
+  },
+  {
+   "phrase": "take it easy",
+   "lang": "en",
+   "meaning": "sakin olmak, kendini yormamak",
+   "ex": "The doctor told him to take it easy for a few days after surgery.",
+   "ex_tr": "Doktor ameliyattan sonra birkaç gün kendini yormamasını söyledi."
+  },
+  {
+   "phrase": "the ball is in your court",
+   "lang": "en",
+   "meaning": "sıra sende, karar senin",
+   "ex": "I've made my offer, so now the ball is in your court.",
+   "ex_tr": "Teklifimi yaptım, artık sıra sende."
+  },
+  {
+   "phrase": "through thick and thin",
+   "lang": "en",
+   "meaning": "iyi günde kötü günde",
+   "ex": "True friends support each other through thick and thin.",
+   "ex_tr": "Gerçek dostlar iyi günde kötü günde birbirine destek olur."
+  },
+  {
+   "phrase": "turn a blind eye",
+   "lang": "en",
+   "meaning": "görmezden gelmek, göz yummak",
+   "ex": "The manager chose to turn a blind eye to minor lateness.",
+   "ex_tr": "Yönetici küçük gecikmeleri görmezden gelmeyi seçti."
+  },
+  {
+   "phrase": "under pressure",
+   "lang": "en",
+   "meaning": "baskı altında",
+   "ex": "She stays remarkably calm even when working under pressure.",
+   "ex_tr": "Baskı altında çalışırken bile dikkate değer ölçüde sakin kalır."
+  },
+  {
+   "phrase": "wrap one's head around",
+   "lang": "en",
+   "meaning": "akıl erdirmek, kavramak",
+   "ex": "It took me a while to wrap my head around the new software architecture.",
+   "ex_tr": "Yeni yazılım mimarisine akıl erdirmem biraz zaman aldı."
+  },
+  {
+   "phrase": "actions speak louder than words",
+   "lang": "en",
+   "meaning": "ayinesi iştir kişinin lafa bakılmaz",
+   "ex": "Don't just promise to help; actions speak louder than words.",
+   "ex_tr": "Sadece yardım edeceğine söz verme; önemli olan icraattır."
+  },
+  {
+   "phrase": "better late than never",
+   "lang": "en",
+   "meaning": "geç olsun güç olmasın",
+   "ex": "He finally started learning English at forty—better late than never.",
+   "ex_tr": "Kırk yaşında nihayet İngilizce öğrenmeye başladı; geç olsun güç olmasın."
+  },
+  {
+   "phrase": "run over",
+   "lang": "en",
+   "meaning": "taşmak",
+   "ex": "Be careful not to let the bathwater run over.",
+   "ex_tr": "Banyo suyunun taşmamasına dikkat et."
+  }
+ ]
+}
