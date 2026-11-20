@@ -29,7 +29,7 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v13.xlsx tools/contrib/hamit_filtre18_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v14.xlsx tools/contrib/hamit_2026-11-20_v15.xlsx \
          tools/contrib/hamit_denetim19_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v16.xlsx \
-         tools/contrib/hamit_2026-11-20_v17.xlsx
+         tools/contrib/hamit_2026-11-20_v17.xlsx tools/contrib/hamit_denetim20_2026-11-20.xlsx
 """
 import json
 import re
@@ -764,7 +764,30 @@ D19_EDITS = {
     'body english': {'action': 'meaning', 'meaning': '(sporda) topu vücut hareketiyle yönlendirmeye çalışmak'},
 }
 
-AUDIT_FIX = {'hamit_denetim19_2026-11-20.xlsx': (D19_EX_FIX, D19_EDITS),
+# --- Audit sheet 20 -------------------------------------------------------------
+# "take to task" needs its object ("take him to task"); "in so far" is the
+# "insofar as" that is there; "drive to drink" is "drive someone to drink".
+D20_EX_FIX = {
+    5: {'ex': 'It was a hard season, but the team won through in the end.', 'ex_tr': 'Zor bir sezondu ama takım sonunda başarıya ulaştı.'},
+    47: {'ex': 'The traffic was slow as Christmas on the narrow mountain road.'},
+    126: {'phrase': 'take sb to task', 'ex': 'The editor called him in to take him to task over the missing sources.'},
+}
+D20_EDITS = {
+    **{p: {'action': 'delete'} for p in ('in so far', 'drive to drink', 'turn together')},
+    'take to task': {'action': 'rename', 'to': 'take sb to task'},
+    'woman up': {'action': 'meaning', 'meaning': 'cesaretini toplamak, güçlü durmak (kadın için; "man up" gibi)'},
+    'hang by a hair': {'action': 'meaning', 'meaning': 'pamuk ipliğine bağlı olmak, büyük tehlikede olmak'},
+    'in at the deep end': {'action': 'meaning', 'meaning': '(throw/jump in at the deep end) hazırlıksız zor bir işin içine atılmak'},
+    'smile from ear to ear': {'action': 'meaning', 'meaning': 'ağzı kulaklarına varmak'},
+    'clear as a bell': {'action': 'meaning', 'meaning': 'çok net, apaçık; (ses) pırıl pırıl'},
+    'life and soul of the party': {'action': 'meaning', 'meaning': 'partinin neşe kaynağı, eğlencenin merkezi'},
+    'average up': {'action': 'meaning', 'meaning': 'yükselen hisseden ek alım yaparak ortalama maliyeti yükseltmek'},
+    'sing up': {'action': 'meaning', 'meaning': 'daha yüksek sesle şarkı söylemek'},
+    'red up': {'action': 'meaning', 'meaning': '(bölgesel, "redd up") ortalığı toplamak, toparlamak'},
+}
+
+AUDIT_FIX = {'hamit_denetim20_2026-11-20.xlsx': (D20_EX_FIX, D20_EDITS),
+             'hamit_denetim19_2026-11-20.xlsx': (D19_EX_FIX, D19_EDITS),
              'hamit_denetim16_2026-11-20.xlsx': (D16_EX_FIX, D16_EDITS),
              'hamit_denetim14_2026-11-20.xlsx': (D14_EX_FIX, D14_EDITS),
              'hamit_denetim15_2026-11-20.xlsx': (D15_EX_FIX, D15_EDITS)}

@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx, hamit_filtre17_2026-11-20.xlsx, hamit_2026-11-20_v13.xlsx, hamit_filtre18_2026-11-20.xlsx, hamit_2026-11-20_v14.xlsx, hamit_2026-11-20_v15.xlsx, hamit_denetim19_2026-11-20.xlsx, hamit_2026-11-20_v16.xlsx, hamit_2026-11-20_v17.xlsx, hamit_denetim20_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -70584,6 +70584,916 @@
    "meaning": "aynı fikirde/aşamada olmak",
    "ex": "Let's review the final plan to ensure everyone in the team is on the same page.",
    "ex_tr": "Ekipteki herkesin aynı fikirde olduğundan emin olmak için nihai planı gözden geçirelim."
+  },
+  {
+   "phrase": "woman up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She told herself to woman up and make the difficult phone call.",
+   "ex_tr": "Kendini toparlayıp o zor telefon görüşmesini yapmaya karar verdi."
+  },
+  {
+   "phrase": "turn about",
+   "lang": "en",
+   "meaning": "",
+   "ex": "As the fog thickened, the captain gave the order to turn about and head back to port.",
+   "ex_tr": "Sis koyulaşınca kaptan geri dönüp limana yönelme emri verdi."
+  },
+  {
+   "phrase": "play through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Despite the sudden rain, the golfers agreed to play through.",
+   "ex_tr": "Ani yağmura rağmen golfçüler oyuna devam etmeyi kabul etti."
+  },
+  {
+   "phrase": "win through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "It was a hard season, but the team won through in the end.",
+   "ex_tr": "Zor bir sezondu ama takım sonunda başarıya ulaştı."
+  },
+  {
+   "phrase": "run out of town",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The angry villagers threatened to run out of town anyone who helped the thieves.",
+   "ex_tr": "Öfkeli köylüler, hırsızlara yardım eden herkesi kasabadan kovmakla tehdit etti."
+  },
+  {
+   "phrase": "big end of town",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The proposal had plenty of support from the big end of town, but little from ordinary residents.",
+   "ex_tr": "Öneri büyük şirketlerden destek gördü ama sıradan halkın pek ilgisini çekmedi."
+  },
+  {
+   "phrase": "at the outside",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The repair should take three days at the outside, according to the mechanic.",
+   "ex_tr": "Tamirciye göre onarım en fazla üç gün sürecek."
+  },
+  {
+   "phrase": "sit about",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We cannot just sit about while the roof keeps leaking.",
+   "ex_tr": "Çatı akmaya devam ederken boş boş oturamayız."
+  },
+  {
+   "phrase": "for real and for true",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I saw the lights moving over the field, for real and for true, he insisted.",
+   "ex_tr": "Işıkların tarlanın üzerinde hareket ettiğini gerçekten gördüm, diye ısrar etti."
+  },
+  {
+   "phrase": "down with the kids",
+   "lang": "en",
+   "meaning": "",
+   "ex": "His attempts to sound down with the kids made his teenage daughter cringe.",
+   "ex_tr": "Gençlerin dilinden konuşmaya çalışması ergen kızını utandırdı."
+  },
+  {
+   "phrase": "age up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The casting director decided to age up the character for the film adaptation.",
+   "ex_tr": "Oyuncu seçimi sorumlusu film uyarlamasında karakterin yaşını büyütmeye karar verdi."
+  },
+  {
+   "phrase": "at dark",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The hikers reached the cabin at dark, just as the temperature began to fall.",
+   "ex_tr": "Yürüyüşçüler hava kararırken kulübeye ulaştı; tam o sırada hava soğumaya başlamıştı."
+  },
+  {
+   "phrase": "put store by",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Grandma always told us to put store by the friends who stayed when things got difficult.",
+   "ex_tr": "Büyükannem, zor günlerimizde yanımızda kalan dostlara değer vermemizi söylerdi."
+  },
+  {
+   "phrase": "white out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She used correction fluid to white out the wrong date on the form.",
+   "ex_tr": "Formdaki yanlış tarihi düzeltme sıvısıyla kapattı."
+  },
+  {
+   "phrase": "snow job",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The salesman gave me a real snow job about the car's condition.",
+   "ex_tr": "Satıcı arabanın durumu hakkında beni kandırmaya yönelik uzun bir hikâye anlattı."
+  },
+  {
+   "phrase": "at the least",
+   "lang": "en",
+   "meaning": "",
+   "ex": "At the least, we should tell her why the appointment was cancelled.",
+   "ex_tr": "En azından randevunun neden iptal edildiğini ona söylemeliyiz."
+  },
+  {
+   "phrase": "break back",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After losing her first service game, she managed to break back immediately.",
+   "ex_tr": "İlk servis oyununu kaybettikten sonra hemen rakibinin servisini kırdı."
+  },
+  {
+   "phrase": "short out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The exposed wires could short out the whole system if water gets inside.",
+   "ex_tr": "Açıkta kalan kablolar su girerse bütün sistemin kısa devre yapmasına neden olabilir."
+  },
+  {
+   "phrase": "cost out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Before agreeing to the renovation, they asked an architect to cost out the work.",
+   "ex_tr": "Tadilatı kabul etmeden önce işin maliyetini çıkarması için bir mimara başvurdular."
+  },
+  {
+   "phrase": "cost up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Could you cost up the materials before we approve the order?",
+   "ex_tr": "Siparişi onaylamadan önce malzemelerin maliyetini hesaplayabilir misin?"
+  },
+  {
+   "phrase": "fight like cat and dog",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Those brothers fight like cat and dog, but they always defend each other at school.",
+   "ex_tr": "O iki kardeş kedi köpek gibi kavga eder ama okulda hep birbirlerini savunurlar."
+  },
+  {
+   "phrase": "by the strong hand",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The governor tried to settle the dispute by the strong hand rather than by negotiation.",
+   "ex_tr": "Vali anlaşmazlığı görüşerek değil güç kullanarak çözmeye çalıştı."
+  },
+  {
+   "phrase": "report out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The committee is expected to report out the bill before the summer recess.",
+   "ex_tr": "Komitenin yaz tatilinden önce yasa tasarısını meclise sevk etmesi bekleniyor."
+  },
+  {
+   "phrase": "save down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Remember to save down the completed report before shutting the laptop.",
+   "ex_tr": "Dizüstü bilgisayarı kapatmadan önce tamamladığın raporu diske kaydetmeyi unutma."
+  },
+  {
+   "phrase": "key up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The approaching exam seemed to key up the entire class.",
+   "ex_tr": "Yaklaşan sınav bütün sınıfı iyice geriyordu."
+  },
+  {
+   "phrase": "in key",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Her voice was perfectly in key with the piano, even during the difficult chorus.",
+   "ex_tr": "Zor nakaratta bile sesi piyanoyla tam uyum içindeydi."
+  },
+  {
+   "phrase": "color in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The children sat by the window to color in the pictures of sea animals.",
+   "ex_tr": "Çocuklar deniz hayvanı resimlerini boyamak için pencerenin yanına oturdu."
+  },
+  {
+   "phrase": "radio ahead",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The rescue team will radio ahead so the hospital can prepare a room.",
+   "ex_tr": "Kurtarma ekibi hastane oda hazırlayabilsin diye önceden telsizle haber verecek."
+  },
+  {
+   "phrase": "run at the mouth",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He tends to run at the mouth when he is nervous, so the interview worried him.",
+   "ex_tr": "Heyecanlandığında çenesi düşer; bu yüzden mülakat onu endişelendiriyordu."
+  },
+  {
+   "phrase": "do the dirty on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He still could not forgive the friend who had tried to do the dirty on him.",
+   "ex_tr": "Kendisine hainlik etmeye çalışan arkadaşını hâlâ affedemiyordu."
+  },
+  {
+   "phrase": "ring through",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Can you ring through to reception and ask whether the visitors have arrived?",
+   "ex_tr": "Resepsiyonu arayıp ziyaretçilerin gelip gelmediğini sorar mısın?"
+  },
+  {
+   "phrase": "down to a fine art",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After years on the road, she had the business of packing down to a fine art.",
+   "ex_tr": "Yıllar süren seyahatlerden sonra bavul toplama işinde tam bir usta olmuştu."
+  },
+  {
+   "phrase": "ask for the moon",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I'm not going to ask for the moon; I only need one extra day.",
+   "ex_tr": "Olmayacak bir şey istemiyorum; yalnızca bir gün daha gerekiyor."
+  },
+  {
+   "phrase": "eat like a bird",
+   "lang": "en",
+   "meaning": "",
+   "ex": "My father worries because my little sister seems to eat like a bird.",
+   "ex_tr": "Babam küçük kız kardeşimin çok az yemek yemesinden endişeleniyor."
+  },
+  {
+   "phrase": "hang by a hair",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With the bridge nearly collapsed, the travelers' safety seemed to hang by a hair.",
+   "ex_tr": "Köprü neredeyse çökmüşken yolcuların güvenliği pamuk ipliğine bağlıydı."
+  },
+  {
+   "phrase": "take the count",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The boxer refused to take the count and struggled back to his feet.",
+   "ex_tr": "Boksör nakavtı kabullenmedi ve güçlükle ayağa kalktı."
+  },
+  {
+   "phrase": "get out of jail free card",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Being the boss's nephew is not a get out of jail free card when you break the rules.",
+   "ex_tr": "Patronun yeğeni olmak kuralları çiğnediğinde seni sorumluluktan kurtarmaz."
+  },
+  {
+   "phrase": "move someone to tears",
+   "lang": "en",
+   "meaning": "",
+   "ex": "A song like that can move someone to tears without a single word of explanation.",
+   "ex_tr": "Böyle bir şarkı hiçbir açıklamaya gerek kalmadan insanı ağlatabilir."
+  },
+  {
+   "phrase": "in and of themselves",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The photographs were not proof in and of themselves, but they raised new questions.",
+   "ex_tr": "Fotoğraflar tek başlarına kanıt değildi ama yeni sorular doğurdu."
+  },
+  {
+   "phrase": "in at the deep end",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On her first day, the new nurse was thrown in at the deep end with a busy emergency ward.",
+   "ex_tr": "Yeni hemşire ilk gününde yoğun acil serviste birdenbire ağır sorumlulukla karşılaştı."
+  },
+  {
+   "phrase": "grow out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She decided to grow out her short haircut before the wedding.",
+   "ex_tr": "Düğünden önce kısa saçlarını uzatmaya karar verdi."
+  },
+  {
+   "phrase": "gone with the wind",
+   "lang": "en",
+   "meaning": "",
+   "ex": "By morning, the little paper boat was gone with the wind.",
+   "ex_tr": "Sabah olduğunda küçük kâğıt tekne rüzgârda kaybolmuştu."
+  },
+  {
+   "phrase": "have a gas",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We always have a gas when the cousins get together at Grandma's house.",
+   "ex_tr": "Kuzenler büyükannemin evinde buluştuğunda hep çok eğleniriz."
+  },
+  {
+   "phrase": "between wind and water",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The unexpected audit struck the company between wind and water.",
+   "ex_tr": "Beklenmedik denetim şirketi en hassas yerinden vurdu."
+  },
+  {
+   "phrase": "feel like a million",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After a shower and a full night's sleep, I feel like a million.",
+   "ex_tr": "Duş alıp deliksiz uyuduktan sonra kendimi harika hissediyorum."
+  },
+  {
+   "phrase": "slow as christmas",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The traffic was slow as Christmas on the narrow mountain road.",
+   "ex_tr": "Dar dağ yolundaki trafik kaplumbağa hızıyla ilerliyordu."
+  },
+  {
+   "phrase": "mail out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The office will mail out the invitations as soon as the address list is approved.",
+   "ex_tr": "Adres listesi onaylanır onaylanmaz ofis davetiyeleri postaya verecek."
+  },
+  {
+   "phrase": "by return mail",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Please send the signed form by return mail so we can confirm your booking.",
+   "ex_tr": "Rezervasyonunuzu onaylayabilmemiz için imzalı formu dönüş postasıyla gönderin."
+  },
+  {
+   "phrase": "land up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "If we miss the last train, we may land up sleeping at the station.",
+   "ex_tr": "Son treni kaçırırsak geceyi istasyonda geçirmek zorunda kalabiliriz."
+  },
+  {
+   "phrase": "due to",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The ferry was delayed due to thick fog along the coast.",
+   "ex_tr": "Kıyı boyunca yoğun sis olduğu için feribot gecikti."
+  },
+  {
+   "phrase": "in due course",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The museum will announce the winner in due course, once the judges have finished.",
+   "ex_tr": "Jüri kararını verdikten sonra müze kazananı zamanı gelince açıklayacak."
+  },
+  {
+   "phrase": "in due time",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You will learn the whole story in due time, her aunt promised.",
+   "ex_tr": "Teyzesi, zamanı gelince hikâyenin tamamını öğreneceksin, diye söz verdi."
+  },
+  {
+   "phrase": "in step",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The dancers moved in step as the drums grew louder.",
+   "ex_tr": "Davulların sesi yükselirken dansçılar aynı ritimde hareket ediyordu."
+  },
+  {
+   "phrase": "fly in the teeth of",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The plan would fly in the teeth of every safety warning the engineers had issued.",
+   "ex_tr": "Plan, mühendislerin yaptığı bütün güvenlik uyarılarına açıkça ters düşüyordu."
+  },
+  {
+   "phrase": "on the fly",
+   "lang": "en",
+   "meaning": "",
+   "ex": "With no time for a rehearsal, the actors had to adjust the scene on the fly.",
+   "ex_tr": "Prova için zaman olmayınca oyuncular sahneyi oynarken değiştirmek zorunda kaldı."
+  },
+  {
+   "phrase": "get out the vote",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Volunteers went door to door to get out the vote before election day.",
+   "ex_tr": "Gönüllüler seçim gününden önce seçmenleri sandığa götürmek için kapı kapı dolaştı."
+  },
+  {
+   "phrase": "in a similar way",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The second group solved the puzzle in a similar way, using the same clues.",
+   "ex_tr": "İkinci grup da aynı ipuçlarını kullanarak bulmacayı benzer biçimde çözdü."
+  },
+  {
+   "phrase": "in full view",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He dropped the note in full view of the security camera.",
+   "ex_tr": "Notu güvenlik kamerasının açıkça görebileceği bir yerde düşürdü."
+  },
+  {
+   "phrase": "on view",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The paintings will be on view until the end of December.",
+   "ex_tr": "Tablolar aralık sonuna kadar sergilenecek."
+  },
+  {
+   "phrase": "out of view",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She waited until the guard was out of view before opening the letter.",
+   "ex_tr": "Mektubu açmadan önce güvenlik görevlisinin görüş alanından çıkmasını bekledi."
+  },
+  {
+   "phrase": "in the same breath",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He praised the restaurant and complained about the service in the same breath.",
+   "ex_tr": "Restoranı överken aynı anda servisinden şikâyet etti."
+  },
+  {
+   "phrase": "at a distance",
+   "lang": "en",
+   "meaning": "",
+   "ex": "From the terrace, the lighthouse looked tiny at a distance.",
+   "ex_tr": "Terastan bakınca uzaktaki deniz feneri küçücük görünüyordu."
+  },
+  {
+   "phrase": "by some distance",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Their youngest runner finished first by some distance.",
+   "ex_tr": "En genç koşucuları yarışı açık farkla birinci bitirdi."
+  },
+  {
+   "phrase": "on a different note",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On a different note, have you heard anything from your brother lately?",
+   "ex_tr": "Başka bir konuya geçecek olursak, son zamanlarda kardeşinden haber aldın mı?"
+  },
+  {
+   "phrase": "on another note",
+   "lang": "en",
+   "meaning": "",
+   "ex": "On another note, the library is staying open late this week.",
+   "ex_tr": "Bu arada kütüphane bu hafta geç saatlere kadar açık kalacak."
+  },
+  {
+   "phrase": "build a case",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The detective spent months gathering statements to build a case against the suspect.",
+   "ex_tr": "Dedektif şüpheli hakkında sağlam bir dava oluşturmak için aylarca ifade topladı."
+  },
+  {
+   "phrase": "take the field",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The home team was ready to take the field when the rain started.",
+   "ex_tr": "Yağmur başladığında ev sahibi takım sahaya çıkmaya hazırdı."
+  },
+  {
+   "phrase": "true to form",
+   "lang": "en",
+   "meaning": "",
+   "ex": "True to form, she arrived early and brought extra sandwiches for everyone.",
+   "ex_tr": "Her zamanki gibi erken geldi ve herkes için fazladan sandviç getirdi."
+  },
+  {
+   "phrase": "out of form",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After the illness, the striker looked out of form for several weeks.",
+   "ex_tr": "Hastalıktan sonra forvet birkaç hafta boyunca formsuz görünüyordu."
+  },
+  {
+   "phrase": "teach someone a lesson",
+   "lang": "en",
+   "meaning": "",
+   "ex": "It's tempting to teach someone a lesson when you're angry, but revenge rarely helps.",
+   "ex_tr": "Öfkeliyken birine ders vermek cazip gelebilir ama intikam nadiren işe yarar."
+  },
+  {
+   "phrase": "give someone the cold shoulder",
+   "lang": "en",
+   "meaning": "",
+   "ex": "It's cruel to give someone the cold shoulder simply because they made a mistake.",
+   "ex_tr": "Bir hata yaptı diye birine soğuk davranmak acımasızlık."
+  },
+  {
+   "phrase": "shoulder in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The crowd began to shoulder in as soon as the doors opened.",
+   "ex_tr": "Kapılar açılır açılmaz kalabalık omuz omuza içeri doluştu."
+  },
+  {
+   "phrase": "drop in the ocean",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The grant was a drop in the ocean compared with the cost of rebuilding the school.",
+   "ex_tr": "Hibe, okulu yeniden yapmanın maliyeti yanında devede kulak kaldı."
+  },
+  {
+   "phrase": "star turn",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Her performance as the detective was the star turn of the evening.",
+   "ex_tr": "Dedektif rolündeki performansı gecenin en dikkat çekici gösterisiydi."
+  },
+  {
+   "phrase": "put a brave face on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She tried to put a brave face on the disappointing news for the children's sake.",
+   "ex_tr": "Çocuklar üzülmesin diye kötü haberi metanetle karşılamaya çalıştı."
+  },
+  {
+   "phrase": "bob about",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Small fishing boats began to bob about in the choppy harbor.",
+   "ex_tr": "Küçük balıkçı tekneleri dalgalı limanda bir aşağı bir yukarı sallanmaya başladı."
+  },
+  {
+   "phrase": "on an empty stomach",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The pharmacist warned him not to take the tablets on an empty stomach.",
+   "ex_tr": "Eczacı tabletleri aç karnına almaması konusunda onu uyardı."
+  },
+  {
+   "phrase": "on request",
+   "lang": "en",
+   "meaning": "",
+   "ex": "A detailed map of the route is available on request at the visitor center.",
+   "ex_tr": "Güzergâhın ayrıntılı haritası ziyaretçi merkezinden istenirse veriliyor."
+  },
+  {
+   "phrase": "facts on the ground",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The report described the facts on the ground rather than the promises made in the capital.",
+   "ex_tr": "Rapor başkentte verilen sözlerden çok sahadaki gerçek durumu anlatıyordu."
+  },
+  {
+   "phrase": "skin over",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The cut began to skin over after a few days, but it was still tender.",
+   "ex_tr": "Kesik birkaç gün içinde kabuk bağlamaya başladı ama hâlâ hassastı."
+  },
+  {
+   "phrase": "out of season",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The strawberries were expensive because they were out of season.",
+   "ex_tr": "Çilekler mevsimi olmadığı için pahalıydı."
+  },
+  {
+   "phrase": "set the record straight",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She called the newspaper to set the record straight about the accident.",
+   "ex_tr": "Kaza hakkında yanlış bilgileri düzeltmek için gazeteyi aradı."
+  },
+  {
+   "phrase": "in record time",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The mechanics repaired the generator in record time after the outage.",
+   "ex_tr": "Teknisyenler kesintiden sonra jeneratörü rekor sürede onardı."
+  },
+  {
+   "phrase": "loss of face",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He feared a public apology would mean a loss of face in front of his colleagues.",
+   "ex_tr": "Herkesin önünde özür dilemenin meslektaşları karşısında itibar kaybı olacağından korkuyordu."
+  },
+  {
+   "phrase": "smile from ear to ear",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The little boy began to smile from ear to ear when he saw the puppy.",
+   "ex_tr": "Küçük çocuk yavru köpeği görünce ağzı kulaklarına vardı."
+  },
+  {
+   "phrase": "turn up the pressure",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The union decided to turn up the pressure after talks broke down.",
+   "ex_tr": "Görüşmeler çıkmaza girince sendika baskıyı artırmaya karar verdi."
+  },
+  {
+   "phrase": "go around the houses",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Please don't go around the houses; tell me what happened at the station.",
+   "ex_tr": "Lafı dolandırma; istasyonda ne olduğunu anlat."
+  },
+  {
+   "phrase": "prepare the ground",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The teacher used a simple experiment to prepare the ground for the new topic.",
+   "ex_tr": "Öğretmen yeni konuya zemin hazırlamak için basit bir deney yaptı."
+  },
+  {
+   "phrase": "ride the bench",
+   "lang": "en",
+   "meaning": "",
+   "ex": "After injuring his ankle, the midfielder had to ride the bench for two matches.",
+   "ex_tr": "Ayak bileğini sakatlayınca orta saha oyuncusu iki maç yedek kulübesinde kaldı."
+  },
+  {
+   "phrase": "warm the bench",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He was tired of being asked to warm the bench while his teammates played.",
+   "ex_tr": "Takım arkadaşları sahadayken kendisinin sürekli yedek bekletilmesinden bıkmıştı."
+  },
+  {
+   "phrase": "copy out",
+   "lang": "en",
+   "meaning": "",
+   "ex": "For homework, the children had to copy out a short poem in their notebooks.",
+   "ex_tr": "Çocukların ödev olarak kısa bir şiiri defterlerine temize çekmeleri gerekiyordu."
+  },
+  {
+   "phrase": "rope in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She managed to rope in three neighbors to help paint the community hall.",
+   "ex_tr": "Mahalle salonunu boyamaya yardım etmeleri için üç komşusunu ikna etti."
+  },
+  {
+   "phrase": "rope up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The climbers stopped at the ridge to rope up before crossing the glacier.",
+   "ex_tr": "Dağcılar buzulu geçmeden önce birbirlerine iple bağlanmak için sırtta durdu."
+  },
+  {
+   "phrase": "nature calls",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Whenever nature calls on a road trip, Dad insists on stopping at the next petrol station.",
+   "ex_tr": "Yolculukta tuvalet ihtiyacı doğduğunda babam bir sonraki benzinlikte durmakta ısrar eder."
+  },
+  {
+   "phrase": "in the nature of things",
+   "lang": "en",
+   "meaning": "",
+   "ex": "In the nature of things, some guests will arrive later than expected.",
+   "ex_tr": "İşin doğası gereği bazı konuklar beklenenden geç gelecektir."
+  },
+  {
+   "phrase": "green as grass",
+   "lang": "en",
+   "meaning": "",
+   "ex": "I was green as grass when I first worked in a restaurant.",
+   "ex_tr": "Bir restoranda ilk işe başladığımda son derece deneyimsizdim."
+  },
+  {
+   "phrase": "hot as hell",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The attic was hot as hell, even with both windows open.",
+   "ex_tr": "İki pencere de açık olmasına rağmen çatı katı cehennem gibi sıcaktı."
+  },
+  {
+   "phrase": "neck of the woods",
+   "lang": "en",
+   "meaning": "",
+   "ex": "If you're ever in our neck of the woods, stop by for coffee.",
+   "ex_tr": "Bir gün bizim buralara yolun düşerse kahve içmeye uğra."
+  },
+  {
+   "phrase": "go down the toilet",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Months of planning could go down the toilet if the funding is withdrawn.",
+   "ex_tr": "Finansman çekilirse aylarca yapılan planlar boşa gidebilir."
+  },
+  {
+   "phrase": "box clever",
+   "lang": "en",
+   "meaning": "",
+   "ex": "She knew she would have to box clever to negotiate with such an experienced lawyer.",
+   "ex_tr": "Böylesine deneyimli bir avukatla pazarlık edebilmek için akıllıca davranması gerektiğini biliyordu."
+  },
+  {
+   "phrase": "like a kid in a candy store",
+   "lang": "en",
+   "meaning": "",
+   "ex": "He was like a kid in a candy store when he entered the old bookshop.",
+   "ex_tr": "Eski kitapçıya girince şekerci dükkânına girmiş çocuk gibi heyecanlandı."
+  },
+  {
+   "phrase": "nice as pie",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The new neighbor was nice as pie and brought us homemade bread.",
+   "ex_tr": "Yeni komşu son derece tatlıydı; bize ev yapımı ekmek getirdi."
+  },
+  {
+   "phrase": "life and soul of the party",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Even at eighty, Aunt Rose was the life and soul of the party.",
+   "ex_tr": "Rose teyze seksen yaşında bile eğlencenin neşe kaynağıydı."
+  },
+  {
+   "phrase": "steal in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "A cool breeze began to steal in through the open window after sunset.",
+   "ex_tr": "Gün batımından sonra açık pencereden serin bir esinti usulca içeri süzülmeye başladı."
+  },
+  {
+   "phrase": "open invitation",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Leaving the gate unlocked felt like an open invitation to curious children.",
+   "ex_tr": "Kapıyı kilitlememek meraklı çocuklara açık davet çıkarmak gibiydi."
+  },
+  {
+   "phrase": "judge a book by its cover",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You should never judge a book by its cover, my father said as he greeted the scruffy visitor.",
+   "ex_tr": "Babam üstü başı dağınık konuğu karşılarken, insanları dış görünüşüne göre yargılama, dedi."
+  },
+  {
+   "phrase": "under cover of night",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The smugglers tried to leave the harbor under cover of night.",
+   "ex_tr": "Kaçakçılar gecenin karanlığından yararlanarak limandan ayrılmaya çalıştı."
+  },
+  {
+   "phrase": "file down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The jeweler had to file down the sharp edge of the ring.",
+   "ex_tr": "Kuyumcu yüzüğün keskin kenarını törpülemek zorunda kaldı."
+  },
+  {
+   "phrase": "file in",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The students began to file in quietly when the bell rang.",
+   "ex_tr": "Zil çalınca öğrenciler sessizce sırayla içeri girmeye başladı."
+  },
+  {
+   "phrase": "press forward",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Despite the thick fog, the rescue team decided to press forward.",
+   "ex_tr": "Yoğun sise rağmen kurtarma ekibi ilerlemeye devam etmeye karar verdi."
+  },
+  {
+   "phrase": "draw even",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The visiting team managed to draw even in the final minute.",
+   "ex_tr": "Deplasman takımı son dakikada skoru eşitlemeyi başardı."
+  },
+  {
+   "phrase": "line in the sand",
+   "lang": "en",
+   "meaning": "",
+   "ex": "For her, sharing confidential files was a line in the sand she would not cross.",
+   "ex_tr": "Ona göre gizli dosyaları paylaşmak asla aşmayacağı bir kırmızı çizgiydi."
+  },
+  {
+   "phrase": "lower the bar",
+   "lang": "en",
+   "meaning": "",
+   "ex": "We should improve the training, not lower the bar just to increase the pass rate.",
+   "ex_tr": "Geçme oranını artırmak için standartları düşürmek yerine eğitimi iyileştirmeliyiz."
+  },
+  {
+   "phrase": "draw ahead",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The blue boat began to draw ahead as the other crew grew tired.",
+   "ex_tr": "Diğer mürettebat yorulmaya başlayınca mavi tekne öne geçti."
+  },
+  {
+   "phrase": "sand down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "They had to sand down the old wooden table before painting it.",
+   "ex_tr": "Eski ahşap masayı boyamadan önce zımparalamaları gerekiyordu."
+  },
+  {
+   "phrase": "out of keeping with",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The modern glass tower looked out of keeping with the village's stone houses.",
+   "ex_tr": "Modern cam kule, köyün taş evleriyle hiç uyumlu görünmüyordu."
+  },
+  {
+   "phrase": "bell the cat",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Everyone agreed that the manager was wrong, but no one wanted to bell the cat.",
+   "ex_tr": "Herkes müdürün hatalı olduğu konusunda hemfikirdi ama kimse gidip bunu yüzüne söylemeye cesaret edemiyordu."
+  },
+  {
+   "phrase": "clear as a bell",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Her voice came through the radio clear as a bell despite the storm.",
+   "ex_tr": "Fırtınaya rağmen telsizden sesi son derece net geliyordu."
+  },
+  {
+   "phrase": "average down",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Some investors try to average down when a stock's price falls.",
+   "ex_tr": "Bazı yatırımcılar hisse fiyatı düşünce ortalama maliyetlerini azaltmak için ek alım yapar."
+  },
+  {
+   "phrase": "average up",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Rather than buy more at a lower price, she chose to average up as the shares gained value.",
+   "ex_tr": "Daha düşük fiyattan almak yerine hisseler değer kazandıkça ek alım yapmayı seçti."
+  },
+  {
+   "phrase": "pull a fast one on",
+   "lang": "en",
+   "meaning": "",
+   "ex": "Do not try to pull a fast one on the landlord by hiding the damage.",
+   "ex_tr": "Hasarı gizleyerek ev sahibini kandırmaya kalkma."
+  },
+  {
+   "phrase": "pull the other leg",
+   "lang": "en",
+   "meaning": "",
+   "ex": "You met the queen at the bus stop? Pull the other leg!",
+   "ex_tr": "Kraliçeyle otobüs durağında mı karşılaştın? Hadi canım sen de!"
+  },
+  {
+   "phrase": "take the stage",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The singer waited behind the curtain until it was time to take the stage.",
+   "ex_tr": "Şarkıcı sahneye çıkma zamanı gelene kadar perdenin arkasında bekledi."
+  },
+  {
+   "phrase": "pale as death",
+   "lang": "en",
+   "meaning": "",
+   "ex": "When he saw the overturned car, he went pale as death.",
+   "ex_tr": "Devrilmiş arabayı görünce yüzü kireç gibi oldu."
+  },
+  {
+   "phrase": "take sb to task",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The editor called him in to take him to task over the missing sources.",
+   "ex_tr": "Editör eksik kaynaklar yüzünden onu hesaba çekmek için odasına çağırdı."
+  },
+  {
+   "phrase": "at a minimum",
+   "lang": "en",
+   "meaning": "",
+   "ex": "At a minimum, bring warm clothes and a flashlight for the trip.",
+   "ex_tr": "Yolculuğa en azından kalın giysiler ve bir el feneri götür."
+  },
+  {
+   "phrase": "burning question",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The burning question was whether anyone had seen the missing child that morning.",
+   "ex_tr": "En önemli soru, o sabah kayıp çocuğu gören olup olmadığıydı."
+  },
+  {
+   "phrase": "beyond a doubt",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The fingerprints established beyond a doubt that he had entered the room.",
+   "ex_tr": "Parmak izleri onun odaya girdiğini şüpheye yer bırakmayacak şekilde kanıtladı."
+  },
+  {
+   "phrase": "beyond a joke",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The constant drilling next door is getting beyond a joke; nobody can sleep.",
+   "ex_tr": "Yandaki sürekli matkap sesi artık şakayı aştı; kimse uyuyamıyor."
+  },
+  {
+   "phrase": "beyond a reasonable doubt",
+   "lang": "en",
+   "meaning": "",
+   "ex": "The jury had to decide whether guilt was proven beyond a reasonable doubt.",
+   "ex_tr": "Jüri suçun makul şüpheye yer bırakmayacak şekilde kanıtlanıp kanıtlanmadığına karar vermek zorundaydı."
   }
  ],
  "phrase_edits": [
@@ -70801,6 +71711,68 @@
    "action": "meaning",
    "meaning": "(sporda) topu vücut hareketiyle yönlendirmeye çalışmak",
    "phrase": "body english"
+  },
+  {
+   "action": "delete",
+   "phrase": "in so far"
+  },
+  {
+   "action": "delete",
+   "phrase": "drive to drink"
+  },
+  {
+   "action": "delete",
+   "phrase": "turn together"
+  },
+  {
+   "action": "rename",
+   "to": "take sb to task",
+   "phrase": "take to task"
+  },
+  {
+   "action": "meaning",
+   "meaning": "cesaretini toplamak, güçlü durmak (kadın için; \"man up\" gibi)",
+   "phrase": "woman up"
+  },
+  {
+   "action": "meaning",
+   "meaning": "pamuk ipliğine bağlı olmak, büyük tehlikede olmak",
+   "phrase": "hang by a hair"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(throw/jump in at the deep end) hazırlıksız zor bir işin içine atılmak",
+   "phrase": "in at the deep end"
+  },
+  {
+   "action": "meaning",
+   "meaning": "ağzı kulaklarına varmak",
+   "phrase": "smile from ear to ear"
+  },
+  {
+   "action": "meaning",
+   "meaning": "çok net, apaçık; (ses) pırıl pırıl",
+   "phrase": "clear as a bell"
+  },
+  {
+   "action": "meaning",
+   "meaning": "partinin neşe kaynağı, eğlencenin merkezi",
+   "phrase": "life and soul of the party"
+  },
+  {
+   "action": "meaning",
+   "meaning": "yükselen hisseden ek alım yaparak ortalama maliyeti yükseltmek",
+   "phrase": "average up"
+  },
+  {
+   "action": "meaning",
+   "meaning": "daha yüksek sesle şarkı söylemek",
+   "phrase": "sing up"
+  },
+  {
+   "action": "meaning",
+   "meaning": "(bölgesel, \"redd up\") ortalığı toplamak, toparlamak",
+   "phrase": "red up"
   }
  ]
 }
