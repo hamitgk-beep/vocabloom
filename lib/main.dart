@@ -28,7 +28,6 @@ import 'ui/reader_page.dart';
 import 'ui/grammar/grammar_page.dart';
 import 'ui/theme.dart';
 import 'ui/window_frame.dart';
-import 'ui/intro_animation.dart';
 import 'tts/speech.dart';
 
 import 'l10n.dart';
@@ -51,7 +50,6 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
   Object? error;
 
   /// The opening animation plays once per start, over the loading screen.
-  bool introDone = false;
 
   @override
   void initState() {
@@ -125,14 +123,7 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
         themeMode: a?.themeMode ?? ThemeMode.light,
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
-        builder: (context, child) => WindowFrame(
-          child: Stack(
-            children: [
-              child ?? const SizedBox.shrink(),
-              if (!introDone) Positioned.fill(child: IntroAnimation(onDone: () => setState(() => introDone = true))),
-            ],
-          ),
-        ),
+        builder: (context, child) => WindowFrame(child: child ?? const SizedBox.shrink()),
         home: app != null
             ? (OnboardingPage.needed(app!) ? OnboardingPage(app: app!, onDone: () => setState(() {})) : HomePage(app: app!))
             : Scaffold(

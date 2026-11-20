@@ -72,7 +72,6 @@ flutter:
     - assets/dict.db
     - assets/tr_en.db
     - assets/brand/logo.png
-    - assets/brand/intro.webp
     - assets/grammar/lessons.json
     - assets/grammar/lessons_en.json
     - assets/library/catalog.json
