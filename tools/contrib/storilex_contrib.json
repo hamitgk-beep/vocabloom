@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -14550,6 +14550,2372 @@
    "pos": "verb",
    "meaning": "ayrıntılı açıklamak",
    "note": "detaylandırmak"
+  },
+  {
+   "word": "hareket etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "act",
+   "note": ""
+  },
+  {
+   "word": "eylem",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "action",
+   "note": ""
+  },
+  {
+   "word": "aktif",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "active",
+   "note": ""
+  },
+  {
+   "word": "aktif olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "actively",
+   "note": ""
+  },
+  {
+   "word": "yaratmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "create",
+   "note": ""
+  },
+  {
+   "word": "yaratım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "creation",
+   "note": ""
+  },
+  {
+   "word": "yaratıcı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "creative",
+   "note": ""
+  },
+  {
+   "word": "yaratıcı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "creatively",
+   "note": ""
+  },
+  {
+   "word": "karar vermek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "decide",
+   "note": ""
+  },
+  {
+   "word": "karar",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "decision",
+   "note": ""
+  },
+  {
+   "word": "kararlı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "decisive",
+   "note": ""
+  },
+  {
+   "word": "kararlı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "decisively",
+   "note": ""
+  },
+  {
+   "word": "farklı olmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "differ",
+   "note": ""
+  },
+  {
+   "word": "fark",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "difference",
+   "note": ""
+  },
+  {
+   "word": "farklı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "different",
+   "note": ""
+  },
+  {
+   "word": "farklı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "differently",
+   "note": ""
+  },
+  {
+   "word": "eğitmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "educate",
+   "note": ""
+  },
+  {
+   "word": "eğitim",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "education",
+   "note": ""
+  },
+  {
+   "word": "eğitici",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "educational",
+   "note": ""
+  },
+  {
+   "word": "eğitsel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "educationally",
+   "note": ""
+  },
+  {
+   "word": "etki",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "effect",
+   "note": ""
+  },
+  {
+   "word": "etkili",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "effective",
+   "note": ""
+  },
+  {
+   "word": "etkili bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "effectively",
+   "note": ""
+  },
+  {
+   "word": "zarar vermek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "harm",
+   "note": ""
+  },
+  {
+   "word": "zarar",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "harm",
+   "note": ""
+  },
+  {
+   "word": "zararlı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "harmful",
+   "note": ""
+  },
+  {
+   "word": "zararlı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "harmfully",
+   "note": ""
+  },
+  {
+   "word": "umut etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "hope",
+   "note": ""
+  },
+  {
+   "word": "umut",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "hope",
+   "note": ""
+  },
+  {
+   "word": "umutlu",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "hopeful",
+   "note": ""
+  },
+  {
+   "word": "umutla",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "hopefully",
+   "note": ""
+  },
+  {
+   "word": "etkilemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "impress",
+   "note": ""
+  },
+  {
+   "word": "izlenim",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "impression",
+   "note": ""
+  },
+  {
+   "word": "etkileyici",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "impressive",
+   "note": ""
+  },
+  {
+   "word": "etkileyici bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "impressively",
+   "note": ""
+  },
+  {
+   "word": "bilgilendirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "inform",
+   "note": ""
+  },
+  {
+   "word": "bilgi",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "information",
+   "note": ""
+  },
+  {
+   "word": "bilgilendirici",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "informative",
+   "note": ""
+  },
+  {
+   "word": "bilgi verici şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "informatively",
+   "note": ""
+  },
+  {
+   "word": "icat etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "invent",
+   "note": ""
+  },
+  {
+   "word": "icat",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "invention",
+   "note": ""
+  },
+  {
+   "word": "yaratıcı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "inventive",
+   "note": ""
+  },
+  {
+   "word": "yaratıcı şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "inventively",
+   "note": ""
+  },
+  {
+   "word": "mantık",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "logic",
+   "note": ""
+  },
+  {
+   "word": "mantıklı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "logical",
+   "note": ""
+  },
+  {
+   "word": "mantıklı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "logically",
+   "note": ""
+  },
+  {
+   "word": "doğa",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "nature",
+   "note": ""
+  },
+  {
+   "word": "doğal",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "natural",
+   "note": ""
+  },
+  {
+   "word": "doğal olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "naturally",
+   "note": ""
+  },
+  {
+   "word": "köken",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "origin",
+   "note": ""
+  },
+  {
+   "word": "orijinal",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "original",
+   "note": ""
+  },
+  {
+   "word": "başlangıçta",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "originally",
+   "note": ""
+  },
+  {
+   "word": "mükemmellik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "perfection",
+   "note": ""
+  },
+  {
+   "word": "mükemmel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "perfect",
+   "note": ""
+  },
+  {
+   "word": "kusursuzca",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "perfectly",
+   "note": ""
+  },
+  {
+   "word": "güç",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "power",
+   "note": ""
+  },
+  {
+   "word": "güçlü",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "powerful",
+   "note": ""
+  },
+  {
+   "word": "güçlü bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "powerfully",
+   "note": ""
+  },
+  {
+   "word": "ürün",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "product",
+   "note": ""
+  },
+  {
+   "word": "üretken",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "productive",
+   "note": ""
+  },
+  {
+   "word": "verimli bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "productively",
+   "note": ""
+  },
+  {
+   "word": "sebep",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "reason",
+   "note": ""
+  },
+  {
+   "word": "makul",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "reasonable",
+   "note": ""
+  },
+  {
+   "word": "makul bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "reasonably",
+   "note": ""
+  },
+  {
+   "word": "bilim",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "science",
+   "note": ""
+  },
+  {
+   "word": "bilimsel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "scientific",
+   "note": ""
+  },
+  {
+   "word": "bilimsel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "scientifically",
+   "note": ""
+  },
+  {
+   "word": "başarı",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "success",
+   "note": ""
+  },
+  {
+   "word": "başarılı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "successful",
+   "note": ""
+  },
+  {
+   "word": "başarıyla",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "successfully",
+   "note": ""
+  },
+  {
+   "word": "kullanmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "use",
+   "note": ""
+  },
+  {
+   "word": "kullanım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "use",
+   "note": ""
+  },
+  {
+   "word": "kullanışlı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "useful",
+   "note": ""
+  },
+  {
+   "word": "kullanışlı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "usefully",
+   "note": ""
+  },
+  {
+   "word": "değer vermek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "value",
+   "note": ""
+  },
+  {
+   "word": "değer",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "value",
+   "note": ""
+  },
+  {
+   "word": "değerli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "valuable",
+   "note": ""
+  },
+  {
+   "word": "değerli bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "valuably",
+   "note": ""
+  },
+  {
+   "word": "cezbetmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "attract",
+   "note": ""
+  },
+  {
+   "word": "çekim",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "attraction",
+   "note": ""
+  },
+  {
+   "word": "çekici",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "attractive",
+   "note": ""
+  },
+  {
+   "word": "çekici bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "attractively",
+   "note": ""
+  },
+  {
+   "word": "dayandırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "base",
+   "note": ""
+  },
+  {
+   "word": "temel",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "base",
+   "note": ""
+  },
+  {
+   "word": "temel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "basic",
+   "note": ""
+  },
+  {
+   "word": "temel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "basically",
+   "note": ""
+  },
+  {
+   "word": "önemsemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "care",
+   "note": ""
+  },
+  {
+   "word": "bakım",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "care",
+   "note": ""
+  },
+  {
+   "word": "dikkatli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "careful",
+   "note": ""
+  },
+  {
+   "word": "dikkatlice",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "carefully",
+   "note": ""
+  },
+  {
+   "word": "merkez",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "center",
+   "note": ""
+  },
+  {
+   "word": "merkezi",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "central",
+   "note": ""
+  },
+  {
+   "word": "merkezi olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "centrally",
+   "note": ""
+  },
+  {
+   "word": "tehlike",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "danger",
+   "note": ""
+  },
+  {
+   "word": "tehlikeli",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "dangerous",
+   "note": ""
+  },
+  {
+   "word": "tehlikeli bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "dangerously",
+   "note": ""
+  },
+  {
+   "word": "yönetmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "direct",
+   "note": ""
+  },
+  {
+   "word": "yön",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "direction",
+   "note": ""
+  },
+  {
+   "word": "doğrudan",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "direct",
+   "note": ""
+  },
+  {
+   "word": "doğrudan",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "directly",
+   "note": ""
+  },
+  {
+   "word": "mükemmel olmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "excel",
+   "note": ""
+  },
+  {
+   "word": "mükemmellik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "excellence",
+   "note": ""
+  },
+  {
+   "word": "mükemmel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "excellent",
+   "note": ""
+  },
+  {
+   "word": "mükemmel bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "excellently",
+   "note": ""
+  },
+  {
+   "word": "istisna",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "exception",
+   "note": ""
+  },
+  {
+   "word": "istisnai",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "exceptional",
+   "note": ""
+  },
+  {
+   "word": "istisnai olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "exceptionally",
+   "note": ""
+  },
+  {
+   "word": "finanse etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "finance",
+   "note": ""
+  },
+  {
+   "word": "finans",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "finance",
+   "note": ""
+  },
+  {
+   "word": "finansal",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "financial",
+   "note": ""
+  },
+  {
+   "word": "finansal olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "financially",
+   "note": ""
+  },
+  {
+   "word": "küre",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "globe",
+   "note": ""
+  },
+  {
+   "word": "küresel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "global",
+   "note": ""
+  },
+  {
+   "word": "küresel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "globally",
+   "note": ""
+  },
+  {
+   "word": "tarih",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "history",
+   "note": ""
+  },
+  {
+   "word": "tarihi",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "historical",
+   "note": ""
+  },
+  {
+   "word": "tarihsel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "historically",
+   "note": ""
+  },
+  {
+   "word": "büyü",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "magic",
+   "note": ""
+  },
+  {
+   "word": "büyülü",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "magical",
+   "note": ""
+  },
+  {
+   "word": "büyülü bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "magically",
+   "note": ""
+  },
+  {
+   "word": "ulus",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "nation",
+   "note": ""
+  },
+  {
+   "word": "ulusal",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "national",
+   "note": ""
+  },
+  {
+   "word": "ulusal olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "nationally",
+   "note": ""
+  },
+  {
+   "word": "barış",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "peace",
+   "note": ""
+  },
+  {
+   "word": "huzurlu",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "peaceful",
+   "note": ""
+  },
+  {
+   "word": "huzur içinde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "peacefully",
+   "note": ""
+  },
+  {
+   "word": "gerçeklik",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "reality",
+   "note": ""
+  },
+  {
+   "word": "gerçek",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "real",
+   "note": ""
+  },
+  {
+   "word": "gerçekten",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "really",
+   "note": ""
+  },
+  {
+   "word": "hissetmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "sense",
+   "note": ""
+  },
+  {
+   "word": "duyu",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "sense",
+   "note": ""
+  },
+  {
+   "word": "mantıklı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "sensible",
+   "note": ""
+  },
+  {
+   "word": "mantıklı bir şekilde",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "sensibly",
+   "note": ""
+  },
+  {
+   "word": "gelenek",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "tradition",
+   "note": ""
+  },
+  {
+   "word": "geleneksel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "traditional",
+   "note": ""
+  },
+  {
+   "word": "geleneksel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "traditionally",
+   "note": ""
+  },
+  {
+   "word": "vizyon",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "vision",
+   "note": ""
+  },
+  {
+   "word": "görsel",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "visual",
+   "note": ""
+  },
+  {
+   "word": "görsel olarak",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "visually",
+   "note": ""
+  },
+  {
+   "word": "sebep olmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "bring about",
+   "note": "yol açmak"
+  },
+  {
+   "word": "pürüzleri gidermek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "iron out",
+   "note": "çözmek"
+  },
+  {
+   "word": "ihtimal dışı bırakmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "rule out",
+   "note": "elemek"
+  },
+  {
+   "word": "çığır açmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "break new ground",
+   "note": "yenilik yapmak"
+  },
+  {
+   "word": "işten çıkarmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "lay off",
+   "note": "kovmak"
+  },
+  {
+   "word": "ertelemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "put off",
+   "note": "geciktirmek"
+  },
+  {
+   "word": "iptal etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "call off",
+   "note": "sonlandırmak"
+  },
+  {
+   "word": "araştırmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "look into",
+   "note": "incelemek"
+  },
+  {
+   "word": "dikkat çekmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "point out",
+   "note": "işaret etmek"
+  },
+  {
+   "word": "gerçekleştirmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "carry out",
+   "note": "uygulamak"
+  },
+  {
+   "word": "çözmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "figure out",
+   "note": "anlamak"
+  },
+  {
+   "word": "devralmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "take over",
+   "note": "yönetimi ele almak"
+  },
+  {
+   "word": "kavramak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "catch on",
+   "note": "popüler olmak"
+  },
+  {
+   "word": "bayılmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "pass out",
+   "note": "dağıtmak"
+  },
+  {
+   "word": "boyun eğmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "give in",
+   "note": "teslim olmak"
+  },
+  {
+   "word": "teslim etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "hand in",
+   "note": "sunmak"
+  },
+  {
+   "word": "bozulmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "break down",
+   "note": "ruhen yıkılmak"
+  },
+  {
+   "word": "zorla girmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "break into",
+   "note": "aniden başlamak"
+  },
+  {
+   "word": "pes etmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "give up",
+   "note": "vazgeçmek"
+  },
+  {
+   "word": "yaymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "give off",
+   "note": "salmak"
+  },
+  {
+   "word": "reddetmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "turn down",
+   "note": "sesini kısmak"
+  },
+  {
+   "word": "sonuçlanmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "turn out",
+   "note": "ortaya çıkmak"
+  },
+  {
+   "word": "tükenmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "run out of",
+   "note": "bitmek"
+  },
+  {
+   "word": "uydurmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "make up",
+   "note": "telafi etmek"
+  },
+  {
+   "word": "patlamak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "go off",
+   "note": "çalmak"
+  },
+  {
+   "word": "benzemek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "take after",
+   "note": "çekmek"
+  },
+  {
+   "word": "moralini bozmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "get down",
+   "note": "üzmek"
+  },
+  {
+   "word": "öne çıkmak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "stand out",
+   "note": "dikkat çekmek"
+  },
+  {
+   "word": "uymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "abide by",
+   "note": "itaat etmek"
+  },
+  {
+   "word": "sözünden dönmek",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "back out",
+   "note": "vazgeçmek"
+  },
+  {
+   "word": "act",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "hareket etmek",
+   "note": ""
+  },
+  {
+   "word": "action",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "eylem",
+   "note": ""
+  },
+  {
+   "word": "active",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "aktif",
+   "note": ""
+  },
+  {
+   "word": "actively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "aktif olarak",
+   "note": ""
+  },
+  {
+   "word": "create",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yaratmak",
+   "note": ""
+  },
+  {
+   "word": "creation",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yaratım",
+   "note": ""
+  },
+  {
+   "word": "creative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yaratıcı",
+   "note": ""
+  },
+  {
+   "word": "creatively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "yaratıcı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "decide",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "karar vermek",
+   "note": ""
+  },
+  {
+   "word": "decision",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "karar",
+   "note": ""
+  },
+  {
+   "word": "decisive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kararlı",
+   "note": ""
+  },
+  {
+   "word": "decisively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "kararlı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "differ",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "farklı olmak",
+   "note": ""
+  },
+  {
+   "word": "difference",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "fark",
+   "note": ""
+  },
+  {
+   "word": "different",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "farklı",
+   "note": ""
+  },
+  {
+   "word": "differently",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "farklı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "educate",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "eğitmek",
+   "note": ""
+  },
+  {
+   "word": "education",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "eğitim",
+   "note": ""
+  },
+  {
+   "word": "educational",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "eğitici",
+   "note": ""
+  },
+  {
+   "word": "educationally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "eğitsel olarak",
+   "note": ""
+  },
+  {
+   "word": "effect",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "etki",
+   "note": ""
+  },
+  {
+   "word": "effective",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "etkili",
+   "note": ""
+  },
+  {
+   "word": "effectively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "etkili bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "harm",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "zarar vermek",
+   "note": ""
+  },
+  {
+   "word": "harm",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "zarar",
+   "note": ""
+  },
+  {
+   "word": "harmful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "zararlı",
+   "note": ""
+  },
+  {
+   "word": "harmfully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "zararlı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "hope",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "umut etmek",
+   "note": ""
+  },
+  {
+   "word": "hope",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "umut",
+   "note": ""
+  },
+  {
+   "word": "hopeful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "umutlu",
+   "note": ""
+  },
+  {
+   "word": "hopefully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "umutla",
+   "note": ""
+  },
+  {
+   "word": "impress",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "etkilemek",
+   "note": ""
+  },
+  {
+   "word": "impression",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "izlenim",
+   "note": ""
+  },
+  {
+   "word": "impressive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "etkileyici",
+   "note": ""
+  },
+  {
+   "word": "impressively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "etkileyici bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "inform",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "bilgilendirmek",
+   "note": ""
+  },
+  {
+   "word": "information",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "bilgi",
+   "note": ""
+  },
+  {
+   "word": "informative",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "bilgilendirici",
+   "note": ""
+  },
+  {
+   "word": "informatively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "bilgi verici şekilde",
+   "note": ""
+  },
+  {
+   "word": "invent",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "icat etmek",
+   "note": ""
+  },
+  {
+   "word": "invention",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "icat",
+   "note": ""
+  },
+  {
+   "word": "inventive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "yaratıcı",
+   "note": ""
+  },
+  {
+   "word": "inventively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "yaratıcı şekilde",
+   "note": ""
+  },
+  {
+   "word": "logic",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mantık",
+   "note": ""
+  },
+  {
+   "word": "logical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "mantıklı",
+   "note": ""
+  },
+  {
+   "word": "logically",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "mantıklı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "nature",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "doğa",
+   "note": ""
+  },
+  {
+   "word": "natural",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "doğal",
+   "note": ""
+  },
+  {
+   "word": "naturally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "doğal olarak",
+   "note": ""
+  },
+  {
+   "word": "origin",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "köken",
+   "note": ""
+  },
+  {
+   "word": "original",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "orijinal",
+   "note": ""
+  },
+  {
+   "word": "originally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "başlangıçta",
+   "note": ""
+  },
+  {
+   "word": "perfection",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mükemmellik",
+   "note": ""
+  },
+  {
+   "word": "perfect",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "mükemmel",
+   "note": ""
+  },
+  {
+   "word": "perfectly",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "kusursuzca",
+   "note": ""
+  },
+  {
+   "word": "power",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "güç",
+   "note": ""
+  },
+  {
+   "word": "powerful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "güçlü",
+   "note": ""
+  },
+  {
+   "word": "powerfully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "güçlü bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "product",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ürün",
+   "note": ""
+  },
+  {
+   "word": "productive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "üretken",
+   "note": ""
+  },
+  {
+   "word": "productively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "verimli bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "reason",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sebep",
+   "note": ""
+  },
+  {
+   "word": "reasonable",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "makul",
+   "note": ""
+  },
+  {
+   "word": "reasonably",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "makul bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "science",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "bilim",
+   "note": ""
+  },
+  {
+   "word": "scientific",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "bilimsel",
+   "note": ""
+  },
+  {
+   "word": "scientifically",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "bilimsel olarak",
+   "note": ""
+  },
+  {
+   "word": "success",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "başarı",
+   "note": ""
+  },
+  {
+   "word": "successful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "başarılı",
+   "note": ""
+  },
+  {
+   "word": "successfully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "başarıyla",
+   "note": ""
+  },
+  {
+   "word": "use",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kullanmak",
+   "note": ""
+  },
+  {
+   "word": "use",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "kullanım",
+   "note": ""
+  },
+  {
+   "word": "useful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kullanışlı",
+   "note": ""
+  },
+  {
+   "word": "usefully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "kullanışlı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "value",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "değer vermek",
+   "note": ""
+  },
+  {
+   "word": "value",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "değer",
+   "note": ""
+  },
+  {
+   "word": "valuable",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "değerli",
+   "note": ""
+  },
+  {
+   "word": "valuably",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "değerli bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "attract",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "cezbetmek",
+   "note": ""
+  },
+  {
+   "word": "attraction",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "çekim",
+   "note": ""
+  },
+  {
+   "word": "attractive",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çekici",
+   "note": ""
+  },
+  {
+   "word": "attractively",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "çekici bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "base",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dayandırmak",
+   "note": ""
+  },
+  {
+   "word": "base",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "temel",
+   "note": ""
+  },
+  {
+   "word": "basic",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "temel",
+   "note": ""
+  },
+  {
+   "word": "basically",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "temel olarak",
+   "note": ""
+  },
+  {
+   "word": "care",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "önemsemek",
+   "note": ""
+  },
+  {
+   "word": "care",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "bakım",
+   "note": ""
+  },
+  {
+   "word": "careful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "dikkatli",
+   "note": ""
+  },
+  {
+   "word": "carefully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "dikkatlice",
+   "note": ""
+  },
+  {
+   "word": "center",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "merkez",
+   "note": ""
+  },
+  {
+   "word": "central",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "merkezi",
+   "note": ""
+  },
+  {
+   "word": "centrally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "merkezi olarak",
+   "note": ""
+  },
+  {
+   "word": "danger",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tehlike",
+   "note": ""
+  },
+  {
+   "word": "dangerous",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "tehlikeli",
+   "note": ""
+  },
+  {
+   "word": "dangerously",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "tehlikeli bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "direct",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yönetmek",
+   "note": ""
+  },
+  {
+   "word": "direction",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "yön",
+   "note": ""
+  },
+  {
+   "word": "direct",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "doğrudan",
+   "note": ""
+  },
+  {
+   "word": "directly",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "doğrudan",
+   "note": ""
+  },
+  {
+   "word": "excel",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "mükemmel olmak",
+   "note": ""
+  },
+  {
+   "word": "excellence",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mükemmellik",
+   "note": ""
+  },
+  {
+   "word": "excellent",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "mükemmel",
+   "note": ""
+  },
+  {
+   "word": "excellently",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "mükemmel bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "exception",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "istisna",
+   "note": ""
+  },
+  {
+   "word": "exceptional",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "istisnai",
+   "note": ""
+  },
+  {
+   "word": "exceptionally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "istisnai olarak",
+   "note": ""
+  },
+  {
+   "word": "finance",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "finanse etmek",
+   "note": ""
+  },
+  {
+   "word": "finance",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "finans",
+   "note": ""
+  },
+  {
+   "word": "financial",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "finansal",
+   "note": ""
+  },
+  {
+   "word": "financially",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "finansal olarak",
+   "note": ""
+  },
+  {
+   "word": "globe",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "küre",
+   "note": ""
+  },
+  {
+   "word": "global",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "küresel",
+   "note": ""
+  },
+  {
+   "word": "globally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "küresel olarak",
+   "note": ""
+  },
+  {
+   "word": "history",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "tarih",
+   "note": ""
+  },
+  {
+   "word": "historical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "tarihi",
+   "note": ""
+  },
+  {
+   "word": "historically",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "tarihsel olarak",
+   "note": ""
+  },
+  {
+   "word": "magic",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "büyü",
+   "note": ""
+  },
+  {
+   "word": "magical",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "büyülü",
+   "note": ""
+  },
+  {
+   "word": "magically",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "büyülü bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "nation",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ulus",
+   "note": ""
+  },
+  {
+   "word": "national",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "ulusal",
+   "note": ""
+  },
+  {
+   "word": "nationally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "ulusal olarak",
+   "note": ""
+  },
+  {
+   "word": "peace",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "barış",
+   "note": ""
+  },
+  {
+   "word": "peaceful",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "huzurlu",
+   "note": ""
+  },
+  {
+   "word": "peacefully",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "huzur içinde",
+   "note": ""
+  },
+  {
+   "word": "reality",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "gerçeklik",
+   "note": ""
+  },
+  {
+   "word": "real",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "gerçek",
+   "note": ""
+  },
+  {
+   "word": "really",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "gerçekten",
+   "note": ""
+  },
+  {
+   "word": "sense",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "hissetmek",
+   "note": ""
+  },
+  {
+   "word": "sense",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "duyu",
+   "note": ""
+  },
+  {
+   "word": "sensible",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "mantıklı",
+   "note": ""
+  },
+  {
+   "word": "sensibly",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "mantıklı bir şekilde",
+   "note": ""
+  },
+  {
+   "word": "tradition",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "gelenek",
+   "note": ""
+  },
+  {
+   "word": "traditional",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "geleneksel",
+   "note": ""
+  },
+  {
+   "word": "traditionally",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "geleneksel olarak",
+   "note": ""
+  },
+  {
+   "word": "vision",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "vizyon",
+   "note": ""
+  },
+  {
+   "word": "visual",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "görsel",
+   "note": ""
+  },
+  {
+   "word": "visually",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "görsel olarak",
+   "note": ""
+  },
+  {
+   "word": "bring about",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sebep olmak",
+   "note": "yol açmak"
+  },
+  {
+   "word": "iron out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "pürüzleri gidermek",
+   "note": "çözmek"
+  },
+  {
+   "word": "rule out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ihtimal dışı bırakmak",
+   "note": "elemek"
+  },
+  {
+   "word": "break new ground",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çığır açmak",
+   "note": "yenilik yapmak"
+  },
+  {
+   "word": "lay off",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "işten çıkarmak",
+   "note": "kovmak"
+  },
+  {
+   "word": "put off",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "ertelemek",
+   "note": "geciktirmek"
+  },
+  {
+   "word": "call off",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "iptal etmek",
+   "note": "sonlandırmak"
+  },
+  {
+   "word": "look into",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "araştırmak",
+   "note": "incelemek"
+  },
+  {
+   "word": "point out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "dikkat çekmek",
+   "note": "işaret etmek"
+  },
+  {
+   "word": "carry out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "gerçekleştirmek",
+   "note": "uygulamak"
+  },
+  {
+   "word": "figure out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "çözmek",
+   "note": "anlamak"
+  },
+  {
+   "word": "take over",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "devralmak",
+   "note": "yönetimi ele almak"
+  },
+  {
+   "word": "catch on",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "kavramak",
+   "note": "popüler olmak"
+  },
+  {
+   "word": "pass out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "bayılmak",
+   "note": "dağıtmak"
+  },
+  {
+   "word": "give in",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "boyun eğmek",
+   "note": "teslim olmak"
+  },
+  {
+   "word": "hand in",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "teslim etmek",
+   "note": "sunmak"
+  },
+  {
+   "word": "break down",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "bozulmak",
+   "note": "ruhen yıkılmak"
+  },
+  {
+   "word": "break into",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "zorla girmek",
+   "note": "aniden başlamak"
+  },
+  {
+   "word": "give up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "pes etmek",
+   "note": "vazgeçmek"
+  },
+  {
+   "word": "give off",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "yaymak",
+   "note": "salmak"
+  },
+  {
+   "word": "turn down",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "reddetmek",
+   "note": "sesini kısmak"
+  },
+  {
+   "word": "turn out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sonuçlanmak",
+   "note": "ortaya çıkmak"
+  },
+  {
+   "word": "run out of",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "tükenmek",
+   "note": "bitmek"
+  },
+  {
+   "word": "make up",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "uydurmak",
+   "note": "telafi etmek"
+  },
+  {
+   "word": "go off",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "patlamak",
+   "note": "çalmak"
+  },
+  {
+   "word": "take after",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "benzemek",
+   "note": "çekmek"
+  },
+  {
+   "word": "get down",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "moralini bozmak",
+   "note": "üzmek"
+  },
+  {
+   "word": "stand out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "öne çıkmak",
+   "note": "dikkat çekmek"
+  },
+  {
+   "word": "abide by",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "uymak",
+   "note": "itaat etmek"
+  },
+  {
+   "word": "back out",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "sözünden dönmek",
+   "note": "vazgeçmek"
   }
  ],
  "examples": [
@@ -23856,6 +26222,706 @@
    "meaning": "kulak tıkamak, görmezden gelmek",
    "ex": "The management turned a deaf ear to the employees' complaints.",
    "ex_tr": "Yönetim çalışanların şikayetlerine kulak tıkadı."
+  },
+  {
+   "phrase": "a piece of cake",
+   "lang": "en",
+   "meaning": "çocuk oyuncağı, çok kolay",
+   "ex": "Don't worry about the exam; it will be a piece of cake.",
+   "ex_tr": "Sınav için endişelenme; çocuk oyuncağı olacak."
+  },
+  {
+   "phrase": "break the ice",
+   "lang": "en",
+   "meaning": "buzları eritmek, ortamı yumuşatmak",
+   "ex": "He told a funny joke to break the ice at the meeting.",
+   "ex_tr": "Toplantıda buzları eritmek için komik bir şaka yaptı."
+  },
+  {
+   "phrase": "under the weather",
+   "lang": "en",
+   "meaning": "keyifsiz, hafif hasta",
+   "ex": "I'm feeling a bit under the weather today, so I will stay home.",
+   "ex_tr": "Bugün biraz keyifsiz hissediyorum, bu yüzden evde kalacağım."
+  },
+  {
+   "phrase": "spill the beans",
+   "lang": "en",
+   "meaning": "baklayı ağzından çıkarmak",
+   "ex": "We wanted to keep the party a secret, but John spilled the beans.",
+   "ex_tr": "Partiyi sır olarak saklamak istiyorduk ama John baklayı ağzından çıkardı."
+  },
+  {
+   "phrase": "bite the bullet",
+   "lang": "en",
+   "meaning": "dişini sıkmak, zorluğa katlanmak",
+   "ex": "I hate going to the dentist, but I'll just have to bite the bullet.",
+   "ex_tr": "Dişçiye gitmekten nefret ediyorum ama dişimi sıkmak zorundayım."
+  },
+  {
+   "phrase": "cost an arm and a leg",
+   "lang": "en",
+   "meaning": "ateş pahası olmak",
+   "ex": "I love this designer bag, but it costs an arm and a leg.",
+   "ex_tr": "Bu tasarım çantaya bayılıyorum ama ateş pahası."
+  },
+  {
+   "phrase": "cut corners",
+   "lang": "en",
+   "meaning": "işten/malzemeden çalmak, ucuza kaçmak",
+   "ex": "If we cut corners on this project, the quality will suffer.",
+   "ex_tr": "Bu projede ucuza kaçarsak kalite düşer."
+  },
+  {
+   "phrase": "get out of hand",
+   "lang": "en",
+   "meaning": "kontrolden çıkmak",
+   "ex": "The argument quickly got out of hand.",
+   "ex_tr": "Tartışma hızla kontrolden çıktı."
+  },
+  {
+   "phrase": "hang in there",
+   "lang": "en",
+   "meaning": "dişini sıkmak, pes etmemek",
+   "ex": "Hang in there, things will get better soon.",
+   "ex_tr": "Pes etme, işler yakında düzelecek."
+  },
+  {
+   "phrase": "hit the sack",
+   "lang": "en",
+   "meaning": "yatmaya gitmek, uyumak",
+   "ex": "I'm exhausted, it's time for me to hit the sack.",
+   "ex_tr": "Çok yorgunum, artık yatmaya gitme vaktim geldi."
+  },
+  {
+   "phrase": "miss the boat",
+   "lang": "en",
+   "meaning": "fırsatı kaçırmak",
+   "ex": "If you don't buy the tickets now, you'll miss the boat.",
+   "ex_tr": "Biletleri şimdi almazsan fırsatı kaçırırsın."
+  },
+  {
+   "phrase": "on the ball",
+   "lang": "en",
+   "meaning": "işini bilen, dikkatli ve atik",
+   "ex": "Our new assistant is really on the ball.",
+   "ex_tr": "Yeni asistanımız gerçekten işini biliyor ve çok dikkatli."
+  },
+  {
+   "phrase": "pull someone's leg",
+   "lang": "en",
+   "meaning": "biriyle kafa bulmak, şaka yapmak",
+   "ex": "Stop pulling my leg! I know you are joking.",
+   "ex_tr": "Benimle kafa bulmayı bırak! Şaka yaptığını biliyorum."
+  },
+  {
+   "phrase": "wrap one's head around",
+   "lang": "en",
+   "meaning": "akıl erdirmek, kavramak",
+   "ex": "I just can't wrap my head around this complex math problem.",
+   "ex_tr": "Bu karmaşık matematik problemine bir türlü akıl erdiremiyorum."
+  },
+  {
+   "phrase": "a dime a dozen",
+   "lang": "en",
+   "meaning": "sıradan, çok yaygın",
+   "ex": "Those cheap souvenirs are a dime a dozen in this city.",
+   "ex_tr": "O ucuz hediyelik eşyalar bu şehirde çok yaygındır."
+  },
+  {
+   "phrase": "beat around the bush",
+   "lang": "en",
+   "meaning": "lafı dolandırmak",
+   "ex": "Stop beating around the bush and tell me the truth.",
+   "ex_tr": "Lafı dolandırmayı bırak ve bana gerçeği söyle."
+  },
+  {
+   "phrase": "better late than never",
+   "lang": "en",
+   "meaning": "geç olsun güç olmasın",
+   "ex": "He finally arrived at the party; well, better late than never.",
+   "ex_tr": "Sonunda partiye geldi; neyse, geç olsun güç olmasın."
+  },
+  {
+   "phrase": "bite off more than one can chew",
+   "lang": "en",
+   "meaning": "boyundan büyük işe kalkışmak",
+   "ex": "By taking on three jobs, she definitely bit off more than she could chew.",
+   "ex_tr": "Üç işi birden alarak kesinlikle boyundan büyük bir işe kalkıştı."
+  },
+  {
+   "phrase": "burn bridges",
+   "lang": "en",
+   "meaning": "gemileri yakmak, ipleri koparmak",
+   "ex": "It's never a good idea to burn bridges when you leave a job.",
+   "ex_tr": "Bir işten ayrılırken ipleri koparmak asla iyi bir fikir değildir."
+  },
+  {
+   "phrase": "by the skin of one's teeth",
+   "lang": "en",
+   "meaning": "kıl payı",
+   "ex": "He passed the final exam by the skin of his teeth.",
+   "ex_tr": "Final sınavını kıl payı geçti."
+  },
+  {
+   "phrase": "call it a day",
+   "lang": "en",
+   "meaning": "paydos etmek, işi bitirmek",
+   "ex": "We've been working for ten hours, let's call it a day.",
+   "ex_tr": "On saattir çalışıyoruz, hadi paydos edelim."
+  },
+  {
+   "phrase": "come rain or shine",
+   "lang": "en",
+   "meaning": "ne olursa olsun",
+   "ex": "I will be there for your wedding, come rain or shine.",
+   "ex_tr": "Ne olursa olsun düğününde orada olacağım."
+  },
+  {
+   "phrase": "cry over spilled milk",
+   "lang": "en",
+   "meaning": "olup bitmiş bir şeye üzülmek",
+   "ex": "It's broken now, there's no use crying over spilled milk.",
+   "ex_tr": "Artık kırıldı, olan olmuş üzülmenin bir faydası yok."
+  },
+  {
+   "phrase": "cut to the chase",
+   "lang": "en",
+   "meaning": "sadede gelmek",
+   "ex": "Let's skip the introductions and cut to the chase.",
+   "ex_tr": "Tanışma faslını atlayıp sadede gelelim."
+  },
+  {
+   "phrase": "do a double take",
+   "lang": "en",
+   "meaning": "şaşırıp tekrar bakmak",
+   "ex": "When I saw her new haircut, I did a double take.",
+   "ex_tr": "Onun yeni saç kesimini gördüğümde şaşırıp tekrar baktım."
+  },
+  {
+   "phrase": "down to earth",
+   "lang": "en",
+   "meaning": "ayakları yere basan, mütevazı",
+   "ex": "Despite her fame, the actress remains very down to earth.",
+   "ex_tr": "Şöhretine rağmen aktris oldukça mütevazı kalmaya devam ediyor."
+  },
+  {
+   "phrase": "draw the line",
+   "lang": "en",
+   "meaning": "sınır çizmek, dur demek",
+   "ex": "I'll help you with your homework, but I draw the line at writing your essay.",
+   "ex_tr": "Ödevine yardım ederim ama kompozisyonunu yazmaya gelince orada dur derim."
+  },
+  {
+   "phrase": "easier said than done",
+   "lang": "en",
+   "meaning": "söylemesi kolay",
+   "ex": "Finding a good job right now is easier said than done.",
+   "ex_tr": "Şu an iyi bir iş bulmak söylemesi kolay ama yapması zordur."
+  },
+  {
+   "phrase": "elephant in the room",
+   "lang": "en",
+   "meaning": "görmezden gelinen bariz sorun",
+   "ex": "The budget cut was the elephant in the room that nobody wanted to discuss.",
+   "ex_tr": "Bütçe kesintisi, kimsenin tartışmak istemediği ama bariz bir sorundu."
+  },
+  {
+   "phrase": "every cloud has a silver lining",
+   "lang": "en",
+   "meaning": "her şerde bir hayır vardır",
+   "ex": "Don't be sad about losing the match; every cloud has a silver lining.",
+   "ex_tr": "Maçı kaybettiğin için üzülme; her şerde bir hayır vardır."
+  },
+  {
+   "phrase": "face the music",
+   "lang": "en",
+   "meaning": "sonuçlarına katlanmak",
+   "ex": "You broke the window, now you have to face the music.",
+   "ex_tr": "Pencereyi kırdın, şimdi sonuçlarına katlanmak zorundasın."
+  },
+  {
+   "phrase": "find one's feet",
+   "lang": "en",
+   "meaning": "yeni bir duruma alışmak",
+   "ex": "It takes a few weeks to find your feet in a new school.",
+   "ex_tr": "Yeni bir okula alışmak birkaç hafta sürer."
+  },
+  {
+   "phrase": "food for thought",
+   "lang": "en",
+   "meaning": "düşündürücü şey",
+   "ex": "The documentary provided a lot of food for thought about climate change.",
+   "ex_tr": "Belgesel, iklim değişikliği hakkında birçok düşündürücü şey sundu."
+  },
+  {
+   "phrase": "get a grip",
+   "lang": "en",
+   "meaning": "kendini toparlamak",
+   "ex": "You need to get a grip and stop panicking.",
+   "ex_tr": "Kendini toparlaman ve paniği bırakman gerekiyor."
+  },
+  {
+   "phrase": "get cold feet",
+   "lang": "en",
+   "meaning": "son anda vazgeçmek, cesaretini kaybetmek",
+   "ex": "He got cold feet just before the wedding ceremony.",
+   "ex_tr": "Düğün töreninden hemen önce cesaretini kaybetti."
+  },
+  {
+   "phrase": "get off the ground",
+   "lang": "en",
+   "meaning": "başlamak, hayata geçmek (proje)",
+   "ex": "We need more funding to get this project off the ground.",
+   "ex_tr": "Bu projeyi hayata geçirmek için daha fazla fona ihtiyacımız var."
+  },
+  {
+   "phrase": "get to the bottom of",
+   "lang": "en",
+   "meaning": "içyüzünü öğrenmek, kökenine inmek",
+   "ex": "The detective promised to get to the bottom of the mystery.",
+   "ex_tr": "Dedektif gizemin içyüzünü öğreneceğine söz verdi."
+  },
+  {
+   "phrase": "give the benefit of the doubt",
+   "lang": "en",
+   "meaning": "şüpheli durumda haklı olduğuna inanmak",
+   "ex": "I will give you the benefit of the doubt this time.",
+   "ex_tr": "Bu seferlik senin haklı olduğuna inanacağım."
+  },
+  {
+   "phrase": "go the extra mile",
+   "lang": "en",
+   "meaning": "fazladan çaba göstermek",
+   "ex": "Our customer service team always goes the extra mile.",
+   "ex_tr": "Müşteri hizmetleri ekibimiz her zaman fazladan çaba gösterir."
+  },
+  {
+   "phrase": "hit the nail on the head",
+   "lang": "en",
+   "meaning": "tam isabet ettirmek, doğruyu söylemek",
+   "ex": "Your analysis hit the nail on the head.",
+   "ex_tr": "Analizin tam isabet ettirdi."
+  },
+  {
+   "phrase": "in hot water",
+   "lang": "en",
+   "meaning": "başı belada olmak",
+   "ex": "He is in hot water with his boss for missing the deadline.",
+   "ex_tr": "Teslim tarihini kaçırdığı için patronuyla başı belada."
+  },
+  {
+   "phrase": "in the long run",
+   "lang": "en",
+   "meaning": "uzun vadede",
+   "ex": "Learning a second language will benefit you in the long run.",
+   "ex_tr": "İkinci bir dil öğrenmek uzun vadede sana fayda sağlayacaktır."
+  },
+  {
+   "phrase": "jump the gun",
+   "lang": "en",
+   "meaning": "aceleci davranmak, erken davranmak",
+   "ex": "We shouldn't jump the gun and celebrate before the official results.",
+   "ex_tr": "Aceleci davranıp resmi sonuçlardan önce kutlama yapmamalıyız."
+  },
+  {
+   "phrase": "keep an eye on",
+   "lang": "en",
+   "meaning": "göz kulak olmak",
+   "ex": "Can you keep an eye on my suitcase for a minute?",
+   "ex_tr": "Bir dakikalığına valizime göz kulak olabilir misin?"
+  },
+  {
+   "phrase": "keep one's chin up",
+   "lang": "en",
+   "meaning": "moralini yüksek tutmak",
+   "ex": "Keep your chin up; you'll find a better job soon.",
+   "ex_tr": "Moralini yüksek tut; yakında daha iyi bir iş bulacaksın."
+  },
+  {
+   "phrase": "know the ropes",
+   "lang": "en",
+   "meaning": "işin inceliklerini bilmek",
+   "ex": "Ask Jane for help; she really knows the ropes around here.",
+   "ex_tr": "Jane'den yardım iste; buraların inceliklerini gerçekten iyi biliyor."
+  },
+  {
+   "phrase": "leave no stone unturned",
+   "lang": "en",
+   "meaning": "bakmadık yer bırakmamak",
+   "ex": "The police will leave no stone unturned to find the culprit.",
+   "ex_tr": "Polis suçluyu bulmak için bakmadık yer bırakmayacak."
+  },
+  {
+   "phrase": "let the dust settle",
+   "lang": "en",
+   "meaning": "ortalığın yatışmasını beklemek",
+   "ex": "Let's wait for the dust to settle before we make a decision.",
+   "ex_tr": "Karar vermeden önce ortalığın yatışmasını bekleyelim."
+  },
+  {
+   "phrase": "look on the bright side",
+   "lang": "en",
+   "meaning": "iyi tarafından bakmak",
+   "ex": "Look on the bright side: at least it's not raining.",
+   "ex_tr": "İyi tarafından bak: en azından yağmur yağmıyor."
+  },
+  {
+   "phrase": "make a long story short",
+   "lang": "en",
+   "meaning": "uzun lafın kısası",
+   "ex": "To make a long story short, we missed the flight.",
+   "ex_tr": "Uzun lafın kısası, uçağı kaçırdık."
+  },
+  {
+   "phrase": "akla karayı seçmek",
+   "lang": "tr",
+   "meaning": "to have a hard time",
+   "ex": "O dosyayı bulana kadar akla karayı seçtim.",
+   "ex_tr": "I had a very hard time until I found that file."
+  },
+  {
+   "phrase": "çantada keklik",
+   "lang": "tr",
+   "meaning": "in the bag, a sure thing",
+   "ex": "Bu maçı kazanmak bizim için çantada keklik.",
+   "ex_tr": "Winning this match is in the bag for us."
+  },
+  {
+   "phrase": "el üstünde tutmak",
+   "lang": "tr",
+   "meaning": "to treat with great respect",
+   "ex": "Anneannemi her zaman el üstünde tutarız.",
+   "ex_tr": "We always treat our grandmother with great respect."
+  },
+  {
+   "phrase": "göz boyamak",
+   "lang": "tr",
+   "meaning": "to deceive, to throw dust in someone's eyes",
+   "ex": "Bu reklam kampanyası sadece göz boyamak için yapılmış.",
+   "ex_tr": "This ad campaign is made just to deceive people."
+  },
+  {
+   "phrase": "iğneyle kuyu kazmak",
+   "lang": "tr",
+   "meaning": "to do a painstakingly slow job",
+   "ex": "Eski metinleri çevirmek iğneyle kuyu kazmak gibidir.",
+   "ex_tr": "Translating ancient texts is like doing a painstakingly slow job."
+  },
+  {
+   "phrase": "kabuğuna çekilmek",
+   "lang": "tr",
+   "meaning": "to withdraw into one's shell",
+   "ex": "Olaydan sonra kimseyle konuşmadı, iyice kabuğuna çekildi.",
+   "ex_tr": "He didn't speak to anyone after the incident, completely withdrawing into his shell."
+  },
+  {
+   "phrase": "kulak ardı etmek",
+   "lang": "tr",
+   "meaning": "to ignore, to turn a deaf ear",
+   "ex": "Verdiğim tavsiyeleri kulak ardı etme lütfen.",
+   "ex_tr": "Please don't turn a deaf ear to the advice I gave."
+  },
+  {
+   "phrase": "nabzını yoklamak",
+   "lang": "tr",
+   "meaning": "to sound someone out, to test the waters",
+   "ex": "Müdürün nabzını yoklamadan zam isteme bence.",
+   "ex_tr": "I don't think you should ask for a raise without sounding out the manager first."
+  },
+  {
+   "phrase": "ok yaydan çıkmak",
+   "lang": "tr",
+   "meaning": "the die is cast, past the point of no return",
+   "ex": "Artık ok yaydan çıktı, geri dönüşümüz yok.",
+   "ex_tr": "The die is cast now, we have no turning back."
+  },
+  {
+   "phrase": "pabucu dama atılmak",
+   "lang": "tr",
+   "meaning": "to fall out of favor",
+   "ex": "Yeni bebek doğunca ilk çocuğun pabucu dama atıldı.",
+   "ex_tr": "When the new baby was born, the first child fell out of favor."
+  },
+  {
+   "phrase": "saman altından su yürütmek",
+   "lang": "tr",
+   "meaning": "to act deceitfully behind the scenes",
+   "ex": "O çok sessizdir ama saman altından su yürütür.",
+   "ex_tr": "He is very quiet but acts deceitfully behind the scenes."
+  },
+  {
+   "phrase": "taş çıkarmak",
+   "lang": "tr",
+   "meaning": "to outshine, to surpass",
+   "ex": "Genç yetenek, tecrübeli ustalara taş çıkarttı.",
+   "ex_tr": "The young talent outshone the experienced masters."
+  },
+  {
+   "phrase": "ucu ucuna",
+   "lang": "tr",
+   "meaning": "by a hair's breadth, just in time",
+   "ex": "Trafiğe rağmen toplantıya ucu ucuna yetiştim.",
+   "ex_tr": "Despite the traffic, I made it to the meeting just in time."
+  },
+  {
+   "phrase": "vakit öldürmek",
+   "lang": "tr",
+   "meaning": "to kill time",
+   "ex": "Uçağı beklerken dergi okuyarak vakit öldürdüm.",
+   "ex_tr": "I killed time by reading a magazine while waiting for the plane."
+  },
+  {
+   "phrase": "yüz akıyla",
+   "lang": "tr",
+   "meaning": "with flying colors, honorably",
+   "ex": "Zorlu projeden yüz akıyla çıkmayı başardılar.",
+   "ex_tr": "They managed to come out of the challenging project with flying colors."
+  },
+  {
+   "phrase": "aba altından sopa göstermek",
+   "lang": "tr",
+   "meaning": "to make a veiled threat",
+   "ex": "Konuşurken gülüyordu ama aba altından sopa gösteriyordu.",
+   "ex_tr": "He was smiling while talking, but he was making a veiled threat."
+  },
+  {
+   "phrase": "açık kapı bırakmak",
+   "lang": "tr",
+   "meaning": "to leave the door open (for future possibilities)",
+   "ex": "Teklifi reddetti ama gelecekteki görüşmeler için açık kapı bıraktı.",
+   "ex_tr": "He rejected the offer but left the door open for future talks."
+  },
+  {
+   "phrase": "bağrına taş basmak",
+   "lang": "tr",
+   "meaning": "to endure sorrow silently",
+   "ex": "Evladını uzaklara gönderirken bağrına taş bastı.",
+   "ex_tr": "She endured the sorrow silently when sending her child far away."
+  },
+  {
+   "phrase": "canı burnuna gelmek",
+   "lang": "tr",
+   "meaning": "to be fed up",
+   "ex": "Gürültüden canı burnuna gelmişti.",
+   "ex_tr": "He was totally fed up with the noise."
+  },
+  {
+   "phrase": "çizmeyi aşmak",
+   "lang": "tr",
+   "meaning": "to overstep the mark, to go too far",
+   "ex": "Son yorumuyla artık çizmeyi aştı.",
+   "ex_tr": "With his last comment, he finally overstepped the mark."
+  },
+  {
+   "phrase": "damarına basmak",
+   "lang": "tr",
+   "meaning": "to touch a nerve, to provoke",
+   "ex": "Özellikle onun hassas olduğu konularda damarına basıyor.",
+   "ex_tr": "He touches a nerve especially on subjects she is sensitive about."
+  },
+  {
+   "phrase": "etekleri zil çalmak",
+   "lang": "tr",
+   "meaning": "to be highly thrilled",
+   "ex": "Sınavı geçtiğini öğrenince etekleri zil çaldı.",
+   "ex_tr": "When she learned she passed the exam, she was highly thrilled."
+  },
+  {
+   "phrase": "fırsat bu fırsat",
+   "lang": "tr",
+   "meaning": "now is the chance",
+   "ex": "Hava güzel, fırsat bu fırsat deyip pikniğe gittik.",
+   "ex_tr": "Saying 'now is the chance' since the weather is nice, we went for a picnic."
+  },
+  {
+   "phrase": "gözdağı vermek",
+   "lang": "tr",
+   "meaning": "to intimidate",
+   "ex": "Rakiplerine gözdağı vermek için sert bir açıklama yaptı.",
+   "ex_tr": "He made a harsh statement to intimidate his rivals."
+  },
+  {
+   "phrase": "hesabını bilmek",
+   "lang": "tr",
+   "meaning": "to manage one's money well",
+   "ex": "O her zaman hesabını bilen tutumlu biridir.",
+   "ex_tr": "He is always a thrifty person who manages his money well."
+  },
+  {
+   "phrase": "içini dökmek",
+   "lang": "tr",
+   "meaning": "to pour one's heart out",
+   "ex": "En yakın arkadaşına bütün gece içini döktü.",
+   "ex_tr": "She poured her heart out to her best friend all night."
+  },
+  {
+   "phrase": "kafasına dank etmek",
+   "lang": "tr",
+   "meaning": "to dawn on someone suddenly",
+   "ex": "Gerçekleri öğrenince durum kafasına dank etti.",
+   "ex_tr": "When he learned the facts, the situation suddenly dawned on him."
+  },
+  {
+   "phrase": "kan ter içinde kalmak",
+   "lang": "tr",
+   "meaning": "to be drenched in sweat",
+   "ex": "Eşyaları taşırken kan ter içinde kaldık.",
+   "ex_tr": "We were drenched in sweat while carrying the furniture."
+  },
+  {
+   "phrase": "laf taşımak",
+   "lang": "tr",
+   "meaning": "to gossip, to carry tales",
+   "ex": "İnsanlar arasında laf taşıyarak ortalığı karıştırıyor.",
+   "ex_tr": "He stirs up trouble by carrying tales among people."
+  },
+  {
+   "phrase": "masaya yatırmak",
+   "lang": "tr",
+   "meaning": "to put on the table for discussion",
+   "ex": "Yeni projeyi yönetim kurulunda masaya yatıracağız.",
+   "ex_tr": "We will put the new project on the table at the board of directors."
+  },
+  {
+   "phrase": "ne oldum delisi olmak",
+   "lang": "tr",
+   "meaning": "to let success go to one's head",
+   "ex": "Biraz para kazanınca hemen ne oldum delisi oldu.",
+   "ex_tr": "When he made a little money, he immediately let it go to his head."
+  },
+  {
+   "phrase": "ok yaydan çıkmak",
+   "lang": "tr",
+   "meaning": "to pass the point of no return",
+   "ex": "Artık ok yaydan çıktı, geri adım atamayız.",
+   "ex_tr": "The arrow has left the bow, we cannot step back now."
+  },
+  {
+   "phrase": "ödü kopmak",
+   "lang": "tr",
+   "meaning": "to be scared out of one's wits",
+   "ex": "Karanlıktan aniden kedi çıkınca ödüm koptu.",
+   "ex_tr": "I was scared out of my wits when a cat suddenly appeared from the dark."
+  },
+  {
+   "phrase": "pay biçmek",
+   "lang": "tr",
+   "meaning": "to infer, to judge by comparison",
+   "ex": "Kendi tecrübelerinden pay biçerek ona hak verdi.",
+   "ex_tr": "Judging by his own experiences, he agreed with him."
+  },
+  {
+   "phrase": "pot kırmak",
+   "lang": "tr",
+   "meaning": "to make a blunder, to put one's foot in one's mouth",
+   "ex": "Toplantıda büyük bir pot kırıp herkesi şaşırttı.",
+   "ex_tr": "He made a huge blunder at the meeting and surprised everyone."
+  },
+  {
+   "phrase": "rest çekmek",
+   "lang": "tr",
+   "meaning": "to take a firm stand, to call someone's bluff",
+   "ex": "Haksızlığa dayanamayıp patrona rest çekti.",
+   "ex_tr": "Unable to tolerate the injustice, he took a firm stand against the boss."
+  },
+  {
+   "phrase": "sırtını dayamak",
+   "lang": "tr",
+   "meaning": "to rely on, to lean on",
+   "ex": "Her zaman ailesine sırtını dayayabileceğini biliyordu.",
+   "ex_tr": "He knew he could always rely on his family."
+  },
+  {
+   "phrase": "şapkasını önüne koymak",
+   "lang": "tr",
+   "meaning": "to reflect seriously",
+   "ex": "Artık şapkanı önüne koyup düşünme vaktin geldi.",
+   "ex_tr": "It's time for you to reflect seriously now."
+  },
+  {
+   "phrase": "tadında bırakmak",
+   "lang": "tr",
+   "meaning": "to stop before overdoing it",
+   "ex": "Eğlenceyi tam tadında bırakıp eve döndük.",
+   "ex_tr": "We stopped the fun before overdoing it and returned home."
+  },
+  {
+   "phrase": "uykusu kaçmak",
+   "lang": "tr",
+   "meaning": "to lose sleep",
+   "ex": "Yarınki sınavı düşünmekten bütün gece uykusu kaçtı.",
+   "ex_tr": "He lost sleep all night thinking about tomorrow's exam."
+  },
+  {
+   "phrase": "üstesinden gelmek",
+   "lang": "tr",
+   "meaning": "to overcome, to handle",
+   "ex": "Birlikte çalışarak bu zorluğun da üstesinden geleceğiz.",
+   "ex_tr": "By working together, we will overcome this difficulty too."
+  },
+  {
+   "phrase": "vakit nakittir",
+   "lang": "tr",
+   "meaning": "time is money",
+   "ex": "Hemen işe başlamalıyız, unutma vakit nakittir.",
+   "ex_tr": "We must start working immediately; remember, time is money."
+  },
+  {
+   "phrase": "yağmurdan kaçarken doluya tutulmak",
+   "lang": "tr",
+   "meaning": "to jump out of the frying pan into the fire",
+   "ex": "Trafikten kaçayım derken kazaya denk geldim, yağmurdan kaçarken doluya tutuldum.",
+   "ex_tr": "Trying to escape the traffic I ran into an accident; jumped out of the frying pan into the fire."
+  },
+  {
+   "phrase": "zaman kazanmak",
+   "lang": "tr",
+   "meaning": "to buy time",
+   "ex": "Karar vermek için biraz zaman kazanmaya çalışıyor.",
+   "ex_tr": "He is trying to buy some time to make a decision."
+  },
+  {
+   "phrase": "açığını bulmak",
+   "lang": "tr",
+   "meaning": "to find someone's weak point",
+   "ex": "Sistemin açığını bularak veri sızdırmışlar.",
+   "ex_tr": "They leaked data by finding the system's weak point."
+  },
+  {
+   "phrase": "baş göstermek",
+   "lang": "tr",
+   "meaning": "to arise, to break out",
+   "ex": "Köyde yeni bir salgın hastalık baş gösterdi.",
+   "ex_tr": "A new epidemic disease broke out in the village."
+  },
+  {
+   "phrase": "can havliyle",
+   "lang": "tr",
+   "meaning": "with desperate effort, in panic",
+   "ex": "Köpeği görünce can havliyle koşmaya başladı.",
+   "ex_tr": "Seeing the dog, he started running in panic."
+  },
+  {
+   "phrase": "deniz feneri gibi",
+   "lang": "tr",
+   "meaning": "like a beacon",
+   "ex": "Bu proje sektördeki diğer firmalara deniz feneri gibi yol gösteriyor.",
+   "ex_tr": "This project guides other companies in the sector like a beacon."
+  },
+  {
+   "phrase": "esip gürlemek",
+   "lang": "tr",
+   "meaning": "to rant and rave, to storm",
+   "ex": "Toplantıda esip gürledi ama sonunda ikna oldu.",
+   "ex_tr": "He ranted and raved in the meeting but was finally convinced."
+  },
+  {
+   "phrase": "fark atmak",
+   "lang": "tr",
+   "meaning": "to outdistance, to surpass by far",
+   "ex": "Yeni ürünümüz satışlarda rakiplerine büyük fark attı.",
+   "ex_tr": "Our new product outdistanced its competitors by a large margin in sales."
   },
   {
    "phrase": "heavy rain",

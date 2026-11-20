@@ -14,7 +14,8 @@ earlier file is read only once, with that file's corrections.
 
 usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20.xlsx tools/contrib/hamit_2026-11-20_v2.xlsx \
-         tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_filtre_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v3.xlsx tools/contrib/hamit_2026-11-20_v4.xlsx \
+         tools/contrib/hamit_filtre_2026-11-20.xlsx \
          tools/contrib/hamit_filtre2_2026-11-20.xlsx
 """
 import json
@@ -278,6 +279,19 @@ V3_EX_FIX = {
     4: {'en': 'This technology broke new ground in medical science.'},
 }
 
+# --- Fourth file, hamit_2026-11-20_v4.xlsx ("1000 gerçek kayıt") -----------------
+# Most of it is made from patterns: 20 verbs with 50 sentences each ("CEO yeniden
+# yeni politikayı onayladı."), word pairs ("yavaş hedef: slow goal"), 900 phrases
+# in one sentence ("They focused on the X to improve overall efficiency."). Only
+# these rows are read:
+V4_KEEP = {
+    'Cümlede anlam': set(), 'Örnek cümleler': set(),
+    'TR-EN kelimeler': set(range(2, 192)), 'EN-TR kelimeler': set(range(2, 192)),
+    'Deyim ve kalıplar': set(range(902, 1002)),
+}
+# Word families: the made-up verb of a noun ("science: bilim yapmak", "nation: ulusallaşmak").
+V4_DROP = {22, 46, 50, 54, 58, 62, 66, 70, 74, 78, 102, 106, 118, 126, 130, 134, 138, 142, 146, 154, 158}
+
 FIXES = {
     'hamit_2026-11-20.xlsx': dict(ctx_fix=CTX_FIX, ctx_to_phrase=CTX_TO_PHRASE, ctx_tr=CTX_TR, ctx_add=[],
                                   en_split=EN_SPLIT, tr_split=TR_SPLIT, ex_fix={i: {'en': e} for i, e in EX_EN_FIX.items()},
@@ -362,15 +376,18 @@ seen = set()  # (sheet, row contents) already read from an earlier file
 
 
 def rows(wb, sheet):
+    keep = V4_KEEP if wb_name == 'hamit_2026-11-20_v4.xlsx' else None
     for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
         r = ['' if v is None else str(v).strip() for v in r]
+        if keep is not None and (i not in keep.get(sheet, set()) or i in V4_DROP):
+            continue
         if any(r) and (sheet, tuple(r)) not in seen and not any(PLACEHOLDER.search(x) for x in r):
             seen.add((sheet, tuple(r)))
             yield i, r
 
 
 for src in srcs:
-    name = src.split('/')[-1]
+    name = wb_name = src.split('/')[-1]
     fx = FIXES.get(name) or dict(ctx_fix={}, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
                                  en_split={}, tr_split={}, ex_fix={}, ph_fix={})
     wb = openpyxl.load_workbook(src, data_only=True)

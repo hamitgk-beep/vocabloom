@@ -73,4 +73,10 @@ void main() {
     final st = tr.entry('tırmanmak')!.senses.where((s) => s.source == 'st').expand((s) => s.glosses);
     expect(st, contains('to escalate'));
   });
+
+  test('Fourth sheet: its real idioms are in, the made-up rows are not', () {
+    expect(tr.entry('çantada keklik'), isNotNull);
+    expect(tr.entry('yavaş hedef'), isNull);
+    expect(en.ownSenses('science').map((s) => s.tr), isNot(contains('bilim yapmak')));
+  });
 }
