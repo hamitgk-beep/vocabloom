@@ -36,7 +36,7 @@ Map<String, String> get posNames => uiEnglish
 /// [WordInfo.trFreeDict]) come from Wiktionary and damdafayton/eng-tur-dictionary
 /// (tools/main_meanings.py); WordNet gives English senses and base forms.
 class DictDb {
-  static const _version = '33';
+  static const _version = '34';
 
   /// Version of the bundled dictionary; part of the context-meaning cache
   /// keys and of the "wrong meaning" reports.

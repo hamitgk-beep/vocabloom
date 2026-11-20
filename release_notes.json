@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "contrib-hamit-5",
+      "area": "dictionary",
+      "tr": "Hazır kalıplar filtresine 210 yeni kalıp (Long time no see, Keep me posted, It's up to you …) ve Söylem belirteçlerine 27 yeni ifade (on top of that, that said, come to think of it …) eklendi. Sözlüğe müphem, yadsımak, kanıksamak, ubiquitous, meticulous gibi ileri seviye kelimeler, 57 yeni Türkçe anlam, 30 bağlam cümlesi ve öbek fiillerin örnek cümleleri geldi.",
+      "en": "210 new phrases in Chunks (Long time no see, Keep me posted, It's up to you …) and 27 in Discourse Markers (on top of that, that said, come to think of it …). The dictionary got advanced words such as müphem, yadsımak, kanıksamak, ubiquitous, meticulous, 57 new Turkish meanings, 30 context sentences and example sentences for phrasal verbs."
+    },
+    {
       "id": "contrib-dictionary-hamit-4",
       "area": "dictionary",
       "tr": "Sözlüğe 100 yeni elle hazırlanmış deyim ve örnek cümlesi eklendi (çantada keklik, pot kırmak, spill the beans, cut corners …), ayrıca İngilizce kelime ailelerinden zarflar (effectively: etkili bir şekilde) ve öbek fiillerin Türkçe karşılıkları.",

@@ -12,7 +12,7 @@ import 'package:sqlite3/sqlite3.dart';
 /// 4.0, ranking only) and Tatoeba sentence pairs (CC BY 2.0 FR).
 class TrEnDict {
   // Bump when assets/tr_en.db changes, so devices copy the new one.
-  static const _version = '8';
+  static const _version = '9';
   final Database db;
   TrEnDict(this.db);
 
