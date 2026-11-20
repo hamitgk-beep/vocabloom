@@ -521,6 +521,8 @@ class SenseEngine {
         final en0 = '${s['en'] ?? ''}'.trim();
         final hasEx = '${s['ex'] ?? ''}'.trim().isNotEmpty;
         final ex = hasEx ? '${s['ex']}'.trim() : en0, exTr = '${s['ex_tr'] ?? ''}'.trim();
+        // More checked sentences for this meaning (tools/contrib/apply.py).
+        final more = [for (final m in (s['more'] as List? ?? const [])) (m as Map).cast<String, dynamic>()];
         out.add(SenseCandidate(
           id: 'ow:$lemma#$i',
           source: 'own',
@@ -529,8 +531,8 @@ class SenseEngine {
           en: hasEx && en0.isNotEmpty ? en0 : null,
           tr: tr,
           note: note.isEmpty ? null : note,
-          examples: [if (ex.isNotEmpty) ex],
-          examplesTr: [if (ex.isNotEmpty) exTr],
+          examples: [if (ex.isNotEmpty) ex, for (final m in more) '${m['en'] ?? ''}'],
+          examplesTr: [if (ex.isNotEmpty) exTr, for (final m in more) '${m['tr'] ?? ''}'],
           rank: i + rankOffset,
         ));
       }

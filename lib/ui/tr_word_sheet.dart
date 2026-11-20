@@ -191,7 +191,12 @@ class _TrWordPanelState extends State<TrWordPanel> {
             if (s.source != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
-                child: Text(s.source == 'wn' ? L('Kaynak: KeNet / WordNet', 'Source: KeNet / WordNet') : L('Kaynak: FreeDict', 'Source: FreeDict'),
+                child: Text(
+                    switch (s.source) {
+                      'wn' => L('Kaynak: KeNet / WordNet', 'Source: KeNet / WordNet'),
+                      'st' => L('Kaynak: Storilex katkıları', 'Source: Storilex contributors'),
+                      _ => L('Kaynak: FreeDict', 'Source: FreeDict'),
+                    },
                     style: TextStyle(fontSize: 11.5, color: theme.hintColor)),
               ),
             if (s.pos.isNotEmpty)

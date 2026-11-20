@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "contrib-dictionary-hamit-1",
+      "area": "dictionary",
+      "tr": "Sözlüğe elle hazırlanıp kontrol edilmiş veri eklendi. Türkçe → İngilizce: 39 yeni anlam, 36 yeni kelime ve deyim, 154 örnek cümle; 52 cümle, kelimenin o cümledeki anlamını seçmeyi öğretiyor (örneğin \"direksiyonu sağa kırmak\": to swerve). İngilizce → Türkçe: 14 yeni anlam, 5 yeni deyim, 14 deyime yeni karşılık, 153 örnek cümle. Elle hazırlanan örnekler artık önce gösteriliyor.",
+      "en": "Hand-checked data added to the dictionary. Turkish → English: 39 new meanings, 36 new words and idioms, 154 example sentences; 52 sentences teach which meaning a word has in its sentence (e.g. \"direksiyonu sağa kırmak\": to swerve). English → Turkish: 14 new meanings, 5 new idioms, new equivalents for 14 idioms, 153 example sentences. Hand-made examples are now shown first."
+    },
+    {
       "id": "free-library-never-spins",
       "area": "app",
       "tr": "Ücretsiz kütüphane düzeltildi: bazı bilgisayarlarda sürekli yükleniyor gösterip hiçbir şey açmıyordu. Artık metinler doğrudan okunuyor; bir dosya okunamazsa diğer dildeki metinler yine açılıyor, hiçbiri okunamazsa sebebi ve \"Tekrar dene\" düğmesi gösteriliyor.",

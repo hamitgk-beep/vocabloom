@@ -30,6 +30,9 @@ jobs:
           python3 tools/tr_en/add_reverse.py assets/dict.db assets/tr_en.db | tee tools/tr_en/reverse_report.md
           # Meaning in context and more examples, from Tatoeba.
           python3 tools/tr_en/build_context.py pairs.tsv assets/tr_en.db | tee tools/tr_en/context_report.md
+          # Hand-checked meanings, examples and context sentences (tools/contrib); dict.db is only read here.
+          cp assets/dict.db /tmp/dict_copy.db
+          python3 tools/contrib/apply.py tools/contrib/storilex_contrib.json assets/tr_en.db /tmp/dict_copy.db
       - name: Commit
         run: |
           ls -la assets/tr_en.db

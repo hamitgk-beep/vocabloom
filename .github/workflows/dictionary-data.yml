@@ -165,6 +165,9 @@ jobs:
         run: |
           cp assets/dict.db old.db
           REVIEW_KEEP_FROM=old.db python3 tools/build_dict.py raw assets/dict.db
+          # Hand-checked meanings and examples (tools/contrib); tr_en.db is only read here.
+          cp assets/tr_en.db /tmp/tr_en_copy.db
+          python3 tools/contrib/apply.py tools/contrib/storilex_contrib.json /tmp/tr_en_copy.db assets/dict.db
       - name: Publish when there are new entries
         env:
           GH_TOKEN: ${{ github.token }}
