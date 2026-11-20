@@ -24,7 +24,8 @@ usage: python3 tools/contrib/clean.py tools/contrib/storilex_contrib.json \
          tools/contrib/hamit_2026-11-20_v9.xlsx tools/contrib/hamit_filtre11_2026-11-20.xlsx tools/contrib/hamit_filtre12_2026-11-20.xlsx \
          tools/contrib/hamit_2026-11-20_v10.xlsx tools/contrib/hamit_filtre13_2026-11-20.xlsx \
          tools/contrib/hamit_denetim14_2026-11-20.xlsx tools/contrib/hamit_denetim15_2026-11-20.xlsx \
-         tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx
+         tools/contrib/hamit_2026-11-20_v11.xlsx tools/contrib/hamit_denetim16_2026-11-20.xlsx \
+         tools/contrib/hamit_2026-11-20_v12.xlsx
 """
 import json
 import re
@@ -390,7 +391,35 @@ V11_EN_SPLIT = {10: [('isim', 'enerji', '')], 11: [('isim', 'güç, canlılık, 
                 16: [('isim', 'ayyaş', 'sürekli alkol alan kişi')], 21: [('isim', 'çorba', 'sıvı yiyecek')], 22: [],
                 24: [('isim', 'klişe duygusallık, bayağılık', 'sıfatı: cheesy')]}
 
+# --- Dictionary v12 (hamit_2026-11-20_v12.xlsx) ----------------------------------
+# v11 again with its fixes (already applied from v11) and new words: only the
+# new words are read. Not taken: "al" as "hile" (old, and the sentence reads as
+# the colour), "felt" as "hissetti" (a form of "feel", not a meaning of its own),
+# "a determined time" (the word is "predetermined").
+_NEW_ROWS = set(range(34, 56)) | {72, 73} | set(range(82, 106)) | set(range(107, 110))
+V12_KEEP = {'Cümlede anlam': _NEW_ROWS - {93}, 'Örnek cümleler': _NEW_ROWS - {93},
+            'TR-EN kelimeler': set(range(34, 56)), 'EN-TR kelimeler': {17, 18} | set(range(27, 51)) - {38} | {52, 53, 54},
+            'Deyim ve kalıplar': set(range(2, 32))}
+V12_EXTREME, V12_INITIAL = 'extreme, radical (views)', 'initial, early'
+V12_MODERN, V12_INCIDENT = 'son teknoloji, yeni', 'olay, çatışma (sınırda, ülkeler arasında)'
+V12_CTX_FIX = {37: (None, None, None, V12_EXTREME), 52: (None, None, None, V12_INITIAL),
+               91: (None, None, None, V12_MODERN), 97: (None, None, None, V12_INCIDENT)}
+V12_EX_FIX = {
+    37: {'meaning': V12_EXTREME, 'en': 'His extreme views sometimes push people away from him.'},
+    38: {'en': "Mr Ahmet is the company's longest-serving and most experienced manager."},
+    39: {'en': 'My husband is going to be a little late from work today, apparently.'},
+    52: {'meaning': V12_INITIAL},
+    87: {'tr': 'Eli kazanmak için kupa dokuzluğunu yere koydu.'},
+    91: {'meaning': V12_MODERN}, 97: {'meaning': V12_INCIDENT},
+}
+V12_TR_SPLIT = {37: [('sıfat', V12_EXTREME, 'düşüncede ileri giden')], 52: [('sıfat', V12_INITIAL, 'en başta olan')]}
+V12_EN_SPLIT = {36: [('sıfat', V12_MODERN, 'gelişmiş donanımlı')], 42: [('isim', V12_INCIDENT, 'ciddi sorun')],
+                48: [('ünlem', 'günaydın', 'selamlama (kısa)')]}
+V12_PH_FIX = {8: {'ex_tr': 'Reading and translating these old manuscripts one by one is painstakingly slow work.'}}
+
 FIXES = {
+    'hamit_2026-11-20_v12.xlsx': dict(ctx_fix=V12_CTX_FIX, ctx_to_phrase=set(), ctx_tr={}, ctx_add=[],
+                                      en_split=V12_EN_SPLIT, tr_split=V12_TR_SPLIT, ex_fix=V12_EX_FIX, ph_fix=V12_PH_FIX),
     'hamit_2026-11-20_v11.xlsx': dict(ctx_fix=V11_CTX_FIX, ctx_to_phrase=set(), ctx_add=[], ctx_phrase={54: 'soup up'},
                                       ctx_tr={54: 'Hafta sonları yarışmak için eski arabasını güçlendirmeye karar verdi.'},
                                       en_split=V11_EN_SPLIT, tr_split=V11_TR_SPLIT, ex_fix=V11_EX_FIX, ph_fix={}),
@@ -597,10 +626,10 @@ seen = set()  # (sheet, row contents) already read from an earlier file
 
 
 def rows(wb, sheet):
-    keep = V4_KEEP if wb_name == 'hamit_2026-11-20_v4.xlsx' else None
+    keep, drop = {'hamit_2026-11-20_v4.xlsx': (V4_KEEP, V4_DROP), 'hamit_2026-11-20_v12.xlsx': (V12_KEEP, set())}.get(wb_name, (None, None))
     for i, r in enumerate(wb[sheet].iter_rows(min_row=2, values_only=True), 2):
         r = ['' if v is None else str(v).strip() for v in r]
-        if keep is not None and (i not in keep.get(sheet, set()) or i in V4_DROP):
+        if keep is not None and (i not in keep.get(sheet, set()) or i in drop):
             continue
         if any(r) and (sheet, tuple(r)) not in seen and not any(PLACEHOLDER.search(x) for x in r):
             seen.add((sheet, tuple(r)))

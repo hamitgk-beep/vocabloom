@@ -1,5 +1,5 @@
 {
- "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx",
+ "source": "Storilex contributors (Hamit), hamit_2026-11-20.xlsx, hamit_2026-11-20_v2.xlsx, hamit_2026-11-20_v3.xlsx, hamit_2026-11-20_v4.xlsx, hamit_2026-11-20_v5.xlsx, hamit_filtre_2026-11-20.xlsx, hamit_filtre2_2026-11-20.xlsx, hamit_filtre3_2026-11-20.xlsx, hamit_2026-11-20_v6.xlsx, hamit_filtre4_2026-11-20.xlsx, hamit_filtre5_2026-11-20.xlsx, hamit_filtre6_2026-11-20.xlsx, hamit_2026-11-20_v7.xlsx, hamit_2026-11-20_v8.xlsx, hamit_filtre7_2026-11-20.xlsx, hamit_filtre8_2026-11-20.xlsx, hamit_filtre9_2026-11-20.xlsx, hamit_filtre10_2026-11-20.xlsx, hamit_2026-11-20_v9.xlsx, hamit_filtre11_2026-11-20.xlsx, hamit_filtre12_2026-11-20.xlsx, hamit_2026-11-20_v10.xlsx, hamit_filtre13_2026-11-20.xlsx, hamit_denetim14_2026-11-20.xlsx, hamit_denetim15_2026-11-20.xlsx, hamit_2026-11-20_v11.xlsx, hamit_denetim16_2026-11-20.xlsx, hamit_2026-11-20_v12.xlsx",
  "context": [
   {
    "sentence": "Yayınlanan program yaklaşık on yıl sürmüştür.",
@@ -7471,6 +7471,406 @@
    "lemma": "cheese",
    "lang": "en",
    "meaning": "klişe duygusallık, bayağılık",
+   "translation": ""
+  },
+  {
+   "sentence": "Dolunayın etrafında oluşan o parlak hale geceye ayrı bir güzellik kattı.",
+   "form": "hale",
+   "lemma": "hale",
+   "lang": "tr",
+   "meaning": "halo",
+   "translation": ""
+  },
+  {
+   "sentence": "Sanatçının etrafındaki o gizemli hale, herkesin ilgisini çekiyordu.",
+   "form": "hale",
+   "lemma": "hale",
+   "lang": "tr",
+   "meaning": "aura",
+   "translation": ""
+  },
+  {
+   "sentence": "Aşırı hız nedeniyle otoyolda birçok kaza meydana geliyor.",
+   "form": "aşırı",
+   "lemma": "aşırı",
+   "lang": "tr",
+   "meaning": "excessive, extreme",
+   "translation": ""
+  },
+  {
+   "sentence": "Onun aşırı görüşleri bazen insanları kendinden uzaklaştırıyor.",
+   "form": "aşırı",
+   "lemma": "aşırı",
+   "lang": "tr",
+   "meaning": "extreme, radical (views)",
+   "translation": ""
+  },
+  {
+   "sentence": "Ahmet Bey, şirketin en eski ve en tecrübeli yöneticisidir.",
+   "form": "Bey",
+   "lemma": "bey",
+   "lang": "tr",
+   "meaning": "gentleman, mister",
+   "translation": ""
+  },
+  {
+   "sentence": "Bizim bey bugün işten biraz geç dönecekmiş.",
+   "form": "bey",
+   "lemma": "bey",
+   "lang": "tr",
+   "meaning": "husband",
+   "translation": ""
+  },
+  {
+   "sentence": "Elinde sadece bir karo bey kaldığı için oyunu kaybetti.",
+   "form": "bey",
+   "lemma": "bey",
+   "lang": "tr",
+   "meaning": "jack (playing card)",
+   "translation": ""
+  },
+  {
+   "sentence": "Güneşin altında çok fazla kaldığı için açık teni hemen kızardı.",
+   "form": "teni",
+   "lemma": "ten",
+   "lang": "tr",
+   "meaning": "skin",
+   "translation": ""
+  },
+  {
+   "sentence": "Kışın dondurucu soğuğu paltosundan geçip tenine işliyordu.",
+   "form": "tenine",
+   "lemma": "ten",
+   "lang": "tr",
+   "meaning": "flesh, body",
+   "translation": ""
+  },
+  {
+   "sentence": "Tatil için kimsenin bilmediği, sessiz ve saklı bir koy keşfettik.",
+   "form": "koy",
+   "lemma": "koy",
+   "lang": "tr",
+   "meaning": "bay, cove",
+   "translation": ""
+  },
+  {
+   "sentence": "Elindeki ağır kitapları yavaşça çalışma masasının üzerine koydu.",
+   "form": "koydu",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to put, to place",
+   "translation": ""
+  },
+  {
+   "sentence": "Misafirlere ikram etmek için bardaklara taze çay koydu.",
+   "form": "koydu",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to pour",
+   "translation": ""
+  },
+  {
+   "sentence": "Şirket yönetimi, çalışanların güvenliği için çok sıkı kurallar koydu.",
+   "form": "koydu",
+   "lemma": "koymak",
+   "lang": "tr",
+   "meaning": "to establish, to set",
+   "translation": ""
+  },
+  {
+   "sentence": "Kahvaltıda taze demlenmiş bir bardak sıcak çay içmeyi çok severim.",
+   "form": "çay",
+   "lemma": "çay",
+   "lang": "tr",
+   "meaning": "tea",
+   "translation": ""
+  },
+  {
+   "sentence": "Köyün hemen girişindeki o coşkun çay yaz aylarında bile kurumaz.",
+   "form": "çay",
+   "lemma": "çay",
+   "lang": "tr",
+   "meaning": "brook, stream",
+   "translation": ""
+  },
+  {
+   "sentence": "Bu yıl kütüphaneye çok kitap bağışlandı.",
+   "form": "çok",
+   "lemma": "çok",
+   "lang": "tr",
+   "meaning": "a lot, much, many",
+   "translation": ""
+  },
+  {
+   "sentence": "Sınav o kadar zordu ki çok yoruldum.",
+   "form": "çok",
+   "lemma": "çok",
+   "lang": "tr",
+   "meaning": "very, too",
+   "translation": ""
+  },
+  {
+   "sentence": "Okuldaki ilk gününde oldukça heyecanlı ve biraz da çekingendi.",
+   "form": "ilk",
+   "lemma": "ilk",
+   "lang": "tr",
+   "meaning": "first",
+   "translation": ""
+  },
+  {
+   "sentence": "Projenin ilk aşaması planladığımızdan çok daha uzun sürdü.",
+   "form": "ilk",
+   "lemma": "ilk",
+   "lang": "tr",
+   "meaning": "initial, early",
+   "translation": ""
+  },
+  {
+   "sentence": "Şu köşede bekleyen herif dünden beri mahalleyi gözetliyor.",
+   "form": "herif",
+   "lemma": "herif",
+   "lang": "tr",
+   "meaning": "guy, fellow",
+   "translation": ""
+  },
+  {
+   "sentence": "Böyle kaba saba bir herifle iş yapmayı asla kabul edemem.",
+   "form": "herifle",
+   "lemma": "herif",
+   "lang": "tr",
+   "meaning": "scoundrel, rascal",
+   "translation": ""
+  },
+  {
+   "sentence": "Törende gökyüzüne al renkli bayraklar çekildi.",
+   "form": "al",
+   "lemma": "al",
+   "lang": "tr",
+   "meaning": "blood red, bright red",
+   "translation": ""
+  },
+  {
+   "sentence": "She practiced playing the piano for three hours every day.",
+   "form": "piano",
+   "lemma": "piano",
+   "lang": "en",
+   "meaning": "piyano",
+   "translation": ""
+  },
+  {
+   "sentence": "The sheet music indicated that this section should be played piano.",
+   "form": "piano",
+   "lemma": "piano",
+   "lang": "en",
+   "meaning": "hafif, yumuşak (müzik)",
+   "translation": ""
+  },
+  {
+   "sentence": "Thailand is one of the world's leading exporters of rice.",
+   "form": "rice",
+   "lemma": "rice",
+   "lang": "en",
+   "meaning": "pirinç",
+   "translation": ""
+  },
+  {
+   "sentence": "I ordered some spicy chicken with a side of rice for dinner.",
+   "form": "rice",
+   "lemma": "rice",
+   "lang": "en",
+   "meaning": "pilav",
+   "translation": ""
+  },
+  {
+   "sentence": "Please speak clearly so that everyone in the room can understand you.",
+   "form": "clearly",
+   "lemma": "clearly",
+   "lang": "en",
+   "meaning": "açıkça, net bir şekilde",
+   "translation": ""
+  },
+  {
+   "sentence": "She is clearly the most talented musician in the entire orchestra.",
+   "form": "clearly",
+   "lemma": "clearly",
+   "lang": "en",
+   "meaning": "şüphesiz, kuşkusuz",
+   "translation": ""
+  },
+  {
+   "sentence": "She has nine different colors of paint in her art box.",
+   "form": "nine",
+   "lemma": "nine",
+   "lang": "en",
+   "meaning": "dokuz",
+   "translation": ""
+  },
+  {
+   "sentence": "He laid down a nine of hearts to win the hand.",
+   "form": "nine",
+   "lemma": "nine",
+   "lang": "en",
+   "meaning": "iskambil dokuzlusu",
+   "translation": ""
+  },
+  {
+   "sentence": "They recently moved into a very quiet and safe neighborhood.",
+   "form": "neighborhood",
+   "lemma": "neighborhood",
+   "lang": "en",
+   "meaning": "mahalle, semt",
+   "translation": ""
+  },
+  {
+   "sentence": "The repairs will cost somewhere in the neighborhood of five hundred dollars.",
+   "form": "neighborhood",
+   "lemma": "neighborhood",
+   "lang": "en",
+   "meaning": "civar, dolay",
+   "translation": ""
+  },
+  {
+   "sentence": "Modern art often challenges traditional ideas of beauty and form.",
+   "form": "modern",
+   "lemma": "modern",
+   "lang": "en",
+   "meaning": "çağdaş, günümüze ait",
+   "translation": ""
+  },
+  {
+   "sentence": "The factory was updated with modern machinery to increase production.",
+   "form": "modern",
+   "lemma": "modern",
+   "lang": "en",
+   "meaning": "son teknoloji, yeni",
+   "translation": ""
+  },
+  {
+   "sentence": "She was incredibly determined to finish the marathon despite her injury.",
+   "form": "determined",
+   "lemma": "determined",
+   "lang": "en",
+   "meaning": "kararlı, azimli",
+   "translation": ""
+  },
+  {
+   "sentence": "He decided to grow a thick beard during the winter months.",
+   "form": "beard",
+   "lemma": "beard",
+   "lang": "en",
+   "meaning": "sakal",
+   "translation": ""
+  },
+  {
+   "sentence": "The brave knight bearded the dragon in its own dark cave.",
+   "form": "bearded",
+   "lemma": "beard",
+   "lang": "en",
+   "meaning": "meydan okumak, karşı gelmek",
+   "translation": ""
+  },
+  {
+   "sentence": "The police are currently investigating the isolated incident in the park.",
+   "form": "incident",
+   "lemma": "incident",
+   "lang": "en",
+   "meaning": "olay, vaka",
+   "translation": ""
+  },
+  {
+   "sentence": "The border incident caused tension between the two neighboring countries.",
+   "form": "incident",
+   "lemma": "incident",
+   "lang": "en",
+   "meaning": "olay, çatışma (sınırda, ülkeler arasında)",
+   "translation": ""
+  },
+  {
+   "sentence": "There is a strong possibility that the flight will be canceled due to snow.",
+   "form": "possibility",
+   "lemma": "possibility",
+   "lang": "en",
+   "meaning": "ihtimal, olasılık",
+   "translation": ""
+  },
+  {
+   "sentence": "The new software opens up endless possibilities for graphic designers.",
+   "form": "possibilities",
+   "lemma": "possibility",
+   "lang": "en",
+   "meaning": "seçenek, imkan",
+   "translation": ""
+  },
+  {
+   "sentence": "The cat chased a small grey mouse across the kitchen floor.",
+   "form": "mouse",
+   "lemma": "mouse",
+   "lang": "en",
+   "meaning": "fare",
+   "translation": ""
+  },
+  {
+   "sentence": "I need to buy a wireless mouse for my new laptop.",
+   "form": "mouse",
+   "lemma": "mouse",
+   "lang": "en",
+   "meaning": "bilgisayar faresi",
+   "translation": ""
+  },
+  {
+   "sentence": "I prefer to exercise early in the morning when it's quiet.",
+   "form": "morning",
+   "lemma": "morning",
+   "lang": "en",
+   "meaning": "sabah",
+   "translation": ""
+  },
+  {
+   "sentence": "Morning, John! How was your weekend trip to the lake?",
+   "form": "Morning",
+   "lemma": "morning",
+   "lang": "en",
+   "meaning": "günaydın",
+   "translation": ""
+  },
+  {
+   "sentence": "The team is preparing vigorously for the coming championship match.",
+   "form": "coming",
+   "lemma": "coming",
+   "lang": "en",
+   "meaning": "gelecek, yaklaşan",
+   "translation": ""
+  },
+  {
+   "sentence": "The sudden coming of winter caught the local farmers off guard.",
+   "form": "coming",
+   "lemma": "coming",
+   "lang": "en",
+   "meaning": "geliş, varış",
+   "translation": ""
+  },
+  {
+   "sentence": "The artisan made a beautiful green hat out of thick felt.",
+   "form": "felt",
+   "lemma": "felt",
+   "lang": "en",
+   "meaning": "keçe",
+   "translation": ""
+  },
+  {
+   "sentence": "The train journey to the capital city takes about an hour.",
+   "form": "hour",
+   "lemma": "hour",
+   "lang": "en",
+   "meaning": "saat (60 dakika)",
+   "translation": ""
+  },
+  {
+   "sentence": "In his darkest hour, his true friends stood by his side.",
+   "form": "hour",
+   "lemma": "hour",
+   "lang": "en",
+   "meaning": "belirli bir zaman, an",
    "translation": ""
   }
  ],
@@ -22944,6 +23344,356 @@
    "pos": "noun",
    "meaning": "klişe duygusallık, bayağılık",
    "note": "sıfatı: cheesy"
+  },
+  {
+   "word": "hale",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "halo",
+   "note": "ay veya güneşin etrafındaki ışık"
+  },
+  {
+   "word": "hale",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "aura",
+   "note": "manevi etki"
+  },
+  {
+   "word": "aşırı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "excessive, extreme",
+   "note": "ölçüyü aşan"
+  },
+  {
+   "word": "aşırı",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "extreme, radical (views)",
+   "note": "düşüncede ileri giden"
+  },
+  {
+   "word": "bey",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "gentleman, mister",
+   "note": "erkeklere verilen ad"
+  },
+  {
+   "word": "bey",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "husband",
+   "note": "kadının eşi"
+  },
+  {
+   "word": "bey",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "jack (playing card)",
+   "note": "vale"
+  },
+  {
+   "word": "ten",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "skin",
+   "note": "vücudun dış örtüsü"
+  },
+  {
+   "word": "ten",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "flesh, body",
+   "note": "bedenin bedeni kısmı"
+  },
+  {
+   "word": "koy",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "bay, cove",
+   "note": "küçük körfez"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to put, to place",
+   "note": "bir yere bırakmak"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to pour",
+   "note": "bardağa/tabağa sıvı eklemek"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "pos": "verb",
+   "meaning": "to establish, to set",
+   "note": "sınır veya kural getirmek"
+  },
+  {
+   "word": "çay",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "tea",
+   "note": "sıcak içecek"
+  },
+  {
+   "word": "çay",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "brook, stream",
+   "note": "dereden büyük su"
+  },
+  {
+   "word": "çok",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "a lot, much, many",
+   "note": "bol olan"
+  },
+  {
+   "word": "çok",
+   "lang": "tr",
+   "pos": "adv",
+   "meaning": "very, too",
+   "note": "derecesi yüksek"
+  },
+  {
+   "word": "ilk",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "first",
+   "note": "sırada önde olan"
+  },
+  {
+   "word": "ilk",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "initial, early",
+   "note": "en başta olan"
+  },
+  {
+   "word": "herif",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "guy, fellow",
+   "note": "erkek kişi (argo/halk ağzı)"
+  },
+  {
+   "word": "herif",
+   "lang": "tr",
+   "pos": "noun",
+   "meaning": "scoundrel, rascal",
+   "note": "güvenilmez kimse"
+  },
+  {
+   "word": "al",
+   "lang": "tr",
+   "pos": "adj",
+   "meaning": "blood red, bright red",
+   "note": "parlak kırmızı"
+  },
+  {
+   "word": "piano",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "piyano",
+   "note": "müzik aleti"
+  },
+  {
+   "word": "piano",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "hafif, yumuşak (müzik)",
+   "note": "müzik terimi"
+  },
+  {
+   "word": "rice",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "pirinç",
+   "note": "tahıl"
+  },
+  {
+   "word": "rice",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "pilav",
+   "note": "pişmiş yemek"
+  },
+  {
+   "word": "clearly",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "açıkça, net bir şekilde",
+   "note": "görünür/duyulur şekilde"
+  },
+  {
+   "word": "clearly",
+   "lang": "en",
+   "pos": "adv",
+   "meaning": "şüphesiz, kuşkusuz",
+   "note": "kesin olarak"
+  },
+  {
+   "word": "nine",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "dokuz",
+   "note": "sayı"
+  },
+  {
+   "word": "nine",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "iskambil dokuzlusu",
+   "note": "kart"
+  },
+  {
+   "word": "neighborhood",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "mahalle, semt",
+   "note": "yaşam alanı"
+  },
+  {
+   "word": "neighborhood",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "civar, dolay",
+   "note": "yakın çevre"
+  },
+  {
+   "word": "modern",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "çağdaş, günümüze ait",
+   "note": "yeni zaman"
+  },
+  {
+   "word": "modern",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "son teknoloji, yeni",
+   "note": "gelişmiş donanımlı"
+  },
+  {
+   "word": "determined",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "kararlı, azimli",
+   "note": "vazgeçmeyen"
+  },
+  {
+   "word": "beard",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sakal",
+   "note": "yüzdeki kıl"
+  },
+  {
+   "word": "beard",
+   "lang": "en",
+   "pos": "verb",
+   "meaning": "meydan okumak, karşı gelmek",
+   "note": "korkmadan yüzleşmek"
+  },
+  {
+   "word": "incident",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "olay, vaka",
+   "note": "gerçekleşen durum"
+  },
+  {
+   "word": "incident",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "olay, çatışma (sınırda, ülkeler arasında)",
+   "note": "ciddi sorun"
+  },
+  {
+   "word": "possibility",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "ihtimal, olasılık",
+   "note": "olabilirlik"
+  },
+  {
+   "word": "possibility",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "seçenek, imkan",
+   "note": "potansiyel fırsat"
+  },
+  {
+   "word": "mouse",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "fare",
+   "note": "kemirgen"
+  },
+  {
+   "word": "mouse",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "bilgisayar faresi",
+   "note": "donanım"
+  },
+  {
+   "word": "morning",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "sabah",
+   "note": "günün ilk saatleri"
+  },
+  {
+   "word": "morning",
+   "lang": "en",
+   "pos": "intj",
+   "meaning": "günaydın",
+   "note": "selamlama (kısa)"
+  },
+  {
+   "word": "coming",
+   "lang": "en",
+   "pos": "adj",
+   "meaning": "gelecek, yaklaşan",
+   "note": "zaman olarak yaklaşan"
+  },
+  {
+   "word": "coming",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "geliş, varış",
+   "note": "birinin ulaşması"
+  },
+  {
+   "word": "felt",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "keçe",
+   "note": "kumaş türü"
+  },
+  {
+   "word": "hour",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "saat (60 dakika)",
+   "note": "zaman birimi"
+  },
+  {
+   "word": "hour",
+   "lang": "en",
+   "pos": "noun",
+   "meaning": "belirli bir zaman, an",
+   "note": "özel an"
   }
  ],
  "examples": [
@@ -31306,6 +32056,406 @@
    "tr": "Romantik komedi eğlenceliydi ama diyaloglar tamamen klişeyle doluydu.",
    "en": "The romantic comedy was fun, but the dialogue was full of cheese.",
    "level": "C1"
+  },
+  {
+   "word": "hale",
+   "lang": "tr",
+   "meaning": "halo",
+   "tr": "Dolunayın etrafında oluşan o parlak hale geceye ayrı bir güzellik kattı.",
+   "en": "That bright halo formed around the full moon added a distinct beauty to the night.",
+   "level": "C1"
+  },
+  {
+   "word": "hale",
+   "lang": "tr",
+   "meaning": "aura",
+   "tr": "Sanatçının etrafındaki o gizemli hale, herkesin ilgisini çekiyordu.",
+   "en": "That mysterious aura around the artist attracted everyone's attention.",
+   "level": "C2"
+  },
+  {
+   "word": "aşırı",
+   "lang": "tr",
+   "meaning": "excessive, extreme",
+   "tr": "Aşırı hız nedeniyle otoyolda birçok kaza meydana geliyor.",
+   "en": "Many accidents occur on the highway due to excessive speed.",
+   "level": "B1"
+  },
+  {
+   "word": "aşırı",
+   "lang": "tr",
+   "meaning": "extreme, radical (views)",
+   "tr": "Onun aşırı görüşleri bazen insanları kendinden uzaklaştırıyor.",
+   "en": "His extreme views sometimes push people away from him.",
+   "level": "C1"
+  },
+  {
+   "word": "bey",
+   "lang": "tr",
+   "meaning": "gentleman, mister",
+   "tr": "Ahmet Bey, şirketin en eski ve en tecrübeli yöneticisidir.",
+   "en": "Mr Ahmet is the company's longest-serving and most experienced manager.",
+   "level": "A1"
+  },
+  {
+   "word": "bey",
+   "lang": "tr",
+   "meaning": "husband",
+   "tr": "Bizim bey bugün işten biraz geç dönecekmiş.",
+   "en": "My husband is going to be a little late from work today, apparently.",
+   "level": "B2"
+  },
+  {
+   "word": "bey",
+   "lang": "tr",
+   "meaning": "jack (playing card)",
+   "tr": "Elinde sadece bir karo bey kaldığı için oyunu kaybetti.",
+   "en": "He lost the game because he only had a jack of diamonds left in his hand.",
+   "level": "C1"
+  },
+  {
+   "word": "ten",
+   "lang": "tr",
+   "meaning": "skin",
+   "tr": "Güneşin altında çok fazla kaldığı için açık teni hemen kızardı.",
+   "en": "Because she stayed under the sun too much, her light skin immediately turned red.",
+   "level": "A2"
+  },
+  {
+   "word": "ten",
+   "lang": "tr",
+   "meaning": "flesh, body",
+   "tr": "Kışın dondurucu soğuğu paltosundan geçip tenine işliyordu.",
+   "en": "The freezing cold of winter passed through his coat and pierced his flesh.",
+   "level": "B2"
+  },
+  {
+   "word": "koy",
+   "lang": "tr",
+   "meaning": "bay, cove",
+   "tr": "Tatil için kimsenin bilmediği, sessiz ve saklı bir koy keşfettik.",
+   "en": "We discovered a quiet and hidden bay that nobody knows about for our vacation.",
+   "level": "B1"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "meaning": "to put, to place",
+   "tr": "Elindeki ağır kitapları yavaşça çalışma masasının üzerine koydu.",
+   "en": "He slowly put the heavy books in his hand on the desk.",
+   "level": "A1"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "meaning": "to pour",
+   "tr": "Misafirlere ikram etmek için bardaklara taze çay koydu.",
+   "en": "She poured fresh tea into the glasses to serve the guests.",
+   "level": "A2"
+  },
+  {
+   "word": "koymak",
+   "lang": "tr",
+   "meaning": "to establish, to set",
+   "tr": "Şirket yönetimi, çalışanların güvenliği için çok sıkı kurallar koydu.",
+   "en": "The company management set very strict rules for the safety of the employees.",
+   "level": "B2"
+  },
+  {
+   "word": "çay",
+   "lang": "tr",
+   "meaning": "tea",
+   "tr": "Kahvaltıda taze demlenmiş bir bardak sıcak çay içmeyi çok severim.",
+   "en": "I really like to drink a glass of freshly brewed hot tea at breakfast.",
+   "level": "A1"
+  },
+  {
+   "word": "çay",
+   "lang": "tr",
+   "meaning": "brook, stream",
+   "tr": "Köyün hemen girişindeki o coşkun çay yaz aylarında bile kurumaz.",
+   "en": "That rushing stream right at the entrance of the village doesn't dry up even in summer months.",
+   "level": "B2"
+  },
+  {
+   "word": "çok",
+   "lang": "tr",
+   "meaning": "a lot, much, many",
+   "tr": "Bu yıl kütüphaneye çok kitap bağışlandı.",
+   "en": "A lot of books were donated to the library this year.",
+   "level": "A1"
+  },
+  {
+   "word": "çok",
+   "lang": "tr",
+   "meaning": "very, too",
+   "tr": "Sınav o kadar zordu ki çok yoruldum.",
+   "en": "The exam was so hard that I got very tired.",
+   "level": "A1"
+  },
+  {
+   "word": "ilk",
+   "lang": "tr",
+   "meaning": "first",
+   "tr": "Okuldaki ilk gününde oldukça heyecanlı ve biraz da çekingendi.",
+   "en": "He was quite excited and a bit shy on his first day at school.",
+   "level": "A1"
+  },
+  {
+   "word": "ilk",
+   "lang": "tr",
+   "meaning": "initial, early",
+   "tr": "Projenin ilk aşaması planladığımızdan çok daha uzun sürdü.",
+   "en": "The initial stage of the project took much longer than we planned.",
+   "level": "B1"
+  },
+  {
+   "word": "herif",
+   "lang": "tr",
+   "meaning": "guy, fellow",
+   "tr": "Şu köşede bekleyen herif dünden beri mahalleyi gözetliyor.",
+   "en": "That guy waiting in the corner has been watching the neighborhood since yesterday.",
+   "level": "B2"
+  },
+  {
+   "word": "herif",
+   "lang": "tr",
+   "meaning": "scoundrel, rascal",
+   "tr": "Böyle kaba saba bir herifle iş yapmayı asla kabul edemem.",
+   "en": "I can never agree to do business with such a rude scoundrel.",
+   "level": "C1"
+  },
+  {
+   "word": "al",
+   "lang": "tr",
+   "meaning": "blood red, bright red",
+   "tr": "Törende gökyüzüne al renkli bayraklar çekildi.",
+   "en": "Bright red flags were hoisted to the sky during the ceremony.",
+   "level": "B1"
+  },
+  {
+   "word": "piano",
+   "lang": "en",
+   "meaning": "piyano",
+   "tr": "Her gün üç saat piyano çalma pratiği yaptı.",
+   "en": "She practiced playing the piano for three hours every day.",
+   "level": "A1"
+  },
+  {
+   "word": "piano",
+   "lang": "en",
+   "meaning": "hafif, yumuşak (müzik)",
+   "tr": "Nota kağıdı, bu bölümün hafif çalınması gerektiğini belirtiyordu.",
+   "en": "The sheet music indicated that this section should be played piano.",
+   "level": "C1"
+  },
+  {
+   "word": "rice",
+   "lang": "en",
+   "meaning": "pirinç",
+   "tr": "Tayland, dünyanın önde gelen pirinç ihracatçılarından biridir.",
+   "en": "Thailand is one of the world's leading exporters of rice.",
+   "level": "A2"
+  },
+  {
+   "word": "rice",
+   "lang": "en",
+   "meaning": "pilav",
+   "tr": "Akşam yemeği için yanında pilav ile baharatlı tavuk sipariş ettim.",
+   "en": "I ordered some spicy chicken with a side of rice for dinner.",
+   "level": "A1"
+  },
+  {
+   "word": "clearly",
+   "lang": "en",
+   "meaning": "açıkça, net bir şekilde",
+   "tr": "Lütfen odadaki herkesin sizi anlayabilmesi için net bir şekilde konuşun.",
+   "en": "Please speak clearly so that everyone in the room can understand you.",
+   "level": "A2"
+  },
+  {
+   "word": "clearly",
+   "lang": "en",
+   "meaning": "şüphesiz, kuşkusuz",
+   "tr": "O, kuşkusuz tüm orkestradaki en yetenekli müzisyendir.",
+   "en": "She is clearly the most talented musician in the entire orchestra.",
+   "level": "B2"
+  },
+  {
+   "word": "nine",
+   "lang": "en",
+   "meaning": "dokuz",
+   "tr": "Sanat kutusunda dokuz farklı boya rengi var.",
+   "en": "She has nine different colors of paint in her art box.",
+   "level": "A1"
+  },
+  {
+   "word": "nine",
+   "lang": "en",
+   "meaning": "iskambil dokuzlusu",
+   "tr": "Eli kazanmak için kupa dokuzluğunu yere koydu.",
+   "en": "He laid down a nine of hearts to win the hand.",
+   "level": "B2"
+  },
+  {
+   "word": "neighborhood",
+   "lang": "en",
+   "meaning": "mahalle, semt",
+   "tr": "Yakın zamanda çok sessiz ve güvenli bir mahalleye taşındılar.",
+   "en": "They recently moved into a very quiet and safe neighborhood.",
+   "level": "A2"
+  },
+  {
+   "word": "neighborhood",
+   "lang": "en",
+   "meaning": "civar, dolay",
+   "tr": "Tamiratlar beş yüz dolar civarında bir tutara mal olacak.",
+   "en": "The repairs will cost somewhere in the neighborhood of five hundred dollars.",
+   "level": "C1"
+  },
+  {
+   "word": "modern",
+   "lang": "en",
+   "meaning": "çağdaş, günümüze ait",
+   "tr": "Çağdaş sanat genellikle geleneksel güzellik ve biçim fikirlerine meydan okur.",
+   "en": "Modern art often challenges traditional ideas of beauty and form.",
+   "level": "B1"
+  },
+  {
+   "word": "modern",
+   "lang": "en",
+   "meaning": "son teknoloji, yeni",
+   "tr": "Üretimi artırmak için fabrika yeni teknolojili makinelerle güncellendi.",
+   "en": "The factory was updated with modern machinery to increase production.",
+   "level": "B1"
+  },
+  {
+   "word": "determined",
+   "lang": "en",
+   "meaning": "kararlı, azimli",
+   "tr": "Sakatlığına rağmen maratonu bitirmek konusunda inanılmaz derecede kararlıydı.",
+   "en": "She was incredibly determined to finish the marathon despite her injury.",
+   "level": "B1"
+  },
+  {
+   "word": "beard",
+   "lang": "en",
+   "meaning": "sakal",
+   "tr": "Kış ayları boyunca gür bir sakal uzatmaya karar verdi.",
+   "en": "He decided to grow a thick beard during the winter months.",
+   "level": "A2"
+  },
+  {
+   "word": "beard",
+   "lang": "en",
+   "meaning": "meydan okumak, karşı gelmek",
+   "tr": "Cesur şövalye kendi karanlık mağarasında ejderhaya meydan okudu.",
+   "en": "The brave knight bearded the dragon in its own dark cave.",
+   "level": "C2"
+  },
+  {
+   "word": "incident",
+   "lang": "en",
+   "meaning": "olay, vaka",
+   "tr": "Polis şu anda parktaki münferit olayı araştırıyor.",
+   "en": "The police are currently investigating the isolated incident in the park.",
+   "level": "B1"
+  },
+  {
+   "word": "incident",
+   "lang": "en",
+   "meaning": "olay, çatışma (sınırda, ülkeler arasında)",
+   "tr": "Sınır krizi, iki komşu ülke arasında gerginliğe neden oldu.",
+   "en": "The border incident caused tension between the two neighboring countries.",
+   "level": "C1"
+  },
+  {
+   "word": "possibility",
+   "lang": "en",
+   "meaning": "ihtimal, olasılık",
+   "tr": "Uçuşun kar nedeniyle iptal edilme ihtimali çok yüksek.",
+   "en": "There is a strong possibility that the flight will be canceled due to snow.",
+   "level": "B1"
+  },
+  {
+   "word": "possibility",
+   "lang": "en",
+   "meaning": "seçenek, imkan",
+   "tr": "Yeni yazılım, grafik tasarımcılar için sonsuz seçenekler sunuyor.",
+   "en": "The new software opens up endless possibilities for graphic designers.",
+   "level": "B2"
+  },
+  {
+   "word": "mouse",
+   "lang": "en",
+   "meaning": "fare",
+   "tr": "Kedi, mutfak zemininde küçük gri bir fareyi kovaladı.",
+   "en": "The cat chased a small grey mouse across the kitchen floor.",
+   "level": "A1"
+  },
+  {
+   "word": "mouse",
+   "lang": "en",
+   "meaning": "bilgisayar faresi",
+   "tr": "Yeni dizüstü bilgisayarım için kablosuz bir bilgisayar faresi almam gerekiyor.",
+   "en": "I need to buy a wireless mouse for my new laptop.",
+   "level": "A1"
+  },
+  {
+   "word": "morning",
+   "lang": "en",
+   "meaning": "sabah",
+   "tr": "Sessizken sabahın erken saatlerinde egzersiz yapmayı tercih ederim.",
+   "en": "I prefer to exercise early in the morning when it's quiet.",
+   "level": "A1"
+  },
+  {
+   "word": "morning",
+   "lang": "en",
+   "meaning": "günaydın",
+   "tr": "Günaydın John! Göle yaptığın hafta sonu gezisi nasıldı?",
+   "en": "Morning, John! How was your weekend trip to the lake?",
+   "level": "A1"
+  },
+  {
+   "word": "coming",
+   "lang": "en",
+   "meaning": "gelecek, yaklaşan",
+   "tr": "Takım, yaklaşan şampiyonluk maçına hararetle hazırlanıyor.",
+   "en": "The team is preparing vigorously for the coming championship match.",
+   "level": "B1"
+  },
+  {
+   "word": "coming",
+   "lang": "en",
+   "meaning": "geliş, varış",
+   "tr": "Kışın ani gelişi yerel çiftçileri hazırlıksız yakaladı.",
+   "en": "The sudden coming of winter caught the local farmers off guard.",
+   "level": "B2"
+  },
+  {
+   "word": "felt",
+   "lang": "en",
+   "meaning": "keçe",
+   "tr": "Zanaatkar, kalın keçeden çok güzel yeşil bir şapka yaptı.",
+   "en": "The artisan made a beautiful green hat out of thick felt.",
+   "level": "C1"
+  },
+  {
+   "word": "hour",
+   "lang": "en",
+   "meaning": "saat (60 dakika)",
+   "tr": "Başkente yapılan tren yolculuğu yaklaşık bir saat sürer.",
+   "en": "The train journey to the capital city takes about an hour.",
+   "level": "A1"
+  },
+  {
+   "word": "hour",
+   "lang": "en",
+   "meaning": "belirli bir zaman, an",
+   "tr": "En karanlık anında, gerçek dostları onun yanında durdu.",
+   "en": "In his darkest hour, his true friends stood by his side.",
+   "level": "B2"
   }
  ],
  "phrases": [
@@ -59841,6 +60991,195 @@
    "meaning": "",
    "ex": "The two teams worked in concert to rescue the hikers.",
    "ex_tr": "İki ekip yürüyüşçüleri kurtarmak için birlikte hareket etti."
+  },
+  {
+   "phrase": "açık kapı bırakmak",
+   "lang": "tr",
+   "meaning": "to leave the door open, to keep options open",
+   "ex": "Teklifi şimdilik reddetti ama ilerideki görüşmeler için açık kapı bıraktı.",
+   "ex_tr": "He rejected the offer for now but left the door open for future discussions."
+  },
+  {
+   "phrase": "canı burnuna gelmek",
+   "lang": "tr",
+   "meaning": "to be fed up, to be sick and tired",
+   "ex": "Bitmek bilmeyen bu gürültüden artık canım burnuma geldi.",
+   "ex_tr": "I am completely fed up with this never-ending noise now."
+  },
+  {
+   "phrase": "çizmeyi aşmak",
+   "lang": "tr",
+   "meaning": "to overstep the mark, to go too far",
+   "ex": "Son toplantıdaki o kaba yorumuyla artık gerçekten çizmeyi aştı.",
+   "ex_tr": "With that rude comment in the last meeting, he really overstepped the mark."
+  },
+  {
+   "phrase": "damarına basmak",
+   "lang": "tr",
+   "meaning": "to touch a nerve, to provoke",
+   "ex": "Özellikle onun hassas olduğu konulardan bahsedip damarına basıyor.",
+   "ex_tr": "He deliberately talks about subjects she is sensitive to and touches a nerve."
+  },
+  {
+   "phrase": "etekleri zil çalmak",
+   "lang": "tr",
+   "meaning": "to be thrilled to bits, to be overjoyed",
+   "ex": "Üniversite sınavını kazandığını öğrenince etekleri zil çaldı.",
+   "ex_tr": "When she found out she passed the university exam, she was thrilled to bits."
+  },
+  {
+   "phrase": "havanda su dövmek",
+   "lang": "tr",
+   "meaning": "to beat the air, to waste time on a futile task",
+   "ex": "Çözüm üretmeden saatlerce tartışmak havanda su dövmekten farksızdır.",
+   "ex_tr": "Arguing for hours without producing a solution is no different than beating the air."
+  },
+  {
+   "phrase": "iğneyle kuyu kazmak",
+   "lang": "tr",
+   "meaning": "to do a painstaking and slow job",
+   "ex": "Bu eski el yazmalarını tek tek okuyup çevirmek iğneyle kuyu kazmak gibidir.",
+   "ex_tr": "Reading and translating these old manuscripts one by one is painstakingly slow work."
+  },
+  {
+   "phrase": "nabza göre şerbet vermek",
+   "lang": "tr",
+   "meaning": "to play to the gallery, to tell people what they want to hear",
+   "ex": "İyi bir satıcı müşterisini tanır ve daima nabza göre şerbet verir.",
+   "ex_tr": "A good salesman knows his customer and always tells them what they want to hear."
+  },
+  {
+   "phrase": "ok yaydan çıkmak",
+   "lang": "tr",
+   "meaning": "the die is cast, past the point of no return",
+   "ex": "Sözleşmeyi dün imzaladık, artık ok yaydan çıktı.",
+   "ex_tr": "We signed the contract yesterday; the die is cast now."
+  },
+  {
+   "phrase": "pabucu dama atılmak",
+   "lang": "tr",
+   "meaning": "to fall out of favor, to be replaced",
+   "ex": "Yeni bebek doğunca evin büyük çocuğunun pabucu dama atıldı.",
+   "ex_tr": "When the new baby was born, the older child of the house fell out of favor."
+  },
+  {
+   "phrase": "yelkenleri suya indirmek",
+   "lang": "tr",
+   "meaning": "to back down, to give in",
+   "ex": "Çok inatçıydı ama gerçekleri kendi gözüyle görünce hemen yelkenleri suya indirdi.",
+   "ex_tr": "He was very stubborn, but when he saw the facts with his own eyes, he quickly backed down."
+  },
+  {
+   "phrase": "zıvanadan çıkmak",
+   "lang": "tr",
+   "meaning": "to go crazy, to hit the roof",
+   "ex": "Bütün gün süren o dayanılmaz gürültü sonunda onu zıvanadan çıkardı.",
+   "ex_tr": "That unbearable noise that lasted all day finally made him hit the roof."
+  },
+  {
+   "phrase": "başının etini yemek",
+   "lang": "tr",
+   "meaning": "to nag someone constantly",
+   "ex": "Bana o pahalı oyuncağı almam için günlerce başımın etini yedi.",
+   "ex_tr": "He nagged me constantly for days to buy him that expensive toy."
+  },
+  {
+   "phrase": "kül yutmamak",
+   "lang": "tr",
+   "meaning": "not to be easily fooled, to be nobody's fool",
+   "ex": "O çok tecrübeli bir tüccardır, öyle ucuz yalanlarla kül yutmaz.",
+   "ex_tr": "He is a very experienced merchant; he is not easily fooled by such cheap lies."
+  },
+  {
+   "phrase": "mangalda kül bırakmamak",
+   "lang": "tr",
+   "meaning": "to talk big, to boast empty words",
+   "ex": "İş konuşmaya gelince mangalda kül bırakmaz ama icraata gelince ortada yoktur.",
+   "ex_tr": "When it comes to talking, he talks big, but when it comes to action, he is nowhere to be found."
+  },
+  {
+   "phrase": "add fuel to the fire",
+   "lang": "en",
+   "meaning": "yangına körükle gitmek",
+   "ex": "Arguing with him while he's angry will only add fuel to the fire.",
+   "ex_tr": "O kızgınken onunla tartışmak sadece yangına körükle gitmek olur."
+  },
+  {
+   "phrase": "back to square one",
+   "lang": "en",
+   "meaning": "en başa dönmek, sıfırdan başlamak",
+   "ex": "The prototype failed the safety test, so we are back to square one.",
+   "ex_tr": "Prototip güvenlik testinden geçemedi, bu yüzden en başa döndük."
+  },
+  {
+   "phrase": "beat around the bush",
+   "lang": "en",
+   "meaning": "lafı dolandırmak",
+   "ex": "Stop beating around the bush and tell me exactly what went wrong.",
+   "ex_tr": "Lafı dolandırmayı bırak ve bana tam olarak neyin yanlış gittiğini söyle."
+  },
+  {
+   "phrase": "bite off more than one can chew",
+   "lang": "en",
+   "meaning": "boyundan büyük işe kalkışmak",
+   "ex": "By taking on three complex projects at once, she bit off more than she could chew.",
+   "ex_tr": "Aynı anda üç karmaşık proje alarak, boyundan büyük bir işe kalkıştı."
+  },
+  {
+   "phrase": "by all means",
+   "lang": "en",
+   "meaning": "elbette, hiç çekinmeden",
+   "ex": "By all means, borrow any reference book you like from my shelf.",
+   "ex_tr": "Hiç çekinmeden, rafımdan istediğiniz referans kitabını ödünç alabilirsiniz."
+  },
+  {
+   "phrase": "call it a day",
+   "lang": "en",
+   "meaning": "paydos etmek, o günlük işi bitirmek",
+   "ex": "We've been coding for ten hours straight; let's call it a day.",
+   "ex_tr": "Aralıksız on saattir kod yazıyoruz; hadi paydos edelim."
+  },
+  {
+   "phrase": "cut to the chase",
+   "lang": "en",
+   "meaning": "sadede gelmek, doğrudan konuya girmek",
+   "ex": "Let's skip the long introductions and cut to the chase.",
+   "ex_tr": "Uzun girişleri atlayıp sadede gelelim."
+  },
+  {
+   "phrase": "get the hang of",
+   "lang": "en",
+   "meaning": "bir işin püf noktasını kavramak",
+   "ex": "Once you get the hang of it, using this new software is quite effortless.",
+   "ex_tr": "Püf noktasını kavradığınızda, bu yeni yazılımı kullanmak oldukça zahmetsizdir."
+  },
+  {
+   "phrase": "make ends meet",
+   "lang": "en",
+   "meaning": "geçimini sağlamak, iki yakasını bir araya getirmek",
+   "ex": "During college, he worked part-time at a cafe to make ends meet.",
+   "ex_tr": "Üniversite yıllarında, geçimini sağlamak için bir kafede yarı zamanlı çalıştı."
+  },
+  {
+   "phrase": "on the same page",
+   "lang": "en",
+   "meaning": "aynı fikirde/aşamada olmak",
+   "ex": "Let's review the plan to ensure everyone is on the same page.",
+   "ex_tr": "Herkesin aynı fikirde olduğundan emin olmak için planı gözden geçirelim."
+  },
+  {
+   "phrase": "out of the blue",
+   "lang": "en",
+   "meaning": "beklenmedik bir anda, aniden",
+   "ex": "I hadn't seen him for years, and then he called me completely out of the blue.",
+   "ex_tr": "Onu yıllardır görmemiştim ve sonra tamamen beklenmedik bir anda beni aradı."
+  },
+  {
+   "phrase": "rule of thumb",
+   "lang": "en",
+   "meaning": "genel geçer kural, pratik kural",
+   "ex": "As a general rule of thumb, you should save at least ten percent of your salary.",
+   "ex_tr": "Genel geçer bir kural olarak, maaşınızın en az yüzde onunu biriktirmelisiniz."
   }
  ],
  "phrase_edits": [
