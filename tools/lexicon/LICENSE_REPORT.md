@@ -107,6 +107,18 @@ modeller için "doğrulanmadı" yazıldı.
   GlotLID ve Glot500 modelleri Hugging Face'te, **doğrulanmadı**. LLM arka uçları çevrimiçi servisler.
 - **Karar:** **Onay gerekli.** Dahil edilmedi.
 
+## Aday verisinin lisansı: güven sınırı
+
+- Araçtaki kaynak onayı (`approve-source`), bir kişinin adını ve yazdığı kanıt metnini kaydeder. Lisans otomatik
+  doğrulanmaz.
+- "Public domain" eser, ülke, baskı ve çeviri düzeyinde ayrıca değerlendirilmelidir. Project Gutenberg metinleri
+  ABD hukukuna göre kamu malıdır. Diğer ülkeler ve modern baskılar ya da çeviriler için ayrı kontrol gerekir.
+- Kaynaktan alınan örnek cümlelerin sözlükte yeniden dağıtılması ayrıca kontrol edilmelidir. Atıf gerektiren
+  lisanslarda atıf, veriyle birlikte taşınmalıdır.
+- `assets/dict.db` CC BY-SA 4.0 lisanslıdır. Yeni üretilen veriye otomatik olarak "telifsiz" muamelesi yapılmaz.
+  Sözlüğe girecek her veri için dağıtım öncesinde ayrı bir lisans uygunluk kontrolü gerekir.
+- Bu kontroller güvenlik sınırı değildir, geliştirici iş akışındaki riski azaltmak içindir.
+
 ## Bu PR'da gerçekte kullanılanlar
 
 | Bileşen | Lisans | Zorunlu mu |

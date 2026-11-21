@@ -28,6 +28,26 @@ Not: Yerel bir SQLite dosyasını elinde tutan biri tetikleyicileri silebilir. B
 tetikleyicileri denetler, sonra kuralları Python'da yeniden uygular. SQL ile eklenen bir onay da (kuralları
 geçiyorsa) kayıtta adıyla görünür.
 
+## Güven sınırı: bu araç neyi garanti etmez
+
+- **Bir onay, lisansın doğrulandığı anlamına gelmez.** `source_approval` yalnızca "şu kişi, şu kanıtla bu kaynağı
+  kontrol ettiğini söyledi" bilgisini kaydeder. Araç lisansı kendisi doğrulamaz, internete de bakmaz. Doğruluk,
+  onayı veren kişinin incelemesine bağlıdır.
+- **"Public domain" eser, ülke, baskı ve çeviri düzeyinde ayrı ayrı değerlendirilmelidir.** Bir eser ABD'de kamu
+  malı olup Türkiye'de ya da AB'de olmayabilir (ölüm + 70 yıl kuralı). Yeni bir baskının editör notları, modern bir
+  çeviri veya düzenlenmiş metin ayrıca korunuyor olabilir. Onay verirken eserin hangi baskısının kullanıldığı
+  kanıt metnine yazılmalıdır.
+- **Örnek cümlelerin yeniden dağıtımı ayrıca kontrol edilmelidir.** Bir kaynağın okunabilir olması, cümlelerinin
+  sözlükte örnek olarak dağıtılabileceği anlamına gelmez. Atıf gerektiren lisanslarda (CC BY) atıf, dağıtılan
+  veriyle birlikte taşınmalıdır.
+- **Mevcut sözlüğün lisansı değişmez.** `assets/dict.db` CC BY-SA 4.0 kaynaklardan uyarlandığı için CC BY-SA 4.0
+  ile paylaşılır (ana README). Bu araçla üretilen veriye, kaynağı ne olursa olsun, otomatik olarak "telifsiz"
+  muamelesi yapılmaz. Bir aday sözlüğe girecekse, dağıtım öncesinde hem kaynağın lisansı hem de sözlüğün CC BY-SA
+  lisansıyla uyumu ayrıca kontrol edilmelidir.
+- **Bu bir güvenlik sınırı değildir.** Tetikleyiciler ve dışa aktarım denetimleri, geliştirici iş akışındaki
+  hataları ve kazaları azaltmak içindir. Dosyaya yazabilen biri her şeyi değiştirebilir. Araç ağ bağlantısı kurmaz,
+  dışa aktarım yalnız verilen yerel dosyaya yazar.
+
 ## İzin modeli
 
 | `licence_class` (kaynakta, sabit) | Onay | `permission` (türetilir) | `scope` |

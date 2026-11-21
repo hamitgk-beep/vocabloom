@@ -490,6 +490,54 @@ class SharingGuardTests(Base):
             self.store.candidates(**{"1=1 OR status": 'x'})
 
 
+class ExportEndToEndTests(Base):
+    """A full run over a private book and a verified public-domain text: the export must not carry any
+    sentence, word or name from the private book, and nothing may be written anywhere else."""
+
+    BOOK = 'The zorblax glimmered over Nimbleford. Zorblaxes never sleep, she whispered. They ran away.'
+    PD = 'A quokka hopped up. The quokka ran away.'
+
+    def test_private_book_sentences_never_leave(self):
+        book = self.store.add_source('my-private-novel', 'user_book', 'MIT', 'en')   # claimed licence ignored
+        extract(self.store, BuiltinEnglishAnalyzer(self.en), self.en, book, self.BOOK, 'en-tr', locator='novel.epub')
+        extract(self.store, BuiltinEnglishAnalyzer(self.en), self.en, self.pd_en, self.PD, 'en-tr', locator='pd.txt')
+        self.store.approve_source(self.pd_en, 'Hamit', 'Project Gutenberg, US public domain, 1865 text')
+        with self.assertRaises(ValueError):
+            self.store.approve_source(book, 'Hamit', 'I own it')
+        for r in self.store.candidates():          # a reviewer accepts everything, even the private rows
+            self.store.review(r['id'], 'accepted', 'Hamit')
+        self.assertTrue(self.store.candidates(source_id=book))
+        out_dir = os.path.join(self.tmp.name, 'export')
+        os.makedirs(out_dir)
+        out = os.path.join(out_dir, 'reviewed.jsonl')
+        n = self.store.export_reviewed_shared(out)
+        self.assertEqual(os.listdir(out_dir), ['reviewed.jsonl'])      # nothing else written
+        with open(out, encoding='utf-8') as f:
+            text = f.read()
+        rows = [json.loads(l) for l in text.splitlines()]
+        self.assertEqual(len(rows), n)
+        self.assertTrue(rows)
+        self.assertEqual({r['source_id'] for r in rows}, {self.pd_en})
+        for needle in ('zorblax', 'Zorblax', 'Nimbleford', 'whispered', 'glimmered', 'my-private-novel', 'novel.epub'):
+            self.assertNotIn(needle, text)
+        # The private rows are still there locally, unchanged and private.
+        self.assertEqual({r['scope'] for r in self.store.candidates(source_id=book)}, {'private'})
+
+    def test_tool_has_no_network_code(self):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        banned = ('socket', 'urllib', 'http', 'requests', 'smtplib', 'ftplib', 'ssl', 'subprocess')
+        import re
+        for dirpath, _, files in os.walk(root):
+            if os.path.basename(dirpath) in ('tests', '__pycache__'):
+                continue
+            for name in files:
+                if name.endswith('.py'):
+                    with open(os.path.join(dirpath, name), encoding='utf-8') as f:
+                        src = f.read()
+                    for mod in banned:
+                        self.assertIsNone(re.search(rf'^\s*(import|from)\s+{mod}\b', src, re.M), f'{name}: {mod}')
+
+
 class DictionaryIntegrityTests(Base):
     def test_dictionaries_unchanged_after_full_run(self):
         extract(self.store, BuiltinEnglishAnalyzer(self.en), self.en, self.pd_en, EN_TEXT, 'en-tr')
