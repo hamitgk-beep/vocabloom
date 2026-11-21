@@ -147,6 +147,8 @@ flutter_launcher_icons:
   android: true
   adaptive_icon_background: assets/brand/icon-adaptive-bg.png
   adaptive_icon_foreground: assets/brand/icon-adaptive-fg.png
+  # The picture already sits in the safe area (make_brand.py), so no extra margin.
+  adaptive_icon_foreground_inset: 0
   ios: true
   remove_alpha_ios: true
   windows:

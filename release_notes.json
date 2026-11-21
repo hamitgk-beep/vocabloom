@@ -2,6 +2,30 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "onboarding-languages",
+      "area": "app",
+      "tr": "İlk açılışta önce ana dilini ve öğrenmek istediğin dili seçiyorsun; sonra Ayarlar > Dil bölümünden değiştirebilirsin.",
+      "en": "On first launch you now pick your native language and the language you want to learn; you can change them later in Settings > Language."
+    },
+    {
+      "id": "app-language-setting",
+      "area": "app",
+      "tr": "Ayarlar'da ayrı \"Uygulama dili\": menüleri İngilizce kullanırken kelime anlamları ana dilinde kalabilir. Ayarlar artık Görünüm, Dil, Öğrenme ve Hakkında gruplarında.",
+      "en": "A separate \"App language\" in Settings: use the menus in English while word meanings stay in your native language. Settings is now grouped into Appearance, Language, Learning and About."
+    },
+    {
+      "id": "menus-and-theme-cleanup",
+      "area": "app",
+      "tr": "Menü adları sadeleşti (Kitaplık, Kelimelerim, Ücretsiz kitaplar, İstatistikler). Tema yalnızca Açık ve Koyu. Kitaplıkta STORILEX başlığı sabit kalıyor; listelerin sonu artık alt menünün arkasında kalmıyor. Uygulama simgesi büyüdü.",
+      "en": "Clearer menu names (Library, My words, Free books, Statistics). The theme is just Light or Dark. The STORILEX header stays put in the library, and the end of every list no longer hides behind the bottom bar. A bigger app icon."
+    },
+    {
+      "id": "grammar-answer-colors",
+      "area": "grammar",
+      "tr": "Gramer alıştırmalarında açıklama kutusu doğru cevapta yeşil, yanlış cevapta kırmızı.",
+      "en": "In grammar practice the explanation box is green for a right answer and red for a wrong one."
+    },
+    {
       "id": "read-aloud-text-visible",
       "area": "voice",
       "tr": "Sesli okumada kitap yeniden görünüyor ve okunan cümle renkli: kontrol kartı sayfanın altında duruyor. Kelimeye dokununca artık kendiliğinden seslendirilmiyor; dinlemek için hoparlör simgesine dokun.",

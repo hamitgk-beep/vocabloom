@@ -262,7 +262,7 @@ class _HomePageState extends State<HomePage> {
     // On phones grammar, the free library, stats and settings open from the
     // bottom bar's menu; on wide screens they have their own place in the side menu.
     final pages = [
-      LibraryPage(app: widget.app, onTab: wide ? null : go, onSearch: () => go(2)),
+      LibraryPage(app: widget.app, onTab: wide ? null : go),
       WordsPage(app: widget.app),
       DictionaryPage(app: widget.app),
       GrammarPage(app: widget.app),
@@ -272,12 +272,13 @@ class _HomePageState extends State<HomePage> {
       SettingsPage(app: widget.app),
     ];
     final dests = [
-      (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Okuma', 'Reading')),
-      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, wide ? L('Kelime defterim', 'My words') : L('Defterim', 'My words')),
+      // Names as reading and learning apps usually call these pages.
+      (Icons.auto_stories_outlined, Icons.auto_stories_rounded, L('Kitaplık', 'Library')),
+      (Icons.bookmarks_outlined, Icons.bookmarks_rounded, L('Kelimelerim', 'My words')),
       (Icons.search_rounded, Icons.search_rounded, L('Sözlük', 'Dictionary')),
       (Icons.school_outlined, Icons.school_rounded, L('Gramer', 'Grammar')),
-      (Icons.explore_outlined, Icons.explore_rounded, L('Ücretsiz kütüphane', 'Free library')),
-      (Icons.insights_outlined, Icons.insights_rounded, L('İstatistiklerim', 'My stats')),
+      (Icons.explore_outlined, Icons.explore_rounded, L('Ücretsiz kitaplar', 'Free books')),
+      (Icons.insights_outlined, Icons.insights_rounded, L('İstatistikler', 'Statistics')),
       (Icons.settings_outlined, Icons.settings_rounded, L('Ayarlar', 'Settings')),
     ];
     if (tab >= pages.length) tab = pages.length - 1;
@@ -321,7 +322,19 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         extendBody: true,
         body: Stack(children: [
-          Positioned.fill(child: DecoratedBox(decoration: pageBackground(theme), child: body)),
+          // The pages end at the top of the bottom bar (its closed height), so
+          // the last row of every list scrolls fully into view. The bar's
+          // own sheet still opens over the page without moving it.
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: pageBackground(theme),
+              child: Padding(
+                key: const ValueKey('tab-body'),
+                padding: EdgeInsets.only(bottom: bottomBarHeight + 1 + MediaQuery.viewPaddingOf(context).bottom),
+                child: MediaQuery.removePadding(context: context, removeBottom: true, child: body),
+              ),
+            ),
+          ),
           // A tap anywhere outside the raised menu closes it.
           Positioned.fill(
             child: IgnorePointer(
@@ -520,9 +533,12 @@ class _SideMenu extends StatelessWidget {
 
 /// Phone bottom bar, flat along the screen's foot: Reading (the library),
 /// Dictionary, My words (with the number of words due for review) and More.
-/// More raises a sheet above the bar: day / night / system on top, then
-/// Grammar, Free library, Stats and Settings. Labels never wrap: a label
+/// More raises a sheet above the bar: day / night on top, then
+/// Grammar, Free books, Statistics and Settings. Labels never wrap: a label
 /// that does not fit is scaled down.
+/// Height of the phone's bottom bar without its raised sheet.
+const bottomBarHeight = 64.0;
+
 class _BottomNav extends StatelessWidget {
   final int selected;
 
@@ -558,7 +574,7 @@ class _BottomNav extends StatelessWidget {
     final barColor = dark ? Brand.dSurface : const Color(0xFFFBF7EF);
 
     Widget tab(int i, {bool menu = false}) {
-      final d = menu ? (Icons.more_horiz_rounded, Icons.more_horiz_rounded, L('Daha fazla', 'More')) : items[i];
+      final d = menu ? (Icons.more_horiz_rounded, Icons.more_horiz_rounded, L('Diğer', 'More')) : items[i];
       final on = menu ? menuOpen || selected >= 3 : i == selected && !menuOpen;
       final color = on ? cs.primary : cs.onSurfaceVariant;
       final badge = !menu && i == 1 && due > 0;
@@ -623,14 +639,14 @@ class _BottomNav extends StatelessWidget {
       );
     }
 
-    // Day / Night / System, as one segmented row.
-    Widget seg(ThemeMode m, IconData? icon, String label) {
+    // Day / Night, as one segmented row.
+    Widget seg(ThemeMode m, IconData icon, String label) {
       final on = m == mode;
       return Expanded(
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            key: ValueKey('menu-${m == ThemeMode.dark ? 'night' : m == ThemeMode.light ? 'day' : 'system'}'),
+            key: ValueKey('menu-${m == ThemeMode.dark ? 'night' : 'day'}'),
             borderRadius: BorderRadius.circular(12),
             onTap: () => onMode(m),
             child: Ink(
@@ -641,7 +657,8 @@ class _BottomNav extends StatelessWidget {
                 boxShadow: on && !dark ? [const BoxShadow(color: Color(0x14785A28), blurRadius: 6, offset: Offset(0, 2))] : null,
               ),
               child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                if (icon != null) ...[Icon(icon, size: 17, color: on ? cs.primary : cs.onSurfaceVariant), const SizedBox(width: 6)],
+                Icon(icon, size: 17, color: on ? cs.primary : cs.onSurfaceVariant),
+                const SizedBox(width: 6),
                 Flexible(
                   child: Text(label,
                       maxLines: 1,
@@ -687,7 +704,7 @@ class _BottomNav extends StatelessWidget {
       3: L('Konular ve alıştırmalar', 'Lessons and exercises'),
       4: L('Hikâyeler ve kitaplar', 'Stories and books'),
       5: L('Okuma süresi ve seri', 'Reading time and streak'),
-      6: L('Dil, tema, ses', 'Language, theme, voice'),
+      6: L('Tema, dil, ses', 'Theme, language, voice'),
     };
     final panel = Padding(
       key: const ValueKey('nav-menu-panel'),
@@ -699,9 +716,8 @@ class _BottomNav extends StatelessWidget {
           padding: const EdgeInsets.all(4),
           decoration: BoxDecoration(color: cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(15)),
           child: Row(children: [
-            seg(ThemeMode.light, Icons.light_mode_outlined, L('Gündüz', 'Day')),
-            seg(ThemeMode.dark, Icons.dark_mode_outlined, L('Gece', 'Night')),
-            seg(ThemeMode.system, null, L('Sistem', 'System')),
+            seg(ThemeMode.light, Icons.light_mode_outlined, L('Açık', 'Light')),
+            seg(ThemeMode.dark, Icons.dark_mode_outlined, L('Koyu', 'Dark')),
           ]),
         ),
         const SizedBox(height: 12),
@@ -741,7 +757,7 @@ class _BottomNav extends StatelessWidget {
               child: menuOpen ? panel : const SizedBox(width: double.infinity),
             ),
             SizedBox(
-              height: 64,
+              height: bottomBarHeight,
               child: Row(children: [tab(0), tab(2), tab(1), tab(3, menu: true)]),
             ),
           ]),

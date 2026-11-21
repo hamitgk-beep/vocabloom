@@ -1000,14 +1000,17 @@ class _GrammarPracticePageState extends State<GrammarPracticePage> {
 
   Widget _resultCard(ThemeData theme, {required bool ok, required Widget child}) {
     final cs = theme.colorScheme;
-    final c = ok ? _green : const Color(0xFFD97706);
+    // Translucent green for a right answer, translucent red otherwise.
+    final dark = theme.brightness == Brightness.dark;
+    final c = ok ? (dark ? const Color(0xFF4ADE80) : _green) : (dark ? const Color(0xFFF87171) : const Color(0xFFDC2626));
     return Container(
+      key: ValueKey(ok ? 'result-right' : 'result-wrong'),
       margin: const EdgeInsets.only(top: 4),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: c.withValues(alpha: 0.08),
+        color: c.withValues(alpha: dark ? 0.14 : 0.10),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: c.withValues(alpha: 0.45)),
+        border: Border.all(color: c.withValues(alpha: 0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
