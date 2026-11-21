@@ -19,6 +19,7 @@ import 'tap_text.dart';
 import 'context_sense_card.dart';
 import '../nlp/context_sense.dart';
 import '../l10n.dart';
+import '../mt/offline_mt.dart';
 import 'paragraph_view.dart';
 import 'meaning_parts.dart';
 import 'theme.dart';
@@ -510,7 +511,7 @@ class _WordPanelState extends State<WordPanel> {
     }
 
     // ---------------- another sentence from the book, only with its Turkish
-    if (bookExamples.isNotEmpty && DeviceTranslate.instance.ready(app.user)) {
+    if (bookExamples.isNotEmpty && (DeviceTranslate.instance.ready(app.user) || OfflineMt.instance.active(app.user))) {
       final s0 = bookExamples.first;
       children.add(PanelHeading(L('KİTAPTAN BAŞKA BİR CÜMLE', 'ANOTHER SENTENCE FROM THE BOOK')));
       children.add(

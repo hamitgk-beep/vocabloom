@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "offline-translation-windows",
+      "area": "reader",
+      "tr": "Windows'ta cümle çevirisi artık internetsiz ve ücretsiz olabilir: Ayarlar > Çevrimdışı çeviri bölümünden OPUS-MT modelini (yaklaşık 530 MB, CC BY 4.0) kendin indirip açabilirsin. İndirmeden önce boyutu ve lisansı görürsün, indirmeyi iptal edebilirsin, her dosya doğrulanır. Model kendiliğinden indirilmez ve ücretli servis kullanmaz.",
+      "en": "On Windows, sentence translation can now work offline and for free: in Settings > Offline translation you can download and turn on the OPUS-MT model (about 530 MB, CC BY 4.0) yourself. You see its size and license first, can cancel the download, and every file is checked. Nothing is downloaded by itself and no paid service is used."
+    },
+    {
       "id": "sentence-translation-match",
       "area": "reader",
       "tr": "Cümle analizinde Türkçe çeviri artık her zaman seçtiğin cümleye ait: \"Prof.\", \"Mr.\", \"No. 28\", \"p. 35\" gibi kısaltmalar cümleyi bölmüyor ve bir cümleye sonraki cümlenin çevirisi gelmiyor. Geçerli bir çeviri yoksa Türkçe satırı gösterilmiyor; önce ücretsiz cihaz içi çeviri deneniyor. Ücretli yapay zekâ ile otomatik kitap analizi artık sen Ayarlar'dan açana kadar kapalı, cümle açıklaması da yalnızca \"Ayrıntılı açıkla\" ile isteniyor. Kelime panelinde ve tekrarda yapay zekâ da artık kendiliğinden sorulmuyor, yalnızca düğmeye bastığında çalışıyor.",

@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 
 import '../app_state.dart';
 import '../l10n.dart';
+import '../mt/offline_mt.dart';
+import 'offline_mt_page.dart';
 import '../online/ai_service.dart';
 import '../online/update_check.dart';
 import 'update_prompt.dart';
@@ -123,6 +125,25 @@ class SettingsPage extends StatelessWidget {
                   );
                 },
               ),
+              if (OfflineMt.platformSupported)
+                ListenableBuilder(
+                  listenable: OfflineMt.instance,
+                  builder: (context, _) {
+                    final mt = OfflineMt.instance;
+                    return SettingsNavTile(
+                      key: const ValueKey('settings-offline-mt'),
+                      icon: Icons.translate_rounded,
+                      color: const Color(0xFF0E9F6E),
+                      title: L('Çevrimdışı çeviri', 'Offline translation'),
+                      subtitle: mt.active(app.user)
+                          ? L('Açık · OPUS-MT', 'On · OPUS-MT')
+                          : mt.installed
+                              ? L('Kapalı · model indirili', 'Off · model downloaded')
+                              : L('Kapalı · isteğe bağlı indirme', 'Off · optional download'),
+                      onTap: () => _push(context, OfflineMtPage(app: app)),
+                    );
+                  },
+                ),
               SettingsNavTile(
                 key: const ValueKey('settings-ai'),
                 icon: Icons.auto_awesome_rounded,
@@ -501,6 +522,8 @@ class LicensesPage extends StatelessWidget {
             'Turkish → English dictionary: Turkish entries of the English Wiktionary via kaikki.org (CC BY-SA 4.0); word frequency: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); example sentences: Tatoeba contributors (CC BY 2.0 FR)')),
         item(L('Türkçe ücretsiz kitaplar: Vikikaynak\'taki kamu malı eserler (tr.wikisource.org; yazarları 1955\'ten önce ölmüş eserler ve anonim halk anlatıları); A1–B1 öyküler bu uygulama için yazıldı. Kelimenin cümledeki anlamı Tatoeba cümle çiftlerinden çıkarılır.',
             'Turkish free books: public-domain works from Turkish Wikisource (tr.wikisource.org; authors who died before 1955 and anonymous folk tales); the A1–B1 stories were written for this app. The meaning of a word in its sentence is learned from Tatoeba sentence pairs.')),
+        item(L('İsteğe bağlı çevrimdışı çeviri (Windows, ayrıca indirilir): OPUS-MT opus-mt-tc-big-en-tr, Helsinki-NLP / Tiedemann ve ark.; ONNX sürümü onnx-community (CC BY 4.0)',
+            'Optional offline translation (Windows, downloaded separately): OPUS-MT opus-mt-tc-big-en-tr, Helsinki-NLP / Tiedemann et al.; ONNX version by onnx-community (CC BY 4.0)')),
         item(L('Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0)', 'Category lists written for this app (CC BY-SA 4.0)')),
         item(L('Uygulamadaki sözlük veritabanı bu kaynaklardan uyarlanmıştır ve aynı lisansla (CC BY-SA 4.0) paylaşılır. Lisans metinleri: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0',
             'The dictionary database in the app is adapted from these sources and shared under the same licence (CC BY-SA 4.0). Licence texts: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0')),

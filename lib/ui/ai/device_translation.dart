@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import '../../ai/device_translate.dart';
 import '../../app_state.dart';
 import '../../l10n.dart';
+import '../../mt/offline_mt.dart';
 import '../panel.dart';
 
 /// The instant on-device translation of [text] (Google ML Kit), or a button
-/// that downloads the free Turkish package once. Nothing on desktop, and
-/// nothing when the text could not be translated.
+/// that downloads the free Turkish package once. On Windows, the offline
+/// OPUS-MT model when the learner downloaded and turned it on in Settings
+/// (no button here). Nothing on other desktops, and nothing when the text
+/// could not be translated.
 class DeviceTranslation extends StatefulWidget {
   final AppState app;
   final String text;
@@ -28,12 +31,31 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   String? error;
 
   DeviceTranslate get mt => DeviceTranslate.instance;
+  OfflineMt get offline => OfflineMt.instance;
+
+  /// Windows with the offline model turned on.
+  bool get _offline => offline.active(widget.app.user);
+
+  Future<String?>? _ask() => _offline
+      ? offline.translate(widget.app.user, widget.text)
+      : mt.ready(widget.app.user)
+          ? mt.translate(widget.app.user, widget.text)
+          : null;
 
   @override
   void initState() {
     super.initState();
-    if (mt.ready(widget.app.user)) result = mt.translate(widget.app.user, widget.text);
+    result = _ask();
     mt.downloading.addListener(_changed);
+    offline.addListener(_offlineChanged);
+  }
+
+  /// The offline model was turned on or off in Settings.
+  void _offlineChanged() {
+    if (!mounted) return;
+    setState(() {
+      result = _ask();
+    });
   }
 
   /// The package was being prepared in the background: show the translation
@@ -51,7 +73,7 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   void didUpdateWidget(DeviceTranslation old) {
     super.didUpdateWidget(old);
     if (old.text != widget.text) {
-      result = mt.ready(widget.app.user) ? mt.translate(widget.app.user, widget.text) : null;
+      result = _ask();
       error = null;
     }
   }
@@ -59,6 +81,7 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   @override
   void dispose() {
     mt.downloading.removeListener(_changed);
+    offline.removeListener(_offlineChanged);
     super.dispose();
   }
 
@@ -84,9 +107,11 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
 
   @override
   Widget build(BuildContext context) {
-    if (!DeviceTranslate.supported) return const SizedBox.shrink();
+    final offlineOn = _offline;
+    if (!DeviceTranslate.supported && !offlineOn) return const SizedBox.shrink();
     final theme = Theme.of(context);
     Widget wrap(Widget w) => widget.frame == null ? w : widget.frame!(w);
+    if (offlineOn && result == null) return const SizedBox.shrink();
     if (result == null && mt.downloading.value) {
       return wrap(Padding(
         padding: const EdgeInsets.only(top: 6),
@@ -136,7 +161,12 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SelectableText(t, style: trStyle(theme, widget.style)),
-              Text(L('Cihaz içi anında çeviri (makine çevirisi)', 'Instant on-device translation (machine translation)'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+              Text(
+                offlineOn
+                    ? L('Çevrimdışı çeviri, OPUS-MT (makine çevirisi)', 'Offline translation, OPUS-MT (machine translation)')
+                    : L('Cihaz içi anında çeviri (makine çevirisi)', 'Instant on-device translation (machine translation)'),
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+              ),
             ],
           ),
         ));
