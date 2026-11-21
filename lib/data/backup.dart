@@ -32,7 +32,8 @@ const backupExtension = 'storilex';
 /// Why a backup was refused. [code] is one of: `not_backup` (not a Storilex
 /// backup, or an entry that would leave the app folder), `newer_version`,
 /// `checksum`, `corrupt`, `incomplete`, `too_large` (over [BackupLimits]),
-/// `replace_needs_books`, `rollback_incomplete` (a failed restore or an undo
+/// `replace_needs_books`, `undo_failed` (nothing changed; try again),
+/// `rollback_incomplete` (a failed restore or an undo
 /// could not put every picture folder back; nothing was deleted, and
 /// [recoverInterruptedRestore] tries again).
 class BackupException implements Exception {
@@ -613,11 +614,25 @@ RestoreResult restoreBackup(UserDb u, BackupPreview pv,
 /// removed. True when there was something to do.
 bool recoverInterruptedRestore(UserDb u) {
   var any = false;
+  _ensureRestoreLog(u);
   for (final j in _journals(u)) {
+    if (j.state == 'undoing') {
+      // An undo that stopped: finished when its transaction was committed,
+      // otherwise its folder moves are taken back and the restore stays.
+      any = true;
+      if (_undoCommitted(u, j)) {
+        _finishUndo(u, j);
+      } else if (_reverseUndo(u, j)) {
+        j
+          ..state = 'done'
+          ..undo.clear()
+          ..save();
+      }
+      continue;
+    }
     if (j.state != 'pending') continue;
     any = true;
-    final committed = _hasTable(u.db, 'main', _restoreLog) &&
-        u.db.select('SELECT 1 FROM main.$_restoreLog WHERE id=?', [j.id]).isNotEmpty;
+    final committed = u.db.select('SELECT 1 FROM main.$_restoreLog WHERE id=?', [j.id]).isNotEmpty;
     if (committed) {
       j.finish();
     } else if (_undoOps(u, j)) {
@@ -632,49 +647,168 @@ bool recoverInterruptedRestore(UserDb u) {
 /// when it finished, and only once (a restore that failed, or one followed
 /// by another restore, is never an undo point). API keys and device settings
 /// stay as they are now.
+///
+/// The undo is safe to stop at any point and to run again:
+/// 1. the picture folders are only moved (back to their place, or the
+///    restore's own folders into a bin), each move written to the journal
+///    first, so every one can be moved back;
+/// 2. the database is put back in one transaction that also records the
+///    undo as done;
+/// 3. only then is the bin emptied and the journal removed.
+///
+/// When step 1 or 2 fails, the folders are moved back and the restore stays
+/// as it was (`undo_failed`; the undo can be tried again). When even that
+/// fails, `rollback_incomplete`: nothing is deleted, and
+/// [recoverInterruptedRestore] finishes the job. A database already put back
+/// is never written again, so work done in between is not lost.
 bool undoLastRestore(UserDb u) {
   recoverInterruptedRestore(u);
   final js = _journals(u);
   if (js.isEmpty) return false;
   final j = js.first;
   if (j.state != 'done' || !j.copy.existsSync()) return false;
-  final db = u.db;
-  db.execute('ATTACH DATABASE ? AS sf', [j.copy.path]);
-  try {
-    db.execute('BEGIN');
-    try {
-      for (final t in _tables) {
-        if (!_hasTable(db, 'main', t)) continue;
-        if (t == 'settings') {
-          for (final r in db.select('SELECT key FROM main.settings').toList()) {
-            final k = r['key'] as String;
-            if (!_staysOnDevice(k)) db.execute('DELETE FROM main.settings WHERE key=?', [k]);
-          }
-          if (!_hasTable(db, 'sf', t)) continue;
-          for (final r in db.select('SELECT key, value FROM sf.settings').toList()) {
-            final k = r['key'] as String;
-            if (!_staysOnDevice(k)) db.execute('INSERT OR REPLACE INTO main.settings(key, value) VALUES (?,?)', [k, r['value']]);
-          }
-          continue;
-        }
-        db.execute('DELETE FROM main."$t"');
-        if (_hasTable(db, 'sf', t)) _copy(db, 'sf', 'main', t);
-      }
-      db.execute('COMMIT');
-    } catch (_) {
-      db.execute('ROLLBACK');
-      rethrow;
+  j
+    ..state = 'undoing'
+    ..undo.clear()
+    ..save();
+
+  void giveUp(Object e) {
+    if (!_reverseUndo(u, j)) {
+      throw BackupException('rollback_incomplete', 'undo failed ($e) and not every picture folder could be moved back');
     }
-  } finally {
-    db.execute('DETACH DATABASE sf');
+    j
+      ..state = 'done'
+      ..undo.clear()
+      ..save();
+    throw BackupException('undo_failed', '$e');
+  }
+
+  // 1. Picture folders: moves only.
+  try {
+    _undoFolders(u, j);
+  } catch (e) {
+    if (e is BackupDebugCrash) rethrow;
+    giveUp(e);
+  }
+
+  // 2. The database, with the record that the undo is done.
+  final db = u.db;
+  var crashed = false;
+  try {
+    db.execute('ATTACH DATABASE ? AS sf', [j.copy.path]);
+    try {
+      db.execute('BEGIN');
+      try {
+        for (final t in _tables) {
+          if (!_hasTable(db, 'main', t)) continue;
+          if (t == 'settings') {
+            for (final r in db.select('SELECT key FROM main.settings').toList()) {
+              final k = r['key'] as String;
+              if (!_staysOnDevice(k)) db.execute('DELETE FROM main.settings WHERE key=?', [k]);
+            }
+            if (!_hasTable(db, 'sf', t)) continue;
+            for (final r in db.select('SELECT key, value FROM sf.settings').toList()) {
+              final k = r['key'] as String;
+              if (!_staysOnDevice(k)) db.execute('INSERT OR REPLACE INTO main.settings(key, value) VALUES (?,?)', [k, r['value']]);
+            }
+            continue;
+          }
+          db.execute('DELETE FROM main."$t"');
+          if (_hasTable(db, 'sf', t)) _copy(db, 'sf', 'main', t);
+        }
+        db.execute('INSERT OR IGNORE INTO main.$_restoreLog(id, mode) VALUES (?,?)', [j.id, j.mode]);
+        db.execute('UPDATE main.$_restoreLog SET undone=? WHERE id=?', [DateTime.now().millisecondsSinceEpoch, j.id]);
+        _step('undo database');
+        db.execute('COMMIT');
+      } catch (e) {
+        if (e is BackupDebugCrash) {
+          crashed = true;
+          rethrow;
+        }
+        try {
+          if (!db.autocommit) db.execute('ROLLBACK');
+        } catch (_) {}
+        rethrow;
+      }
+    } finally {
+      if (!crashed) db.execute('DETACH DATABASE sf');
+    }
+  } catch (e) {
+    if (e is BackupDebugCrash) rethrow;
+    giveUp(e);
   }
   u.reloadStatuses();
-  if (!_undoOps(u, j)) {
-    // The database is back; the journal stays, so undo can be tried again.
-    throw const BackupException('rollback_incomplete', 'not every picture folder could be put back');
-  }
-  j.remove();
+
+  // 3. Clean up.
+  _step('undo finish');
+  _finishUndo(u, j);
   return true;
+}
+
+bool _undoCommitted(UserDb u, _Journal j) =>
+    u.db.select('SELECT 1 FROM main.$_restoreLog WHERE id=? AND undone IS NOT NULL', [j.id]).isNotEmpty;
+
+/// Moves the restore's picture folders out of the way and the folders it
+/// moved aside back, newest step first. Throws on the first step that cannot
+/// be taken; the moves already made are in [_Journal.undo].
+void _undoFolders(UserDb u, _Journal j) {
+  var n = 0;
+  void move(String from, String to, String step) {
+    j.undo.add({'from': from, 'to': to});
+    j.save();
+    _step(step);
+    final t = Directory(_abs(u, to));
+    t.parent.createSync(recursive: true);
+    Directory(_abs(u, from)).renameSync(t.path);
+  }
+
+  for (final o in j.ops.reversed) {
+    if (o['op'] == 'create') {
+      final path = '${o['path']}';
+      if (Directory(_abs(u, path)).existsSync()) move(path, 'backups/undo-${j.id}/${n++}', 'undo create $path');
+    } else if (o['op'] == 'move') {
+      final from = '${o['from']}', to = '${o['to']}';
+      final f = Directory(_abs(u, from)), t = Directory(_abs(u, to));
+      if (t.existsSync()) {
+        if (f.existsSync()) throw StateError('$from is in the way');
+        move(to, from, 'undo move $from');
+      } else if (!f.existsSync()) {
+        throw StateError('$to is missing');
+      }
+    }
+  }
+}
+
+/// Takes back the moves of [_undoFolders], newest first. A move that never
+/// happened (its target is not there yet) is skipped. False when some
+/// folder could not be moved back.
+bool _reverseUndo(UserDb u, _Journal j) {
+  var ok = true;
+  for (final m in j.undo.reversed) {
+    try {
+      final from = Directory(_abs(u, '${m['from']}')), to = Directory(_abs(u, '${m['to']}'));
+      _step('reverse ${m['from']}');
+      if (to.existsSync()) {
+        if (from.existsSync()) throw StateError('${m['from']} is in the way');
+        from.parent.createSync(recursive: true);
+        to.renameSync(from.path);
+      } else if (!from.existsSync()) {
+        throw StateError('${m['to']} is missing');
+      }
+    } catch (_) {
+      ok = false;
+    }
+  }
+  return ok;
+}
+
+/// The undo is recorded in the database: empty the bin, remove the journal.
+void _finishUndo(UserDb u, _Journal j) {
+  try {
+    final bin = Directory(p.join(_Journal.dir(u).path, 'undo-${j.id}'));
+    if (bin.existsSync()) bin.deleteSync(recursive: true);
+  } catch (_) {} // left for _prune
+  j.remove();
 }
 
 void _merge(UserDb u, BackupPreview pv, RestoreResult res, Map<String, ConflictChoice> bookChoices, ConflictChoice wordChoice,
@@ -806,7 +940,9 @@ void _replace(UserDb u, BackupPreview pv, _Journal j) {
 const _restoreLog = 'backup_restore_log';
 
 /// Tests only: called before each step on the picture folders (`move …`,
-/// `create …`, `copy …`, `undo …`, `discard`); throwing makes that step fail.
+/// `create …`, `copy …`, `undo …`, `reverse …`, `discard`) and before the
+/// undo commits (`undo database`) and cleans up (`undo finish`); throwing
+/// makes that step fail.
 void Function(String step)? debugRestoreStep;
 
 /// Tests only: thrown from [debugRestoreStep], it stops a restore as if the
@@ -821,7 +957,8 @@ String _abs(UserDb u, String rel) => p.joinAll([u.dir, ...rel.split('/')]);
 
 /// One restore's safety copy (`backups/before-restore-<id>.db`) and journal
 /// (`.json`): its state — `pending` while it runs, `done` when it can be
-/// undone, `superseded` once a later restore finished, `failed` — and each
+/// undone, `undoing` while it is undone, `superseded` once a later restore
+/// finished, `failed` — and each
 /// step on the picture folders, written before the step is taken. Paths are
 /// relative to the app folder, which can move (iOS moves it on updates).
 class _Journal {
@@ -830,7 +967,11 @@ class _Journal {
   String state;
   final String mode;
   final List<Map<String, dynamic>> ops;
-  _Journal(this.u, this.id, this.state, this.mode, this.ops);
+
+  /// While the restore is being undone: each folder moved back or moved to
+  /// the bin (`from` → `to`), written before it is moved.
+  final List<Map<String, dynamic>> undo;
+  _Journal(this.u, this.id, this.state, this.mode, this.ops, [List<Map<String, dynamic>>? undo]) : undo = undo ?? [];
 
   static Directory dir(UserDb u) => Directory(p.join(u.dir, 'backups'));
   File get copy => File(p.join(dir(u).path, 'before-restore-$id.db'));
@@ -874,7 +1015,8 @@ class _Journal {
     try {
       final m = jsonDecode(f.readAsStringSync()) as Map;
       return _Journal(u, id, '${m['state']}', '${m['mode'] ?? ''}',
-          [for (final o in (m['ops'] as List? ?? const [])) Map<String, dynamic>.from(o as Map)]);
+          [for (final o in (m['ops'] as List? ?? const [])) Map<String, dynamic>.from(o as Map)],
+          [for (final o in (m['undo'] as List? ?? const [])) Map<String, dynamic>.from(o as Map)]);
     } catch (_) {
       return _Journal(u, id, 'unreadable', '', []);
     }
@@ -888,7 +1030,7 @@ class _Journal {
   /// Written beside and renamed over, so the journal is never half written.
   void save() {
     final part = File('${file.path}.part');
-    part.writeAsStringSync(jsonEncode({'state': state, 'mode': mode, 'ops': ops}), flush: true);
+    part.writeAsStringSync(jsonEncode({'state': state, 'mode': mode, 'ops': ops, 'undo': undo}), flush: true);
     part.renameSync(file.path);
   }
 
@@ -962,6 +1104,14 @@ void _prune(UserDb u) {
     o.remove();
   }
   final ids = {for (final o in js.take(3)) o.id};
+  for (final d in _Journal.dir(u).listSync().whereType<Directory>()) {
+    final m = RegExp(r'^undo-(\d+)$').firstMatch(p.basename(d.path));
+    if (m != null && !ids.contains(int.parse(m[1]!))) {
+      try {
+        d.deleteSync(recursive: true);
+      } catch (_) {}
+    }
+  }
   for (final f in _Journal.dir(u).listSync().whereType<File>()) {
     final m = RegExp(r'^before-restore-(\d+)\.db$').firstMatch(p.basename(f.path));
     if (m != null && !ids.contains(int.parse(m[1]!))) {
@@ -1025,7 +1175,12 @@ void _ensureTables(UserDb u) {
     CREATE TABLE IF NOT EXISTS backup_pending_books(key TEXT PRIMARY KEY, title TEXT, author TEXT, format TEXT, source TEXT,
       lang TEXT, last_chapter INTEGER, last_para INTEGER, last_page INTEGER, added INTEGER)
   ''');
-  u.db.execute('CREATE TABLE IF NOT EXISTS $_restoreLog(id INTEGER PRIMARY KEY, mode TEXT, finished INTEGER)');
+  _ensureRestoreLog(u);
+}
+
+void _ensureRestoreLog(UserDb u) {
+  u.db.execute('CREATE TABLE IF NOT EXISTS $_restoreLog(id INTEGER PRIMARY KEY, mode TEXT, finished INTEGER, undone INTEGER)');
+  if (!_columns(u.db, 'main', _restoreLog).contains('undone')) u.db.execute('ALTER TABLE $_restoreLog ADD COLUMN undone INTEGER');
 }
 
 // ------------------------------------------------------------------ helpers

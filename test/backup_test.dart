@@ -661,4 +661,149 @@ void main() {
       expect(v.statuses.keys.toSet(), {'cloud', 'rain', 'garden'});
     });
   });
+
+  group('undo can stop at any step and be run again without losing data', () {
+    late UserDb v;
+    late String before, after;
+    late Map<String, String> picsBefore, picsAfter;
+
+    void restore(RestoreMode mode) {
+      final pv = inspectBackup(v, out('x.storilex'));
+      restoreBackup(v, pv, mode: mode);
+      pv.dispose();
+      after = snapshot(v);
+      picsAfter = pictures(b);
+      expect(after, isNot(before));
+      expect(picsAfter, isNot(picsBefore));
+    }
+
+    setUp(() {
+      exportBackup(device(a), out('x.storilex'));
+      v = UserDb.open(b);
+      ReviewStore(v);
+      StatsStore(v);
+      v.insertBook(sampleBook(title: 'Local', images: {'local.png': [9, 9, 9]}));
+      v.setWord('cloud', WordStatus.learning);
+      before = snapshot(v);
+      picsBefore = pictures(b);
+      restore(RestoreMode.replace);
+    });
+
+    void isBefore() {
+      expect(snapshot(v), before);
+      expect(pictures(b), picsBefore);
+    }
+
+    void isAfter() {
+      expect(snapshot(v), after);
+      expect(pictures(b), picsAfter);
+    }
+
+    void failAt(bool Function(String s) at, String code) {
+      debugRestoreStep = (s) {
+        if (at(s)) throw FileSystemException('denied', s);
+      };
+      expect(() => undoLastRestore(v), failsWith(code));
+      debugRestoreStep = null;
+    }
+
+    void crashAt(String step) {
+      debugRestoreStep = (s) {
+        if (s == step) throw const BackupDebugCrash();
+      };
+      expect(() => undoLastRestore(v), throwsA(isA<BackupDebugCrash>()));
+      debugRestoreStep = null;
+      v.db.close(); // as when the app is closed: an open transaction is lost
+      v = UserDb.open(b);
+    }
+
+    /// Every picture file there was, before or after the restore, is still somewhere in the app folder.
+    void nothingDeleted() {
+      final all = {
+        for (final f in b.listSync(recursive: true).whereType<File>())
+          if (!p.basename(f.path).endsWith('.db') && !f.path.endsWith('.json')) fileSha(f)
+      };
+      expect(all, containsAll({...picsBefore.values, ...picsAfter.values}));
+    }
+
+    test('a picture folder cannot be moved back: nothing changes, and the undo can be tried again', () {
+      failAt((s) => s == 'undo move books', 'undo_failed');
+      isAfter();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('the database step fails: the folders are moved back, and the undo can be tried again', () {
+      failAt((s) => s == 'undo database', 'undo_failed');
+      isAfter();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('moving the folders back fails too: nothing is deleted, the database is untouched, and the next try finishes', () {
+      failAt((s) => s == 'undo move books' || s.startsWith('reverse '), 'rollback_incomplete');
+      expect(snapshot(v), after);
+      nothingDeleted();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('the app closes while the folders are moved: the next start puts the restore back, then undo works', () {
+      crashAt('undo move books');
+      expect(recoverInterruptedRestore(v), isTrue);
+      isAfter();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('the app closes before the database step is saved: the next start puts the restore back, then undo works', () {
+      crashAt('undo database');
+      expect(recoverInterruptedRestore(v), isTrue);
+      isAfter();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('the app closes after the database step was saved: the next start finishes the undo, and it is not run again', () {
+      crashAt('undo finish');
+      expect(recoverInterruptedRestore(v), isTrue);
+      isBefore();
+      expect(journals(b), isEmpty);
+      v.setWord('sky', WordStatus.learning);
+      final now = snapshot(v);
+      expect(undoLastRestore(v), isFalse);
+      expect(snapshot(v), now, reason: 'work done after the undo is kept');
+      expect(pictures(b), picsBefore);
+    });
+
+    test('running the same undo a second time changes nothing, even after new books were added', () {
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+      v.setWord('sky', WordStatus.learning);
+      v.insertBook(sampleBook(title: 'New', images: {'new.png': [7, 7]}));
+      final now = snapshot(v), pics = pictures(b);
+      expect(undoLastRestore(v), isFalse);
+      expect(recoverInterruptedRestore(v), isFalse);
+      expect(snapshot(v), now);
+      expect(pictures(b), pics);
+    });
+
+    test('merge: a book added after the undo keeps its pictures, even in a folder the restore had used', () {
+      expect(undoLastRestore(v), isTrue);
+      final pv = inspectBackup(v, out('x.storilex'));
+      restoreBackup(v, pv); // adds "The Garden" with its pictures in a new folder
+      pv.dispose();
+      final used = pictures(b).keys.toSet().difference(picsBefore.keys.toSet());
+      expect(used, isNotEmpty);
+      failAt((s) => s.startsWith('undo create'), 'undo_failed');
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+      // The next book may get the same id, and so the same folder.
+      v.insertBook(sampleBook(title: 'New', images: {'new.png': [7, 7]}));
+      final pics = pictures(b);
+      expect(undoLastRestore(v), isFalse);
+      expect(pictures(b), pics);
+      expect(v.books().map((x) => x.title), contains('New'));
+    });
+  });
 }
