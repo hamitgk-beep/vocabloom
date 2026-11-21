@@ -59,10 +59,13 @@ WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? 
   final sentTokens = a.tokens.where((x) => x.start >= r.$1 && x.end <= r.$2).toList();
   final idx = sentTokens.indexWhere((x) => x.start == t.start);
   final matches = a.matches.where((m) => m.tokens.contains(ti)).toList();
-  final tr = app.user.paraTranslation(para.id);
   String? at(int k) => k >= 0 && k < ranges.length ? para.text.substring(ranges[k].$1, ranges[k].$2).trim() : null;
   final sentence = para.text.substring(r.$1, r.$2).trim();
-  final sTr = tr != null && sIdx < tr.length && plausibleTranslation(sentence, tr[sIdx]) ? [tr[sIdx]] : null;
+  // The saved Turkish is looked up by the English sentence itself, never by
+  // its position in the paragraph: a position can point at another sentence
+  // when the boundaries or the text changed since the translation was made.
+  final saved = app.user.paraTranslation(para.id)?.forSentence(sentence);
+  final sTr = saved != null && plausibleTranslation(sentence, saved) ? [saved] : null;
   return WordContext(sentence, sentTokens, idx < 0 ? 0 : idx, matches, sTr, bookId, bookTitle, paraId: para.id, prevSentence: at(sIdx - 1), nextSentence: at(sIdx + 1));
 }
 

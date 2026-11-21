@@ -69,12 +69,18 @@ class DeviceTranslate {
     download(user);
   }
 
+  /// Engine and direction in the saved answers' key: an answer is reused only
+  /// for the same text, the same direction and the same engine.
+  static const cachePrefix = 'mt:mlkit:en>tr:';
+
   /// Turkish of [text]; answers are kept, so a sentence is translated once.
   Future<String?> translate(UserDb user, String text) async {
     text = text.trim();
     if (!ready(user) || text.isEmpty) return null;
-    final key = 'mt:$text';
-    final saved = user.getSetting(key);
+    final key = '$cachePrefix$text';
+    // Saved by older versions under the bare text: the same engine and
+    // direction (ML Kit English > Turkish was the only one), so still valid.
+    final saved = user.getSetting(key) ?? user.getSetting('mt:$text');
     if (saved != null && saved.isNotEmpty) return saved;
     _translator ??= OnDeviceTranslator(sourceLanguage: TranslateLanguage.english, targetLanguage: TranslateLanguage.turkish);
     try {

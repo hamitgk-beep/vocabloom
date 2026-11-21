@@ -40,6 +40,17 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
     });
   }
 
+  /// The same panel now shows another text: its translation is asked anew,
+  /// so the old text's answer can never show under the new one.
+  @override
+  void didUpdateWidget(DeviceTranslation old) {
+    super.didUpdateWidget(old);
+    if (old.text != widget.text) {
+      result = mt.ready(widget.app.user) ? mt.translate(widget.app.user, widget.text) : null;
+      error = null;
+    }
+  }
+
   @override
   void dispose() {
     mt.downloading.removeListener(_changed);
@@ -112,7 +123,13 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
           );
         }
         final t = s.data;
-        if (t == null) return const SizedBox.shrink();
+        if (t == null) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(L('Çeviri oluşturulamadı', 'No translation could be made'),
+                key: const ValueKey('mt-no-tr'), style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+          );
+        }
         return Padding(
           padding: const EdgeInsets.only(top: 4),
           child: Column(

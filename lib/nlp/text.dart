@@ -18,16 +18,104 @@ List<Token> tokenize(String text) => [
       for (final m in _wordRe.allMatches(text)) Token(m.start, m.end, m.group(0)!)
     ];
 
-/// Splits a paragraph into sentences; returns [start, end) ranges.
+/// Splits a paragraph into sentences; returns [start, end) ranges that follow
+/// each other in order.
+///
+/// A dot is not a sentence end when it belongs to an abbreviation, an initial
+/// or a reference: "Prof. Child", "Mr. E. S. Hartland", "(No. 28)",
+/// "(ed. 1886), i. 125", "p. 35", "e.g. an", "U.S.", "3.5". The translations
+/// saved for a paragraph, the sentence panel, grammar marks and reading aloud
+/// all use these boundaries, so a split in the middle of a sentence gave the
+/// AI fragments that it joined, and the Turkish slid onto the next sentence.
 List<(int, int)> sentenceRanges(String text) {
   final out = <(int, int)>[];
-  final re = RegExp(r'[^.!?…]+(?:[.!?…]+["”’)\]]*|$)');
-  for (final m in re.allMatches(text)) {
-    if (m.group(0)!.trim().isEmpty) continue;
-    out.add((m.start, m.end));
+  void add(int s, int e) {
+    if (e > s && text.substring(s, e).trim().isNotEmpty) out.add((s, e));
   }
-  if (out.isEmpty) out.add((0, text.length));
+
+  final n = text.length;
+  var start = 0;
+  var i = 0;
+  while (i < n) {
+    if (!_terminators.contains(text[i])) {
+      i++;
+      continue;
+    }
+    final runStart = i;
+    while (i < n && _terminators.contains(text[i])) {
+      i++;
+    }
+    final runEnd = i;
+    while (i < n && _closers.contains(text[i])) {
+      i++;
+    }
+    if (_endsSentence(text, runStart, runEnd, i)) {
+      add(start, i);
+      start = i;
+    }
+  }
+  add(start, n);
+  if (out.isEmpty) out.add((0, n));
   return out;
+}
+
+const _terminators = {'.', '!', '?', '…'};
+const _closers = {'"', '”', '’', ')', ']', "'"};
+
+/// Words that are written with a dot and are followed by a name or a
+/// capitalised word without ending the sentence. Words that often end a
+/// sentence ("etc.", "Inc.", "Jr.", "No." as an answer) are left out: a
+/// number after them is handled by the digit rule.
+const _abbreviations = {
+  'Mr', 'Mrs', 'Ms', 'Mx', 'Dr', 'Prof', 'St', 'Mt', 'Rev', 'Revd', 'Fr', 'Gen', 'Col', 'Capt', 'Lt', 'Sgt',
+  'Maj', 'Cmdr', 'Adm', 'Gov', 'Sen', 'Rep', 'Hon', 'Messrs', 'Mme', 'Mlle',
+  'vs', 'viz', 'cf', 'Cf', 'ed', 'eds', 'Ed', 'Eds', 'trans', 'vol', 'vols', 'Vol', 'Vols', 'ch', 'chap', 'Ch', 'Chap',
+  'fig', 'figs', 'Fig', 'Figs', 'pp', 'Pp',
+};
+
+bool _isLetter(String c) => c.toLowerCase() != c.toUpperCase();
+bool _isDigit(String c) => c.codeUnitAt(0) >= 0x30 && c.codeUnitAt(0) <= 0x39;
+bool _isSpace(String c) => c.trim().isEmpty;
+bool _isLower(String c) => _isLetter(c) && c == c.toLowerCase();
+bool _isUpper(String c) => _isLetter(c) && c == c.toUpperCase();
+
+/// Whether the terminators at [runStart, runEnd) (with closing quotes and
+/// brackets up to [end]) end a sentence.
+bool _endsSentence(String text, int runStart, int runEnd, int end) {
+  final n = text.length;
+  if (end >= n) return true;
+  final run = text.substring(runStart, runEnd);
+  final dots = run.split('').every((c) => c == '.' || c == '…');
+  final closed = end > runEnd;
+  final next = text[end];
+  if (!_isSpace(next)) {
+    // A dot inside a word or a number: "U.S.", "e.g", "3.5", "etc.,".
+    if (dots && !closed && (_isLetter(next) || _isDigit(next) || ',;:'.contains(next))) return false;
+    return true;
+  }
+  // Closing quotes or brackets, "!" and "?" keep ending the sentence as before
+  // ("'Well!' thought Alice", "(see p. 4). After").
+  if (!dots || closed) return true;
+  var j = end;
+  while (j < n && _isSpace(text[j])) {
+    j++;
+  }
+  if (j >= n) return true;
+  final c = text[j];
+  // A sentence starts with a capital: "ed. 1886", "i. 125", "pop. de",
+  // "these… and".
+  if (_isLower(c) || _isDigit(c)) return false;
+  if (run != '.') return true;
+  // The word right before the dot.
+  var w = runStart;
+  while (w > 0 && _isLetter(text[w - 1])) {
+    w--;
+  }
+  final word = text.substring(w, runStart);
+  if (_abbreviations.contains(word)) return false;
+  // An initial before a name: "E. S. Hartland", "J. M. W. Turner" (not "I.").
+  if (word.length == 1 && _isUpper(word) && word != 'I' && _isUpper(c)) return false;
+  return true;
 }
 
 /// Morphy-style lemmatizer backed by the WordNet exception lists and the

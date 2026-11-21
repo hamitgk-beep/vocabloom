@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "sentence-translation-match",
+      "area": "reader",
+      "tr": "Cümle analizinde Türkçe çeviri artık her zaman seçtiğin cümleye ait: \"Prof.\", \"Mr.\", \"No. 28\", \"p. 35\" gibi kısaltmalar cümleyi bölmüyor ve bir cümleye sonraki cümlenin çevirisi gelmiyor. Geçerli çeviri yoksa \"Çeviri oluşturulamadı\" yazıyor.",
+      "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation it says \"No translation could be made\"."
+    },
+    {
       "id": "onboarding-languages",
       "area": "app",
       "tr": "İlk açılışta önce ana dilini ve öğrenmek istediğin dili seçiyorsun; sonra Ayarlar > Dil bölümünden değiştirebilirsin.",

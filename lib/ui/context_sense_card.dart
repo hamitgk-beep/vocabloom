@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../ai/device_translate.dart';
+import '../data/sentence_translation.dart';
 import '../online/ai_service.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
@@ -365,6 +366,10 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
   }
 }
 
+/// Shown in the Turkish line when there is no valid translation of the
+/// sentence: never another sentence's Turkish, never the English again.
+String noTranslationText() => L('Çeviri oluşturulamadı', 'No translation could be made');
+
 /// The book's sentence with its Turkish right under it: the reader's saved
 /// translation, the sentence panel's saved one, the phone's instant
 /// translation, or (with an AI service) a button that translates it.
@@ -394,7 +399,23 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
   @override
   void initState() {
     super.initState();
-    aiTr = widget.app.user.sentenceAi(widget.ctx.sentence)?.$1;
+    aiTr = _saved(widget.ctx.sentence);
+  }
+
+  String? _saved(String sentence) {
+    final t = widget.app.user.sentenceAi(sentence)?.$1;
+    return usableTranslation(sentence, t) ? t : null;
+  }
+
+  @override
+  void didUpdateWidget(BookSentenceCard old) {
+    super.didUpdateWidget(old);
+    // Another sentence in the same card: nothing of the old one stays.
+    if (old.ctx.sentence != widget.ctx.sentence) {
+      aiTr = _saved(widget.ctx.sentence);
+      loading = false;
+      error = null;
+    }
   }
 
   Future<void> _translate() async {
@@ -404,15 +425,23 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
       loading = true;
       error = null;
     });
+    final c = widget.ctx;
+    final asked = c.sentence;
     try {
-      final c = widget.ctx;
-      final r = await svc.explainSentence(c.sentence, [c.prevSentence, c.sentence, c.nextSentence].whereType<String>().join(' '));
-      widget.app.user.setSentenceAi(c.sentence, r.translation, jsonEncode({'tr': r.explanation, 'en': r.explanationEn}));
-      if (mounted) setState(() => aiTr = r.translation);
+      final r = await svc.explainSentence(asked, [c.prevSentence, asked, c.nextSentence].whereType<String>().join(' '));
+      final ok = usableTranslation(asked, r.translation);
+      widget.app.user.setSentenceAi(asked, ok ? r.translation : '', jsonEncode({'tr': r.explanation, 'en': r.explanationEn}));
+      // A late answer for a sentence that is no longer shown is only saved.
+      if (mounted && widget.ctx.sentence == asked) {
+        setState(() {
+          aiTr = ok ? r.translation : null;
+          if (!ok) error = noTranslationText();
+        });
+      }
     } catch (e) {
-      if (mounted) setState(() => error = L('Çevrilemedi: ${errorText(e)}', 'Could not translate: ${errorText(e)}'));
+      if (mounted && widget.ctx.sentence == asked) setState(() => error = L('Çevrilemedi: ${errorText(e)}', 'Could not translate: ${errorText(e)}'));
     } finally {
-      if (mounted) setState(() => loading = false);
+      if (mounted && widget.ctx.sentence == asked) setState(() => loading = false);
     }
   }
 
@@ -421,9 +450,11 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
     final t = Theme.of(context);
     final app = widget.app;
     final c = widget.ctx;
-    final tr = c.sentenceTr?.first ?? widget.tr ?? aiTr;
+    // Every candidate here was saved for exactly this English sentence. The
+    // AI's own answer for it (which comes with the explanation) goes first.
+    final tr = widget.tr ?? aiTr ?? c.sentenceTr?.first;
     final hasAi = AiService.fromSettings(app.user) != null;
-    Widget? trLine;
+    final Widget trLine;
     if (tr == null && widget.translating) {
       trLine = LangLine(
         en: false,
@@ -467,6 +498,12 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
                 ),
         ),
       );
+    } else {
+      // No valid translation and nothing that could make one here.
+      trLine = LangLine(
+        en: false,
+        child: Text(noTranslationText(), key: const ValueKey('ctx-sentence-no-tr'), style: t.textTheme.bodyMedium?.copyWith(color: t.hintColor)),
+      );
     }
     return PanelCard(
       child: Column(
@@ -481,7 +518,8 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
             ),
             trailing: Speech.supported ? SpeakButton(c.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence'), size: 20) : null,
           ),
-          if (trLine != null) ...[const LangDivider(), trLine],
+          const LangDivider(),
+          trLine,
         ],
       ),
     );

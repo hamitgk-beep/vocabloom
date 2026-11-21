@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 
+import 'sentence_translation.dart';
+
 enum WordStatus { none, learning, learned }
 
 class Book {
@@ -568,15 +570,15 @@ class UserDb {
               r['meta'] == null ? const {} : (jsonDecode(r['meta'] as String) as Map<String, dynamic>))
       ];
 
-  /// Sentence translations stored by the online analysis (JSON list).
-  List<String>? paraTranslation(int paraId) {
+  /// Sentence translations stored by the online analysis, each tied to its
+  /// English sentence (see sentence_translation.dart). Null when none.
+  ParaTranslations? paraTranslation(int paraId) {
     final r = db.select('SELECT tr FROM paras WHERE id=?', [paraId]);
-    final s = r.isEmpty ? null : r.first['tr'] as String?;
-    return s == null ? null : (jsonDecode(s) as List).cast<String>();
+    return ParaTranslations.decode(r.isEmpty ? null : r.first['tr'] as String?);
   }
 
-  void setParaTranslation(int paraId, List<String> tr) =>
-      db.execute('UPDATE paras SET tr=? WHERE id=?', [jsonEncode(tr), paraId]);
+  void setParaTranslation(int paraId, ParaTranslations tr) =>
+      db.execute('UPDATE paras SET tr=? WHERE id=?', [tr.encode(), paraId]);
 
   void setChapterSummary(int bookId, int idx, String summary) =>
       db.execute('UPDATE chapters SET summary=? WHERE book_id=? AND idx=?', [summary, bookId, idx]);

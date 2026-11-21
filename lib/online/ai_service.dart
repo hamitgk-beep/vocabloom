@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 
+import '../data/sentence_translation.dart';
 import '../data/user_db.dart';
 import '../nlp/word_family.dart';
 import '../l10n.dart';
@@ -96,7 +97,11 @@ class AiService {
   final AiConfig cfg;
   AiService(this.cfg);
 
+  /// Tests only: a stand-in service (a fake that answers without the network).
+  static AiService? Function(UserDb db)? debugFromSettings;
+
   static AiService? fromSettings(UserDb db) {
+    if (debugFromSettings != null) return debugFromSettings!(db);
     final c = AiSettings.active(db);
     return c == null ? null : AiService(c);
   }
@@ -379,16 +384,19 @@ class AiService {
   }
 
   /// Translates numbered sentences; also returns a short Turkish summary.
-  /// Each translation comes back with its sentence's number, so a model that
-  /// joins or splits sentences cannot shift the Turkish onto the wrong ones:
-  /// a sentence it left out stays empty.
+  /// Each translation comes back with its sentence's number and the first
+  /// words of that sentence, so a model that joins or splits sentences, or
+  /// numbers its answers on after a join, cannot shift the Turkish onto the
+  /// wrong ones: an answer that does not match its sentence is dropped and
+  /// that sentence stays empty (see [alignNumberedTranslations]).
   Future<({List<String> translations, String summary})> translateChunk(List<String> sentences) async {
     final numbered = [for (var i = 0; i < sentences.length; i++) '[$i] ${sentences[i]}'].join('\n');
     final r = await _json(
       'Below are ${sentences.length} consecutive sentences from a book, numbered from 0. '
-      'Return JSON {"translations": [{"i": 0, "tr": "..."}, ...], "summary": "..."}: one item per number, with "i" the '
-      'sentence number and "tr" the Turkish translation of exactly that sentence (translate headings too; never join or '
-      'split sentences), and "summary" is 2-4 Turkish sentences that summarise what this passage tells.\n\n$numbered',
+      'Return JSON {"translations": [{"i": 0, "src": "...", "tr": "..."}, ...], "summary": "..."}: one item per number, '
+      'with "i" the sentence number, "src" the first three words of that English sentence copied exactly, and "tr" the '
+      'Turkish translation of exactly that sentence (translate headings too; never join or split sentences, even when a '
+      'sentence looks unfinished), and "summary" is 2-4 Turkish sentences that summarise what this passage tells.\n\n$numbered',
       {
         'type': 'object',
         'properties': {
@@ -398,9 +406,10 @@ class AiService {
               'type': 'object',
               'properties': {
                 'i': {'type': 'integer'},
+                'src': {'type': 'string'},
                 'tr': {'type': 'string'},
               },
-              'required': ['i', 'tr'],
+              'required': ['i', 'src', 'tr'],
               'additionalProperties': false,
             },
           },
@@ -410,19 +419,7 @@ class AiService {
         'additionalProperties': false,
       },
     );
-    final out = List.filled(sentences.length, '');
-    final list = r['translations'] as List? ?? const [];
-    for (var k = 0; k < list.length; k++) {
-      final e = list[k];
-      if (e is Map) {
-        final i = e['i'] is num ? (e['i'] as num).toInt() : int.tryParse('${e['i']}');
-        if (i != null && i >= 0 && i < out.length) out[i] = '${e['tr'] ?? ''}'.trim();
-      } else if (e is String && list.length == out.length) {
-        // A plain list (older answer shape): trusted only when the count matches.
-        out[k] = e;
-      }
-    }
-    return (translations: out, summary: '${r['summary'] ?? ''}');
+    return (translations: parseChunkTranslations(sentences, r['translations']), summary: '${r['summary'] ?? ''}');
   }
 
   /// Turkish meanings for dictionary expressions that only have English
@@ -651,6 +648,26 @@ class ExprSense {
       };
 }
 
+/// The "translations" of a [AiService.translateChunk] answer, one per
+/// sentence (empty when missing or not matching its sentence). A plain list
+/// of strings (an older answer shape) is trusted only when its length matches.
+List<String> parseChunkTranslations(List<String> sentences, Object? raw) {
+  final list = raw is List ? raw : const [];
+  if (list.isNotEmpty && list.every((e) => e is String)) {
+    if (list.length != sentences.length) return List.filled(sentences.length, '');
+    return [for (var k = 0; k < list.length; k++) usableTranslation(sentences[k], list[k] as String) ? (list[k] as String).trim() : ''];
+  }
+  return alignNumberedTranslations(sentences, [
+    for (final e in list)
+      if (e is Map)
+        (
+          i: e['i'] is num ? (e['i'] as num).toInt() : int.tryParse('${e['i']}'),
+          src: e['src'] as String?,
+          tr: '${e['tr'] ?? ''}',
+        ),
+  ]);
+}
+
 /// Runs the online analysis for a whole book and saves the results. Already
 /// translated paragraphs are skipped, so it can resume at any time.
 Future<void> analyzeBook(AiService svc, UserDb db, int bookId,
@@ -681,12 +698,14 @@ Future<void> analyzeBook(AiService svc, UserDb db, int bookId,
       final r = await svc.translateChunk(sentences);
       var k = 0;
       for (var b = 0; b < batch.length; b++) {
-        final tr = <String>[];
+        final tr = <SentenceTranslation>[];
         for (var c = 0; c < counts[b]; c++) {
-          tr.add(k < r.translations.length ? r.translations[k] : '');
+          // Each Turkish is saved with its English sentence, so it can only
+          // ever be shown for that sentence.
+          tr.add(SentenceTranslation(sentences[k], k < r.translations.length ? r.translations[k] : ''));
           k++;
         }
-        db.setParaTranslation(batch[b].id, tr);
+        db.setParaTranslation(batch[b].id, ParaTranslations(tr, engine: 'ai:${svc.cfg.provider.name}/${svc.cfg.model}'));
       }
       if (r.summary.isNotEmpty) summaries.add(r.summary);
       done += batch.length;
