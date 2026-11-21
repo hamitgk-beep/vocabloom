@@ -2,8 +2,9 @@ name: lexicon-tools
 # Tests for the developer-only dictionary candidate tool in tools/lexicon/ (Python). It never changes the app,
 # assets/dict.db or assets/tr_en.db: the tests open both dictionaries read-only and check their SHA-256.
 #  - stdlib: the tests with Python's standard library only (spaCy and Zemberek tests are skipped).
-#  - engines: the same tests with spaCy (setup_spacy.sh, pinned) and Zemberek (setup_zemberek.sh, SHA-256 pinned
-#    jars, Java 21), plus the quality measurements in tools/lexicon/eval.
+#  - engines: the same tests with spaCy and wordfreq (setup_spacy.sh --with-wordfreq, pinned) and Zemberek
+#    (setup_zemberek.sh, SHA-256 pinned jars, Java 21) and sentence embeddings (setup_embeddings.sh, SHA-256 pinned
+#    ONNX model), plus the quality measurements in tools/lexicon/eval.
 on:
   pull_request:
     paths: ['tools/lexicon/**', '.github/workflows/lexicon-tools.yml']
@@ -31,15 +32,20 @@ jobs:
         with: { python-version: '3.13' }
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: '21' }
-      - name: spaCy (pinned)
-        run: PYTHON=python bash tools/lexicon/setup_spacy.sh
+      - name: spaCy and wordfreq (pinned)
+        run: PYTHON=python bash tools/lexicon/setup_spacy.sh --with-wordfreq
       - name: Zemberek (pinned jars)
         run: bash tools/lexicon/setup_zemberek.sh
+      - name: Sentence embeddings (pinned ONNX model, 118 MB)
+        run: bash tools/lexicon/setup_embeddings.sh
       - name: Tests with both engines (none may be skipped)
         run: |
+          set -o pipefail
           build/lexicon/venv/bin/python -m unittest discover -s tools/lexicon/tests -t tools -v 2>&1 | tee test.log
-          if grep -E "skipped '(spaCy|Zemberek)" test.log; then echo "an engine test was skipped" >&2; exit 1; fi
+          if grep -E "skipped '(spaCy|Zemberek|wordfreq|embeddings)" test.log; then echo "an engine test was skipped" >&2; exit 1; fi
       - name: Quality measurements
         run: |
+          set -o pipefail
           build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py | tee -a "$GITHUB_STEP_SUMMARY"
           build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py --lang tr | tee -a "$GITHUB_STEP_SUMMARY"
+          build/lexicon/venv/bin/python tools/lexicon/eval/evaluate_senses.py --embeddings | tee -a "$GITHUB_STEP_SUMMARY"

@@ -2,7 +2,7 @@
 
   python3 tools/lexicon/run.py add-source --name alice --kind public_domain_text --licence "Public domain" --lang en
   python3 tools/lexicon/run.py approve-source --source alice --approver Hamit --evidence "https://www.gutenberg.org/ebooks/11"
-  python3 tools/lexicon/run.py extract --source alice --text book.txt [--engine builtin|spacy]
+  python3 tools/lexicon/run.py extract --source alice --text book.txt [--engine builtin|spacy] [--wordfreq] [--embeddings]
   python3 tools/lexicon/run.py add-sense --source manual-en --headword run --translation "yönetmek"
   python3 tools/lexicon/run.py review --id 12 --status accepted --reviewer Hamit
   python3 tools/lexicon/run.py summary
@@ -71,6 +71,10 @@ def main(argv=None):
     s.add_argument('--engine', default='builtin', choices=['builtin', 'spacy', 'zemberek'],
                    help='spacy: English (setup_spacy.sh); zemberek: Turkish (setup_zemberek.sh)')
     s.add_argument('--include-forms', action='store_true')
+    s.add_argument('--wordfreq', action='store_true',
+                   help='add wordfreq Zipf values and the lemma_suspect flag to word candidates (frequency.py)')
+    s.add_argument('--embeddings', action='store_true',
+                   help='use sentence embeddings for the sense hints of example candidates (setup_embeddings.sh)')
     s = sub.add_parser('add-sense')
     s.add_argument('--source', required=True)
     s.add_argument('--headword', required=True)
@@ -121,8 +125,17 @@ def main(argv=None):
                             sys.exit('spacy is an English engine; use builtin or zemberek for Turkish sources')
                         from lexicon.adapters.turkish import make_turkish
                         analyzer = make_turkish(args.engine, dictionary)
+                    frequency = None
+                    if args.wordfreq:
+                        from lexicon.frequency import Frequency
+                        frequency = Frequency(lang)
+                    encoder = None
+                    if args.embeddings and lang == 'en':
+                        from lexicon.embeddings import SentenceEncoder
+                        encoder = SentenceEncoder()
                     counts = extract(store, analyzer, dictionary, sid, _read_text(args.text), direction,
-                                     locator=os.path.basename(args.text), include_forms=args.include_forms)
+                                     locator=os.path.basename(args.text), include_forms=args.include_forms,
+                                     frequency=frequency, encoder=encoder)
                     print(json.dumps(counts, ensure_ascii=False))
                 else:
                     cid = add_sense(store, dictionary, sid, direction, args.headword, args.translation,

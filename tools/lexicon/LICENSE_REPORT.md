@@ -19,22 +19,23 @@ reklamlı/ücretli olabileceği için NC şartı taşıyan her şey ayrıca risk
 | `explosion/spacy-models/meta/en_core_web_sm-3.8.0.json` | Model lisansı ve eğitim kaynakları |
 | `UniversalDependencies/UD_*/LICENSE.txt` | Stanza ve turkicnlp modellerinin eğitildiği ağaç bankaları |
 
-Doğrulanamayanlar: Bu ortamdan `huggingface.co` ve GitHub API'sine erişilemedi. Hugging Face'teki model
-kartları (sentence-transformers modelleri, Stanza ve turkicnlp ağırlıkları, GlotLID, Glot500) **okunamadı**. Bu
-modeller için "doğrulanmadı" yazıldı.
+İlk incelemede bu ortamdan `huggingface.co`'ya erişilemiyordu. Üçüncü aşamada (21 Kasım 2026) erişim açıldı:
+`paraphrase-multilingual-MiniLM-L12-v2`, `stanfordnlp/stanza-tr` ve `stanfordnlp/stanza-en` model kartları Hugging
+Face API'sinden okundu. GlotLID ve Glot500 kartlarına bakılmadı, çünkü turkicnlp başka nedenlerle elendi.
+`download.pytorch.org` hâlâ erişilemiyor.
 
 ## Özet
 
 | # | Repo | Kod | Model | Veri | Karar |
 |---|---|---|---|---|---|
 | 1 | explosion/spaCy | MIT ✅ | en_core_web_sm 3.8.0: MIT ✅ | Model meta: OntoNotes 5 (Explosion'ın ticari lisansı), WordNet 3.0 License | **Prototipte isteğe bağlı** |
-| 2 | orionsheep/wordlink | MIT ✅ | WordLink-Edge: Qwen2.5 lisansı ⚠️ | `data/`: ECDICT (MIT) ve şartları ayrıca belirtilmemiş kaynaklar ⚠️ | Dahil edilmedi |
+| 2 | orionsheep/wordlink | MIT ✅ | WordLink-Edge: Qwen2.5 lisansı ⚠️ | `data/`: ECDICT (MIT) ve şartları ayrıca belirtilmemiş kaynaklar ⚠️ | Dahil edilmedi: somut katkı yok |
 | 3 | open-spaced-repetition/fsrs4anki | MIT ✅ | (FSRS parametreleri) | Eğitim verisi AnkiWeb kullanıcılarından, alınmıyor | Uygun, sonraki aşama |
-| 4 | huggingface/sentence-transformers | Apache-2.0 ✅ | Her model ayrı, doğrulanmadı ⚠️ | Model eğitim verileri modele göre değişir ⚠️ | Dahil edilmedi |
-| 5 | stanfordnlp/stanza | Apache-2.0 ✅ | UD ağaç bankalarıyla eğitilmiş ⚠️ | EWT: CC BY-SA 4.0, GUM: CC BY-NC-SA 4.0, Türkçe IMST: CC BY-NC-SA ⚠️ | Dahil edilmedi, onay gerekli |
-| 6 | rspeer/wordfreq | Apache-2.0 ✅ | – | CC BY-SA 4.0 (+ Google Books Ngrams, SUBTLEX şartları) ⚠️ | Dahil edilmedi, onay gerekli |
+| 4 | huggingface/sentence-transformers | Apache-2.0 ✅ | `paraphrase-multilingual-MiniLM-L12-v2`: model kartı Apache-2.0 ✅ | Eğitim verisi ayrıca incelenmedi ⚠️ | **Model isteğe bağlı eklendi** (ONNX, PyTorch'suz; paket kullanılmadı) |
+| 5 | stanfordnlp/stanza | Apache-2.0 ✅ | HF kartı Apache-2.0, ama UD ağaç bankalarıyla eğitilmiş ⚠️ | EWT: CC BY-SA 4.0, GUM: CC BY-NC-SA 4.0, Türkçe IMST: CC BY-NC-SA ⚠️ | Dahil edilmedi: somut katkı yok, lisans çelişkili |
+| 6 | rspeer/wordfreq | Apache-2.0 ✅ | – | CC BY-SA 4.0 (+ Google Books Ngrams, SUBTLEX şartları) ⚠️ | **İsteğe bağlı eklendi**: yalnız sayı, yalnız aday veritabanında |
 | 7 | ahmetaa/zemberek-nlp | Apache-2.0 ✅ | Sözlük ve model jar içinde, ayrı lisans yok (Apache-2.0 sayılıyor). Kökeni için aşağıya bakın ⚠️ | Guava, Caffeine Apache-2.0; protobuf, ANTLR BSD-3 ✅ | İsteğe bağlı adaptör olarak eklendi, yalnız çözümleme için |
-| 8 | turkic-nlp/turkicnlp | Apache-2.0 ✅ | Apertium FST: GPL-3.0 ⚠️, Türkçe Stanza: IMST (NC) ⚠️, GlotLID/Glot500 doğrulanmadı | UD treebank'leri ⚠️ | Dahil edilmedi, onay gerekli |
+| 8 | turkic-nlp/turkicnlp | Apache-2.0 ✅ | Apertium FST: GPL-3.0 ⚠️, Türkçe Stanza: IMST (NC) ⚠️, GlotLID/Glot500 doğrulanmadı | UD treebank'leri ⚠️ | Dahil edilmedi: somut katkı yok, GPL/NC |
 
 ## Ayrıntılar
 
@@ -72,6 +73,8 @@ modeller için "doğrulanmadı" yazıldı.
 - **Bağımlılık:** PyTorch + transformers (birkaç GB).
 - **Karar:** Anlam eşleştirme (yeni anlam mı, var olan mı) için ileride değerli. Model seçildiğinde ayrı lisans
   doğrulaması ve onay gerekiyor.
+- **Güncelleme (üçüncü aşama):** Model kartı okundu ve tek bir model isteğe bağlı eklendi. Bkz. "Üçüncü aşama:
+  entegrasyon kararları".
 
 ### 5. Stanza
 - **Kod:** Apache-2.0 ("Copyright 2019 The Board of Trustees of The Leland Stanford Junior University").
@@ -84,12 +87,22 @@ modeller için "doğrulanmadı" yazıldı.
 - **Karar:** Modellerin lisansı eğitim verisinden bağımsız değerlendirilemiyor. NC/SA riski var, **onay gerekli**.
 
 ### 6. wordfreq
-- **Kod:** Apache-2.0 ("Copyright 2022 Robyn Speer").
+- **Kod:** Apache-2.0 ("Copyright 2022 Robyn Speer"). PyPI 3.1.1 (2023-11-21): `Apache-2.0`.
 - **Veri:** README: "includes data files that may be redistributed under a Creative Commons
   Attribution-ShareAlike 4.0 license". Ayrıca Google Books Ngrams ve SUBTLEX şartları geçerli. README'ye göre
   veri artık güncellenmiyor.
-- **Karar:** Kelime sıklığı için yararlı. Ancak sıklık değerleri CC BY-SA veriden türetildiği için **ayrı onay**
-  gerekiyor. (Projede `wfreq` tablosu zaten var.)
+- **İlk karar:** Kelime sıklığı için yararlı. Ancak sıklık değerleri CC BY-SA veriden türetildiği için ayrı onay
+  gerekiyordu. (Projede `wfreq` tablosu zaten var.)
+- **Üçüncü aşama kararı (eklendi, isteğe bağlı):** Hamit "wordfreq ... için uygun lisanslı bileşenleri entegre et"
+  dedi. Uygun olan bileşen **kod** (Apache-2.0). Veriyle ilgili sınır şöyle çizildi:
+  - Liste hiçbir yere kopyalanmaz, git'e, uygulamaya ve sözlüğe girmez.
+  - Aday veritabanına yalnız aday başına bir sayı (Zipf) yazılır. Bu bir inceleme bilgisidir, sözlük içeriği değil.
+  - `dict.db` zaten CC BY-SA 4.0. İleride bu sayılar sözlüğe girerse atıf gerekir (wordfreq, Robyn Speer, ve
+    README'deki kaynaklar). Bu adım ayrı onay ister.
+- **Bağımlılıklar** (PyPI metadata ve paket içindeki LICENSE dosyaları): ftfy 6.3.1 (Apache-2.0), langcodes 3.5.1
+  (MIT), msgpack 1.2.4 (Apache-2.0), regex 2026.9.29 (Apache-2.0 AND CNRI-Python), wcwidth 0.9.4 (MIT), locate 1.1.1
+  (PyPI sınıflandırması "Other/Proprietary", ama paketteki LICENSE dosyası **MIT**; dosya okundu). regex'in en yeni
+  sürümü (2026.11.19) iki haftadan yeni olduğu için kullanılmadı. Sürümler `requirements-wordfreq.txt`'de sabit.
 
 ### 7. Zemberek-NLP
 - **Kod:** Apache-2.0 ("Copyright 2018 Ahmet A. Akın, Mehmet D. Akın"). README: "Code is licensed under Apache
@@ -128,6 +141,54 @@ modeller için "doğrulanmadı" yazıldı.
   GlotLID ve Glot500 modelleri Hugging Face'te, **doğrulanmadı**. LLM arka uçları çevrimiçi servisler.
 - **Karar:** **Onay gerekli.** Dahil edilmedi.
 
+## Üçüncü aşama: entegrasyon kararları (21 Kasım 2026)
+
+Kural: bir bileşen yalnız lisansı doğrulandıysa **ve** ölçülebilir bir katkı sağlıyorsa eklendi.
+
+### Sentence Transformers: model eklendi, paket eklenmedi
+- **Model:** `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, revizyon
+  `e8f8c211226b894fcb81acc59f3b34ba3efd5f42`. Model kartı ve API: `license: apache-2.0`. 50'den fazla dil, Türkçe
+  dahil. Kart "trained by sentence-transformers" diyor. Eğitim verisinin (paralel cümle derlemleri) şartları ayrıca
+  incelenmedi ⚠️. Model yalnız geliştirici makinesinde **puan üretmek** için kullanılıyor. Çıktısı bir sayıdır,
+  metin üretmez, sözlüğe bir şey kopyalamaz.
+- **Neden paket değil:** `sentence-transformers` paketi PyTorch ister (Linux'ta CUDA paketleriyle birkaç GB,
+  `download.pytorch.org` bu ortamdan erişilemiyor). Aynı model depoda ONNX biçiminde de yayımlanmış. 8-bit sürümü
+  (`onnx/model_qint8_avx512.onnx`, 118 MB) onnxruntime (MIT) + tokenizers (Apache-2.0) + numpy ile çalışıyor.
+  Havuzlama, modelin `1_Pooling/config.json` dosyasındaki gibi ortalama (mean pooling).
+- **Bağımlılıklar** `--no-deps` ile kuruluyor: onnxruntime 1.31.1 (MIT), tokenizers 0.23.3 (Apache-2.0), numpy 2.5.5
+  (BSD-3-Clause ve diğer izin verici lisanslar), flatbuffers 25.12.19 (Apache-2.0), protobuf 7.36.2 (BSD-3-Clause),
+  packaging 26.3 (Apache-2.0 OR BSD-2-Clause). tokenizers'ın normalde çektiği `huggingface_hub` (ve onun MPL-2.0
+  lisanslı `tqdm` bağımlılığı) kurulmuyor. Böylece çalışma anında ağ istemcisi yok. onnxruntime 1.32.0 iki haftadan
+  yeni olduğu için kullanılmadı.
+- **Dosyalar** `embeddings.lock`'ta SHA-256 ile sabit, `setup_embeddings.sh` indirir ve doğrular, `build/` altına
+  yazar. Uygulamaya hiçbir şey paketlenmez.
+- **Katkı (ölçüldü):** Bağlama uygun anlam önerisi 0.596 → 0.636 doğruluk. Bağlamla karar verilen öneri oranı
+  %23 → %60 (bkz. eval/REPORT.md).
+
+### wordfreq: eklendi (isteğe bağlı)
+Bkz. yukarıdaki 6. bölüm. **Katkı (ölçüldü):** 5 İngilizce kitapta `lemma_suspect` 5 adayı işaretledi, 5'i de
+gerçek lemma hatası (unaccounted → unaccount, unfeeling → unfeel, unlooked → unlook, unprovided → unprovide,
+vittles → vittle). Zipf değeri tek başına "geçerli kelime / lehçe" ayrımı yapmıyor ("dunno" 3.76, "agitatedly"
+1.25). Bu yüzden yalnız sıralama ve inceleme bilgisi olarak tutuluyor. Türkçede wordfreq listesi çekimli biçimler
+içerdiği için lemma kontrolü kapalı.
+
+### Stanza: eklenmedi
+- **Lisans:** Kod Apache-2.0. Hugging Face kartları (`stanza-tr`, `stanza-en`) `apache-2.0` diyor, ama kart otomatik
+  üretilmiş. Türkçe varsayılan paket IMST (CC BY-NC-SA), İngilizce varsayılan paket GUM (CC BY-NC-SA 4.0) içeren
+  ağaç bankalarıyla eğitilmiş. Kart ile eğitim verisi lisansı çelişiyor, yani durum belirsiz.
+- **Katkı:** Aynı işi yapan bileşenler zaten ölçüldü: İngilizce kök doğruluğu spaCy ile 0.983, Türkçe Zemberek ile
+  0.953. Stanza'nın sağlayabileceği fark birkaç kelimeyle sınırlı. Bunun için PyTorch (birkaç GB) gerekirdi.
+- **Karar:** Somut katkı yok, lisans belirsiz. Eklenmedi.
+
+### WordLink: eklenmedi
+- Kod MIT, ama işe yarayacak kısım verisi. Verinin bir kısmının lisansı yazılmamış. Model Qwen2.5 lisanslı.
+  İngilizce–Çince odaklı. Kelime bağı (eş anlam, türev) fikri zaten `dict.db`'deki WordNet ilişkileriyle (`syn`,
+  `fam`) karşılanıyor. Eklenmedi.
+
+### TurkicNLP: eklenmedi
+- Kod Apache-2.0. Türkçe çözümleme Apertium FST'ye (**GPL-3.0**) ya da IMST ile eğitilmiş Stanza'ya (**NC**)
+  dayanıyor. Zemberek (Apache-2.0) aynı işi yapıyor ve ölçüldü (kök doğruluğu 0.953). Eklenmedi.
+
 ## Aday verisinin lisansı: güven sınırı
 
 - Araçtaki kaynak onayı (`approve-source`), bir kişinin adını ve yazdığı kanıt metnini kaydeder. Lisans otomatik
@@ -148,6 +209,8 @@ modeller için "doğrulanmadı" yazıldı.
 | Yerleşik İngilizce ve Türkçe adaptörler | GPL-3.0 (Storilex kaynak kodu) | Evet |
 | spaCy 3.8.18 + en_core_web_sm 3.8.0 | MIT + MIT | Hayır, `--engine spacy` (`setup_spacy.sh`) |
 | Zemberek-NLP 0.18.0 + Guava, Caffeine, protobuf, ANTLR | Apache-2.0 + Apache-2.0 / BSD-3-Clause | Hayır, `--engine zemberek` (`setup_zemberek.sh`, Java 21) |
+| wordfreq 3.1.1 (+ ftfy, langcodes, locate, msgpack, regex, wcwidth) | Kod Apache-2.0 / MIT; veri CC BY-SA 4.0 (yalnız Zipf sayısı kullanılır) | Hayır, `--wordfreq` (`setup_spacy.sh --with-wordfreq`) |
+| `paraphrase-multilingual-MiniLM-L12-v2` (ONNX, 8-bit) + onnxruntime 1.31.1, tokenizers 0.23.3, numpy, flatbuffers, protobuf, packaging | Apache-2.0 + MIT / Apache-2.0 / BSD | Hayır, `--embeddings` (`setup_embeddings.sh`) |
 | `assets/dict.db`, `assets/tr_en.db` | mevcut lisansları | Yalnız salt okunur karşılaştırma |
 
 Flutter uygulamasına hiçbir bağımlılık eklenmedi (`pubspec.yaml` değişmedi). Değerlendirmede yalnız uygulamanın

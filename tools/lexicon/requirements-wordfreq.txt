@@ -1,0 +1,13 @@
+# Optional frequency signal for the lexicon tool (developer machines only; the app never uses it).
+# wordfreq code: Apache-2.0. Its bundled frequency data: CC BY-SA 4.0 with attribution (see LICENSE_REPORT.md).
+# Only Zipf numbers are stored, as review metadata in the candidate database; the word lists are never copied.
+# Install with: bash tools/lexicon/setup_spacy.sh --with-wordfreq
+wordfreq==3.1.1
+# Exact dependency versions (tested with Python 3.13 on 2026-11-21). regex 2026.11.19 is newer than two weeks
+# and is not used.
+ftfy==6.3.1
+langcodes==3.5.1
+locate==1.1.1
+msgpack==1.2.4
+regex==2026.9.29
+wcwidth==0.9.4
