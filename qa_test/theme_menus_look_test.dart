@@ -14,6 +14,7 @@ import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/key_ai.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
+import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/l10n.dart';
@@ -75,6 +76,8 @@ void main() {
     for (final w in ['mysterious', 'bitter', 'frost', 'gale']) {
       app.user.setWord(w, WordStatus.learning);
     }
+    // The Turkish-English dictionary, so Settings shows "Learning language" as in the app.
+    app.trEn = TrEnDict(sqlite3.open('assets/tr_en.db', mode: OpenMode.readOnly));
     lessons = parseGrammarTopics(File('assets/grammar/lessons.json').readAsStringSync(), File('assets/grammar/lessons_en.json').readAsStringSync());
   });
 

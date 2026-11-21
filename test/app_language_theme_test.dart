@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/ai/key_ai.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
+import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/ui/settings_page.dart';
@@ -69,14 +70,14 @@ void main() {
   });
 
   testWidgets('settings: language group and a light / dark theme menu', (tester) async {
-    final app = open(Directory.systemTemp.createTempSync('vb_settings'));
+    final app = open(Directory.systemTemp.createTempSync('vb_settings'))..trEn = TrEnDict(sqlite3.open('assets/tr_en.db', mode: OpenMode.readOnly));
     app.setLanguages(native: 'tr', learn: 'en');
     tester.view.physicalSize = const Size(393 * 2, 1400 * 2);
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(MaterialApp(theme: buildTheme(Brightness.light), home: SettingsPage(app: app)));
     await tester.pump();
-    for (final t in ['GÖRÜNÜM', 'DİL', 'Uygulama dili', 'Ana dil', 'Anlam dili']) {
+    for (final t in ['GÖRÜNÜM', 'DİL', 'Uygulama dili', 'Ana dil', 'Öğrenilen dil', 'Anlam dili']) {
       expect(find.text(t), findsOneWidget, reason: t);
     }
     await tester.tap(find.byType(DropdownButton<ThemeMode>));
