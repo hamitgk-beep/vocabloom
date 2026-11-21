@@ -70,7 +70,8 @@ class _ReviewPageState extends State<ReviewPage> {
     if (app.learnTurkish) return _choices[i] = _quiz.choiceFor(w);
     if (!ans.sure && _askAi(w)) return null;
     final ch = _quiz.choiceFor(w);
-    if (ch == null && _askAi(w)) return null; // ask again when the answer arrives
+    // Only a word the dictionary has no Turkish for: the AI service is asked.
+    if (ch == null && ans.tr == null && _askAi(w)) return null; // ask again when the answer arrives
     // The dictionary lacks the Turkish of this sense: remember it, so it can
     // be reported and added in a later dictionary update.
     if ((ch == null || !ans.sure) && !w.lemma.contains(' ')) {
@@ -203,7 +204,7 @@ class _ReviewPageState extends State<ReviewPage> {
     final ch = _choiceFor(pos);
     final waiting = ch == null && _waiting(pos);
     final ans = _quiz.answerFor(w);
-    // What the word means in its own sentence (never an unrelated sense).
+    // The word's most common meaning.
     final meaning = ch?.right ?? ans.tr;
     final gloss = ans.gloss;
     final answered = picked != null;
