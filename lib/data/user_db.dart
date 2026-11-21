@@ -129,6 +129,9 @@ class UserDb {
 
   String get _langWhere => _lang == 'en' ? "lemma NOT LIKE 'tr:%'" : "lemma LIKE '$_prefix%'";
 
+  /// Reads the saved words again (after a backup was restored).
+  void reloadStatuses() => _loadStatuses();
+
   void _loadStatuses() {
     statuses.clear();
     for (final r in db.select('SELECT lemma, status FROM words WHERE $_langWhere')) {
