@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "contrib-hamit-6",
+      "area": "dictionary",
+      "tr": "Deyimler, öbek fiiller, edatlı ifadeler ve eşdizimler filtrelerine yaklaşık 4.700 yeni örnek cümle eklendi (dig oneself into a hole, take the rap, pull the wool over one's eyes, fizzle out …). Yüzlerce deyimin anlamına (İngiliz), (Amerikan), (eskice), (argo) gibi kullanım etiketleri geldi, yanlış anlamlar ve başlıklar düzeltildi, gerçek olmayan kayıtlar temizlendi. Sözlüğe yeni Türkçe anlamlar ve bağlam cümleleri de eklendi.",
+      "en": "About 4,700 new example sentences for idioms, phrasal verbs, prepositional phrases and collocations (dig oneself into a hole, take the rap, pull the wool over one's eyes, fizzle out …). Hundreds of idioms now carry usage labels such as British, American, dated or slang; wrong meanings and headings were fixed and bogus entries removed. The dictionary also got new Turkish meanings and context sentences."
+    },
+    {
       "id": "contrib-hamit-5",
       "area": "dictionary",
       "tr": "Hazır kalıplar filtresine 210 yeni kalıp (Long time no see, Keep me posted, It's up to you …) ve Söylem belirteçlerine 27 yeni ifade (on top of that, that said, come to think of it …) eklendi. Sözlüğe müphem, yadsımak, kanıksamak, ubiquitous, meticulous gibi ileri seviye kelimeler, 57 yeni Türkçe anlam, 30 bağlam cümlesi ve öbek fiillerin örnek cümleleri geldi.",

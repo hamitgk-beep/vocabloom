@@ -263,11 +263,17 @@ OWN_FILTERS = {'dependent_prepositions', 'similes', 'polite_phrases', 'informal_
 def en_phrase(p):
     phrase, meaning, ex, ex_tr = p['phrase'].strip(), p['meaning'].strip(), p.get('ex', ''), p.get('ex_tr', '')
     want = p.get('cat')
+    if not meaning:
+        # An example for a phrase the dictionary has: its meaning stays as it is.
+        meaning = None
     if want and want not in OWN_FILTERS and en_db.execute('SELECT 1 FROM expr WHERE phrase=?', (phrase,)).fetchone():
         # A filter the dictionary already fills: the phrase stays where it is.
         want = None
     rows = en_db.execute('SELECT id, cat, tr, entr, ex, extr FROM expr WHERE phrase=?' + (' AND cat=?' if want else ''),
                          (phrase, want) if want else (phrase,)).fetchall()
+    if not rows and meaning is None:
+        stats['en phrase examples skipped (no such phrase)'] += 1
+        return
     if not rows:
         words = phrase.split()
         cat = want or ('phrasal_verbs' if len(words) == 2 and words[1] in {'up', 'down', 'over', 'out', 'off', 'on', 'in', 'away', 'back'} else 'idioms')
@@ -283,7 +289,7 @@ def en_phrase(p):
     senses = json.loads(own[0]) if own else []
     texts = [s.get('tr', '') for s in senses] + [tr or '']
     exd = en_db.execute('SELECT json FROM exd WHERE phrase=? AND cat=?', (phrase, cat)).fetchone()
-    if exd and not own:
+    if exd and not own and meaning is not None:
         # The phrase has its own explained senses ("make up": oluşturmak,
         # uydurmak, barışmak …); an own_expr row would take their place.
         texts += [x.get('title_tr', '') for x in json.loads(exd[0])]
@@ -317,6 +323,23 @@ def en_phrase(p):
 
 # ---------------------------------------------------------------- apply
 
+for w in data.get('word_drops', []):
+    # A meaning marked wrong by hand ("pm": "gece yarısından sonra") is taken out.
+    if w['lang'] == 'en':
+        senses, keep, exists = en_row(w['word'])
+        left = [s for s in senses if s.get('tr', '').strip() != w['meaning'].strip()]
+        if exists and len(left) < len(senses):
+            en_save(w['word'], left, keep, exists)
+            stats['en meanings removed'] += len(senses) - len(left)
+    else:
+        groups = tr_senses(w['word']) or []
+        for g in groups:
+            g['g'] = [x for x in g['g'] if x.strip() != w['meaning'].strip()]
+        groups = [g for g in groups if g['g']]
+        if groups:
+            tr_save(w['word'], groups, False)
+            stats['tr meanings removed'] += 1
+
 for w in data['words']:
     if w['lang'] == 'tr':
         tr_add_meaning(w['word'], w['pos'], w['meaning'])
@@ -325,7 +348,7 @@ for w in data['words']:
 
 for e in data['examples']:
     if e['lang'] == 'tr':
-        tr_add_meaning(e['word'], 'verb' if e['word'].endswith(('mak', 'mek')) else 'adj', e['meaning'])
+        tr_add_meaning(e['word'], e.get('pos') or ('verb' if e['word'].endswith(('mak', 'mek')) else 'adj'), e['meaning'])
         tr_example(e['word'], e['tr'], e['en'])
     else:
         en_example(e['word'], e['meaning'], e['en'], e['tr'])
@@ -338,6 +361,36 @@ for c in data['context']:
         tr_example(c['lemma'], c['sentence'], c['translation'])
     elif ' ' not in c['lemma']:
         en_example(c['lemma'], c['meaning'], c['sentence'], c['translation'])
+
+for p in data.get('phrase_edits', []):
+    # Checked by hand: a wrong meaning replaced, or a phrase that is not one removed.
+    phrase = p['phrase']
+    if p['action'] == 'rename':
+        # "get the best" → "get the best of": the heading in its usual form.
+        to = p['to']
+        cats = [c for c, in en_db.execute('SELECT cat FROM expr WHERE phrase=?', (phrase,))]
+        for t in ('expr', 'own_expr', 'exd', 'exfreq'):
+            en_db.execute(f'UPDATE {t} SET phrase=? WHERE phrase=?', (to, phrase))
+        for c in cats:
+            en_db.execute('UPDATE exs SET key=? WHERE key=?', (f'{to}|{c}', f'{phrase}|{c}'))
+        stats['en phrases renamed'] += len(cats)
+    elif p['action'] in ('delete', 'merge'):
+        # merge: a second heading of a phrase that is there; its rows go to that one (clean.py).
+        cats = [c for c, in en_db.execute('SELECT cat FROM expr WHERE phrase=?', (phrase,))]
+        en_db.execute('DELETE FROM expr WHERE phrase=?', (phrase,))
+        for t in ('own_expr', 'exd', 'exfreq'):
+            en_db.execute(f'DELETE FROM {t} WHERE phrase=?', (phrase,))
+        en_db.executemany('DELETE FROM exs WHERE key=?', [(f'{phrase}|{c}',) for c in cats])
+        stats['en phrases removed'] += len(cats)
+    else:
+        for cat, ex, extr in en_db.execute('SELECT cat, ex, extr FROM expr WHERE phrase=?', (phrase,)).fetchall():
+            en_db.execute('UPDATE expr SET tr=? WHERE phrase=? AND cat=?', (p['meaning'], phrase, cat))
+            own = en_db.execute('SELECT senses FROM own_expr WHERE phrase=? AND cat=?', (phrase, cat)).fetchone()
+            senses = json.loads(own[0]) if own else [{'pos': 'deyim', 'tr': '', 'note': '', 'en': '', 'ex': ex or '', 'ex_tr': extr or ''}]
+            senses = [dict(senses[0], tr=p['meaning'], src='storilex')]
+            en_db.execute('INSERT OR REPLACE INTO own_expr(phrase, cat, senses, status, reviewed, action, source, note) VALUES (?,?,?,?,?,?,?,?)',
+                          (phrase, cat, json.dumps(senses, ensure_ascii=False), 'contrib', 1, None, 'storilex_contrib', None))
+            stats['en phrase meanings replaced'] += 1
 
 for p in data['phrases']:
     if p['lang'] == 'tr':

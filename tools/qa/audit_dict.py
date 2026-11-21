@@ -100,6 +100,9 @@ figuratively literally idiomatic informal formal slang'''.split())
 TR_LOOKALIKES = set('o bu şu ne da de ki mi mu mı mü ve ile için her not has had his on at kim ben'.split())
 
 WORD_RE = re.compile(r"[A-Za-zÇĞİÖŞÜçğıöşüâîû']+")
+# Deliberate English references inside a Turkish meaning: the other spelling
+# in a UK/US pair, "(UK; US: truck)", and the confused word, "(≠ do: yapmak)".
+EN_REF_RE = re.compile(r"\((?:UK|US); (?:UK|US): [^)]*\)|\(≠ [^)]*\)")
 TR_CHARS = set('çğıöşüÇĞİÖŞÜ')
 # Bracketed labels in FreeDict Turkish lines.
 FT_TAG = re.compile(r'\((?:çoğ\.?|çoğul|son ?ek|sonek|ön ?ek|önek|amer\.?|ing\.?|argo|kon\.?|esk\.?|'
@@ -197,7 +200,7 @@ class Audit:
             if not tr and not senses:
                 self.hit('expr_no_tr', label, en[:120], cat)
             if tr:
-                bad = english_words(tr)
+                bad = english_words(EN_REF_RE.sub(' ', tr))
                 if bad:
                     self.hit('expr_tr_has_english', label, f'{tr}  ← {", ".join(sorted(set(bad)))}', cat)
                 if en and norm(tr) == norm(en):
