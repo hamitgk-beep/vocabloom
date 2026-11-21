@@ -92,6 +92,14 @@ String? _assetForPlatform() {
   return null;
 }
 
+/// The per-processor APK for the Dart VM's [platformVersion] (it ends in
+/// `on "android_arm64"`), or null for a processor without its own APK.
+String? androidAbiAsset(String platformVersion) {
+  if (platformVersion.contains('"android_arm64"')) return 'Storilex-Android-arm64-v8a.apk';
+  if (platformVersion.contains('"android_arm"')) return 'Storilex-Android-armeabi-v7a.apk';
+  return null;
+}
+
 /// Returns the newer release for this platform, or null (also when offline).
 Future<UpdateInfo?> checkForUpdate() async {
   try {
@@ -114,13 +122,18 @@ Future<UpdateInfo?> checkForUpdateOrThrow() async {
   final latest = int.tryParse(m?.group(1) ?? '') ?? 0;
   if (latest <= appBuild) return null;
   final v = RegExp(r'S\u00fcr\u00fcm\s+([\d.]+)').firstMatch(body)?.group(1) ?? '';
-  var size = 0;
-  for (final a in (json['assets'] as List? ?? const [])) {
-    if (a is Map && a['name'] == asset) size = (a['size'] as num?)?.toInt() ?? 0;
-  }
+  final sizes = <String, int>{
+    for (final a in (json['assets'] as List? ?? const []))
+      if (a is Map && a['name'] is String) a['name'] as String: (a['size'] as num?)?.toInt() ?? 0,
+  };
+  // Android: the APK for this phone's processor, about half the size of the
+  // universal one, when the release has it (older releases do not).
+  final abiAsset = Platform.isAndroid ? androidAbiAsset(Platform.version) : null;
+  final chosen = abiAsset != null && sizes.containsKey(abiAsset) ? abiAsset : asset;
+  final size = sizes[chosen] ?? 0;
   return UpdateInfo(
     latest,
-    '$_download$asset',
+    '$_download$chosen',
     version: v,
     size: size,
     notes: parseReleaseNotes(body, sinceBuild: appBuild),
