@@ -21,7 +21,7 @@ import '../nlp/context_sense.dart';
 Future<void> showExprSheet(BuildContext context, AppState app, Expr expr, WordContext? ctx, [List<String>? words]) {
   panelApp = app;
   app.stats.logLookup('expr', expr.phrase);
-  return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words ?? expr.phrase.split(' ').where((w) => !placeholderWords.contains(w)).toList(), scroll: sc));
+  return showPanel(context, (c, sc) => ExprPanel(app: app, expr: expr, ctx: ctx, words: words ?? expr.phrase.split(' ').where((w) => !placeholderWords.contains(w)).toList(), scroll: sc), short: true);
 }
 
 class ExprPanel extends StatefulWidget {

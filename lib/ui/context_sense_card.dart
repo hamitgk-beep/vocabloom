@@ -31,7 +31,11 @@ class ContextSenseCard extends StatefulWidget {
 
   /// Words of the sentence to highlight (the tapped word or expression).
   final Set<String> highlight;
-  const ContextSenseCard({super.key, required this.app, required this.result, required this.ctx, required this.highlight});
+
+  /// Shown right under the meaning, above the book's sentence (the word
+  /// panel's To learn / Learned row, so a short panel shows it).
+  final Widget? actions;
+  const ContextSenseCard({super.key, required this.app, required this.result, required this.ctx, required this.highlight, this.actions});
 
   /// Runs the engine for a tap; null (no card) when anything goes wrong.
   static ContextSense? resolve(AppState app, WordContext ctx, {Expr? expr, List<int>? exprTokens, String? lemma}) {
@@ -284,6 +288,7 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
     }
 
     if (helpOpen) children.add(_plainExplanation(theme));
+    if (widget.actions != null) children.add(widget.actions!);
     children.add(PanelHeading(L('KİTAPTAKİ CÜMLE', 'SENTENCE IN THE BOOK')));
     children.add(BookSentenceCard(app: app, ctx: widget.ctx, highlight: widget.highlight));
     children.add(

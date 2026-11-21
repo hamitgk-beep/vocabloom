@@ -9,8 +9,8 @@ import '../l10n.dart';
 /// brown with soft glassy cards and gold by night. Gold never gets confused
 /// with the blue used for English text (see enStyle in panel.dart).
 class Brand {
-  /// Main accent (day). Dark enough for white text on buttons.
-  static const gold = Color(0xFFA9792F);
+  /// Main accent (day): gold text and icons on cream stay above 4.5:1.
+  static const gold = Color(0xFF8C5E1F);
 
   /// Main accent (night): lighter so it glows on dark brown.
   static const goldLight = Color(0xFFD6B16C);
@@ -22,7 +22,7 @@ class Brand {
   static const lSurfaceLow = Color(0xFFFDFAF4);
   static const lSurfaceHigh = Color(0xFFF4ECDC);
   static const lBorder = Color(0xFFEDE3D0);
-  static const lMuted = Color(0xFF85775F);
+  static const lMuted = Color(0xFF6F604C);
 
   // Night palette: warm dark brown, not black, with soft cream text.
   static const dBg = Color(0xFF17130F);
@@ -34,7 +34,11 @@ class Brand {
   static const dMuted = Color(0xFFA99D89);
 
   /// Gold gradient for pill buttons, the center button and highlights.
+  /// By night it carries dark text; by day use [goldDay] (see [goldFill]).
   static const goldGradient = LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFFDBB873), Color(0xFFA67D3A)]);
+
+  /// Deeper day gold, so white text on it stays above 4.5:1.
+  static const goldDay = LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0xFF94652A), Color(0xFF6E4A16)]);
 
   /// Deeper gold for banners that carry white text.
   static const gradient = LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFFA77B35), Color(0xFF6E4E1D)]);
@@ -75,6 +79,9 @@ class Brand {
 Color goldSoft(ThemeData t) => t.brightness == Brightness.dark ? const Color(0x29D6B16C) : const Color(0xFFF3E6CB);
 
 /// Text and icon color on the gold gradient.
+/// The gold fill under [onGold] text and icons.
+LinearGradient goldFill(ThemeData t) => t.brightness == Brightness.dark ? Brand.goldGradient : Brand.goldDay;
+
 Color onGold(ThemeData t) => t.brightness == Brightness.dark ? const Color(0xFF21180A) : Colors.white;
 
 /// Page background: cream by day, a warm glow by night.
@@ -102,7 +109,7 @@ class GoldButton extends StatelessWidget {
       opacity: onPressed == null ? 0.5 : 1,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: Brand.goldGradient,
+          gradient: goldFill(t),
           borderRadius: BorderRadius.circular(height / 2),
           boxShadow: [BoxShadow(color: const Color(0xFFA67D3A).withValues(alpha: 0.30), blurRadius: 14, offset: const Offset(0, 3))],
         ),
@@ -157,7 +164,7 @@ class RoundIconButton extends StatelessWidget {
       shape: CircleBorder(side: gold ? BorderSide.none : BorderSide(color: cs.outlineVariant)),
       color: gold ? Colors.transparent : cs.surface,
       child: Ink(
-        decoration: gold ? const BoxDecoration(shape: BoxShape.circle, gradient: Brand.goldGradient) : null,
+        decoration: gold ? BoxDecoration(shape: BoxShape.circle, gradient: goldFill(t)) : null,
         child: InkWell(
           customBorder: const CircleBorder(),
           onTap: onPressed,
@@ -582,7 +589,7 @@ class DayNightToggle extends StatelessWidget {
             duration: const Duration(milliseconds: 180),
             width: 38,
             height: 34,
-            decoration: BoxDecoration(gradient: on ? Brand.goldGradient : null, borderRadius: BorderRadius.circular(17)),
+            decoration: BoxDecoration(gradient: on ? goldFill(t) : null, borderRadius: BorderRadius.circular(17)),
             child: Icon(night ? Icons.dark_mode_rounded : Icons.light_mode_rounded, size: 20, color: on ? onGold(t) : cs.onSurfaceVariant),
           ),
         ),

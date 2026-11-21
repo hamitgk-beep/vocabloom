@@ -128,11 +128,11 @@ class MeaningBox extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.only(top: 14),
       padding: const EdgeInsets.fromLTRB(18, 15, 18, 15),
-      decoration: BoxDecoration(gradient: Brand.goldGradient, borderRadius: BorderRadius.circular(22)),
+      decoration: BoxDecoration(gradient: goldFill(t), borderRadius: BorderRadius.circular(22)),
       child: DefaultTextStyle.merge(
         style: TextStyle(color: fg),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(label, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: 0.8, color: fg.withValues(alpha: 0.75))),
+          Text(label, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: 0.8, color: fg.withValues(alpha: 0.9))),
           if (tr != null)
             Padding(
               padding: const EdgeInsets.only(top: 4),

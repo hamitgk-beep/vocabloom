@@ -365,7 +365,7 @@ class _SideMenu extends StatelessWidget {
         child: Ink(
           decoration: on
               ? BoxDecoration(
-                  gradient: Brand.goldGradient,
+                  gradient: goldFill(theme),
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [BoxShadow(color: const Color(0xFFA67D3A).withValues(alpha: 0.28), blurRadius: 14, offset: const Offset(0, 5))],
                 )
@@ -567,7 +567,7 @@ class _BottomNav extends StatelessWidget {
             height: 62,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: Brand.goldGradient,
+              gradient: goldFill(theme),
               border: Border.all(color: dark ? Brand.dBg : Brand.lBg, width: 4),
               boxShadow: [BoxShadow(color: const Color(0xFFA67D3A).withValues(alpha: 0.45), blurRadius: 18, offset: const Offset(0, 6))],
             ),
@@ -591,7 +591,7 @@ class _BottomNav extends StatelessWidget {
             child: Ink(
               height: 58,
               decoration: BoxDecoration(
-                gradient: on ? Brand.goldGradient : null,
+                gradient: on ? goldFill(theme) : null,
                 color: on ? null : cs.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(22),
               ),
