@@ -70,6 +70,7 @@ class UpdatePrompt {
                     )
                   : L('Storilex\'in yeni sürümü var$v.', 'A new version of Storilex is available$v.'),
             ),
+            if (u.downloadSizeText.isNotEmpty) ...[const SizedBox(height: 6), Text(_sizeLine(u), style: const TextStyle(fontWeight: FontWeight.w600))],
             if (u.notes.isNotEmpty) ...[const SizedBox(height: 6), Text(L('Yenilikler: ', "What's new: ") + _areas(u.notes), style: const TextStyle(fontWeight: FontWeight.w600))],
           ],
         ),
@@ -86,6 +87,16 @@ class UpdatePrompt {
         ],
       ),
     );
+  }
+
+  /// "Yeni sürüm: 12 MB", and on Windows with only the changed files, what
+  /// the full package would have been.
+  static String _sizeLine(UpdateInfo u) {
+    final s = u.downloadSizeText;
+    final full = u.plan != null && u.size > 0 ? UpdateInfo(0, '', size: u.size).downloadSizeText : '';
+    return full.isEmpty || full == s
+        ? L('Yeni sürüm: $s', 'New version: $s')
+        : L('Yeni sürüm: $s (yalnızca değişen dosyalar; tam paket $full)', 'New version: $s (only the changed files; full package $full)');
   }
 
   /// The changed areas in one line: "Gramer, Sözlük, Uygulama".
@@ -178,7 +189,9 @@ class UpdatePrompt {
               children: [
                 Text(
                   v == null || v < 1
-                      ? L('Yeni sürüm indiriliyor…', 'Downloading the new version…')
+                      ? (u.downloadSizeText.isEmpty
+                            ? L('Yeni sürüm indiriliyor…', 'Downloading the new version…')
+                            : L('Yeni sürüm indiriliyor (${u.downloadSizeText})…', 'Downloading the new version (${u.downloadSizeText})…'))
                       : L('Kuruluyor, Storilex birazdan yeniden açılacak…', 'Installing, Storilex will reopen in a moment…'),
                 ),
                 const SizedBox(height: 16),
@@ -191,7 +204,18 @@ class UpdatePrompt {
       ),
     );
     try {
-      final dir = await WindowsUpdater.prepare(u.url, (v) => progress.value = v, expectedSize: u.size > 0 ? u.size : null);
+      Directory? dir;
+      final plan = u.plan;
+      if (plan != null) {
+        try {
+          dir = await WindowsUpdater.prepareFiles(plan, windowsFilesUrl, (v) => progress.value = v);
+        } catch (_) {
+          // A file could not be downloaded or did not match its checksum:
+          // the full package is tried next.
+          progress.value = null;
+        }
+      }
+      dir ??= await WindowsUpdater.prepare(u.url, (v) => progress.value = v, expectedSize: u.size > 0 ? u.size : null);
       progress.value = 1;
       await WindowsUpdater.installAndRestart(dir);
     } catch (e) {

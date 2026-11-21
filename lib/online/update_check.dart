@@ -3,6 +3,7 @@ import 'dart:io';
 
 import '../l10n.dart';
 import 'native_fetch.dart';
+import 'windows_manifest.dart';
 
 /// Build number baked in by CI (--dart-define=BUILD_NUMBER=...); 0 for local builds.
 const appBuild = int.fromEnvironment('BUILD_NUMBER');
@@ -23,7 +24,21 @@ class UpdateInfo {
 
   /// What changed since the installed build, newest first.
   final List<ReleaseNote> notes;
-  const UpdateInfo(this.build, this.url, {this.version = '', this.size = 0, this.notes = const []});
+
+  /// Windows: only the changed files, when the release has a manifest.
+  final UpdatePlan? plan;
+  const UpdateInfo(this.build, this.url, {this.version = '', this.size = 0, this.notes = const [], this.plan});
+
+  /// What the update downloads, in bytes; 0 when unknown.
+  int get downloadSize => plan?.bytes ?? size;
+
+  /// "12 MB", "0.4 MB"; empty when unknown.
+  String get downloadSizeText {
+    final b = downloadSize;
+    if (b <= 0) return '';
+    final mb = b / (1024 * 1024);
+    return mb >= 10 ? '${mb.round()} MB' : '${mb < 0.1 ? '0.1' : mb.toStringAsFixed(1)} MB';
+  }
 }
 
 /// One "what's new" line of a release (release_notes.json, written into the
@@ -109,5 +124,23 @@ Future<UpdateInfo?> checkForUpdateOrThrow() async {
     version: v,
     size: size,
     notes: parseReleaseNotes(body, sinceBuild: appBuild),
+    plan: Platform.isWindows ? await _windowsPlan(json, latest) : null,
   );
 }
+
+/// The changed files to download, or null to use the full zip (a release
+/// without a manifest, a manifest for another build, or any error).
+Future<UpdatePlan?> _windowsPlan(Map release, int build) async {
+  try {
+    final hasManifest = (release['assets'] as List? ?? const []).any((a) => a is Map && a['name'] == WindowsManifest.assetName);
+    if (!hasManifest) return null;
+    final m = await fetchManifest('$_download${WindowsManifest.assetName}');
+    if (m == null || m.build != build) return null;
+    return await planUpdate(m, File(Platform.resolvedExecutable).parent);
+  } catch (_) {
+    return null;
+  }
+}
+
+/// Where the files named in a Windows manifest are downloaded from.
+const windowsFilesUrl = _download;

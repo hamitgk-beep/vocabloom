@@ -1,0 +1,29 @@
+name: voice-checksums
+# Writes voice-models.json (SHA-256 and size of every pack) into the
+# "voice-models" release from the zips already there, without building the
+# packs again. Runs after every voice-models run, or by hand. (It is a
+# separate workflow so that changing it does not rebuild and republish the
+# packs, which a change to voice-models.yml would.)
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [voice-models]
+    types: [completed]
+
+jobs:
+  checksums:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hash the published voice packs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release download voice-models -p '*.zip' -D packs
+          python3 -I tools/release/voice_checksums.py packs/*.zip > voice-models.json
+          cat voice-models.json
+          gh release upload voice-models voice-models.json --clobber

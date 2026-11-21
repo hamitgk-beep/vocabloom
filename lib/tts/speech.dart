@@ -15,6 +15,7 @@ import 'package:sherpa_onnx/sherpa_onnx.dart' as so;
 import '../data/user_db.dart';
 import '../l10n.dart';
 import 'ema.dart';
+import 'voice_checksum.dart';
 import 'voices.dart';
 
 enum PackState { missing, downloading, extracting, ready, failed }
@@ -209,6 +210,10 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
       }
       _state[pk.id] = PackState.extracting;
       notifyListeners();
+      // The release's checksum list, when it has one, guards against a
+      // broken or replaced download. Packs from another address are not checked.
+      final want = url == null ? await expectedVoiceSha(pk.id) : null;
+      if (want != null && await sha256OfFile(zip.path) != want) throw const FileSystemException('voice pack checksum mismatch');
       final dir = packDir(pk);
       if (dir.existsSync()) await dir.delete(recursive: true);
       final zipPath = zip.path, out = voiceDir.path;
@@ -223,7 +228,8 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
       await zip.delete();
       final mark = pk.engine == 'ema' ? 'decoder.onnx' : 'tokens.txt';
       if (!File(p.join(dir.path, mark)).existsSync()) throw const FileSystemException('voice pack is incomplete');
-      await _readyMark(pk).writeAsString('1');
+      // The checked SHA-256, so it is known which download is installed.
+      await _readyMark(pk).writeAsString(want ?? '1');
       _state[pk.id] = PackState.ready;
       unawaited(warmUp());
     } catch (e) {

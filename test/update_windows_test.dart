@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/online/native_fetch.dart';
+import 'package:kelime_okur/online/windows_manifest.dart';
 import 'package:kelime_okur/online/windows_updater.dart';
 import 'package:path/path.dart' as p;
 
@@ -14,6 +15,9 @@ import 'package:path/path.dart' as p;
 // fallbacks (curl.exe, PowerShell) do the work.
 const _release = 'https://api.github.com/repos/hamitgk-beep/vocabloom/releases/tags/latest';
 const _zip = 'https://github.com/hamitgk-beep/vocabloom/releases/download/latest/Storilex-Windows.zip';
+
+/// Windows runners have python, Linux and macOS python3.
+final _python = Platform.isWindows ? 'python' : 'python3';
 
 void main() {
   tearDown(() {
@@ -80,13 +84,27 @@ void main() {
     File(p.join(fresh.path, 'data', 'x.bin')).writeAsStringSync('x');
     final marker = p.join(root.path, 'started.txt');
     final exe = p.join(app.path, 'run.cmd');
-    final run = '@echo started> "$marker"\r\n@exit\r\n';
+    // Like the real app (WindowsUpdater.confirmStarted), the started program
+    // tells the script it is up.
+    final run = '@echo started> "$marker"\r\n@if defined VB_HEALTH echo ok> "%VB_HEALTH%"\r\n@exit\r\n';
     File(exe).writeAsStringSync(run);
     File(p.join(fresh.path, 'run.cmd')).writeAsStringSync(run);
     return (root: root, app: app, work: work, fresh: fresh, marker: marker, exe: exe, result: File(p.join(root.path, 'result.txt')));
   }
 
-  Future<String> runInstall(dynamic t, int appPid, {int killAfter = 10, int giveUpAfter = 40, String appName = 'Storilex.exe', String? remove}) async {
+  Future<String> runInstall(
+    dynamic t,
+    int appPid, {
+    int killAfter = 10,
+    int giveUpAfter = 40,
+    String appName = 'Storilex.exe',
+    String? remove,
+    List<String> delete = const [],
+    int waitStart = 30,
+  }) async {
+    if (!File(p.join(t.work.path, 'touched.txt')).existsSync()) {
+      await WindowsUpdater.writeLists(t.work, [...listFolder(t.fresh), ...delete], delete);
+    }
     final script = File(p.join(t.work.path, 'install.cmd'))..writeAsStringSync(WindowsUpdater.installScript(appPid));
     await WindowsUpdater.launchScript(
       script.path,
@@ -101,6 +119,7 @@ void main() {
         log: p.join(t.root.path, 'update.log'),
         killAfter: killAfter,
         giveUpAfter: giveUpAfter,
+        waitStart: waitStart,
       ),
     );
     for (var i = 0; i < 160 && !File(t.marker).existsSync(); i++) {
@@ -182,4 +201,71 @@ void main() {
     expect(File(p.join(t.app.path, 'Storilex.exe')).readAsStringSync(), 'new exe', reason: log);
     t.root.deleteSync(recursive: true);
   }, timeout: const Timeout(Duration(minutes: 1)));
+
+  test('files dropped by the new version are deleted after a good copy', () async {
+    final t = await setUp_();
+    File(p.join(t.app.path, 'gone.dll')).writeAsStringSync('old plugin');
+    final log = await runInstall(t, 999999, delete: ['gone.dll']);
+    expect(t.result.readAsStringSync().trim(), 'ok', reason: log);
+    expect(File(p.join(t.app.path, 'gone.dll')).existsSync(), isFalse, reason: log);
+    expect(File(p.join(t.app.path, 'keep.txt')).readAsStringSync(), 'keep');
+    t.root.deleteSync(recursive: true);
+  }, timeout: const Timeout(Duration(minutes: 1)));
+
+  test('a new version that closes before it starts is rolled back to the old one', () async {
+    final t = await setUp_();
+    File(p.join(t.app.path, 'gone.dll')).writeAsStringSync('old plugin');
+    // The new program never says it is up, and exits at once.
+    final crashed = p.join(t.root.path, 'new-started.txt');
+    File(p.join(t.fresh.path, 'run.cmd')).writeAsStringSync('@echo new> "$crashed"\r\n@exit 1\r\n');
+    final log = await runInstall(t, 999999, delete: ['gone.dll'], waitStart: 60);
+    expect(File(crashed).existsSync(), isTrue, reason: 'the new version was not started. Log: $log');
+    // The marker comes from the old run.cmd, started again after the rollback.
+    expect(File(t.marker).existsSync(), isTrue, reason: 'old app was not started again. Log: $log');
+    expect(t.result.readAsStringSync().trim(), 'fail start, old version restored', reason: log);
+    expect(File(p.join(t.app.path, 'old.txt')).readAsStringSync(), 'old', reason: log);
+    expect(File(p.join(t.app.path, 'Storilex.exe')).readAsBytesSync().length, greaterThan(1000), reason: 'old exe is back. Log: $log');
+    expect(File(p.join(t.app.path, 'gone.dll')).readAsStringSync(), 'old plugin', reason: log);
+    expect(File(p.join(t.app.path, 'data', 'x.bin')).existsSync(), isFalse, reason: 'files the update added are removed. Log: $log');
+    expect(File(p.join(t.app.path, 'run.cmd')).readAsStringSync(), contains('VB_HEALTH'), reason: log);
+    expect(File(p.join(t.app.path, 'keep.txt')).readAsStringSync(), 'keep');
+    t.root.deleteSync(recursive: true);
+  }, timeout: const Timeout(Duration(minutes: 2)));
+
+  test('file-by-file update: only changed files are downloaded, checked and installed', () async {
+    final t = await setUp_();
+    final root = t.root;
+    // The release: the tool writes the manifest and one blob per file.
+    final next = Directory(p.join(root.path, 'release'))..createSync();
+    File(p.join(t.app.path, 'Storilex.exe')).copySync(p.join(next.path, 'Storilex.exe'));
+    File(p.join(next.path, 'keep.txt')).writeAsStringSync('keep');
+    File(p.join(next.path, 'old.txt')).writeAsStringSync('new');
+    File(p.join(next.path, 'run.cmd')).writeAsStringSync(File(t.exe).readAsStringSync());
+    final blobs = p.join(root.path, 'blobs');
+    final out = p.join(root.path, 'manifest.json');
+    final r = await Process.run(_python, ['-I', 'tools/release/windows_manifest.py', '--dir', next.path, '--build', '2', '--blobs', blobs, '--out', out]);
+    expect(r.exitCode, 0, reason: '${r.stdout}${r.stderr}');
+    final m = WindowsManifest.parse(File(out).readAsStringSync());
+    final plan = await planUpdate(m, t.app);
+    expect(plan.download.map((f) => f.path), ['old.txt'], reason: 'Storilex.exe, keep.txt and run.cmd are unchanged');
+
+    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    server.listen((req) async {
+      final f = File(p.join(blobs, req.uri.pathSegments.last));
+      if (f.existsSync()) {
+        req.response.add(f.readAsBytesSync());
+      } else {
+        req.response.statusCode = 404;
+      }
+      await req.response.close();
+    });
+    final stage = await WindowsUpdater.prepareFiles(plan, 'http://127.0.0.1:${server.port}/', (_) {});
+    await server.close(force: true);
+    final t2 = (root: root, app: t.app, work: stage.parent, fresh: stage, marker: t.marker, exe: t.exe, result: t.result);
+    final log = await runInstall(t2, 999999);
+    expect(t.result.readAsStringSync().trim(), 'ok', reason: log);
+    expect(File(p.join(t.app.path, 'old.txt')).readAsStringSync(), 'new', reason: log);
+    expect(File(p.join(t.app.path, WindowsManifest.fileName)).readAsStringSync(), m.text, reason: log);
+    root.deleteSync(recursive: true);
+  }, timeout: const Timeout(Duration(minutes: 2)));
 }

@@ -222,6 +222,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _checkUpdate() async {
     if (!_installChecked && Platform.isWindows) {
       _installChecked = true;
+      WindowsUpdater.confirmStarted();
       final failed = WindowsUpdater.takeFailedResult();
       if (failed != null && mounted) {
         UpdatePrompt.showInstallFailed(context, failed);
