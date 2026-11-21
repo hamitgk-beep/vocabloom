@@ -918,7 +918,7 @@ D20_EDITS = {
     "steal someone's thunder": {'action': 'rename', 'to': "steal one's thunder"},
     'woman up': {'action': 'meaning', 'meaning': 'cesaretini toplamak, güçlü durmak (kadın için; "man up" gibi)'},
     'hang by a hair': {'action': 'meaning', 'meaning': 'pamuk ipliğine bağlı olmak, büyük tehlikede olmak'},
-    'in at the deep end': {'action': 'meaning', 'meaning': '(throw/jump in at the deep end) hazırlıksız zor bir işin içine atılmak'},
+    'in at the deep end': {'action': 'meaning', 'meaning': 'hazırlıksız zor bir işin içine atılmak'},
     'smile from ear to ear': {'action': 'meaning', 'meaning': 'ağzı kulaklarına varmak'},
     'clear as a bell': {'action': 'meaning', 'meaning': 'çok net, apaçık; (ses) pırıl pırıl'},
     'life and soul of the party': {'action': 'meaning', 'meaning': 'partinin neşe kaynağı, eğlencenin merkezi'},
