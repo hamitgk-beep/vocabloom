@@ -251,58 +251,89 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     reader.start(_firstVisiblePara());
   }
 
+  /// Read aloud: a small floating card over the page's foot, with pause,
+  /// the sentence before / after, how far the chapter is, speed and close.
   Widget _speechBar(ThemeData theme) {
     final s = Speech.instance;
-    return Material(
-      color: theme.colorScheme.surfaceContainerHigh,
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: Row(
-            children: [
-              const SizedBox(width: 6),
-              Icon(Icons.headphones_rounded, size: 20, color: theme.colorScheme.primary),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(s.voice.name, style: theme.textTheme.titleSmall, overflow: TextOverflow.ellipsis),
-              ),
-              IconButton(
-                tooltip: L('Önceki cümle', 'Previous sentence'),
-                onPressed: () => reader.skip(-1),
-                icon: const Icon(Icons.skip_previous_rounded),
-              ),
-              IconButton.filled(
-                tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
-                onPressed: reader.toggle,
-                icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
-              ),
-              IconButton(
-                tooltip: L('Sonraki cümle', 'Next sentence'),
-                onPressed: () => reader.skip(1),
-                icon: const Icon(Icons.skip_next_rounded),
-              ),
-              PopupMenuButton<double>(
-                tooltip: L('Hız', 'Speed'),
-                initialValue: s.speed,
-                onSelected: (v) {
-                  s.speed = v;
-                  reader.skip(0);
-                },
-                itemBuilder: (_) => [
-                  for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
-                ],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 0 : 2)}×', style: theme.textTheme.labelLarge),
+    final cs = theme.colorScheme;
+    final dark = theme.brightness == Brightness.dark;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 560),
+            child: Material(
+              key: const ValueKey('speech-bar'),
+              color: dark ? Brand.dSurface : const Color(0xFFFBF7EF),
+              elevation: 8,
+              shadowColor: Colors.black.withValues(alpha: dark ? 0.5 : 0.2),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: cs.outlineVariant)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 8, 4, 8),
+                child: Row(
+                  children: [
+                    IconButton.filled(
+                      tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
+                      onPressed: reader.toggle,
+                      style: IconButton.styleFrom(
+                        backgroundColor: dark ? Brand.goldLight : const Color(0xFF5C3D14),
+                        foregroundColor: dark ? const Color(0xFF21180A) : Colors.white,
+                        fixedSize: const Size(46, 46),
+                      ),
+                      icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(L('Sesli okuma · ${s.voice.name}', 'Read aloud · ${s.voice.name}'), style: theme.textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 6),
+                        LinearProgressIndicator(
+                          value: reader.chapterProgress,
+                          minHeight: 4,
+                          borderRadius: BorderRadius.circular(2),
+                          backgroundColor: cs.surfaceContainerHigh,
+                        ),
+                      ]),
+                    ),
+                    IconButton(
+                      tooltip: L('Önceki cümle', 'Previous sentence'),
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () => reader.skip(-1),
+                      icon: const Icon(Icons.skip_previous_rounded),
+                    ),
+                    IconButton(
+                      tooltip: L('Sonraki cümle', 'Next sentence'),
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () => reader.skip(1),
+                      icon: const Icon(Icons.skip_next_rounded),
+                    ),
+                    PopupMenuButton<double>(
+                      tooltip: L('Hız', 'Speed'),
+                      initialValue: s.speed,
+                      onSelected: (v) {
+                        s.speed = v;
+                        reader.skip(0);
+                      },
+                      itemBuilder: (_) => [
+                        for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
+                      ],
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), border: Border.all(color: cs.outlineVariant)),
+                        child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 1 : 2)}×', style: theme.textTheme.labelLarge),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'),
+                      onPressed: reader.stop,
+                      icon: const Icon(Icons.close_rounded),
+                    ),
+                  ],
                 ),
               ),
-              IconButton(
-                tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'),
-                onPressed: reader.stop,
-                icon: const Icon(Icons.close_rounded),
-              ),
-            ],
+            ),
           ),
         ),
       ),

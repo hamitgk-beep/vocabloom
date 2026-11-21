@@ -82,6 +82,9 @@ void main() {
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.reset);
         final pre = '${dev}_${b.name}';
+        await tester.pumpWidget(shell(const LoadingScreen(), b));
+        await tester.pump(const Duration(milliseconds: 300));
+        await shot(tester, '${pre}_0_loading');
         await tester.pumpWidget(shell(HomePage(app: app), b));
         await shot(tester, '${pre}_1_library');
         final phone = dev == 'phone';
@@ -89,7 +92,9 @@ void main() {
           if (phone && i >= 3) {
             // Grammar, free library, stats and settings live in the bottom bar's menu.
             await tester.tap(find.byKey(const ValueKey('nav-menu')));
-            await tester.pump(const Duration(milliseconds: 400));
+            for (var k = 0; k < 4; k++) {
+              await tester.pump(const Duration(milliseconds: 100));
+            }
             if (i == 3) await shot(tester, '${pre}_menu_open');
           }
           await tester.tap(find.byKey(ValueKey(phone ? 'nav_$i' : 'side-menu-$i')));

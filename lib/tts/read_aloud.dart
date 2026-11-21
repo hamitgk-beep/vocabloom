@@ -46,6 +46,13 @@ class ReadAloud extends ChangeNotifier {
 
   SpokenSentence? get current => active && _idx < _items.length ? _items[_idx] : null;
 
+  /// How far the reading is through the chapter, 0 to 1.
+  double get chapterProgress {
+    final c = current;
+    final n = paras().length;
+    return c == null || n == 0 ? 0 : ((c.para + 1) / n).clamp(0.0, 1.0);
+  }
+
   /// Sentence currently read in paragraph [para], if any.
   (int, int)? rangeIn(int para) {
     final c = current;

@@ -173,11 +173,40 @@ class _TrWordPanelState extends State<TrWordPanel> {
       ));
     }
 
+    // To learn / learned: under the meanings, so the short panel shows it.
+    final statusRow = Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Row(children: [
+        Expanded(
+          child: PanelPill(
+            key: const ValueKey('word-learning'),
+            icon: st == WordStatus.learning ? Icons.bookmark_rounded : Icons.bookmark_add_outlined,
+            label: L('Öğreneceğim', 'To learn'),
+            color: st == WordStatus.learning ? learningColor : null,
+            fill: st == WordStatus.learning ? learningColor.withValues(alpha: 0.2) : null,
+            onPressed: () => _set(st == WordStatus.learning ? WordStatus.none : WordStatus.learning),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: PanelPill(
+            key: const ValueKey('word-learned'),
+            icon: st == WordStatus.learned ? Icons.check_circle_rounded : Icons.check_circle_outline,
+            label: L('Öğrendim', 'Learned'),
+            color: st == WordStatus.learned ? learnedColor : null,
+            fill: st == WordStatus.learned ? learnedColor.withValues(alpha: 0.2) : null,
+            onPressed: () => _set(st == WordStatus.learned ? WordStatus.none : WordStatus.learned),
+          ),
+        ),
+      ]),
+    );
+
     if (e == null) {
       children.add(Text(
         L('"${widget.surface}" Türkçe-İngilizce sözlükte bulunamadı.', '"${widget.surface}" is not in the Turkish-English dictionary.'),
         style: TextStyle(color: theme.hintColor, fontSize: 15),
       ));
+      children.add(statusRow);
     } else {
       var gi = 0;
       for (final s in e.senses) {
@@ -220,9 +249,10 @@ class _TrWordPanelState extends State<TrWordPanel> {
           ]),
         ));
       }
+      children.add(statusRow);
       if (e.examples.isNotEmpty) {
         children.add(Padding(
-          padding: const EdgeInsets.only(top: 4, bottom: 6),
+          padding: const EdgeInsets.only(top: 18, bottom: 6),
           child: Text(L('Örnek cümleler', 'Example sentences'), style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
         ));
         final shownEx = _allExamples ? e.examples : e.examples.take(3);
@@ -257,33 +287,6 @@ class _TrWordPanelState extends State<TrWordPanel> {
         children.add(Text(L('Örnekler: Tatoeba (CC BY 2.0 FR)', 'Examples: Tatoeba (CC BY 2.0 FR)'), style: TextStyle(fontSize: 11.5, color: theme.hintColor)));
       }
     }
-
-    children.add(Padding(
-      padding: const EdgeInsets.only(top: 14),
-      child: Row(children: [
-        Expanded(
-          child: PanelPill(
-            key: const ValueKey('word-learning'),
-            icon: st == WordStatus.learning ? Icons.bookmark_rounded : Icons.bookmark_add_outlined,
-            label: L('Öğreneceğim', 'To learn'),
-            color: st == WordStatus.learning ? learningColor : null,
-            fill: st == WordStatus.learning ? learningColor.withValues(alpha: 0.2) : null,
-            onPressed: () => _set(st == WordStatus.learning ? WordStatus.none : WordStatus.learning),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: PanelPill(
-            key: const ValueKey('word-learned'),
-            icon: st == WordStatus.learned ? Icons.check_circle_rounded : Icons.check_circle_outline,
-            label: L('Öğrendim', 'Learned'),
-            color: st == WordStatus.learned ? learnedColor : null,
-            fill: st == WordStatus.learned ? learnedColor.withValues(alpha: 0.2) : null,
-            onPressed: () => _set(st == WordStatus.learned ? WordStatus.none : WordStatus.learned),
-          ),
-        ),
-      ]),
-    ));
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
   }

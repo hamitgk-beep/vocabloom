@@ -593,6 +593,8 @@ void main() {
       }
     }
     content.add(sentence);
+    // The reading preview in Settings shows book text.
+    content.addAll(readingPreviewText.values);
     // Dictionary expressions and their English definitions.
     for (final e in d.exprs) {
       content.addAll([e.phrase, displayPhrase(e.phrase)]);

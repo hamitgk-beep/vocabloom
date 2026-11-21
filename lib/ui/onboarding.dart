@@ -54,9 +54,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 12, 8, 0),
                 child: Row(children: [
-                  const BrandMark(),
-                  const SizedBox(width: 10),
-                  Text('Storilex', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800)),
+                  const Wordmark(height: 22),
                   const Spacer(),
                   // Interface language right on the first screen.
                   TextButton(

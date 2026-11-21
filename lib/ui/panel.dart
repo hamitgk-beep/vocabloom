@@ -6,8 +6,9 @@ import 'reading_sheet.dart';
 /// slides in as a tall card on the right, so the book stays readable beside
 /// it; a tap on the book closes it. [left] puts it on the left instead (the
 /// sentence panel, so it does not cover the word panel's place). On phones it
-/// is a tall bottom sheet.
-Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext context, ScrollController? scroll) builder, {bool left = false}) {
+/// is a tall bottom sheet; [short] opens it at about [shortSize] of the screen
+/// (the book stays visible above it) and it snaps up when pulled.
+Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext context, ScrollController? scroll) builder, {bool left = false, bool short = false}) {
   final size = MediaQuery.sizeOf(context);
   // Opened from the reader: the panel takes the page's colours (sepia stays sepia).
   final pt = readingPanelTheme;
@@ -72,13 +73,18 @@ Future<T?> showPanel<T>(BuildContext context, Widget Function(BuildContext conte
     useSafeArea: true,
     builder: (_) => DraggableScrollableSheet(
       expand: false,
-      initialChildSize: 0.9,
-      minChildSize: 0.4,
+      initialChildSize: short ? shortSize : 0.9,
+      minChildSize: short ? 0.3 : 0.4,
       maxChildSize: 1,
+      snap: short,
+      snapSizes: short ? const [shortSize, 0.9] : null,
       builder: (c, sc) => themed(c, sc),
     ),
   );
 }
+
+/// How much of a phone screen a short word panel takes when it opens.
+const shortSize = 0.55;
 
 /// English text: bold blue. Turkish text: bold in the normal text color.
 /// So the two languages can be told apart at a glance.

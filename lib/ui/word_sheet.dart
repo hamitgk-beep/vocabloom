@@ -81,9 +81,9 @@ Future<void> showWordSheet(BuildContext context, AppState app, String surface, {
   panelApp = app;
   app.stats.logLookup('word', lemma ?? surface);
   if (app.learnTurkish) {
-    return showPanel(context, (c, sc) => TrWordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
+    return showPanel(context, (c, sc) => TrWordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc), short: true);
   }
-  return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
+  return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc), short: true);
 }
 
 class WordPanel extends StatefulWidget {
@@ -331,6 +331,37 @@ class _WordPanelState extends State<WordPanel> {
       if (verbForms != null) VerbFormsRow(forms: verbForms, tapped: surface),
     ];
 
+    // ---------------- to learn / learned: right under the meaning, so the
+    // short panel shows it without scrolling.
+    final statusRow = Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Row(
+        children: [
+          Expanded(
+            child: PanelPill(
+              key: const ValueKey('word-learning'),
+              icon: st == WordStatus.learning ? Icons.bookmark_rounded : Icons.bookmark_add_outlined,
+              label: L('Öğreneceğim', 'To learn'),
+              color: st == WordStatus.learning ? learningColor : null,
+              fill: st == WordStatus.learning ? learningColor.withValues(alpha: 0.2) : null,
+              onPressed: () => _set(lemma, st == WordStatus.learning ? WordStatus.none : WordStatus.learning),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: PanelPill(
+              key: const ValueKey('word-learned'),
+              icon: st == WordStatus.learned ? Icons.check_circle_rounded : Icons.check_circle_outline,
+              label: L('Öğrendim', 'Learned'),
+              color: st == WordStatus.learned ? learnedColor : null,
+              fill: st == WordStatus.learned ? learnedColor.withValues(alpha: 0.2) : null,
+              onPressed: () => _set(lemma, st == WordStatus.learned ? WordStatus.none : WordStatus.learned),
+            ),
+          ),
+        ],
+      ),
+    );
+
     // ---------------- the meaning here, and the book's sentence
     final mainOwn = own.isEmpty ? null : own.first;
     if (card) {
@@ -341,6 +372,7 @@ class _WordPanelState extends State<WordPanel> {
           result: sense!,
           ctx: ctx,
           highlight: {widget.surface.toLowerCase(), if (sense!.cat != null) ...sense!.headword.split(' ')},
+          actions: statusRow,
         ),
       );
     } else {
@@ -380,6 +412,7 @@ class _WordPanelState extends State<WordPanel> {
           ),
         );
       }
+      children.add(statusRow);
       if (ctx != null) {
         children.add(PanelHeading(L('KİTAPTAKİ CÜMLE', 'SENTENCE IN THE BOOK')));
         children.add(BookSentenceCard(app: app, ctx: ctx, highlight: {widget.surface.toLowerCase()}));
@@ -399,38 +432,6 @@ class _WordPanelState extends State<WordPanel> {
         children.add(ExprCard(app: app, expr: e, ctx: ctx, onChanged: () => setState(() {})));
       }
     }
-
-    // ---------------- to learn / learned
-    children.add(
-      Padding(
-        padding: const EdgeInsets.only(top: 14),
-        child: Row(
-          children: [
-            Expanded(
-              child: PanelPill(
-                key: const ValueKey('word-learning'),
-                icon: st == WordStatus.learning ? Icons.bookmark_rounded : Icons.bookmark_add_outlined,
-                label: L('Öğreneceğim', 'To learn'),
-                color: st == WordStatus.learning ? learningColor : null,
-                fill: st == WordStatus.learning ? learningColor.withValues(alpha: 0.2) : null,
-                onPressed: () => _set(lemma, st == WordStatus.learning ? WordStatus.none : WordStatus.learning),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: PanelPill(
-                key: const ValueKey('word-learned'),
-                icon: st == WordStatus.learned ? Icons.check_circle_rounded : Icons.check_circle_outline,
-                label: L('Öğrendim', 'Learned'),
-                color: st == WordStatus.learned ? learnedColor : null,
-                fill: st == WordStatus.learned ? learnedColor.withValues(alpha: 0.2) : null,
-                onPressed: () => _set(lemma, st == WordStatus.learned ? WordStatus.none : WordStatus.learned),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
 
     // ---------------- the other meanings: Turkish first, never English alone
     final tiles = <Widget>[];
