@@ -72,6 +72,8 @@ flutter:
     - assets/dict.db
     - assets/tr_en.db
     - assets/brand/logo.png
+    - assets/brand/wordmark-light.png
+    - assets/brand/wordmark-dark.png
     - assets/grammar/lessons.json
     - assets/grammar/lessons_en.json
     - assets/grammar/lessons_tr.json
@@ -155,15 +157,17 @@ flutter_launcher_icons:
     generate: true
     image_path: assets/brand/icon.png
 
+# Pictures in assets/brand: python3 tools/brand/make_brand.py
 # Launch screen: dart run flutter_native_splash:create
 flutter_native_splash:
   color: "#FAF6EE"
   image: assets/brand/splash.png
   color_dark: "#17130F"
+  image_dark: assets/brand/splash-dark.png
   android_12:
     color: "#FAF6EE"
     color_dark: "#17130F"
     image: assets/brand/splash-android12.png
-    icon_background_color: "#7A5532"
-    icon_background_color_dark: "#4A3220"
+    icon_background_color: "#2A1E14"
+    icon_background_color_dark: "#2A1E14"
   web: false

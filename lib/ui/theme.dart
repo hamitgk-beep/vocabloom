@@ -79,6 +79,11 @@ class Brand {
 Color goldSoft(ThemeData t) => t.brightness == Brightness.dark ? const Color(0x29D6B16C) : const Color(0xFFF3E6CB);
 
 /// Text and icon color on the gold gradient.
+/// "To review" orange of the home page's review button and the badge on My
+/// words (white text on it by day, dark text by night).
+Color learnColor(ThemeData t) => t.brightness == Brightness.dark ? const Color(0xFFD38B4E) : const Color(0xFFB45309);
+Color onLearn(ThemeData t) => t.brightness == Brightness.dark ? const Color(0xFF21180A) : Colors.white;
+
 /// The gold fill under [onGold] text and icons.
 LinearGradient goldFill(ThemeData t) => t.brightness == Brightness.dark ? Brand.goldGradient : Brand.goldDay;
 
@@ -543,7 +548,45 @@ class BookCover extends StatelessWidget {
 /// Page color behind the book text: warm paper by day, the night grey at night.
 Color readerPaper(ThemeData t) => t.brightness == Brightness.dark ? Brand.dBg : const Color(0xFFFCFAF6);
 
-/// The app logo (same art as the launcher icon).
+/// The gold "Storilex" wordmark (Cinzel Decorative, drawn into a picture by
+/// tools/brand/make_brand.py, so the font does not ship with the app).
+class Wordmark extends StatelessWidget {
+  final double height;
+  const Wordmark({super.key, this.height = 26});
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return Semantics(
+      label: 'Storilex',
+      image: true,
+      child: Image.asset(
+        dark ? 'assets/brand/wordmark-dark.png' : 'assets/brand/wordmark-light.png',
+        height: height,
+        filterQuality: FilterQuality.medium,
+        excludeFromSemantics: true,
+      ),
+    );
+  }
+}
+
+/// A thin gold line that fades out at both ends (under the wordmark).
+class GoldRule extends StatelessWidget {
+  final double? width;
+  const GoldRule({super.key, this.width});
+
+  @override
+  Widget build(BuildContext context) => Container(
+        width: width,
+        height: 1.5,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(colors: [Color(0x00C99A3E), Color(0xFFC99A3E), Color(0x00C99A3E)]),
+        ),
+      );
+}
+
+/// The app logo: the launcher icon's gold S (small places such as the
+/// narrow side menu and the About page).
 class BrandMark extends StatelessWidget {
   final double size;
   const BrandMark({super.key, this.size = 30});

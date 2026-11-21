@@ -2,6 +2,18 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "design-b-home",
+      "area": "app",
+      "tr": "Yeni görünüm: ana sayfanın üstünde altın Storilex yazısı, kelime arama kutusu, günlük hedef halkası ve tekrar düğmesiyle \"Bugün\" kartı, okuduğun kitap. Telefonda alt menü artık Okuma, Sözlük, Defterim ve Daha fazla; Daha fazla'dan gündüz, gece ya da sistem teması seçilir. Açılış ekranı ve uygulama simgesi yenilendi (altın S).",
+      "en": "New look: the gold Storilex wordmark on top of the home page, a word search field, a Today card with the daily goal ring and a review button, and the book you are reading. On phones the bottom bar is now Reading, Dictionary, My words and More; More has day, night or system theme. New launch screen and app icon (gold S)."
+    },
+    {
+      "id": "design-b-reader",
+      "area": "reader",
+      "tr": "Telefonda bir kelimeye dokununca önce ekranın yarısında kısa bir kart açılır, yukarı çekince tamamı gelir. Öğreneceğim / Öğrendim düğmeleri anlamın hemen altında. Gündüz renkleri daha okunaklı.",
+      "en": "On phones, tapping a word opens a short card on half the screen; pull it up for the whole panel. To learn / Learned sit right under the meaning. Day colours are easier to read."
+    },
+    {
       "id": "contrib-hamit-5",
       "area": "dictionary",
       "tr": "Hazır kalıplar filtresine 210 yeni kalıp (Long time no see, Keep me posted, It's up to you …) ve Söylem belirteçlerine 27 yeni ifade (on top of that, that said, come to think of it …) eklendi. Sözlüğe müphem, yadsımak, kanıksamak, ubiquitous, meticulous gibi ileri seviye kelimeler, 57 yeni Türkçe anlam, 30 bağlam cümlesi ve öbek fiillerin örnek cümleleri geldi.",
