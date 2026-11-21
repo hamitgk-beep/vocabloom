@@ -177,13 +177,6 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     notifyListeners();
   }
 
-  /// Say a word as soon as its panel opens.
-  bool get autoWord => _user?.getSetting('tts_auto_word') == '1';
-  set autoWord(bool v) {
-    _user?.setSetting('tts_auto_word', v ? '1' : null);
-    notifyListeners();
-  }
-
   // ---------------------------------------------------------------- download
 
   final _clients = <String, http.Client>{};
