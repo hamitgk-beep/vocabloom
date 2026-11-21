@@ -4,6 +4,7 @@
 // position or a word on its own when the two devices disagree.
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:crypto/crypto.dart';
@@ -54,6 +55,36 @@ UserDb device(Directory dir) {
 
 String fileSha(File f) => sha256.convert(f.readAsBytesSync()).toString();
 
+/// Every file under [dir]/books, by path, with its checksum.
+Map<String, String> pictures(Directory dir) {
+  final d = Directory(p.join(dir.path, 'books'));
+  if (!d.existsSync()) return {};
+  return {
+    for (final f in d.listSync(recursive: true).whereType<File>()) p.relative(f.path, from: dir.path): fileSha(f),
+  };
+}
+
+/// What the learner sees of the data: words, review cards, books, paragraphs, settings.
+String snapshot(UserDb u) => jsonEncode([
+      for (final q in [
+        'SELECT lemma, status FROM words ORDER BY lemma',
+        'SELECT lemma, box, reps FROM review ORDER BY lemma',
+        'SELECT id, title, last_chapter, last_para FROM books ORDER BY id',
+        'SELECT book_id, chapter, idx, kind, text FROM paras ORDER BY book_id, chapter, idx',
+        'SELECT key, value FROM settings ORDER BY key',
+      ])
+        u.db.select(q).map((r) => r.values).toList(),
+    ]);
+
+/// The restore's safety copies and journals in [dir]/backups.
+List<String> journals(Directory dir) {
+  final d = Directory(p.join(dir.path, 'backups'));
+  if (!d.existsSync()) return [];
+  return [for (final f in d.listSync().whereType<File>()) if (p.basename(f.path).startsWith('before-restore-')) p.basename(f.path)]..sort();
+}
+
+Matcher failsWith(String code) => throwsA(isA<BackupException>().having((e) => e.code, 'code', code));
+
 void main() {
   late Directory root;
   late Directory a, b;
@@ -62,7 +93,10 @@ void main() {
     a = Directory(p.join(root.path, 'a'))..createSync();
     b = Directory(p.join(root.path, 'b'))..createSync();
   });
-  tearDown(() => root.deleteSync(recursive: true));
+  tearDown(() {
+    debugRestoreStep = null;
+    root.deleteSync(recursive: true);
+  });
 
   File out(String name) => File(p.join(root.path, name));
 
@@ -357,5 +391,274 @@ void main() {
     pv.dispose();
     expect(v.books().single.title, 'The Garden');
     expect(v.statuses['rain'], WordStatus.learning);
+  });
+
+  group('large files are read from disk, and a zip bomb is refused before anything is unpacked', () {
+    late UserDb v;
+    late File db;
+    setUp(() {
+      v = device(b);
+      db = File(p.join(b.path, 'user.db'));
+      v.db.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+    });
+
+    void refused(File f, String code, {BackupLimits limits = const BackupLimits()}) {
+      final before = fileSha(db);
+      final tmpBefore = Directory.systemTemp.listSync().where((d) => p.basename(d.path).startsWith('storilex_restore')).length;
+      expect(() => inspectBackup(v, f, limits: limits), failsWith(code));
+      v.db.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+      expect(fileSha(db), before);
+      final tmpAfter = Directory.systemTemp.listSync().where((d) => p.basename(d.path).startsWith('storilex_restore')).length;
+      expect(tmpAfter, tmpBefore, reason: 'no unpacked folder is left behind');
+    }
+
+    test('a normal illustrated library (200 pictures, 10 MB) passes the default limits and comes back whole', () {
+      final u = UserDb.open(a);
+      final rnd = List<int>.generate(50 * 1024, (i) => (i * 7919 + i ~/ 3) & 0xff);
+      final images = {for (var i = 0; i < 200; i++) 'pic$i.png': [...rnd, i & 0xff, i >> 8]};
+      final id = u.insertBook(sampleBook(title: 'Atlas', images: images));
+      exportBackup(u, out('big.storilex'));
+      final w = UserDb.open(Directory(p.join(root.path, 'c'))..createSync());
+      final pv = inspectBackup(w, out('big.storilex'));
+      restoreBackup(w, pv);
+      pv.dispose();
+      final mine = pictures(a), theirs = pictures(Directory(p.join(root.path, 'c')));
+      expect(mine.length, greaterThanOrEqualTo(200));
+      expect(theirs.values.toSet(), mine.values.toSet());
+      expect(w.books().single.title, 'Atlas');
+      expect(id, greaterThan(0));
+    });
+
+    test('one file larger than allowed', () {
+      exportBackup(device(a), out('x.storilex'));
+      refused(out('x.storilex'), 'too_large', limits: const BackupLimits(maxEntryBytes: 1000));
+    });
+
+    test('all files together larger than allowed', () {
+      exportBackup(device(a), out('x.storilex'));
+      refused(out('x.storilex'), 'too_large', limits: const BackupLimits(maxTotalBytes: 2000));
+    });
+
+    test('too many files', () {
+      exportBackup(device(a), out('x.storilex'));
+      refused(out('x.storilex'), 'too_large', limits: const BackupLimits(maxEntries: 2));
+    });
+
+    test('a file that unpacks to more than its header says', () {
+      // 1 MB of zeros, packed to about 1 KB, with headers that claim 100 bytes.
+      final zeros = List<int>.filled(1024 * 1024, 0);
+      final m = {'format': backupFormat, 'format_version': backupFormatVersion, 'data_sha256': sha256.convert(zeros).toString()};
+      final bytes = ZipEncoder().encodeBytes(Archive()
+        ..add(ArchiveFile.string('manifest.json', jsonEncode(m)))
+        ..add(ArchiveFile.bytes('data.db', zeros)));
+      final z = Uint8List.fromList(bytes);
+      final bd = ByteData.sublistView(z);
+      var patched = 0;
+      for (var i = 0; i + 46 < z.length; i++) {
+        final sig = bd.getUint32(i, Endian.little);
+        if (sig == 0x04034b50 && utf8.decode(z.sublist(i + 30, i + 30 + bd.getUint16(i + 26, Endian.little)), allowMalformed: true) == 'data.db') {
+          bd.setUint32(i + 22, 100, Endian.little);
+          patched++;
+        }
+        if (sig == 0x02014b50 && utf8.decode(z.sublist(i + 46, i + 46 + bd.getUint16(i + 28, Endian.little)), allowMalformed: true) == 'data.db') {
+          bd.setUint32(i + 24, 100, Endian.little);
+          patched++;
+        }
+      }
+      expect(patched, 2);
+      final before = fileSha(db);
+      expect(() => inspectBackup(v, out('liar.storilex')..writeAsBytesSync(z)), throwsA(isA<BackupException>()));
+      v.db.execute('PRAGMA wal_checkpoint(TRUNCATE)');
+      expect(fileSha(db), before);
+    });
+
+    test('the same name twice', () {
+      final f = exportBackup(device(a), out('x.storilex'));
+      final z = ZipDecoder().decodeBytes(f.readAsBytesSync());
+      // Archive keeps one entry per name, so the zip is written entry by entry.
+      final o = OutputMemoryStream();
+      final enc = ZipEncoder()..startEncode(o);
+      for (final e in z.files) {
+        enc.add(ArchiveFile.bytes(e.name, e.readBytes()!));
+      }
+      enc.add(ArchiveFile.bytes('data.db', [1, 2, 3]));
+      enc.endEncode();
+      final names = ZipDirectory().headers(InputMemoryStream(o.getBytes()), files: false).map((h) => h.filename);
+      expect(names.where((n) => n == 'data.db').length, 2);
+      refused(out('twice.storilex')..writeAsBytesSync(o.getBytes()), 'not_backup');
+    });
+  });
+
+  group('a failed restore always puts the database and the pictures back', () {
+    late UserDb v;
+    late String data;
+    late Map<String, String> pics;
+    setUp(() {
+      exportBackup(device(a), out('x.storilex'));
+      // The second device has a book of its own, with a picture.
+      v = UserDb.open(b);
+      ReviewStore(v);
+      StatsStore(v);
+      v.insertBook(sampleBook(title: 'Local', images: {'local.png': [9, 9, 9]}));
+      v.setWord('cloud', WordStatus.learning);
+      v.setSetting('ai_key_openai', 'sk-local');
+      data = snapshot(v);
+      pics = pictures(b);
+      expect(pics, isNotEmpty);
+    });
+
+    void same() {
+      expect(snapshot(v), data);
+      expect(pictures(b), pics);
+      expect(v.statuses.keys.toList(), ['cloud']);
+    }
+
+    void fails(RestoreMode mode, bool Function(String step) at, Matcher error) {
+      debugRestoreStep = (s) {
+        if (at(s)) throw FileSystemException('disk full', s);
+      };
+      final pv = inspectBackup(v, out('x.storilex'));
+      expect(() => restoreBackup(v, pv, mode: mode), error);
+      pv.dispose();
+      debugRestoreStep = null;
+    }
+
+    test('merge: copying a picture of a new book fails', () {
+      fails(RestoreMode.merge, (s) => s.startsWith('copy '), throwsA(isA<FileSystemException>()));
+      same();
+      expect(journals(b), isEmpty, reason: 'no safety copy is left as an undo point');
+      expect(undoLastRestore(v), isFalse);
+    });
+
+    test('merge: a folder left over from a deleted book is moved aside and comes back unchanged', () {
+      final stale = File(p.join(b.path, 'books', '2', 'old.png'))
+        ..parent.createSync(recursive: true)
+        ..writeAsBytesSync([5, 5]);
+      pics = pictures(b);
+      fails(RestoreMode.merge, (s) => s.startsWith('copy '), throwsA(isA<FileSystemException>()));
+      same();
+      expect(stale.readAsBytesSync(), [5, 5]);
+    });
+
+    test('replace: moving the old picture folder away fails', () {
+      fails(RestoreMode.replace, (s) => s == 'move books', throwsA(isA<FileSystemException>()));
+      same();
+      expect(journals(b), isEmpty);
+    });
+
+    test('replace: copying the new pictures fails after the old folder was moved away', () {
+      fails(RestoreMode.replace, (s) => s.startsWith('copy '), throwsA(isA<FileSystemException>()));
+      same();
+      expect(Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>(), isEmpty,
+          reason: 'the moved folder went back to its place');
+    });
+
+    test('the database fails after the pictures were copied', () {
+      final pv = inspectBackup(v, out('x.storilex'));
+      expect(() => restoreBackup(v, pv, mode: RestoreMode.replace, debugFailAfterWrites: true), throwsA(isA<StateError>()));
+      pv.dispose();
+      same();
+    });
+
+    test('when putting a folder back fails too, nothing is deleted and it is tried again later', () {
+      fails(RestoreMode.replace, (s) => s.startsWith('copy ') || s.startsWith('undo move'), failsWith('rollback_incomplete'));
+      expect(snapshot(v), data, reason: 'the database is rolled back either way');
+      final moved = Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>().single;
+      expect(moved.listSync(recursive: true).whereType<File>(), isNotEmpty, reason: 'the old pictures are kept');
+      expect(undoLastRestore(v), isFalse, reason: 'an unfinished restore is not an undo point');
+      // undoLastRestore ran the recovery, which put the folder back.
+      same();
+      expect(journals(b), isEmpty);
+    });
+
+    test('the app closed in the middle of a restore: the next start puts everything back', () {
+      debugRestoreStep = (s) {
+        if (s.startsWith('copy ')) throw const BackupDebugCrash();
+      };
+      final pv = inspectBackup(v, out('x.storilex'));
+      expect(() => restoreBackup(v, pv, mode: RestoreMode.replace), throwsA(isA<BackupDebugCrash>()));
+      pv.dispose();
+      debugRestoreStep = null;
+      expect(pictures(b), isNot(pics), reason: 'the folder is half replaced when the app stops');
+      v.db.close(); // the open transaction is lost, as when the app is closed
+      v = UserDb.open(b);
+      expect(recoverInterruptedRestore(v), isTrue);
+      same();
+      expect(journals(b), isEmpty);
+      expect(undoLastRestore(v), isFalse);
+    });
+
+    test('the app closed right after the restore was saved: it is kept and can be undone', () {
+      final pv = inspectBackup(v, out('x.storilex'));
+      restoreBackup(v, pv);
+      pv.dispose();
+      final restored = snapshot(v);
+      // As if the journal had not been marked finished yet.
+      final j = File(p.join(b.path, 'backups', journals(b).firstWhere((n) => n.endsWith('.json'))));
+      final m = jsonDecode(j.readAsStringSync()) as Map..['state'] = 'pending';
+      j.writeAsStringSync(jsonEncode(m));
+      expect(recoverInterruptedRestore(v), isTrue);
+      expect(snapshot(v), restored, reason: 'a finished restore is not taken back by the recovery');
+      expect(undoLastRestore(v), isTrue);
+      same();
+    });
+  });
+
+  group('safety copies and undo points', () {
+    test('the safety copy holds no API key, and undo keeps the key the device has now', () {
+      exportBackup(device(a), out('x.storilex'));
+      final v = UserDb.open(b);
+      v.setSetting('ai_key_openai', 'sk-local-OLDKEY-123');
+      v.setSetting('api_key', 'sk-local-OLDKEY-123');
+      v.setWord('cloud', WordStatus.learning);
+      final pv = inspectBackup(v, out('x.storilex'));
+      final r = restoreBackup(v, pv);
+      pv.dispose();
+      final bytes = File(r.safetyCopy).readAsBytesSync();
+      expect(latin1.decode(bytes, allowInvalid: true).contains('OLDKEY'), isFalse);
+      v.setSetting('ai_key_openai', 'sk-local-NEWKEY-456');
+      expect(undoLastRestore(v), isTrue);
+      expect(v.getSetting('ai_key_openai'), 'sk-local-NEWKEY-456');
+      expect(v.getSetting('api_key'), 'sk-local-OLDKEY-123');
+      expect(v.statuses.keys.toList(), ['cloud']);
+    });
+
+    test('a failed restore leaves no undo point, even when its journal cannot be deleted', () {
+      exportBackup(device(a), out('x.storilex'));
+      final v = UserDb.open(b);
+      v.setWord('cloud', WordStatus.learning);
+      debugRestoreStep = (s) {
+        if (s.startsWith('copy ') || s == 'discard') throw const FileSystemException('denied');
+      };
+      final pv = inspectBackup(v, out('x.storilex'));
+      expect(() => restoreBackup(v, pv), throwsA(isA<FileSystemException>()));
+      pv.dispose();
+      debugRestoreStep = null;
+      expect(journals(b).where((n) => n.endsWith('.db')), isEmpty, reason: 'its safety copy is removed');
+      final j = File(p.join(b.path, 'backups', journals(b).single));
+      expect((jsonDecode(j.readAsStringSync()) as Map)['state'], 'failed');
+      v.setWord('sky', WordStatus.learning);
+      expect(undoLastRestore(v), isFalse);
+      expect(v.statuses.keys.toSet(), {'cloud', 'sky'}, reason: 'work done after the failure is not taken back');
+    });
+
+    test('only the newest restore can be undone, and only once', () {
+      exportBackup(device(a), out('x.storilex'));
+      final u2 = UserDb.open(Directory(p.join(root.path, 'c'))..createSync());
+      u2.setWord('moon', WordStatus.learned);
+      exportBackup(u2, out('y.storilex'));
+      final v = UserDb.open(b);
+      v.setWord('cloud', WordStatus.learning);
+      for (final f in ['x.storilex', 'y.storilex']) {
+        final pv = inspectBackup(v, out(f));
+        restoreBackup(v, pv);
+        pv.dispose();
+      }
+      expect(v.statuses.keys.toSet(), {'cloud', 'rain', 'garden', 'moon'});
+      expect(undoLastRestore(v), isTrue);
+      expect(v.statuses.keys.toSet(), {'cloud', 'rain', 'garden'});
+      expect(undoLastRestore(v), isFalse, reason: 'the earlier restore was followed by another one');
+      expect(v.statuses.keys.toSet(), {'cloud', 'rain', 'garden'});
+    });
   });
 }

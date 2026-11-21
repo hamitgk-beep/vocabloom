@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:archive/archive.dart';
+import 'dart:typed_data';
+
+import 'package:archive/archive_io.dart';
 import 'package:crypto/crypto.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
@@ -29,7 +31,10 @@ const backupExtension = 'storilex';
 
 /// Why a backup was refused. [code] is one of: `not_backup` (not a Storilex
 /// backup, or an entry that would leave the app folder), `newer_version`,
-/// `checksum`, `corrupt`, `incomplete`, `replace_needs_books`.
+/// `checksum`, `corrupt`, `incomplete`, `too_large` (over [BackupLimits]),
+/// `replace_needs_books`, `rollback_incomplete` (a failed restore or an undo
+/// could not put every picture folder back; nothing was deleted, and
+/// [recoverInterruptedRestore] tries again).
 class BackupException implements Exception {
   final String code;
   final String detail;
@@ -123,6 +128,7 @@ File exportBackup(UserDb u, File out, {bool includeBooks = true, String appVersi
         d.execute('INSERT INTO backup_books VALUES (?,?,?)', [e.key, e.value, src]);
       }
       if (!includeBooks) d.execute('DELETE FROM paras');
+      d.execute('DROP TABLE IF EXISTS $_restoreLog'); // which restores ran here: this device only
       for (final t in [..._tables, 'backup_books']) {
         if (_hasTable(d, 'main', t)) counts[t] = d.select('SELECT COUNT(*) AS n FROM "$t"').first['n'] as int;
       }
@@ -130,7 +136,6 @@ File exportBackup(UserDb u, File out, {bool includeBooks = true, String appVersi
     } finally {
       d.close();
     }
-    final data = File(dataPath).readAsBytesSync();
     final manifest = {
       'format': backupFormat,
       'format_version': backupFormatVersion,
@@ -140,29 +145,72 @@ File exportBackup(UserDb u, File out, {bool includeBooks = true, String appVersi
       'platform': Platform.operatingSystem,
       'includes_books': includeBooks,
       'counts': counts,
-      'data_sha256': sha256.convert(data).toString(),
+      'data_sha256': _sha256File(File(dataPath)),
     };
-    final zip = Archive()
-      ..add(ArchiveFile.string('manifest.json', const JsonEncoder.withIndent(' ').convert(manifest)))
-      ..add(ArchiveFile.bytes('data.db', data));
-    if (includeBooks) {
-      for (final id in fingerprints.keys) {
-        final dir = Directory(p.join(u.dir, 'books', '$id'));
-        if (!dir.existsSync()) continue;
-        for (final f in dir.listSync(recursive: true).whereType<File>()) {
-          final rel = p.split(p.relative(f.path, from: u.dir)).join('/');
-          zip.add(ArchiveFile.bytes(rel, f.readAsBytesSync()));
+    // Written next to the target first, so a failed write leaves no half file.
+    // Each entry streams from its file into the zip on disk; no file is held
+    // whole in memory, however large the library is.
+    final part = File('${out.path}.part');
+    final zip = ZipFileEncoder()..create(part.path);
+    try {
+      zip.addArchiveFile(ArchiveFile.string('manifest.json', const JsonEncoder.withIndent(' ').convert(manifest)));
+      _zipFile(zip, File(dataPath), 'data.db');
+      if (includeBooks) {
+        for (final id in fingerprints.keys) {
+          final dir = Directory(p.join(u.dir, 'books', '$id'));
+          if (!dir.existsSync()) continue;
+          for (final f in dir.listSync(recursive: true).whereType<File>()) {
+            _zipFile(zip, f, p.split(p.relative(f.path, from: u.dir)).join('/'));
+          }
         }
       }
+      zip.closeSync();
+    } catch (_) {
+      try {
+        zip.closeSync();
+      } catch (_) {}
+      if (part.existsSync()) part.deleteSync();
+      rethrow;
     }
-    // Written next to the target first, so a failed write leaves no half file.
-    final part = File('${out.path}.part');
-    part.writeAsBytesSync(ZipEncoder().encodeBytes(zip), flush: true);
     if (out.existsSync()) out.deleteSync();
     return part.renameSync(out.path);
   } finally {
     tmp.deleteSync(recursive: true);
   }
+}
+
+void _zipFile(ZipFileEncoder zip, File f, String name) {
+  final s = InputFileStream(f.path);
+  try {
+    zip.addArchiveFile(ArchiveFile.stream(name, s));
+  } finally {
+    s.closeSync();
+  }
+}
+
+String _sha256File(File f) {
+  Digest? d;
+  final sink = sha256.startChunkedConversion(_DigestSink((x) => d = x));
+  final raf = f.openSync();
+  try {
+    final buf = Uint8List(1 << 20);
+    for (var n = raf.readIntoSync(buf); n > 0; n = raf.readIntoSync(buf)) {
+      sink.add(Uint8List.sublistView(buf, 0, n));
+    }
+  } finally {
+    raf.closeSync();
+  }
+  sink.close();
+  return d.toString();
+}
+
+class _DigestSink implements Sink<Digest> {
+  final void Function(Digest) _on;
+  _DigestSink(this._on);
+  @override
+  void add(Digest d) => _on(d);
+  @override
+  void close() {}
 }
 
 /// Identifies a book by its text, so the same book imported again on another
@@ -252,44 +300,114 @@ class BackupPreview {
 /// Checks [file] completely and compares it with the data on [u]. Throws a
 /// [BackupException] for a file that is not a sound, compatible backup;
 /// nothing on the device is changed either way.
-BackupPreview inspectBackup(UserDb u, File file) {
-  final Archive zip;
+///
+/// The file is read from disk as it is unpacked, never whole into memory.
+/// Before anything is unpacked, the sizes the zip declares are checked
+/// against [limits] (a "zip bomb" is refused with `too_large`), and while
+/// unpacking no entry may grow past the size it declared.
+BackupPreview inspectBackup(UserDb u, File file, {BackupLimits limits = const BackupLimits()}) {
+  final InputFileStream input;
   try {
-    zip = ZipDecoder().decodeBytes(file.readAsBytesSync(), verify: true);
+    input = InputFileStream(file.path);
   } catch (e) {
     throw BackupException('not_backup', '$e');
   }
-  final mf = zip.findFile('manifest.json');
-  if (mf == null) throw const BackupException('not_backup', 'no manifest');
-  final Map m;
   try {
-    m = jsonDecode(utf8.decode(mf.readBytes() ?? const [])) as Map;
-  } catch (e) {
-    throw BackupException('not_backup', 'manifest: $e');
-  }
-  final version = m['format_version'];
-  if (m['format'] != backupFormat || version is! int) throw const BackupException('not_backup', 'not a Storilex backup');
-  if (version > backupFormatVersion) throw BackupException('newer_version', 'format $version');
-  for (final f in zip.files) {
-    if (!_safeEntry(f.name)) throw BackupException('not_backup', 'bad entry ${f.name}');
-  }
-  final data = zip.findFile('data.db')?.readBytes();
-  if (data == null) throw const BackupException('incomplete', 'no data.db');
-  if (sha256.convert(data).toString() != m['data_sha256']) throw const BackupException('checksum');
-
-  final tmp = Directory.systemTemp.createTempSync('storilex_restore');
-  try {
-    File(p.join(tmp.path, 'data.db')).writeAsBytesSync(data, flush: true);
-    for (final f in zip.files) {
-      if (!f.isFile || !f.name.startsWith('books/')) continue;
-      final target = File(p.joinAll([tmp.path, ...f.name.split('/')]));
-      target.parent.createSync(recursive: true);
-      target.writeAsBytesSync(f.readBytes() ?? const []);
+    _checkEntries(input, limits);
+    final Archive zip;
+    try {
+      zip = ZipDecoder().decodeStream(input, verify: true);
+    } catch (e) {
+      throw BackupException('not_backup', '$e');
     }
-    return _preview(u, m, tmp);
-  } catch (e) {
-    tmp.deleteSync(recursive: true);
+    final mf = zip.findFile('manifest.json');
+    if (mf == null) throw const BackupException('not_backup', 'no manifest');
+    final Map m;
+    try {
+      m = jsonDecode(utf8.decode(mf.readBytes() ?? const [])) as Map;
+    } catch (e) {
+      throw BackupException('not_backup', 'manifest: $e');
+    }
+    final version = m['format_version'];
+    if (m['format'] != backupFormat || version is! int) throw const BackupException('not_backup', 'not a Storilex backup');
+    if (version > backupFormatVersion) throw BackupException('newer_version', 'format $version');
+    final data = zip.findFile('data.db');
+    if (data == null || !data.isFile) throw const BackupException('incomplete', 'no data.db');
+
+    final tmp = Directory.systemTemp.createTempSync('storilex_restore');
+    try {
+      final dataFile = File(p.join(tmp.path, 'data.db'));
+      _unpack(data, dataFile);
+      if (_sha256File(dataFile) != m['data_sha256']) throw const BackupException('checksum');
+      for (final f in zip.files) {
+        if (!f.isFile || !f.name.startsWith('books/')) continue;
+        _unpack(f, File(p.joinAll([tmp.path, ...f.name.split('/')])));
+      }
+      return _preview(u, m, tmp);
+    } catch (e) {
+      tmp.deleteSync(recursive: true);
+      rethrow;
+    }
+  } finally {
+    input.closeSync();
+  }
+}
+
+/// How much a backup may unpack to. The defaults are far above a real
+/// library (a database with the texts of a few hundred books is some
+/// hundred MB; an illustrated book some tens of MB), so only a file built to
+/// fill the device is refused.
+class BackupLimits {
+  /// Files in the zip.
+  final int maxEntries;
+
+  /// One unpacked file (the database is the largest).
+  final int maxEntryBytes;
+
+  /// All files together, unpacked.
+  final int maxTotalBytes;
+
+  final int maxManifestBytes;
+  const BackupLimits(
+      {this.maxEntries = 50000,
+      this.maxEntryBytes = 2 * 1024 * 1024 * 1024,
+      this.maxTotalBytes = 4 * 1024 * 1024 * 1024,
+      this.maxManifestBytes = 1024 * 1024});
+}
+
+/// Reads only the zip's table of contents: names, count and declared sizes.
+void _checkEntries(InputStream input, BackupLimits l) {
+  var count = 0, total = 0;
+  final names = <String>{};
+  try {
+    for (final h in ZipDirectory().headers(input, verify: true, files: false)) {
+      if (++count > l.maxEntries) throw BackupException('too_large', 'more than ${l.maxEntries} files');
+      final name = h.filename, size = h.uncompressedSize;
+      if (!_safeEntry(name) || !names.add(name)) throw BackupException('not_backup', 'bad entry $name');
+      final max = name == 'manifest.json' ? l.maxManifestBytes : l.maxEntryBytes;
+      if (size < 0 || size > max) throw BackupException('too_large', '$name: $size bytes');
+      total += size;
+      if (total > l.maxTotalBytes) throw BackupException('too_large', 'more than ${l.maxTotalBytes} bytes');
+    }
+  } on BackupException {
     rethrow;
+  } catch (e) {
+    throw BackupException('not_backup', '$e');
+  }
+  if (count == 0) throw const BackupException('not_backup', 'empty');
+}
+
+/// Streams one entry to [target]. The zip reader stops an entry at the size
+/// it declared and checks its CRC, so a lying header cannot fill the disk.
+void _unpack(ArchiveFile f, File target) {
+  target.parent.createSync(recursive: true);
+  final o = OutputFileStream(target.path);
+  try {
+    f.writeContent(o);
+  } catch (e) {
+    throw BackupException('corrupt', '${f.name}: $e');
+  } finally {
+    o.closeSync();
   }
 }
 
@@ -419,7 +537,17 @@ class RestoreResult {
 
 /// Restores [pv] into [u]. Conflicts not named in [bookChoices] (by
 /// [BookConflict.key]) or covered by [wordChoice] keep this device's data.
-/// [debugFailAfterWrites] makes the restore fail after all its writes (tests).
+///
+/// Before anything changes, a safety copy of the data (without API keys) and
+/// a journal are written to `backups/`. Every picture folder the restore
+/// creates or moves is written into the journal before it happens, so a
+/// failure, or the app being closed in the middle, can put each one back
+/// ([recoverInterruptedRestore]). The database changes in one transaction
+/// that also records the restore as finished; the journal becomes an undo
+/// point ([undoLastRestore]) only then.
+///
+/// [debugFailAfterWrites] makes the restore fail after all its writes
+/// (tests).
 RestoreResult restoreBackup(UserDb u, BackupPreview pv,
     {RestoreMode mode = RestoreMode.merge,
     Map<String, ConflictChoice> bookChoices = const {},
@@ -428,32 +556,48 @@ RestoreResult restoreBackup(UserDb u, BackupPreview pv,
   if (mode == RestoreMode.replace && !pv.manifest.includesBooks) throw const BackupException('replace_needs_books');
   if (!pv._tmp.existsSync()) throw StateError('the backup preview was disposed');
   _ensureTables(u);
+  recoverInterruptedRestore(u);
   final res = RestoreResult();
-  final safety = _safetyCopy(u);
-  res.safetyCopy = safety.path;
-  final created = <String>[];
-  String? moved;
+  final j = _Journal.begin(u, mode);
+  res.safetyCopy = j.copy.path;
   final db = u.db;
+  var crashed = false;
   db.execute('ATTACH DATABASE ? AS bk', [pv._dataPath]);
   try {
     db.execute('BEGIN');
     try {
       if (mode == RestoreMode.replace) {
-        moved = _replace(u, pv, created);
+        _replace(u, pv, j);
       } else {
-        _merge(u, pv, res, bookChoices, wordChoice, created);
+        _merge(u, pv, res, bookChoices, wordChoice, j);
       }
+      db.execute('INSERT INTO main.$_restoreLog(id, mode, finished) VALUES (?,?,?)',
+          [j.id, mode.name, DateTime.now().millisecondsSinceEpoch]);
       if (debugFailAfterWrites) throw StateError('restore failed on purpose');
       db.execute('COMMIT');
-    } catch (_) {
-      db.execute('ROLLBACK');
-      _undoFiles(u, created, moved);
+    } catch (e) {
+      if (e is BackupDebugCrash) {
+        crashed = true; // as if the app had been closed here: nothing is cleaned up
+        rethrow;
+      }
+      try {
+        if (!db.autocommit) db.execute('ROLLBACK');
+      } catch (_) {}
+      if (!_undoOps(u, j)) {
+        throw BackupException('rollback_incomplete', 'the restore failed ($e) and not every picture folder could be put back');
+      }
+      j.discard();
       rethrow;
     }
   } finally {
-    db.execute('DETACH DATABASE bk');
+    if (!crashed) db.execute('DETACH DATABASE bk');
   }
-  File(p.setExtension(safety.path, '.json')).writeAsStringSync(jsonEncode({'created_dirs': created, 'moved_books': moved}));
+  try {
+    j.finish();
+  } catch (_) {
+    // The data is restored; the journal says "pending" with the restore
+    // recorded in the database, and recoverInterruptedRestore finishes it.
+  }
   if (mode == RestoreMode.replace) {
     res.wordsAdded = db.select('SELECT COUNT(*) AS n FROM words').first['n'] as int;
     res.booksAdded = db.select('SELECT COUNT(*) AS n FROM books').first['n'] as int;
@@ -462,24 +606,57 @@ RestoreResult restoreBackup(UserDb u, BackupPreview pv,
   return res;
 }
 
+/// Finishes a restore the app was closed in the middle of, and is safe to
+/// call at every start. When its transaction was committed, the restore is
+/// kept and becomes the undo point; when not (the database already rolled it
+/// back on its own), the picture folders are put back and its safety copy is
+/// removed. True when there was something to do.
+bool recoverInterruptedRestore(UserDb u) {
+  var any = false;
+  for (final j in _journals(u)) {
+    if (j.state != 'pending') continue;
+    any = true;
+    final committed = _hasTable(u.db, 'main', _restoreLog) &&
+        u.db.select('SELECT 1 FROM main.$_restoreLog WHERE id=?', [j.id]).isNotEmpty;
+    if (committed) {
+      j.finish();
+    } else if (_undoOps(u, j)) {
+      j.discard();
+    }
+  }
+  return any;
+}
+
 /// Puts the data back the way it was before the last restore. False when
-/// there is no restore to undo.
+/// there is no restore to undo: only the newest restore can be undone, only
+/// when it finished, and only once (a restore that failed, or one followed
+/// by another restore, is never an undo point). API keys and device settings
+/// stay as they are now.
 bool undoLastRestore(UserDb u) {
-  final dir = Directory(p.join(u.dir, 'backups'));
-  if (!dir.existsSync()) return false;
-  final copies = dir.listSync().whereType<File>().where((f) => p.basename(f.path).startsWith('before-restore-') && f.path.endsWith('.db')).toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
-  if (copies.isEmpty) return false;
-  final copy = copies.last;
-  final info = File(p.setExtension(copy.path, '.json'));
-  final meta = info.existsSync() ? jsonDecode(info.readAsStringSync()) as Map : const {};
+  recoverInterruptedRestore(u);
+  final js = _journals(u);
+  if (js.isEmpty) return false;
+  final j = js.first;
+  if (j.state != 'done' || !j.copy.existsSync()) return false;
   final db = u.db;
-  db.execute('ATTACH DATABASE ? AS sf', [copy.path]);
+  db.execute('ATTACH DATABASE ? AS sf', [j.copy.path]);
   try {
     db.execute('BEGIN');
     try {
       for (final t in _tables) {
         if (!_hasTable(db, 'main', t)) continue;
+        if (t == 'settings') {
+          for (final r in db.select('SELECT key FROM main.settings').toList()) {
+            final k = r['key'] as String;
+            if (!_staysOnDevice(k)) db.execute('DELETE FROM main.settings WHERE key=?', [k]);
+          }
+          if (!_hasTable(db, 'sf', t)) continue;
+          for (final r in db.select('SELECT key, value FROM sf.settings').toList()) {
+            final k = r['key'] as String;
+            if (!_staysOnDevice(k)) db.execute('INSERT OR REPLACE INTO main.settings(key, value) VALUES (?,?)', [k, r['value']]);
+          }
+          continue;
+        }
         db.execute('DELETE FROM main."$t"');
         if (_hasTable(db, 'sf', t)) _copy(db, 'sf', 'main', t);
       }
@@ -491,15 +668,17 @@ bool undoLastRestore(UserDb u) {
   } finally {
     db.execute('DETACH DATABASE sf');
   }
-  _undoFiles(u, [for (final d in (meta['created_dirs'] as List? ?? const [])) '$d'], meta['moved_books'] as String?);
-  copy.deleteSync();
-  if (info.existsSync()) info.deleteSync();
   u.reloadStatuses();
+  if (!_undoOps(u, j)) {
+    // The database is back; the journal stays, so undo can be tried again.
+    throw const BackupException('rollback_incomplete', 'not every picture folder could be put back');
+  }
+  j.remove();
   return true;
 }
 
 void _merge(UserDb u, BackupPreview pv, RestoreResult res, Map<String, ConflictChoice> bookChoices, ConflictChoice wordChoice,
-    List<String> created) {
+    _Journal j) {
   final db = u.db;
   final hasReview = _hasTable(db, 'bk', 'review');
 
@@ -546,7 +725,7 @@ void _merge(UserDb u, BackupPreview pv, RestoreResult res, Map<String, ConflictC
             'AND s.idx=main.paras.idx) WHERE book_id=? AND tr IS NULL', [b.id, lid]);
       }
     } else if (pv.manifest.includesBooks) {
-      ids[b.id] = _addBook(u, pv, b.id, created);
+      ids[b.id] = _addBook(u, pv, b.id, j);
       res.booksAdded++;
     } else {
       final r = db.select('SELECT * FROM bk.books WHERE id=?', [b.id]).first;
@@ -577,7 +756,7 @@ void _merge(UserDb u, BackupPreview pv, RestoreResult res, Map<String, ConflictC
 }
 
 /// Adds a book of the backup that is not on this device; returns its new id.
-int _addBook(UserDb u, BackupPreview pv, int id, List<String> created) {
+int _addBook(UserDb u, BackupPreview pv, int id, _Journal j) {
   final db = u.db;
   _copy(db, 'bk', 'main', 'books', where: 'id=?', args: [id], skip: {'id'});
   final nid = db.lastInsertRowId;
@@ -589,15 +768,16 @@ int _addBook(UserDb u, BackupPreview pv, int id, List<String> created) {
   });
   final src = Directory(p.join(pv._tmp.path, 'books', '$id'));
   if (src.existsSync()) {
-    final dst = Directory(p.join(u.dir, 'books', '$nid'));
-    if (!dst.existsSync()) created.add(dst.path);
-    _copyDir(src, dst);
+    final rel = 'books/$nid';
+    _freshDir(u, j, rel);
+    _copyDir(src, Directory(_abs(u, rel)), rel);
   }
   return nid;
 }
 
-/// Replaces the learner's tables; returns where the old pictures were moved.
-String? _replace(UserDb u, BackupPreview pv, List<String> created) {
+/// Replaces the learner's tables, and the picture folder: the old one is
+/// moved into `backups/` (never deleted here), the backup's is copied in.
+void _replace(UserDb u, BackupPreview pv, _Journal j) {
   final db = u.db;
   for (final t in _tables) {
     if (t == 'settings' || !_hasTable(db, 'main', t)) continue;
@@ -611,47 +791,231 @@ String? _replace(UserDb u, BackupPreview pv, List<String> created) {
   for (final e in pv.backupSettings.entries) {
     db.execute('INSERT OR REPLACE INTO main.settings(key, value) VALUES (?,?)', [e.key, e.value]);
   }
-  final books = Directory(p.join(u.dir, 'books'));
-  String? moved;
-  if (books.existsSync()) {
-    moved = p.join(u.dir, 'backups', 'books-before-restore-${DateTime.now().millisecondsSinceEpoch}');
-    books.renameSync(moved);
-  }
+  if (Directory(_abs(u, 'books')).existsSync()) _move(u, j, 'books', 'backups/books-before-restore-${j.id}');
   final src = Directory(p.join(pv._tmp.path, 'books'));
-  created.add(books.path);
-  if (src.existsSync()) _copyDir(src, books);
-  return moved;
-}
-
-void _undoFiles(UserDb u, List<String> created, String? moved) {
-  for (final d in created) {
-    try {
-      final dir = Directory(d);
-      if (dir.existsSync()) dir.deleteSync(recursive: true);
-    } catch (_) {}
-  }
-  if (moved != null && Directory(moved).existsSync()) {
-    final books = Directory(p.join(u.dir, 'books'));
-    if (books.existsSync()) books.deleteSync(recursive: true);
-    Directory(moved).renameSync(books.path);
+  if (src.existsSync()) {
+    _freshDir(u, j, 'books');
+    _copyDir(src, Directory(_abs(u, 'books')), 'books');
   }
 }
 
-/// A full copy of the device's data, the last three kept.
-File _safetyCopy(UserDb u) {
-  final dir = Directory(p.join(u.dir, 'backups'))..createSync(recursive: true);
-  final f = File(p.join(dir.path, 'before-restore-${DateTime.now().millisecondsSinceEpoch}.db'));
-  u.db.execute('VACUUM INTO ?', [f.path]);
-  final old = dir.listSync().whereType<File>().where((x) => p.basename(x.path).startsWith('before-restore-') && x.path.endsWith('.db')).toList()
-    ..sort((a, b) => b.path.compareTo(a.path));
-  for (final x in old.skip(3)) {
+// ------------------------------------------------------------------ journal
+
+/// The database table that records, in the restore's own transaction, that
+/// a restore finished. Only on this device (left out of every backup).
+const _restoreLog = 'backup_restore_log';
+
+/// Tests only: called before each step on the picture folders (`move …`,
+/// `create …`, `copy …`, `undo …`, `discard`); throwing makes that step fail.
+void Function(String step)? debugRestoreStep;
+
+/// Tests only: thrown from [debugRestoreStep], it stops a restore as if the
+/// app had been closed at that point (no rollback, no clean-up).
+class BackupDebugCrash implements Exception {
+  const BackupDebugCrash();
+}
+
+void _step(String s) => debugRestoreStep?.call(s);
+
+String _abs(UserDb u, String rel) => p.joinAll([u.dir, ...rel.split('/')]);
+
+/// One restore's safety copy (`backups/before-restore-<id>.db`) and journal
+/// (`.json`): its state — `pending` while it runs, `done` when it can be
+/// undone, `superseded` once a later restore finished, `failed` — and each
+/// step on the picture folders, written before the step is taken. Paths are
+/// relative to the app folder, which can move (iOS moves it on updates).
+class _Journal {
+  final UserDb u;
+  final int id;
+  String state;
+  final String mode;
+  final List<Map<String, dynamic>> ops;
+  _Journal(this.u, this.id, this.state, this.mode, this.ops);
+
+  static Directory dir(UserDb u) => Directory(p.join(u.dir, 'backups'));
+  File get copy => File(p.join(dir(u).path, 'before-restore-$id.db'));
+  File get file => File(p.join(dir(u).path, 'before-restore-$id.json'));
+
+  /// Takes the safety copy: the whole database without API keys and device
+  /// settings (a restore never changes those, and undo keeps the ones the
+  /// device has then), so no key lies in a second file.
+  static _Journal begin(UserDb u, RestoreMode mode) {
+    dir(u).createSync(recursive: true);
+    var id = DateTime.now().millisecondsSinceEpoch;
+    _Journal j() => _Journal(u, id, 'pending', mode.name, []);
+    while (j().file.existsSync() || j().copy.existsSync()) {
+      id++;
+    }
+    final jr = j();
     try {
-      x.deleteSync();
-      final j = File(p.setExtension(x.path, '.json'));
-      if (j.existsSync()) j.deleteSync();
+      u.db.execute('VACUUM INTO ?', [jr.copy.path]);
+      final d = sqlite3.open(jr.copy.path);
+      try {
+        d.execute('PRAGMA secure_delete=ON');
+        if (_hasTable(d, 'main', 'settings')) {
+          for (final r in d.select('SELECT key FROM settings').toList()) {
+            final k = r['key'] as String;
+            if (_staysOnDevice(k)) d.execute('DELETE FROM settings WHERE key=?', [k]);
+          }
+        }
+        d.execute('VACUUM');
+      } finally {
+        d.close();
+      }
+      jr.save();
+    } catch (_) {
+      jr.remove();
+      rethrow;
+    }
+    return jr;
+  }
+
+  static _Journal load(UserDb u, int id, File f) {
+    try {
+      final m = jsonDecode(f.readAsStringSync()) as Map;
+      return _Journal(u, id, '${m['state']}', '${m['mode'] ?? ''}',
+          [for (final o in (m['ops'] as List? ?? const [])) Map<String, dynamic>.from(o as Map)]);
+    } catch (_) {
+      return _Journal(u, id, 'unreadable', '', []);
+    }
+  }
+
+  void add(Map<String, dynamic> op) {
+    ops.add(op);
+    save();
+  }
+
+  /// Written beside and renamed over, so the journal is never half written.
+  void save() {
+    final part = File('${file.path}.part');
+    part.writeAsStringSync(jsonEncode({'state': state, 'mode': mode, 'ops': ops}), flush: true);
+    part.renameSync(file.path);
+  }
+
+  /// The restore finished: this is the undo point now, no earlier one is.
+  void finish() {
+    state = 'done';
+    save();
+    for (final o in _journals(u)) {
+      if (o.id != id && o.state == 'done') {
+        o.state = 'superseded';
+        o.save();
+      }
+    }
+    _prune(u);
+  }
+
+  /// A restore that failed and was rolled back leaves nothing behind that
+  /// could later be taken for an undo point.
+  void discard() {
+    try {
+      _step('discard');
+      file.deleteSync();
+    } catch (_) {
+      try {
+        state = 'failed';
+        ops.clear();
+        save();
+      } catch (_) {}
+    }
+    try {
+      if (copy.existsSync()) copy.deleteSync();
     } catch (_) {}
   }
-  return f;
+
+  void remove() {
+    for (final f in [file, copy, File('${file.path}.part')]) {
+      try {
+        if (f.existsSync()) f.deleteSync();
+      } catch (_) {}
+    }
+  }
+}
+
+/// The journals in `backups/`, newest first.
+List<_Journal> _journals(UserDb u) {
+  final d = _Journal.dir(u);
+  if (!d.existsSync()) return [];
+  final out = <_Journal>[];
+  for (final f in d.listSync().whereType<File>()) {
+    final m = RegExp(r'^before-restore-(\d+)\.json$').firstMatch(p.basename(f.path));
+    if (m != null) out.add(_Journal.load(u, int.parse(m[1]!), f));
+  }
+  out.sort((a, b) => b.id.compareTo(a.id));
+  return out;
+}
+
+/// Keeps the three newest restores (with the picture folders they moved
+/// aside); removes safety copies that never got a journal.
+void _prune(UserDb u) {
+  final js = _journals(u);
+  for (final o in js.skip(3)) {
+    for (final op in o.ops) {
+      final to = op['to'];
+      if (op['op'] == 'move' && to is String && to.startsWith('backups/')) {
+        try {
+          final d = Directory(_abs(u, to));
+          if (d.existsSync()) d.deleteSync(recursive: true);
+        } catch (_) {}
+      }
+    }
+    o.remove();
+  }
+  final ids = {for (final o in js.take(3)) o.id};
+  for (final f in _Journal.dir(u).listSync().whereType<File>()) {
+    final m = RegExp(r'^before-restore-(\d+)\.db$').firstMatch(p.basename(f.path));
+    if (m != null && !ids.contains(int.parse(m[1]!))) {
+      try {
+        f.deleteSync();
+      } catch (_) {}
+    }
+  }
+}
+
+void _move(UserDb u, _Journal j, String from, String to) {
+  j.add({'op': 'move', 'from': from, 'to': to});
+  _step('move $from');
+  final t = Directory(_abs(u, to));
+  t.parent.createSync(recursive: true);
+  Directory(_abs(u, from)).renameSync(t.path);
+}
+
+/// A new, empty folder at [rel]; a folder already there is moved aside.
+void _freshDir(UserDb u, _Journal j, String rel) {
+  if (Directory(_abs(u, rel)).existsSync()) _move(u, j, rel, 'backups/restore-${j.id}-aside/${rel.replaceAll('/', '_')}');
+  j.add({'op': 'create', 'path': rel});
+  _step('create $rel');
+  Directory(_abs(u, rel)).createSync(recursive: true);
+}
+
+/// Takes back the journal's steps on the picture folders, newest first. Each
+/// step is tried even when an earlier one fails, and nothing that was there
+/// before the restore is deleted: a folder moved aside is only moved back.
+/// False when some step could not be taken back.
+bool _undoOps(UserDb u, _Journal j) {
+  var ok = true;
+  for (final o in j.ops.reversed) {
+    try {
+      if (o['op'] == 'create') {
+        _step('undo create ${o['path']}');
+        final d = Directory(_abs(u, '${o['path']}'));
+        if (d.existsSync()) d.deleteSync(recursive: true);
+      } else if (o['op'] == 'move') {
+        _step('undo move ${o['from']}');
+        final from = Directory(_abs(u, '${o['from']}')), to = Directory(_abs(u, '${o['to']}'));
+        if (to.existsSync()) {
+          if (from.existsSync()) throw StateError('${o['from']} is in the way');
+          from.parent.createSync(recursive: true);
+          to.renameSync(from.path);
+        } else if (!from.existsSync()) {
+          throw StateError('${o['to']} is missing');
+        }
+      }
+    } catch (_) {
+      ok = false;
+    }
+  }
+  return ok;
 }
 
 void _ensureTables(UserDb u) {
@@ -661,6 +1025,7 @@ void _ensureTables(UserDb u) {
     CREATE TABLE IF NOT EXISTS backup_pending_books(key TEXT PRIMARY KEY, title TEXT, author TEXT, format TEXT, source TEXT,
       lang TEXT, last_chapter INTEGER, last_para INTEGER, last_page INTEGER, added INTEGER)
   ''');
+  u.db.execute('CREATE TABLE IF NOT EXISTS $_restoreLog(id INTEGER PRIMARY KEY, mode TEXT, finished INTEGER)');
 }
 
 // ------------------------------------------------------------------ helpers
@@ -696,9 +1061,11 @@ void _copyNew(Database db, String t) {
       'WHERE NOT EXISTS (SELECT 1 FROM main."$t" m WHERE $same)');
 }
 
-void _copyDir(Directory src, Directory dst) {
+void _copyDir(Directory src, Directory dst, String rel) {
   for (final f in src.listSync(recursive: true).whereType<File>()) {
-    final target = File(p.join(dst.path, p.relative(f.path, from: src.path)));
+    final r = p.relative(f.path, from: src.path);
+    _step('copy $rel/${p.split(r).join('/')}');
+    final target = File(p.join(dst.path, r));
     target.parent.createSync(recursive: true);
     f.copySync(target.path);
   }
