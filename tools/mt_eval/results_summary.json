@@ -1,0 +1,14 @@
+{
+ "sentences": 256,
+ "load_s": 1.7,
+ "ms_median": 167.5,
+ "ms_p90": 302,
+ "chrf_mean": {
+  "report": 57.9,
+  "tatoeba": 65.4
+ },
+ "chrf_n": {
+  "report": 2,
+  "tatoeba": 200
+ }
+}
