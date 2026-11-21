@@ -805,5 +805,95 @@ void main() {
       expect(pictures(b), pics);
       expect(v.books().map((x) => x.title), contains('New'));
     });
+
+    // ---- the app closes after a folder move was written to the journal, before the move
+
+    test('closed after the first move was journaled, before it was made: the folders are as restored, then undo works', () {
+      crashAt('undo create books');
+      expect(Directory(p.join(b.path, 'books')).existsSync(), isTrue, reason: 'the move never happened');
+      expect(Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>().where((d) => p.basename(d.path).startsWith('undo-')),
+          isEmpty);
+      expect(recoverInterruptedRestore(v), isTrue);
+      isAfter();
+      expect(journals(b).length, 2, reason: 'the restore is still the undo point');
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('closed after the second move was journaled, before it was made: the first is moved back, the second skipped', () {
+      crashAt('undo move books');
+      // The first move (the restore's pictures into the bin) happened, the second did not.
+      expect(Directory(p.join(b.path, 'books')).existsSync(), isFalse);
+      final moved = Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>().map((d) => p.basename(d.path)).toSet();
+      expect(moved.any((n) => n.startsWith('books-before-restore-')), isTrue);
+      expect(moved.any((n) => n.startsWith('undo-')), isTrue);
+      expect(recoverInterruptedRestore(v), isTrue);
+      isAfter();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('a folder appeared where one must be moved back: nothing is deleted or overwritten, and new restores wait', () {
+      crashAt('undo move books');
+      final stray = File(p.join(b.path, 'books', 'stray.png'))
+        ..parent.createSync(recursive: true)
+        ..writeAsBytesSync([4, 2]);
+      recoverInterruptedRestore(v);
+      expect(stray.readAsBytesSync(), [4, 2]);
+      nothingDeleted();
+      expect(snapshot(v), after, reason: 'the database is not touched');
+      expect(() => undoLastRestore(v), failsWith('rollback_incomplete'));
+      final pv = inspectBackup(v, out('x.storilex'));
+      expect(() => restoreBackup(v, pv, mode: RestoreMode.replace), failsWith('rollback_incomplete'));
+      pv.dispose();
+      expect(stray.readAsBytesSync(), [4, 2]);
+      nothingDeleted();
+      // Once the stray folder is out of the way, the recovery finishes.
+      Directory(p.join(b.path, 'books')).renameSync(p.join(root.path, 'stray'));
+      expect(recoverInterruptedRestore(v), isTrue);
+      isAfter();
+      expect(undoLastRestore(v), isTrue);
+      isBefore();
+    });
+
+    test('a folder to move back is gone: the database is not touched, and nothing else is deleted', () {
+      crashAt('undo move books');
+      final bin = Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>().firstWhere((d) => p.basename(d.path).startsWith('undo-'));
+      bin.deleteSync(recursive: true); // removed outside the app
+      recoverInterruptedRestore(v);
+      expect(snapshot(v), after);
+      for (final sha in picsBefore.values) {
+        expect(b.listSync(recursive: true).whereType<File>().map(fileSha), contains(sha), reason: 'the old pictures are kept');
+      }
+      expect(() => undoLastRestore(v), failsWith('rollback_incomplete'));
+      expect(snapshot(v), after);
+    });
+
+    // ---- the app closes while cleaning up, after the database was put back
+
+    for (final step in ['undo finish', 'undo finish journal']) {
+      test('closed at "$step": the next start finishes the clean-up without putting the database back again', () {
+        crashAt(step);
+        if (step == 'undo finish journal') {
+          expect(Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>().where((d) => p.basename(d.path).startsWith('undo-')),
+              isEmpty, reason: 'the bin was emptied, the journal was not removed yet');
+        }
+        expect(journals(b).any((n) => n.endsWith('.json')), isTrue);
+        isBefore();
+        // The learner keeps working before the clean-up runs.
+        v.setWord('sky', WordStatus.learning);
+        v.insertBook(sampleBook(title: 'New', images: {'new.png': [7, 7]}));
+        final now = snapshot(v), pics = pictures(b);
+        expect(recoverInterruptedRestore(v), isTrue);
+        expect(snapshot(v), now, reason: 'the database is not put back a second time');
+        expect(pictures(b), pics);
+        expect(journals(b), isEmpty, reason: 'the journal and the safety copy are gone');
+        expect(undoLastRestore(v), isFalse);
+        expect(snapshot(v), now);
+        expect(pictures(b), pics);
+        expect(Directory(p.join(b.path, 'backups')).listSync().whereType<Directory>().where((d) => p.basename(d.path).startsWith('undo-')),
+            isEmpty);
+      });
+    }
   });
 }

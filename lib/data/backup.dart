@@ -558,6 +558,7 @@ RestoreResult restoreBackup(UserDb u, BackupPreview pv,
   if (!pv._tmp.existsSync()) throw StateError('the backup preview was disposed');
   _ensureTables(u);
   recoverInterruptedRestore(u);
+  _refuseIfUnfinished(u);
   final res = RestoreResult();
   final j = _Journal.begin(u, mode);
   res.safetyCopy = j.copy.path;
@@ -663,6 +664,7 @@ bool recoverInterruptedRestore(UserDb u) {
 /// is never written again, so work done in between is not lost.
 bool undoLastRestore(UserDb u) {
   recoverInterruptedRestore(u);
+  _refuseIfUnfinished(u);
   final js = _journals(u);
   if (js.isEmpty) return false;
   final j = js.first;
@@ -745,6 +747,18 @@ bool undoLastRestore(UserDb u) {
   return true;
 }
 
+/// A restore or undo the recovery could not finish (a folder it must move
+/// back is in the way, or gone) blocks new ones: their moves could otherwise
+/// meet its folders. Nothing is deleted; once the folder is cleared,
+/// [recoverInterruptedRestore] finishes it.
+void _refuseIfUnfinished(UserDb u) {
+  for (final j in _journals(u)) {
+    if (j.state == 'pending' || j.state == 'undoing') {
+      throw BackupException('rollback_incomplete', 'restore ${j.id} is not finished (${j.state})');
+    }
+  }
+}
+
 bool _undoCommitted(UserDb u, _Journal j) =>
     u.db.select('SELECT 1 FROM main.$_restoreLog WHERE id=? AND undone IS NOT NULL', [j.id]).isNotEmpty;
 
@@ -754,6 +768,8 @@ bool _undoCommitted(UserDb u, _Journal j) =>
 void _undoFolders(UserDb u, _Journal j) {
   var n = 0;
   void move(String from, String to, String step) {
+    // Never onto a folder that is there: an empty one would be replaced.
+    if (Directory(_abs(u, to)).existsSync()) throw StateError('$to is in the way');
     j.undo.add({'from': from, 'to': to});
     j.save();
     _step(step);
@@ -808,6 +824,7 @@ void _finishUndo(UserDb u, _Journal j) {
     final bin = Directory(p.join(_Journal.dir(u).path, 'undo-${j.id}'));
     if (bin.existsSync()) bin.deleteSync(recursive: true);
   } catch (_) {} // left for _prune
+  _step('undo finish journal');
   j.remove();
 }
 
@@ -941,7 +958,8 @@ const _restoreLog = 'backup_restore_log';
 
 /// Tests only: called before each step on the picture folders (`move …`,
 /// `create …`, `copy …`, `undo …`, `reverse …`, `discard`) and before the
-/// undo commits (`undo database`) and cleans up (`undo finish`); throwing
+/// undo commits (`undo database`) and cleans up (`undo finish`, `undo finish
+/// journal`); throwing
 /// makes that step fail.
 void Function(String step)? debugRestoreStep;
 
