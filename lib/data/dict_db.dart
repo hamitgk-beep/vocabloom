@@ -464,6 +464,25 @@ class DictDb {
     return (sense: best, tr: guess == null ? null : shortTr(guess), pos: pos, sure: false);
   }
 
+  static const _ownPos = {'isim': 'n', 'özel isim': 'n', 'fiil': 'v', 'deyimsel fiil': 'v', 'sıfat': 'a', 'zarf': 'r'};
+
+  /// The word's most common meaning, whatever sentence it was met in: the
+  /// first meaning of the own dictionary (its senses are listed most common
+  /// first), otherwise the dictionary's first meaning. Review cards ask this
+  /// one ("through" is "boyunca", even when it was saved from "a through train").
+  ({String? tr, String? pos, String? gloss}) commonMeaning(String lemma) {
+    final own = ownSenses(lemma).where((s) => !s.tr.toLowerCase().contains('bakınız')).firstOrNull;
+    if (own != null) {
+      final tr = shortTr(own.tr);
+      // Prepositions, conjunctions …: no WordNet part of speech, so the
+      // wrong options are picked by the shape of the Turkish (not verbs).
+      final pos = _ownPos[own.pos] ?? (isTrVerb(tr) ? 'v' : null);
+      return (tr: tr, pos: pos, gloss: own.en.isEmpty ? null : own.en);
+    }
+    final m = meaningIn(lemma, null);
+    return (tr: m.tr, pos: m.pos, gloss: m.sense?.gloss);
+  }
+
   static Iterable<String> _parts(String t) =>
       t.toLowerCase().split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.length > 1);
 
