@@ -130,6 +130,7 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 500));
     final log = File(p.join(t.root.path, 'update.log'));
     var text = log.existsSync() ? latin1.decode(log.readAsBytesSync()) : '-';
+    printOnFailure('install log:\n$text');
     if (!File(t.marker).existsSync()) {
       final ps = await Process.run('tasklist', ['/v', '/fo', 'list']);
       text +=

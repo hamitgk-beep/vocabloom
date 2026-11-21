@@ -229,15 +229,20 @@ class WindowsUpdater {
     'set /a S=0',
     ':health',
     'ping -n 2 127.0.0.1 >nul',
-    // Windows' own tools by full path (a PATH with Git's "find" came first
-    // on the test runner) and with no input: the script has no console.
-    '"%SystemRoot%\\System32\\findstr.exe" /B "ok" "%VB_HEALTH%" < nul >nul 2>&1 && goto good',
+    // cmd's own commands only: findstr and tasklist did not get through to
+    // the end on the test runner (findstr may read a path like "İndirilen"
+    // in the ANSI code page).
+    'set H=',
+    'if exist "%VB_HEALTH%" set /p H=<"%VB_HEALTH%"',
+    'if "%H%"=="ok" goto good',
     'set /a S+=1',
     'set /a M=S %% 5',
     'if %M%==0 >> %LOG% echo %TIME% waiting for the new version to start (%S% s)',
     'if %S% GEQ %VB_WAITSTART% goto good',
     'if %S% LSS 5 goto health',
-    '"%SystemRoot%\\System32\\tasklist.exe" /NH /FI "IMAGENAME eq %EXENAME%" < nul 2>nul | "%SystemRoot%\\System32\\find.exe" /I "%EXENAME%" >nul && goto health',
+    // A running program's file cannot be opened for writing: while it is
+    // locked, the new version is still starting.
+    '(call ) 2>nul >>"%VB_EXE%" || goto health',
     'set WHY=start',
     '>> %LOG% echo %TIME% the new version closed before it started',
     'goto rollback',
