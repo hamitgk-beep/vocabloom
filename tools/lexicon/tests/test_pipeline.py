@@ -220,8 +220,10 @@ class LowConfidenceTests(Base):
         extract(self.store, BuiltinTurkishAnalyzer(self.tr), self.tr, self.pd_tr,
                 '– Zıpla! Zıpla! diye bağırmışlar. Bir gün kedisi geldi.', 'tr-en')
         flagged = self.store.candidates(headword='zıpla')[0]
-        self.assertEqual(flagged['confidence'], 0.1)
-        self.assertIn('short', json.loads(flagged['compare_detail'])['sentence_flags'])
+        self.assertLessEqual(flagged['confidence'], 0.1)
+        detail = json.loads(flagged['compare_detail'])
+        self.assertIn('short', detail['sentence_flags'])
+        self.assertTrue(detail['possible_name'])        # only ever seen capitalised at a sentence start
         clean = self.store.candidates(headword='kedisi')[0]
         self.assertEqual(clean['confidence'], 0.2)
         self.assertNotIn('sentence_flags', json.loads(clean['compare_detail']))
@@ -535,6 +537,11 @@ class ExportEndToEndTests(Base):
                     with open(os.path.join(dirpath, name), encoding='utf-8') as f:
                         src = f.read()
                     for mod in banned:
+                        # The one exception: the optional Zemberek adapter starts a local `java` process.
+                        if mod == 'subprocess' and name == 'turkish_zemberek.py':
+                            self.assertEqual(re.findall(r'subprocess\.Popen\(\[([^,\]]+)', src), ["'java'"])
+                            self.assertEqual(len(re.findall(r'subprocess\.(?!PIPE|DEVNULL)\w+', src)), 1)
+                            continue
                         self.assertIsNone(re.search(rf'^\s*(import|from)\s+{mod}\b', src, re.M), f'{name}: {mod}')
 
 

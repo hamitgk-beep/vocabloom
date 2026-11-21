@@ -2,7 +2,7 @@
 import re
 from abc import ABC, abstractmethod
 
-from .types import Sentence, Token, split_sentences
+from .types import Sentence, Token, split_sentences, starts_clause
 
 
 def _lower(s):
@@ -30,7 +30,7 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
     """Lexicon-based fallback with no third-party code: an inflected form is mapped to its lemma with the
     form table of the read-only tr_en.db view (`lexicon` needs has_lemma / lemmas_of_form / pos_of).
     Words after an apostrophe split ("Ali'nin") and capitalised words inside a sentence are proper nouns.
-    A future Zemberek (Apache-2.0, Java) adapter can implement the same interface."""
+    The optional Zemberek adapter (turkish_zemberek.py) implements the same interface."""
     name = 'builtin-tr'
     version = '1'
     licence = 'GPL-3.0 (Storilex source)'
@@ -69,9 +69,11 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
                     toks.append(Token(t, '', 'SUFFIX', False, m.start()))
                     after_apostrophe = False
                     continue
-                nxt_ap = i + 1 < len(parts) and parts[i + 1].group(0) in ("'", '’')
-                # Capitalised after the first word of the sentence (a leading dash or quote doesn't count).
-                propn = (t[0].isupper() and any(x.is_word for x in toks)) or nxt_ap
+                # "Ali'nin" (a lower-case "san'at" is an old spelling, not a name)
+                nxt_ap = t[0].isupper() and i + 1 < len(parts) and parts[i + 1].group(0) in ("'", '’')
+                # Capitalised after the first word of the sentence. A leading dash or quote doesn't count, and
+                # quoted speech after a dash or colon starts a new sentence ("dedi: — Kız ...").
+                propn = (t[0].isupper() and any(x.is_word for x in toks) and not starts_clause(toks)) or nxt_ap
                 lemma = '' if propn else self.lemma(t)
                 pos = 'PROPN' if propn else (self.lexicon.pos_of(lemma) if (self.lexicon and lemma) else '')
                 toks.append(Token(t, lemma, pos, True, m.start()))
@@ -82,4 +84,7 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
 def make_turkish(engine, lexicon=None):
     if engine == 'builtin':
         return BuiltinTurkishAnalyzer(lexicon)
-    raise ValueError(f'unknown Turkish engine: {engine} (available: builtin; Zemberek is planned)')
+    if engine == 'zemberek':
+        from .turkish_zemberek import ZemberekTurkishAnalyzer  # optional: needs setup_zemberek.sh
+        return ZemberekTurkishAnalyzer(lexicon)
+    raise ValueError(f'unknown Turkish engine: {engine} (choose builtin or zemberek)')

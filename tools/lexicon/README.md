@@ -90,10 +90,32 @@ Dışa aktarılanlar: `accepted` durumunda, `permission = allowed` olan ve Pytho
 
 | Dil | Adaptör | Bağımlılık | Not |
 |---|---|---|---|
-| İngilizce | `builtin` | yok | Düzensiz biçimler `dict.db/exc` tablosundan gelir, ekler kurallarla çözülüp sözlükte denetlenir. Phrasal verb yalnız fiil + edat cümle sonundaysa ya da zaten biliniyorsa bulunur |
-| İngilizce | `spacy` | spaCy + en_core_web_sm (MIT) | Ayrık phrasal verb'leri de bulur ("took it off"). Lemmayı yanlış bulursa yerleşik kurallara düşer |
+| İngilizce | `builtin` | yok | Düzensiz biçimler `dict.db/exc` tablosundan önce aranır ("sat" → "sit"), ekler kurallarla çözülüp sözlükte denetlenir (karşılaştırma ve üstünlük ekleri, ön ek + bilinen kelime dahil). Phrasal verb yalnız fiil + edat cümle sonundaysa ya da zaten biliniyorsa bulunur |
+| İngilizce | `spacy` | spaCy 3.8.18 + en_core_web_sm 3.8.0 (MIT) | Ayrık phrasal verb'leri de bulur ("took it off"). Özel adları etiket ve varlık tanımayla ayırır. Lemmayı sözlükle doğrular, yanlışsa yerleşik kurallara düşer. Tireli birleşikleri tek kelime tutar. Fiil + nesne eşdizim kanıtı toplar |
 | Türkçe | `builtin` | yok | Çekimli biçim `tr_en.db/form` ile lemmaya indirilir. Kesme işaretli sözcükler ve cümlenin ilk sözcüğünden sonra büyük harfle başlayan sözcükler özel ad sayılır |
-| Türkçe | Zemberek | – | Planlandı (Apache-2.0, Java). Aynı `TurkishAnalyzer` arayüzünü uygulayacak |
+| Türkçe | `zemberek` (deneysel) | Zemberek-NLP 0.18.0 (Apache-2.0), Java 21 | Biçimbirim çözümlemesi ve belirsizlik giderme ile kök bulur. Yerel bir `java` alt sürecinde çalışır, ağ kullanmaz. Zemberek'in kendi kelime listesi aday olarak kopyalanmaz |
+
+Kurulum tek komut, elle bir şey kurmak gerekmez. İkisi de yalnız `build/lexicon/` altına yazar, uygulamaya
+bağımlılık eklemez:
+
+```bash
+bash tools/lexicon/setup_spacy.sh      # build/lexicon/venv: sabit sürümler (requirements-spacy.txt + constraints-spacy.txt)
+bash tools/lexicon/setup_zemberek.sh   # build/lexicon/zemberek: SHA-256 ile sabitlenmiş jar'lar (zemberek/jars.lock)
+```
+
+## Aday türleri ve filtreler (extract)
+
+| Tür | Ne zaman yazılır | Güven |
+|---|---|---|
+| `word` | Lemma sözlükte yoksa | 0.4 (lemma bulundu), 0.2 (bulunamadı); bilinen parçalardan tireli birleşik, düşmüş harfli lehçe yazımı ("kep'"), ünlem ve yalnız cümle başında görülen kelime 0.1 |
+| `phrasal_verb` | Sözlükte olmayan fiil + edat | 0.3–0.6 |
+| `collocation` | spaCy fiil + nesne çifti, metinde en az 2 kez ve sözlükte yok ("make decision" → "make a decision" de denenir) | 0.2–0.5 |
+| `sense` | Bilinen bir kelime, sözlüğün listelemediği türde (isim ↔ fiil) en az 3 kez ve kullanımlarının en az %20'sinde | 0.2 |
+| `example` | Bilinen kelime ya da bilinen deyim / phrasal verb için kaynak başına bir cümle. Deyimler çekimli hâlleriyle de bulunur ("broke the ice" → "break the ice", "pulled my leg" → "pull someone's leg") | 0.3 |
+
+Özel adlar belge düzeyinde de aranır: bir kelime metnin bir yerinde cümle içinde büyük harfle yazılıp hiç küçük
+harfle geçmiyorsa, cümle başındaki kullanımları da ad sayılır ("Dinah was ..."). Kısaltmalar ("etc.") aday olmaz.
+Şüpheli cümlelerden gelen adayların güveni 0.1 düşer. Çeviri hiçbir zaman otomatik üretilmez.
 
 ## Kullanım (depo kökünden)
 
@@ -105,22 +127,36 @@ python3 tools/lexicon/run.py extract --source gutenberg-11 --text alice.txt     
 python3 tools/lexicon/run.py add-source --name elle --kind manual --licence Storilex --lang en
 python3 tools/lexicon/run.py add-sense --source elle --headword run --translation "işletmek" --pos verb
 python3 tools/lexicon/run.py summary
+python3 tools/lexicon/run.py gaps --out build/lexicon/gaps.md                            # eksik kelime/anlam raporu
 python3 tools/lexicon/run.py review --id 12 --status accepted --reviewer Hamit
 python3 tools/lexicon/run.py export --out build/lexicon/reviewed.jsonl
 ```
 
+spaCy ile: `build/lexicon/venv/bin/python tools/lexicon/run.py extract ... --engine spacy`. Türkçe kaynakta
+`--engine zemberek`. Yanlış dil için motor seçilirse komut aday yazmadan durur.
+
+`gaps`, aday veritabanındaki eksikleri (yeni kelime, olası yeni anlam, yeni phrasal verb / deyim / eşdizim) kaynaklar
+arasında birleştirip `.md` ve `.tsv` olarak yazar. En çok kaynakta görülenler başa gelir. Reddedilenler hariçtir.
+Kullanıcı kitabından gelen örnek cümleler rapora hiç yazılmaz, yalnız sayıları görünür.
+
 `add-sense` mevcut bir kelimeye **yeni anlam adayı** ekler. Anlam sözlükte varsa karşılaştırma `known_sense`,
 yoksa `possible_new_sense` yazar. Çeviriler otomatik üretilmez. Yön her zaman kaynağın dilinden çıkarılır.
 
-## Testler
+## Testler ve değerlendirme
 
 ```bash
-python3 -m unittest discover -s tools/lexicon/tests -t tools
+python3 -m unittest discover -s tools/lexicon/tests -t tools                       # standart kütüphane
+build/lexicon/venv/bin/python -m unittest discover -s tools/lexicon/tests -t tools # spaCy testleriyle
+build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py                      # başarı oranları
 ```
 
 Testler küçük, sentetik `dict.db`/`tr_en.db` kopyalarıyla çalışır. `RealAssetsTests` gerçek dosyalar varsa onları
-salt okunur açar ve SHA-256 değerinin ve değişiklik zamanının aynı kaldığını denetler. spaCy kurulu değilse spaCy testi
-atlanır. `SharingGuardTests` sahte kaynak, SQL ile alan değiştirme, silinen tetikleyici gibi saldırgan girdileri dener.
+salt okunur açar ve SHA-256 değerinin ve değişiklik zamanının aynı kaldığını denetler. spaCy ya da Zemberek kurulu
+değilse onların testleri atlanır. `SharingGuardTests` sahte kaynak, SQL ile alan değiştirme, silinen tetikleyici gibi
+saldırgan girdileri dener. `EvaluationThresholdTests`, etiketli 30 cümlede ölçülen kalitenin (kök doğruluğu, özel ad
+sızıntısı, phrasal verb kesinliği) belirlenen eşiklerin altına düşmediğini denetler.
+
+Ölçüm yöntemi ve sonuçlar: [eval/REPORT.md](eval/REPORT.md). Kitap düzeyinde çalıştırma: `eval/corpus.py`.
 
 ## Bilinen sınırlar
 
@@ -131,7 +167,13 @@ atlanır. `SharingGuardTests` sahte kaynak, SQL ile alan değiştirme, silinen t
 
   Böyle parçalar `sentence_flags` ile işaretlenir (`short`, `speech_inside`, `abbreviation`, `starts_lowercase`,
   `unbalanced_quotes`, `no_final_punctuation`). Bu parçalardan çıkan adaylar düşük güvenle kaydedilir.
-- Yerleşik İngilizce adaptör cümle başındaki özel adları (ör. "Dinah") yeni kelime sanabilir. spaCy bunları ayırır.
+- Yerleşik İngilizce adaptör cümle başındaki özel adları (ör. "Dinah") yeni kelime sanabilir. Belge düzeyindeki ad
+  kanıtı ve spaCy bunların çoğunu ayırır, kalanlar 0.1 güvenle `possible_name` işaretiyle yazılır.
+- spaCy, sözlükte olmayan kelimelerin kökünü bazen yanlış kurar ("covies" → "covie"). Lehçe yazımları (Tom Sawyer,
+  Treasure Island) sözlükte olmadığı için aday olur. Bunları ayıklamak gözden geçirenin işidir.
+- Eşdizim ve olası yeni anlam adayları gürültülüdür (bkz. rapor). Yeni anlamlar için asıl yol `add-sense`.
 - Yerleşik Türkçe adaptör `tr_en.db`'de olmayan çekimli biçimleri lemmaya indiremez. Bunlar `lemma` boş ve düşük
-  güvenle (`0.2`) kaydedilir.
-- Deyim çıkarımı henüz yok. Deyim ve eşdizim adayları şimdilik `add-sense --kind idiom` ile elle eklenir.
+  güvenle (`0.2`) kaydedilir. Zemberek bu adayların çoğunu köke indirir.
+- Zemberek cümle başındaki özel adları bazen sıradan kelime olarak çözer ("Ali" → "ali", sıfat).
+- Yeni deyim çıkarımı yok. Sözlükte kayıtlı deyimler metinde bulunup örnek cümle adayı olur. Yeni deyim ve eşdizim
+  adayları elle `add-sense --kind idiom` ile eklenir.

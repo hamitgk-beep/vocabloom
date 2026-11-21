@@ -25,6 +25,16 @@ def fold_tr(s):
     return s.replace('I', 'ı').replace('İ', 'i').lower().replace('̇', '').strip()
 
 
+_CIRCUMFLEX = str.maketrans('âîûÂÎÛ', 'aiuAIU')
+
+
+def _tr_keys(word):
+    """Lookup keys for a Turkish word: as written, then without circumflexes ("hakikî" -> "hakiki")."""
+    k = fold_tr(word)
+    plain = k.translate(_CIRCUMFLEX)
+    return [k] if plain == k else [k, plain]
+
+
 def _split_meanings(text):
     return {fold_tr(p) for p in re.split(r'[,;/]|\s\|\s', text or '') if p.strip()}
 
@@ -91,6 +101,43 @@ class EnTrDictionary:
             return True
         return self._has_own_expr and self._one('SELECT 1 FROM own_expr WHERE phrase = ? LIMIT 1', [p])
 
+    # Dictionary word classes: WordNet letters in `sense`, Turkish labels in own_word senses.
+    _OWN_POS = {'isim': 'n', 'fiil': 'v', 'deyimsel fiil': 'v', 'sıfat': 'a', 'zarf': 'r'}
+
+    def pos_set(self, word):
+        """Word classes the dictionary lists for a lemma: subset of {'n', 'v', 'a', 'r'} (empty = unknown)."""
+        w = word.lower()
+        out = {('a' if p == 's' else p) for (p,) in self.db.execute('SELECT DISTINCT pos FROM sense WHERE lemma = ?', [w])}
+        if self._has_own:
+            for (senses,) in self.db.execute('SELECT senses FROM own_word WHERE word = ?', [w]):
+                for s in _json_list(senses):
+                    if isinstance(s, dict) and s.get('pos') in self._OWN_POS:
+                        out.add(self._OWN_POS[s['pos']])
+        return out & {'n', 'v', 'a', 'r'}
+
+    _phrases = None
+    # Phrase categories matched in running text, and the candidate kind they map to.
+    PHRASE_CATS = {'idioms': 'idiom', 'proverbs': 'idiom', 'similes': 'idiom', 'binomials': 'idiom',
+                   'phrasal_verbs': 'phrasal_verb', 'collocations': 'collocation'}
+
+    def phrase_index(self):
+        """Known multi-word phrases by first word: {first: [(tokens, phrase, kind)]}, longest first."""
+        if self._phrases is None:
+            idx = {}
+            sql = 'SELECT phrase, cat FROM expr'
+            if self._has_own_expr:
+                sql += ' UNION SELECT phrase, cat FROM own_expr'
+            for phrase, cat in self.db.execute(sql):
+                kind = self.PHRASE_CATS.get(cat)
+                toks = tuple(re.findall(r"[a-z]+(?:'[a-z]+)?", (phrase or '').lower()))
+                if kind is None or not 2 <= len(toks) <= 6:
+                    continue
+                idx.setdefault(toks[0], []).append((toks, phrase.lower(), kind))
+            for v in idx.values():
+                v.sort(key=lambda e: -len(e[0]))
+            self._phrases = idx
+        return self._phrases
+
 
 class TrEnDictionary:
     """Read-only view of assets/tr_en.db (Turkish -> English)."""
@@ -101,8 +148,15 @@ class TrEnDictionary:
     def close(self):
         self.db.close()
 
+    def lemma_key(self, word):
+        """The headword as tr_en.db spells it ("hakikî" -> "hakiki"), or None."""
+        for k in _tr_keys(word):
+            if self.db.execute('SELECT 1 FROM lemma WHERE word = ?', [k]).fetchone():
+                return k
+        return None
+
     def has_lemma(self, word):
-        return self.db.execute('SELECT 1 FROM lemma WHERE word = ?', [fold_tr(word)]).fetchone() is not None
+        return self.lemma_key(word) is not None
 
     def lemmas_of_form(self, form):
         return [r[0] for r in self.db.execute(
@@ -110,13 +164,13 @@ class TrEnDictionary:
             [fold_tr(form)])]
 
     def pos_of(self, lemma):
-        r = self.db.execute('SELECT senses FROM lemma WHERE word = ?', [fold_tr(lemma)]).fetchone()
+        r = self.db.execute('SELECT senses FROM lemma WHERE word = ?', [self.lemma_key(lemma) or '']).fetchone()
         senses = _json_list(r[0]) if r else []
         return senses[0].get('p', '') if senses and isinstance(senses[0], dict) else ''
 
     def translations(self, word):
         out = set()
-        for (senses,) in self.db.execute('SELECT senses FROM lemma WHERE word = ?', [fold_tr(word)]):
+        for (senses,) in self.db.execute('SELECT senses FROM lemma WHERE word = ?', [self.lemma_key(word) or '']):
             for s in _json_list(senses):
                 if isinstance(s, dict):
                     for g in s.get('g', []):
@@ -130,6 +184,11 @@ class TrEnDictionary:
 def compare_word(dictionary, surface, lemma='', translation=''):
     """Classifies one word candidate against a dictionary view. Returns (result, detail)."""
     lemma = lemma or surface
+    if hasattr(dictionary, 'lemma_key') and dictionary.has_lemma(lemma):
+        same = fold_tr(lemma) == fold_tr(surface)
+        lemma = dictionary.lemma_key(lemma)        # dictionary spelling ("hakikî" -> "hakiki")
+        if same:
+            surface = lemma
     if dictionary.has_lemma(lemma):
         if translation:
             known = dictionary.translations(lemma)
@@ -143,11 +202,64 @@ def compare_word(dictionary, surface, lemma='', translation=''):
         if irregular:
             return 'known_form', {'lemma': irregular[0]}
     else:
-        lemmas = dictionary.lemmas_of_form(surface)
-        if lemmas:
-            return 'known_form', {'lemma': lemmas[0]}
+        # The analyzer's lemma may itself be a listed form ("fevkalâde" -> "fevkalade"), else the word as written.
+        for w in dict.fromkeys([lemma, surface]):
+            for k in _tr_keys(w):
+                lemmas = dictionary.lemmas_of_form(k)
+                if lemmas:
+                    return 'known_form', {'lemma': lemmas[0]}
     return 'new_headword', {}
 
 
 def compare_phrase(dictionary, phrase):
-    return ('known_phrase' if dictionary.has_phrase(phrase) else 'new_phrase'), {}
+    """known_phrase when the phrase, or a verb-object pair with an article or "one's" ("make decision" ->
+    "make a decision"), is in the dictionary."""
+    if dictionary.has_phrase(phrase):
+        return 'known_phrase', {}
+    parts = phrase.split()
+    if len(parts) == 2:
+        for filler in ('a', 'an', 'the', "one's", 'some'):
+            alt = f'{parts[0]} {filler} {parts[1]}'
+            if dictionary.has_phrase(alt):
+                return 'known_phrase', {'as': alt}
+    return 'new_phrase', {}
+
+
+# Placeholders in dictionary phrases ("pull someone's leg") and the words that may stand for them.
+_POSSESSIVES = {'my', 'your', 'his', 'her', 'its', 'our', 'their'}
+_SLOTS = {'someone', 'somebody', 'something', 'sb', 'sth', "someone's", "somebody's", "one's"}
+
+
+def _slot_ok(slot, word):
+    if slot in ("one's", "someone's", "somebody's"):
+        return word in _POSSESSIVES or word.endswith("'s")
+    return True
+
+
+def find_known_phrases(dictionary, tokens):
+    """Known dictionary phrases in a token list, matched on lemmas or on the words as written, so inflected
+    uses are found ("broke the ice" -> "break the ice"). Returns [(phrase, kind, start, end)]."""
+    if not hasattr(dictionary, 'phrase_index'):
+        return []
+    idx = dictionary.phrase_index()
+    words = [(t.lemma or t.text).lower() for t in tokens if t.is_word]
+    surface = [t.text.lower() for t in tokens if t.is_word]
+    found, i = [], 0
+    while i < len(words):
+        hit = None
+        for key in {words[i], surface[i]}:
+            for toks, phrase, kind in idx.get(key, ()):
+                n = len(toks)
+                if i + n > len(words):
+                    continue
+                if all(t == words[i + k] or t == surface[i + k] or (t in _SLOTS and _slot_ok(t, surface[i + k]))
+                       for k, t in enumerate(toks)) and toks[0] not in _SLOTS:
+                    if hit is None or n > hit[3] - hit[2]:
+                        hit = (phrase, kind, i, i + n)
+                    break
+        if hit:
+            found.append(hit)
+            i = hit[3]
+        else:
+            i += 1
+    return found
