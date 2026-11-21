@@ -1,9 +1,13 @@
 """Licence policy for candidate sources.
 
-A source is *shareable* (its candidates may later be proposed for the shared dictionary) only when its licence
-is on the permissive allow list and it is not a user's own imported book. Everything else stays private on
-the machine where it was extracted. Share-alike, copyleft, non-commercial and unknown licences are never
-shareable automatically: they need a separate, explicit decision by the project owner.
+A declared licence is only a claim. A source can become *shareable* (its reviewed candidates may later be
+proposed for the shared dictionary) only when all of these hold:
+  - its declared licence is on the permissive allow list below,
+  - it is not a user's own imported book,
+  - a named person has recorded a verification of that licence (store.approve_source, with evidence).
+Everything else stays private on the machine where it was extracted. Share-alike, copyleft, non-commercial and
+unknown licences cannot be verified with this tool at all: they need a separate decision by the project owner
+and a code change to the allow list.
 """
 
 # Normalised licence id -> human readable name. Permissive: attribution at most.
@@ -46,29 +50,35 @@ def normalise(licence):
     return s.replace(' ', '-')
 
 
-# Usage permission, stored separately from the licence itself.
-PERMISSIONS = ('allowed', 'needs_approval', 'unknown', 'private_only')
+# Licence class of a source, decided once from its declared licence and kind (stored on the source, which is
+# immutable). It is *not* a permission: a declared licence is only a claim. A source becomes shareable only after
+# a separate, recorded verification (store.approve_source), and only a `permissive` source can be verified.
+LICENCE_CLASSES = ('permissive', 'needs_approval', 'unknown', 'private_only')
+
+# Effective usage permission, derived from the licence class and the approval log (never typed in):
+#   allowed               permissive licence, verified by a named person: may be exported after review
+#   pending_verification  permissive licence declared, not yet verified
+#   needs_approval        known share-alike / copyleft / non-commercial licence: owner decides first, the tool
+#                         cannot verify it
+#   unknown               licence missing or not recognised
+#   private_only          the user's own imported book: never shared
+PERMISSIONS = ('allowed', 'pending_verification', 'needs_approval', 'unknown', 'private_only')
 
 
 def classify(licence, kind):
-    """Returns (licence_id, permission, shareable, review_note).
-
-    permission: allowed        permissive licence, may be proposed for the shared dictionary after review
-                needs_approval known share-alike / copyleft / non-commercial licence: owner decides first
-                unknown        licence missing or not recognised
-                private_only   the user's own imported book, or a shipped dictionary"""
+    """Returns (licence_id, licence_class, note)."""
     if kind not in SOURCE_KINDS:
         raise ValueError(f'unknown source kind: {kind}')
     lid = normalise(licence)
     if kind == 'user_book':
         # Copyrighted books the user imported: never shared, whatever licence is claimed.
-        return lid or 'unknown', 'private_only', False, 'user-imported book: candidates stay private'
+        return lid or 'unknown', 'private_only', 'user-imported book: candidates stay private'
     if kind == 'existing_dictionary':
-        return lid or 'unknown', 'private_only', False, 'shipped dictionary: read-only reference, not a candidate source'
+        return lid or 'unknown', 'private_only', 'shipped dictionary: read-only reference, not a candidate source'
     if lid in PERMISSIVE:
-        return lid, 'allowed', True, ''
+        return lid, 'permissive', 'declared permissive licence: needs a recorded verification before sharing'
     if lid in NEEDS_APPROVAL:
-        return lid, 'needs_approval', False, f'{NEEDS_APPROVAL[lid]} needs a separate approval before sharing'
+        return lid, 'needs_approval', f'{NEEDS_APPROVAL[lid]} needs a separate approval before sharing'
     if not lid:
-        return 'unknown', 'unknown', False, 'licence unknown: needs review'
-    return lid, 'unknown', False, f'licence "{licence}" not on the allow list: needs review'
+        return 'unknown', 'unknown', 'licence unknown: needs review'
+    return lid, 'unknown', f'licence "{licence}" not on the allow list: needs review'

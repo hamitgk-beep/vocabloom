@@ -71,12 +71,12 @@ class BuiltinEnglishAnalyzer(EnglishAnalyzer):
         out = []
         for s in split_sentences(text):
             toks = []
-            for i, m in enumerate(_WORD.finditer(s)):
+            for m in _WORD.finditer(s):
                 t = m.group(0)
                 # Contractions (didn't, it'll) are not dictionary headwords; possessive 's is kept.
                 is_word = t[0].isalpha() and not ("'" in t.replace('’', "'") and not t.lower().endswith(("'s", "’s")))
                 pos = ''
-                if is_word and t[0].isupper() and i > 0 and not t.isupper() and t != 'I':
+                if is_word and t[0].isupper() and any(x.is_word for x in toks) and not t.isupper() and t != 'I':
                     pos = 'PROPN'
                 toks.append(Token(t, self.lemma(t) if is_word else t, pos, is_word, m.start()))
             sent = Sentence(s, toks)

@@ -8,6 +8,7 @@ Each test class maps to one of the acceptance points of the first PR:
   5 the dictionaries are not changed   DictionaryIntegrityTests (synthetic) and RealAssetsTests (real files)
 plus: no automatic acceptance, adapters, path guards.
 """
+import json
 import os
 import sqlite3
 import tempfile
@@ -16,9 +17,10 @@ import unittest
 from lexicon.tests.helpers import REPO, make_dict_db, make_tr_en_db, sha256  # noqa: F401 (sets sys.path)
 from lexicon.adapters.english import BuiltinEnglishAnalyzer, make_english
 from lexicon.adapters.turkish import BuiltinTurkishAnalyzer
+from lexicon.adapters.types import sentence_flags, split_sentences
 from lexicon.compare import EnTrDictionary, TrEnDictionary, compare_word
 from lexicon.extract import add_sense, extract
-from lexicon.store import CandidateStore
+from lexicon.store import TRIGGERS, CandidateStore, IntegrityError
 
 EN_TEXT = ('Alice was very tired of sitting by the hole. She gave up. The rabbit ran away. '
            'Then the quokka stopped and it hopped up.')
@@ -95,6 +97,136 @@ class DirectionTests(Base):
         self.assertEqual(compare_word(self.tr, 'kedi')[0], 'new_headword')
 
 
+class RouteValidationTests(Base):
+    """Every entry point refuses a source / direction / dictionary / analyzer mix that doesn't fit,
+    before writing anything."""
+
+    def assertRefused(self, fn):
+        before = self.store.count()
+        with self.assertRaises(ValueError):
+            fn()
+        self.assertEqual(self.store.count(), before)
+
+    def test_extract_wrong_combinations(self):
+        en_an, tr_an = BuiltinEnglishAnalyzer(self.en), BuiltinTurkishAnalyzer(self.tr)
+        bad = [
+            (en_an, self.tr, self.pd_en, EN_TEXT, 'en-tr'),   # English source, Turkish dictionary
+            (tr_an, self.en, self.pd_en, EN_TEXT, 'en-tr'),   # Turkish analyzer for en-tr
+            (en_an, self.en, self.pd_tr, TR_TEXT, 'en-tr'),   # Turkish source for en-tr
+            (tr_an, self.tr, self.pd_en, TR_TEXT, 'tr-en'),   # English source for tr-en
+            (en_an, self.tr, self.pd_tr, TR_TEXT, 'tr-en'),   # English analyzer for tr-en
+            (tr_an, self.en, self.pd_tr, TR_TEXT, 'tr-en'),   # English dictionary for tr-en
+            (en_an, self.en, self.pd_en, EN_TEXT, 'en-en'),   # unknown direction
+            (en_an, self.en, 999, EN_TEXT, 'en-tr'),          # unknown source
+        ]
+        for analyzer, dictionary, sid, text, direction in bad:
+            self.assertRefused(lambda: extract(self.store, analyzer, dictionary, sid, text, direction))
+
+    def test_add_sense_wrong_combinations(self):
+        bad = [
+            (self.en, self.pd_en, 'tr-en'), (self.tr, self.pd_en, 'en-tr'), (self.tr, self.pd_en, 'tr-en'),
+            (self.en, self.pd_tr, 'tr-en'), (self.en, self.pd_tr, 'en-tr'), (self.tr, self.pd_tr, 'en-tr'),
+            (self.en, self.pd_en, 'EN-TR'), (self.en, 999, 'en-tr'),
+        ]
+        for dictionary, sid, direction in bad:
+            self.assertRefused(lambda: add_sense(self.store, dictionary, sid, direction, 'run', 'yönetmek'))
+
+    def test_store_wrong_combinations(self):
+        for sid, direction in ((self.pd_en, 'tr-en'), (self.pd_tr, 'en-tr'), (self.pd_en, 'xx')):
+            self.assertRefused(lambda: self.store.add_candidate(kind='word', direction=direction, headword='x',
+                                                                source_id=sid, engine='t'))
+        with self.assertRaises(ValueError):
+            self.store.add_source('bad-lang', 'public_domain_text', 'Public domain', 'de')
+
+    def test_both_directions_still_work(self):
+        self.assertEqual(self.store.get(add_sense(self.store, self.en, self.pd_en, 'en-tr', 'run', 'yönetmek'))
+                         ['direction'], 'en-tr')
+        self.assertEqual(self.store.get(add_sense(self.store, self.tr, self.pd_tr, 'tr-en', 'ev', 'household'))
+                         ['direction'], 'tr-en')
+
+    def test_command_line_derives_direction_from_source(self):
+        import contextlib
+        import io
+        from lexicon import run
+        db = os.path.join(self.tmp.name, 'out', 'cli.db')
+        common = ['--db', db, '--dict-db', self.dict_path, '--tr-en-db', self.tr_en_path]
+        text = os.path.join(self.tmp.name, 'tr.txt')
+        with open(text, 'w', encoding='utf-8') as f:
+            f.write(TR_TEXT)
+        with contextlib.redirect_stdout(io.StringIO()):
+            run.main(common + ['add-source', '--name', 'hoca', '--kind', 'public_domain_text',
+                               '--licence', 'Public domain', '--lang', 'tr'])
+            run.main(common + ['extract', '--source', 'hoca', '--text', text])
+            run.main(common + ['add-sense', '--source', 'hoca', '--headword', 'ev', '--translation', 'household'])
+            with self.assertRaises(SystemExit):     # only the builtin Turkish engine exists
+                run.main(common + ['extract', '--source', 'hoca', '--text', text, '--engine', 'spacy'])
+        store = CandidateStore(db)
+        try:
+            self.assertEqual({r['direction'] for r in store.candidates()}, {'tr-en'})
+            self.assertEqual(store.candidates(kind='sense')[0]['compare_result'], 'possible_new_sense')
+        finally:
+            store.close()
+        self.assertEqual((sha256(self.dict_path), sha256(self.tr_en_path)), self.hashes)
+
+
+class SentenceSplitterTests(unittest.TestCase):
+    """Behaviour and known limits of the dependency-free splitter."""
+
+    def split(self, text):
+        return split_sentences(text)
+
+    def test_abbreviations_and_initials(self):
+        self.assertEqual(self.split('Mr. Smith met Dr. Brown at St. Paul. They talked.'),
+                         ['Mr. Smith met Dr. Brown at St. Paul.', 'They talked.'])
+        self.assertEqual(self.split('J. K. Rowling wrote it. Then she left.'),
+                         ['J. K. Rowling wrote it.', 'Then she left.'])
+        self.assertEqual(self.split('Prof. Dr. Ayşe Kaya geldi. Kalem, defter vb. aldı. Sonra gitti.'),
+                         ['Prof. Dr. Ayşe Kaya geldi.', 'Kalem, defter vb. aldı.', 'Sonra gitti.'])
+
+    def test_turkish_capitals_start_sentences(self):
+        self.assertEqual(self.split("Şu an İstanbul'dayız. Çok güzel! Öyle mi? Ümit geldi… Işık yandı."),
+                         ["Şu an İstanbul'dayız.", 'Çok güzel!', 'Öyle mi?', 'Ümit geldi…', 'Işık yandı.'])
+
+    def test_numbers_quotes_and_dialogue(self):
+        self.assertEqual(self.split('It costs 3.5 dollars. He said "Go!" Then he went.'),
+                         ['It costs 3.5 dollars.', 'He said "Go!"', 'Then he went.'])
+        self.assertEqual(self.split("'Oh dear!' said the Rabbit. 'I shall be late!' The Rabbit ran."),
+                         ["'Oh dear!' said the Rabbit.", "'I shall be late!'", 'The Rabbit ran.'])
+        self.assertEqual(self.split('Wait... what? No!'), ['Wait... what?', 'No!'])
+
+    def test_known_limits_are_flagged(self):
+        # Known limit: Turkish dash dialogue followed by a capitalised repetition is cut in two.
+        parts = self.split('– Ver elini! Ver elini! diye seslenmişler. Ama oralı olmamış.')
+        self.assertEqual(parts, ['– Ver elini!', 'Ver elini! diye seslenmişler.', 'Ama oralı olmamış.'])
+        self.assertIn('short', sentence_flags(parts[0]))
+        self.assertIn('speech_inside', sentence_flags(parts[1]))
+        self.assertEqual(sentence_flags(parts[2]), [])
+        # Known limit: an abbreviation at the true end of a sentence joins it with the next one.
+        joined = self.split('He bought apples, pears etc. Then he left.')
+        self.assertEqual(len(joined), 1)
+        self.assertIn('abbreviation', sentence_flags(joined[0]))
+        self.assertIn('starts_lowercase', sentence_flags('e.g. this is odd.'))
+        self.assertIn('no_final_punctuation', sentence_flags('The end of a heading'))
+        self.assertIn('unbalanced_quotes', sentence_flags('He said "Go and see.'))
+        self.assertEqual(sentence_flags('She went home early.'), [])
+
+    def test_headings_and_blank_lines(self):
+        self.assertEqual(self.split('# Chapter I\n\nFirst one. Second one.\n\n\nThird one'),
+                         ['First one.', 'Second one.', 'Third one'])
+
+
+class LowConfidenceTests(Base):
+    def test_flagged_sentences_give_low_confidence_candidates(self):
+        extract(self.store, BuiltinTurkishAnalyzer(self.tr), self.tr, self.pd_tr,
+                '– Zıpla! Zıpla! diye bağırmışlar. Bir gün kedisi geldi.', 'tr-en')
+        flagged = self.store.candidates(headword='zıpla')[0]
+        self.assertEqual(flagged['confidence'], 0.1)
+        self.assertIn('short', json.loads(flagged['compare_detail'])['sentence_flags'])
+        clean = self.store.candidates(headword='kedisi')[0]
+        self.assertEqual(clean['confidence'], 0.2)
+        self.assertNotIn('sentence_flags', json.loads(clean['compare_detail']))
+
+
 class NewSenseTests(Base):
     def test_new_sense_for_existing_english_word(self):
         cid = add_sense(self.store, self.en, self.pd_en, 'en-tr', 'run', 'yönetmek', pos='verb',
@@ -128,16 +260,20 @@ class ProvenanceTests(Base):
         sa = self.store.add_source('wiki', 'open_license_text', 'CC BY-SA 4.0', 'en')
         unk = self.store.add_source('blog', 'open_license_text', '', 'en')
         book = self.store.add_source('my-novel', 'user_book', 'All rights reserved', 'en')
+        approved = self.store.add_source('checked-pd', 'public_domain_text', 'Public domain', 'en')
+        self.store.approve_source(approved, 'Hamit', 'https://www.gutenberg.org/ebooks/11')
         expect = {
-            self.pd_en: ('public_domain_text', 'public-domain', 'allowed', 1, 'shared'),
-            sa: ('open_license_text', 'cc-by-sa-4.0', 'needs_approval', 0, 'private'),
-            unk: ('open_license_text', 'unknown', 'unknown', 0, 'private'),
-            book: ('user_book', 'all-rights-reserved', 'private_only', 0, 'private'),
+            # kind, declared licence, licence class, usage permission, scope
+            self.pd_en: ('public_domain_text', 'public-domain', 'permissive', 'pending_verification', 'private'),
+            approved: ('public_domain_text', 'public-domain', 'permissive', 'allowed', 'shared'),
+            sa: ('open_license_text', 'cc-by-sa-4.0', 'needs_approval', 'needs_approval', 'private'),
+            unk: ('open_license_text', 'unknown', 'unknown', 'unknown', 'private'),
+            book: ('user_book', 'all-rights-reserved', 'private_only', 'private_only', 'private'),
         }
-        for sid, (kind, lic, perm, shareable, scope) in expect.items():
+        for sid, (kind, lic, cls, perm, scope) in expect.items():
             src = self.store.source(sid)
-            self.assertEqual((src['kind'], src['licence'], src['permission'], src['shareable']),
-                             (kind, lic, perm, shareable))
+            self.assertEqual((src['kind'], src['licence'], src['licence_class'], src['permission']),
+                             (kind, lic, cls, perm))
             c = self.store.get(self.store.add_candidate(kind='word', direction='en-tr', headword=f'w{sid}',
                                                         source_id=sid, engine='test', locator='ch1#p2'))
             self.assertEqual((c['source_id'], c['licence'], c['permission'], c['scope'], c['locator'],
@@ -182,35 +318,176 @@ class ReviewTests(Base):
 
 
 class SharingGuardTests(Base):
-    def test_only_reviewed_permissive_candidates_are_exported(self):
+    def _accepted(self, sid, head):
+        cid = self.store.add_candidate(kind='word', direction='en-tr', headword=head, source_id=sid, engine='t')
+        self.store.review(cid, 'accepted', 'Hamit')
+        return cid
+
+    def _exported(self):
+        out = os.path.join(self.tmp.name, 'out', 'reviewed.jsonl')
+        n = self.store.export_reviewed_shared(out)
+        with open(out, encoding='utf-8') as f:
+            heads = [json.loads(l)['headword'] for l in f]
+        self.assertEqual(n, len(heads))
+        return heads
+
+    def test_only_reviewed_verified_permissive_candidates_are_exported(self):
         sa = self.store.add_source('wiki', 'open_license_text', 'CC BY-SA 4.0', 'en')
         nc = self.store.add_source('nc', 'open_license_text', 'CC BY-NC-SA 4.0', 'en')
         unk = self.store.add_source('blog', 'open_license_text', 'my own terms', 'en')
         book = self.store.add_source('my-novel', 'user_book', 'Public domain', 'en')  # claim ignored for books
-        ids = {}
-        for name, sid in [('pd', self.pd_en), ('sa', sa), ('nc', nc), ('unk', unk), ('book', book)]:
-            ids[name] = self.store.add_candidate(kind='word', direction='en-tr', headword=name, source_id=sid,
-                                                 engine='t')
-            self.store.review(ids[name], 'accepted', 'Hamit')
+        mit = self.store.add_source('mit-unverified', 'open_license_text', 'MIT', 'en')
+        self.store.approve_source(self.pd_en, 'Hamit', 'gutenberg.org licence page')
+        for name, sid in [('pd', self.pd_en), ('sa', sa), ('nc', nc), ('unk', unk), ('book', book), ('mit', mit)]:
+            self._accepted(sid, name)
         self.store.add_candidate(kind='word', direction='en-tr', headword='pd-unreviewed', source_id=self.pd_en,
                                  engine='t')
-        out = os.path.join(self.tmp.name, 'out', 'reviewed.jsonl')
-        self.assertEqual(self.store.export_reviewed_shared(out), 1)
-        with open(out, encoding='utf-8') as f:
-            self.assertEqual([__import__('json').loads(l)['headword'] for l in f], ['pd'])
+        self.assertEqual(self._exported(), ['pd'])
 
-    def test_private_candidate_cannot_be_forced_shared(self):
+    def test_declared_mit_alone_is_not_shareable(self):
+        sid = self.store.add_source('says-mit', 'open_license_text', '--licence MIT'.split()[1], 'en')
+        self.assertEqual(self.store.source(sid)['permission'], 'pending_verification')
+        self._accepted(sid, 'x')
+        self.assertEqual(self._exported(), [])
+        self.store.approve_source(sid, 'Hamit', 'https://example.org/LICENSE checked')
+        self.assertEqual(self._exported(), ['x'])
+        self.store.revoke_source(sid, 'Hamit', 'licence page changed')
+        self.assertEqual(self._exported(), [])
+        log = self.store.db.execute('SELECT decision, approver FROM source_approval WHERE source_id = ? ORDER BY id',
+                                    [sid]).fetchall()
+        self.assertEqual([tuple(r) for r in log], [('approve', 'Hamit'), ('revoke', 'Hamit')])
+
+    def test_approval_needs_person_evidence_and_permissive_licence(self):
+        sa = self.store.add_source('wiki', 'open_license_text', 'CC BY-SA 4.0', 'en')
+        book = self.store.add_source('my-novel', 'user_book', 'MIT', 'en')
+        unk = self.store.add_source('blog', 'open_license_text', '', 'en')
+        for sid in (sa, book, unk):
+            with self.assertRaises(ValueError):
+                self.store.approve_source(sid, 'Hamit', 'looks fine')
+            with self.assertRaises(sqlite3.IntegrityError):        # direct SQL is refused as well
+                self.store.db.execute("INSERT INTO source_approval(source_id, decision, approver, evidence, at) "
+                                      "VALUES (?, 'approve', 'x', 'y', 'now')", [sid])
+        for approver, evidence in (('', 'url'), ('Hamit', ''), ('  ', '  ')):
+            with self.assertRaises(ValueError):
+                self.store.approve_source(self.pd_en, approver, evidence)
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.store.db.execute("INSERT INTO source_approval(source_id, decision, approver, evidence, at) "
+                                  "VALUES (?, 'approve', ' ', ' ', 'now')", [self.pd_en])
+
+    def test_source_fields_cannot_be_changed_with_sql(self):
         book = self.store.add_source('my-novel', 'user_book', '', 'en')
-        cid = self.store.add_candidate(kind='word', direction='en-tr', headword='x', source_id=book, engine='t')
-        with self.assertRaises(sqlite3.IntegrityError):
-            self.store.db.execute("UPDATE candidate SET scope = 'shared' WHERE id = ?", [cid])
-        with self.assertRaises(sqlite3.IntegrityError):
-            self.store.db.execute("UPDATE source SET shareable = 1 WHERE id = ?", [book])
+        attacks = [
+            "UPDATE source SET licence = 'mit', licence_class = 'permissive', kind = 'open_license_text' WHERE id = ?",
+            "UPDATE source SET kind = 'public_domain_text' WHERE id = ?",
+            "UPDATE source SET licence_class = 'permissive' WHERE id = ?",
+            "UPDATE source SET lang = 'tr' WHERE id = ?",
+            "UPDATE source SET licence = 'public-domain' WHERE id = ?",
+            "DELETE FROM source WHERE id = ?",
+        ]
+        for sql in attacks:
+            with self.assertRaises(sqlite3.IntegrityError, msg=sql):
+                self.store.db.execute(sql, [book])
+        for sql in ("UPDATE source SET permission = 'allowed'", "UPDATE source SET shareable = 1",
+                    "UPDATE candidate SET scope = 'shared'", "UPDATE candidate SET permission = 'allowed'"):
+            with self.assertRaises(sqlite3.OperationalError, msg=sql):   # derived, not stored: no such column
+                self.store.db.execute(sql)
+        self.assertEqual(self.store.source(book)['permission'], 'private_only')
+
+    def test_forged_sources_are_refused(self):
+        forged = [
+            ('book-as-permissive', 'user_book', 'mit', 'permissive'),
+            ('sa-as-permissive', 'open_license_text', 'cc-by-sa-4.0', 'permissive'),
+            ('unknown-as-permissive', 'open_license_text', 'whatever', 'permissive'),
+            ('mit-as-unknown', 'open_license_text', 'mit', 'unknown'),   # would hide a class mismatch
+            ('pd-as-private', 'public_domain_text', 'public-domain', 'private_only'),
+        ]
+        for name, kind, lic, cls in forged:
+            with self.assertRaises(sqlite3.IntegrityError, msg=name):
+                self.store.db.execute("INSERT INTO source(name, kind, licence, licence_class, lang, added_at) "
+                                      "VALUES (?, ?, ?, ?, 'en', 'now')", [name, kind, lic, cls])
+
+    def test_candidates_cannot_drift_from_their_source(self):
+        book = self.store.add_source('my-novel', 'user_book', '', 'en')
+        self.store.approve_source(self.pd_en, 'Hamit', 'checked')
+        cid = self._accepted(book, 'x')
+        for sql in ("UPDATE candidate SET source_id = %d WHERE id = ?" % self.pd_en,
+                    "UPDATE candidate SET licence = 'public-domain' WHERE id = ?",
+                    "UPDATE candidate SET direction = 'tr-en' WHERE id = ?",
+                    "UPDATE candidate SET headword = 'y' WHERE id = ?"):
+            with self.assertRaises(sqlite3.IntegrityError, msg=sql):
+                self.store.db.execute(sql, [cid])
+        with self.assertRaises(sqlite3.IntegrityError):            # licence snapshot must match the source
+            self.store.db.execute("INSERT INTO candidate(kind, direction, headword, source_id, licence, engine, "
+                                  "created_at, updated_at) VALUES ('word', 'en-tr', 'z', ?, 'mit', 't', 'n', 'n')",
+                                  [book])
+        with self.assertRaises(sqlite3.IntegrityError):            # direction must match the source language
+            self.store.db.execute("INSERT INTO candidate(kind, direction, headword, source_id, licence, engine, "
+                                  "created_at, updated_at) VALUES ('word', 'tr-en', 'z', ?, 'public-domain', 't', "
+                                  "'n', 'n')", [self.pd_en])
+        self.assertEqual(self._exported(), [])
+
+    def test_accepted_by_sql_without_reviewer_is_refused(self):
+        self.store.approve_source(self.pd_en, 'Hamit', 'checked')
+        cid = self.store.add_candidate(kind='word', direction='en-tr', headword='x', source_id=self.pd_en, engine='t')
+        for sql in ("UPDATE candidate SET status = 'accepted' WHERE id = ?",
+                    "UPDATE candidate SET status = 'accepted', reviewer = '   ' WHERE id = ?"):
+            with self.assertRaises(sqlite3.IntegrityError, msg=sql):
+                self.store.db.execute(sql, [cid])
+        self.assertEqual(self._exported(), [])
+
+    def test_logs_are_append_only(self):
+        cid = self._accepted(self.pd_en, 'x')
+        self.store.approve_source(self.pd_en, 'Hamit', 'checked')
+        for sql in ("UPDATE review_log SET reviewer = 'someone'", "DELETE FROM review_log",
+                    "UPDATE source_approval SET approver = 'someone'", "DELETE FROM source_approval"):
+            with self.assertRaises(sqlite3.IntegrityError, msg=sql):
+                self.store.db.execute(sql)
+        self.assertEqual(self.store.get(cid)['reviewer'], 'Hamit')
+
+    def test_dropped_trigger_blocks_export_and_reopen(self):
+        book = self.store.add_source('my-novel', 'user_book', '', 'en')
+        self._accepted(book, 'x')
+        self.store.db.execute('DROP TRIGGER source_no_update')
+        self.store.db.commit()
+        with self.assertRaises(IntegrityError):
+            self.store.export_reviewed_shared(os.path.join(self.tmp.name, 'out', 'e.jsonl'))
+        path = self.store.path
+        self.store.close()
+        self.store = CandidateStore(path)        # a missing trigger is put back on open ...
+        self.store.db.execute("DROP TRIGGER approval_insert_check")
+        self.store.db.execute("CREATE TRIGGER approval_insert_check BEFORE INSERT ON source_approval "
+                              "BEGIN SELECT 1; END")    # ... and a rewritten one is detected
+        with self.assertRaises(IntegrityError):
+            self.store.verify_integrity()
+
+    def test_python_recheck_catches_bypassed_sql(self):
+        # Even with the triggers dropped and put back, the export re-checks the rules in Python.
+        self.store.db.execute('DROP TRIGGER source_insert_check')
+        self.store.db.execute('DROP TRIGGER approval_insert_check')
+        self.store.db.execute("INSERT INTO source(name, kind, licence, licence_class, lang, added_at) "
+                              "VALUES ('forged', 'open_license_text', 'cc-by-sa-4.0', 'permissive', 'en', 'now')")
+        sid = self.store.db.execute("SELECT id FROM source WHERE name = 'forged'").fetchone()[0]
+        self.store.db.execute("INSERT INTO source_approval(source_id, decision, approver, evidence, at) "
+                              "VALUES (?, 'approve', 'x', 'y', 'now')", [sid])
+        self.store.db.execute(TRIGGERS['source_insert_check'])
+        self.store.db.execute(TRIGGERS['approval_insert_check'])
+        self.assertEqual(self.store.source(sid)['permission'], 'allowed')     # SQL view was fooled ...
+        self._accepted(sid, 'x')
+        self.assertEqual(self._exported(), [])                                # ... the export was not
 
     def test_user_book_extraction_stays_private(self):
         book = self.store.add_source('my-novel', 'user_book', '', 'en')
         extract(self.store, BuiltinEnglishAnalyzer(self.en), self.en, book, EN_TEXT, 'en-tr')
         self.assertEqual({r['scope'] for r in self.store.candidates(source_id=book)}, {'private'})
+
+    def test_existing_source_name_cannot_be_reused_with_other_licence(self):
+        self.store.add_source('my-novel', 'user_book', '', 'en')
+        with self.assertRaises(ValueError):
+            self.store.add_source('my-novel', 'public_domain_text', 'Public domain', 'en')
+
+    def test_query_filter_rejects_unknown_columns(self):
+        with self.assertRaises(ValueError):
+            self.store.candidates(**{"1=1 OR status": 'x'})
 
 
 class DictionaryIntegrityTests(Base):
@@ -253,6 +530,13 @@ class AdapterTests(Base):
         self.assertIn("Rabbit's", words)
         phrases = {p.phrase for s in sent for p in s.phrases}
         self.assertEqual(phrases, {'run off'})          # "it off": "it" is not a verb
+
+    def test_word_after_leading_dash_or_quote_is_not_a_proper_noun(self):
+        tr = BuiltinTurkishAnalyzer(self.tr).analyze('– Eve gitti.')[0]
+        self.assertEqual({t.text: t.pos for t in tr.tokens}['Eve'], 'noun')
+        en = BuiltinEnglishAnalyzer(self.en).analyze("'Rabbit,' said Alice.")[0]
+        pos = {t.text: t.pos for t in en.tokens}
+        self.assertEqual((pos['Rabbit'], pos['Alice']), ('', 'PROPN'))
 
     def test_turkish_builtin_tokens(self):
         sent = BuiltinTurkishAnalyzer(self.tr).analyze("Ali'nin evde İstanbul'a gitti.")[0]

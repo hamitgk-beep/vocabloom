@@ -70,7 +70,8 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
                     after_apostrophe = False
                     continue
                 nxt_ap = i + 1 < len(parts) and parts[i + 1].group(0) in ("'", '’')
-                propn = (t[0].isupper() and i > 0) or nxt_ap
+                # Capitalised after the first word of the sentence (a leading dash or quote doesn't count).
+                propn = (t[0].isupper() and any(x.is_word for x in toks)) or nxt_ap
                 lemma = '' if propn else self.lemma(t)
                 pos = 'PROPN' if propn else (self.lexicon.pos_of(lemma) if (self.lexicon and lemma) else '')
                 toks.append(Token(t, lemma, pos, True, m.start()))

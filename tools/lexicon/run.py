@@ -1,6 +1,7 @@
 """Command line for the lexicon candidate pipeline. Run from the repository root:
 
   python3 tools/lexicon/run.py add-source --name alice --kind public_domain_text --licence "Public domain" --lang en
+  python3 tools/lexicon/run.py approve-source --source alice --approver Hamit --evidence "https://www.gutenberg.org/ebooks/11"
   python3 tools/lexicon/run.py extract --source alice --text book.txt [--engine builtin|spacy]
   python3 tools/lexicon/run.py add-sense --source manual-en --headword run --translation "yönetmek"
   python3 tools/lexicon/run.py review --id 12 --status accepted --reviewer Hamit
@@ -56,6 +57,12 @@ def main(argv=None):
     s.add_argument('--licence', default='')
     s.add_argument('--licence-url', default='')
     s.add_argument('--lang', required=True, choices=['en', 'tr'])
+    for cmd in ('approve-source', 'revoke-source'):
+        s = sub.add_parser(cmd, help='record a licence verification (needed before export)'
+                           if cmd == 'approve-source' else 'withdraw a licence verification')
+        s.add_argument('--source', required=True)
+        s.add_argument('--approver', required=True)
+        s.add_argument('--evidence', required=True, help='licence URL or how the licence was checked')
     s = sub.add_parser('extract')
     s.add_argument('--source', required=True)
     s.add_argument('--text', required=True)
@@ -84,6 +91,11 @@ def main(argv=None):
     try:
         if args.cmd == 'add-source':
             sid = store.add_source(args.name, args.kind, args.licence, args.lang, args.licence_url)
+            print(json.dumps(dict(store.source(sid)), ensure_ascii=False))
+        elif args.cmd in ('approve-source', 'revoke-source'):
+            sid = _source_id(store, args.source)
+            (store.approve_source if args.cmd == 'approve-source' else store.revoke_source)(
+                sid, args.approver, args.evidence)
             print(json.dumps(dict(store.source(sid)), ensure_ascii=False))
         elif args.cmd in ('extract', 'add-sense'):
             sid = _source_id(store, args.source)
@@ -116,7 +128,7 @@ def main(argv=None):
         elif args.cmd == 'summary':
             print(json.dumps(store.summary(), ensure_ascii=False, indent=1))
         elif args.cmd == 'export':
-            print(f'{store.export_reviewed_shared(args.out)} reviewed shared candidates written to {args.out}')
+            print(f'{store.export_reviewed_shared(args.out)} reviewed candidates from verified sources written to {args.out}')
     finally:
         store.close()
 
