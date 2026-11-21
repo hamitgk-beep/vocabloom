@@ -20,27 +20,41 @@ SavedWord saved(String lemma, String? ctx) => SavedWord(lemma, WordStatus.learni
 void main() {
   final d = openDict();
 
-  test('golf course: the right answer is the sports-ground sense, never "akmak"', () {
-    final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
+  test('golf course: the sentence meaning is the sports ground, never "akmak"', () {
     const s = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
     final m = d.meaningIn('course', s);
     expect(m.pos, 'n');
     expect(m.sense?.gloss, contains('sport'));
     expect(m.tr ?? '', isNot(contains('akmak')));
-    final q = ReviewQuiz(d, u, rnd: Random(1));
-    final ch = q.choiceFor(saved('course', s));
-    if (ch != null) {
-      expect(ch.right, isNot(contains('akmak')));
-      expect(ch.options.where((o) => o.contains('akmak') || o.contains('ders')), isEmpty);
-    }
-    // With a meaning from the AI service the question uses it.
-    u.setContextAi('course', s, 'saha, golf sahası');
-    final ch2 = ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved('course', s))!;
-    expect(ch2.right, 'saha, golf sahası');
-    expect(ch2.options.toSet().length, 4);
   });
 
-  test('simply in "simply by reason of" is "sadece, yalnızca", with four choices', () {
+  // Hamit: "through" saved from a book was asked as "aktarmasız, direkt"; the
+  // card must ask the word's most common meaning, not the book's sense.
+  test('review card: the right answer is the most common meaning, not the sentence one', () {
+    final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
+    const train = 'We took a through train from London to Edinburgh.';
+    const golf = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
+    for (final (lemma, s) in [('through', train), ('course', golf), ('bank', 'They sat on the bank of the river.')]) {
+      final common = d.commonMeaning(lemma);
+      expect(common.tr, isNotNull, reason: lemma);
+      final q = ReviewQuiz(d, u, rnd: Random(1));
+      final ch = q.choiceFor(saved(lemma, s))!;
+      expect(ch.right, common.tr, reason: lemma);
+      expect(ch.options.toSet().length, 4, reason: lemma);
+      // The same word saved from another sentence asks the same meaning.
+      expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved(lemma, null))!.right, common.tr, reason: lemma);
+    }
+    expect(d.commonMeaning('through').tr, 'boyunca, baştan sona');
+    expect(d.commonMeaning('except').tr, 'hariç, dışında');
+    expect(d.commonMeaning('course').tr, contains('ders'));
+    expect(d.commonMeaning('bank').tr, contains('banka'));
+    // A meaning the AI service gave for the sentence does not replace the
+    // dictionary's common meaning.
+    u.setContextAi('course', golf, 'saha, golf sahası');
+    expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved('course', golf))!.right, contains('ders'));
+  });
+
+  test('simply is "sadece, yalnızca", with four choices', () {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     const s = 'How often does some crime come to light simply by reason of a bit of unmitigated bungling, '
         'and each tune one asks oneself the question: If this hadn\'t been bungled, would anyone ever have known?';
@@ -55,9 +69,9 @@ void main() {
   });
 
   // Every word people meet often, in real sentences: the question must have
-  // exactly one right option, three different wrong ones, no wrong option that
-  // is also a meaning of the word, and the right one must fit the sentence's
-  // part of speech (a noun is never answered with a verb meaning).
+  // exactly one right option (the word's most common meaning), three different
+  // wrong ones, no wrong option that is also a meaning of the word, and a noun
+  // meaning is never answered with a verb.
   test('audit: questions of common words in real sentences', () {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     final q = ReviewQuiz(d, u, rnd: Random(7));
@@ -98,14 +112,14 @@ void main() {
       final own = d.trWordsOf(w);
       if (ch.options.length != 4 || ch.options.toSet().length != 4) bad.add('$w: duplicate options ${ch.options}');
       if (ch.options.where((o) => o == ch.right).length != 1) bad.add('$w: right answer not once');
-      if (ch.right != DictDb.shortTr(a.tr!)) bad.add('$w: right ${ch.right} is not the context meaning ${a.tr}');
+      if (ch.right != DictDb.shortTr(a.tr!)) bad.add('$w: right ${ch.right} is not the common meaning ${a.tr}');
       for (var i = 0; i < 4; i++) {
         if (i == ch.correct) continue;
         final parts = ch.options[i].toLowerCase().split(RegExp(r'[,;]')).map((e) => e.trim());
         if (parts.any(own.contains)) bad.add('$w: wrong option "${ch.options[i]}" is also a meaning of the word');
         if (a.pos == null && DictDb.isTrVerb(ch.options[i]) != DictDb.isTrVerb(ch.right)) bad.add('$w: mixed verb/non-verb options ${ch.options}');
       }
-      if (a.pos == 'n' && DictDb.isTrVerb(ch.right) && !ch.right.contains(' ')) bad.add('$w: noun in "$s" answered with verb "${ch.right}"');
+      if (a.pos == 'n' && DictDb.isTrVerb(ch.right) && !ch.right.contains(' ')) bad.add('$w: noun answered with verb "${ch.right}"');
     }
     // ignore: avoid_print
     print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards, $unsure answers guessed, $untranslatable words with no Turkish at all');
