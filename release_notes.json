@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "onboarding-languages",
+      "area": "app",
+      "tr": "İlk açılışta önce ana dilini ve öğrenmek istediğin dili seçiyorsun; sonra Ayarlar > Dil bölümünden değiştirebilirsin.",
+      "en": "On first launch you now pick your native language and the language you want to learn; you can change them later in Settings > Language."
+    },
+    {
       "id": "app-language-setting",
       "area": "app",
       "tr": "Ayarlar'da ayrı \"Uygulama dili\": menüleri İngilizce kullanırken kelime anlamları ana dilinde kalabilir. Ayarlar artık Görünüm, Dil, Öğrenme ve Hakkında gruplarında.",

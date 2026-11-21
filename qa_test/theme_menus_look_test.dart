@@ -20,6 +20,7 @@ import 'package:kelime_okur/import/importers.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
 import 'package:kelime_okur/ui/grammar/grammar_page.dart';
+import 'package:kelime_okur/ui/onboarding.dart';
 import 'package:kelime_okur/ui/settings_page.dart';
 import 'package:kelime_okur/ui/theme.dart';
 
@@ -89,6 +90,12 @@ void main() {
       tester.view.devicePixelRatio = 2;
       addTearDown(tester.view.reset);
       final n = b.name;
+
+      // First launch: the language step before the introduction.
+      await tester.pumpWidget(shell(OnboardingPage(app: app, onDone: () {}), b));
+      await shot(tester, '${n}_onboarding_languages');
+      await tester.tap(find.byKey(const ValueKey('onboarding-languages-next')));
+      await shot(tester, '${n}_onboarding_1');
 
       await tester.pumpWidget(shell(HomePage(app: app), b));
       await shot(tester, '${n}_home');
