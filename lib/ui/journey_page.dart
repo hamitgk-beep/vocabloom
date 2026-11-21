@@ -23,7 +23,7 @@ class JourneyPage extends StatelessWidget {
     final days = app.stats.readingByDay(14);
     final looks = app.stats.lookupsByDay(14);
     return Scaffold(
-      appBar: AppBar(title: Text(L('İstatistiklerim', 'My stats'))),
+      appBar: AppBar(title: Text(L('İstatistikler', 'Statistics'))),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 980),

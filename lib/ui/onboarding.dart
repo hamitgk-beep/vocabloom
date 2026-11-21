@@ -5,7 +5,8 @@ import '../l10n.dart';
 import 'panel.dart';
 import 'theme.dart';
 
-/// Three short screens shown on the first launch.
+/// First launch: the learner picks their native language and the language
+/// they learn, then three short screens introduce the app.
 class OnboardingPage extends StatefulWidget {
   final AppState app;
   final VoidCallback onDone;
@@ -22,6 +23,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final pc = PageController();
   int page = 0;
 
+  /// The language step comes first; the introduction follows it.
+  bool languagesChosen = false;
+
   void _finish() {
     widget.app.user.setSetting('onboarded', '1');
     widget.onDone();
@@ -35,6 +39,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!languagesChosen) {
+      return _LanguageStep(app: widget.app, onNext: () => setState(() => languagesChosen = true));
+    }
     final theme = Theme.of(context);
     final pages = [
       (const _BooksArt(), L('Sevdiğin kitabı İngilizce oku', 'Read the books you love in English'),
@@ -56,11 +63,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 child: Row(children: [
                   const Wordmark(height: 22),
                   const Spacer(),
-                  // Interface language right on the first screen.
-                  TextButton(
-                    onPressed: () => setState(() => widget.app.setUiEnglish(!uiEnglish)),
-                    child: Text(uiEnglish ? 'Türkçe' : 'English'),
-                  ),
                   if (!last) TextButton(onPressed: _finish, child: Text(L('Atla', 'Skip'))),
                 ]),
               ),
@@ -107,6 +109,88 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
               ),
             ]),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The first question: "My language" and "I want to learn". They are never
+/// the same, so picking one sets the other. The menus follow the native
+/// language here; Settings can change all three later.
+class _LanguageStep extends StatelessWidget {
+  final AppState app;
+  final VoidCallback onNext;
+  const _LanguageStep({required this.app, required this.onNext});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    // Turkish books need the Turkish-English dictionary.
+    final canLearnTr = app.trEn != null;
+    Widget question(String label, IconData icon, String value, ValueChanged<String> onPick, {bool trEnabled = true}) =>
+        Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Row(children: [
+            Icon(icon, size: 20, color: cs.primary),
+            const SizedBox(width: 8),
+            Expanded(child: Text(label, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700))),
+          ]),
+          const SizedBox(height: 10),
+          SegmentedButton<String>(
+            showSelectedIcon: true,
+            style: SegmentedButton.styleFrom(minimumSize: const Size.fromHeight(52), textStyle: theme.textTheme.titleSmall),
+            segments: [
+              ButtonSegment(value: 'tr', label: Text(L('Türkçe', 'Turkish')), enabled: trEnabled),
+              ButtonSegment(value: 'en', label: Text(L('İngilizce', 'English'))),
+            ],
+            selected: {value},
+            onSelectionChanged: (v) => onPick(v.first),
+          ),
+        ]);
+    return ListenableBuilder(
+      listenable: app,
+      builder: (context, _) => Scaffold(
+        key: const ValueKey('onboarding-languages'),
+        body: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 520),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 12, 24, 20),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  const Align(alignment: Alignment.centerLeft, child: Padding(padding: EdgeInsets.only(top: 6), child: Wordmark(height: 22))),
+                  const Spacer(),
+                  Text(L('Dillerini seç', 'Choose your languages'), textAlign: TextAlign.center, style: theme.textTheme.headlineSmall?.copyWith(fontSize: 26)),
+                  const SizedBox(height: 10),
+                  Text(
+                    L('Kelime anlamları ana dilinde gösterilir. İstediğin zaman Ayarlar > Dil bölümünden değiştirebilirsin.',
+                        'Word meanings are shown in your native language. You can change this any time in Settings > Language.'),
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyLarge?.copyWith(color: cs.onSurfaceVariant, height: 1.5),
+                  ),
+                  const SizedBox(height: 32),
+                  KeyedSubtree(
+                    key: const ValueKey('onboarding-native'),
+                    child: question(L('Ana dilim', 'My native language'), Icons.person_outline_rounded, app.nativeLang, (v) => app.setUiEnglish(v == 'en')),
+                  ),
+                  const SizedBox(height: 24),
+                  KeyedSubtree(
+                    key: const ValueKey('onboarding-learn'),
+                    child: question(L('Öğrenmek istediğim dil', 'Language I want to learn'), Icons.school_outlined, app.learnLang,
+                        (v) => app.setUiEnglish(v == 'tr'), trEnabled: canLearnTr || app.learnLang == 'tr'),
+                  ),
+                  const Spacer(flex: 2),
+                  FilledButton(
+                    key: const ValueKey('onboarding-languages-next'),
+                    style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(54)),
+                    onPressed: onNext,
+                    child: Text(L('Devam', 'Continue')),
+                  ),
+                ]),
+              ),
+            ),
           ),
         ),
       ),

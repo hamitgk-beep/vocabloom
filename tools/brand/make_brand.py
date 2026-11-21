@@ -41,12 +41,14 @@ def wordmark(cls, size, shadow):
     return f'<span class="g {cls}" style="font-size:{size}px;letter-spacing:.06em;padding:{size*.1:.0f}px {size*.12:.0f}px;filter:{shadow}">Storilex</span>'
 
 
-def icon(px, bg=True, fg=True, scale=1.0):
+def icon(px, bg=True, fg=True, scale=1.0, corner=.154):
     """The launcher icon: S and frame drawn at [scale] of the square (adaptive
-    icons keep their picture inside the middle two thirds)."""
+    icons show about the middle two thirds: at 0.72 the frame runs just inside
+    the edge of that area, with rounder corners like the launcher's mask, and
+    pubspec.yaml sets no extra inset)."""
     s = px * scale
     off = (px - s) / 2
-    frame = f'<div style="position:absolute;left:{off + s*.07:.1f}px;top:{off + s*.07:.1f}px;width:{s*.86:.1f}px;height:{s*.86:.1f}px;border:{max(s/96,1):.1f}px solid rgba(214,177,108,.55);border-radius:{s*.22*.7:.1f}px"></div>'
+    frame = f'<div style="position:absolute;left:{off + s*.07:.1f}px;top:{off + s*.07:.1f}px;width:{s*.86:.1f}px;height:{s*.86:.1f}px;border:{max(s/96,1):.1f}px solid rgba(214,177,108,.55);border-radius:{s*corner:.1f}px"></div>'
     letter = f'<span class="g n" style="font-size:{s*.62:.1f}px;margin-top:{s*.04:.1f}px;position:relative">S</span>'
     return f'<div class="box" style="width:{px}px;height:{px}px;background:{LEATHER if bg else "transparent"}">{frame if fg else ""}{letter if fg else ""}</div>'
 
@@ -62,7 +64,7 @@ SHOTS = {
     'wordmark-dark': (wordmark('n', 160, 'drop-shadow(0 3px 0 #4A300C)'), True),
     'icon': (icon(1024), False),
     'icon-adaptive-bg': (icon(1024, fg=False), False),
-    'icon-adaptive-fg': (icon(1024, bg=False, scale=0.62), False),
+    'icon-adaptive-fg': (icon(1024, bg=False, scale=0.72, corner=.2), False),
     'logo': (icon(256), False),
     'splash': (splash('d', 1), False),
     'splash-dark': (splash('n', 1), False),

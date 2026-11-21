@@ -313,10 +313,11 @@ Future<void> allScreens(WidgetTester tester) async {
     app.user.deleteBook(b.id);
   }
   await tester.pumpWidget(shell(OnboardingPage(app: app, onDone: () {})));
-  for (var i = 0; i < 3; i++) {
-    await capture(tester, 'onboarding_${i + 1}');
+  // The language step, then the three introduction screens.
+  for (var i = 0; i < 4; i++) {
+    await capture(tester, i == 0 ? 'onboarding_languages' : 'onboarding_$i');
     final next = find.byType(FilledButton);
-    if (next.evaluate().isNotEmpty && i < 2) {
+    if (next.evaluate().isNotEmpty && i < 3) {
       await tester.tap(next.last);
       await _settle(tester);
     }

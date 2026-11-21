@@ -32,10 +32,7 @@ class LibraryPage extends StatefulWidget {
   /// On phones: opens another page of the app (4 free library, 5 stats, 6 settings)
   /// from the buttons on the top bar. Null on wide screens, where the side menu has them.
   final ValueChanged<int>? onTab;
-
-  /// The search field at the top: opens the dictionary.
-  final VoidCallback? onSearch;
-  const LibraryPage({super.key, required this.app, this.onTab, this.onSearch});
+  const LibraryPage({super.key, required this.app, this.onTab});
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
@@ -203,106 +200,114 @@ class _LibraryPageState extends State<LibraryPage> {
             height: 46,
             onPressed: importing ? null : _import,
           );
-    final search = widget.onSearch == null ? null : _SearchField(onTap: widget.onSearch!);
     final current = recent.isEmpty ? null : _CurrentBookCard(book: recent.first, cover: _cover(recent.first), onTap: () => _open(recent.first), big: !phone);
     final today = _TodayCard(app: widget.app);
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: ValueListenableBuilder(
-          valueListenable: widget.app.analyzer.status,
-          builder: (context, progress, _) => CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: EdgeInsets.fromLTRB(pad, phone ? 4 : 24, pad, 0),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (phone) ...[
-                        // The gold wordmark stays at the top of the home page.
-                        SizedBox(
-                          height: 52,
-                          child: Row(children: [
-                            const SizedBox(width: 48),
-                            const Expanded(child: Center(child: Wordmark(height: 24))),
-                            addButton,
-                          ]),
-                        ),
-                        const Padding(padding: EdgeInsets.fromLTRB(40, 2, 40, 14), child: GoldRule()),
-                        ?search,
-                      ] else ...[
-                        Row(
-                          children: [
-                            Expanded(child: Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium)),
-                            if (search != null) ...[SizedBox(width: 320, child: search), const SizedBox(width: 14)],
-                            addButton,
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
-                          style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
-                        ),
-                      ],
-                      SizedBox(height: phone ? 12 : 20),
-                      if (!phone && current != null && width >= 1100)
-                        IntrinsicHeight(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(flex: 5, child: current),
-                              const SizedBox(width: 18),
-                              Expanded(flex: 4, child: Align(alignment: Alignment.topCenter, child: today)),
-                            ],
-                          ),
-                        )
-                      else ...[
-                        today,
-                        if (current != null) ...[const SizedBox(height: 12), current],
-                      ],
-                      if (importStatus != null) ...[
-                        const SizedBox(height: 14),
-                        Panel(
-                          children: [
-                            Text(importStatus!, style: theme.textTheme.bodyMedium),
-                            const SizedBox(height: 10),
-                            const LinearProgressIndicator(),
-                          ],
-                        ),
-                      ],
-                      if (books.isNotEmpty) ...[
-                        const SizedBox(height: 16),
-                        _SectionTitle(L('Rafım', 'My shelf'), trailing: '${books.length}'),
-                      ],
-                    ],
-                  ),
+        child: Column(children: [
+          // Phones: the gold wordmark and the add button stay pinned on top
+          // while the page scrolls under them.
+          if (phone)
+            Padding(
+              key: const ValueKey('home-header'),
+              padding: EdgeInsets.fromLTRB(pad, 4, pad, 0),
+              child: Column(children: [
+                SizedBox(
+                  height: 52,
+                  child: Row(children: [
+                    const SizedBox(width: 48),
+                    const Expanded(child: Center(child: Wordmark(height: 24))),
+                    addButton,
+                  ]),
                 ),
-              ),
-              if (books.isEmpty)
-                // Below the summary card; scrolls when the window is short.
-                SliverToBoxAdapter(
-                  child: _EmptyLibrary(onAdd: importing ? null : _import, onFree: _openFreeLibrary),
-                )
-              else
-                SliverPadding(
-                  padding: EdgeInsets.fromLTRB(pad, 0, pad, phone ? 130 : 40),
-                  sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: phone ? 200 : 210,
-                      childAspectRatio: 0.56,
-                      crossAxisSpacing: 14,
-                      mainAxisSpacing: 14,
+                const Padding(padding: EdgeInsets.fromLTRB(40, 2, 40, 10), child: GoldRule()),
+              ]),
+            ),
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: widget.app.analyzer.status,
+              builder: (context, progress, _) => CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: EdgeInsets.fromLTRB(pad, phone ? 4 : 24, pad, 0),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (!phone) ...[
+                            Row(
+                              children: [
+                                Expanded(child: Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium)),
+                                addButton,
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
+                              style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
+                            ),
+                          ],
+                          SizedBox(height: phone ? 4 : 20),
+                          if (!phone && current != null && width >= 1100)
+                            IntrinsicHeight(
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Expanded(flex: 5, child: current),
+                                  const SizedBox(width: 18),
+                                  Expanded(flex: 4, child: Align(alignment: Alignment.topCenter, child: today)),
+                                ],
+                              ),
+                            )
+                          else ...[
+                            today,
+                            if (current != null) ...[const SizedBox(height: 12), current],
+                          ],
+                          if (importStatus != null) ...[
+                            const SizedBox(height: 14),
+                            Panel(
+                              children: [
+                                Text(importStatus!, style: theme.textTheme.bodyMedium),
+                                const SizedBox(height: 10),
+                                const LinearProgressIndicator(),
+                              ],
+                            ),
+                          ],
+                          if (books.isNotEmpty) ...[
+                            const SizedBox(height: 16),
+                            _SectionTitle(L('Rafım', 'My shelf'), trailing: '${books.length}'),
+                          ],
+                        ],
+                      ),
                     ),
-                    delegate: SliverChildBuilderDelegate((c, i) {
-                      final b = books[i];
-                      return _BookCard(book: b, cover: _cover(b), status: progress[b.id], onTap: () => _open(b), onMenu: (v) => _onMenu(b, v));
-                    }, childCount: books.length),
                   ),
-                ),
-            ],
+                  if (books.isEmpty)
+                    // Below the summary card; scrolls when the window is short.
+                    SliverToBoxAdapter(
+                      child: _EmptyLibrary(onAdd: importing ? null : _import, onFree: _openFreeLibrary),
+                    )
+                  else
+                    SliverPadding(
+                      padding: EdgeInsets.fromLTRB(pad, 0, pad, phone ? 24 : 40),
+                      sliver: SliverGrid(
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: phone ? 200 : 210,
+                          childAspectRatio: 0.56,
+                          crossAxisSpacing: 14,
+                          mainAxisSpacing: 14,
+                        ),
+                        delegate: SliverChildBuilderDelegate((c, i) {
+                          final b = books[i];
+                          return _BookCard(book: b, cover: _cover(b), status: progress[b.id], onTap: () => _open(b), onMenu: (v) => _onMenu(b, v));
+                        }, childCount: books.length),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
+        ]),
       ),
     );
   }
@@ -494,53 +499,6 @@ class _HomeCard extends StatelessWidget {
           boxShadow: dark ? null : const [BoxShadow(color: Color(0x10785A28), blurRadius: 18, offset: Offset(0, 6))],
         ),
         child: InkWell(borderRadius: radius, onTap: onTap, child: Padding(padding: padding, child: child)),
-      ),
-    );
-  }
-}
-
-/// Looks like a search field; a tap opens the dictionary.
-class _SearchField extends StatelessWidget {
-  final VoidCallback onTap;
-  const _SearchField({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final cs = theme.colorScheme;
-    final dark = theme.brightness == Brightness.dark;
-    return Semantics(
-      button: true,
-      label: L('Sözlükte kelime ara', 'Search a word in the dictionary'),
-      excludeSemantics: true,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          key: const ValueKey('home-search'),
-          borderRadius: BorderRadius.circular(23),
-          onTap: onTap,
-          child: Ink(
-            height: 46,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: dark ? Brand.dSurfaceLow : const Color(0xFFFBF7EF),
-              borderRadius: BorderRadius.circular(23),
-              border: Border.all(color: cs.outlineVariant),
-            ),
-            child: Row(children: [
-              Icon(Icons.search_rounded, size: 20, color: cs.onSurfaceVariant),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  L('Kelime ara · İngilizce ya da Türkçe', 'Search a word · English or Turkish'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 14.5, color: cs.onSurfaceVariant),
-                ),
-              ),
-            ]),
-          ),
-        ),
       ),
     );
   }
