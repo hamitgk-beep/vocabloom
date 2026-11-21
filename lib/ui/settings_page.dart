@@ -37,62 +37,75 @@ class SettingsPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(toolbarHeight: 68, title: Text(L('Ayarlar', 'Settings'), style: theme.textTheme.headlineSmall)),
           body: _SettingsList(children: [
-            SettingsGroup(title: L('Okuma görünümü', 'Reading view'), children: [
-              _ReadingPreview(app: app),
+            // Grouped the way phone and desktop settings usually are:
+            // Appearance, Language, Learning, About.
+            SettingsGroup(title: L('Görünüm', 'Appearance'), children: [
+              SettingsDropdownTile<ThemeMode>(
+                key: const ValueKey('setting-theme'),
+                icon: Icons.contrast_rounded,
+                color: const Color(0xFF7C3AED),
+                title: L('Tema', 'Theme'),
+                value: app.themeMode == ThemeMode.dark ? ThemeMode.dark : ThemeMode.light,
+                items: {ThemeMode.light: L('Açık', 'Light'), ThemeMode.dark: L('Koyu', 'Dark')},
+                onChanged: app.setTheme,
+              ),
               SettingsNavTile(
                 key: const ValueKey('settings-reading'),
                 icon: Icons.text_fields_rounded,
                 color: Brand.gold,
-                title: L('Yazı boyutu, satır aralığı ve sayfa', 'Text size, line spacing and page'),
+                title: L('Yazı ve sayfa', 'Text and page'),
                 subtitle: '${app.fontSize.round()} pt · ${app.lineHeight.toStringAsFixed(1)} · ${switch (app.paper) {
                   'sepia' => L('Sepya', 'Sepia'),
                   _ => L('Beyaz', 'White'),
                 }}',
                 onTap: () => showReadingSheet(context, app),
               ),
+              _ReadingPreview(app: app),
             ]),
-            SettingsGroup(title: L('Genel', 'General'), children: [
+            SettingsGroup(title: L('Dil', 'Language'), children: [
               SettingsDropdownTile<String>(
-                key: const ValueKey('setting-native'),
+                key: const ValueKey('setting-app-lang'),
                 icon: Icons.language_rounded,
                 color: const Color(0xFF2563EB),
-                title: L('Ana dil', 'Native language'),
-                subtitle: L('Menüler, açıklamalar ve anlamlar', 'Menus, explanations and meanings'),
-                value: app.nativeLang,
+                title: L('Uygulama dili', 'App language'),
+                subtitle: L('Menüler ve düğmeler', 'Menus and buttons'),
+                value: uiEnglish ? 'en' : 'tr',
                 items: const {'tr': 'Türkçe', 'en': 'English'},
+                onChanged: app.setAppLanguage,
+              ),
+              SettingsDropdownTile<String>(
+                key: const ValueKey('setting-native'),
+                icon: Icons.person_outline_rounded,
+                color: const Color(0xFF2563EB),
+                title: L('Ana dil', 'Native language'),
+                subtitle: L('Kelime anlamları bu dilde', 'Word meanings are given in it'),
+                value: app.nativeLang,
+                items: {'tr': L('Türkçe', 'Turkish'), 'en': L('İngilizce', 'English')},
                 onChanged: (v) => app.setLanguages(native: v),
               ),
               if (app.trEn != null)
                 SettingsDropdownTile<String>(
                   key: const ValueKey('setting-learn'),
-                  icon: Icons.school_rounded,
+                  icon: Icons.school_outlined,
                   color: const Color(0xFFDB2777),
-                  title: L('Öğrenilen dil', 'Language you learn'),
+                  title: L('Öğrenilen dil', 'Learning language'),
                   subtitle: L('Okuduğun kitapların dili', 'The language of your books'),
                   value: app.learnLang,
                   items: {'en': L('İngilizce', 'English'), 'tr': L('Türkçe', 'Turkish')},
                   onChanged: (v) => app.setLanguages(learn: v),
                 ),
-              SettingsDropdownTile<ThemeMode>(
-                icon: Icons.contrast_rounded,
-                color: const Color(0xFF7C3AED),
-                title: L('Tema', 'Theme'),
-                value: app.themeMode,
-                items: {ThemeMode.light: L('Gündüz', 'Day'), ThemeMode.dark: L('Gece', 'Night'), ThemeMode.system: L('Sistem', 'System')},
-                onChanged: app.setTheme,
-              ),
               if (!app.learnTurkish)
-              SettingsDropdownTile<String>(
-                icon: Icons.translate_rounded,
-                color: const Color(0xFF0E9F6E),
-                title: L('Anlam dili', 'Meaning language'),
-                subtitle: L('Kelime panelinde', 'In the word panel'),
-                value: meaning,
-                items: {'tr': 'Türkçe', 'en': 'English', 'both': L('İkisi birden', 'Both')},
-                onChanged: (v) => app.setLang(tr: v != 'en', en: v != 'tr'),
-              ),
+                SettingsDropdownTile<String>(
+                  icon: Icons.translate_rounded,
+                  color: const Color(0xFF0E9F6E),
+                  title: L('Anlam dili', 'Meaning language'),
+                  subtitle: L('Kelime panelinde', 'In the word panel'),
+                  value: meaning,
+                  items: {'tr': L('Türkçe', 'Turkish'), 'en': L('İngilizce', 'English'), 'both': L('İkisi birden', 'Both')},
+                  onChanged: (v) => app.setLang(tr: v != 'en', en: v != 'tr'),
+                ),
             ]),
-            SettingsGroup(title: L('Öğrenme araçları', 'Learning tools'), children: [
+            SettingsGroup(title: L('Öğrenme', 'Learning'), children: [
               ListenableBuilder(
                 listenable: Speech.instance,
                 builder: (context, _) {
@@ -124,7 +137,7 @@ class SettingsPage extends StatelessWidget {
                   key: const ValueKey('settings-sense-feedback'),
                   icon: Icons.flag_outlined,
                   color: const Color(0xFFDC2626),
-                  title: L('Anlam bildirimleri', 'Meaning reports'),
+                  title: L('Yanlış anlam bildirimleri', 'Wrong meaning reports'),
                   subtitle: n == 0
                       ? L('"Anlam yanlış" bildirimin yok', 'No "wrong meaning" reports')
                       : L('$n bildirim · dışa aktar', '$n reports · export'),
@@ -134,9 +147,9 @@ class SettingsPage extends StatelessWidget {
             ]),
             SettingsGroup(title: L('Hakkında', 'About'), children: [
               SettingsNavTile(
-                icon: Icons.local_florist_rounded,
+                icon: Icons.info_outline_rounded,
                 color: Brand.gold,
-                title: 'Storilex',
+                title: L('Storilex hakkında', 'About Storilex'),
                 subtitle: _versionLabel(),
                 onTap: () => _push(context, const AboutPage()),
               ),
@@ -373,7 +386,7 @@ class SettingsDropdownTile<T> extends StatelessWidget {
         child: DropdownButton<T>(
           value: value,
           borderRadius: BorderRadius.circular(14),
-          icon: Icon(Icons.unfold_more_rounded, size: 18, color: theme.colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.expand_more_rounded, size: 20, color: theme.colorScheme.onSurfaceVariant),
           style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w600),
           alignment: AlignmentDirectional.centerEnd,
           items: [for (final e in items.entries) DropdownMenuItem(value: e.key, child: Text(e.value))],
@@ -482,12 +495,12 @@ class LicensesPage extends StatelessWidget {
         item(L('Çevirili örnek cümleler: Tatoeba (CC BY 2.0 FR)', 'Example sentences with translations: Tatoeba (CC BY 2.0 FR)')),
         item(L('Storilex katkıları: kullanıcılarımızın elle hazırlayıp kontrol ettiği anlamlar, örnek cümleler, cümledeki anlamlar ve deyimler (iki yönde). Katkı verenler: Hamit',
             'Storilex contributors: meanings, example sentences, meanings in context and idioms prepared and checked by hand by our users (both directions). Contributors: Hamit')),
-        item(L('Ücretsiz kütüphane: Pratham Books / StoryWeaver hikâyeleri (CC BY 4.0, yalnız metin, global-asp/pb-source üzerinden); Project Gutenberg kamu malı kitaplar',
-            'Free library: Pratham Books / StoryWeaver stories (CC BY 4.0, text only, via global-asp/pb-source); public-domain books from Project Gutenberg')),
+        item(L('Ücretsiz kitaplar: Pratham Books / StoryWeaver hikâyeleri (CC BY 4.0, yalnız metin, global-asp/pb-source üzerinden); Project Gutenberg kamu malı kitaplar',
+            'Free books: Pratham Books / StoryWeaver stories (CC BY 4.0, text only, via global-asp/pb-source); public-domain books from Project Gutenberg')),
         item(L('Türkçe → İngilizce sözlük: İngilizce Vikisözlük\'teki Türkçe kelimeler, kaikki.org üzerinden (CC BY-SA 4.0); kelime sıklığı: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); örnek cümleler: Tatoeba katkıcıları (CC BY 2.0 FR)',
             'Turkish → English dictionary: Turkish entries of the English Wiktionary via kaikki.org (CC BY-SA 4.0); word frequency: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); example sentences: Tatoeba contributors (CC BY 2.0 FR)')),
-        item(L('Türkçe ücretsiz kütüphane: Vikikaynak\'taki kamu malı eserler (tr.wikisource.org; yazarları 1955\'ten önce ölmüş eserler ve anonim halk anlatıları); A1–B1 öyküler bu uygulama için yazıldı. Kelimenin cümledeki anlamı Tatoeba cümle çiftlerinden çıkarılır.',
-            'Turkish free library: public-domain works from Turkish Wikisource (tr.wikisource.org; authors who died before 1955 and anonymous folk tales); the A1–B1 stories were written for this app. The meaning of a word in its sentence is learned from Tatoeba sentence pairs.')),
+        item(L('Türkçe ücretsiz kitaplar: Vikikaynak\'taki kamu malı eserler (tr.wikisource.org; yazarları 1955\'ten önce ölmüş eserler ve anonim halk anlatıları); A1–B1 öyküler bu uygulama için yazıldı. Kelimenin cümledeki anlamı Tatoeba cümle çiftlerinden çıkarılır.',
+            'Turkish free books: public-domain works from Turkish Wikisource (tr.wikisource.org; authors who died before 1955 and anonymous folk tales); the A1–B1 stories were written for this app. The meaning of a word in its sentence is learned from Tatoeba sentence pairs.')),
         item(L('Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0)', 'Category lists written for this app (CC BY-SA 4.0)')),
         item(L('Uygulamadaki sözlük veritabanı bu kaynaklardan uyarlanmıştır ve aynı lisansla (CC BY-SA 4.0) paylaşılır. Lisans metinleri: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0',
             'The dictionary database in the app is adapted from these sources and shared under the same licence (CC BY-SA 4.0). Licence texts: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0')),

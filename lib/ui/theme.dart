@@ -421,7 +421,7 @@ class SectionLabel extends StatelessWidget {
     final t = Theme.of(context);
     return Padding(
       padding: padding,
-      child: Text(text.toUpperCase(), style: t.textTheme.labelMedium?.copyWith(letterSpacing: 1.0, color: t.colorScheme.onSurfaceVariant)),
+      child: Text(upperUi(text), style: t.textTheme.labelMedium?.copyWith(letterSpacing: 1.0, color: t.colorScheme.onSurfaceVariant)),
     );
   }
 }
@@ -614,7 +614,7 @@ class DayNightToggle extends StatelessWidget {
     if (compact) {
       return IconButton(
         key: const ValueKey('day-night'),
-        tooltip: dark ? L('Gündüz moduna geç', 'Switch to day mode') : L('Gece moduna geç', 'Switch to night mode'),
+        tooltip: dark ? L('Açık temaya geç', 'Switch to light theme') : L('Koyu temaya geç', 'Switch to dark theme'),
         style: IconButton.styleFrom(backgroundColor: goldSoft(t), foregroundColor: cs.primary),
         icon: Icon(dark ? Icons.light_mode_rounded : Icons.dark_mode_rounded),
         onPressed: () => onChanged(!dark),
@@ -623,7 +623,7 @@ class DayNightToggle extends StatelessWidget {
     Widget half(bool night) {
       final on = night == dark;
       return Tooltip(
-        message: night ? L('Gece modu', 'Night mode') : L('Gündüz modu', 'Day mode'),
+        message: night ? L('Koyu tema', 'Dark theme') : L('Açık tema', 'Light theme'),
         child: InkWell(
           key: ValueKey(night ? 'mode-night' : 'mode-day'),
           borderRadius: BorderRadius.circular(17),

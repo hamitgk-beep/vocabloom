@@ -39,8 +39,8 @@ void main() {
       for (var i = 0; i < 7; i++) {
         expect(find.byKey(ValueKey('side-menu-$i')), findsOneWidget);
       }
-      expect(find.text('İstatistiklerim'), full ? findsOneWidget : findsNothing);
-      expect(find.text('Ücretsiz kütüphane'), full ? findsOneWidget : findsNothing);
+      expect(find.text('İstatistikler'), full ? findsOneWidget : findsNothing);
+      expect(find.text('Ücretsiz kitaplar'), full ? findsOneWidget : findsNothing);
       if (shotDir != null) {
         await tester.runAsync(() async {
           final img = await captureImage(find.byType(MaterialApp).evaluate().first);

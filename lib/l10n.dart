@@ -11,6 +11,9 @@ bool uiEnglish = false;
 /// Picks the Turkish or English text for the interface.
 String L(String tr, String en) => uiEnglish ? en : tr;
 
+/// Capitals for headings: in Turkish i becomes İ (Dart's toUpperCase gives I).
+String upperUi(String s) => uiEnglish ? s.toUpperCase() : s.replaceAll('i', 'İ').toUpperCase();
+
 /// A percentage the way each language writes it: "%45" in Turkish, "45%" in English.
 String percent(num n) => uiEnglish ? '$n%' : '%$n';
 

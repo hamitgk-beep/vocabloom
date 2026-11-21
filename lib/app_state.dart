@@ -1,3 +1,5 @@
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
 
 import 'data/dict_db.dart';
@@ -311,6 +313,14 @@ const learningColor = Color(0xFFFF9800);
 const learnedColor = Color(0xFF43A047);
 
 /// App-wide state: databases and the reader preferences.
+/// The saved theme: day or night. The old "system" choice became whichever
+/// of the two the device shows now, so nobody's screen changes on update.
+ThemeMode themeFromPrefs(Object? saved, Brightness device) => switch (saved) {
+      'dark' => ThemeMode.dark,
+      'system' => device == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
+      _ => ThemeMode.light,
+    };
+
 class AppState extends ChangeNotifier {
   final DictDb dict;
   final UserDb user;
@@ -333,8 +343,9 @@ class AppState extends ChangeNotifier {
   String learnLang = 'en';
   bool get learnTurkish => learnLang == 'tr' && trEn != null;
 
-  /// The learner's own language: the interface and the meanings follow it.
-  String get nativeLang => uiEnglish ? 'en' : 'tr';
+  /// The learner's own language: the meanings follow it. The interface has
+  /// its own setting ([uiEnglish]), so a Turkish speaker can use the app in English.
+  String nativeLang = 'tr';
 
   /// Sets the native and the learned language together; they are never the same.
   void setLanguages({String? native, String? learn}) {
@@ -346,7 +357,7 @@ class AppState extends ChangeNotifier {
         n = l == 'tr' ? 'en' : 'tr';
       }
     }
-    uiEnglish = n == 'en';
+    nativeLang = n;
     learnLang = l;
     if (l == 'tr') {
       showEn = true;
@@ -432,14 +443,29 @@ class AppState extends ChangeNotifier {
         if (e.value is num) tone[e.key as String] = (e.value as num).toDouble().clamp(0, 1);
       }
     }
-    themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
+    themeMode = themeFromPrefs(s['theme'], PlatformDispatcher.instance.platformBrightness);
     uiEnglish = s['ui'] == 'en';
+    // Before the app language had its own setting, 'ui' was the native language too.
+    nativeLang = (s['native'] ?? s['ui']) == 'en' ? 'en' : 'tr';
     learnLang = s['learn'] == 'tr' ? 'tr' : 'en';
+    if (nativeLang == learnLang) learnLang = nativeLang == 'tr' ? 'en' : 'tr';
   }
 
   bool get englishUi => uiEnglish;
 
-  void setUiEnglish(bool v) => setLanguages(native: v ? 'en' : 'tr');
+  /// The app (menu) language, on its own: the native language stays.
+  void setAppLanguage(String lang) {
+    uiEnglish = lang == 'en';
+    _wordsVersion++;
+    _save();
+    notifyListeners();
+  }
+
+  /// First start: one switch sets the app language and the native language.
+  void setUiEnglish(bool v) {
+    uiEnglish = v;
+    setLanguages(native: v ? 'en' : 'tr');
+  }
 
   void setTheme(ThemeMode m) {
     themeMode = m;
@@ -450,7 +476,7 @@ class AppState extends ChangeNotifier {
   int get wordsVersion => _wordsVersion;
 
   void _save() =>
-      user.setJson('prefs', {'cats': _cats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight, 'tone': tone, 'learn': learnLang});
+      user.setJson('prefs', {'cats': _cats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'native': nativeLang, 'paper': paper, 'lh': lineHeight, 'tone': tone, 'learn': learnLang});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);

@@ -61,7 +61,7 @@ class _WordsPageState extends State<WordsPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(L('Kelime defterim', 'My words'), style: theme.textTheme.headlineMedium),
+                  Text(L('Kelimelerim', 'My words'), style: theme.textTheme.headlineMedium),
                   const SizedBox(height: 2),
                   Text(L('Okurken topladığın kelimeler.', 'The words you collected while reading.'), style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant)),
                   const SizedBox(height: 12),

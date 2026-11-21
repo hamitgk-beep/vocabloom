@@ -250,7 +250,7 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     final width = MediaQuery.sizeOf(context).width;
     final pad = width >= 900 ? (width - 860) / 2 : 16.0;
     return Scaffold(
-      appBar: AppBar(title: Text(L('Ücretsiz kütüphane', 'Free library'))),
+      appBar: AppBar(title: Text(L('Ücretsiz kitaplar', 'Free books'))),
       body: l == null
           ? (failed != null ? _failure(theme) : const Center(child: CircularProgressIndicator()))
           : ListView(
