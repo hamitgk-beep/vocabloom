@@ -47,6 +47,18 @@ jobs:
       - name: Check Windows OCR
         run: flutter test test/ocr_platform_test.dart
       - run: flutter build windows --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
+      # How much a file-by-file update from the published release to this
+      # build would download (tools/release/windows_manifest.py). Only a
+      # measurement: it never fails the build.
+      - name: Measure the file-by-file update from the latest release
+        continue-on-error: true
+        shell: bash
+        run: |
+          curl -sSfL -o "$RUNNER_TEMP/latest.zip" https://github.com/${{ github.repository }}/releases/download/latest/Storilex-Windows.zip
+          mkdir -p "$RUNNER_TEMP/latest" && unzip -q "$RUNNER_TEMP/latest.zip" -d "$RUNNER_TEMP/latest"
+          python -I tools/release/windows_manifest.py --dir build/windows/x64/runner/Release --compare "$RUNNER_TEMP/latest" | tee "$RUNNER_TEMP/measure.txt"
+          echo "::notice title=Windows update size::$(tail -1 "$RUNNER_TEMP/measure.txt") (full zip: $(stat -c %s "$RUNNER_TEMP/latest.zip") bytes)"
+          { echo '### File-by-file Windows update from the latest release'; echo '```'; cat "$RUNNER_TEMP/measure.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         with:
           name: Storilex-Windows
@@ -85,10 +97,23 @@ jobs:
             echo "::warning::ANDROID_KEYSTORE_B64 secret is not set; the APK is signed with a temporary debug key."
           fi
       - run: flutter build apk --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
+      # One APK per processor type as well: a phone needs only its own native
+      # libraries, so the app's update downloads about half of the universal
+      # APK. The universal APK stays for older apps and manual downloads.
+      - name: Per-ABI APKs
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk "$RUNNER_TEMP/app-release.apk"
+          flutter build apk --release --split-per-abi --target-platform android-arm,android-arm64 --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
+          mv "$RUNNER_TEMP/app-release.apk" build/app/outputs/flutter-apk/app-release.apk
+          ls -l build/app/outputs/flutter-apk/*.apk
+          for f in build/app/outputs/flutter-apk/*.apk; do echo "::notice title=APK size::$(basename "$f") $(( $(stat -c %s "$f") / 1048576 )) MB"; done
       - uses: actions/upload-artifact@v4
         with:
           name: Storilex-Android
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/flutter-apk/app-arm64-v8a-release.apk
+            build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
 
   linux:
     needs: test
@@ -184,11 +209,22 @@ jobs:
             --build "${{ github.run_number }}" --prev-body prev-body.md --commits commits.txt \
             --notes src/release_notes.json > body.md
           cat body.md
+      # File-by-file Windows updates: one gzip blob per program file, named
+      # after its SHA-256, and the manifest (also put into the Windows
+      # folder, so every install knows its own files). Older apps keep
+      # using the full zip.
+      - name: Windows update manifest
+        run: |
+          python3 -I src/tools/release/windows_manifest.py --dir dist/Storilex-Windows \
+            --build "${{ github.run_number }}" --version "${{ needs.test.outputs.version }}" \
+            --blobs dist/windows-files --out dist/Storilex-Windows-manifest.json
       - name: Package files
         run: |
           cd dist
           (cd Storilex-Windows && zip -qr ../Storilex-Windows.zip .)
           cp Storilex-Android/app-release.apk Storilex-Android.apk
+          cp Storilex-Android/app-arm64-v8a-release.apk Storilex-Android-arm64-v8a.apk
+          cp Storilex-Android/app-armeabi-v7a-release.apk Storilex-Android-armeabi-v7a.apk
           cp Storilex-iOS/Storilex-unsigned.ipa Storilex-iOS-unsigned.ipa
           (cd Storilex-macOS && zip -qry ../Storilex-macOS.zip .)
           tar -czf Storilex-Linux.tar.gz -C Storilex-Linux .
@@ -212,5 +248,6 @@ jobs:
           gh release create latest --prerelease --target "$GITHUB_SHA" \
             --title "Storilex ${{ needs.test.outputs.version }}" \
             --notes-file body.md \
-            dist/Storilex-Windows.zip dist/Storilex-Android.apk dist/Storilex-iOS-unsigned.ipa dist/Storilex-macOS.zip dist/Storilex-Linux.tar.gz \
-            dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip dist/VocaBloom-Linux.tar.gz
+            dist/Storilex-Windows.zip dist/Storilex-Android.apk dist/Storilex-Android-arm64-v8a.apk dist/Storilex-Android-armeabi-v7a.apk dist/Storilex-iOS-unsigned.ipa dist/Storilex-macOS.zip dist/Storilex-Linux.tar.gz \
+            dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip dist/VocaBloom-Linux.tar.gz \
+            dist/Storilex-Windows-manifest.json dist/windows-files/*.gz

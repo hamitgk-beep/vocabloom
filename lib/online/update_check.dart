@@ -3,6 +3,7 @@ import 'dart:io';
 
 import '../l10n.dart';
 import 'native_fetch.dart';
+import 'windows_manifest.dart';
 
 /// Build number baked in by CI (--dart-define=BUILD_NUMBER=...); 0 for local builds.
 const appBuild = int.fromEnvironment('BUILD_NUMBER');
@@ -23,7 +24,21 @@ class UpdateInfo {
 
   /// What changed since the installed build, newest first.
   final List<ReleaseNote> notes;
-  const UpdateInfo(this.build, this.url, {this.version = '', this.size = 0, this.notes = const []});
+
+  /// Windows: only the changed files, when the release has a manifest.
+  final UpdatePlan? plan;
+  const UpdateInfo(this.build, this.url, {this.version = '', this.size = 0, this.notes = const [], this.plan});
+
+  /// What the update downloads, in bytes; 0 when unknown.
+  int get downloadSize => plan?.bytes ?? size;
+
+  /// "12 MB", "0.4 MB"; empty when unknown.
+  String get downloadSizeText {
+    final b = downloadSize;
+    if (b <= 0) return '';
+    final mb = b / (1024 * 1024);
+    return mb >= 10 ? '${mb.round()} MB' : '${mb < 0.1 ? '0.1' : mb.toStringAsFixed(1)} MB';
+  }
 }
 
 /// One "what's new" line of a release (release_notes.json, written into the
@@ -77,6 +92,14 @@ String? _assetForPlatform() {
   return null;
 }
 
+/// The per-processor APK for the Dart VM's [platformVersion] (it ends in
+/// `on "android_arm64"`), or null for a processor without its own APK.
+String? androidAbiAsset(String platformVersion) {
+  if (platformVersion.contains('"android_arm64"')) return 'Storilex-Android-arm64-v8a.apk';
+  if (platformVersion.contains('"android_arm"')) return 'Storilex-Android-armeabi-v7a.apk';
+  return null;
+}
+
 /// Returns the newer release for this platform, or null (also when offline).
 Future<UpdateInfo?> checkForUpdate() async {
   try {
@@ -99,15 +122,38 @@ Future<UpdateInfo?> checkForUpdateOrThrow() async {
   final latest = int.tryParse(m?.group(1) ?? '') ?? 0;
   if (latest <= appBuild) return null;
   final v = RegExp(r'S\u00fcr\u00fcm\s+([\d.]+)').firstMatch(body)?.group(1) ?? '';
-  var size = 0;
-  for (final a in (json['assets'] as List? ?? const [])) {
-    if (a is Map && a['name'] == asset) size = (a['size'] as num?)?.toInt() ?? 0;
-  }
+  final sizes = <String, int>{
+    for (final a in (json['assets'] as List? ?? const []))
+      if (a is Map && a['name'] is String) a['name'] as String: (a['size'] as num?)?.toInt() ?? 0,
+  };
+  // Android: the APK for this phone's processor, about half the size of the
+  // universal one, when the release has it (older releases do not).
+  final abiAsset = Platform.isAndroid ? androidAbiAsset(Platform.version) : null;
+  final chosen = abiAsset != null && sizes.containsKey(abiAsset) ? abiAsset : asset;
+  final size = sizes[chosen] ?? 0;
   return UpdateInfo(
     latest,
-    '$_download$asset',
+    '$_download$chosen',
     version: v,
     size: size,
     notes: parseReleaseNotes(body, sinceBuild: appBuild),
+    plan: Platform.isWindows ? await _windowsPlan(json, latest) : null,
   );
 }
+
+/// The changed files to download, or null to use the full zip (a release
+/// without a manifest, a manifest for another build, or any error).
+Future<UpdatePlan?> _windowsPlan(Map release, int build) async {
+  try {
+    final hasManifest = (release['assets'] as List? ?? const []).any((a) => a is Map && a['name'] == WindowsManifest.assetName);
+    if (!hasManifest) return null;
+    final m = await fetchManifest('$_download${WindowsManifest.assetName}');
+    if (m == null || m.build != build) return null;
+    return await planUpdate(m, File(Platform.resolvedExecutable).parent);
+  } catch (_) {
+    return null;
+  }
+}
+
+/// Where the files named in a Windows manifest are downloaded from.
+const windowsFilesUrl = _download;

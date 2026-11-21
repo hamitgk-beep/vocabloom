@@ -28,7 +28,11 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         // Phones only: the offline voice engine ships native code per ABI.
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        // Not with --split-per-abi (one APK per ABI): there ABI filters and
+        // ABI splits cannot be set together.
+        if (project.findProperty("split-per-abi")?.toString() != "true") {
+            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        }
     }
 
     // A fixed release key (from CI secrets) lets new versions install over old
