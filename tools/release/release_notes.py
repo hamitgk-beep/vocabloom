@@ -17,7 +17,7 @@ an HTML comment that the app reads (lib/online/update_check.dart). The first
 line keeps "Sürüm X · Build: N", which older app versions look for."""
 import argparse, json, os, re
 
-KEEP = 40
+KEEP = 60  # entries kept in the release body (the hand-written file has ~40)
 MARK = 'vocabloom-notes'
 AREAS = {
     'dictionary': 'Sözlük', 'grammar': 'Gramer', 'reader': 'Okuyucu', 'words': 'Kelimelerim',

@@ -2,6 +2,24 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "design-b-words",
+      "area": "words",
+      "tr": "Kelime defteri yenilendi: Öğreneceğim, Öğrendim ve Kitaba göre seçenekleri, üstte \"Bugünkü tekrar\" kartı ve her kelimede bir sonraki tekrarın ne zaman olduğu (bugün, yarın, 3 gün sonra).",
+      "en": "The word notebook is new: To learn, Learned and By book views, a \"Today's review\" card on top, and when each word comes up for review next (today, tomorrow, in 3 days)."
+    },
+    {
+      "id": "design-b-review",
+      "area": "review",
+      "tr": "Tekrar kartında üç cevap: Hatırlamadım, Zorlandım, Bildim; her birinin altında kelimenin ne zaman yeniden soracağı yazar.",
+      "en": "Three answers on the review card: Forgot, Hard, Knew it, each showing when the word comes back."
+    },
+    {
+      "id": "design-b-reading",
+      "area": "reader",
+      "tr": "Ayarlar'da okuma görünümü: yazı boyutu, satır aralığı ve sayfa rengini kitaptan bir örnekle önizle. Sesli okuma artık sayfanın altında küçük bir kart: duraklat, önceki/sonraki cümle, ilerleme ve hız.",
+      "en": "Reading view in Settings: preview text size, line spacing and page colour on a sample from a book. Read aloud is now a small card at the foot of the page: pause, previous/next sentence, progress and speed."
+    },
+    {
       "id": "design-b-home",
       "area": "app",
       "tr": "Yeni görünüm: ana sayfanın üstünde altın Storilex yazısı, kelime arama kutusu, günlük hedef halkası ve tekrar düğmesiyle \"Bugün\" kartı, okuduğun kitap. Telefonda alt menü artık Okuma, Sözlük, Defterim ve Daha fazla; Daha fazla'dan gündüz, gece ya da sistem teması seçilir. Açılış ekranı ve uygulama simgesi yenilendi (altın S).",

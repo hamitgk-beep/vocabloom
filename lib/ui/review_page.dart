@@ -334,12 +334,34 @@ class _ReviewPageState extends State<ReviewPage> {
             child: Text(L('Cevabı göster', 'Show answer')),
           )
         else
-          Row(children: [
-            _AnswerButton(label: L('Tekrar', 'Again'), hint: _hint(ReviewAnswer.again, c.box), color: const Color(0xFFE5484D), onTap: () => _answer(ReviewAnswer.again)),
-            const SizedBox(width: 10),
-            _AnswerButton(label: L('Zor', 'Hard'), hint: _hint(ReviewAnswer.hard, c.box), color: learningColor, onTap: () => _answer(ReviewAnswer.hard)),
-            const SizedBox(width: 10),
-            _AnswerButton(label: L('Biliyorum', 'Got it'), hint: _hint(ReviewAnswer.good, c.box), color: learnedColor, onTap: () => _answer(ReviewAnswer.good)),
+          Column(children: [
+            Text(L('Ne kadar iyi hatırladın?', 'How well did you remember it?'), style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            const SizedBox(height: 10),
+            Row(children: [
+              _AnswerButton(
+                  key: const ValueKey('review-again'),
+                  icon: Icons.replay_rounded,
+                  label: L('Hatırlamadım', 'Forgot'),
+                  hint: _hint(ReviewAnswer.again, c.box),
+                  color: learnColor(theme),
+                  onTap: () => _answer(ReviewAnswer.again)),
+              const SizedBox(width: 10),
+              _AnswerButton(
+                  key: const ValueKey('review-hard'),
+                  icon: Icons.schedule_rounded,
+                  label: L('Zorlandım', 'Hard'),
+                  hint: _hint(ReviewAnswer.hard, c.box),
+                  color: theme.colorScheme.primary,
+                  onTap: () => _answer(ReviewAnswer.hard)),
+              const SizedBox(width: 10),
+              _AnswerButton(
+                  key: const ValueKey('review-good'),
+                  icon: Icons.check_circle_outline_rounded,
+                  label: L('Bildim', 'Knew it'),
+                  hint: _hint(ReviewAnswer.good, c.box),
+                  color: learnedColor,
+                  onTap: () => _answer(ReviewAnswer.good)),
+            ]),
           ]),
       ]),
     );
@@ -502,13 +524,15 @@ class _OptionButton extends StatelessWidget {
 
 class _AnswerButton extends StatelessWidget {
   final String label, hint;
+  final IconData icon;
   final Color color;
   final VoidCallback onTap;
-  const _AnswerButton({required this.label, required this.hint, required this.color, required this.onTap});
+  const _AnswerButton({super.key, required this.icon, required this.label, required this.hint, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
+    final fg = t.brightness == Brightness.dark ? Color.lerp(color, Colors.white, 0.3)! : Color.lerp(color, Colors.black, 0.25)!;
     return Expanded(
       child: Material(
         color: color.withValues(alpha: t.brightness == Brightness.dark ? 0.22 : 0.12),
@@ -517,9 +541,14 @@ class _AnswerButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           onTap: onTap,
           child: SizedBox(
-            height: 62,
+            height: 82,
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(label, style: t.textTheme.titleSmall?.copyWith(color: t.brightness == Brightness.dark ? Color.lerp(color, Colors.white, 0.3) : Color.lerp(color, Colors.black, 0.25), fontWeight: FontWeight.w700)),
+              Icon(icon, size: 22, color: fg),
+              const SizedBox(height: 4),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(label, maxLines: 1, style: t.textTheme.titleSmall?.copyWith(color: fg, fontWeight: FontWeight.w700)),
+              ),
               const SizedBox(height: 2),
               Text(hint, style: t.textTheme.labelSmall?.copyWith(color: t.colorScheme.onSurfaceVariant)),
             ]),
