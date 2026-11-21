@@ -295,7 +295,7 @@ class _WordPanelState extends State<WordPanel> {
               head,
               style: TextStyle(fontFamily: readingFont, fontSize: 34, fontWeight: FontWeight.w700, height: 1.1, color: theme.colorScheme.onSurface),
             ),
-            if (Speech.supported) SpeakButton(head, key: ValueKey('say-$head'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), autoPlay: Speech.instance.autoWord, size: 26),
+            if (Speech.supported) SpeakButton(head, key: ValueKey('say-$head'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), size: 26),
             if (surface != head) Text('(${widget.surface})', style: theme.textTheme.titleMedium?.copyWith(color: theme.hintColor)),
             if (pos != null && posLabel(pos).isNotEmpty)
               Container(

@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "read-aloud-text-visible",
+      "area": "voice",
+      "tr": "Sesli okumada kitap yeniden görünüyor ve okunan cümle renkli: kontrol kartı sayfanın altında duruyor. Kelimeye dokununca artık kendiliğinden seslendirilmiyor; dinlemek için hoparlör simgesine dokun.",
+      "en": "Read aloud shows the book again with the spoken sentence highlighted, and the control card stays at the foot of the page. Tapping a word no longer says it on its own; tap the speaker icon to hear it."
+    },
+    {
       "id": "design-b-words",
       "area": "words",
       "tr": "Kelime defteri yenilendi: Öğreneceğim, Öğrendim ve Kitaba göre seçenekleri, üstte \"Bugünkü tekrar\" kartı ve her kelimede bir sonraki tekrarın ne zaman olduğu (bugün, yarın, 3 gün sonra).",

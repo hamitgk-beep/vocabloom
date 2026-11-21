@@ -251,95 +251,6 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     reader.start(_firstVisiblePara());
   }
 
-  /// Read aloud: a small floating card over the page's foot, with pause,
-  /// the sentence before / after, how far the chapter is, speed and close.
-  Widget _speechBar(ThemeData theme) {
-    final s = Speech.instance;
-    final cs = theme.colorScheme;
-    final dark = theme.brightness == Brightness.dark;
-    return SafeArea(
-      top: false,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 560),
-            child: Material(
-              key: const ValueKey('speech-bar'),
-              color: dark ? Brand.dSurface : const Color(0xFFFBF7EF),
-              elevation: 8,
-              shadowColor: Colors.black.withValues(alpha: dark ? 0.5 : 0.2),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: cs.outlineVariant)),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 8, 4, 8),
-                child: Row(
-                  children: [
-                    IconButton.filled(
-                      tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
-                      onPressed: reader.toggle,
-                      style: IconButton.styleFrom(
-                        backgroundColor: dark ? Brand.goldLight : const Color(0xFF5C3D14),
-                        foregroundColor: dark ? const Color(0xFF21180A) : Colors.white,
-                        fixedSize: const Size(46, 46),
-                      ),
-                      icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(L('Sesli okuma · ${s.voice.name}', 'Read aloud · ${s.voice.name}'), style: theme.textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
-                        const SizedBox(height: 6),
-                        LinearProgressIndicator(
-                          value: reader.chapterProgress,
-                          minHeight: 4,
-                          borderRadius: BorderRadius.circular(2),
-                          backgroundColor: cs.surfaceContainerHigh,
-                        ),
-                      ]),
-                    ),
-                    IconButton(
-                      tooltip: L('Önceki cümle', 'Previous sentence'),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () => reader.skip(-1),
-                      icon: const Icon(Icons.skip_previous_rounded),
-                    ),
-                    IconButton(
-                      tooltip: L('Sonraki cümle', 'Next sentence'),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () => reader.skip(1),
-                      icon: const Icon(Icons.skip_next_rounded),
-                    ),
-                    PopupMenuButton<double>(
-                      tooltip: L('Hız', 'Speed'),
-                      initialValue: s.speed,
-                      onSelected: (v) {
-                        s.speed = v;
-                        reader.skip(0);
-                      },
-                      itemBuilder: (_) => [
-                        for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
-                      ],
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), border: Border.all(color: cs.outlineVariant)),
-                        child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 1 : 2)}×', style: theme.textTheme.labelLarge),
-                      ),
-                    ),
-                    IconButton(
-                      tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'),
-                      onPressed: reader.stop,
-                      icon: const Icon(Icons.close_rounded),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   void _onWord(Para p, ParaAnalysis a, int i) async {
     // A word coloured by a grammar filter (a tense, a conditional …) opens the explanation.
     if (a.shownAt(app, i).mark != null) {
@@ -634,7 +545,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             ),
           ),
         ),
-        bottomNavigationBar: reader.active ? _speechBar(theme) : null,
+        bottomNavigationBar: reader.active ? ReadAloudBar(reader: reader) : null,
         endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
         body: CallbackShortcuts(
           bindings: {
@@ -910,4 +821,103 @@ class _FilterPanelState extends State<FilterPanel> {
       ],
     ),
   );
+}
+
+/// Read aloud: a small floating card over the page's foot, with pause,
+/// the sentence before / after, how far the chapter is, speed and close.
+class ReadAloudBar extends StatelessWidget {
+  final ReadAloud reader;
+  const ReadAloudBar({super.key, required this.reader});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final s = Speech.instance;
+    final cs = theme.colorScheme;
+    final dark = theme.brightness == Brightness.dark;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        // heightFactor 1: as the Scaffold's bottom bar a plain Center would
+        // take the whole page height and hide the book behind the card.
+        child: Center(
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 560),
+            child: Material(
+              key: const ValueKey('speech-bar'),
+              color: dark ? Brand.dSurface : const Color(0xFFFBF7EF),
+              elevation: 8,
+              shadowColor: Colors.black.withValues(alpha: dark ? 0.5 : 0.2),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: cs.outlineVariant)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 8, 4, 8),
+                child: Row(
+                  children: [
+                    IconButton.filled(
+                      tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
+                      onPressed: reader.toggle,
+                      style: IconButton.styleFrom(
+                        backgroundColor: dark ? Brand.goldLight : const Color(0xFF5C3D14),
+                        foregroundColor: dark ? const Color(0xFF21180A) : Colors.white,
+                        fixedSize: const Size(46, 46),
+                      ),
+                      icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(L('Sesli okuma · ${s.voice.name}', 'Read aloud · ${s.voice.name}'), style: theme.textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 6),
+                        LinearProgressIndicator(
+                          value: reader.chapterProgress,
+                          minHeight: 4,
+                          borderRadius: BorderRadius.circular(2),
+                          backgroundColor: cs.surfaceContainerHigh,
+                        ),
+                      ]),
+                    ),
+                    IconButton(
+                      tooltip: L('Önceki cümle', 'Previous sentence'),
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () => reader.skip(-1),
+                      icon: const Icon(Icons.skip_previous_rounded),
+                    ),
+                    IconButton(
+                      tooltip: L('Sonraki cümle', 'Next sentence'),
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () => reader.skip(1),
+                      icon: const Icon(Icons.skip_next_rounded),
+                    ),
+                    PopupMenuButton<double>(
+                      tooltip: L('Hız', 'Speed'),
+                      initialValue: s.speed,
+                      onSelected: (v) {
+                        s.speed = v;
+                        reader.skip(0);
+                      },
+                      itemBuilder: (_) => [
+                        for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
+                      ],
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), border: Border.all(color: cs.outlineVariant)),
+                        child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 1 : 2)}×', style: theme.textTheme.labelLarge),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'),
+                      onPressed: reader.stop,
+                      icon: const Icon(Icons.close_rounded),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

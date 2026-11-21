@@ -364,12 +364,6 @@ class _VoiceSettingsState extends State<VoiceSettings> {
           const Divider(height: 32),
           Text(L('Okuma hızı: ${s.speed.toStringAsFixed(2)}×', 'Speed: ${s.speed.toStringAsFixed(2)}×'), style: theme.textTheme.titleSmall),
           Slider(value: s.speed.clamp(0.6, 1.4), min: 0.6, max: 1.4, divisions: 16, label: '${s.speed.toStringAsFixed(2)}×', onChanged: (v) => s.speed = v),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            value: s.autoWord,
-            onChanged: s.ready ? (v) => s.autoWord = v : null,
-            title: Text(L('Kelimeye dokununca otomatik seslendir', 'Say a word when I tap it')),
-          ),
           if (voicePacks.any(s.isReady))
             ExpansionTile(
               tilePadding: EdgeInsets.zero,

@@ -107,7 +107,7 @@ class _TrWordPanelState extends State<TrWordPanel> {
           runSpacing: 4,
           children: [
             Text(lemma, style: TextStyle(fontFamily: readingFont, fontSize: 34, fontWeight: FontWeight.w700, height: 1.1, color: theme.colorScheme.onSurface)),
-            if (Speech.supported) SpeakButton(lemma, lang: 'tr', key: ValueKey('say-tr-$lemma'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), autoPlay: Speech.instance.autoWord, size: 26),
+            if (Speech.supported) SpeakButton(lemma, lang: 'tr', key: ValueKey('say-tr-$lemma'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), size: 26),
             if (surface != lemma) Text('(${widget.surface})', style: theme.textTheme.titleMedium?.copyWith(color: theme.hintColor)),
           ],
         ),
