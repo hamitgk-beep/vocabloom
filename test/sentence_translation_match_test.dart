@@ -17,7 +17,10 @@ import 'package:kelime_okur/data/sentence_translation.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/nlp/text.dart';
 import 'package:kelime_okur/online/ai_service.dart';
+import 'package:kelime_okur/online/auto_analyzer.dart';
 import 'package:kelime_okur/ui/context_sense_card.dart';
+import 'package:kelime_okur/ui/meaning_parts.dart';
+import 'package:kelime_okur/ui/sentence_sheet.dart';
 import 'package:kelime_okur/ui/paragraph_view.dart';
 import 'package:kelime_okur/ui/theme.dart';
 import 'package:kelime_okur/ui/word_sheet.dart';
@@ -126,8 +129,14 @@ class FakeAi extends AiService {
 
   final explainCalls = <String, Completer<({String translation, String explanation, String explanationEn})>>{};
 
+  var chunkCalls = 0;
+
+  @override
+  Future<bool> reachable() async => true;
+
   @override
   Future<({List<String> translations, String summary})> translateChunk(List<String> sentences) async {
+    chunkCalls++;
     final items = <Map<String, Object?>>[];
     var n = 0;
     for (var i = 0; i < sentences.length; i++) {
@@ -398,13 +407,15 @@ void main() {
 
     WordContext ctxOf(String s, {List<String>? tr}) => WordContext(s, tokenize(s), 0, const [], tr, book1, 'x');
 
-    testWidgets('with no valid translation it says so, and never shows the English as Turkish', (tester) async {
+    testWidgets('with no valid translation the Turkish line is hidden, and the English is never shown as Turkish', (tester) async {
       await pump(tester, ctxOf('For the Beanstalk elsewhere, see Ralston.'));
-      expect(find.text('Çeviri oluşturulamadı'), findsOneWidget);
+      expect(find.byKey(const ValueKey('ctx-sentence-tr')), findsNothing);
+      expect(find.byType(LangTag), findsOneWidget); // only the English line
+      expect(find.text('Çeviri oluşturulamadı'), findsNothing);
       app.user.setSentenceAi('499.', '499.', null);
       await pump(tester, ctxOf('499.'));
       expect(find.byKey(const ValueKey('ctx-sentence-tr')), findsNothing);
-      expect(find.text('Çeviri oluşturulamadı'), findsOneWidget);
+      expect(find.byType(LangTag), findsOneWidget);
     });
 
     testWidgets('a saved answer (cache) is shown after a restart, only for its own sentence', (tester) async {
@@ -454,14 +465,91 @@ void main() {
       ai.explainCalls[a]!.complete((translation: a, explanation: '', explanationEn: ''));
       await tester.pump();
       expect(find.byKey(const ValueKey('ctx-sentence-tr')), findsNothing);
-      expect(find.text('Çeviri oluşturulamadı'), findsOneWidget);
+      expect(find.byKey(const ValueKey('ctx-sentence-translate')), findsNothing);
+      expect(find.byType(LangTag), findsOneWidget);
     });
 
-    testWidgets('the AI\'s own answer for the sentence wins over the paragraph translation', (tester) async {
+    testWidgets('order: the verified book translation, then the sentence cache', (tester) async {
       const s = 'He sat on the bank of the river.';
-      await pump(tester, ctxOf(s, tr: ['Paragraf çevirisi.']), tr: 'Açıklamalı çeviri.');
-      expect(find.text('Açıklamalı çeviri.'), findsOneWidget);
-      expect(find.text('Paragraf çevirisi.'), findsNothing);
+      app.user.setSentenceAi(s, 'Önbellekteki çeviri.', null, engine: 'ai:x/y');
+      await pump(tester, ctxOf(s, tr: ['Paragraf çevirisi.']), tr: 'Panelin çevirisi.');
+      expect(find.text('Paragraf çevirisi.'), findsOneWidget);
+      expect(find.text('Panelin çevirisi.'), findsNothing);
+      await pump(tester, ctxOf(s), tr: 'Panelin çevirisi.');
+      expect(find.text('Panelin çevirisi.'), findsOneWidget);
+      await pump(tester, ctxOf(s));
+      expect(find.text('Önbellekteki çeviri.'), findsOneWidget);
+    });
+  });
+
+  group('paid AI only with the learner\'s permission', () {
+    test('automatic book analysis is off unless switched on ("1"); no value and "0" are off', () async {
+      final ai = FakeAi();
+      AiService.debugFromSettings = (_) => ai;
+      final a = AutoAnalyzer(app.user);
+      expect(a.enabled, isFalse);
+      await a.tick();
+      expect(ai.chunkCalls, 0);
+      app.user.setSetting('auto_analyze', '0');
+      await a.tick();
+      expect(ai.chunkCalls, 0);
+      app.user.setSetting('auto_analyze', '1');
+      expect(a.enabled, isTrue);
+      await a.tick(onlyBook: book2);
+      expect(ai.chunkCalls, greaterThan(0));
+    });
+
+    test('the book menu action still runs it when asked (force)', () async {
+      final ai = FakeAi();
+      AiService.debugFromSettings = (_) => ai;
+      await AutoAnalyzer(app.user).tick(force: true, onlyBook: book2);
+      expect(ai.chunkCalls, greaterThan(0));
+    });
+
+    testWidgets('opening the sentence panel asks the AI nothing; "Explain in detail" does', (tester) async {
+      final ai = FakeAi();
+      AiService.debugFromSettings = (_) => ai;
+      final p = app.user.paras(book2, 0).first;
+      final a = analyze(app, p.text);
+      final c = buildContext(app, p, a, 0, bookId: book2);
+      tester.view.physicalSize = const Size(420 * 2, 1400 * 2);
+      tester.view.devicePixelRatio = 2;
+      await tester.pumpWidget(MaterialApp(
+          theme: buildTheme(Brightness.light),
+          home: Scaffold(body: SentencePanel(app: app, ctx: c, para: p, matches: const []))));
+      await tester.pump();
+      expect(ai.explainCalls, isEmpty);
+      await tester.tap(find.text('Ayrıntılı açıkla'));
+      await tester.pump();
+      expect(ai.explainCalls.keys, [c.sentence]);
+      ai.explainCalls[c.sentence]!.complete((translation: 'Geçen yıl sigarayı bıraktı.', explanation: 'Geçmiş zaman.', explanationEn: 'Past simple.'));
+      await tester.pump();
+      expect(find.text('Geçmiş zaman.'), findsOneWidget);
+      // Saved with its source sentence, direction and engine.
+      final row = app.user.db.select('SELECT tr, dir, engine FROM sentence_ai WHERE sentence=?', [c.sentence]).first;
+      expect(row['tr'], 'Geçen yıl sigarayı bıraktı.');
+      expect(row['dir'], 'en>tr');
+      expect(row['engine'], 'ai:openai/fake-model');
+    });
+  });
+
+  group('sentence cache', () {
+    test('older rows (no direction, no engine) are kept and still read', () {
+      final old = Directory.systemTemp.createTempSync('storilex_old_db');
+      final raw = sqlite3.open('${old.path}/user.db');
+      raw.execute('CREATE TABLE sentence_ai(sentence TEXT PRIMARY KEY, tr TEXT, exp TEXT)');
+      raw.execute("INSERT INTO sentence_ai VALUES ('Hello there.', 'Merhaba.', NULL)");
+      raw.close();
+      final u = UserDb.open(old);
+      expect(u.sentenceAi('Hello there.')!.$1, 'Merhaba.');
+      expect(u.db.select('SELECT COUNT(*) AS n FROM sentence_ai').first['n'], 1);
+      old.deleteSync(recursive: true);
+    });
+
+    test('an answer is used only for its own direction', () {
+      app.user.setSentenceAi('Merhaba.', 'Hello.', null, dir: 'tr>en', engine: 'ai:x/y');
+      expect(app.user.sentenceAi('Merhaba.'), isNull);
+      expect(app.user.sentenceAi('Merhaba.', dir: 'tr>en')!.$1, 'Hello.');
     });
   });
 }

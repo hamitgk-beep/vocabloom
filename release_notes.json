@@ -4,8 +4,8 @@
     {
       "id": "sentence-translation-match",
       "area": "reader",
-      "tr": "Cümle analizinde Türkçe çeviri artık her zaman seçtiğin cümleye ait: \"Prof.\", \"Mr.\", \"No. 28\", \"p. 35\" gibi kısaltmalar cümleyi bölmüyor ve bir cümleye sonraki cümlenin çevirisi gelmiyor. Geçerli çeviri yoksa \"Çeviri oluşturulamadı\" yazıyor.",
-      "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation it says \"No translation could be made\"."
+      "tr": "Cümle analizinde Türkçe çeviri artık her zaman seçtiğin cümleye ait: \"Prof.\", \"Mr.\", \"No. 28\", \"p. 35\" gibi kısaltmalar cümleyi bölmüyor ve bir cümleye sonraki cümlenin çevirisi gelmiyor. Geçerli bir çeviri yoksa Türkçe satırı gösterilmiyor; önce ücretsiz cihaz içi çeviri deneniyor. Ücretli yapay zekâ ile otomatik kitap analizi artık sen Ayarlar'dan açana kadar kapalı, cümle açıklaması da yalnızca \"Ayrıntılı açıkla\" ile isteniyor.",
+      "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation the Turkish line is left out, and the free on-device translation is tried first. Automatic book analysis with a paid AI service now stays off until you turn it on in Settings, and a sentence explanation is asked only with \"Explain in detail\"."
     },
     {
       "id": "onboarding-languages",

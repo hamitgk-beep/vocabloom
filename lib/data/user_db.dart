@@ -173,6 +173,11 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS sense_help(word TEXT, sentence TEXT, created INTEGER, PRIMARY KEY(word, sentence));
     ''');
     // Older databases have no withdrawn flag on the reports: add it, keep every row.
+    // Sentence answers keep their direction and engine; older rows stay as
+    // they are (no direction = English > Turkish, the only one then).
+    final sa = u.db.select('PRAGMA table_info(sentence_ai)').map((r) => r['name']).toSet();
+    if (!sa.contains('dir')) u.db.execute('ALTER TABLE sentence_ai ADD COLUMN dir TEXT');
+    if (!sa.contains('engine')) u.db.execute('ALTER TABLE sentence_ai ADD COLUMN engine TEXT');
     final fb = u.db.select('PRAGMA table_info(sense_feedback)').map((r) => r['name']).toSet();
     if (!fb.contains('withdrawn')) u.db.execute('ALTER TABLE sense_feedback ADD COLUMN withdrawn INTEGER DEFAULT 0');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
@@ -295,13 +300,21 @@ class UserDb {
   void setExprDetail(String key, String json) =>
       db.execute('INSERT OR REPLACE INTO expr_detail(key, json) VALUES (?,?)', [key, json]);
 
-  (String, String?)? sentenceAi(String sentence) {
-    final r = db.select('SELECT tr, exp FROM sentence_ai WHERE sentence=?', [sentence]);
-    return r.isEmpty ? null : (r.first['tr'] as String, r.first['exp'] as String?);
+  /// The AI's translation and explanation saved for exactly [sentence], in
+  /// the direction [dir]. Rows saved before the direction was kept have none:
+  /// they were all English > Turkish, the only direction asked then.
+  (String, String?)? sentenceAi(String sentence, {String dir = 'en>tr'}) {
+    final r = db.select('SELECT tr, exp, dir FROM sentence_ai WHERE sentence=?', [sentence]);
+    if (r.isEmpty) return null;
+    final d = r.first['dir'] as String?;
+    if (d != null && d != dir) return null;
+    return (r.first['tr'] as String, r.first['exp'] as String?);
   }
 
-  void setSentenceAi(String sentence, String tr, String? exp) =>
-      db.execute('INSERT OR REPLACE INTO sentence_ai(sentence, tr, exp) VALUES (?,?,?)', [sentence, tr, exp]);
+  /// Saves the answer under its source sentence, with the language direction
+  /// and the engine that made it (`ai:<provider>/<model>`).
+  void setSentenceAi(String sentence, String tr, String? exp, {String dir = 'en>tr', String? engine}) =>
+      db.execute('INSERT OR REPLACE INTO sentence_ai(sentence, tr, exp, dir, engine) VALUES (?,?,?,?,?)', [sentence, tr, exp, dir, engine]);
 
   // ---- AI word families
   String? familyAi(String word) {

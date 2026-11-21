@@ -6,12 +6,17 @@ import '../../l10n.dart';
 import '../panel.dart';
 
 /// The instant on-device translation of [text] (Google ML Kit), or a button
-/// that downloads the free Turkish package once. Nothing on desktop.
+/// that downloads the free Turkish package once. Nothing on desktop, and
+/// nothing when the text could not be translated.
 class DeviceTranslation extends StatefulWidget {
   final AppState app;
   final String text;
   final TextStyle? style;
-  const DeviceTranslation({super.key, required this.app, required this.text, this.style});
+
+  /// Wraps whatever is shown (the Turkish, the progress, the button), so a
+  /// caller's label and divider disappear with it when nothing is shown.
+  final Widget Function(Widget child)? frame;
+  const DeviceTranslation({super.key, required this.app, required this.text, this.style, this.frame});
 
   @override
   State<DeviceTranslation> createState() => _DeviceTranslationState();
@@ -81,8 +86,9 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   Widget build(BuildContext context) {
     if (!DeviceTranslate.supported) return const SizedBox.shrink();
     final theme = Theme.of(context);
+    Widget wrap(Widget w) => widget.frame == null ? w : widget.frame!(w);
     if (result == null && mt.downloading.value) {
-      return Padding(
+      return wrap(Padding(
         padding: const EdgeInsets.only(top: 6),
         child: Row(
           children: [
@@ -93,10 +99,10 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
             ),
           ],
         ),
-      );
+      ));
     }
     if (result == null) {
-      return Padding(
+      return wrap(Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,26 +117,20 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
             if (error != null) Text(error!, style: TextStyle(color: theme.colorScheme.error, fontSize: 13)),
           ],
         ),
-      );
+      ));
     }
     return FutureBuilder<String?>(
       future: result,
       builder: (c, s) {
         if (s.connectionState != ConnectionState.done) {
-          return const Padding(
+          return wrap(const Padding(
             padding: EdgeInsets.only(top: 6),
             child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
-          );
+          ));
         }
         final t = s.data;
-        if (t == null) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Text(L('Çeviri oluşturulamadı', 'No translation could be made'),
-                key: const ValueKey('mt-no-tr'), style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
-          );
-        }
-        return Padding(
+        if (t == null) return const SizedBox.shrink();
+        return wrap(Padding(
           padding: const EdgeInsets.only(top: 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,7 +139,7 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
               Text(L('Cihaz içi anında çeviri (makine çevirisi)', 'Instant on-device translation (machine translation)'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
             ],
           ),
-        );
+        ));
       },
     );
   }

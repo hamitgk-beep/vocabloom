@@ -108,6 +108,9 @@ class AiService {
 
   String get label => '${cfg.provider.name} · ${cfg.model}';
 
+  /// The engine saved with each translation it makes: `ai:<provider>/<model>`.
+  String get engineId => 'ai:${cfg.provider.id}/${cfg.model}';
+
   /// Whether the provider's server can be reached right now.
   Future<bool> reachable() async {
     try {
@@ -705,7 +708,7 @@ Future<void> analyzeBook(AiService svc, UserDb db, int bookId,
           tr.add(SentenceTranslation(sentences[k], k < r.translations.length ? r.translations[k] : ''));
           k++;
         }
-        db.setParaTranslation(batch[b].id, ParaTranslations(tr, engine: 'ai:${svc.cfg.provider.name}/${svc.cfg.model}'));
+        db.setParaTranslation(batch[b].id, ParaTranslations(tr, engine: svc.engineId));
       }
       if (r.summary.isNotEmpty) summaries.add(r.summary);
       done += batch.length;

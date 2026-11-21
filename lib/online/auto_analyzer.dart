@@ -27,7 +27,11 @@ class AutoAnalyzer {
 
   AutoAnalyzer(this.db, [this.dict]);
 
-  bool get enabled => db.getSetting('auto_analyze') != '0';
+  /// Uses the learner's paid AI service in the background, so it runs only
+  /// when they switched it on themselves ('1'). Older versions treated "no
+  /// value" as on and stored nothing when it was switched on, so an earlier
+  /// choice cannot be told apart from the default: no value is now off.
+  bool get enabled => db.getSetting('auto_analyze') == '1';
 
   void start() {
     _timer?.cancel();
