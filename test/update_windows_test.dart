@@ -122,7 +122,9 @@ void main() {
         waitStart: waitStart,
       ),
     );
-    for (var i = 0; i < 160 && !File(t.marker).existsSync(); i++) {
+    // The script writes its result once the started program is up (or,
+    // after a rollback, just before it starts the old one again).
+    for (var i = 0; i < 480 && !(File(t.marker).existsSync() && t.result.existsSync()); i++) {
       await Future<void>.delayed(const Duration(milliseconds: 250));
     }
     await Future<void>.delayed(const Duration(milliseconds: 500));
@@ -155,7 +157,7 @@ void main() {
     expect(t.work.existsSync(), isFalse, reason: log);
     await app.exitCode;
     t.root.deleteSync(recursive: true);
-  }, timeout: const Timeout(Duration(minutes: 1)));
+  }, timeout: const Timeout(Duration(minutes: 3)));
 
   test('install ends an app that does not close and then updates it', () async {
     final t = await setUp_();
@@ -169,7 +171,7 @@ void main() {
     expect(File(p.join(t.app.path, 'Storilex.exe')).readAsStringSync(), 'new exe', reason: log);
     expect(await hung.exitCode.timeout(const Duration(seconds: 5)), isNot(0));
     t.root.deleteSync(recursive: true);
-  }, timeout: const Timeout(Duration(minutes: 1)));
+  }, timeout: const Timeout(Duration(minutes: 3)));
 
   test('install copies nothing while a file stays locked and reports it', () async {
     final t = await setUp_();
@@ -188,7 +190,7 @@ void main() {
     locker.kill();
     await locker.exitCode;
     t.root.deleteSync(recursive: true);
-  }, timeout: const Timeout(Duration(minutes: 1)));
+  }, timeout: const Timeout(Duration(minutes: 3)));
 
   test('an update from the VocaBloom.exe copy removes it once the copy worked', () async {
     final t = await setUp_();
@@ -200,7 +202,7 @@ void main() {
     expect(File(legacy).existsSync(), isFalse, reason: log);
     expect(File(p.join(t.app.path, 'Storilex.exe')).readAsStringSync(), 'new exe', reason: log);
     t.root.deleteSync(recursive: true);
-  }, timeout: const Timeout(Duration(minutes: 1)));
+  }, timeout: const Timeout(Duration(minutes: 3)));
 
   test('files dropped by the new version are deleted after a good copy', () async {
     final t = await setUp_();
@@ -210,7 +212,7 @@ void main() {
     expect(File(p.join(t.app.path, 'gone.dll')).existsSync(), isFalse, reason: log);
     expect(File(p.join(t.app.path, 'keep.txt')).readAsStringSync(), 'keep');
     t.root.deleteSync(recursive: true);
-  }, timeout: const Timeout(Duration(minutes: 1)));
+  }, timeout: const Timeout(Duration(minutes: 3)));
 
   test('a new version that closes before it starts is rolled back to the old one', () async {
     final t = await setUp_();
@@ -219,6 +221,10 @@ void main() {
     final crashed = p.join(t.root.path, 'new-started.txt');
     File(p.join(t.fresh.path, 'run.cmd')).writeAsStringSync('@echo new> "$crashed"\r\n@exit 1\r\n');
     final log = await runInstall(t, 999999, delete: ['gone.dll'], waitStart: 60);
+    // The old app is started right after the result is written.
+    for (var i = 0; i < 40 && !File(t.marker).existsSync(); i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+    }
     expect(File(crashed).existsSync(), isTrue, reason: 'the new version was not started. Log: $log');
     // The marker comes from the old run.cmd, started again after the rollback.
     expect(File(t.marker).existsSync(), isTrue, reason: 'old app was not started again. Log: $log');

@@ -229,11 +229,15 @@ class WindowsUpdater {
     'set /a S=0',
     ':health',
     'ping -n 2 127.0.0.1 >nul',
-    'findstr /B "ok" "%VB_HEALTH%" >nul 2>&1 && goto good',
+    // Windows' own tools by full path (a PATH with Git's "find" came first
+    // on the test runner) and with no input: the script has no console.
+    '"%SystemRoot%\\System32\\findstr.exe" /B "ok" "%VB_HEALTH%" < nul >nul 2>&1 && goto good',
     'set /a S+=1',
+    'set /a M=S %% 5',
+    'if %M%==0 >> %LOG% echo %TIME% waiting for the new version to start (%S% s)',
     'if %S% GEQ %VB_WAITSTART% goto good',
     'if %S% LSS 5 goto health',
-    'tasklist /FI "IMAGENAME eq %EXENAME%" 2>nul | find /I "%EXENAME%" >nul && goto health',
+    '"%SystemRoot%\\System32\\tasklist.exe" /NH /FI "IMAGENAME eq %EXENAME%" < nul 2>nul | "%SystemRoot%\\System32\\find.exe" /I "%EXENAME%" >nul && goto health',
     'set WHY=start',
     '>> %LOG% echo %TIME% the new version closed before it started',
     'goto rollback',
