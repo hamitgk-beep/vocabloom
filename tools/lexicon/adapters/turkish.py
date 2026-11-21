@@ -30,7 +30,7 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
     """Lexicon-based fallback with no third-party code: an inflected form is mapped to its lemma with the
     form table of the read-only tr_en.db view (`lexicon` needs has_lemma / lemmas_of_form / pos_of).
     Words after an apostrophe split ("Ali'nin") and capitalised words inside a sentence are proper nouns.
-    A future Zemberek (Apache-2.0, Java) adapter can implement the same interface."""
+    The optional Zemberek adapter (turkish_zemberek.py) implements the same interface."""
     name = 'builtin-tr'
     version = '1'
     licence = 'GPL-3.0 (Storilex source)'
@@ -82,4 +82,7 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
 def make_turkish(engine, lexicon=None):
     if engine == 'builtin':
         return BuiltinTurkishAnalyzer(lexicon)
-    raise ValueError(f'unknown Turkish engine: {engine} (available: builtin; Zemberek is planned)')
+    if engine == 'zemberek':
+        from .turkish_zemberek import ZemberekTurkishAnalyzer  # optional: needs setup_zemberek.sh
+        return ZemberekTurkishAnalyzer(lexicon)
+    raise ValueError(f'unknown Turkish engine: {engine} (choose builtin or zemberek)')

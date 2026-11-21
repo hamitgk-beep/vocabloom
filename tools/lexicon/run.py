@@ -6,6 +6,7 @@
   python3 tools/lexicon/run.py add-sense --source manual-en --headword run --translation "yönetmek"
   python3 tools/lexicon/run.py review --id 12 --status accepted --reviewer Hamit
   python3 tools/lexicon/run.py summary
+  python3 tools/lexicon/run.py gaps --out build/lexicon/gaps.md [--min-confidence 0.3]
   python3 tools/lexicon/run.py export --out build/lexicon/reviewed.jsonl
 
 The candidate database defaults to build/lexicon/candidates.db (git-ignored). assets/dict.db and
@@ -21,6 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lexicon.compare import EnTrDictionary, TrEnDictionary  # noqa: E402
 from lexicon.extract import add_sense, extract  # noqa: E402
+from lexicon.gaps import write_report  # noqa: E402
 from lexicon.safety import repo_root  # noqa: E402
 from lexicon.store import CandidateStore  # noqa: E402
 
@@ -66,7 +68,8 @@ def main(argv=None):
     s = sub.add_parser('extract')
     s.add_argument('--source', required=True)
     s.add_argument('--text', required=True)
-    s.add_argument('--engine', default='builtin', choices=['builtin', 'spacy'])
+    s.add_argument('--engine', default='builtin', choices=['builtin', 'spacy', 'zemberek'],
+                   help='spacy: English (setup_spacy.sh); zemberek: Turkish (setup_zemberek.sh)')
     s.add_argument('--include-forms', action='store_true')
     s = sub.add_parser('add-sense')
     s.add_argument('--source', required=True)
@@ -83,6 +86,10 @@ def main(argv=None):
     s.add_argument('--reviewer', required=True)
     s.add_argument('--note', default='')
     sub.add_parser('summary')
+    s = sub.add_parser('gaps', help='report missing words, senses and phrases (writes .md and .tsv)')
+    s.add_argument('--out', default=os.path.join(root, 'build', 'lexicon', 'gaps.md'))
+    s.add_argument('--min-confidence', type=float, default=0.3)
+    s.add_argument('--direction', choices=['en-tr', 'tr-en'])
     s = sub.add_parser('export')
     s.add_argument('--out', required=True)
     args = p.parse_args(argv)
@@ -105,13 +112,15 @@ def main(argv=None):
             try:
                 if args.cmd == 'extract':
                     if lang == 'en':
+                        if args.engine == 'zemberek':
+                            sys.exit('zemberek is a Turkish engine; use builtin or spacy for English sources')
                         from lexicon.adapters.english import make_english
                         analyzer = make_english(args.engine, dictionary)
                     else:
-                        if args.engine != 'builtin':
-                            sys.exit('only the builtin Turkish engine is available')
+                        if args.engine == 'spacy':
+                            sys.exit('spacy is an English engine; use builtin or zemberek for Turkish sources')
                         from lexicon.adapters.turkish import make_turkish
-                        analyzer = make_turkish('builtin', dictionary)
+                        analyzer = make_turkish(args.engine, dictionary)
                     counts = extract(store, analyzer, dictionary, sid, _read_text(args.text), direction,
                                      locator=os.path.basename(args.text), include_forms=args.include_forms)
                     print(json.dumps(counts, ensure_ascii=False))
@@ -127,6 +136,9 @@ def main(argv=None):
             print(json.dumps(dict(store.get(args.id)), ensure_ascii=False))
         elif args.cmd == 'summary':
             print(json.dumps(store.summary(), ensure_ascii=False, indent=1))
+        elif args.cmd == 'gaps':
+            counts = write_report(store, args.out, min_confidence=args.min_confidence, direction=args.direction)
+            print(json.dumps(counts, ensure_ascii=False))
         elif args.cmd == 'export':
             print(f'{store.export_reviewed_shared(args.out)} reviewed candidates from verified sources written to {args.out}')
     finally:

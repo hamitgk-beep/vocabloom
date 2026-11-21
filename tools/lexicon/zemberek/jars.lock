@@ -1,0 +1,12 @@
+# Zemberek-NLP 0.18.0 and its runtime dependencies, pinned by SHA-256. Fetched by setup_zemberek.sh into
+# build/lexicon/zemberek/lib (git-ignored); no jar is committed.
+# file	sha256	licence	url
+zemberek-core-0.18.0.jar	f8673d91d79e56b843a4726d71093e86af02c255f0dd018fd60aad57f42433ed	Apache-2.0	https://raw.githubusercontent.com/ahmetaa/maven-repo/master/zemberek-nlp/zemberek-core/0.18.0/zemberek-core-0.18.0.jar
+zemberek-morphology-0.18.0.jar	d5cfa046e3a3c1be79b3ab3a7cf5b0575bbf031198083b35aea1bc1073e63634	Apache-2.0	https://raw.githubusercontent.com/ahmetaa/maven-repo/master/zemberek-nlp/zemberek-morphology/0.18.0/zemberek-morphology-0.18.0.jar
+zemberek-tokenization-0.18.0.jar	1c4d07680f0b70a4439bc6ddf9ad2a8c5622bd38de333de11b0838d4feb84ba4	Apache-2.0	https://raw.githubusercontent.com/ahmetaa/maven-repo/master/zemberek-nlp/zemberek-tokenization/0.18.0/zemberek-tokenization-0.18.0.jar
+zemberek-lm-0.18.0.jar	70fd4edb71254a9b8b1edfafc552c7d11065b43de77ab2cd605ac9782c403de5	Apache-2.0	https://raw.githubusercontent.com/ahmetaa/maven-repo/master/zemberek-nlp/zemberek-lm/0.18.0/zemberek-lm-0.18.0.jar
+guava-33.7.1-jre.jar	796d8e28ac64e83a47c4c5935a8fecc4682650a04bbdead738ef0f5a3a0e6c46	Apache-2.0	https://repo1.maven.org/maven2/com/google/guava/guava/33.7.1-jre/guava-33.7.1-jre.jar
+failureaccess-1.0.3.jar	cbfc3906b19b8f55dd7cfd6dfe0aa4532e834250d7f080bd8d211a3e246b59cb	Apache-2.0	https://repo1.maven.org/maven2/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar
+caffeine-3.2.4.jar	9d9d2cfd681fd9272ded3d27c9930db12f89f732345975aa113ebc223bbf1224	Apache-2.0	https://repo1.maven.org/maven2/com/github/ben-manes/caffeine/caffeine/3.2.4/caffeine-3.2.4.jar
+protobuf-java-4.36.2.jar	0773e72eaf375e1285df330575bfec5bda5da674d544d0e142a17f89c8f754da	BSD-3-Clause	https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/4.36.2/protobuf-java-4.36.2.jar
+antlr4-runtime-4.7.2.jar	4c518b87d4bdff8b44cd8cbc1af816e944b62a3fe5b80b781501cf1f4759bbc4	BSD-3-Clause	https://repo1.maven.org/maven2/org/antlr/antlr4-runtime/4.7.2/antlr4-runtime-4.7.2.jar

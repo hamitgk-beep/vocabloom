@@ -8,6 +8,7 @@ class Token:
     pos: str = ''          # Universal POS tag when the engine knows it (NOUN, VERB, PROPN ...), else ''
     is_word: bool = True   # False for punctuation, numbers and symbols
     start: int = 0         # character offset in the sentence
+    ent: str = ''          # named-entity label when the engine has one (PERSON, GPE ...), else ''
 
 
 @dataclass
