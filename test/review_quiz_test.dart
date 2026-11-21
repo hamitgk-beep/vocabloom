@@ -44,7 +44,8 @@ void main() {
       // The same word saved from another sentence asks the same meaning.
       expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved(lemma, null))!.right, common.tr, reason: lemma);
     }
-    expect(d.commonMeaning('through').tr, isNot(contains('aktarmasız')));
+    expect(d.commonMeaning('through').tr, 'boyunca, baştan sona');
+    expect(d.commonMeaning('except').tr, 'hariç, dışında');
     expect(d.commonMeaning('course').tr, contains('ders'));
     expect(d.commonMeaning('bank').tr, contains('banka'));
     // A meaning the AI service gave for the sentence does not replace the

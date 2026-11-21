@@ -122,7 +122,7 @@ void main() {
     await open(tester, 'through');
     final st2 = tester.state(find.byType(ReviewPage)) as dynamic;
     expect(st2.debugRight, app.dict.commonMeaning('through').tr);
-    expect(st2.debugRight, isNot(contains('aktarmasız')));
+    expect(st2.debugRight, 'boyunca, baştan sona');
     await shot(tester, 'through_question');
     final right = find.text(st2.debugRight as String);
     await tester.tap(right);
