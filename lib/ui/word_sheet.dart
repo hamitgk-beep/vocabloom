@@ -392,6 +392,9 @@ class _WordPanelState extends State<WordPanel> {
           ),
         );
       } else if (LocalAiCard.available(app)) {
+        // The learner's own (often paid) AI key is used only on a tap; the
+        // free on-device translation is shown meanwhile where there is one.
+        if (!info.isEmpty) children.add(DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge));
         children.add(
           LocalAiCard(
             key: ValueKey('ai-word-$lemma'),
@@ -399,7 +402,6 @@ class _WordPanelState extends State<WordPanel> {
             cacheKey: 'word:$lemma|${ctx?.sentence ?? ''}',
             title: L('Yapay zekâ: Türkçe anlamı', 'AI: meaning in Turkish'),
             button: L('Yapay zekâ ile açıkla', 'Explain with AI'),
-            auto: true,
             run: () => Tutor.of(app).wordMeaning(lemma, sentence: ctx?.sentence, gloss: best?.gloss ?? info.senses.firstOrNull?.gloss, turkish: null),
           ),
         );

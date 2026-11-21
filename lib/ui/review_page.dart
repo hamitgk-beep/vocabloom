@@ -90,6 +90,9 @@ class _ReviewPageState extends State<ReviewPage> {
     final key = '${w.lemma}|$ctx';
     if (_asking.contains(key)) return true;
     if (_aiFailed.contains(key)) return false;
+    // The learner's own (often paid) key is used in the background only
+    // when they turned on automatic AI analysis in Settings.
+    if (!app.analyzer.enabled) return false;
     final svc = AiService.fromSettings(app.user);
     if (svc == null) return false;
     _asking.add(key);
