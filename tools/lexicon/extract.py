@@ -14,6 +14,7 @@ from .adapters.english import EnglishAnalyzer
 from .adapters.turkish import TurkishAnalyzer
 from .adapters.types import ABBREVIATIONS, SPEECH_OPENERS, sentence_flags
 from .compare import EnTrDictionary, TrEnDictionary, compare_phrase, compare_word, find_known_phrases
+from .senses import SenseRanker
 
 # direction -> (source language, dictionary view type, analyzer base class)
 ROUTES = {
@@ -115,7 +116,7 @@ def _known_part(dictionary, part):
 
 def extract(store, analyzer, dictionary, source_id, text, direction, *, locator='', include_forms=False,
             examples=True, max_examples_per_word=1, min_collocation=2, min_pos_gap=3,
-            min_pos_share=0.2):
+            min_pos_share=0.2, frequency=None, encoder=None):
     """Analyses a whole text, then stores candidates:
       word          lemmas not in the dictionary (proper names left out; dialect spellings with a dropped
                     letter, "kep'", and hyphenated compounds of known words get confidence 0.1)
@@ -124,7 +125,12 @@ def extract(store, analyzer, dictionary, source_id, text, direction, *, locator=
       sense         a known word used as a word class the dictionary doesn't list, at least `min_pos_gap` times
                     and in at least `min_pos_share` of its uses (spaCy; e.g. a noun-only entry used as a verb):
                     possible missing meaning, no translation
-      example       one sentence per known word or known phrase (idioms, phrasal verbs ...) and source"""
+      example       one sentence per known word or known phrase (idioms, phrasal verbs ...) and source; for an
+                    English word with several curated senses, compare_detail.sense_hint suggests the fitting one
+                    (senses.py, confidence 0.3-0.5, to be checked by a person)
+    frequency: an optional frequency.Frequency; word candidates then carry Zipf values in compare_detail and a
+    `lemma_suspect` flag (confidence 0.1) when the lemma is unknown to wordfreq but the written word is not.
+    encoder: an optional embeddings.SentenceEncoder for the sense hints (see senses.py)."""
     check_route(store, source_id, direction, dictionary, analyzer)
     engine = analyzer.engine_id
     counts = {'sentences': 0, 'word': 0, 'phrasal_verb': 0, 'collocation': 0, 'sense': 0, 'example': 0,
@@ -136,6 +142,8 @@ def extract(store, analyzer, dictionary, source_id, text, direction, *, locator=
     colloc = {}      # phrase -> [count, first locator, first example, flags]
     pos_uses = {}    # (lemma, dict pos) -> [count, upos, first locator, first example]
     lemma_uses = {}  # lemma -> uses in the text (any word class)
+    # Curated English senses: example candidates of a word with several senses get a suggested sense.
+    ranker = SenseRanker(dictionary, encoder) if direction == 'en-tr' and getattr(dictionary, '_has_own', False) else None
 
     def detail_with(detail, flags, **extra):
         out = {**detail, **extra}
@@ -147,10 +155,15 @@ def extract(store, analyzer, dictionary, source_id, text, direction, *, locator=
         if not (examples and example) or examples_for.get(head, 0) >= max_examples_per_word:
             return
         examples_for[head] = examples_for.get(head, 0) + 1
+        extra = {}
+        if ranker is not None and kind_detail[0] != 'known_phrase' and len(ranker.senses(head)) > 1:
+            hint = ranker.suggest(head, example, pos or None)   # a reviewer's hint, never the answer
+            if hint:
+                extra['sense_hint'] = hint
         store.add_candidate(kind='example', direction=direction, headword=head, lemma=head, pos=pos,
                             source_id=source_id, engine=engine, locator=loc, example=example,
                             confidence=round(0.3 - 2 * penalty, 2), compare_result=kind_detail[0],
-                            compare_detail=detail_with(kind_detail[1], flags))
+                            compare_detail=detail_with(kind_detail[1], flags, **extra))
         counts['example'] += 1
 
     for si, sent in enumerate(sentences):
@@ -201,6 +214,11 @@ def extract(store, analyzer, dictionary, source_id, text, direction, *, locator=
                     conf, extra = 0.1, {'interjection': True}
                 if lower in initial_only:          # "Dinah was ..." with no other use: may be a name
                     conf, extra = 0.1, {'possible_name': True}
+                if frequency is not None:          # optional wordfreq signal (frequency.py)
+                    fq = frequency.annotate(tok.text, lemma)
+                    if fq.get('lemma_suspect'):    # "anywher": the lemma is unknown, the written word common
+                        conf = 0.1
+                    extra = {**extra, **fq}
                 store.add_candidate(kind='word', direction=direction, headword=head, lemma=lemma, pos=tok.pos,
                                     source_id=source_id, engine=engine, locator=loc, example=example,
                                     confidence=round(max(0.0, conf - penalty), 2), compare_result=result,

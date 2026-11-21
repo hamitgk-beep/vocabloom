@@ -41,7 +41,9 @@ def _flags(detail):
         d = json.loads(detail or '{}')
     except ValueError:
         return ''
-    out = [k for k in ('compound', 'elided', 'possible_name', 'interjection') if d.get(k)]
+    out = [k for k in ('compound', 'elided', 'possible_name', 'interjection', 'lemma_suspect') if d.get(k)]
+    if 'zipf' in d:
+        out.append(f"zipf={d['zipf']}")
     if d.get('dictionary_pos'):
         out.append('dictionary_pos=' + ''.join(d['dictionary_pos']))
     return ' '.join(out + d.get('sentence_flags', []))

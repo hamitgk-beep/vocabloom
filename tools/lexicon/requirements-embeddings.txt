@@ -1,0 +1,10 @@
+# Optional sentence embeddings for the lexicon tool (developer machines only; the app never uses it).
+# Runs the Sentence Transformers model paraphrase-multilingual-MiniLM-L12-v2 (Apache-2.0) in ONNX form, without
+# PyTorch. Installed by setup_embeddings.sh with --no-deps, so nothing else (no huggingface_hub, no network client)
+# is pulled in. Versions tested with Python 3.13 on 2026-11-21; onnxruntime 1.32.0 is newer than two weeks.
+onnxruntime==1.31.1        # MIT
+tokenizers==0.23.3         # Apache-2.0 (only Tokenizer.from_file is used)
+numpy==2.5.5               # BSD-3-Clause and others (same version as constraints-spacy.txt)
+flatbuffers==25.12.19      # Apache-2.0, needed by onnxruntime
+protobuf==7.36.2           # BSD-3-Clause, needed by onnxruntime
+packaging==26.3            # Apache-2.0 OR BSD-2-Clause, needed by onnxruntime

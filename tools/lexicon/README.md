@@ -103,6 +103,18 @@ bash tools/lexicon/setup_spacy.sh      # build/lexicon/venv: sabit sürümler (r
 bash tools/lexicon/setup_zemberek.sh   # build/lexicon/zemberek: SHA-256 ile sabitlenmiş jar'lar (zemberek/jars.lock)
 ```
 
+### İsteğe bağlı yardımcı sinyaller
+
+| Bileşen | Lisans | Ne yapar | Kurulum |
+|---|---|---|---|
+| `senses.py` (bağlama uygun anlam) | Storilex (GPL-3.0) | `own_word`'deki anlamlar arasından cümleye uyanı önerir. Anlamın örnekleri ve Türkçesi üzerinden bağlı WordNet tanımlarıyla kelime örtüşmesine, kelime türüne ve anlam sırasına bakar | Gerekmez |
+| `embeddings.py` | Model Apache-2.0; onnxruntime MIT, tokenizers Apache-2.0 | Sentence Transformers modeli `paraphrase-multilingual-MiniLM-L12-v2` ile İngilizce cümleyi anlamın Türkçe karşılığı ve WordNet tanımıyla karşılaştırır. PyTorch gerekmez (ONNX, 118 MB) | `bash tools/lexicon/setup_embeddings.sh` (SHA-256: `embeddings.lock`) |
+| `frequency.py` | wordfreq kodu Apache-2.0, verisi CC BY-SA 4.0 | Kelime adayına Zipf sıklığı ekler. Lemma bilinmiyor ama yazılı biçim yaygınsa (`unaccounted` → `unaccount`) `lemma_suspect` işaretler ve güveni 0.1'e indirir | `bash tools/lexicon/setup_spacy.sh --with-wordfreq` |
+
+Üçü de yalnız aday veritabanına **inceleme bilgisi** yazar (`compare_detail` içinde `sense_hint`, `zipf`,
+`lemma_suspect`). Çeviri alanını doldurmaz, adayı kabul etmez, sözlüğe bir şey aktarmaz. Model ve sıklık listeleri
+git'e ve uygulamaya girmez.
+
 ## Aday türleri ve filtreler (extract)
 
 | Tür | Ne zaman yazılır | Güven |
@@ -111,7 +123,7 @@ bash tools/lexicon/setup_zemberek.sh   # build/lexicon/zemberek: SHA-256 ile sab
 | `phrasal_verb` | Sözlükte olmayan fiil + edat | 0.3–0.6 |
 | `collocation` | spaCy fiil + nesne çifti, metinde en az 2 kez ve sözlükte yok ("make decision" → "make a decision" de denenir) | 0.2–0.5 |
 | `sense` | Bilinen bir kelime, sözlüğün listelemediği türde (isim ↔ fiil) en az 3 kez ve kullanımlarının en az %20'sinde | 0.2 |
-| `example` | Bilinen kelime ya da bilinen deyim / phrasal verb için kaynak başına bir cümle. Deyimler çekimli hâlleriyle de bulunur ("broke the ice" → "break the ice", "pulled my leg" → "pull someone's leg") | 0.3 |
+| `example` | Bilinen kelime ya da bilinen deyim / phrasal verb için kaynak başına bir cümle. Deyimler çekimli hâlleriyle de bulunur ("broke the ice" → "break the ice", "pulled my leg" → "pull someone's leg"). Birden çok anlamı olan İngilizce kelimelerde `sense_hint` hangi Türkçe anlamın uyduğunu **önerir** (güven 0.3–0.5) | 0.3 |
 
 Özel adlar belge düzeyinde de aranır: bir kelime metnin bir yerinde cümle içinde büyük harfle yazılıp hiç küçük
 harfle geçmiyorsa, cümle başındaki kullanımları da ad sayılır ("Dinah was ..."). Kısaltmalar ("etc.") aday olmaz.
@@ -133,7 +145,8 @@ python3 tools/lexicon/run.py export --out build/lexicon/reviewed.jsonl
 ```
 
 spaCy ile: `build/lexicon/venv/bin/python tools/lexicon/run.py extract ... --engine spacy`. Türkçe kaynakta
-`--engine zemberek`. Yanlış dil için motor seçilirse komut aday yazmadan durur.
+`--engine zemberek`. Yanlış dil için motor seçilirse komut aday yazmadan durur. `--wordfreq` Zipf sıklığını,
+`--embeddings` anlam önerisinde cümle gömmelerini açar.
 
 `gaps`, aday veritabanındaki eksikleri (yeni kelime, olası yeni anlam, yeni phrasal verb / deyim / eşdizim) kaynaklar
 arasında birleştirip `.md` ve `.tsv` olarak yazar. En çok kaynakta görülenler başa gelir. Reddedilenler hariçtir.
@@ -148,13 +161,17 @@ yoksa `possible_new_sense` yazar. Çeviriler otomatik üretilmez. Yön her zaman
 python3 -m unittest discover -s tools/lexicon/tests -t tools                       # standart kütüphane
 build/lexicon/venv/bin/python -m unittest discover -s tools/lexicon/tests -t tools # spaCy testleriyle
 build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py                      # başarı oranları
+build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py --lang tr            # Türkçe (Zemberek)
+build/lexicon/venv/bin/python tools/lexicon/eval/evaluate_senses.py --embeddings  # bağlama uygun anlam
 ```
 
 Testler küçük, sentetik `dict.db`/`tr_en.db` kopyalarıyla çalışır. `RealAssetsTests` gerçek dosyalar varsa onları
 salt okunur açar ve SHA-256 değerinin ve değişiklik zamanının aynı kaldığını denetler. spaCy ya da Zemberek kurulu
 değilse onların testleri atlanır. `SharingGuardTests` sahte kaynak, SQL ile alan değiştirme, silinen tetikleyici gibi
 saldırgan girdileri dener. `EvaluationThresholdTests`, etiketli 30 cümlede ölçülen kalitenin (kök doğruluğu, özel ad
-sızıntısı, phrasal verb kesinliği) belirlenen eşiklerin altına düşmediğini denetler.
+sızıntısı, phrasal verb kesinliği) ve 20 Türkçe cümlede Zemberek sonuçlarının belirlenen eşiklerin altına
+düşmediğini denetler. `SenseEvaluationThresholdTests` aynısını 99 cümlelik anlam kümesi için yapar. CI'daki
+`lexicon-tools` iş akışı testleri hem yalnız standart kütüphaneyle hem de bütün motorlar kurulu olarak çalıştırır.
 
 Ölçüm yöntemi ve sonuçlar: [eval/REPORT.md](eval/REPORT.md). Kitap düzeyinde çalıştırma: `eval/corpus.py`.
 
@@ -175,5 +192,7 @@ sızıntısı, phrasal verb kesinliği) belirlenen eşiklerin altına düşmedi�
 - Yerleşik Türkçe adaptör `tr_en.db`'de olmayan çekimli biçimleri lemmaya indiremez. Bunlar `lemma` boş ve düşük
   güvenle (`0.2`) kaydedilir. Zemberek bu adayların çoğunu köke indirir.
 - Zemberek cümle başındaki özel adları bazen sıradan kelime olarak çözer ("Ali" → "ali", sıfat).
+- Anlam önerisi 99 etiketli cümlede %64 doğru (ilk anlamı seçmek %38). Yani her üç öneriden biri yanlış: yalnız
+  gözden geçirene yardımcı bir ipucudur.
 - Yeni deyim çıkarımı yok. Sözlükte kayıtlı deyimler metinde bulunup örnek cümle adayı olur. Yeni deyim ve eşdizim
   adayları elle `add-sense --kind idiom` ile eklenir.

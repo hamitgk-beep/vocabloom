@@ -45,9 +45,10 @@ def main(argv=None):
     p.add_argument('--engine', default='builtin', choices=['builtin', 'spacy', 'zemberek'])
     p.add_argument('--dict-db', default=os.path.join(repo_root(), 'assets', 'dict.db'))
     p.add_argument('--tr-en-db', default=os.path.join(repo_root(), 'assets', 'tr_en.db'))
+    p.add_argument('--wordfreq', action='store_true', help='add wordfreq Zipf values (frequency.py)')
     p.add_argument('--out', default=os.path.join(repo_root(), 'build', 'lexicon', 'eval'))
     a = p.parse_args(argv)
-    out = os.path.join(a.out, f'{a.lang}-{a.engine}')
+    out = os.path.join(a.out, f'{a.lang}-{a.engine}' + ('-wordfreq' if a.wordfreq else ''))
     os.makedirs(out, exist_ok=True)
     db_path = check_writable_target(os.path.join(out, 'candidates.db'))
     if os.path.exists(db_path):
@@ -59,13 +60,18 @@ def main(argv=None):
         dictionary = TrEnDictionary(a.tr_en_db)
         analyzer = make_turkish(a.engine, dictionary)
     direction = 'en-tr' if a.lang == 'en' else 'tr-en'
+    frequency = None
+    if a.wordfreq:
+        from lexicon.frequency import Frequency
+        frequency = Frequency(a.lang)
     store = CandidateStore(db_path)
     totals = {}
     for path in a.books:
         name = os.path.basename(path).split('.')[0]
         sid = store.add_source(name, 'public_domain_text', 'Public domain', a.lang)
         t0 = time.time()
-        counts = extract(store, analyzer, dictionary, sid, read_book(path), direction, locator=name)
+        counts = extract(store, analyzer, dictionary, sid, read_book(path), direction, locator=name,
+                         frequency=frequency)
         counts['seconds'] = round(time.time() - t0, 1)
         print(name, json.dumps(counts))
         for k, v in counts.items():

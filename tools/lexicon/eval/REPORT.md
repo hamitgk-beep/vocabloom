@@ -13,6 +13,10 @@ olabilir. Kitap düzeyindeki elle sınıflandırma örnekleri ise ayarlamadan so
 bash tools/lexicon/setup_spacy.sh          # build/lexicon/venv (spaCy 3.8.18 + en_core_web_sm 3.8.0, MIT)
 bash tools/lexicon/setup_zemberek.sh       # build/lexicon/zemberek (Zemberek 0.18.0, Apache-2.0; Java 21 gerekir)
 build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py
+bash tools/lexicon/setup_spacy.sh --with-wordfreq && bash tools/lexicon/setup_embeddings.sh
+build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py --lang tr
+build/lexicon/venv/bin/python tools/lexicon/eval/evaluate_senses.py --embeddings
+build/lexicon/venv/bin/python tools/lexicon/eval/corpus.py --engine spacy --wordfreq library/books/pg-{55,120,74,1342,16}.md.gz
 build/lexicon/venv/bin/python tools/lexicon/eval/corpus.py --engine spacy library/books/pg-{55,120,74,1342,16}.md.gz
 python3 tools/lexicon/eval/corpus.py --engine builtin library/books/pg-{55,120,74,1342,16}.md.gz
 python3 tools/lexicon/eval/corpus.py --lang tr --engine zemberek library/books/trb-*.md.gz
@@ -133,6 +137,38 @@ tr.wikisource.org).
 - Bilinen sınır: cümle başındaki özel adlar ("Ali dün ...") Zemberek'te sıfat ("ali") olarak çözülebiliyor.
   Belge düzeyindeki ad kanıtı, adın başka yerlerdeki büyük harfli kullanımlarından bunu çoğu zaman yakalıyor.
 
+## 5. Bağlama uygun Türkçe anlam (`sense_gold.jsonl`, `evaluate_senses.py`)
+
+5 Gutenberg kitabından 99 cümle, `own_word`'de birden çok anlamı olan 51 kelime. Her cümlede kelimenin uyan anlamı
+(bazen iki anlam) etiketlendi. Etiketleri Claude yaptı. Ayar (ağırlıklar, gömme metinleri) aynı kümede seçildi, bu
+yüzden oranlar iyimser olabilir. İki yarıya bölünce gömmeli sonuç 0.68 ve 0.59 çıktı.
+
+| Yöntem | Doğruluk |
+|---|---|
+| Her zaman ilk anlam (taban çizgisi) | 0.384 |
+| Doğru kelime türündeki ilk anlam (spaCy) | 0.495 |
+| Kelime örtüşmesi, yerleşik adaptör | 0.465 |
+| Kelime örtüşmesi + spaCy kelime türü | 0.596 |
+| **+ Sentence Transformers gömmeleri** (`--embeddings`) | **0.636** |
+
+- Gömmeler, İngilizce cümleyi anlamın **Türkçe karşılığıyla** ("kıyı, yamaç (nehir için)") ve bağlı WordNet
+  tanımıyla karşılaştırıyor. Örnek cümlelerle karşılaştırmak daha kötüydü (0.48): örnek cümleler başka konularla dolu.
+- Bağlamla karar verilen öneriler (güven 0.5): kelime örtüşmesinde %23 kapsama, %78 kesinlik. Gömmelerle %60 kapsama,
+  %64 kesinlik. Kalanlar sıraya dayanır (güven 0.3).
+- 5 kitapta 19.448 örnek adayının 14.499'u öneri aldı (2.552'si bağlamla, gömmesiz çalıştırma).
+- **Sonuç:** Öneri, gözden geçirene hangi anlamın uyduğunu göstermek için yararlı. Her üç öneriden biri yanlış, bu
+  yüzden hiçbir zaman çeviri alanına yazılmıyor.
+
+## 6. wordfreq sinyali
+
+- 5 İngilizce kitapta (spaCy) `lemma_suspect` 5 kelime adayını işaretledi. 5'i de gerçek lemma hatası: unaccounted →
+  unaccount, unfeeling → unfeel, unlooked → unlook, unprovided → unprovide, vittles → vittle. Bunların güveni 0.1'e
+  iniyor ve `suggested_headword` yazılı biçimi tutuyor.
+- Zipf tek başına geçerli kelimeyi lehçeden ayırmıyor (dunno 3.76, agitatedly 1.25, woodbox 0). Güveni ≥ 0.3 olan
+  218 İngilizce adayın 122'si wordfreq'te hiç yok. Bu yüzden Zipf yalnız sıralama ve inceleme bilgisi.
+- Türkçede (Zemberek) güveni ≥ 0.3 olan 999 adayın 856'sının yazılı biçimi wordfreq'te yok. Liste küçük ve çekimli
+  biçimlerden oluştuğu için lemma kontrolü Türkçede kapalı.
+
 ## Özet
 
 | Hedef | Sonuç |
@@ -142,4 +178,7 @@ tr.wikisource.org).
 | Deyim adayları | Sözlükte kayıtlı deyim ve phrasal verb'ler çekimli hâlleriyle de bulunup örnek cümle adayı oluyor ("broke the ice" → "break the ice"). Yeni deyim çıkarımı yok, elle `add-sense --kind idiom` |
 | Özel adları aday yapmama | spaCy: etiketli kümede sızıntı 0; kitaplarda güven ≥ 0.3 olan adaylarda 0 |
 | Eksik kelime ve anlam tespiti | Eksik kelime: spaCy örneğinde %40 geçerli, %40 lehçe, %90 "gerçekten sözlükte yok". Eksik anlam: zayıf |
+| Türkçe kök bulma | Zemberek 0.953, yerleşik 0.756 (etiketli 86 kelime); özel ad sızıntısı 0 |
+| Bağlama uygun Türkçe anlam | 0.636 (gömmelerle), 0.596 (spaCy), ilk anlam 0.384 (99 etiketli cümle) |
+| Lemma hatası yakalama (wordfreq) | 5 işaret, 5'i doğru |
 | Ayrı veritabanı | `build/lexicon/...` altında, `assets/` dışına yazılır. Ana sözlükler hiç değişmedi |
