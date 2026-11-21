@@ -94,7 +94,22 @@ yaklaşık 4'ü anlamlıydı. Sonra yalnız isim ↔ fiil boşlukları, en az 3 
 şartıyla sınırlandı. **Sonuç:** küçük spaCy modeliyle sözcük türü boşluğu, yeni anlam bulmak için zayıf bir sinyal.
 Yeni anlamlar şimdilik `add-sense` ile elle eklenmeli. Bu adaylar 0.2 güvenle kaydediliyor.
 
-## 3. Türkçe, 6 kitap (18.410 cümle)
+## 3. Türkçe, etiketli 20 cümle (`tr_gold.jsonl`)
+
+Cümleler, kütüphanedeki Nasreddin Hoca ve Ömer Seyfettin metinlerinden aynen alındı. 86 çekimli kelime ve 19 özel ad
+etiketlendi. "Hoca", "Bey", "Paşa" gibi unvanlar puanlanmadı.
+
+| Ölçü | Yerleşik (`builtin-tr@1`) | Zemberek 0.18.0 |
+|---|---|---|
+| Kök (lemma) doğruluğu | 0.756 | **0.953** |
+| Özel ad kesinliği | **1.000** | 0.950 |
+| Özel ad bulma | 0.947 | **1.000** |
+| Kelime adayına sızan özel ad | 0.000 | 0.000 |
+
+- Konuşma çizgisinden ya da iki noktadan sonra gelen büyük harf ("– Şunun ...", "Kız: ...") artık ad kanıtı
+  sayılmıyor. Bu düzeltmeden önce iki adaptör de bu kelimeleri ad sanıyordu.
+
+## 4. Türkçe, 6 kitap (18.410 cümle)
 
 Kitaplar: Nasreddin Hoca Fıkraları 1–3 ve Ömer Seyfettin Hikâyeler 1–3 (katalogda "Public domain", kaynak
 tr.wikisource.org).
