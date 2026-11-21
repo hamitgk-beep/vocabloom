@@ -37,9 +37,11 @@ jobs:
         run: bash tools/lexicon/setup_zemberek.sh
       - name: Tests with both engines (none may be skipped)
         run: |
+          set -o pipefail
           build/lexicon/venv/bin/python -m unittest discover -s tools/lexicon/tests -t tools -v 2>&1 | tee test.log
           if grep -E "skipped '(spaCy|Zemberek)" test.log; then echo "an engine test was skipped" >&2; exit 1; fi
       - name: Quality measurements
         run: |
+          set -o pipefail
           build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py | tee -a "$GITHUB_STEP_SUMMARY"
           build/lexicon/venv/bin/python tools/lexicon/eval/evaluate.py --lang tr | tee -a "$GITHUB_STEP_SUMMARY"
