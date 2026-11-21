@@ -4,11 +4,10 @@ import 'dict_db.dart';
 import 'tr_en_dict.dart';
 import 'user_db.dart';
 
-/// The right answer of a review card: what the saved word means in the
-/// sentence it was saved from.
+/// The right answer of a review card: the saved word's most common meaning.
 class QuizAnswer {
   /// Turkish meaning, or null when neither the dictionary nor the AI service
-  /// knows the Turkish of the sense used in the sentence.
+  /// knows the Turkish of the word.
   final String? tr;
 
   /// Part of speech of that sense (n, v, a, r), when known.
@@ -35,9 +34,9 @@ class QuizChoice {
 
 /// Builds the four-choice question of a review card.
 ///
-/// The right option is always the meaning of the word in its own sentence
-/// ("course" in "a new golf course" is a sports ground, not "akmak"), and the
-/// three wrong options are meanings of other words of the same part of speech
+/// The right option is the word's most common meaning, not the one of the
+/// sentence it was saved from ("through" is "boyunca", not "aktarmasız"), and
+/// the three wrong options are meanings of other words of the same part of speech
 /// that are not also meanings of this word.
 class ReviewQuiz {
   final DictDb dict;
@@ -72,12 +71,14 @@ class ReviewQuiz {
       final tr = e?.trShown ?? (w.meaning != null && w.meaning != e?.en ? w.meaning : null);
       return QuizAnswer(tr == null || tr.trim().isEmpty ? null : DictDb.shortTr(tr), null, e?.en);
     }
-    final ai = w.context == null ? null : user.contextAi(lemma, w.context!);
-    final m = dict.meaningIn(lemma, w.context);
+    // The word's most common meaning, not the one of the sentence it was
+    // saved from ("through" is "boyunca", even from "a through train").
+    final m = dict.commonMeaning(lemma);
     // A one-word expression ("though", "however") has its own Turkish.
     final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull?.trShown : null;
-    return QuizAnswer(ai ?? m.tr ?? (self == null ? null : DictDb.shortTr(self)), m.pos, m.sense?.gloss,
-        sure: ai != null || self != null || m.sure, synId: m.sense?.synId);
+    // Only with no Turkish at all: the meaning the AI service gave for the sentence.
+    final ai = m.tr != null || self != null || w.context == null ? null : user.contextAi(lemma, w.context!);
+    return QuizAnswer(m.tr ?? (self == null ? null : DictDb.shortTr(self)) ?? ai, m.pos, m.gloss);
   }
 
   late final List<SavedWord> _saved = [
