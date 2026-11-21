@@ -12,6 +12,7 @@ import 'update_prompt.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 import 'key_guide.dart';
+import 'reading_sheet.dart';
 import 'theme.dart';
 
 // Settings: a short main list in groups. Items with a few fixed choices use a
@@ -36,6 +37,20 @@ class SettingsPage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(toolbarHeight: 68, title: Text(L('Ayarlar', 'Settings'), style: theme.textTheme.headlineSmall)),
           body: _SettingsList(children: [
+            SettingsGroup(title: L('Okuma görünümü', 'Reading view'), children: [
+              _ReadingPreview(app: app),
+              SettingsNavTile(
+                key: const ValueKey('settings-reading'),
+                icon: Icons.text_fields_rounded,
+                color: Brand.gold,
+                title: L('Yazı boyutu, satır aralığı ve sayfa', 'Text size, line spacing and page'),
+                subtitle: '${app.fontSize.round()} pt · ${app.lineHeight.toStringAsFixed(1)} · ${switch (app.paper) {
+                  'sepia' => L('Sepya', 'Sepia'),
+                  _ => L('Beyaz', 'White'),
+                }}',
+                onTap: () => showReadingSheet(context, app),
+              ),
+            ]),
             SettingsGroup(title: L('Genel', 'General'), children: [
               SettingsDropdownTile<String>(
                 key: const ValueKey('setting-native'),
@@ -160,6 +175,39 @@ Future<void> _exportSenseFeedback(BuildContext context, AppState app) async {
   } catch (_) {
     await Clipboard.setData(ClipboardData(text: text));
     m.showSnackBar(SnackBar(content: Text(L('Dosya kaydedilemedi; bildirimler panoya kopyalandı.', 'Could not save a file; the reports were copied to the clipboard.'))));
+  }
+}
+
+/// Book text for the reading preview, in the language being learned (it is
+/// book content, so it does not follow the interface language).
+const readingPreviewText = {
+  'en': 'Every evening, as soon as the sun went down, old Martin climbed the narrow stairs of the lighthouse. He had been doing this for forty years.',
+  'tr': 'Her akşam, güneş batar batmaz yaşlı Martin deniz fenerinin dar merdivenlerini tırmanırdı. Kırk yıldır bunu yapıyordu.',
+};
+
+/// A few lines of a book as the reader will show them: the page colour,
+/// letters, size and line spacing chosen now (night shows the night page).
+class _ReadingPreview extends StatelessWidget {
+  final AppState app;
+  const _ReadingPreview({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = readerTheme(app, Theme.of(context));
+    final paper = pageColor(app, Theme.of(context));
+    final text = readingPreviewText[app.learnTurkish ? 'tr' : 'en']!;
+    return Container(
+      key: const ValueKey('reading-preview'),
+      width: double.infinity,
+      color: paper,
+      padding: const EdgeInsets.fromLTRB(22, 18, 22, 20),
+      child: Text(
+        text,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(fontFamily: readingFont, fontSize: app.fontSize, height: app.lineHeight, color: t.colorScheme.onSurface),
+      ),
+    );
   }
 }
 

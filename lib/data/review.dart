@@ -52,6 +52,15 @@ class ReviewStore {
 
   int dueCount() => due().length;
 
+  /// When each "To learn" word is due next (a new word: when it was added).
+  Map<String, DateTime> nextDue() {
+    final st = _state();
+    return {
+      for (final w in user.words(WordStatus.learning))
+        w.lemma: DateTime.fromMillisecondsSinceEpoch(st[user.key(w.lemma)]?.$2 ?? w.added.millisecondsSinceEpoch),
+    };
+  }
+
   /// Records an answer. Returns true when the word graduated to "Learned".
   bool answer(String lemma, int box, ReviewAnswer a, {DateTime? now}) {
     final n = now ?? DateTime.now();

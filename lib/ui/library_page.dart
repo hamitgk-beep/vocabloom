@@ -14,6 +14,7 @@ import '../online/ai_service.dart';
 import '../l10n.dart';
 import 'free_library_page.dart';
 import 'reader_page.dart';
+import 'review_page.dart';
 import 'theme.dart';
 
 /// Books in the order to continue them: those read most recently first, then
@@ -31,7 +32,10 @@ class LibraryPage extends StatefulWidget {
   /// On phones: opens another page of the app (4 free library, 5 stats, 6 settings)
   /// from the buttons on the top bar. Null on wide screens, where the side menu has them.
   final ValueChanged<int>? onTab;
-  const LibraryPage({super.key, required this.app, this.onTab});
+
+  /// The search field at the top: opens the dictionary.
+  final VoidCallback? onSearch;
+  const LibraryPage({super.key, required this.app, this.onTab, this.onSearch});
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
@@ -182,17 +186,13 @@ class _LibraryPageState extends State<LibraryPage> {
     final recent = recentBooks(widget.app);
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
-    final st = widget.app.user.statuses.values;
-    final learning = st.where((s) => s == WordStatus.learning).length;
-    final learned = st.where((s) => s == WordStatus.learned).length;
     final width = MediaQuery.sizeOf(context).width;
     final phone = width < 720;
     final pad = phone ? 20.0 : 32.0;
     final addButton = phone
-        ? RoundIconButton(
+        ? IconButton(
             key: const ValueKey('add-book'),
-            icon: importing ? Icons.hourglass_top_rounded : Icons.add_rounded,
-            gold: true,
+            icon: Icon(importing ? Icons.hourglass_top_rounded : Icons.add_rounded, size: 27, color: cs.onSurfaceVariant),
             tooltip: L('Kitap ekle', 'Add book'),
             onPressed: importing ? null : _import,
           )
@@ -203,35 +203,9 @@ class _LibraryPageState extends State<LibraryPage> {
             height: 46,
             onPressed: importing ? null : _import,
           );
-    final hero = _HeroCard(app: widget.app, books: books.length, learning: learning, learned: learned, wide: !phone);
-    // Up to five books to pick up again: the ones read last, or simply the newest.
-    final cont = recent.where((b) => _progress(b) > 0 || b.lastPage > 0).take(5).toList();
-    if (cont.isEmpty && recent.isNotEmpty) cont.add(recent.first);
-    final continueList = cont.isEmpty
-        ? null
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _SectionTitle(L('Okumaya devam et', 'Continue reading')),
-              if (phone)
-                SizedBox(
-                  height: 178,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    clipBehavior: Clip.none,
-                    itemCount: cont.length,
-                    separatorBuilder: (_, _) => const SizedBox(width: 12),
-                    itemBuilder: (_, i) => _ContinueCard(book: cont[i], cover: _cover(cont[i]), onTap: () => _open(cont[i])),
-                  ),
-                )
-              else
-                for (final b in cont.take(2))
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: _ContinueRow(book: b, cover: _cover(b), onTap: () => _open(b)),
-                  ),
-            ],
-          );
+    final search = widget.onSearch == null ? null : _SearchField(onTap: widget.onSearch!);
+    final current = recent.isEmpty ? null : _CurrentBookCard(book: recent.first, cover: _cover(recent.first), onTap: () => _open(recent.first), big: !phone);
+    final today = _TodayCard(app: widget.app);
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -240,56 +214,52 @@ class _LibraryPageState extends State<LibraryPage> {
           builder: (context, progress, _) => CustomScrollView(
             slivers: [
               SliverPadding(
-                padding: EdgeInsets.fromLTRB(pad, phone ? 12 : 24, pad, 0),
+                padding: EdgeInsets.fromLTRB(pad, phone ? 4 : 24, pad, 0),
                 sliver: SliverToBoxAdapter(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (phone)
-                        Row(
-                          children: [
-                            const BrandMark(size: 36),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                'Storilex',
-                                maxLines: 1,
-                                softWrap: false,
-                                overflow: TextOverflow.fade,
-                                style: theme.textTheme.titleLarge?.copyWith(fontFamily: readingFont, fontWeight: FontWeight.w600, fontSize: 21),
-                              ),
-                            ),
+                      if (phone) ...[
+                        // The gold wordmark stays at the top of the home page.
+                        SizedBox(
+                          height: 52,
+                          child: Row(children: [
+                            const SizedBox(width: 48),
+                            const Expanded(child: Center(child: Wordmark(height: 24))),
                             addButton,
-                          ],
-                        )
-                      else
+                          ]),
+                        ),
+                        const Padding(padding: EdgeInsets.fromLTRB(40, 2, 40, 14), child: GoldRule()),
+                        ?search,
+                      ] else ...[
                         Row(
                           children: [
                             Expanded(child: Text(L('Kitaplığım', 'My library'), style: theme.textTheme.headlineMedium)),
+                            if (search != null) ...[SizedBox(width: 320, child: search), const SizedBox(width: 14)],
                             addButton,
                           ],
                         ),
-                      const SizedBox(height: 4),
-                      Text(
-                        L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
-                        style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
-                      ),
-                      const SizedBox(height: 16),
-                      if (!phone && continueList != null && width >= 1100)
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(flex: 5, child: hero),
-                            const SizedBox(width: 24),
-                            Expanded(
-                              flex: 4,
-                              child: Transform.translate(offset: const Offset(0, -14), child: continueList),
-                            ),
-                          ],
+                        const SizedBox(height: 4),
+                        Text(
+                          L('Okurken bilmediğin kelimeleri öğren.', 'Learn the words you don\'t know while you read.'),
+                          style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
+                        ),
+                      ],
+                      SizedBox(height: phone ? 12 : 20),
+                      if (!phone && current != null && width >= 1100)
+                        IntrinsicHeight(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(flex: 5, child: current),
+                              const SizedBox(width: 18),
+                              Expanded(flex: 4, child: Align(alignment: Alignment.topCenter, child: today)),
+                            ],
+                          ),
                         )
                       else ...[
-                        hero,
-                        if (continueList != null) ...[const SizedBox(height: 8), continueList],
+                        today,
+                        if (current != null) ...[const SizedBox(height: 12), current],
                       ],
                       if (importStatus != null) ...[
                         const SizedBox(height: 14),
@@ -303,7 +273,7 @@ class _LibraryPageState extends State<LibraryPage> {
                       ],
                       if (books.isNotEmpty) ...[
                         const SizedBox(height: 16),
-                        _SectionTitle(L('Tüm kitaplar', 'All books'), trailing: '${books.length}'),
+                        _SectionTitle(L('Rafım', 'My shelf'), trailing: '${books.length}'),
                       ],
                     ],
                   ),
@@ -361,286 +331,101 @@ class _SectionTitle extends StatelessWidget {
   }
 }
 
-/// The cream summary card at the top: reading time, streak and word counts,
-/// with a drawn open book.
-class _HeroCard extends StatelessWidget {
-  final AppState app;
-  final int books, learning, learned;
-  final bool wide;
-  const _HeroCard({required this.app, required this.books, required this.learning, required this.learned, required this.wide});
-
-  static String _time(int secs) {
-    final m = (secs / 60).round();
-    if (m < 60) return L('$m dk', '$m min');
-    return L('${m ~/ 60} sa ${m % 60} dk', '${m ~/ 60} h ${m % 60} min');
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final t = Theme.of(context);
-    final dark = t.brightness == Brightness.dark;
-    const ink = Color(0xFF231C12);
-    final muted = dark ? const Color(0xFF6E6453) : const Color(0xFF7D6E55);
-    final line = dark ? Colors.black.withValues(alpha: 0.09) : const Color(0x1F503714);
-    final now = DateTime.now();
-    final today = DateTime(now.year, now.month, now.day);
-    final week = app.stats.readingByDay(7);
-    final todaySecs = week.last.$2;
-    final weekSecs = week.fold<int>(0, (a, d) => a + d.$2);
-    final streak = app.stats.readingStreak();
-    final title = weekSecs == 0
-        ? L('Okumaya başla', 'Start reading')
-        : streak >= 3
-        ? L('Harika gidiyorsun!', 'You\'re doing great!')
-        : L('Güzel ilerliyorsun', 'Nice progress');
-    Widget stat(String value, String label, {Key? key}) => Expanded(
-      key: key,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Text(
-              value,
-              style: t.textTheme.titleMedium?.copyWith(color: ink, fontWeight: FontWeight.w700, fontSize: 18),
-            ),
-          ),
-          Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: t.textTheme.labelSmall?.copyWith(color: muted, fontWeight: FontWeight.w500),
-          ),
-        ],
-      ),
-    );
-    Widget sep() => Container(width: 1, height: 34, margin: const EdgeInsets.symmetric(horizontal: 10), color: line);
-    final maxDay = week.fold<int>(1, (a, d) => d.$2 > a ? d.$2 : a);
-    return Container(
-      decoration: BoxDecoration(
-        gradient: dark ? Brand.heroDark : Brand.heroLight,
-        borderRadius: BorderRadius.circular(26),
-        boxShadow: [BoxShadow(color: dark ? Colors.black.withValues(alpha: 0.35) : const Color(0x1A785A28), blurRadius: 24, offset: const Offset(0, 6))],
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: LayoutBuilder(builder: (context, c) {
-      // The book takes only the room left beside the text: it shrinks as the
-      // card narrows and hides when too small, so it never covers the text.
-      final padH = wide ? 26.0 : 18.0;
-      final bookW = (c.maxWidth - padH * 2 - (wide ? 300.0 : 190.0)).clamp(0.0, wide ? 210.0 : 112.0);
-      final showBook = bookW >= (wide ? 110 : 76);
-      final reserve = showBook ? bookW + (wide ? 10 : 0) : 0.0;
-      final textMax = (c.maxWidth - padH * 2 - reserve).clamp(0.0, wide ? 440.0 : double.infinity);
-      return Stack(
-        children: [
-          if (showBook)
-            Positioned(
-              right: wide ? 18 : -4,
-              top: wide ? 8 : 2,
-              child: CustomPaint(size: Size(bookW, bookW * 0.75), painter: _OpenBookPainter()),
-            ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(wide ? 26 : 18, wide ? 22 : 16, wide ? 26 : 18, wide ? 20 : 14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(L('Bu hafta', 'This week'), style: t.textTheme.bodySmall?.copyWith(color: muted)),
-                const SizedBox(height: 2),
-                Padding(
-                  padding: EdgeInsets.only(right: reserve),
-                  child: Text(
-                    title,
-                    style: TextStyle(fontFamily: readingFont, fontWeight: FontWeight.w700, fontSize: wide ? 30 : 22, height: 1.15, color: ink),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Padding(
-                  padding: EdgeInsets.only(right: reserve),
-                  child: Text(
-                  key: const ValueKey('stat-books'),
-                  L('$books kitap · $learning öğreneceğim · $learned öğrendim', '$books books · $learning to learn · $learned learned'),
-                  style: t.textTheme.bodySmall?.copyWith(color: muted, fontWeight: FontWeight.w600),
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Container(
-                  height: 1,
-                  color: line,
-                  constraints: BoxConstraints(maxWidth: textMax),
-                ),
-                const SizedBox(height: 12),
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: textMax),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      children: [
-                        stat(_time(todaySecs), L('Bugün', 'Today')),
-                        sep(),
-                        stat(_time(weekSecs), L('Bu hafta', 'This week')),
-                        sep(),
-                        stat(L('$streak gün', '$streak days'), L('Seri', 'Streak')),
-                      ],
-                    ),
-                  ),
-                ),
-                if (wide) ...[
-                  const SizedBox(height: 22),
-                  SizedBox(
-                    height: 78,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        for (final (i, d) in week.indexed)
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    height: 8 + 44 * d.$2 / maxDay,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.vertical(top: Radius.circular(8), bottom: Radius.circular(4)),
-                                      color: i == week.length - 1 ? null : line,
-                                      gradient: i == week.length - 1 ? Brand.goldGradient : null,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    _dayName(d.$1, today),
-                                    style: t.textTheme.labelSmall?.copyWith(color: muted, fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ],
-            ),
-          ),
-        ],
-      );
-      }),
-    );
-  }
-
-  static String _dayName(DateTime d, DateTime today) {
-    const tr = ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'];
-    const en = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    return L(tr[d.weekday - 1], en[d.weekday - 1]);
-  }
-}
-
-/// An open book with a gold ribbon, drawn for the summary card.
-class _OpenBookPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final s = size.width / 200;
-    canvas.save();
-    canvas.scale(s);
-    canvas.translate(100, 80);
-    canvas.rotate(-0.17);
-    canvas.translate(-100, -80);
-    Path page(bool left) {
-      final x = left ? 24.0 : 176.0, q = left ? 62.0 : 138.0;
-      return Path()
-        ..moveTo(x, 44)
-        ..quadraticBezierTo(q, 26, 100, 46)
-        ..lineTo(100, 124)
-        ..quadraticBezierTo(q, 104, x, 122)
-        ..close();
-    }
-
-    final coverPath = Path()
-      ..moveTo(18, 50)
-      ..quadraticBezierTo(60, 30, 100, 52)
-      ..quadraticBezierTo(140, 30, 184, 50)
-      ..lineTo(184, 128)
-      ..quadraticBezierTo(140, 108, 100, 130)
-      ..quadraticBezierTo(60, 108, 18, 128)
-      ..close();
-    canvas.drawShadow(coverPath, Colors.black, 6, false);
-    canvas.drawPath(
-      coverPath,
-      Paint()..shader = const LinearGradient(colors: [Color(0xFF7A4A22), Color(0xFF4E2D12)]).createShader(const Rect.fromLTWH(18, 30, 166, 100)),
-    );
-    final paper = Paint()
-      ..shader = const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Color(0xFFFFF9EC), Color(0xFFEADFC6)],
-      ).createShader(const Rect.fromLTWH(0, 26, 200, 100));
-    final edge = Paint()
-      ..color = const Color(0xFFD9CBAA)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.8;
-    for (final l in [true, false]) {
-      canvas.drawPath(page(l), paper);
-      canvas.drawPath(page(l), edge);
-    }
-    final lines = Paint()
-      ..color = const Color(0xCCCBBB98)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-    for (var i = 0; i < 4; i++) {
-      final y = 56.0 + i * 10;
-      canvas.drawPath(
-        Path()
-          ..moveTo(36, y)
-          ..quadraticBezierTo(64, y - 12, i == 3 ? 84 : 90, y + 2),
-        lines,
-      );
-      if (i < 3)
-        canvas.drawPath(
-          Path()
-            ..moveTo(110, y + 2)
-            ..quadraticBezierTo(136, y - 12, 164, y),
-          lines,
-        );
-    }
-    canvas.drawPath(
-      Path()
-        ..moveTo(120, 46)
-        ..lineTo(120, 86)
-        ..lineTo(126, 80)
-        ..lineTo(132, 86)
-        ..lineTo(132, 42)
-        ..close(),
-      Paint()..color = const Color(0xFFB8863A),
-    );
-    canvas.drawLine(
-      const Offset(100, 46),
-      const Offset(100, 124),
-      Paint()
-        ..color = const Color(0xFFBFAE88)
-        ..strokeWidth = 1.4,
-    );
-    canvas.restore();
-    final dot = Paint()..color = const Color(0xFFD6B16C);
-    canvas.drawCircle(Offset(40 * s, 18 * s), 2.5 * s, dot);
-    canvas.drawCircle(Offset(176 * s, 14 * s), 1.8 * s, dot);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
 double _progress(Book b) => b.chapterCount <= 1 ? 0.0 : b.lastChapter / (b.chapterCount - 1);
 
 String _where(Book b) => b.chapterCount <= 1
     ? (b.lastPage > 0 ? L('Sayfa ${b.lastPage + 1}', 'Page ${b.lastPage + 1}') : L('Başlangıç', 'Start'))
     : L('Bölüm ${b.lastChapter + 1} / ${b.chapterCount}', 'Chapter ${b.lastChapter + 1} / ${b.chapterCount}');
 
-/// Phone: a card in the sideways "Continue reading" row.
-class _ContinueCard extends StatelessWidget {
+/// Daily reading goal, in minutes (home page ring and the side menu).
+const readingGoalMinutes = 25;
+
+/// Today: minutes read against the goal as a ring, the streak, and a button
+/// for the words due for review.
+class _TodayCard extends StatelessWidget {
+  final AppState app;
+  const _TodayCard({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+    final mins = (app.stats.readingSeconds(from: DateTime.now()) / 60).floor();
+    final streak = app.stats.readingStreak();
+    final due = app.review.dueCount();
+    final left = readingGoalMinutes - mins;
+    return _HomeCard(
+      key: const ValueKey('today-card'),
+      padding: const EdgeInsets.all(16),
+      child: Row(children: [
+        SizedBox(
+          width: 78,
+          height: 78,
+          child: Stack(alignment: Alignment.center, children: [
+            Positioned.fill(
+              child: CircularProgressIndicator(
+                value: (mins / readingGoalMinutes).clamp(0.0, 1.0),
+                strokeWidth: 8,
+                strokeCap: StrokeCap.round,
+                backgroundColor: cs.surfaceContainerHigh,
+              ),
+            ),
+            Column(mainAxisSize: MainAxisSize.min, children: [
+              Text('$mins', style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700, height: 1.1)),
+              Text(L('/ $readingGoalMinutes dk', '/ $readingGoalMinutes min'), style: TextStyle(fontSize: 10.5, color: cs.onSurfaceVariant)),
+            ]),
+          ]),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(children: [
+              Expanded(
+                child: Text(L('Bugün', 'Today'), style: TextStyle(fontFamily: readingFont, fontSize: 17, fontWeight: FontWeight.w600, color: cs.onSurface)),
+              ),
+              if (streak > 0) ...[
+                Icon(Icons.local_fire_department_outlined, size: 16, color: cs.primary),
+                const SizedBox(width: 3),
+                Text(L('$streak gün', '$streak days'), style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: cs.primary)),
+              ],
+            ]),
+            const SizedBox(height: 2),
+            Text(
+              left > 0
+                  ? L('$left dakika daha okursan hedef tamam.', 'Read $left more minutes to reach the goal.')
+                  : L('Bugünkü hedef tamam.', 'Today\'s goal is done.'),
+              style: TextStyle(fontSize: 13.5, height: 1.3, color: cs.onSurfaceVariant),
+            ),
+            if (due > 0) ...[
+              const SizedBox(height: 10),
+              FilledButton.icon(
+                key: const ValueKey('today-review'),
+                onPressed: () => startReview(context, app),
+                icon: const Icon(Icons.replay_rounded, size: 17),
+                label: Text(L('$due kelime tekrar', 'Review $due words')),
+                style: FilledButton.styleFrom(
+                  backgroundColor: learnColor(theme),
+                  foregroundColor: onLearn(theme),
+                  minimumSize: const Size(0, 36),
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  textStyle: theme.textTheme.labelLarge?.copyWith(fontSize: 13.5, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ],
+          ]),
+        ),
+      ]),
+    );
+  }
+}
+
+/// The book read last, big: cover, where you are, and a button back into it.
+class _CurrentBookCard extends StatelessWidget {
   final Book book;
   final File? cover;
   final VoidCallback onTap;
-  const _ContinueCard({required this.book, required this.cover, required this.onTap});
+  final bool big;
+  const _CurrentBookCard({required this.book, required this.cover, required this.onTap, this.big = false});
 
   @override
   Widget build(BuildContext context) {
@@ -648,108 +433,112 @@ class _ContinueCard extends StatelessWidget {
     final cs = theme.colorScheme;
     final dark = theme.brightness == Brightness.dark;
     final pct = _progress(book);
-    return SizedBox(
-      width: 236,
-      child: Material(
-        color: Colors.transparent,
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: cs.outlineVariant),
-            color: dark ? null : cs.surface,
-            gradient: dark ? const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Color(0xFF2A221A), Color(0xFF33291C)]) : null,
-            boxShadow: dark ? null : [const BoxShadow(color: Color(0x14785A28), blurRadius: 18, offset: Offset(0, 6))],
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(22),
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BookCover(title: book.title, format: book.format, width: 46, image: cover),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(book.title, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleSmall?.copyWith(fontSize: 15)),
-                            const SizedBox(height: 3),
-                            Text(_where(book), maxLines: 1, style: theme.textTheme.labelSmall?.copyWith(color: cs.onSurfaceVariant)),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  LinearProgressIndicator(value: pct, minHeight: 4),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: onTap,
-                      style: OutlinedButton.styleFrom(minimumSize: const Size(0, 38), padding: const EdgeInsets.symmetric(horizontal: 14)),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text(L('Devam et', 'Continue'))),
-                          const Icon(Icons.chevron_right_rounded, size: 20),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+    return _HomeCard(
+      key: const ValueKey('current-book'),
+      padding: const EdgeInsets.all(18),
+      onTap: onTap,
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        BookCover(title: book.title, format: book.format, width: big ? 120 : 96, image: cover),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(L('ŞU AN OKUDUĞUN', 'READING NOW'), style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, letterSpacing: 1.6, color: cs.onSurfaceVariant)),
+            const SizedBox(height: 6),
+            Text(book.title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontFamily: readingFont, fontSize: big ? 21 : 19, fontWeight: FontWeight.w600, height: 1.2, color: cs.onSurface)),
+            const SizedBox(height: 4),
+            Text('${_where(book)} · ${percent((pct * 100).round())}', style: TextStyle(fontSize: 13, color: cs.onSurfaceVariant)),
+            const SizedBox(height: 10),
+            LinearProgressIndicator(value: pct, minHeight: 4, borderRadius: BorderRadius.circular(2), backgroundColor: cs.surfaceContainerHigh),
+            const SizedBox(height: 14),
+            FilledButton.icon(
+              key: const ValueKey('current-book-open'),
+              onPressed: onTap,
+              icon: const Icon(Icons.auto_stories_outlined, size: 18),
+              label: Text(L('Okumaya dön', 'Back to the book')),
+              style: FilledButton.styleFrom(
+                backgroundColor: dark ? Brand.goldLight : const Color(0xFF5C3D14),
+                foregroundColor: dark ? const Color(0xFF21180A) : Colors.white,
+                minimumSize: const Size(0, 42),
+                textStyle: theme.textTheme.labelLarge?.copyWith(fontSize: 14.5, fontWeight: FontWeight.w600),
               ),
             ),
-          ),
+          ]),
         ),
+      ]),
+    );
+  }
+}
+
+/// A plain home page card: surface colour, thin border, soft shadow by day.
+class _HomeCard extends StatelessWidget {
+  final Widget child;
+  final EdgeInsets padding;
+  final VoidCallback? onTap;
+  const _HomeCard({super.key, required this.child, required this.padding, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    final radius = BorderRadius.circular(22);
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: dark ? Brand.dSurface : const Color(0xFFFBF7EF),
+          borderRadius: radius,
+          border: Border.all(color: theme.colorScheme.outlineVariant),
+          boxShadow: dark ? null : const [BoxShadow(color: Color(0x10785A28), blurRadius: 18, offset: Offset(0, 6))],
+        ),
+        child: InkWell(borderRadius: radius, onTap: onTap, child: Padding(padding: padding, child: child)),
       ),
     );
   }
 }
 
-/// Wide screens: one row per book next to the summary card.
-class _ContinueRow extends StatelessWidget {
-  final Book book;
-  final File? cover;
+/// Looks like a search field; a tap opens the dictionary.
+class _SearchField extends StatelessWidget {
   final VoidCallback onTap;
-  const _ContinueRow({required this.book, required this.cover, required this.onTap});
+  const _SearchField({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final pct = _progress(book);
-    return Card(
-      margin: EdgeInsets.zero,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            children: [
-              BookCover(title: book.title, format: book.format, width: 54, image: cover),
-              const SizedBox(width: 14),
+    final cs = theme.colorScheme;
+    final dark = theme.brightness == Brightness.dark;
+    return Semantics(
+      button: true,
+      label: L('Sözlükte kelime ara', 'Search a word in the dictionary'),
+      excludeSemantics: true,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: const ValueKey('home-search'),
+          borderRadius: BorderRadius.circular(23),
+          onTap: onTap,
+          child: Ink(
+            height: 46,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: dark ? Brand.dSurfaceLow : const Color(0xFFFBF7EF),
+              borderRadius: BorderRadius.circular(23),
+              border: Border.all(color: cs.outlineVariant),
+            ),
+            child: Row(children: [
+              Icon(Icons.search_rounded, size: 20, color: cs.onSurfaceVariant),
+              const SizedBox(width: 10),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(book.title, maxLines: 1, overflow: TextOverflow.ellipsis, style: theme.textTheme.titleSmall?.copyWith(fontSize: 15)),
-                    const SizedBox(height: 3),
-                    Text(
-                      '${_where(book)} · ${percent((pct * 100).round())}',
-                      style: theme.textTheme.labelSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
-                    ),
-                    const SizedBox(height: 8),
-                    LinearProgressIndicator(value: pct, minHeight: 4),
-                  ],
+                child: Text(
+                  L('Kelime ara · İngilizce ya da Türkçe', 'Search a word · English or Turkish'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 14.5, color: cs.onSurfaceVariant),
                 ),
               ),
-              const SizedBox(width: 14),
-              GoldButton(label: L('Devam et', 'Continue'), icon: Icons.chevron_right_rounded, trailingIcon: true, height: 40, onPressed: onTap),
-            ],
+            ]),
           ),
         ),
       ),
