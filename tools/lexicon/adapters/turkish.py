@@ -2,7 +2,7 @@
 import re
 from abc import ABC, abstractmethod
 
-from .types import Sentence, Token, split_sentences
+from .types import Sentence, Token, split_sentences, starts_clause
 
 
 def _lower(s):
@@ -69,9 +69,11 @@ class BuiltinTurkishAnalyzer(TurkishAnalyzer):
                     toks.append(Token(t, '', 'SUFFIX', False, m.start()))
                     after_apostrophe = False
                     continue
-                nxt_ap = i + 1 < len(parts) and parts[i + 1].group(0) in ("'", '’')
-                # Capitalised after the first word of the sentence (a leading dash or quote doesn't count).
-                propn = (t[0].isupper() and any(x.is_word for x in toks)) or nxt_ap
+                # "Ali'nin" (a lower-case "san'at" is an old spelling, not a name)
+                nxt_ap = t[0].isupper() and i + 1 < len(parts) and parts[i + 1].group(0) in ("'", '’')
+                # Capitalised after the first word of the sentence. A leading dash or quote doesn't count, and
+                # quoted speech after a dash or colon starts a new sentence ("dedi: — Kız ...").
+                propn = (t[0].isupper() and any(x.is_word for x in toks) and not starts_clause(toks)) or nxt_ap
                 lemma = '' if propn else self.lemma(t)
                 pos = 'PROPN' if propn else (self.lexicon.pos_of(lemma) if (self.lexicon and lemma) else '')
                 toks.append(Token(t, lemma, pos, True, m.start()))

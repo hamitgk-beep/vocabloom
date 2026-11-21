@@ -12,7 +12,7 @@ later from a person through `add-sense`. Nothing is accepted automatically.
 """
 from .adapters.english import EnglishAnalyzer
 from .adapters.turkish import TurkishAnalyzer
-from .adapters.types import ABBREVIATIONS, sentence_flags
+from .adapters.types import ABBREVIATIONS, SPEECH_OPENERS, sentence_flags
 from .compare import EnTrDictionary, TrEnDictionary, compare_phrase, compare_word, find_known_phrases
 
 # direction -> (source language, dictionary view type, analyzer base class)
@@ -60,6 +60,8 @@ def name_evidence(sentences):
         first = True
         for t in sent.tokens:
             if not t.is_word:
+                if t.text in SPEECH_OPENERS:     # quoted speech starts with a capital: like a sentence start
+                    first = True
                 continue
             w = t.text.lower()
             st = stats.setdefault(w, [0, 0, 0, 0, 0])  # uses, tagged name, lower case, capital inside, capital at start

@@ -128,6 +128,18 @@ class NameTests(Base):
         self.assertEqual(counts['names_skipped'], 2)
 
 
+class SpeechCapitalTests(unittest.TestCase):
+    def test_capital_after_dash_or_colon_is_not_a_name(self):
+        from lexicon.adapters.turkish import BuiltinTurkishAnalyzer
+        toks = BuiltinTurkishAnalyzer(None).analyze("Ali'ye döndü: — Kız niçin girmiyorsun? Eskiden san'at vardı.")
+        pos = {t.text: t.pos for s in toks for t in s.tokens if t.is_word}
+        self.assertEqual(pos['Ali'], 'PROPN')
+        self.assertNotEqual(pos['Kız'], 'PROPN')
+        self.assertNotEqual(pos['san'], 'PROPN')     # old spelling with an apostrophe, lower case
+        names, _ = name_evidence(toks)
+        self.assertNotIn('kız', names)
+
+
 class WordFilterTests(Base):
     def test_compounds_dialect_abbreviations(self):
         text = "The sea-cook said a-going, kep' and wibbly-wobbit etc. here."
@@ -343,7 +355,8 @@ class SpacyTests(Base):
         self.assertNotIn('meet mother', phrases)
 
 
-@unittest.skipUnless(os.path.isfile(REAL_DICT), 'shipped dict.db not present')
+@unittest.skipUnless(os.path.isfile(REAL_DICT) and os.path.isfile(os.path.join(REPO, 'assets', 'tr_en.db')),
+                     'shipped dictionaries not present')
 class EvaluationThresholdTests(unittest.TestCase):
     """Guards the measured quality on eval/en_gold.jsonl (30 public-domain sentences, real dict.db read-only)."""
 
@@ -363,6 +376,32 @@ class EvaluationThresholdTests(unittest.TestCase):
         self.assertGreaterEqual(r['lemma_accuracy'], 0.9)
         self.assertGreaterEqual(r['name_recall'], 0.8)
         self.assertLessEqual(r['name_leakage'], 0.1)
+
+    def _run_tr(self, engine):
+        from lexicon.eval.evaluate import TR_GOLD, evaluate_tr, load_gold
+        path = os.path.join(REPO, 'assets', 'tr_en.db')
+        d = TrEnDictionary(path)
+        try:
+            before = sha256(path)
+            r = evaluate_tr(engine, d, load_gold(TR_GOLD))
+            self.assertEqual(sha256(path), before)
+            return r
+        finally:
+            d.close()
+
+    def test_builtin_turkish(self):
+        r = self._run_tr('builtin')
+        self.assertGreaterEqual(r['lemma_accuracy'], 0.7)
+        self.assertGreaterEqual(r['name_precision'], 0.9)
+        self.assertEqual(r['name_leakage'], 0.0)
+
+    @unittest.skipUnless(_zemberek_ready(), 'Zemberek not set up')
+    def test_zemberek_turkish(self):
+        r = self._run_tr('zemberek')
+        self.assertGreaterEqual(r['lemma_accuracy'], 0.9)
+        self.assertGreaterEqual(r['name_recall'], 0.95)
+        self.assertGreaterEqual(r['name_precision'], 0.9)
+        self.assertEqual(r['name_leakage'], 0.0)
 
     @unittest.skipUnless(HAVE_SPACY, 'spaCy not installed')
     def test_spacy(self):

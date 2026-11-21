@@ -27,6 +27,14 @@ class Sentence:
 
 import re
 
+# Punctuation after which quoted speech starts, usually with a capital ("dedi: — Kız ...", 'said: "Come ...').
+SPEECH_OPENERS = {'—', '–', '-', ':', '"', '“', '«', '‘'}
+
+
+def starts_clause(toks):
+    """True when the next token follows a dash, colon or opening quote, so a capital there is no name evidence."""
+    return bool(toks) and not toks[-1].is_word and toks[-1].text in SPEECH_OPENERS
+
 # Words that end with a full stop without ending the sentence (compared case-insensitively, without the dot).
 ABBREVIATIONS = {
     # English

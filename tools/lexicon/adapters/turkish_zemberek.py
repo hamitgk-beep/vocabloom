@@ -11,7 +11,7 @@ import shutil
 import subprocess
 
 from .turkish import TurkishAnalyzer, _lower
-from .types import Sentence, Token, split_sentences
+from .types import Sentence, Token, split_sentences, starts_clause
 
 # Zemberek primary POS -> the word-class names used in tr_en.db senses
 _POS = {'Noun': 'noun', 'Verb': 'verb', 'Adj': 'adj', 'Adv': 'adv', 'Pron': 'pron', 'Conj': 'conj',
@@ -85,8 +85,10 @@ class ZemberekTurkishAnalyzer(TurkishAnalyzer):
                 if upos == 'Punc' or not surface[:1].isalpha():
                     toks.append(Token(surface, surface, 'NUM' if upos == 'Num' else '', False, start))
                     continue
-                inside = any(t.is_word for t in toks)
-                if spos == 'Prop' or (surface[0].isupper() and inside) or "'" in surface or '’' in surface:
+                inside = any(t.is_word for t in toks) and not starts_clause(toks)
+                cap = surface[0].isupper()
+                # Proper noun: capitalised and tagged as one, capitalised inside a sentence, or "Ali'nin".
+                if cap and (spos == 'Prop' or inside or "'" in surface or '’' in surface):
                     toks.append(Token(surface, '', 'PROPN', True, start))
                     continue
                 # Unknown or guessed roots, and halves of doubled words ("harıl" in "harıl harıl"), get no lemma.
