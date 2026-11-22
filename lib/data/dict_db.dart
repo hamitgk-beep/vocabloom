@@ -655,6 +655,45 @@ class DictDb {
     return (tr: m.tr, pos: m.pos, gloss: m.sense?.gloss);
   }
 
+  /// Turkish word -> the KeNet synsets (id, part of speech) it is a meaning of.
+  late final Map<String, List<(int, String)>> _trSyn = () {
+    final m = <String, List<(int, String)>>{};
+    for (final r in db.select("SELECT id, pos, tr FROM syn WHERE tr IS NOT NULL AND tr != '[]'")) {
+      final e = (r['id'] as int, normPos(r['pos'] as String));
+      for (final t in (jsonDecode(r['tr'] as String) as List).cast<String>()) {
+        (m[t.toLowerCase().trim()] ??= []).add(e);
+      }
+    }
+    return m;
+  }();
+
+  /// Whether the Turkish meanings [a] and [b] say the same thing: they share
+  /// a part ("kurs, ders" and "ders"), or a part of each is listed as a meaning
+  /// of one and the same KeNet synset ("istemek" and "arzu etmek"), which is
+  /// a hand-made synonym set. [pos] (n, v, a, r) limits it to synsets of that
+  /// part of speech, so a noun and a verb that only look alike are not joined.
+  /// No spelling similarity is used.
+  bool sameTr(String a, String b, {String? pos}) => trLink(a, b, pos: pos) != null;
+
+  /// How [sameTr] holds: 'same' (a shared part), 'synonym' (one synset), or null.
+  String? trLink(String a, String b, {String? pos}) {
+    final pa = _parts(a).toSet(), pb = _parts(b).toSet();
+    if (pa.intersection(pb).isNotEmpty) return 'same';
+    final p = pos == null ? null : normPos(pos);
+    final ids = <int>{
+      for (final x in pa)
+        for (final e in _trSyn[x] ?? const <(int, String)>[])
+          if (p == null || e.$2 == p) e.$1,
+    };
+    if (ids.isEmpty) return null;
+    for (final x in pb) {
+      for (final e in _trSyn[x] ?? const <(int, String)>[]) {
+        if (ids.contains(e.$1)) return 'synonym';
+      }
+    }
+    return null;
+  }
+
   static Iterable<String> _parts(String t) =>
       t.toLowerCase().split(RegExp(r'[,;]')).map((e) => e.trim()).where((e) => e.length > 1);
 

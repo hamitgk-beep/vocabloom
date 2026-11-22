@@ -4,8 +4,10 @@ import 'dart:math';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/review_quiz.dart';
+import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/import/importers.dart';
+import 'package:kelime_okur/nlp/context_sense.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 DictDb openDict() {
@@ -41,6 +43,9 @@ void main() {
       ('bank', 'They sat on the bank of the river.', false),
       ('bank', 'The bank approved the loan.', true),
       ('course', golf, false),
+      // No sentence: graded when a second checked source says it is a main meaning.
+      ('bank', null, true),
+      ('course', null, false),
     ]) {
       final common = d.commonMeaning(lemma);
       expect(common.tr, isNotNull, reason: lemma);
@@ -48,10 +53,7 @@ void main() {
       expect(q.answerFor(saved(lemma, s)).tr, common.tr, reason: lemma);
       final ch = q.choiceFor(saved(lemma, s));
       expect(ch?.right, graded ? common.tr : null, reason: '$lemma in "$s"');
-      // The same word saved with no sentence asks the common meaning.
-      final plain = ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved(lemma, null))!;
-      expect(plain.right, common.tr, reason: lemma);
-      expect(plain.options.toSet().length, 4, reason: lemma);
+      if (ch != null) expect(ch.options.toSet().length, 4, reason: lemma);
     }
     // ft's first meaning (DictDb.sourcePolicy); the AI draft said "boyunca, baştan sona".
     expect(d.commonMeaning('through').tr, 'boyunca');
@@ -76,7 +78,9 @@ void main() {
     expect(q.answerFor(saved('simply', s)).tr, 'sadece');
     // In this long sentence the context picker does not confirm it: shown, not graded.
     expect(q.choiceFor(saved('simply', s)), isNull);
-    final ch = ReviewQuiz(d, u, rnd: Random(2)).choiceFor(saved('simply', null))!;
+    // No sentence: "sadece" is in the human translations of the word's example sentences.
+    final trEn = TrEnDict(sqlite3.open('assets/tr_en.db', mode: OpenMode.readOnly));
+    final ch = ReviewQuiz(d, u, rnd: Random(2), trEn: trEn).choiceFor(saved('simply', null))!;
     expect(ch.right, 'sadece');
     expect(ch.options.toSet().length, 4);
   });
@@ -121,7 +125,7 @@ void main() {
         // Not confirmed for the sentence: a plain flashcard, never a wrong
         // "right" answer.
         notGraded++;
-        final f = q.fit(w, s, a.tr!);
+        final f = q.fit(w, s, a.tr!).fit;
         if (f == SentenceFit.other) other++;
         if (f == SentenceFit.unknown) unknown++;
         continue;
@@ -160,6 +164,35 @@ void main() {
     expect(asked, greaterThan(rows.length * 0.38));
     expect(untranslatable, lessThan(rows.length * 0.02));
     expect(unsure, lessThan(rows.length * 0.03));
+  });
+
+  // How many cards are graded (the price of never grading an unconfirmed
+  // answer). Printed for the report; the floors only keep it from falling unnoticed.
+  test('coverage: cards with no sentence, and expression cards', () {
+    final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
+    final trEn = TrEnDict(sqlite3.open('assets/tr_en.db', mode: OpenMode.readOnly));
+    final q = ReviewQuiz(d, u, rnd: Random(5), trEn: trEn);
+    var n = 0, graded = 0;
+    for (final r in d.db.select("SELECT word FROM wfreq WHERE word NOT GLOB '* *' AND length(word) > 2 ORDER BY n DESC LIMIT 3000")) {
+      final w = r['word'] as String;
+      final a = q.answerFor(saved(w, null));
+      if (a.tr == null) continue;
+      n++;
+      if (a.choice) graded++;
+    }
+    var en = 0, eGraded = 0, es = 0, esGraded = 0;
+    for (final r in d.db.select("SELECT phrase, cat, ex FROM expr WHERE phrase LIKE '% %' AND cat IN ('idioms', 'phrasal_verbs') AND tr IS NOT NULL AND tr != '' ORDER BY id LIMIT 3000")) {
+      final phrase = r['phrase'] as String;
+      en++;
+      if (q.answerFor(saved(phrase, null)).choice) eGraded++;
+      final ex = r['ex'] as String?;
+      if (ex == null || ex.isEmpty) continue;
+      es++;
+      if (ReviewQuiz(d, u, rnd: Random(5), trEn: trEn, senses: q.senses).answerFor(saved(phrase, ex)).choice) esGraded++;
+    }
+    // ignore: avoid_print
+    print('coverage: words with no sentence $graded/$n graded; expressions with no sentence $eGraded/$en; expressions in their own example sentence $esGraded/$es');
+    expect(graded, greaterThan(n * 0.6));
   });
 
   test('machine-made book titles get a title from the text', () {

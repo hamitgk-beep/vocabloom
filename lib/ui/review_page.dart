@@ -48,7 +48,7 @@ class _ReviewPageState extends State<ReviewPage> {
   /// Multiple-choice state per card position (null: a plain flashcard).
   final _choices = <int, QuizChoice?>{};
   int? picked;
-  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user, trEn: app.trEn);
+  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user, trEn: app.trEn, senses: app.senses);
 
   /// Cards whose meaning in their sentence is being asked from the AI service.
   final _asking = <String>{};
@@ -277,11 +277,14 @@ class _ReviewPageState extends State<ReviewPage> {
                             if (meaning != null && ans.unconfirmed) ...[
                               const SizedBox(height: 8),
                               Text(
-                                ans.saved
-                                    ? L('Kayıtlı anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
-                                        'The saved meaning could not be confirmed for this sentence. This card is not graded.')
-                                    : L('Bu anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
-                                        'This meaning could not be confirmed for this sentence. This card is not graded.'),
+                                w.context == null
+                                    ? L('Bu anlamın kelimenin ana anlamı olduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                        'This meaning could not be confirmed as the main meaning of the word. This card is not graded.')
+                                    : ans.saved
+                                        ? L('Kayıtlı anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                            'The saved meaning could not be confirmed for this sentence. This card is not graded.')
+                                        : L('Bu anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                            'This meaning could not be confirmed for this sentence. This card is not graded.'),
                                 key: const ValueKey('review-unconfirmed'),
                                 style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, fontStyle: FontStyle.italic),
                               ),

@@ -14,6 +14,7 @@ import 'package:kelime_okur/ai/key_ai.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
 import 'package:kelime_okur/data/review_quiz.dart';
+import 'package:kelime_okur/data/tr_en_dict.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/nlp/context_sense.dart';
 import 'package:kelime_okur/nlp/text.dart';
@@ -60,6 +61,7 @@ void main() {
   late DictDb d;
   late AppState app;
   late UserDb user;
+  late TrEnDict trEn;
   late Map<String, int> counts;
 
   Map<String, int> ownCounts(DictDb x) => {
@@ -74,6 +76,7 @@ void main() {
     final dir = Directory.systemTemp.createTempSync('source_priority');
     user = UserDb.open(dir);
     app = AppState(d, user)..localAi = KeyAi(user);
+    trEn = TrEnDict(sqlite3.open('assets/tr_en.db', mode: OpenMode.readOnly));
   });
 
   tearDown(() => DictDb.sourcePolicy = true);
@@ -305,15 +308,25 @@ void main() {
       ('book', 'I booked a table for two.', 'rezerve etmek, ayırtmak', 'rezerve etmek, ayırtmak', true),
       ('book', 'I read a good book.', null, 'kitap, betik', true),
       ('bank', 'The bank approved the loan.', null, 'banka', true),
-      // No sentence on the card: nothing to contradict, the meaning is asked.
-      ('still', null, null, 'hâlâ', true),
-      ('through', null, null, 'boyunca', true),
-      ('course', null, 'kurs, ders', 'kurs, ders', true),
+      // More of Hamit's examples.
+      ('book', 'I booked a table for two.', null, 'kitap, betik', false),
+      ('still', 'Keep still.', null, 'hâlâ', false),
+      // A Turkish synonym from a checked source confirms: the picker says "arzu etmek".
+      ('want', 'I want it.', null, 'istemek', true),
+      // No sentence on the card: graded only when a second checked source
+      // says it is a main meaning of the word.
+      ('still', null, null, 'hâlâ', true), // the word's own entry in the expression list
+      ('water', null, null, 'su', true), // human translations of its example sentences
+      ('course', null, 'kurs, ders', 'kurs, ders', true), // KeNet
+      ('course', null, null, 'mecra', false),
+      ('sound', null, null, 'Øresund', false),
+      ('through', null, null, 'boyunca', false),
+      ('still', null, 'hareketsiz, durgun', 'hareketsiz, durgun', false),
     ];
     for (final (lemma, ctx, meaning, shown, graded) in cases) {
       test('$lemma | ${ctx ?? "no sentence"} | saved: ${meaning ?? "-"} → ${graded ? "graded" : "not graded"}', () {
         final w = saved(lemma, ctx, meaning);
-        final q = ReviewQuiz(d, user, rnd: Random(1));
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
         final a = q.answerFor(w);
         expect(a.tr, shown);
         expect(a.saved, meaning != null);
@@ -331,17 +344,19 @@ void main() {
 
     test('the rule is general: no word is named in it, and a draft never confirms', () {
       final src = File('lib/data/review_quiz.dart').readAsStringSync();
-      final rule = src.substring(src.indexOf('SentenceFit fit('), src.indexOf('static bool _overlap'));
+      final src2 = File('lib/nlp/context_sense.dart').readAsStringSync();
+      final rule = src.substring(src.indexOf('bool mainMeaning('), src.indexOf('static String? _keptMeaning')) +
+          src2.substring(src2.indexOf('AnswerFit fit('), src2.indexOf('bool isLiteral('));
       for (final w in ['course', 'still', 'bank', 'mecra', 'banka', 'akmak', 'hâlâ']) {
         expect(rule.contains("'$w'"), isFalse, reason: w);
       }
-      final q = ReviewQuiz(d, user, rnd: Random(1));
+      final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
       // The picker's own choice confirms itself; an unrelated meaning does not.
       final c = _sense(app, golf, 'course');
-      expect(q.fit('course', golf, c.tr!), SentenceFit.confirmed);
-      expect(q.fit('course', golf, 'banka'), SentenceFit.other);
-      expect(q.fit('still', water, 'hâlâ'), SentenceFit.unknown);
-      expect(q.fit('course', 'No such word here.', 'kurs'), SentenceFit.unknown);
+      expect(q.fit('course', golf, c.tr!).fit, SentenceFit.confirmed);
+      expect(q.fit('course', golf, 'banka').fit, SentenceFit.other);
+      expect(q.fit('still', water, 'hâlâ').why, 'grammar word');
+      expect(q.fit('course', 'No such word here.', 'kurs').why, 'not in sentence');
     });
 
     test('saved cards are not rewritten: meaning, status and schedule stay', () {
@@ -349,7 +364,7 @@ void main() {
       app.setWord('course', WordStatus.learning, context: golf, meaning: 'akmak, hızla akmak');
       final row0 = row('course');
       final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'course');
-      final q = ReviewQuiz(d, user, rnd: Random(1));
+      final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
       expect(q.choiceFor(w), isNull);
       expect(q.answerFor(w).tr, 'akmak, hızla akmak');
       expect(row('course'), row0);
@@ -357,15 +372,70 @@ void main() {
 
     test('an English definition saved when no Turkish was known is not a Turkish answer', () {
       final gloss = d.lookup('still').senses.first.gloss;
-      final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('still', null, gloss));
+      final a = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses).answerFor(saved('still', null, gloss));
       expect(a.saved, isFalse);
       expect(a.tr, d.commonMeaning('still').tr);
+    });
+
+    group('Turkish synonyms', () {
+      test('the same Turkish, or one KeNet synset of the same part of speech; never a look-alike', () {
+        expect(d.trLink('kurs, ders', 'ders'), 'same');
+        expect(d.trLink('şans, talih', 'fırsat, olanak', pos: 'n'), 'synonym');
+        expect(d.sameTr('banka', 'kıyı'), isFalse);
+        expect(d.sameTr('mecra', 'kurs, ders'), isFalse);
+        expect(d.sameTr('hâlâ', 'durgun'), isFalse);
+        // Spelling alone joins nothing.
+        expect(d.sameTr('kurs', 'kurşun'), isFalse);
+        expect(d.sameTr('yüz', 'yüzmek'), isFalse);
+      });
+
+      test('a synonym confirms an answer only through the sense the picker chose', () {
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
+        // "istemek" is the first meaning of "want" and of "desire", whose first sense is this synset.
+        final f = q.fit('want', 'I want it.', 'istemek');
+        expect(f.confirmed, isTrue);
+        expect(f.why, isNot('same'));
+        expect(app.senses.fit('want', 'I want it.', 'istemek', synonyms: false).confirmed, isFalse);
+        // A noun's meaning never confirms a verb answer.
+        expect(q.fit('book', 'I read a good book.', 'ayırtmak').confirmed, isFalse);
+        // Bringing up children is not "kaldırmak", although "rear" can mean both.
+        expect(q.fit('raise', 'They raised their children in a town surrounded by nature.', 'kaldırmak').confirmed, isFalse);
+      });
+
+      test('an AI draft the picker chose confirms only a checked meaning it repeats', () {
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
+        final c = _sense(app, 'Is it expensive?', 'expensive');
+        expect(c.best!.unverified, isTrue, reason: 'the picker chose the draft here');
+        expect(q.fit('expensive', 'Is it expensive?', 'pahalı').confirmed, isTrue); // ft says "pahalı" too
+        expect(q.fit('expensive', 'Is it expensive?', 'tuzlu').confirmed, isFalse);
+      });
+    });
+
+    group('expression cards: the expression as a whole', () {
+      test('used literally in the sentence: not graded', () {
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
+        final e = d.exprs.firstWhere((e) => e.phrase == 'live in' && e.tr != null);
+        final w = saved('live in', 'They lived in Kansas for ten years.', null);
+        expect(q.fit('live in', w.context!, e.tr!).why, 'literal');
+        expect(q.answerFor(w).choice, isFalse);
+        expect(q.choiceFor(w), isNull);
+      });
+
+      test('not found in the sentence, or the picker is not sure: not graded', () {
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
+        final e = _expr(d, 'break the ice', 'idioms');
+        expect(q.answerFor(saved('break the ice', 'The weather was cold.', null)).choice, isFalse);
+        final f = q.fit('break the ice', 'He finally broke the ice.', e.tr!);
+        expect(q.answerFor(saved('break the ice', 'He finally broke the ice.', null)).choice, f.sense!.confidence == SenseConfidence.sure);
+        // No sentence: the checked dictionary meaning is asked.
+        expect(q.answerFor(saved('break the ice', null, null)).choice, isTrue);
+      });
     });
 
     group('expressions and drafts', () {
       test('a dime a dozen: the saved meaning is kept; with none, the dictionary meaning', () {
         final e = _expr(d, 'a dime a dozen', 'idioms');
-        final q = ReviewQuiz(d, user, rnd: Random(1));
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
         expect(q.answerFor(saved('a dime a dozen', 'Talented singers are a dime a dozen in this city.', 'bol, ucuz')).tr, 'bol, ucuz');
         final a = q.answerFor(saved('a dime a dozen', null, null));
         expect(a.tr, DictDb.shortTr(e.tr!));
@@ -374,7 +444,7 @@ void main() {
 
       test('an expression with only an AI draft is shown, never graded', () {
         final e = d.exprs.firstWhere((e) => e.tr == null && e.trDraft != null && e.phrase.contains(' '));
-        final q = ReviewQuiz(d, user, rnd: Random(1));
+        final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
         final a = q.answerFor(saved(e.phrase, null, null));
         expect(a.tr, DictDb.shortTr(e.trDraft!));
         expect(a.choice, isFalse);
@@ -385,7 +455,7 @@ void main() {
         final r = d.db.select("SELECT o.word FROM own_word o WHERE o.reviewed = 0 AND NOT EXISTS (SELECT 1 FROM ft WHERE ft.word = o.word) "
             "AND NOT EXISTS (SELECT 1 FROM sense x JOIN syn s ON s.id = x.syn_id WHERE x.lemma = o.word AND s.tr IS NOT NULL AND s.tr != '[]')");
         final w = r.single['word'] as String;
-        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved(w, null, null));
+        final a = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses).answerFor(saved(w, null, null));
         expect(a.tr, isNotNull);
         expect(a.choice, isFalse);
       });
@@ -400,7 +470,7 @@ void main() {
           ];
       final before = all();
       final sched0 = app.review.due(now: DateTime(2030)).map((c) => '${c.word.lemma}:${c.word.status}').toList();
-      final q = ReviewQuiz(d, user, rnd: Random(1));
+      final q = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses);
       for (final w in user.words(WordStatus.learning)) {
         q.choiceFor(w);
       }
@@ -409,7 +479,7 @@ void main() {
     });
 
     test('wrong options never repeat any meaning of the word, drafts included', () {
-      final ch = ReviewQuiz(d, user, rnd: Random(3)).choiceFor(saved('still', null, null))!;
+      final ch = ReviewQuiz(d, user, rnd: Random(3), trEn: trEn, senses: app.senses).choiceFor(saved('still', null, null))!;
       final drafts = d.draftSenses('still').expand((s) => s.tr.split(RegExp('[,;]'))).map((t) => t.trim()).toSet();
       for (final o in ch.options.where((o) => o != ch.right)) {
         expect(o.split(RegExp('[,;]')).map((t) => t.trim()).any(drafts.contains), isFalse, reason: o);
@@ -451,7 +521,7 @@ void main() {
         expect(m, want);
         // The new card asks what was saved; with nothing saved, the review rules for empty meanings apply.
         final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma);
-        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(w);
+        final a = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses).answerFor(w);
         // The same confidence rule as for old cards: graded only with a confirmed meaning.
         expect(a.choice, want != null);
         if (want != null) {
