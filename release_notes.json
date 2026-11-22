@@ -2,6 +2,18 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "sentence-word-analysis",
+      "area": "reader",
+      "tr": "Kelimeye dokunduğunda açılan anlam artık daha doğru kelimeye ve cümleye bakıyor: \"only\", \"thing\", \"letter\", \"offer\" gibi kelimeler başka bir kelimenin ekli hali sanılmıyor, \"years\" ve \"things\" tekil haliyle açılıyor, aksanlı harfli adlar (\"Zurbarán\") bölünmüyor. Bir cümlenin sonu ile sonrakinin başı birleşip yanlış bir deyim oluşturmuyor (\"…care. For…\"), paragrafın ikinci ve sonraki cümlelerindeki deyimler de doğru kelimelerle eşleşiyor. Kelimenin isim mi fiil mi sıfat mı olduğu virgül ve cümle sınırlarına bakılarak daha iyi bulunuyor. Deyimler daha sık tanınıyor; ama cümle deyimi açıkça desteklemiyorsa anlam \"olası\" olarak gösteriliyor, kesin diye sunulmuyor.",
+      "en": "The meaning that opens when you tap a word now looks at the right word and the right sentence more often: words such as \"only\", \"thing\", \"letter\" and \"offer\" are no longer taken for another word with an ending, \"years\" and \"things\" open under their singular, and names with accented letters (\"Zurbarán\") are not cut. The end of one sentence and the start of the next no longer join into a wrong expression (\"…care. For…\"), and expressions in the second and later sentences of a paragraph are matched with the right words. Whether a word is a noun, a verb or an adjective is found better by looking at commas and sentence ends. Idioms are recognised more often; when the sentence does not clearly support the idiom, the meaning is shown as \"possible\", never as certain."
+    },
+    {
+      "id": "sentence-translation-match",
+      "area": "reader",
+      "tr": "Cümle analizinde Türkçe çeviri artık her zaman seçtiğin cümleye ait: \"Prof.\", \"Mr.\", \"No. 28\", \"p. 35\" gibi kısaltmalar cümleyi bölmüyor ve bir cümleye sonraki cümlenin çevirisi gelmiyor. Geçerli bir çeviri yoksa Türkçe satırı gösterilmiyor; önce ücretsiz cihaz içi çeviri deneniyor. Ücretli yapay zekâ ile otomatik kitap analizi artık sen Ayarlar'dan açana kadar kapalı, cümle açıklaması da yalnızca \"Ayrıntılı açıkla\" ile isteniyor. Kelime panelinde ve tekrarda yapay zekâ da artık kendiliğinden sorulmuyor, yalnızca düğmeye bastığında çalışıyor.",
+      "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation the Turkish line is left out, and the free on-device translation is tried first. Automatic book analysis with a paid AI service now stays off until you turn it on in Settings, and a sentence explanation is asked only with \"Explain in detail\". The word panel and the review no longer ask the AI by themselves either; it runs only when you tap its button."
+    },
+    {
      "id": "review-confirmed-answers",
      "area": "review",
      "tr": "Tekrar kartlarında bir anlam, ancak kartın cümlesine uyduğu doğrulanırsa çoktan seçmeli soru olarak soruluyor. Doğrulanamayan kartlar puanlanmadan düz kart olarak gösteriliyor ve bunu belirten kısa bir not çıkıyor. Kayıtlı anlamların ve ilerlemen değişmiyor.",

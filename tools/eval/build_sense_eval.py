@@ -101,6 +101,28 @@ with open(f'{out}/sense_eval_semcor.tsv', 'w', encoding='utf-8') as f:
         f.write('\t'.join(str(x) for x in r) + '\n')
 print('semcor', {p: len(cands[p]) for p in cands}, 'sampled', len(rows))
 
+# Two more draws of other words, each with its own seed so that the first
+# file stays as it was: "dev" is looked at while the picker is worked on,
+# "fresh" is measured once at the end and never tuned on.
+taken = {r[0] for r in rows}
+for part, seed in (('dev', SEED + 1), ('fresh', SEED + 2)):
+    rnd2 = random.Random(seed)
+    more = []
+    for pos, n in QUOTA.items():
+        names = sorted(x for x in cands[pos] if x not in taken)
+        rnd2.shuffle(names)
+        for name in names[:n]:
+            text, sid, tr, fid = rnd2.choice(sorted(cands[pos][name]))
+            more.append((name, pos, sid, tr, text, fid))
+    taken |= {r[0] for r in more}
+    with open(f'{out}/sense_eval_semcor_{part}.tsv', 'w', encoding='utf-8') as f:
+        f.write('# SemCor 3.0 (Princeton University; mapping to WordNet 3.0 by R. Mihalcea, UNT), Brown corpus sentences.\n')
+        f.write('# Sense chosen by human annotators; Turkish reference: KeNet (CC BY-SA 4.0) Turkish of that synset.\n')
+        f.write(f'# Built by tools/eval/build_sense_eval.py, seed {seed}; words of the earlier draws left out. Columns: lemma, pos, dict.db synset id, reference Turkish, sentence, file.\n')
+        for r in more:
+            f.write('\t'.join(str(x) for x in r) + '\n')
+    print('semcor', part, 'sampled', len(more))
+
 if magpie:
     exprs = {p for (p,) in db.execute("SELECT phrase FROM expr WHERE cat='idioms' AND tr IS NOT NULL AND tr != ''")}
     by = {'i': {}, 'l': {}}
@@ -116,7 +138,8 @@ if magpie:
     # Two draws of different idioms: the first one was looked at while the rule for expressions
     # was settled (development), the second one is measured once (fresh).
     used = set()
-    for part in ('dev', 'fresh'):
+    # A third draw (fresh2) was added for the sentence-analysis work, again measured once.
+    for part in ('dev', 'fresh', 'fresh2'):
         rows = []
         for label, n in (('i', 60), ('l', 60)):
             names = sorted(x for x in by[label] if x not in used)

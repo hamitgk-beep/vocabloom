@@ -1,0 +1,263 @@
+# SemCor 3.0 (Princeton University; mapping to WordNet 3.0 by R. Mihalcea, UNT), Brown corpus sentences.
+# Sense chosen by human annotators; Turkish reference: KeNet (CC BY-SA 4.0) Turkish of that synset.
+# Built by tools/eval/build_sense_eval.py, seed 20261123; words of the earlier draws left out. Columns: lemma, pos, dict.db synset id, reference Turkish, sentence, file.
+allotment	n	70964	tahsisat	Multiply the population of each State by the square of its allotment percentage.	brown2/tagfiles/br-h14.xml
+toy	n	21900	oyuncak	If he snatches a toy, she says, "Caroline wants her own truck just as you do".	brown1/tagfiles/br-b13.xml
+imprisonment	n	5944	hapis	Petitioner was found guilty and sentenced to 15 months ' imprisonment.	brown2/tagfiles/br-h17.xml
+mischief	n	3757	muzırlık	Now it would be up to me to keep the little girl out of mischief.	brown1/tagfiles/br-k18.xml
+production	n	22155	ürün	Production may fall far below expectations.	brown2/tagfiles/br-f13.xml
+gold	n	27534	altın rengi	Then I saw the father's head slightly turn; gauche rainbow shapes replaced the poignant ovals of gold.	brown2/tagfiles/br-n16.xml
+desire	n	75161	arzu; dilek; istek	But, kindled by his kiss, his caressing hand, her desire was aflame.	brown1/tagfiles/br-k20.xml
+enigma	n	31250	gizem; giz; sır; esrar	First, they wanted to clarify a tantalizing, bizarre enigma.	brown2/tagfiles/br-f16.xml
+connection	n	73839	ilişki; bağ	In this connection it should be capable of being disseminated without excessive destruction.	brown1/tagfiles/br-j08.xml
+wash	n	50867	kuru dere yatağı	He clambered out of the dwindling wash, the loose dirt flying behind him, and flashed a look about.	brown2/tagfiles/br-n14.xml
+basketball	n	2372	basketbol; basket; sepet topu	He played basketball there while working toward a law degree.	brown1/tagfiles/br-a14.xml
+pope	n	56589	papa	Same as with the Popes.	brown1/tagfiles/br-m01.xml
+cuff	n	17056	manşet; kolluk	They curled around the cuff of his nightshirt.	brown1/tagfiles/br-k24.xml
+crack	n	18627	çatlak; yarık	All he cares about is his whisky and that dry crack in his face.	brown1/tagfiles/br-k24.xml
+trust	n	31312	güven	A great deal of labor we have as well, for we are too uncertain of where trust may be placed".	brown2/tagfiles/br-p07.xml
+behavior	n	6238	davranış; tutum; hareket	She tells him of the consequences of his behavior.	brown1/tagfiles/br-b13.xml
+energy	n	62227	enerji; erke	Thus, the energy transferred from the arc to the anode was partly fed back into the arc.	brown1/tagfiles/br-j02.xml
+trail	n	24908	patika; çığır; keçiyolu	Somewhere, we'll hit a trail".	brown2/tagfiles/br-n20.xml
+package	n	21335	bohça; paket	Dr. Verdi had told him to deliver his package in person.	brown1/tagfiles/br-k05.xml
+registration	n	123	kayıt	Voter registration began in late November 1959 and continued until early January, 1960.	brown1/tagfiles/br-j37.xml
+unity	n	77460	bütünlük	Now again in 1961, in England, there is perhaps nothing in the religious sphere so popularly discussed as Christian unity.	brown1/tagfiles/br-d03.xml
+consumption	n	4261	yeme	Aids in minimizing the occurrence of feed-lot bloat due to high consumption of concentrates.	brown2/tagfiles/br-e27.xml
+studio	n	24172	stüdyo	I also use a small electric hand blower to dry large washes in the studio.	brown2/tagfiles/br-e23.xml
+counter	n	16873	tezgah; tezgâh	Then he spread out the last list on the counter.	brown1/tagfiles/br-k28.xml
+threshold	n	17517	eşik	There is no evidence that these Milquetoasts became suddenly emboldened when they crossed the threshhold of the master bedroom.	brown2/tagfiles/br-f08.xml
+climax	n	190	orgazm	Marriage manuals and women's magazine articles began to stress the importance of the female climax.	brown2/tagfiles/br-f08.xml
+moment	n	81110	şu an; şimdi	The number depends on who is talking at the moment.	brown2/tagfiles/br-e31.xml
+tournament	n	40407	turnuva	During that tournament alone, some 250000 words winged their way out of Manchester.	brown1/tagfiles/br-j56.xml
+shore	n	50634	kıyı	Usually it is only when they approach shallow water on the shore that they build up to their terrifying heights.	brown2/tagfiles/br-f21.xml
+affair	n	74612	aşk ilişkisi	But her personality was such that each affair lasted only until that lover, too, had been conquered and reduced to passivity.	brown2/tagfiles/br-f08.xml
+factor	n	39656	etken fiil; etken	Of course, there was another factor.	brown2/tagfiles/br-l08.xml
+table	n	24379	sofra; masa	It's just barely possible with this crowd that the kidnapper wasn't able to get a table.	brown1/tagfiles/br-l12.xml
+storm	n	74850	fırtına	As construction progresses, the volume of storm drainage will be sharply reduced.	brown1/tagfiles/br-j70.xml
+admirer	n	57908	destekçi; taraftar	But time is running out, and many of Stravinsky's admirers begin to fear that he will never find terra firma.	brown2/tagfiles/br-e22.xml
+parody	n	36576	taklit	Piepsam is grotesque, a disturbing parody; his end is ridiculous and trivial.	brown1/tagfiles/br-g15.xml
+headache	n	76694	baş ağrısı	She had left the party early, pleading a headache.	brown2/tagfiles/br-l14.xml
+association	n	43968	dernek; cemiyet	Residential associations struggle to insulate themselves against intrusions.	brown2/tagfiles/br-f44.xml
+motive	n	32	güdü; motivasyon; güdüleme	He tried to ignore what his own common sense told him, but it wasn't possible; her motives were too blatant.	brown2/tagfiles/br-l13.xml
+suffering	n	40594	acı; üzüntü	But the machine quack can cause far more than just suffering.	brown1/tagfiles/br-f10.xml
+alarm	n	14373	alarm; alarm sistemi	At 17: 07 that afternoon (Greenwich time) the shock was recorded by the seismograph alarm in Honolulu.	brown2/tagfiles/br-f21.xml
+light	n	20135	ışık; ışık kaynağı	Lights blazed in the big house and surrounding grounds.	brown2/tagfiles/br-n17.xml
+closing	n	1674	kapama	The shutter consists of two parts: a fast opening part and a fast closing part.	brown2/tagfiles/br-h11.xml
+mud	n	80188	balçık; çamur	It was a rough long ride through the mud and pot holes.	brown2/tagfiles/br-n15.xml
+abundance	n	28328	bereket	Their main asset is an abundance of unsaturated fatty acids, so necessary for maintaining the good health of the circulatory system.	brown1/tagfiles/br-e02.xml
+stall	n	15431	kabin	Monsieur Favre sat down in his high-backed stall, lips compressed, eyes glinting.	brown1/tagfiles/br-k10.xml
+music	n	38022	müzik; musiki	The music which La^utner has composed for this episode is for the most part "rather pretty and perfectly banal".	brown1/tagfiles/br-g15.xml
+bus	n	15741	otobüs	When you pass a church on an Irish bus, all the hands flurry in the sign of the cross.	brown2/tagfiles/br-g12.xml
+advent	n	116	geliş; gelme	With the advent of Sir Arthur Conan Doyle's Sherlock Holmes, the development of the modern private detective begins.	brown2/tagfiles/br-g19.xml
+circle	n	74290	çember	The circle with the dot in the center showed up yellow on the reflector glass in front of him.	brown2/tagfiles/br-n15.xml
+loading	n	73737	yük	The organic loading on the pond was slightly under 60 lb BOD / day / acre.	brown1/tagfiles/br-j70.xml
+elevator	n	17843	asansör	He crossed the lobby and rode up in the elevator lost in his own thoughts.	brown2/tagfiles/br-l10.xml
+end	n	81933	son; bitiş	This was working by the end of August and giving satisfactory service.	brown1/tagfiles/br-j56.xml
+kid	n	53420	çocuk	He's been married and got this half grown kid.	brown1/tagfiles/br-k26.xml
+value	n	32102	değer	The values agree with the data from 1958 Alpha and 1959 Eta.	brown1/tagfiles/br-j07.xml
+history	n	35150	hikaye; hikâye; tarih	Claire felt suddenly small and cheap, heroine of a trivial episode in the voluminous history of Don Juan.	brown1/tagfiles/br-k20.xml
+gate	n	18695	kapı; mantık kapısı	This assembly also supplies a 20 - cps switching gate for the electronics circuitry.)	brown2/tagfiles/br-e25.xml
+density	n	27402	yoğunluk	The threshold mass of about * * f corresponds to a 10 - | m diameter sphere of density * * f.	brown1/tagfiles/br-j07.xml
+arms	n	25496	silah	Half of the population of the U. S. would be needed to work on arms just to feed the people".	brown2/tagfiles/br-f23.xml
+system	n	24369	sistem	Thus the cocktail party would appear to be the ideal system, but there is one weakness.	brown2/tagfiles/br-g20.xml
+root	n	46215	köken; kök; kaynak	These questions touch the root of confusion in the prosecution's case.	brown2/tagfiles/br-f14.xml
+pottery	n	22064	çanak çömlek	The pottery of the first half of the eighth century is commonly called Ripe Geometric.	brown1/tagfiles/br-j54.xml
+theme	n	32402	tema	The first of two possible variations on this theme is symbolized by Mickey Spillane's Mike Hammer.	brown2/tagfiles/br-g19.xml
+ruby	n	71442	yakut	Then O ' Banion was presented with a platinum watch set with rubies and diamonds.	brown2/tagfiles/br-f20.xml
+bag	n	14815	torba	He was wearing sneakers and shorts and an open-collared shirt, and in his hand he carried a little black bag.	brown1/tagfiles/br-k13.xml
+symptom	n	76565	bulgu; semptom; araz	This is a common symptom and the cause usually is pressure on the nerve leading to the affected hand.	brown1/tagfiles/br-b13.xml
+cinch	n	2876	elde bir	If Rose Mallory's killer acted this way, catching up with him was going to be a cinch.	brown1/tagfiles/br-l11.xml
+powder	n	22072	pudra	More and more of the colonials were wearing their own hair and not using powder.	brown1/tagfiles/br-k16.xml
+obedience	n	5971	itaat	The true way to immortality lay through obedience, but man did not believe this.	brown1/tagfiles/br-d04.xml
+monument	n	20587	anıt; abide	Or the city can be a graveyard monument to Western intransigence, if that is what the West wants.	brown1/tagfiles/br-b20.xml
+optimism	n	40841	iyimserlik; optimizm	Her optimism gave me heart.	brown1/tagfiles/br-k29.xml
+call	n	38538	bağırma	The horse plodded on, and he repeated his call.	brown2/tagfiles/br-g14.xml
+public	n	43635	kamu; halk	With over four million American men away at war, Protestants forced their distinctive theological belief upon the general public.	brown2/tagfiles/br-f15.xml
+breath	n	79502	nefes; soluk	Jess caught his breath in surprise.	brown2/tagfiles/br-n12.xml
+experimentation	n	3241	deney; tecrübe	Since the apparatus is new, it requires experimentation and changes in technique.	brown1/tagfiles/br-b13.xml
+stem	n	70097	sap	In all cases studied tissues of the stem on which the tumor had developed did not contain detectable amounts of WTV antigen.	brown1/tagfiles/br-j16.xml
+daylight	n	81363	gündüz; gün	To get it out into the daylight's glow Is my life's aim both first and last, the whole.	brown2/tagfiles/br-g18.xml
+mixture	n	78133	karışım	No detectable reaction was found at room temperature for reaction mixtures allowed to stand up to 5 hours.	brown1/tagfiles/br-j06.xml
+garrison	n	18649	garnizon	Maneuvers over, the 7 th returned to garrison duty in Tokyo, Captain Chandler still with them.	brown2/tagfiles/br-f22.xml
+employment	n	2923	meslek	Choose a location within easy commuting distance of both the regular job and other employment opportunities.	brown2/tagfiles/br-f13.xml
+stock	n	71705	hisse senedi; pay senedi	The Mercers took up residence in Brooklyn, and Mercer found a regular job in Wall Street "misplacing stocks and bonds".	brown2/tagfiles/br-g39.xml
+confidence	n	40762	güven	He was unwilling to rely on Griffith's carrying his message, and he had no confidence the police would act on it.	brown2/tagfiles/br-l16.xml
+magnet	n	20373	mıknatıs	Like a particle drawn to a magnet he returned to that which was pressing so hard in his mind.	brown1/tagfiles/br-k07.xml
+runner	n	57549	kaçakçı	Blockade runners can be stopped - by gunfire, if necessary - searched and held, at least temporarily.	brown2/tagfiles/br-h13.xml
+cabbage	n	41992	lahana; kelem	It consists in saying, ' That would be sending the goat to look after the cabbage '.	brown1/tagfiles/br-r06.xml
+die	n	17321	zar	Mathematically, we shall not distinguish the experiment of three dice tossed once from that of one die tossed three times.	brown1/tagfiles/br-j19.xml
+recording	n	4648	kayıt	All of the jackets carry a fairly technical and detailed explanation of this new recording program.	brown1/tagfiles/br-c02.xml
+resignation	n	35135	istifa	Caldwell's resignation had been expected for some time.	brown1/tagfiles/br-a01.xml
+fund	n	71364	fon	Madden inquired next about the audit of the scholarship fund.	brown2/tagfiles/br-l15.xml
+hobby	n	2125	hobi; düşkü	Folklore is his hobby, and he, all too rightly, wishes it to remain as such.	brown1/tagfiles/br-f19.xml
+plenty	n	73750	yığın; çok sayıda	It gives them room to play and plenty of fresh air.	brown2/tagfiles/br-f13.xml
+climb	v	91663	tırmanmak	Quickening his steps, John entered the vast church and climbed the tower steps to the bells.	brown1/tagfiles/br-k10.xml
+regard	v	85503	saymak; görmek; olarak görmek	For better or worse we cannot regard "imitation" in the arts in the simple mode of classical rationalism or detached realism.	brown2/tagfiles/br-g16.xml
+embrace	v	89192	sarılmak; kucaklamak; bağrına basmak; kollarının arasına almak	They cannot stop to grasp and embrace and sit in the back seat of cars along a dark country lane.	brown1/tagfiles/br-k03.xml
+please	v	91141	hoşuna gitmek; iltifat etmek; rağbet etmek; takdir etmek; zevkine gitmek; sevindirmek; memnun etmek; hatırını hoş etmek; gönlünü almak; gönül almak; zevk vermek	Ludie did as he pleased.	brown1/tagfiles/br-k06.xml
+test	v	94698	sınamak; test etmek; imtihan etmek	Ideas need to be tested, and not merely by argument and debate.	brown2/tagfiles/br-g23.xml
+rip	v	89933	yarmak; yırtmak	The bitterness of their wedding night still ripped within him like an open wound.	brown2/tagfiles/br-n20.xml
+ready	v	90392	pişirmek; pişmek	He was readying a batch of sourdough biscuits for the Dutch oven.	brown2/tagfiles/br-n10.xml
+sprout	v	83861	filizlenmek; sürgün vermek	He smiled and stuck a large finger with white hairs sprouting on it into his ear as though that might help.	brown1/tagfiles/br-k02.xml
+drop	v	91956	düşürmek	If someone were to drop a match in here, this place would go up like a haystack".	brown2/tagfiles/br-n12.xml
+preach	v	86132	vaaz vermek; vaaz etmek	Somewhere, beyond, where shadows lurked, must be the yawning pit of which Papa preached and the dreadful Lake of Fire.	brown1/tagfiles/br-k06.xml
+reach	v	92108	ulaşmak; varmak	His salary had reached the ten thousand mark.	brown2/tagfiles/br-l15.xml
+construct	v	90346	inşa etmek; kurmak; dikmek; bina etmek	The Onset Profile and Completion Profile are constructed to serve as norms for children.	brown1/tagfiles/br-j13.xml
+assume	v	85243	farz etmek; farzetmek; saymak; varsaymak; tutmak	Prosecutor Baird immediately assumed he was hiding out there after the shooting and began preparing an indictment.	brown2/tagfiles/br-n11.xml
+bud	v	83864	tomurcuklanmak	These cut-down plants will bud and blossom in record time and will behave just as they did in early spring.	brown1/tagfiles/br-e02.xml
+touch	v	92732	dokunmak	They wanted to touch the mystery.	brown1/tagfiles/br-r07.xml
+mind	v	86219	aldırmak	He did not mind the useless, kindly questions.	brown1/tagfiles/br-k01.xml
+improvise	v	90723	doğaçlamak	Sangallo studied the drawings and improvised a trestle couch.	brown1/tagfiles/br-k14.xml
+fish	v	87655	balık tutmak	In the meadow below, militia officers shouted at their men and on King's Bridge two boys sat fishing.	brown1/tagfiles/br-k16.xml
+decay	v	84065	ayrışmak	There will come a time in a basement shelter when the radiation has decayed enough to allow use of the whole basement.	brown2/tagfiles/br-h15.xml
+desert	v	85165	yüzüstü bırakmak	Kate felt she had deserted the boy in her own loss.	brown1/tagfiles/br-k15.xml
+applaud	v	86277	alkışlamak	The crowd of 32589 had only two chances to applaud.	brown1/tagfiles/br-a13.xml
+substitute	v	93363	değiştirmek	Are there other, cheaper communications techniques that could be substituted?	brown2/tagfiles/br-e30.xml
+fix	v	86673	tespit etmek	A goal was fixed, as given in Table 2, and attention focused on its fulfillment.	brown1/tagfiles/br-j37.xml
+inquire	v	85945	sormak; soruşturmak	He thought a moment, then inquired, "You mean petted"?	brown1/tagfiles/br-r05.xml
+snap	v	86532	hırlamak	I've drawn his fangs", he snapped.	brown2/tagfiles/br-n14.xml
+capture	v	88037	ele geçirmek; yakalamak; tutmak; derdest etmek; teshir etmek	Nobody wanted Americans to be hurt or captured, and few soldiers could be spared as escorts.	brown2/tagfiles/br-f24.xml
+have	v	92640	almak; yaşamak; zarara uğramak	Japan has had 15 destructive ones (eight of them disastrous) since 1596.	brown2/tagfiles/br-f21.xml
+nest	v	95280	yuva yapmak	Next, the hen was nested and all seemed well.	brown1/tagfiles/br-k27.xml
+quit	v	92116	gitmek; kalkmak	An injury forced Skorich to quit after the 1948 season.	brown1/tagfiles/br-a14.xml
+accompany	v	95583	eşlik etmek	In Figure 2, the points in the network are designated by a letter accompanied by a number.	brown2/tagfiles/br-g20.xml
+grant	v	93351	vermek	Such interest must be paid even though an extension of time for filing is granted.	brown2/tagfiles/br-h24.xml
+discourage	v	86493	vazgeçirmek	Far from discouraging Henri, his parents urge him on to greater and greater accomplishments.	brown1/tagfiles/br-e01.xml
+cipher	v	86891	şifrelemek	Print it in real big letters, an ' I can cipher it out later".	brown2/tagfiles/br-n09.xml
+correspond	v	95290	mutabık olmak; tutmak; uymak	The threshold mass of about * * f corresponds to a 10 - | m diameter sphere of density * * f.	brown1/tagfiles/br-j07.xml
+crack	v	93005	çatlamak	From above me and somewhere behind me, a rifle cracked.	brown1/tagfiles/br-k09.xml
+concern	v	95390	ilgilendirmek	These moments are historical events in the lives of individual authors with which the student of comparative literature must be frequently concerned.	brown2/tagfiles/br-g44.xml
+define	v	86720	tanımlamak	But I'm not here to define conservatism.	brown2/tagfiles/br-g21.xml
+slip	v	91394	kaymak	Killpath leaned forward; his foot slipped off the chair and he put it back again, frowning now.	brown2/tagfiles/br-l17.xml
+evaporate	v	83907	buharlaşmak	Miscellaneous soils, which primarily include sticky substances and colorless liquids which evaporate to leave a residue.	brown1/tagfiles/br-j05.xml
+unite	v	83911	birleşmek	Parson Weems's George Washington became the symbol of honesty and the father image of the uniting States.	brown1/tagfiles/br-f19.xml
+boost	v	94806	ilerletmek; desteklemek	This boosted local telegraph business and Manchester basked in all the free advertising.	brown1/tagfiles/br-j56.xml
+exert	v	93112	kullanmak	Note that though the ideal gas itself contains no additional energy, the compressed gas does exert an increased pressure.	brown1/tagfiles/br-j03.xml
+display	v	92792	göstermek; çıkarmak; teşhir etmek; sergilemek; sergi açmak	But these accounts do not show that Northerners have been subjected to embarrassment or provocation by Yankee hatred displayed in social gatherings.	brown1/tagfiles/br-g01.xml
+push	v	94116	çabalamak	His eyes blinked hard, snapping on and squashing some bad things that were trying to push their way into him.	brown1/tagfiles/br-k07.xml
+spit	v	82621	tükürmek	Watson spat on the ground.	brown1/tagfiles/br-k21.xml
+rest	v	82687	durmak; kalmak; muallakta kalmak; askıda kalmak; muallakta olmak; sürüncemede kalmak	Let his bones and his memory rest in the fifteenth century where they belong; he is out of place in our times.	brown2/tagfiles/br-g23.xml
+transfer	v	89243	iletmek; taşımak	Their study showed that it was possible to transfer 3 to 4 lb of oxygen / hr / hp.	brown1/tagfiles/br-j70.xml
+admire	v	91203	hayran olmak; hayran kalmak	Mrs. Benington admired Gordon's spirit and did what she could to persuade her husband that the boy might help the team.	brown1/tagfiles/br-a15.xml
+repair	v	83358	düzeltmek; onarmak; yapmak; tamir etmek; restore etmek	Haying time was close at hand, and they needed some strong branches to repair a hay rack.	brown2/tagfiles/br-n11.xml
+wait	v	95215	beklemek	Where was Muller waiting with the rifle?	brown2/tagfiles/br-l16.xml
+glare	v	82269	dik dik bakmak	Pa had his head up, glaring, his teeth gnawing at the place where he'd grown a mustache once.	brown1/tagfiles/br-k24.xml
+think	v	85242	düşünmek; sanmak; ummak; zannetmek; zannına düşmek	I think he might be", Conrad said grimly.	brown2/tagfiles/br-l10.xml
+travel	v	91236	hareket etmek; yola gitmek	The smaller the particle the further it will travel downwind before settling out.	brown1/tagfiles/br-j08.xml
+learn	v	85093	duymak; haber almak	As a result, she consulted medical authorities and learned that the devices her quack "doctor" was using were phony.	brown1/tagfiles/br-f10.xml
+use	v	87755	kullanmak; değerlendirmek; uygulamak	Spring used a Brush surface analyzer in a metal cleaning study and showed considerable differences in soil removal, depending upon surface roughness.	brown1/tagfiles/br-j05.xml
+stress	v	86987	vurgulamak	The U. S. Office of Education continues to stress local surveys rather than national surveys.	brown2/tagfiles/br-j38.xml
+relate	v	85609	bağlamak; ilişkilendirmek	To appreciate this development, we must relate it to other aspects of nineteenth century philosophy.	brown2/tagfiles/br-j42.xml
+sow	v	89564	tohum ekmek; tohum atmak	I dig it, rake it smooth, sow the seeds and wet them down with a fog spray.	brown1/tagfiles/br-e02.xml
+box	v	89482	kutulamak	He is already beginning to box the compass of alternative lines of action, including doing nothing.	brown2/tagfiles/br-h18.xml
+aid	v	82519	yardım etmek; elini uzatmak; muavenet etmek; yardımcı olmak	Arm, shoulder, chest, upper and lower back strength will be aided with the Horse Kick.	brown1/tagfiles/br-e24.xml
+cure	v	82518	iyileştirmek; iyi etmek; şifa vermek; sağaltmak; tedavi etmek	Yes, the ozone from his machine would cure practically everything, he assured her.	brown1/tagfiles/br-f10.xml
+love	v	91208	keyif almak	The audience, as usual, loved it.	brown1/tagfiles/br-k05.xml
+meditate	v	85238	düşünmek taşınmak; düşünüp taşınmak; kara kara düşünmek; düşünceye dalmak; iki eli şakaklarında düşünmek; derin derin düşünmek; tefekküre dalmak	It is harder, he muttered, to meditate on man (or woman) than on God.	brown1/tagfiles/br-k16.xml
+fly	v	91761	uçmak; kanat çırpmak; pervaz etmek	As if drawn by a wire the enemy flew into them.	brown2/tagfiles/br-n15.xml
+plant	v	90311	kurmak; temelini atmak	We have had opportunities - clear invitations to plant our influence on the other side of the Iron Curtain.	brown2/tagfiles/br-f23.xml
+pretend	v	90685	sahte davranmak	Ludie inquired every evening, pretending that he did not care.	brown1/tagfiles/br-k06.xml
+roll	v	91372	yuvarlamak	She was still laughing when I grabbed her and started rolling her on the bed.	brown1/tagfiles/br-k18.xml
+identify	v	87044	teşhis etmek; teşhis koymak	Some of them came from people who identified themselves.	brown2/tagfiles/br-l18.xml
+glance	v	92917	göz atmak	Watson glanced briefly at him, seeing only a body rigidly erect behind the languid banner.	brown1/tagfiles/br-k21.xml
+head	v	94264	baş olmak; birinci olmak; önde gelmek	The New York franchise is headed by Mrs. Charles Shipman Payson.	brown1/tagfiles/br-a14.xml
+require	v	95151	gerekli kılmak; gerektirmek; icap ettirmek; mucip olmak; istilzam etmek	This space group requires the hydrogen bond to be symmetric.	brown1/tagfiles/br-j04.xml
+deal	v	93301	ticareti yapmak; alıp satmak; ticaretini yapmak	In addition, our way of dealing directly with natural phenomena has also changed.	brown1/tagfiles/br-g11.xml
+progress	v	83299	ilerlemek	The spectacle progressed towards a denouement which was obviously still remote; the audience attended.	brown1/tagfiles/br-k27.xml
+amaze	v	85662	hayrette bırakmak	He stared at it, amazed, alarmed.	brown1/tagfiles/br-k07.xml
+improve	v	83087	iyileşmek	As flexibility improves, the feet will move closer to the hands and the bridge rise higher.	brown1/tagfiles/br-e24.xml
+like	v	90960	sevmek; hoşlanmak	However, when there's a job to be done, I'm a monstrosity of grim determination, I like to think.	brown2/tagfiles/br-n17.xml
+bob	v	91504	sekmek	I bobbed my head each time it appeared.	brown2/tagfiles/br-n16.xml
+point	v	91716	rehberlik etmek; kılavuzluk etmek; kösemenlik etmek; yol göstermek	The child should then bring both legs together overhead, point the toes and tighten the seat muscles.	brown1/tagfiles/br-e24.xml
+miss	v	91094	özlemek	She says the children miss you.	brown1/tagfiles/br-k01.xml
+study	v	85295	analiz etmek; çözümlemek; tahlil etmek	He studied the problem for a few seconds and thought of a means by which it might be solved.	brown2/tagfiles/br-n12.xml
+furnish	v	93756	döşemek	Airy and bright, the apartment was furnished with good modern furniture, rugs, and draperies.	brown2/tagfiles/br-l15.xml
+wish	v	86471	dilemek	They recall Byron's classic comment: "I wish he would explain his explanation".	brown1/tagfiles/br-r05.xml
+pack	v	89468	paketlemek; kutuya koymak	He began to pack the saddlebags.	brown1/tagfiles/br-k16.xml
+signify	v	86608	anlama gelmek	Charity as she knew it was complex and reciprocal, and almost every roof she saw signified charity.	brown1/tagfiles/br-k22.xml
+alter	v	82727	değiştirmek; değişiklik yapmak; tadilat yapmak; değişmek; tadil etmek; tebdil etmek; trampa etmek; ters yüz etmek	None of these values is destroyed, not significantly altered by refrigeration storage.	brown1/tagfiles/br-e02.xml
+meet	v	95343	uymak	In looking for the best sites available that meet the requirements, you need information to compare the site with others.	brown1/tagfiles/br-e21.xml
+transmit	v	89243	iletmek; taşımak	Bones and cartilage transmit poorly and tend to reflect the ultrasonic signals.	brown2/tagfiles/br-e25.xml
+spread	v	95438	sermek; yaymak	First, the Onset Profile spreads across approximately 12 years for boys and 10 years for girls.	brown1/tagfiles/br-j13.xml
+bother	v	94590	canını sıkmak; zahmete sokmak	Don't like to bother no one unless we have to, which I figger we do, in your case.	brown2/tagfiles/br-n09.xml
+count	v	86678	saymak; tadad etmek	In Chapters 3 and 4 we answered questions like those in the examples, usually by counting points in a sample space.	brown1/tagfiles/br-j19.xml
+particular	a	98630	özel	Or the exception may be due to a particular durability peculiar to the Athabascan verb.	brown2/tagfiles/br-j35.xml
+honest	a	107868	dürüst	The analyst is apt to be too honest to fit in.	brown1/tagfiles/br-f19.xml
+beautiful	a	97078	güzel	He had his own face, dark and beautiful.	brown1/tagfiles/br-m01.xml
+shallow	a	99732	sığ	Usually it is only when they approach shallow water on the shore that they build up to their terrifying heights.	brown2/tagfiles/br-f21.xml
+portable	a	104259	seyyar; portatif	A portable electric heater is advisable for shelters in cold climates.	brown2/tagfiles/br-h15.xml
+easy	a	100029	basit; kolay	I was the first to get my squad on the ball, and anybody thinkin it was easy is pretty damn dumb.	brown1/tagfiles/br-k07.xml
+hot	a	102706	sıcak	Frequently he must work long hours in the hot sun or cold rain.	brown2/tagfiles/br-f13.xml
+constant	a	109779	sabit	The flow rate remained relatively constant during the winter months as shown in Table 1,.	brown1/tagfiles/br-j70.xml
+objective	a	104720	objektif; nesnel	So an objective look at our present procedures may move us to consider seriously this possibly analogous situation.	brown2/tagfiles/br-g22.xml
+fair	a	101127	adil; âdil; adaletli	How's it strike you, foul or fair"?	brown2/tagfiles/br-n17.xml
+finite	a	101395	sonlu	Let T be a linear operator on the finite dimensional vector space V over the field F.	brown1/tagfiles/br-j18.xml
+astonishing	a	108951	şaşırtıcı	The guards came to life with astonishing menace.	brown1/tagfiles/br-k21.xml
+same	a	107221	aynı	The same command is repeated as many times as there are levels in rank from general to corporal.	brown2/tagfiles/br-g20.xml
+unstable	a	108569	dengesiz	There would be no conceivable sense in going to the opposite extreme of selecting items whose forms are the most unstable.	brown2/tagfiles/br-j35.xml
+molecular	a	112387	moleküler	Heat transfer by molecular conduction as well as by radiation from the arc column.	brown1/tagfiles/br-j02.xml
+scientific	a	107305	bilimsel; ilmî	This involves step-by-step progress, and such will have to be the day-by-day work of lexicostatistics as a growing body of scientific inquiry.	brown2/tagfiles/br-j35.xml
+social	a	111726	toplumsal; sosyal	Holmes rebels against the social conventions of his day not on moral but rather on aesthetic grounds.	brown2/tagfiles/br-g19.xml
+negative	a	105872	menfi	But it is a clumsy and wasteful process: it can produce negative results but not much that is positive.	brown2/tagfiles/br-g23.xml
+ambitious	a	96432	hırslı	Adele, like Amy, the youngest of the Marches, was the rebellious, mischievous, rather calculating and ambitious one.	brown2/tagfiles/br-g31.xml
+dramatic	a	102883	dramatik	It is at least as important as the more dramatic attempts to break down barriers of inequality in the South.	brown2/tagfiles/br-f33.xml
+sound	a	108469	salim	We need many more studies of this sort if the design of written languages is to be put on a sound basis.	brown2/tagfiles/br-j34.xml
+halfway	a	97718	orta; ortadaki	Halfway across the house, he could have smelled her morning perfume.	brown1/tagfiles/br-k28.xml
+sturdy	a	107052	dayanıklı; sağlam	Kneeling, Cobb planted a sturdy knee in the small of his back, holding him pinned.	brown2/tagfiles/br-n14.xml
+responsible	a	97686	sorumlu	He, Casey, had been scared for a while, but that had come mostly from the fact that he felt responsible.	brown2/tagfiles/br-l18.xml
+pregnant	a	96816	hamile; gebe	The raped valley was a pregnant womb awaiting abortion.	brown1/tagfiles/br-k02.xml
+alleged	a	106393	sözde	Paradise lost to the alleged water needs of Texas ' big cities Thursday.	brown1/tagfiles/br-a02.xml
+hostile	a	102693	düşman; düşmanca	It was not a hostile gathering but Andy sensed the difference from last night's hero-worshippers.	brown1/tagfiles/br-l12.xml
+lazy	a	97517	tembel; miskin; erincek; üşengeç	He looked lazy, spoiled, a little querulous.	brown1/tagfiles/br-k01.xml
+permanent	a	105513	sürekli; kalıcı	The universe is a safe and permanent home.	brown1/tagfiles/br-j23.xml
+careful	a	97589	dikkatli	The rest of Black Bottom was a rabbit warren of homes in every condition of neglect, disrepair and careful upkeep.	brown1/tagfiles/br-k04.xml
+knowledgeable	a	100445	okumuş; bilgili	This may both divert the attention of the uninitiate and cause confusion for the more knowledgeable.	brown2/tagfiles/br-j34.xml
+insolent	a	106812	küstah	A tall lady, with a ruffled collar very low on her bosom, turned insolent green eyes upon him.	brown1/tagfiles/br-k06.xml
+unusual	a	101180	ender	The lyric, Mercer remembers, was tailored to fit the unusual melody.	brown2/tagfiles/br-g39.xml
+exciting	a	100929	heyecan verici	This is an exciting young actor to watch.	brown1/tagfiles/br-c04.xml
+external	a	101076	harici	Certainly external forces should not be applied arbitrarily out of mere power available to do so.	brown2/tagfiles/br-g22.xml
+electronic	a	111152	elektronik	We have noted how some electronic techniques, developed for the defense effort, have evenutally been used in commerce and industry.	brown2/tagfiles/br-e25.xml
+practiced	a	108189	becerikli; kabiliyetli; yetenekli; mahir; yeterli; ehliyetli; hünerli; maharetli	Lawrence listened with the practiced, deceptive calm of the lawyer, but his face was in the shadow.	brown1/tagfiles/br-k03.xml
+strange	a	101180	ender	Blanche knew something must be causing Stanley's new, strange behavior but she never once connected it with Kitti Walker.	brown2/tagfiles/br-l10.xml
+short	a	103766	kısa	The days seemed short, perhaps because his routine was, each day, almost the same.	brown1/tagfiles/br-k01.xml
+comprehensive	a	98831	geniş çaplı; etraflı; kapsamlı; şümullü	These countries must formulate a comprehensive, long-term program covering the objectives of both the private and the public sectors of the economy.	brown1/tagfiles/br-j22.xml
+magnetic	a	112545	manyetik	The form of galvanic activity is halfway between the magnetic form and the electrical form.	brown2/tagfiles/br-e26.xml
+severe	a	99498	tehlikeli; ciddi	She had - he informed her - kidney trouble, liver trouble, and a severe female disorder.	brown1/tagfiles/br-f10.xml
+quick	a	102820	hızlı; kısa	Bobby Joe took a gun from behind the door, and with a quick "Bye now" was gone for the day.	brown1/tagfiles/br-k26.xml
+grateful	a	102155	müteşekkir	With his club foot he might well be grateful.	brown1/tagfiles/br-k20.xml
+straight	a	108677	düz; doğru	She was too young, that was all; too young and thin and straight.	brown1/tagfiles/br-k28.xml
+notable	a	103376	meşhur; tanınmış; namlı; ünlü; şöhretli; şanlı	Great actors and actresses - the most notable being Sarah Bernhardt - were hired to repeat their stage performances before the camera.	brown1/tagfiles/br-f43.xml
+common	a	101194	olağan; alışılmış	The most common type of letter was that of soldier husbands to their wives.	brown2/tagfiles/br-f18.xml
+great	a	102863	büyük; önemli	A very great Pope, this one, the old woman explained, her black eyes sparkling.	brown2/tagfiles/br-p12.xml
+military	a	111484	askeri; askerî	In contrast to cocktail parties, military organizations, even in the field, are more formal.	brown2/tagfiles/br-g20.xml
+dry	a	110037	susuz	He tilted his homely face toward the dry bed of the river.	brown2/tagfiles/br-n20.xml
+deliberately	r	114396	kasten; bile bile; mahsus	But they deliberately avoided the one subject that had them all curious:	brown2/tagfiles/br-n10.xml
+particularly	r	114536	özellikle	This is particularly true in site selection.	brown1/tagfiles/br-e21.xml
+quickly	r	114686	hemen; çabucak	Winston apologized and quickly set the hat right.	brown1/tagfiles/br-k28.xml
+somehow	r	114176	nasılsa	It wouldn't - wouldn't seem fair, somehow".	brown2/tagfiles/br-n17.xml
+desperately	r	114459	ivedilikle	To win her favors, her husband first took an additional job, then desperately began to embezzle from his employer.	brown2/tagfiles/br-f08.xml
+once	r	114779	bir kere	Never, he'd once told Joyce, had he encountered any man or situation that called for a gun.	brown2/tagfiles/br-n09.xml
+alone	r	114080	yalnız; sadece; sırf; tek; bir; yalnızca; ancak	There are about 200 different kinds of Andrena in Europe alone.	brown1/tagfiles/br-j10.xml
+back	r	114471	geri	He sputtered back to his feet and scrambled madly to pull his bags of seed grain forward.	brown2/tagfiles/br-n20.xml
+too	r	114300	ayrıca; bununla beraber; aynı zamanda; bununla birlikte; yine	This knowledge has come in handy, too.	brown1/tagfiles/br-a14.xml
+unexpectedly	r	114256	tesadüfen; kazara	They came unexpectedly upon the sea.	brown1/tagfiles/br-k23.xml
+likewise	r	114300	ayrıca; bununla beraber; aynı zamanda; bununla birlikte; yine	The others likewise had hidden themselves in the grass and the brush.	brown1/tagfiles/br-k02.xml
+often	r	114227	sık; sık sık	Actual practice does not often work out this way.	brown2/tagfiles/br-j34.xml
+heavily	r	115226	büyük ölçüde; çok	Andy felt his heart thud heavily with relief.	brown1/tagfiles/br-l12.xml
+personally	r	116546	bizzat; şahsen	Personally, I think we ought to set up an immediate naval blockade of Cuba.	brown2/tagfiles/br-h13.xml
+twice	r	114530	iki kat; iki misli	Animals eat only from one side, so the fence-line bunk must be twice as long as the mechanical bunk.	brown2/tagfiles/br-e27.xml
+inside	r	114722	içinde	Or was it another revolt inside Vientiane?	brown2/tagfiles/br-f24.xml
+slightly	r	114234	hafifçe	Of four dark brown ears, one twitched slightly at this.	brown2/tagfiles/br-l14.xml
+slowly	r	115117	yavaş yavaş	This operation would permit evaluation of the pilot plant, with a slowly increasing load, over a reasonable period of time.	brown1/tagfiles/br-j70.xml
+less	r	114645	daha az	Generally, the same level of living costs less in the country than in the city.	brown2/tagfiles/br-f13.xml
+even	r	114124	hatta	Those in power tend to procrastinate and even to repudiate the electoral process.	brown1/tagfiles/br-j37.xml
+above	r	114506	yukarıda	The patrol snaked around in back of the cave, approached it from above and dropped in suddenly with wild howls.	brown1/tagfiles/br-k03.xml
+ahead	r	114426	önde; ileride	The shapes of the men ahead of him lacked solidity, as if the whip had stripped them of their very flesh.	brown1/tagfiles/br-k02.xml
+jointly	r	115385	ortaklaşa; müştereken	Participation loans are those made jointly by the SBA and banks or other private lending institutions.	brown1/tagfiles/br-h01.xml
+together	r	117580	beraber; birlikte	The petition said that the couple has not lived together as man and wife for more than a year.	brown1/tagfiles/br-a01.xml
+suddenly	r	114388	birdenbire; aniden	Suddenly she was very mysterious and dramatic.	brown1/tagfiles/br-k18.xml
+however	r	114180	ancak; bununla birlikte; rağmen; karşın	However, many herpetologists remain skeptical and would prefer a tentative maximum of about 30 feet.	brown1/tagfiles/br-j11.xml
+sincerely	r	116615	içtenlikle	Most of them sincerely believe that the Anglo-Saxon is the best race in the world and that it should remain pure.	brown1/tagfiles/br-g01.xml
+constantly	r	114142	her zaman; daima	Both watched Scotty constantly, Rachel without seeming to, Virginia openly, her eyes filled with concern.	brown1/tagfiles/br-k01.xml
+below	r	114609	aşağıda; alt katta	In the ballroom below, the dark had given way to moonlight coming in through the bank of French windows.	brown1/tagfiles/br-k16.xml
+absolutely	r	114081	kesinlikle; tamamen	And after Wilson had talked to Mrs. Catt and to others, he was absolutely amazed.	brown1/tagfiles/br-k04.xml

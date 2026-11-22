@@ -11,23 +11,159 @@ class Token {
 
 String _norm(String s) => s.toLowerCase().replaceAll('’', "'");
 
-// Turkish letters too, so Turkish books split into whole words.
-final RegExp _wordRe = RegExp(r"[A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+(?:['’][A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)*(?:-[A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]+)*");
+// Every Latin letter, with its accents, belongs to the word: Turkish books
+// split into whole words, and so do "café", "naïve" and "Brontë" in English
+// ones (a word cut at its accent is looked up as another word).
+const _l = r'\p{Script=Latin}\p{M}';
+final RegExp _wordRe = RegExp("[$_l]+(?:['’][$_l]+)*(?:-[$_l]+)*", unicode: true);
 
 List<Token> tokenize(String text) => [
       for (final m in _wordRe.allMatches(text)) Token(m.start, m.end, m.group(0)!)
     ];
 
-/// Splits a paragraph into sentences; returns [start, end) ranges.
+/// Splits a paragraph into sentences; returns [start, end) ranges that follow
+/// each other in order.
+///
+/// A dot is not a sentence end when it belongs to an abbreviation, an initial
+/// or a reference: "Prof. Child", "Mr. E. S. Hartland", "(No. 28)",
+/// "(ed. 1886), i. 125", "p. 35", "e.g. an", "U.S.", "3.5". The translations
+/// saved for a paragraph, the sentence panel, grammar marks and reading aloud
+/// all use these boundaries, so a split in the middle of a sentence gave the
+/// AI fragments that it joined, and the Turkish slid onto the next sentence.
 List<(int, int)> sentenceRanges(String text) {
   final out = <(int, int)>[];
-  final re = RegExp(r'[^.!?…]+(?:[.!?…]+["”’)\]]*|$)');
-  for (final m in re.allMatches(text)) {
-    if (m.group(0)!.trim().isEmpty) continue;
-    out.add((m.start, m.end));
+  void add(int s, int e) {
+    if (e > s && text.substring(s, e).trim().isNotEmpty) out.add((s, e));
   }
-  if (out.isEmpty) out.add((0, text.length));
+
+  final n = text.length;
+  var start = 0;
+  var i = 0;
+  while (i < n) {
+    if (!_terminators.contains(text[i])) {
+      i++;
+      continue;
+    }
+    final runStart = i;
+    while (i < n && _terminators.contains(text[i])) {
+      i++;
+    }
+    final runEnd = i;
+    while (i < n && _closers.contains(text[i])) {
+      i++;
+    }
+    if (_endsSentence(text, runStart, runEnd, i)) {
+      add(start, i);
+      start = i;
+    }
+  }
+  add(start, n);
+  if (out.isEmpty) out.add((0, n));
   return out;
+}
+
+/// The sentence a word of a paragraph is in, as every screen sees it: the
+/// reader's underline, the word panel, the sentence panel and the context
+/// picker all cut it here, so they judge the same words.
+class SentenceAt {
+  /// The sentence, without the spaces around it.
+  final String text;
+
+  /// Its tokens (the paragraph's own, with their places in the paragraph).
+  final List<Token> tokens;
+
+  /// Index of [tokens].first among the paragraph's tokens.
+  final int first;
+
+  /// Number of the sentence in the paragraph, and the sentences around it.
+  final int index;
+  final String? prev;
+  final String? next;
+  const SentenceAt(this.text, this.tokens, this.first, this.index, this.prev, this.next);
+}
+
+/// The sentence of token [ti] of a paragraph. [ranges]: its
+/// [sentenceRanges], when the caller has them.
+SentenceAt sentenceAt(String text, List<Token> tokens, int ti, {List<(int, int)>? ranges}) {
+  final rs = ranges ?? sentenceRanges(text);
+  final t = tokens[ti];
+  var k = 0;
+  for (var i = 0; i < rs.length; i++) {
+    if (t.start >= rs[i].$1 && t.start < rs[i].$2) k = i;
+  }
+  final r = rs[k];
+  var a = ti, b = ti;
+  while (a > 0 && tokens[a - 1].start >= r.$1) {
+    a--;
+  }
+  while (b + 1 < tokens.length && tokens[b + 1].end <= r.$2) {
+    b++;
+  }
+  String? at(int i) => i >= 0 && i < rs.length ? text.substring(rs[i].$1, rs[i].$2).trim() : null;
+  return SentenceAt(text.substring(r.$1, r.$2).trim(), tokens.sublist(a, b + 1), a, k, at(k - 1), at(k + 1));
+}
+
+const _terminators = {'.', '!', '?', '…'};
+const _closers = {'"', '”', '’', ')', ']', "'"};
+const _dashes = {'—', '–', '-'};
+
+/// Words that are written with a dot and are followed by a name or a
+/// capitalised word without ending the sentence. Words that often end a
+/// sentence ("etc.", "Inc.", "Jr.", "No." as an answer) are left out: a
+/// number after them is handled by the digit rule.
+const _abbreviations = {
+  'Mr', 'Mrs', 'Ms', 'Mx', 'Dr', 'Prof', 'St', 'Mt', 'Rev', 'Revd', 'Fr', 'Gen', 'Col', 'Capt', 'Lt', 'Sgt',
+  'Maj', 'Cmdr', 'Adm', 'Gov', 'Sen', 'Rep', 'Hon', 'Messrs', 'Mme', 'Mlle',
+  'vs', 'viz', 'cf', 'Cf', 'ed', 'eds', 'Ed', 'Eds', 'trans', 'vol', 'vols', 'Vol', 'Vols', 'ch', 'chap', 'Ch', 'Chap',
+  'fig', 'figs', 'Fig', 'Figs', 'pp', 'Pp',
+};
+
+bool _isLetter(String c) => c.toLowerCase() != c.toUpperCase();
+bool _isDigit(String c) => c.codeUnitAt(0) >= 0x30 && c.codeUnitAt(0) <= 0x39;
+bool _isSpace(String c) => c.trim().isEmpty;
+bool _isLower(String c) => _isLetter(c) && c == c.toLowerCase();
+bool _isUpper(String c) => _isLetter(c) && c == c.toUpperCase();
+
+/// Whether the terminators at [runStart, runEnd) (with closing quotes and
+/// brackets up to [end]) end a sentence.
+bool _endsSentence(String text, int runStart, int runEnd, int end) {
+  final n = text.length;
+  if (end >= n) return true;
+  final run = text.substring(runStart, runEnd);
+  final dots = run.split('').every((c) => c == '.' || c == '…');
+  final closed = end > runEnd;
+  final next = text[end];
+  if (!_isSpace(next)) {
+    // A dot inside a word or a number: "U.S.", "e.g", "3.5", "etc.,".
+    if (dots && !closed && (_isLetter(next) || _isDigit(next) || ',;:'.contains(next))) return false;
+    return true;
+  }
+  var j = end;
+  while (j < n && (_isSpace(text[j]) || _dashes.contains(text[j]))) {
+    j++;
+  }
+  if (j >= n) return true;
+  final c = text[j];
+  // A sentence starts with a capital, so what goes on in small letters is
+  // the same sentence: "'Well!' thought Alice", "“Where?” asked Tom",
+  // "Ah! what a day", "pop. de", "these… and".
+  if (_isLower(c)) return false;
+  // Otherwise closing quotes or brackets, "!" and "?" end it
+  // ("(see p. 4). After").
+  if (!dots || closed) return true;
+  // "ed. 1886", "i. 125".
+  if (_isDigit(c)) return false;
+  if (run != '.') return true;
+  // The word right before the dot.
+  var w = runStart;
+  while (w > 0 && _isLetter(text[w - 1])) {
+    w--;
+  }
+  final word = text.substring(w, runStart);
+  if (_abbreviations.contains(word)) return false;
+  // An initial before a name: "E. S. Hartland", "J. M. W. Turner" (not "I.").
+  if (word.length == 1 && _isUpper(word) && word != 'I' && _isUpper(c)) return false;
+  return true;
 }
 
 /// Morphy-style lemmatizer backed by the WordNet exception lists and the
@@ -261,6 +397,23 @@ class PhraseMatcher {
   /// tokens come from) phrasal verbs split by a noun object are found too.
   List<Match> match(List<Token> toks, {String? text}) {
     final out = <Match>[];
+    // The sentence each token is in: an expression is inside one sentence
+    // ("Take care. For now …" is not "care for").
+    List<int>? sent;
+    if (text != null) {
+      final ranges = sentenceRanges(text);
+      var r = 0;
+      sent = [
+        for (final t in toks)
+          () {
+            while (r + 1 < ranges.length && t.start >= ranges[r].$2) {
+              r++;
+            }
+            return r;
+          }(),
+      ];
+    }
+    bool oneSentence(List<int> idx) => sent == null || idx.isEmpty || sent[idx.first] == sent[idx.last];
     for (var i = 0; i < toks.length; i++) {
       final t = toks[i];
       final keys = <String>{t.lower, ...lem.lemmas(t.lower)};
@@ -271,13 +424,19 @@ class PhraseMatcher {
           // not the verb of a phrasal verb.
           if (e.cat == 'phrasal_verbs' && i > 0 && _det.contains(toks[i - 1].lower)) continue;
           final m = _matchAt(e, toks, i);
-          if (m != null) out.add(Match(e, m));
+          if (m != null && oneSentence(m)) out.add(Match(e, m));
         }
       }
       for (final e in _byForm[t.lower] ?? const <Expr>[]) {
         out.add(Match(e, [i]));
       }
-      if (text != null && (i == 0 || !_det.contains(toks[i - 1].lower))) _separableNoun(toks, i, text, out);
+      if (text != null && (i == 0 || !_det.contains(toks[i - 1].lower))) {
+        final before = out.length;
+        _separableNoun(toks, i, text, out);
+        for (var k = out.length - 1; k >= before; k--) {
+          if (!oneSentence(out[k].tokens)) out.removeAt(k);
+        }
+      }
     }
     return out;
   }
@@ -303,28 +462,87 @@ String displayPhrase(String phrase) {
 
 List<String> patternOf(String phrase) => tokenize(phrase).map((t) => t.lower).toList();
 
-/// Very small part-of-speech guesser used to pick the right dictionary sense.
-String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String> Function(String word)? posOf}) {
+/// For each token and one past the last: whether a mark that ends a clause
+/// (comma, full stop, bracket, quote, dash …) stands right before it in
+/// [sentence]. The words on the two sides of such a mark do not tell each
+/// other's part of speech ("… property rights, the state …"). Null when the
+/// tokens are not found in [sentence].
+List<bool>? clauseBreaks(String sentence, List<Token> toks) {
+  if (toks.isEmpty) return null;
+  // Tokens may carry their place in a longer text (the paragraph).
+  final at = sentence.indexOf(toks.first.text);
+  if (at < 0) return null;
+  final off = toks.first.start - at;
+  final out = <bool>[true];
+  for (var i = 0; i < toks.length; i++) {
+    final s = toks[i].start - off, e = toks[i].end - off;
+    if (s < 0 || e > sentence.length || sentence.substring(s, e) != toks[i].text) return null;
+    if (i > 0) out.add(_clauseMark.hasMatch(sentence.substring(toks[i - 1].end - off, s)));
+  }
+  out.add(true);
+  return out;
+}
+
+final _clauseMark = RegExp(r'[.,;:!?()\[\]"“”…—–]| - ');
+
+/// Small part-of-speech guesser used to pick the right dictionary sense: the
+/// part of speech the words right around token [i] call for, or null when
+/// they do not say. [breaks] ([clauseBreaks]) keeps it from reading across a
+/// comma or a full stop.
+String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String> Function(String word)? posOf, List<bool>? breaks}) {
   final w = toks[i].lower;
-  final prev = i > 0 ? toks[i - 1].lower : '';
-  final next = i + 1 < toks.length ? toks[i + 1].lower : '';
+  final cutBefore = breaks != null && breaks[i], cutAfter = breaks != null && breaks[i + 1];
+  final prev = i > 0 && !cutBefore ? toks[i - 1].lower : '';
+  final next = i + 1 < toks.length && !cutAfter ? toks[i + 1].lower : '';
   // Forms of be / have / do are verbs ("had been" is not the metal beryllium).
   const aux = {
     'be', 'am', 'is', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having',
     'do', 'does', 'did', 'done', 'doing',
   };
   if (aux.contains(w) && availablePos.contains('v')) return 'v';
+  const modal = {'will', 'would', 'can', 'could', 'should', 'must', 'may', 'might', 'shall', "won't", "can't", "couldn't", "wouldn't", "shouldn't"};
+  const finite = {...modal, 'is', 'are', 'was', 'were', 'has', 'have', 'had', 'do', 'does', 'did', "isn't", "aren't", "wasn't", "weren't", "don't", "doesn't", "didn't", "hasn't", "haven't"};
+  const relative = {'who', 'which', 'that'};
+  final nounVerb = availablePos.contains('n') && availablePos.contains('v');
+  // A form in "-s" is a plural noun or a verb after he / she / it.
+  if (nounVerb && w.endsWith('s') && !w.endsWith('ss')) {
+    // After "to" or "can" a verb has no "-s": "to neighbors".
+    if (prev == 'to' || modal.contains(prev)) return 'n';
+    // "the fans were", "her channel has": what comes next is the verb.
+    if (finite.contains(next)) return 'n';
+    if (const {'he', 'she', 'it', 'who', 'which'}.contains(prev)) return 'v';
+    // "property rights, …", "email alerts.": closing a clause right after a
+    // noun, it is the plural that ends the noun group.
+    if (breaks != null && cutAfter && posOf != null && prev.isNotEmpty && !stopWords.contains(prev) && posOf(prev).contains('n') && !posOf(prev).contains('r')) return 'n';
+  }
+  // "that benefit the …", "which causes a …": after a relative pronoun and
+  // before an object stands a verb ("that" is no determiner there).
+  if (availablePos.contains('v') && relative.contains(prev) && (_det.contains(next) || _objPron.contains(next) || next == 'to' || next == 'that')) return 'v';
+  // "the rates of", "studies of": a word before "of" is a noun, unless it is
+  // a verb form ("consisting of", "made of") or follows a subject or "to".
+  const subject = {'i', 'you', 'we', 'they', 'he', 'she', 'it', 'who'};
+  if (next == 'of' && availablePos.contains('n') && !w.endsWith('ing') && !w.endsWith('ed') && !subject.contains(prev) && !modal.contains(prev) && prev != 'to') {
+    return 'n';
+  }
   // "unfortunate circumstances", "heavy rain": a word that can be an
   // adjective, followed by a noun, is an adjective.
+  // "a complex one", "the individual Zurbarán paintings": after a determiner
+  // and before "one" or a name the dictionary does not know.
+  if (availablePos.contains('a') && _det.contains(prev) && posOf != null && !cutAfter && i + 1 < toks.length) {
+    final t = toks[i + 1];
+    if (next == 'one' || next == 'ones' || (t.text[0] != t.lower[0] && posOf(next).isEmpty)) return 'a';
+  }
   if (availablePos.contains('a') && next.isNotEmpty && !stopWords.contains(next) && posOf != null) {
     final np = posOf(next);
-    // "the light shines" is ambiguous (noun + verb), so only when that reading is impossible.
-    final nounThenVerb = _det.contains(prev) && availablePos.contains('n') && np.contains('v');
+    // "the light shines" is noun + verb. That reading needs a verb that fits
+    // a noun before it: "shines", "flickered"; in "the general interest" the
+    // second word is the noun.
+    final verbAfterNoun = np.contains('v') && (next.endsWith('s') || next.endsWith('ed')) && !w.endsWith('s');
+    final nounThenVerb = _det.contains(prev) && availablePos.contains('n') && verbAfterNoun;
     if (np.contains('n') && !nounThenVerb) return 'a';
   }
   const modals = {
-    'will', 'would', 'can', 'could', 'should', 'must', 'may', 'might', 'shall',
-    "don't", "doesn't", "didn't", "won't", "can't", "couldn't", "wouldn't", 'not', 'never',
+    ...modal, "don't", "doesn't", "didn't", 'not', 'never',
     'i', 'you', 'we', 'they', 'he', 'she', 'it', 'please', "let's"
   };
   const adverbs = {'very', 'too', 'so', 'quite', 'more', 'most', 'rather', 'really', 'extremely', 'less', 'least'};
@@ -337,15 +555,24 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
   }
 
   if (w.endsWith('ly') && availablePos.contains('r')) return 'r';
+  // "Further, …", "Later, …": alone before a comma at the start, an adverb.
+  if (breaks != null && cutBefore && cutAfter && availablePos.contains('r')) return 'r';
   if (_det.contains(prev)) return pick(['n', 'a', 'v']);
   if (adverbs.contains(prev)) return pick(['a', 'r', 'v']);
   if (be.contains(prev)) {
     if (w.endsWith('ing') || w.endsWith('ed')) return pick(['v', 'a', 'n']);
     return pick(['a', 'n', 'v']);
   }
+  // "do it later.", "take them back,": after an object, closing the clause.
+  if (breaks != null && cutAfter && availablePos.contains('r') && !availablePos.contains('v') && _objPron.contains(prev) && i > 1 && !breaks[i - 1]) return 'r';
   if (modals.contains(prev)) return pick(['v', 'n', 'a']);
   if (prev == 'to' && availablePos.contains('v')) return 'v';
   if (w.endsWith('ing') || w.endsWith('ed')) return pick(['v', 'a', 'n']);
+  // "do it later.", "moving forward,": at the end of a clause after a verb
+  // or its object, a word that can be an adverb is one.
+  if (breaks != null && cutAfter && availablePos.contains('r') && prev.isNotEmpty && posOf != null && (_objPron.contains(prev) || posOf(prev).contains('v')) && !posOf(prev).contains('a')) {
+    return 'r';
+  }
   if (prev == 'of' || prev == 'in' || prev == 'on' || prev == 'at' || prev == 'with' || prev == 'for') {
     return pick(['n', 'a', 'v']);
   }

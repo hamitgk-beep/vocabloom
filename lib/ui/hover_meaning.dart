@@ -27,12 +27,8 @@ HoverMeaning? hoverMeaning(AppState app, List<Token> tokens, List<Match> matches
 
   final lower = tokens[i].lower.replaceAll('’', "'");
   final dict = app.dict;
-  final cands = <String>[...?dict.irregularOf[lower], ...dict.lemmatizer.lemmas(lower), lower];
-  // A common word beats a rare base form the suffix rules make ("never", not "neve").
-  if (cands.contains(lower) && dict.ownTier(lower) != null && dict.irregularOf[lower] == null) {
-    cands.remove(lower);
-    cands.insert(0, lower);
-  }
+  // The base form the word panel opens, then the wider list as a fallback.
+  final cands = <String>{for (final b in dict.baseForms(lower)) b.lemma, ...?dict.irregularOf[lower], ...dict.lemmatizer.lemmas(lower), lower}.toList();
   final opens = text != null && opensSentence(text, tokens[i]);
   for (final c in cands) {
     final own = dict.ownSenses(c);

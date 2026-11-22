@@ -16,6 +16,9 @@ class ParaAnalysis {
   final List<Match> matches;
   ParaAnalysis(this.text, this.tokens, this.matches);
 
+  /// The paragraph's sentences ([sentenceRanges]), found once.
+  late final List<(int, int)> sentences = sentenceRanges(text);
+
   List<GMark>? _grammar;
 
   /// Grammar structures (tenses, conditionals …), found the first time a
@@ -30,7 +33,12 @@ class ParaAnalysis {
     // or collocation found in its own words is the expression.
     if (m.expr.cat != 'phrasal_verbs') return false;
     try {
-      return app.senses.isLiteral(m.expr, tokens, m.tokens);
+      // Judged in its own sentence with the sentences around it, exactly as
+      // the panel judges it, so the underline and the panel agree.
+      final s = sentenceAt(text, tokens, m.tokens.first, ranges: sentences);
+      final idx = [for (final x in m.tokens) x - s.first];
+      if (idx.any((x) => x < 0 || x >= s.tokens.length)) return false;
+      return app.senses.isLiteral(m.expr, s.tokens, idx, sentence: s.text, prev: s.prev, next: s.next);
     } catch (_) {
       return false;
     }

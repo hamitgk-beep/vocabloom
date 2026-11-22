@@ -708,11 +708,11 @@ class _AiServicePageState extends State<AiServicePage> {
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: Text(L('İnternet olunca kitapları otomatik tara', 'Scan books automatically when online')),
-          subtitle: Text(L('Kitaplar çevrilir, sonra sözlükte yalnızca İngilizce açıklaması olan kalıplar Türkçeye çevrilip cihaza kaydedilir. Kapalıysa kitap menüsünden elle başlatabilirsin.',
-              'Books are translated first; then dictionary entries that only have an English definition are translated into Turkish and saved on the device. When off, you can start it from the book menu.')),
-          value: u.getSetting('auto_analyze') != '0',
+          subtitle: Text(L('Kitaplar çevrilir, sonra sözlükte yalnızca İngilizce açıklaması olan kalıplar Türkçeye çevrilip cihaza kaydedilir. Bağlı yapay zekâ servisini kullanır (ücretli olabilir), bu yüzden sen açana kadar kapalı. Kapalıysa kitap menüsünden elle başlatabilirsin.',
+              'Books are translated first; then dictionary entries that only have an English definition are translated into Turkish and saved on the device. It uses your connected AI service (which may cost money), so it stays off until you turn it on. When off, you can start it from the book menu.')),
+          value: app.analyzer.enabled,
           onChanged: (v) => setState(() {
-            u.setSetting('auto_analyze', v ? null : '0');
+            u.setSetting('auto_analyze', v ? '1' : '0');
             if (v) app.analyzer.tick();
           }),
         ),

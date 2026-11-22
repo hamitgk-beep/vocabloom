@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../data/sentence_translation.dart';
 import '../data/user_db.dart';
 import '../nlp/text.dart';
 import 'ai/ai_ask_box.dart';
@@ -49,15 +50,14 @@ class _SentencePanelState extends State<SentencePanel> {
   @override
   void initState() {
     super.initState();
-    // Saved earlier, or translated now when an AI service is connected.
+    // Saved earlier. The paid AI is asked only when the learner taps
+    // "Explain in detail": opening the panel never spends their quota.
     final saved = widget.app.user.sentenceAi(widget.ctx.sentence);
     if (saved != null) {
-      onlineTr = saved.$1;
+      onlineTr = usableTranslation(widget.ctx.sentence, saved.$1) ? saved.$1 : null;
       final exp = saved.$2 == null ? null : jsonDecode(saved.$2!) as Map;
       onlineExplain = exp?['tr'] as String?;
       onlineExplainEn = exp?['en'] as String?;
-    } else if (AiService.fromSettings(widget.app.user) != null) {
-      _explain();
     }
   }
 
@@ -71,12 +71,16 @@ class _SentencePanelState extends State<SentencePanel> {
       loading = true;
       error = null;
     });
+    // The answer belongs to the sentence asked about: it is saved under that
+    // sentence and shown only while the panel still shows it.
+    final asked = widget.ctx.sentence;
     try {
-      final r = await svc.explainSentence(widget.ctx.sentence, widget.para.text);
-      widget.app.user.setSentenceAi(widget.ctx.sentence, r.translation, jsonEncode({'tr': r.explanation, 'en': r.explanationEn}));
-      if (!mounted) return;
+      final r = await svc.explainSentence(asked, widget.para.text);
+      final ok = usableTranslation(asked, r.translation);
+      widget.app.user.setSentenceAi(asked, ok ? r.translation : '', jsonEncode({'tr': r.explanation, 'en': r.explanationEn}), engine: svc.engineId);
+      if (!mounted || widget.ctx.sentence != asked) return;
       setState(() {
-        onlineTr = r.translation;
+        onlineTr = ok ? r.translation : null;
         onlineExplain = r.explanation;
         onlineExplainEn = r.explanationEn.isEmpty ? null : r.explanationEn;
       });
@@ -93,6 +97,8 @@ class _SentencePanelState extends State<SentencePanel> {
     final theme = Theme.of(context);
     final ctx = widget.ctx;
     final tenses = app.tenses.detect(ctx.sentenceTokens);
+    // The verified translation of the book first, then the AI's answer for
+    // this very sentence; both were saved for exactly this English.
     final tr = ctx.sentenceTr?.first ?? onlineTr;
     final showTr = app.showTr, showEn = app.showEn;
     final hasAi = AiService.fromSettings(app.user) != null;
@@ -172,7 +178,7 @@ class _SentencePanelState extends State<SentencePanel> {
             ),
           ),
         ],
-        if (tr != null && onlineExplain == null && !loading && hasAi)
+        if (onlineExplain == null && !loading && hasAi)
           Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Align(

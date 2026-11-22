@@ -50,21 +50,23 @@ class WordContext {
 
 /// Builds the context for token [ti] of paragraph [para].
 WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? bookId, String? bookTitle}) {
-  final t = a.tokens[ti];
-  final ranges = sentenceRanges(para.text);
-  var sIdx = 0;
-  for (var i = 0; i < ranges.length; i++) {
-    if (t.start >= ranges[i].$1 && t.start < ranges[i].$2) sIdx = i;
-  }
-  final r = ranges[sIdx];
-  final sentTokens = a.tokens.where((x) => x.start >= r.$1 && x.end <= r.$2).toList();
-  final idx = sentTokens.indexWhere((x) => x.start == t.start);
-  final matches = a.matches.where((m) => m.tokens.contains(ti)).toList();
-  final tr = app.user.paraTranslation(para.id);
-  String? at(int k) => k >= 0 && k < ranges.length ? para.text.substring(ranges[k].$1, ranges[k].$2).trim() : null;
-  final sentence = para.text.substring(r.$1, r.$2).trim();
-  final sTr = tr != null && sIdx < tr.length && plausibleTranslation(sentence, tr[sIdx]) ? [tr[sIdx]] : null;
-  return WordContext(sentence, sentTokens, idx < 0 ? 0 : idx, matches, sTr, bookId, bookTitle, paraId: para.id, prevSentence: at(sIdx - 1), nextSentence: at(sIdx + 1));
+  final s = sentenceAt(para.text, a.tokens, ti, ranges: a.sentences);
+  final sentTokens = s.tokens;
+  final idx = ti - s.first;
+  // The expressions on this word, their words counted inside the sentence
+  // like [WordContext.indexInSentence] (the paragraph counts them from its
+  // own start, which is another number in every sentence but the first).
+  final matches = [
+    for (final m in a.matches)
+      if (m.tokens.contains(ti) && m.tokens.every((x) => x >= s.first && x < s.first + sentTokens.length)) Match(m.expr, [for (final x in m.tokens) x - s.first]),
+  ];
+  final sentence = s.text;
+  // The saved Turkish is looked up by the English sentence itself, never by
+  // its position in the paragraph: a position can point at another sentence
+  // when the boundaries or the text changed since the translation was made.
+  final saved = app.user.paraTranslation(para.id)?.forSentence(sentence);
+  final sTr = saved != null && plausibleTranslation(sentence, saved) ? [saved] : null;
+  return WordContext(sentence, sentTokens, idx, matches, sTr, bookId, bookTitle, paraId: para.id, prevSentence: s.prev, nextSentence: s.next);
 }
 
 /// Whether a saved Turkish translation can belong to [en]: translations saved
@@ -116,23 +118,12 @@ class _WordPanelState extends State<WordPanel> {
     super.initState();
     final app = widget.app;
     final lower = widget.surface.toLowerCase().replaceAll('’', "'");
-    final cands = app.dict.lemmatizer.lemmas(lower);
+    // The same base form the context picker and the hover bubble use
+    // ("things" is thing, "only" is only); the wider list is the fallback
+    // for words only the learner's own dictionary knows.
+    final forms = [for (final b in app.dict.baseForms(lower)) b.lemma];
+    final cands = [...forms, ...app.dict.lemmatizer.lemmas(lower).where((l) => !forms.contains(l))];
     lemma = widget.lemma ?? cands.first;
-    // A past form of an irregular verb belongs to that verb ("found" -> find,
-    // "fell" -> fall), unless it is a base form itself ("lay").
-    final irrBase = app.dict.irregularOf[lower];
-    final irr = widget.lemma == null && irrBase != null && !app.dict.irregular.containsKey(lower);
-    if (irr) lemma = irrBase.first;
-    // A word that is itself common beats a rare base form the suffix rules
-    // produce ("never" is not a form of "neve").
-    if (widget.lemma == null && !irr && lemma != lower && cands.contains(lower)) {
-      int freq(String w) {
-        final r = app.dict.db.select('SELECT n FROM wfreq WHERE word=?', [w]);
-        return r.isEmpty ? 0 : r.first['n'] as int;
-      }
-
-      if (freq(lower) >= freq(lemma)) lemma = lower;
-    }
     info = app.dict.lookup(lemma);
     if (info.isEmpty) {
       for (final c in cands) {
@@ -413,6 +404,9 @@ class _WordPanelState extends State<WordPanel> {
           ),
         );
       } else if (LocalAiCard.available(app)) {
+        // The learner's own (often paid) AI key is used only on a tap; the
+        // free on-device translation is shown meanwhile where there is one.
+        if (!info.isEmpty) children.add(DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge));
         children.add(
           LocalAiCard(
             key: ValueKey('ai-word-$lemma'),
@@ -420,7 +414,6 @@ class _WordPanelState extends State<WordPanel> {
             cacheKey: 'word:$lemma|${ctx?.sentence ?? ''}',
             title: L('Yapay zekâ: Türkçe anlamı', 'AI: meaning in Turkish'),
             button: L('Yapay zekâ ile açıkla', 'Explain with AI'),
-            auto: true,
             run: () => Tutor.of(app).wordMeaning(lemma, sentence: ctx?.sentence, gloss: best?.gloss ?? info.senses.firstOrNull?.gloss, turkish: null),
           ),
         );
