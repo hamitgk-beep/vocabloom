@@ -45,7 +45,13 @@ class TrEnDict {
   /// Base words a tapped word can belong to, the most likely first:
   /// the word itself, then the dictionary's inflected forms (evlerimizden ->
   /// ev), then a few endings the tables do not list ("seninle", "Ankara'da").
-  List<String> lemmas(String surface) {
+  List<String> lemmas(String surface) => lemmasWithGuess(surface).$1;
+
+  /// Whether [lemmas] found [surface]'s base word only by cutting endings
+  /// that the dictionary does not list for it: a guess, to be shown as one.
+  bool isGuess(String surface) => lemmasWithGuess(surface).$2;
+
+  (List<String>, bool) lemmasWithGuess(String surface) {
     var w = lower(surface.trim());
     final apo = w.indexOf("'");
     if (apo > 0) w = w.substring(0, apo);
@@ -57,17 +63,23 @@ class TrEnDict {
         final l = r.columnAt(0) as String;
         if (!out.contains(l)) out.add(l);
       }
+      // An entry that only says which form of another word it is
+      // ("annesi": possessive of anne; "yılında") comes after that word.
+      if (out.length > 1 && out.first == t && _onlyFormOf(t, out.skip(1).toSet())) out.add(out.removeAt(0));
       return out;
     }
 
     final found = direct(w);
-    if (found.isNotEmpty) return found;
+    if (found.isNotEmpty) return (found, false);
     for (final end in _endings) {
       if (w.length > end.length + 1 && w.endsWith(end)) {
         final r = direct(w.substring(0, w.length - end.length));
-        if (r.isNotEmpty) return r;
+        if (r.isNotEmpty) return (r, false);
       }
     }
+    // Not in the tables: a guess. Every base word the endings allow is kept
+    // (at most three), so a wrong first guess is never the only one shown.
+    final guesses = <String>[];
     // Verb forms the tables leave out ("olduğumu", "yaptığını", "alabilir"):
     // cut a verb ending and look for the infinitive (ol -> olmak).
     for (final end in _verbEndings) {
@@ -75,12 +87,119 @@ class TrEnDict {
         var stem = w.substring(0, w.length - end.length);
         for (final st in {stem, if (stem.endsWith('d')) '${stem.substring(0, stem.length - 1)}t'}) {
           for (final inf in ['${st}mak', '${st}mek']) {
-            if (_has(inf)) return [inf];
+            if (_has(inf) && !guesses.contains(inf)) guesses.add(inf);
+          }
+          // negative: "olmadığından" is ol-ma-dığından (olmak)
+          if (st.length > 3 && (st.endsWith('ma') || st.endsWith('me'))) {
+            final pos = st.substring(0, st.length - 2);
+            for (final inf in ['${pos}mak', '${pos}mek']) {
+              if (_has(inf) && !guesses.contains(inf)) guesses.add(inf);
+            }
           }
         }
       }
     }
-    return const [];
+    // Noun endings the tables leave out ("tehlikesi", "hesabına",
+    // "yatırımcıları"): plural, possessive and case endings that agree with
+    // the word's last vowel, on a noun or adjective the dictionary has.
+    for (final n in _nounStems(w)) {
+      if (!guesses.contains(n)) guesses.add(n);
+    }
+    if (guesses.isEmpty) return (const <String>[], false);
+    return (guesses.take(3).toList(), true);
+  }
+
+  static final _formOf = RegExp(
+      r'\b(singular|plural|person|possession|possessive|nominative|accusative|dative|locative|ablative|genitive|instrumental|definite|inflection|form)\b.* of (\S+)\s*$');
+
+  bool _onlyFormOf(String w, Set<String> bases) {
+    final e = entry(w);
+    if (e == null || e.senses.isEmpty) return false;
+    for (final s in e.senses) {
+      for (final g in s.glosses) {
+        final m = _formOf.firstMatch(g);
+        if (m == null || !bases.contains(m.group(2)!.replaceAll(RegExp(r'[^a-zçğıöşüâîû]'), ''))) return false;
+      }
+    }
+    return true;
+  }
+
+  static const _back = 'aıou', _vowels = 'aıoueiöüâîû';
+
+  static String? _lastVowel(String s) {
+    for (var i = s.length - 1; i >= 0; i--) {
+      if (_vowels.contains(s[i])) return s[i];
+    }
+    return null;
+  }
+
+  // Whether the first vowel of [ending] follows the vowel harmony of [stem].
+  static bool _harmony(String stem, String ending) {
+    final v = _lastVowel(stem), e = _lastVowel(ending.isEmpty ? '' : ending.substring(0, ending.indexOf(RegExp('[$_vowels]')) + 1));
+    if (v == null || e == null) return true;
+    final backStem = _back.contains(v) || v == 'â' || v == 'û';
+    if ('ae'.contains(e)) return backStem ? e == 'a' : e == 'e';
+    const four = {'a': 'ı', 'ı': 'ı', 'o': 'u', 'u': 'u', 'e': 'i', 'i': 'i', 'ö': 'ü', 'ü': 'ü', 'â': 'ı', 'î': 'i', 'û': 'u'};
+    return four[v] == e;
+  }
+
+  static final List<String> _nounEndings = () {
+    const plural = ['', 'lar', 'ler'];
+    const poss = ['', 'ım', 'im', 'um', 'üm', 'm', 'ın', 'in', 'un', 'ün', 'n', 'ı', 'i', 'u', 'ü', 'sı', 'si', 'su', 'sü',
+      'ımız', 'imiz', 'umuz', 'ümüz', 'mız', 'miz', 'muz', 'müz', 'ınız', 'iniz', 'unuz', 'ünüz', 'nız', 'niz', 'nuz', 'nüz', 'ları', 'leri'];
+    const cases = ['', 'ı', 'i', 'u', 'ü', 'yı', 'yi', 'yu', 'yü', 'nı', 'ni', 'nu', 'nü', 'a', 'e', 'ya', 'ye', 'na', 'ne',
+      'da', 'de', 'ta', 'te', 'nda', 'nde', 'dan', 'den', 'tan', 'ten', 'ndan', 'nden', 'ın', 'in', 'un', 'ün', 'nın', 'nin', 'nun', 'nün',
+      'la', 'le', 'yla', 'yle', 'ca', 'ce', 'ndaki', 'ndeki', 'daki', 'deki'];
+    final out = <String>{};
+    for (final p in plural) {
+      for (final q in poss) {
+        for (final c in cases) {
+          final e = '$p$q$c';
+          if (e.length >= 2) out.add(e);
+        }
+      }
+    }
+    return out.toList()..sort((a, b) => b.length.compareTo(a.length));
+  }();
+
+  bool _isNominal(String w) {
+    final e = entry(w);
+    return e != null && e.senses.any((s) => const {'noun', 'adj', 'name', 'pron'}.contains(s.pos));
+  }
+
+  /// The nouns a word with endings can belong to, the likeliest first. Consonants softened
+  /// before a vowel are put back (hesab- → hesap, ağac- → ağaç) and a vowel
+  /// dropped before an ending ("kadri" → kadir); the ending must follow the
+  /// word's vowel harmony, and the rest must be two letters or more.
+  List<String> _nounStems(String w) {
+    final out = <String>[];
+    // First the word as written before the ending, then with a softened
+    // consonant or a dropped vowel put back ("kendinden" is kendi, not kent).
+    for (final altered in [false, true]) {
+      for (final end in _nounEndings) {
+        if (w.length < end.length + 2 || !w.endsWith(end)) continue;
+        final st = w.substring(0, w.length - end.length);
+        if (!_harmony(st, end)) continue;
+        if (!altered) {
+          if (!out.contains(st) && _isNominal(st)) out.add(st);
+          continue;
+        }
+        // Softening happens only before a vowel.
+        if (!_vowels.contains(end[0]) && !(end[0] == 'y')) continue;
+        final opts = <String>[
+        if (st.endsWith('b')) '${st.substring(0, st.length - 1)}p',
+        if (st.endsWith('c')) '${st.substring(0, st.length - 1)}ç',
+        if (st.endsWith('d')) '${st.substring(0, st.length - 1)}t',
+        if (st.endsWith('ğ')) ...['${st.substring(0, st.length - 1)}k', '${st.substring(0, st.length - 1)}g'],
+        if (st.length >= 3 && !_vowels.contains(st[st.length - 1]) && !_vowels.contains(st[st.length - 2]))
+          for (final v in 'ıiuü'.split('')) '${st.substring(0, st.length - 1)}$v${st[st.length - 1]}',
+      ];
+        for (final o in opts) {
+          if (o.length >= 2 && !out.contains(o) && _isNominal(o)) out.add(o);
+        }
+      }
+    }
+    return out;
   }
 
   static final List<String> _verbEndings = () {

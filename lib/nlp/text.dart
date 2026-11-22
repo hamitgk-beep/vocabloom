@@ -488,8 +488,9 @@ final _clauseMark = RegExp(r'[.,;:!?()\[\]"“”…—–]| - ');
 /// Small part-of-speech guesser used to pick the right dictionary sense: the
 /// part of speech the words right around token [i] call for, or null when
 /// they do not say. [breaks] ([clauseBreaks]) keeps it from reading across a
-/// comma or a full stop.
-String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String> Function(String word)? posOf, List<bool>? breaks}) {
+/// comma or a full stop. [why] is told which rule decided (see
+/// [SenseEngine] for the rules that are too often wrong to count as proof).
+String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String> Function(String word)? posOf, List<bool>? breaks, void Function(String rule)? why}) {
   final w = toks[i].lower;
   final cutBefore = breaks != null && breaks[i], cutAfter = breaks != null && breaks[i + 1];
   final prev = i > 0 && !cutBefore ? toks[i - 1].lower : '';
@@ -499,7 +500,7 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
     'be', 'am', 'is', 'are', 'was', 'were', 'been', 'being', 'have', 'has', 'had', 'having',
     'do', 'does', 'did', 'done', 'doing',
   };
-  if (aux.contains(w) && availablePos.contains('v')) return 'v';
+  if (aux.contains(w) && availablePos.contains('v')) return _why(why, 'aux', 'v');
   const modal = {'will', 'would', 'can', 'could', 'should', 'must', 'may', 'might', 'shall', "won't", "can't", "couldn't", "wouldn't", "shouldn't"};
   const finite = {...modal, 'is', 'are', 'was', 'were', 'has', 'have', 'had', 'do', 'does', 'did', "isn't", "aren't", "wasn't", "weren't", "don't", "doesn't", "didn't", "hasn't", "haven't"};
   const relative = {'who', 'which', 'that'};
@@ -507,22 +508,22 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
   // A form in "-s" is a plural noun or a verb after he / she / it.
   if (nounVerb && w.endsWith('s') && !w.endsWith('ss')) {
     // After "to" or "can" a verb has no "-s": "to neighbors".
-    if (prev == 'to' || modal.contains(prev)) return 'n';
+    if (prev == 'to' || modal.contains(prev)) return _why(why, 'sAfterTo', 'n');
     // "the fans were", "her channel has": what comes next is the verb.
-    if (finite.contains(next)) return 'n';
-    if (const {'he', 'she', 'it', 'who', 'which'}.contains(prev)) return 'v';
+    if (finite.contains(next)) return _why(why, 'sBeforeFinite', 'n');
+    if (const {'he', 'she', 'it', 'who', 'which'}.contains(prev)) return _why(why, 'sAfterHe', 'v');
     // "property rights, …", "email alerts.": closing a clause right after a
     // noun, it is the plural that ends the noun group.
-    if (breaks != null && cutAfter && posOf != null && prev.isNotEmpty && !stopWords.contains(prev) && posOf(prev).contains('n') && !posOf(prev).contains('r')) return 'n';
+    if (breaks != null && cutAfter && posOf != null && prev.isNotEmpty && !stopWords.contains(prev) && posOf(prev).contains('n') && !posOf(prev).contains('r')) return _why(why, 'pluralEndsClause', 'n');
   }
   // "that benefit the …", "which causes a …": after a relative pronoun and
   // before an object stands a verb ("that" is no determiner there).
-  if (availablePos.contains('v') && relative.contains(prev) && (_det.contains(next) || _objPron.contains(next) || next == 'to' || next == 'that')) return 'v';
+  if (availablePos.contains('v') && relative.contains(prev) && (_det.contains(next) || _objPron.contains(next) || next == 'to' || next == 'that')) return _why(why, 'verbAfterRelative', 'v');
   // "the rates of", "studies of": a word before "of" is a noun, unless it is
   // a verb form ("consisting of", "made of") or follows a subject or "to".
   const subject = {'i', 'you', 'we', 'they', 'he', 'she', 'it', 'who'};
   if (next == 'of' && availablePos.contains('n') && !w.endsWith('ing') && !w.endsWith('ed') && !subject.contains(prev) && !modal.contains(prev) && prev != 'to') {
-    return 'n';
+    return _why(why, 'beforeOf', 'n');
   }
   // "unfortunate circumstances", "heavy rain": a word that can be an
   // adjective, followed by a noun, is an adjective.
@@ -530,7 +531,7 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
   // and before "one" or a name the dictionary does not know.
   if (availablePos.contains('a') && _det.contains(prev) && posOf != null && !cutAfter && i + 1 < toks.length) {
     final t = toks[i + 1];
-    if (next == 'one' || next == 'ones' || (t.text[0] != t.lower[0] && posOf(next).isEmpty)) return 'a';
+    if (next == 'one' || next == 'ones' || (t.text[0] != t.lower[0] && posOf(next).isEmpty)) return _why(why, 'adjBeforeName', 'a');
   }
   if (availablePos.contains('a') && next.isNotEmpty && !stopWords.contains(next) && posOf != null) {
     final np = posOf(next);
@@ -539,7 +540,7 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
     // second word is the noun.
     final verbAfterNoun = np.contains('v') && (next.endsWith('s') || next.endsWith('ed')) && !w.endsWith('s');
     final nounThenVerb = _det.contains(prev) && availablePos.contains('n') && verbAfterNoun;
-    if (np.contains('n') && !nounThenVerb) return 'a';
+    if (np.contains('n') && !nounThenVerb) return _why(why, 'adjBeforeNoun', 'a');
   }
   const modals = {
     ...modal, "don't", "doesn't", "didn't", 'not', 'never',
@@ -554,29 +555,35 @@ String? guessPos(List<Token> toks, int i, Set<String> availablePos, {Set<String>
     return null;
   }
 
-  if (w.endsWith('ly') && availablePos.contains('r')) return 'r';
+  if (w.endsWith('ly') && availablePos.contains('r')) return _why(why, 'lyAdverb', 'r');
   // "Further, …", "Later, …": alone before a comma at the start, an adverb.
-  if (breaks != null && cutBefore && cutAfter && availablePos.contains('r')) return 'r';
-  if (_det.contains(prev)) return pick(['n', 'a', 'v']);
-  if (adverbs.contains(prev)) return pick(['a', 'r', 'v']);
+  if (breaks != null && cutBefore && cutAfter && availablePos.contains('r')) return _why(why, 'aloneAdverb', 'r');
+  if (_det.contains(prev)) return _why(why, 'afterDet', pick(['n', 'a', 'v']));
+  if (adverbs.contains(prev)) return _why(why, 'afterDegree', pick(['a', 'r', 'v']));
   if (be.contains(prev)) {
-    if (w.endsWith('ing') || w.endsWith('ed')) return pick(['v', 'a', 'n']);
-    return pick(['a', 'n', 'v']);
+    if (w.endsWith('ing') || w.endsWith('ed')) return _why(why, 'participleAfterBe', pick(['v', 'a', 'n']));
+    return _why(why, 'afterBe', pick(['a', 'n', 'v']));
   }
   // "do it later.", "take them back,": after an object, closing the clause.
-  if (breaks != null && cutAfter && availablePos.contains('r') && !availablePos.contains('v') && _objPron.contains(prev) && i > 1 && !breaks[i - 1]) return 'r';
-  if (modals.contains(prev)) return pick(['v', 'n', 'a']);
-  if (prev == 'to' && availablePos.contains('v')) return 'v';
-  if (w.endsWith('ing') || w.endsWith('ed')) return pick(['v', 'a', 'n']);
+  if (breaks != null && cutAfter && availablePos.contains('r') && !availablePos.contains('v') && _objPron.contains(prev) && i > 1 && !breaks[i - 1]) return _why(why, 'adverbAfterObject', 'r');
+  if (modals.contains(prev)) return _why(why, 'afterModal', pick(['v', 'n', 'a']));
+  if (prev == 'to' && availablePos.contains('v')) return _why(why, 'afterTo', 'v');
+  if (w.endsWith('ing') || w.endsWith('ed')) return _why(why, 'participle', pick(['v', 'a', 'n']));
   // "do it later.", "moving forward,": at the end of a clause after a verb
   // or its object, a word that can be an adverb is one.
   if (breaks != null && cutAfter && availablePos.contains('r') && prev.isNotEmpty && posOf != null && (_objPron.contains(prev) || posOf(prev).contains('v')) && !posOf(prev).contains('a')) {
-    return 'r';
+    return _why(why, 'adverbAfterVerb', 'r');
   }
   if (prev == 'of' || prev == 'in' || prev == 'on' || prev == 'at' || prev == 'with' || prev == 'for') {
-    return pick(['n', 'a', 'v']);
+    return _why(why, 'afterPrep', pick(['n', 'a', 'v']));
   }
   return null;
+}
+
+// Tells [f] which rule of [guessPos] decided, when one did.
+String? _why(void Function(String)? f, String tag, String? p) {
+  if (p != null) f?.call(tag);
+  return p;
 }
 
 const stopWords = {

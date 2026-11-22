@@ -44,6 +44,7 @@ String trPosLabel(String pos) {
 
 class _TrWordPanelState extends State<TrWordPanel> {
   late final List<String> cands;
+  bool guessed = false;
   late String lemma;
   TrEntry? entry;
 
@@ -69,7 +70,19 @@ class _TrWordPanelState extends State<TrWordPanel> {
   void initState() {
     super.initState();
     final d = widget.app.trEn!;
-    cands = widget.lemma != null ? [widget.lemma!] : d.lemmas(widget.surface);
+    // A base word found only by cutting endings is a guess, also when it was
+    // picked from a list: the sheet says so and offers the other roots.
+    final (all, guess) = d.lemmasWithGuess(widget.surface);
+    final l = widget.lemma;
+    if (l == null) {
+      cands = all;
+      guessed = guess && all.isNotEmpty;
+    } else if (guess && all.contains(l)) {
+      cands = [l, ...all.where((c) => c != l)];
+      guessed = true;
+    } else {
+      cands = [l];
+    }
     _load(cands.isEmpty ? TrEnDict.lower(widget.surface) : cands.first);
     if (Speech.supported) Speech.instance.prefetch(lemma, lang: 'tr');
   }
@@ -112,6 +125,15 @@ class _TrWordPanelState extends State<TrWordPanel> {
           ],
         ),
       ),
+      // The base word was found by cutting endings the dictionary does not
+      // list for this form: say it is a guess.
+      if (guessed)
+        Padding(
+          key: const ValueKey('tr-lemma-guess'),
+          padding: const EdgeInsets.only(top: 6),
+          child: Text(L('Kök tahmini: ekler çıkarılarak bulundu, yanlış olabilir.', 'Base word guessed by removing endings; it may be wrong.'),
+              style: TextStyle(color: theme.hintColor, fontSize: 13.5)),
+        ),
       if (cands.length > 1)
         Padding(
           padding: const EdgeInsets.only(top: 8),

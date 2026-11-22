@@ -549,6 +549,19 @@ void main() {
       expect(await saveFrom(tester, WordPanel(app: app, surface: 'book'), 'book'), contains('kitap'));
     });
 
+    testWidgets('an idiom shown as a guess: the reader\'s tap saves its checked meaning, the card is not graded', (tester) async {
+      final e = _expr(d, 'go with the flow', 'idioms');
+      const s = 'Enjoy the ride down, let the wind fly through your hair, go with the flow, and wait.';
+      expect(app.senses.resolve(SenseQuery.find(d, s, e.phrase)).confidence, SenseConfidence.likely);
+      final m = await saveFrom(tester, ExprPanel(app: app, expr: e, ctx: ctxOf(s, 'flow'), words: const ['go', 'with', 'the', 'flow']), e.phrase);
+      expect(m, _exprTr(d, e.phrase, e.cat));
+      final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == e.phrase);
+      expect(w.context, s);
+      final a = ReviewQuiz(d, user, rnd: Random(1), trEn: trEn, senses: app.senses).answerFor(w);
+      expect(a.tr, isNotNull);
+      expect(a.choice, isFalse);
+    });
+
     testWidgets('an idiom saves the dictionary meaning, never the AI draft', (tester) async {
       final e = _expr(d, 'a dime a dozen', 'idioms');
       const s = 'Talented singers are a dime a dozen in this city.';

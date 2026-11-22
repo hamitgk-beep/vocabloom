@@ -161,7 +161,10 @@ class ReviewQuiz {
     for (final (_, tr) in dict.examples('w:$lemma', limit: 8)) {
       final seen = <String>{};
       for (final m in _trWord.allMatches(TrEnDict.lower(tr))) {
-        seen.addAll(t.lemmas(m.group(0)!));
+        // A guessed base word counts only as the first guess: the other
+        // possible roots are shown to the reader, never used to grade.
+        final (ls, guessed) = t.lemmasWithGuess(m.group(0)!);
+        seen.addAll(guessed ? ls.take(1) : ls);
       }
       if (parts.any((p) => p.every(seen.contains))) n++;
     }
