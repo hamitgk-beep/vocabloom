@@ -1,0 +1,47 @@
+{
+ "dict.db|content": {
+  "records": 465786,
+  "source_exact": 412129,
+  "origin_record_present": 385908,
+  "status_blocked": 83382,
+  "status_needs_review": 134330,
+  "multi_source": 32027,
+  "status_approved": 129346,
+  "source_inferred": 37496,
+  "license_unknown": 118728,
+  "ai_generated": 102567,
+  "status_unknown": 118728,
+  "ai_assisted": 1136,
+  "source_unknown": 16161,
+  "ai_unknown": 16161
+ },
+ "dict.db|structural": {
+  "records": 282542,
+  "source_exact": 282542,
+  "origin_record_present": 282542,
+  "status_approved": 255887,
+  "status_needs_review": 26655
+ },
+ "tr_en.db|content": {
+  "records": 148197,
+  "source_exact": 140915,
+  "origin_record_present": 148197,
+  "status_needs_review": 125418,
+  "status_approved": 1739,
+  "status_blocked": 20680,
+  "source_inferred": 7282,
+  "multi_source": 7282,
+  "license_unknown": 360,
+  "ai_generated": 360,
+  "status_unknown": 360
+ },
+ "tr_en.db|structural": {
+  "records": 546952,
+  "source_exact": 145364,
+  "origin_record_present": 546952,
+  "license_unknown": 55364,
+  "status_needs_review": 546189,
+  "source_inferred": 401588,
+  "status_approved": 763
+ }
+}

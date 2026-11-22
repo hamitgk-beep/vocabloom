@@ -1,0 +1,552 @@
+{
+  "_comment": "Source and license registry for the Storilex dictionaries (Task 5C). Every value here was checked on 2026-11-22; see docs/lexicon_provenance/LICENSE_AUDIT.md for the evidence. Nothing here is legal advice. A source is only as good as its weakest field: an empty version, an unverified licence or an unknown data origin keeps its records out of 'approved'.",
+  "audit_date": "2026-11-22",
+  "policy": {
+    "bundle_license": "CC-BY-SA-4.0",
+    "bundle_license_note": "Settings > Privacy and licenses says the dictionary database is shared under CC BY-SA 4.0 (lib/ui/settings_page.dart). The gate checks every record against this target."
+  },
+  "licenses": {
+    "CC-BY-SA-4.0": {
+      "name": "Creative Commons Attribution-ShareAlike 4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode",
+      "attribution": true,
+      "share_alike": true,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": true
+      }
+    },
+    "CC-BY-4.0": {
+      "name": "Creative Commons Attribution 4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "attribution": true,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": null
+      }
+    },
+    "CC-BY-2.0-FR": {
+      "name": "Creative Commons Attribution 2.0 France",
+      "url": "https://creativecommons.org/licenses/by/2.0/fr/legalcode",
+      "attribution": true,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": null
+      }
+    },
+    "CC0-1.0": {
+      "name": "Creative Commons Zero 1.0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "attribution": false,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": true
+      }
+    },
+    "GFDL-1.1-or-later": {
+      "name": "GNU Free Documentation License 1.1 or later",
+      "url": "https://www.gnu.org/licenses/fdl-1.3.html",
+      "attribution": true,
+      "share_alike": true,
+      "copyleft": true,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": false,
+        "GPL-3.0-only": false
+      }
+    },
+    "GPL-2.0-or-later": {
+      "name": "GNU General Public License 2.0 or later",
+      "url": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+      "attribution": true,
+      "share_alike": true,
+      "copyleft": true,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": false,
+        "GPL-3.0-only": true
+      }
+    },
+    "WordNet-3.0": {
+      "name": "WordNet 3.0 License (Princeton)",
+      "url": "https://wordnet.princeton.edu/license-and-commercial-use",
+      "attribution": true,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": true
+      }
+    },
+    "MIT": {
+      "name": "MIT License",
+      "url": "https://opensource.org/license/mit",
+      "attribution": true,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": true
+      }
+    },
+    "Storilex-contrib": {
+      "name": "Storilex contributors, released by the project owner under the bundle licence",
+      "url": "https://github.com/hamitgk-beep/vocabloom",
+      "attribution": true,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": true,
+        "GPL-3.0-only": true
+      }
+    },
+    "AI-output": {
+      "name": "Machine output: no licence grant, only the provider's terms of service",
+      "url": "",
+      "attribution": false,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": null,
+        "GPL-3.0-only": null
+      }
+    },
+    "unknown": {
+      "name": "Unknown",
+      "url": "",
+      "attribution": false,
+      "share_alike": false,
+      "copyleft": false,
+      "non_commercial": false,
+      "no_derivatives": false,
+      "into_bundle": {
+        "CC-BY-SA-4.0": null,
+        "GPL-3.0-only": null
+      }
+    }
+  },
+  "sources": {
+    "wiktionary_en": {
+      "name": "English Wiktionary",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://en.wiktionary.org/",
+      "version": "",
+      "version_note": "Taken through kaikki.org dumps that are downloaded without a date or hash (wiktionary.yml, tr-en-data.yml) and through the Kindle compilation (kaikki dump of May 2026 according to its README).",
+      "license_ids": [
+        "CC-BY-SA-4.0",
+        "GFDL-1.1-or-later"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "verified",
+      "license_evidence": "Wiktionary:Copyrights (read 2026-11-22): dual-licensed under CC BY-SA 4.0 and GFDL 1.1 or later; the page calls itself a draft proposal.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "Contains material from English Wiktionary (https://en.wiktionary.org/), licensed under CC BY-SA 4.0. Authors: Wiktionary contributors.",
+      "evidence_value": "independent"
+    },
+    "wiktionary_tr": {
+      "name": "Turkish Wiktionary (Vikisözlük)",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://tr.wiktionary.org/",
+      "version": "",
+      "version_note": "kaikki.org trwiktionary raw dump, downloaded without a date or hash (wiktionary.yml).",
+      "license_ids": [
+        "CC-BY-SA-4.0"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "claimed_unverified",
+      "license_evidence": "Not read in this audit (tr.wiktionary.org was not reachable from the build machine). The app states CC BY-SA 4.0.",
+      "data_origin": "known",
+      "commercial_use": "unverified",
+      "redistribution": "conditional",
+      "attribution": "Contains material from Turkish Wiktionary (https://tr.wiktionary.org/), Vikisözlük contributors.",
+      "evidence_value": "independent"
+    },
+    "kaikki": {
+      "name": "kaikki.org / wiktextract, English and Turkish Wiktionary (expressions)",
+      "kind": "extraction",
+      "derived_from": [
+        "wiktionary_en",
+        "wiktionary_tr"
+      ],
+      "url": "https://kaikki.org/",
+      "version": "",
+      "version_note": "Dump date not recorded.",
+      "license_ids": [
+        "CC-BY-SA-4.0"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "inherited",
+      "license_evidence": "wiktextract code is MIT (LICENSE read); the data keeps the Wiktionary licence. kaikki.org itself was not reachable (Task 5A).",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "Extracted with wiktextract / kaikki.org (Tatu Ylonen).",
+      "evidence_value": "derived"
+    },
+    "kindle_en_tr_wiktionary_part": {
+      "name": "Kindle English-Turkish dictionary by Murat Uysal, Wiktionary paragraphs only",
+      "kind": "compilation",
+      "derived_from": [
+        "kaikki_en"
+      ],
+      "url": "https://github.com/mybottles/kindle-en-tr-dictionary",
+      "version": "",
+      "version_note": "The .mobi release used by tools/main_meanings.py extract is not recorded (no tag, date or hash). The repository README describes a kaikki dump of May 2026.",
+      "license_ids": [
+        "CC-BY-SA-4.0"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "inherited",
+      "license_evidence": "README: build code MIT, the combined .mobi GPL v2.0+ 'inherited from FreeDict'. build.py writes FreeDict blocks without a part-of-speech label; main_meanings.extract keeps only paragraphs that start with one, so the FreeDict part is left out by construction. Whether a CC BY-SA subset taken from a GPL-labelled compilation keeps CC BY-SA needs legal confirmation.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "Word meanings compiled by Murat Uysal (muratuysal.com) from English Wiktionary via kaikki.org.",
+      "evidence_value": "derived"
+    },
+    "damdafayton": {
+      "name": "damdafayton/eng-tur-dictionary",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://github.com/damdafayton/eng-tur-dictionary",
+      "version": "f8f1a3d (2022-02-17)",
+      "version_note": "Last commit of the repository; the commit used when tools/data/main_meanings.jsonl.gz was made is not recorded.",
+      "license_ids": [
+        "MIT"
+      ],
+      "license_choice": "MIT",
+      "license_status": "claimed_unverified",
+      "license_evidence": "README says 'This project is MIT licensed' and links ./MIT.md, which does not exist (404 on main and master; no LICENSE, LICENSE.md or COPYING file; checked by cloning on 2026-11-22). dict_base.py builds the database from a spreadsheet called lugat1.xls whose origin is not given anywhere.",
+      "data_origin": "unknown",
+      "commercial_use": "unverified",
+      "redistribution": "unverified",
+      "attribution": "",
+      "evidence_value": "independent"
+    },
+    "freedict_eng_tur": {
+      "name": "FreeDict English-Turkish",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://github.com/freedict/fd-dictionaries/tree/master/eng-tur",
+      "version": "0.3 (2017-12-03)",
+      "license_ids": [
+        "GPL-2.0-or-later"
+      ],
+      "license_choice": "GPL-2.0-or-later",
+      "license_status": "verified",
+      "license_evidence": "eng-tur.tei header: edition 0.3, 'Copyright (C) 1999-2017 by various authors', 'GNU General Public License ver. 2.0 and any later version'; source gtksozluk2 (linuxprogramlama.com).",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "FreeDict English-Turkish dictionary 0.3, (C) 1999-2017 various authors (gtksozluk2), GPL-2.0-or-later.",
+      "evidence_value": "independent"
+    },
+    "princeton_wordnet": {
+      "name": "Princeton WordNet 3.0",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://wordnet.princeton.edu/",
+      "version": "3.0",
+      "license_ids": [
+        "WordNet-3.0"
+      ],
+      "license_choice": "WordNet-3.0",
+      "license_status": "verified",
+      "license_evidence": "LICENSE file shipped with WordNet 3.0 (nltk_data wordnet.zip): permission to use, copy, modify and distribute for any purpose, with the copyright notice in all copies.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "allowed",
+      "attribution": "WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved. (full notice: wordnet.princeton.edu/license-and-commercial-use)",
+      "evidence_value": "independent"
+    },
+    "kenet": {
+      "name": "KeNet Turkish WordNet (Starlang / Özyeğin University)",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://github.com/StarlangSoftware/TurkishWordNet",
+      "version": "",
+      "version_note": "dictionary-data.yml downloads kenet.xml from the master branch without a commit or hash. This audit used master as of 2026-11-22 (kenet.xml sha256 4023b4f8...).",
+      "license_ids": [
+        "CC-BY-SA-4.0"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "verified",
+      "license_evidence": "README 'Licensing' section (added 2026-10-05, commit 0a0ba22): XML data files under CC BY-SA 4.0, code under GPL-3.0. Before that date the only licence file was GPL-3.0 (since 2021).",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "KeNet Turkish WordNet, Starlang Software / Özyeğin University (Olcay Taner Yıldız et al.), CC BY-SA 4.0.",
+      "evidence_value": "independent"
+    },
+    "cili": {
+      "name": "Collaborative Interlingual Index",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://github.com/globalwordnet/cili",
+      "version": "",
+      "version_note": "Downloaded from master without a commit.",
+      "license_ids": [
+        "CC-BY-4.0"
+      ],
+      "license_choice": "CC-BY-4.0",
+      "license_status": "verified",
+      "license_evidence": "LICENSE: 'licensed under CC BY 4.0 or any later version', Francis Bond.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "allowed",
+      "attribution": "Collaborative Interlingual Index, Francis Bond et al., CC BY 4.0.",
+      "evidence_value": "independent"
+    },
+    "tatoeba": {
+      "name": "Tatoeba",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://tatoeba.org/",
+      "version": "",
+      "version_note": "Weekly exports downloaded without a date (dictionary-data.yml, tr-en-data.yml).",
+      "license_ids": [
+        "CC-BY-2.0-FR"
+      ],
+      "license_choice": "CC-BY-2.0-FR",
+      "license_status": "verified",
+      "license_evidence": "Terms of use (effective 2022-04-24): CC BY 2.0 FR by default; each sentence can carry its own licence (CC0 allowed; ND, SA and non-marketing conditions exist); author must be named. The licence and author of each sentence are not stored in the Storilex databases.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "Example sentences from Tatoeba (https://tatoeba.org), by Tatoeba contributors, CC BY 2.0 FR.",
+      "per_record_license": true,
+      "evidence_value": "independent"
+    },
+    "frequencywords": {
+      "name": "FrequencyWords (hermitdave), OpenSubtitles 2018",
+      "kind": "extraction",
+      "derived_from": [
+        "opensubtitles"
+      ],
+      "url": "https://github.com/hermitdave/FrequencyWords",
+      "version": "",
+      "license_ids": [
+        "unknown"
+      ],
+      "license_choice": "unknown",
+      "license_status": "claimed_unverified",
+      "license_evidence": "Repository code MIT (Task 5A); the app and tr_en.db meta say CC BY-SA 4.0 for the word lists, which this audit could not confirm. Only a rank number is used.",
+      "data_origin": "known",
+      "commercial_use": "unverified",
+      "redistribution": "unverified",
+      "attribution": "Word frequency: FrequencyWords by Hermit Dave, from OpenSubtitles 2018 (opensubtitles.org).",
+      "evidence_value": "derived"
+    },
+    "opensubtitles": {
+      "name": "OpenSubtitles 2018 (OPUS)",
+      "kind": "primary",
+      "derived_from": [],
+      "url": "https://opus.nlpl.eu/OpenSubtitles/corpus/version/OpenSubtitles",
+      "version": "2018",
+      "license_ids": [
+        "unknown"
+      ],
+      "license_choice": "unknown",
+      "license_status": "missing",
+      "license_evidence": "OPUS names no licence, only an attribution request (Task 5A).",
+      "data_origin": "known",
+      "commercial_use": "unverified",
+      "redistribution": "unverified",
+      "attribution": "",
+      "evidence_value": "independent"
+    },
+    "storilex_contrib": {
+      "name": "Storilex contributors (hand-checked sheets, tools/contrib)",
+      "kind": "internal",
+      "derived_from": [],
+      "url": "https://github.com/hamitgk-beep/vocabloom/tree/main/tools/contrib",
+      "version": "storilex_contrib.json @ main 6817c28",
+      "license_ids": [
+        "Storilex-contrib"
+      ],
+      "license_choice": "Storilex-contrib",
+      "license_status": "owner_declared",
+      "license_evidence": "Written and checked by the project owner (Hamit). The owner should confirm in writing that rows were not copied from closed dictionaries.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "allowed",
+      "attribution": "Storilex contributors: Hamit.",
+      "evidence_value": "independent",
+      "human_review": true
+    },
+    "storilex_categories": {
+      "name": "Storilex category lists (tools/categories.py)",
+      "kind": "internal",
+      "derived_from": [],
+      "url": "https://github.com/hamitgk-beep/vocabloom/blob/main/tools/categories.py",
+      "version": "tools/categories.py @ main 6817c28",
+      "license_ids": [
+        "Storilex-contrib"
+      ],
+      "license_choice": "Storilex-contrib",
+      "license_status": "owner_declared",
+      "license_evidence": "File header: 'Written for this project; released with the app under CC BY-SA 4.0'. git log: 4 commits by Claude, 2 by the owner. The lists were written with an AI assistant; no record of a human review.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "allowed",
+      "attribution": "Category lists written for Storilex.",
+      "ai": "assisted",
+      "evidence_value": "none"
+    },
+    "storilex_expr_fixes": {
+      "name": "Storilex expression fixes (tools/expr_fixes.py)",
+      "kind": "internal",
+      "derived_from": [],
+      "url": "https://github.com/hamitgk-beep/vocabloom/blob/main/tools/expr_fixes.py",
+      "version": "tools/expr_fixes.py @ main 6817c28",
+      "license_ids": [
+        "Storilex-contrib"
+      ],
+      "license_choice": "Storilex-contrib",
+      "license_status": "owner_declared",
+      "license_evidence": "In-repository corrections; authored in commits by Claude and the owner.",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "allowed",
+      "attribution": "Corrections written for Storilex.",
+      "ai": "assisted",
+      "evidence_value": "none"
+    },
+    "ai_pretranslate": {
+      "name": "AI drafts from tools/pretranslate.py (Gemini, Mistral, Groq, Cerebras, OpenRouter; Claude for tools/data)",
+      "kind": "ai",
+      "derived_from": [
+        "princeton_wordnet",
+        "wiktionary_en"
+      ],
+      "url": "https://github.com/hamitgk-beep/vocabloom/blob/main/tools/pretranslate.py",
+      "version": "",
+      "version_note": "Model names and dates are in the release data files, not in dict.db.",
+      "license_ids": [
+        "AI-output"
+      ],
+      "license_choice": "AI-output",
+      "license_status": "unknown",
+      "license_evidence": "No licence; each provider's terms decide. The NVIDIA trial was excluded because its terms forbid publishing (dictionary-data.yml comment).",
+      "data_origin": "known",
+      "commercial_use": "unverified",
+      "redistribution": "unverified",
+      "attribution": "",
+      "ai": "generated",
+      "evidence_value": "none"
+    },
+    "own_dict_ai": {
+      "name": "Storilex own dictionary drafts (own_word / own_expr, source=ai_generated)",
+      "kind": "ai",
+      "derived_from": [
+        "ai_pretranslate"
+      ],
+      "url": "https://github.com/hamitgk-beep/vocabloom/tree/main/tools/own_dict",
+      "version": "entries_full.jsonl.gz @ main 6817c28",
+      "license_ids": [
+        "AI-output"
+      ],
+      "license_choice": "AI-output",
+      "license_status": "unknown",
+      "license_evidence": "Status ai_draft_unreviewed, reviewed=0 in dict.db. Model and prompt not stored per row.",
+      "data_origin": "known",
+      "commercial_use": "unverified",
+      "redistribution": "unverified",
+      "attribution": "",
+      "ai": "generated",
+      "evidence_value": "none"
+    },
+    "dbnary": {
+      "name": "DBnary",
+      "kind": "extraction",
+      "derived_from": [
+        "wiktionary_en",
+        "wiktionary_tr"
+      ],
+      "url": "https://kaiko.getalp.org/about-dbnary/",
+      "version": "",
+      "license_ids": [
+        "CC-BY-SA-4.0"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "inherited",
+      "license_evidence": "Not used in the databases; listed for the lineage check (Task 5A).",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "DBnary (Gilles Sérasset), from Wiktionary.",
+      "evidence_value": "derived"
+    },
+    "babelnet": {
+      "name": "BabelNet",
+      "kind": "primary",
+      "derived_from": [
+        "wiktionary_en",
+        "princeton_wordnet"
+      ],
+      "url": "https://babelnet.org/full-license",
+      "version": "",
+      "license_ids": [
+        "unknown"
+      ],
+      "license_choice": "unknown",
+      "license_status": "verified",
+      "license_evidence": "BabelNet Non-Commercial licence, research institutions only (Task 5A). Not used.",
+      "data_origin": "known",
+      "commercial_use": "no",
+      "redistribution": "forbidden",
+      "attribution": "BabelNet",
+      "evidence_value": "derived"
+    },
+    "kaikki_en": {
+      "name": "kaikki.org / wiktextract, English Wiktionary",
+      "kind": "extraction",
+      "derived_from": [
+        "wiktionary_en"
+      ],
+      "url": "https://kaikki.org/",
+      "version": "",
+      "version_note": "Dump date not recorded.",
+      "license_ids": [
+        "CC-BY-SA-4.0"
+      ],
+      "license_choice": "CC-BY-SA-4.0",
+      "license_status": "inherited",
+      "license_evidence": "wiktextract code is MIT (LICENSE read); the data keeps the Wiktionary licence. kaikki.org itself was not reachable (Task 5A).",
+      "data_origin": "known",
+      "commercial_use": "yes",
+      "redistribution": "conditional",
+      "attribution": "Extracted with wiktextract / kaikki.org (Tatu Ylonen).",
+      "evidence_value": "derived"
+    }
+  }
+}
