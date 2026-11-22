@@ -103,7 +103,7 @@ class AutoAnalyzer {
       dictStatus.value = null;
       return;
     }
-    final total = d.exprs.where((e) => e.en != null && e.tr == null).length;
+    final total = d.exprs.where((e) => e.en != null && e.tr == null && e.trDraft == null).length;
     const batch = 40;
     for (var i = 0; i < pending.length; i += batch) {
       if (!enabled) break;

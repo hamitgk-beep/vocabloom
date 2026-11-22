@@ -44,22 +44,26 @@ void main() {
       // The same word saved from another sentence asks the same meaning.
       expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved(lemma, null))!.right, common.tr, reason: lemma);
     }
-    expect(d.commonMeaning('through').tr, 'boyunca, baştan sona');
-    expect(d.commonMeaning('except').tr, 'hariç, dışında');
-    expect(d.commonMeaning('course').tr, contains('ders'));
+    // ft's first meaning (DictDb.sourcePolicy); the AI draft said "boyunca, baştan sona".
+    expect(d.commonMeaning('through').tr, 'boyunca');
+    expect(d.commonMeaning('except').tr, 'dışında, hariç'); // ft order; the AI draft said "hariç, dışında"
+    // KNOWN WEAKNESS (reported): ft's first meaning of course is "mecra"; the AI draft's
+    // "kurs, ders" reads better but is unreviewed, so it is no longer the answer (DictDb.sourcePolicy).
+    expect(d.commonMeaning('course').tr, 'mecra');
     expect(d.commonMeaning('bank').tr, contains('banka'));
     // A meaning the AI service gave for the sentence does not replace the
     // dictionary's common meaning.
     u.setContextAi('course', golf, 'saha, golf sahası');
-    expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved('course', golf))!.right, contains('ders'));
+    expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved('course', golf))!.right, 'mecra');
   });
 
-  test('simply is "sadece, yalnızca", with four choices', () {
+  test('simply is "sadece", with four choices', () {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     const s = 'How often does some crime come to light simply by reason of a bit of unmitigated bungling, '
         'and each tune one asks oneself the question: If this hadn\'t been bungled, would anyone ever have known?';
     final ch = ReviewQuiz(d, u, rnd: Random(2)).choiceFor(saved('simply', s))!;
-    expect(ch.right, 'sadece, yalnızca');
+    // ft's first meaning (DictDb.sourcePolicy); the AI draft said "sadece, yalnızca".
+    expect(ch.right, 'sadece');
     expect(ch.options.toSet().length, 4);
   });
 

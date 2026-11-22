@@ -46,3 +46,9 @@ String errorText(Object e) {
   if (e is FileSystemException) return L('Dosya okunamadı ya da yazılamadı.', 'A file could not be read or written.');
   return e.toString().replaceFirst(RegExp(r'^(Exception|ImportException|FormatException|Bad state|AiException): ?'), '');
 }
+
+/// Labels for unreviewed AI drafts of the own dictionary (DictDb.sourcePolicy):
+/// the closed section, the badge on a single meaning, and the short tag.
+String unverifiedAiSection() => L('Doğrulanmamış AI önerileri', 'Unverified AI suggestions');
+String unverifiedAiLabel() => L('Doğrulanmamış AI önerisi', 'Unverified AI suggestion');
+String unverifiedAiShort() => L('AI taslağı', 'AI draft');

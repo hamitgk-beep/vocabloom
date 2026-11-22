@@ -60,6 +60,11 @@ class SenseCandidate {
   /// Synonyms (WordNet).
   final List<String> synonyms;
 
+  /// The meaning comes from an unreviewed AI draft (own_word / own_expr with
+  /// reviewed = 0). It still competes, but alone it is never proof enough for a
+  /// "sure" meaning ([DictDb.sourcePolicy]).
+  final bool unverified;
+
   double score = 0;
   final Map<String, double> parts = {};
 
@@ -82,12 +87,13 @@ class SenseCandidate {
     this.rank = 0,
     this.literal = false,
     this.synonyms = const [],
+    this.unverified = false,
   });
 
   SenseCandidate withTr(List<String> t, {bool derived = false}) => SenseCandidate(
         id: id, source: source, lemma: lemma, pos: pos, en: en, tr: t, trDerived: derived, explainTr: explainTr,
         explainEn: explainEn, note: note, examples: examples, examplesTr: examplesTr, rank: rank, literal: literal,
-        synonyms: synonyms,
+        synonyms: synonyms, unverified: unverified,
       )
         ..score = score
         ..parts.addAll(parts);
@@ -243,6 +249,7 @@ class SenseEngine {
       q.expr == null ? '' : '${q.expr!.phrase}|${q.expr!.cat}',
       dictVersion,
       version,
+      DictDb.policyVersion,
       q.lang,
     ].join('|');
   }
@@ -461,8 +468,9 @@ class SenseEngine {
     }
     if (_hasOwn) out.addAll(_ownCandidates(lemma, rankOffset));
     // A word with Turkish meanings but no WordNet senses (function words,
-    // new words): its main meanings, in the dictionary's order.
-    if (out.isEmpty) {
+    // new words): its main meanings, in the dictionary's order. AI drafts do
+    // not stand in for them ([DictDb.sourcePolicy]).
+    if (out.every((c) => c.unverified)) {
       final ft = mainTr(lemma);
       for (var i = 0; i < ft.length; i++) {
         out.add(SenseCandidate(id: 'ft:$lemma#$i', source: 'ft', lemma: lemma, tr: _split(ft[i]), rank: i + rankOffset));
@@ -495,6 +503,7 @@ class SenseEngine {
           examples: [if ('${s['en'] ?? ''}'.isNotEmpty) '${s['en']}'],
           examplesTr: [if ('${s['ex_tr'] ?? ''}'.isNotEmpty) '${s['ex_tr']}'],
           rank: i + rankOffset,
+          unverified: dict.isDraftSense(lemma, s),
         ));
       }
     } catch (_) {}
@@ -534,6 +543,7 @@ class SenseEngine {
           examples: [if (ex.isNotEmpty) ex, for (final m in more) '${m['en'] ?? ''}'],
           examplesTr: [if (ex.isNotEmpty) exTr, for (final m in more) '${m['tr'] ?? ''}'],
           rank: i + rankOffset,
+          unverified: dict.isDraftSense(lemma, s),
         ));
       }
     } catch (_) {}
@@ -566,7 +576,7 @@ class SenseEngine {
           if (e.cat == 'phrasal_verbs' && c.pos != null && c.pos != 'v') continue;
           cands.add(SenseCandidate(
             id: c.id, source: c.source, lemma: c.lemma, pos: c.pos, en: c.en, tr: c.tr, examples: c.examples,
-            examplesTr: c.examplesTr, rank: c.rank, literal: true, synonyms: c.synonyms, note: c.note,
+            examplesTr: c.examplesTr, rank: c.rank, literal: true, synonyms: c.synonyms, note: c.note, unverified: c.unverified,
           ));
         }
       }
@@ -589,16 +599,20 @@ class SenseEngine {
   /// otherwise its one dictionary meaning.
   List<SenseCandidate> _exprCandidates(Expr e) {
     final out = <SenseCandidate>[];
-    final js = dict.exprDetail(e.phrase, e.cat);
-    if (js != null) {
+    // Checked senses (a verified own row, otherwise exd) as "ex:", then the AI
+    // draft's senses as "xd:" ([DictDb.sourcePolicy]): drafts compete, marked.
+    final drafts = <SenseCandidate>[];
+    void read(String? js, bool draft) {
+      if (js == null) return;
       try {
         final list = jsonDecode(js) as List;
         for (var i = 0; i < list.length; i++) {
           final s = (list[i] as Map).cast<String, dynamic>();
           final exs = [for (final x in (s['examples'] as List? ?? const [])) (x as Map).cast<String, dynamic>()];
           final title = '${s['title_tr'] ?? ''}'.trim();
-          out.add(SenseCandidate(
-            id: 'ex:${e.phrase}|${e.cat}#$i',
+          (draft ? drafts : out).add(SenseCandidate(
+            id: '${draft ? 'xd' : 'ex'}:${e.phrase}|${e.cat}#$i',
+            unverified: draft,
             source: 'expr',
             lemma: e.phrase,
             pos: e.cat == 'phrasal_verbs' ? 'v' : null,
@@ -613,16 +627,27 @@ class SenseEngine {
         }
       } catch (_) {}
     }
-    if (out.isEmpty && (e.trShown != null || e.en != null)) {
+
+    read(dict.exprDetail(e.phrase, e.cat), false);
+    read(dict.exprDraftDetail(e.phrase, e.cat), true);
+    // The expression's one dictionary meaning (or the user's own AI translation).
+    final plain = e.tr ?? e.aiTr;
+    if (out.isEmpty && (plain != null || (e.en != null && drafts.isEmpty))) {
       out.add(SenseCandidate(
         id: 'ex:${e.phrase}|${e.cat}#0',
         source: 'expr',
         lemma: e.phrase,
         pos: e.cat == 'phrasal_verbs' ? 'v' : null,
         en: e.en?.split('; ').first,
-        tr: e.trShown == null ? const [] : [e.trShown!],
+        tr: plain == null ? const [] : [plain],
         examples: [if (e.ex != null) e.ex!],
         examplesTr: [if (e.exTr != null) e.exTr!],
+      ));
+    }
+    for (final d in drafts) {
+      out.add(SenseCandidate(
+        id: d.id, source: d.source, lemma: d.lemma, pos: d.pos, en: d.en, tr: d.tr, explainTr: d.explainTr,
+        explainEn: d.explainEn, examples: d.examples, examplesTr: d.examplesTr, rank: d.rank + out.length, unverified: true,
       ));
     }
     return out;
@@ -935,6 +960,8 @@ class SenseEngine {
     if (posS == 0.0) c.score *= 0.8;
     // A meaning with Turkish of its own wins a tie over one without.
     if (c.tr.isNotEmpty) c.score += 0.02;
+    // A checked source wins a tie over an unreviewed AI draft.
+    if (c.unverified) c.score -= 0.01;
     if (c.literal) c.score -= 0.06; // the expression wins a near tie
   }
 
@@ -1059,18 +1086,28 @@ class SenseEngine {
     final samePos = cands.where((c) => c.tr.isNotEmpty && (pos == null || c.pos == null || c.pos == pos));
     final evidence = gap >= 0.08 || mainOk || samePos.every((c) => c.tr.any(shown.contains));
     final weak = best.score < 0.3;
+    // An AI draft alone is no proof: "sure" only when a checked source has the
+    // same Turkish (the main meaning list or a checked candidate).
+    final checked = <String>{
+      for (final t in ft) ..._split(t),
+      for (final c in cands)
+        if (!c.unverified) ...c.tr.expand(_split),
+    };
+    final uncorroborated = best.unverified && !shown.expand(_split).any(checked.contains);
     final SenseConfidence conf;
     String reason;
     if (weak) {
       conf = SenseConfidence.none;
       reason = 'weak ${best.score.toStringAsFixed(2)}';
-    } else if (best.trDerived || dissent.isNotEmpty || !evidence) {
+    } else if (best.trDerived || uncorroborated || dissent.isNotEmpty || !evidence) {
       conf = SenseConfidence.likely;
       reason = best.trDerived
           ? 'derived Turkish'
-          : dissent.isNotEmpty
-              ? 'close: ${dissent.map((c) => c.id).join(',')}'
-              : 'no clear evidence';
+          : uncorroborated
+              ? 'unverified draft'
+              : dissent.isNotEmpty
+                  ? 'close: ${dissent.map((c) => c.id).join(',')}'
+                  : 'no clear evidence';
     } else {
       conf = SenseConfidence.sure;
       reason = 'clear';

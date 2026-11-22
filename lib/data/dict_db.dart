@@ -22,11 +22,22 @@ class Sense {
 
 class WordInfo {
   final String lemma;
+
+  /// Turkish meanings from checked sources only, most trusted first: verified
+  /// contributions, then the kept Wiktionary part (keep_tr) and the main list (ft).
   final List<String> trFreeDict;
   final List<Sense> senses;
-  WordInfo(this.lemma, this.trFreeDict, this.senses);
-  bool get isEmpty => trFreeDict.isEmpty && senses.isEmpty;
+
+  /// Turkish of unreviewed AI drafts (own_word, reviewed = 0). Never part of
+  /// [trFreeDict]; shown only as labelled suggestions (see [DictDb.sourcePolicy]).
+  final List<String> trDraft;
+  WordInfo(this.lemma, this.trFreeDict, this.senses, [this.trDraft = const []]);
+  bool get isEmpty => trFreeDict.isEmpty && senses.isEmpty && trDraft.isEmpty;
 }
+
+/// How far a meaning can be trusted. One order for every screen:
+/// verified contribution > trusted source (ft, WordNet, expr, exd) > AI draft.
+enum SourceTier { verified, trusted, draft }
 
 Map<String, String> get posNames => uiEnglish
     ? const {'n': 'noun', 'v': 'verb', 'a': 'adjective', 'r': 'adverb'}
@@ -98,24 +109,39 @@ class DictDb {
     final forms = <int, List<String>>{};
     final cols = {for (final r in db.select('PRAGMA table_info(expr)')) r['name'] as String};
     final hasEx = cols.contains('ex'), hasEnTr = cols.contains('entr');
-    // Own expression meanings (own_expr) replace the Turkish gloss when the flag is on and a row exists.
+    // Own expression meanings (own_expr): a verified row replaces the Turkish gloss;
+    // an unreviewed AI draft only fills [Expr.trDraft] ([sourcePolicy]).
     final ownExpr = <String, String>{};
+    final draftExpr = <String>{};
     if (ownEnabled && db.select("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'own_expr'").isNotEmpty) {
-      for (final r in db.select('SELECT phrase, cat, senses FROM own_expr')) {
-        ownExpr['${r.columnAt(0)}|${r.columnAt(1)}'] = r.columnAt(2) as String;
+      final rev = db.select('PRAGMA table_info(own_expr)').any((r) => r['name'] == 'reviewed');
+      for (final r in db.select('SELECT phrase, cat, senses${rev ? ', reviewed, status' : ''} FROM own_expr')) {
+        final k = '${r.columnAt(0)}|${r.columnAt(1)}';
+        ownExpr[k] = r.columnAt(2) as String;
+        if (rev && !verifiedRow(r['reviewed'], r['status'])) draftExpr.add(k);
       }
     }
     for (final r in db.select('SELECT id, phrase, cat, tr, en, forms${hasEx ? ', ex' : ''}${hasEnTr ? ', entr, extr' : ''} FROM expr')) {
       var trOwn = r['tr'] as String?;
-      final own = ownExpr['${r['phrase']}|${r['cat']}'];
+      String? trDraft;
+      final key = '${r['phrase']}|${r['cat']}';
+      final own = ownExpr[key];
       if (own != null) {
         final senses = (jsonDecode(own) as List).cast<Map>();
-        final t = [for (final x in senses) (x['tr'] as String? ?? '').trim()].where((x) => x.isNotEmpty).toList();
+        final rowOk = !draftExpr.contains(key);
+        List<String> trs(bool draft) => [
+              for (final x in senses)
+                if (draftSense(x, rowOk) == draft) (x['tr'] as String? ?? '').trim(),
+            ].where((x) => x.isNotEmpty).toList();
+        final t = trs(false), d = trs(true);
         if (t.isNotEmpty) trOwn = t.join(', ');
+        if (d.isNotEmpty) trDraft = d.join(', ');
       }
+      if (trOwn != null && trOwn.trim().isEmpty) trOwn = null;
       final e = Expr(r['id'] as int, r['phrase'] as String, r['cat'] as String, trOwn,
           r['en'] as String?, patternOf(r['phrase'] as String),
-          ex: hasEx ? r['ex'] as String? : null, enTr: hasEnTr ? r['entr'] as String? : null, exTr: hasEnTr ? r['extr'] as String? : null);
+          ex: hasEx ? r['ex'] as String? : null, enTr: hasEnTr ? r['entr'] as String? : null, exTr: hasEnTr ? r['extr'] as String? : null)
+        ..trDraft = trDraft;
       if (e.pattern.isEmpty) continue;
       exprs.add(e);
       exprById[e.id] = e;
@@ -136,6 +162,45 @@ class DictDb {
 
   late final bool _hasExTr = db.select('PRAGMA table_info(syn)').any((r) => r['name'] == 'extr');
 
+  /// Source priority: verified contributions, then the sourced dictionaries
+  /// (ft, WordNet, expr, exd), then unreviewed AI drafts. Drafts are never
+  /// deleted, promoted or written anywhere; they are only kept out of the main
+  /// meanings. False brings back the order before this policy, where any own row
+  /// (draft or not) replaced ft, expr and exd. Only tests change it, before
+  /// opening a [DictDb].
+  static bool sourcePolicy = true;
+
+  /// Version of [sourcePolicy]; part of the context-meaning cache key, so a
+  /// meaning chosen under the old order is not reused.
+  static String get policyVersion => sourcePolicy ? 'src1' : 'src0';
+
+  /// A row of own_word / own_expr is a verified contribution: the user checked it.
+  static bool verifiedRow(Object? reviewed, Object? status) => reviewed == 1 && status != 'ai_draft_unreviewed';
+
+  /// One sense of an own row is an unreviewed AI draft. A meaning the user
+  /// contributed (tools/contrib/apply.py marks it src "storilex") is verified even
+  /// inside an AI draft row; "api_review" is an AI check, not a person's.
+  static bool draftSense(Map sense, bool rowVerified) => sourcePolicy && !rowVerified && sense['src'] != 'storilex';
+
+  late final bool _ownHasReview = _hasOwnWord &&
+      db.select('PRAGMA table_info(own_word)').any((r) => r['name'] == 'reviewed');
+
+  final Map<String, SourceTier?> _tierCache = {};
+
+  /// Tier of [lemma]'s own_word row: verified, draft, or null (no row).
+  SourceTier? ownTier(String lemma) => _tierCache.putIfAbsent(lemma, () {
+        if (!useOwnDictionary || !_hasOwnWord) return null;
+        if (!_ownHasReview) {
+          return db.select('SELECT 1 FROM own_word WHERE word = ?', [lemma]).isEmpty ? null : SourceTier.verified;
+        }
+        final r = db.select('SELECT reviewed, status FROM own_word WHERE word = ?', [lemma]);
+        if (r.isEmpty) return null;
+        return verifiedRow(r.first['reviewed'], r.first['status']) ? SourceTier.verified : SourceTier.draft;
+      });
+
+  /// Whether [sense] of [lemma]'s own_word row is an unreviewed AI draft.
+  bool isDraftSense(String lemma, Map sense) => draftSense(sense, ownTier(lemma) != SourceTier.draft);
+
   /// Off until the own-dictionary tables have been checked on a copy of the database.
   /// While it is off, the app shows exactly the meanings it shows today.
   static const bool useOwnDictionary = true;
@@ -146,22 +211,35 @@ class DictDb {
 
   /// [ownEnabled] defaults to [useOwnDictionary] (false in the app). Only tests pass it.
   WordInfo lookup(String lemma, {bool ownEnabled = useOwnDictionary}) {
-    // Own meanings first: keep_tr (the Wiktionary part that stays), then the new senses.
-    // No own row, or an empty one, falls back to the current table (ft).
+    // [sourcePolicy] on: a verified own row first, then keep_tr (the Wiktionary part
+    // that stays) and ft; an AI draft row never replaces them and goes to trDraft.
+    // Off (the order before): keep_tr and the own senses of any row, ft only without them.
     var tr = <String>[];
+    var draft = <String>[];
+    var verified = false;
     if (ownEnabled && _hasOwnWord) {
-      final own = db.select('SELECT senses, keep_tr FROM own_word WHERE word = ?', [lemma]);
+      final own = db.select('SELECT senses, keep_tr${_ownHasReview ? ', reviewed, status' : ''} FROM own_word WHERE word = ?', [lemma]);
       if (own.isNotEmpty) {
-        tr = [
-          ...(jsonDecode(own.first.columnAt(1) as String) as List).cast<String>(),
+        final keep = (jsonDecode(own.first.columnAt(1) as String) as List).cast<String>();
+        final rowOk = !_ownHasReview || verifiedRow(own.first['reviewed'], own.first['status']);
+        final all = [
           for (final s in jsonDecode(own.first.columnAt(0) as String) as List)
-            (s as Map)['tr'] as String,
+            if ('${(s as Map)['tr'] ?? ''}'.trim().isNotEmpty) s,
         ];
+        final checked = [for (final s in all) if (!draftSense(s, rowOk)) '${s['tr']}'];
+        if (!sourcePolicy) {
+          tr = [...keep, ...checked];
+        } else {
+          draft = [for (final s in all) if (draftSense(s, rowOk)) '${s['tr']}'];
+          tr = [...checked, ...keep.where((t) => !checked.contains(t))];
+          verified = checked.isNotEmpty;
+        }
       }
     }
-    if (tr.isEmpty) {
+    if (tr.isEmpty || (sourcePolicy && (verified || draft.isNotEmpty))) {
       final ft = db.select('SELECT tr FROM ft WHERE word = ?', [lemma]);
-      tr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
+      final ftTr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
+      tr = [...tr, ...ftTr.where((t) => !tr.contains(t))];
     }
     final senses = <Sense>[];
     for (final r in db.select(
@@ -178,21 +256,29 @@ class DictDb {
         !_hasExTr || r['extr'] == null ? const [] : (jsonDecode(r['extr'] as String) as List).cast<String>(),
       ));
     }
-    return WordInfo(lemma, tr, senses);
+    return WordInfo(lemma, tr, senses, draft);
   }
 
   /// The own dictionary's senses of [lemma] in its order: part of speech
   /// (Turkish label: isim, fiil …), Turkish meaning, usage note, English
   /// definition (empty on older rows) and an example with its Turkish.
   /// Empty when it has none.
-  List<OwnSense> ownSenses(String lemma) {
+  /// Under [sourcePolicy] only verified contributions: an AI draft's senses are
+  /// read with [draftSenses] instead.
+  List<OwnSense> ownSenses(String lemma) => _ownSenses(lemma, draft: false);
+
+  /// The unreviewed AI draft senses of [lemma] (empty when the row is verified,
+  /// missing, or [sourcePolicy] is off). Shown only in a closed, labelled section.
+  List<OwnSense> draftSenses(String lemma) => _ownSenses(lemma, draft: true);
+
+  List<OwnSense> _ownSenses(String lemma, {required bool draft}) {
     if (!useOwnDictionary || !_hasOwnWord) return const [];
     final r = db.select('SELECT senses FROM own_word WHERE word = ?', [lemma]);
     if (r.isEmpty) return const [];
     try {
       return [
         for (final x in jsonDecode(r.first.columnAt(0) as String) as List)
-          if ('${(x as Map)['tr'] ?? ''}'.trim().isNotEmpty)
+          if ('${(x as Map)['tr'] ?? ''}'.trim().isNotEmpty && isDraftSense(lemma, x) == draft)
             // Older rows have no "ex": their "en" is the example, not a definition.
             '${x['ex'] ?? ''}'.trim().isEmpty
                 ? OwnSense('${x['pos'] ?? ''}'.trim(), '${x['tr']}'.trim(), '${x['note'] ?? ''}'.trim(), '',
@@ -248,15 +334,48 @@ class DictDb {
   /// Built-in senses of an expression (Turkish + English, with translated
   /// examples), as JSON in the same shape the AI service returns. Null when
   /// this dictionary has none for it.
+  ///
+  /// Under [sourcePolicy] only a verified own row comes before exd; an AI draft is
+  /// never returned here (see [exprDraftDetail]).
   String? exprDetail(String phrase, String cat) {
     // Own meanings first (own_expr), in the same shape as the built-in library.
-    if (_ownOn && _hasOwnExpr) {
-      final own = db.select('SELECT senses FROM own_expr WHERE phrase=? AND cat=?', [phrase, cat]);
-      if (own.isNotEmpty) return _ownExprDetail(own.first.columnAt(0) as String);
-    }
-    if (!_hasExd) return null;
-    final r = db.select('SELECT json FROM exd WHERE phrase=? AND cat=?', [phrase, cat]);
-    return r.isEmpty ? null : r.first.columnAt(0) as String;
+    final own = _ownExprRow(phrase, cat);
+    if (own != null && own.$2 == null) return _ownExprDetail(own.$1);
+    final r = _hasExd ? db.select('SELECT json FROM exd WHERE phrase=? AND cat=?', [phrase, cat]) : const <Row>[];
+    final exd = r.isEmpty ? null : r.first.columnAt(0) as String;
+    // A draft row with meanings the user contributed: those first, then exd.
+    final mine = own == null ? const [] : [for (final s in jsonDecode(own.$1) as List) if (!draftSense(s as Map, false)) s];
+    if (mine.isEmpty) return exd;
+    final head = jsonDecode(_ownExprDetail(jsonEncode(mine))) as List;
+    final titles = {for (final x in head) '${(x as Map)['title_tr']}'};
+    return jsonEncode([
+      ...head,
+      if (exd != null)
+        for (final x in jsonDecode(exd) as List)
+          if (!titles.contains('${(x as Map)['title_tr']}')) x,
+    ]);
+  }
+
+  /// The unreviewed AI draft senses of an expression, in the [exprDetail] shape, or
+  /// null. Shown only in a closed, labelled section; never a verified meaning.
+  String? exprDraftDetail(String phrase, String cat) {
+    final own = _ownExprRow(phrase, cat);
+    if (own == null || own.$2 == null) return null;
+    final d = [for (final s in jsonDecode(own.$1) as List) if (draftSense(s as Map, false)) s];
+    return d.isEmpty ? null : _ownExprDetail(jsonEncode(d));
+  }
+
+  late final bool _ownExprHasReview =
+      _hasOwnExpr && db.select('PRAGMA table_info(own_expr)').any((r) => r['name'] == 'reviewed');
+
+  /// (senses JSON, `true` when it is an AI draft row under [sourcePolicy], null
+  /// when the whole row counts) of the expression's own row, or null.
+  (String, bool?)? _ownExprRow(String phrase, String cat) {
+    if (!_ownOn || !_hasOwnExpr) return null;
+    final r = db.select('SELECT senses${_ownExprHasReview ? ', reviewed, status' : ''} FROM own_expr WHERE phrase=? AND cat=?', [phrase, cat]);
+    if (r.isEmpty) return null;
+    final draft = sourcePolicy && _ownExprHasReview && !verifiedRow(r.first['reviewed'], r.first['status']);
+    return (r.first.columnAt(0) as String, draft ? true : null);
   }
 
   late final bool _hasExs =
@@ -480,6 +599,14 @@ class DictDb {
       return (tr: tr, pos: pos, gloss: own.en.isEmpty ? null : own.en);
     }
     final m = meaningIn(lemma, null);
+    if (m.tr == null) {
+      // Nothing checked has Turkish for it: the AI draft, as the only meaning there is.
+      final d = draftSenses(lemma).where((s) => !s.tr.toLowerCase().contains('bakınız')).firstOrNull;
+      if (d != null) {
+        final tr = shortTr(d.tr);
+        return (tr: tr, pos: _ownPos[d.pos] ?? (isTrVerb(tr) ? 'v' : null), gloss: d.en.isEmpty ? m.sense?.gloss : d.en);
+      }
+    }
     return (tr: m.tr, pos: m.pos, gloss: m.sense?.gloss);
   }
 
@@ -511,7 +638,8 @@ class DictDb {
   Set<String> trWordsOf(String lemma) {
     final info = lookup(lemma);
     final out = <String>{};
-    for (final t in [...info.trFreeDict, for (final s in info.senses) ...s.tr]) {
+    // Drafts too: this set keeps wrong answer options away from any meaning of the word.
+    for (final t in [...info.trFreeDict, ...info.trDraft, for (final s in info.senses) ...s.tr]) {
       for (final p in t.toLowerCase().split(RegExp(r'[,;]'))) {
         final x = p.trim();
         if (x.isNotEmpty) out.add(x);

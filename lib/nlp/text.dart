@@ -117,11 +117,19 @@ class Expr {
   String? aiExp;
   Expr(this.id, this.phrase, this.cat, this.tr, this.en, this.pattern, {this.ex, this.enTr, this.exTr});
 
-  /// Turkish meaning: from the dictionary, otherwise from the AI translation.
-  String? get trShown => tr ?? aiTr;
+  /// Turkish of an unreviewed AI draft (own_expr, reviewed = 0). It never replaces
+  /// [tr]; it is shown only when the dictionary has no Turkish, and labelled.
+  String? trDraft;
+
+  /// Turkish meaning: from the dictionary, otherwise the AI draft, otherwise the
+  /// user's own AI translation.
+  String? get trShown => tr ?? trDraft ?? aiTr;
+
+  /// [trShown] comes from an unreviewed AI draft.
+  bool get trShownIsDraft => tr == null && trDraft != null;
 
   /// Whether the AI still has something to translate for this entry.
-  bool get needsAi => tr == null && aiTr == null && en != null;
+  bool get needsAi => tr == null && trDraft == null && aiTr == null && en != null;
 }
 
 class Match {
