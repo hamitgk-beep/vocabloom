@@ -218,7 +218,7 @@ void main() {
     final users = <String>[];
     for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'))) {
       final t = f.readAsStringSync();
-      if (RegExp(r'OfflineMt|mtCached|mt_cache|opus_mt|OpusMt').hasMatch(t)) users.add(f.path.replaceAll(r'\\', '/'));
+      if (RegExp(r'OfflineMt|mtCached|mt_cache|opus_mt|OpusMt').hasMatch(t)) users.add(f.path.replaceAll('\\', '/'));
     }
     expect(users.where((p) => !allowed.contains(p)), isEmpty, reason: 'only sentence display may use the offline model');
     // In those two panels it only feeds a sentence line, never a word meaning.
