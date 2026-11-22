@@ -1,0 +1,47 @@
+name: offline-mt-windows
+# The optional offline translation (OPUS-MT) on a real Windows machine: the
+# unit and screen tests, then the end-to-end steps with the real model
+# (download with SHA-256 checks, cancel, first translation, use without the
+# internet, reopening, delete). The model is downloaded into a temporary
+# folder only for this check; it is never committed or bundled.
+on:
+  pull_request:
+    paths:
+      - 'lib/mt/**'
+      - 'lib/ui/offline_mt_page.dart'
+      - 'lib/ui/ai/device_translation.dart'
+      - 'test/offline_mt_test.dart'
+      - 'test/offline_mt_windows_test.dart'
+      - '.github/workflows/offline-mt-windows.yml'
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.50.0 }
+      - run: flutter pub get
+      - name: ONNX Runtime shipped with the app (sherpa-onnx)
+        shell: pwsh
+        run: |
+          $dll = Get-ChildItem -Recurse -Filter onnxruntime.dll "$env:LOCALAPPDATA\Pub\Cache\hosted\pub.dev" | Where-Object { $_.FullName -like '*sherpa_onnx_windows*' } | Select-Object -First 1
+          if (-not $dll) { throw 'onnxruntime.dll not found' }
+          "SHERPA_ONNX_LIB_DIR=$($dll.DirectoryName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Write-Host "ONNX Runtime: $($dll.FullName)"
+      - name: Unit and screen tests
+        run: flutter test test/offline_mt_test.dart
+      - name: End to end with the real model
+        shell: pwsh
+        env:
+          OPUS_MT_LIVE: '1'
+          MT_LIVE_OUT: ${{ runner.temp }}\mt_live_windows.json
+        run: flutter test test/offline_mt_windows_test.dart --reporter expanded
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-mt-windows-report
+          path: ${{ runner.temp }}\mt_live_windows.json
+          if-no-files-found: warn

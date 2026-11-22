@@ -6,11 +6,14 @@ library;
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:crypto/crypto.dart';
+import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 
+import '../ai/local_ai.dart' show formatBytes;
 import '../data/user_db.dart';
 import '../l10n.dart';
 import 'opus_mt.dart';
@@ -169,6 +172,32 @@ class OfflineMt extends ChangeNotifier {
 
   // ------------------------------------------------------------ download
 
+  /// Room kept free beside the model.
+  static const diskMargin = 100 * 1000 * 1000;
+
+  /// Free bytes on the disk of [path]; null when unknown. Tests replace it.
+  int? Function(String path) freeSpace = diskFree;
+
+  /// Free bytes for this user on the disk holding [path] (Windows), or null.
+  static int? diskFree(String path) {
+    if (kIsWeb || !Platform.isWindows) return null;
+    try {
+      final k = DynamicLibrary.open('kernel32.dll');
+      final f = k.lookupFunction<Int32 Function(Pointer<Utf16>, Pointer<Uint64>, Pointer<Uint64>, Pointer<Uint64>),
+          int Function(Pointer<Utf16>, Pointer<Uint64>, Pointer<Uint64>, Pointer<Uint64>)>('GetDiskFreeSpaceExW');
+      final p = path.toNativeUtf16();
+      final out = calloc<Uint64>();
+      try {
+        return f(p, out, nullptr, nullptr) != 0 ? out.value : null;
+      } finally {
+        calloc.free(p);
+        calloc.free(out);
+      }
+    } catch (_) {
+      return null;
+    }
+  }
+
   bool _cancelled = false;
   StreamSubscription<List<int>>? _sub;
   Completer<void>? _cancelSignal;
@@ -182,6 +211,20 @@ class OfflineMt extends ChangeNotifier {
     _cancelled = false;
     final total = spec.totalBytes;
     var done = 0;
+    // Enough room first: what is still missing plus a margin, so the disk is
+    // never filled up by the download.
+    final missing = spec.files.fold(0, (s, f) {
+      final x = _file(f.path);
+      return s + (x.existsSync() && x.lengthSync() == f.size ? 0 : f.size);
+    });
+    final need = missing + diskMargin;
+    final free = missing == 0 ? null : freeSpace(_root!.parent.path);
+    if (free != null && free < need) {
+      _set(OfflineMtState(OfflineMtStatus.failed,
+          errorTr: 'Diskte yeterli yer yok: ${formatBytes(need)} gerekiyor, ${formatBytes(free)} boş. Biraz yer açıp tekrar dene; hiçbir şey indirilmedi.',
+          errorEn: 'Not enough disk space: ${formatBytes(need)} needed, ${formatBytes(free)} free. Free some space and try again; nothing was downloaded.'));
+      return false;
+    }
     _set(OfflineMtState(OfflineMtStatus.downloading, total: total));
     try {
       await Directory(modelDir!).create(recursive: true);

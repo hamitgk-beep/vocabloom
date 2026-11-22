@@ -526,7 +526,7 @@ class _WordPanelState extends State<WordPanel> {
               const LangDivider(),
               LangLine(
                 en: false,
-                child: DeviceTranslation(key: ValueKey('mt-b-$s0'), app: app, text: s0, style: panelTrStyle(theme)),
+                child: DeviceTranslation(key: ValueKey('mt-b-$s0'), app: app, text: s0, sentence: true, style: panelTrStyle(theme)),
               ),
             ],
           ),

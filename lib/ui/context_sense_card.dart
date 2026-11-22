@@ -485,6 +485,7 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
         key: ValueKey('mt-s-${c.sentence}'),
         app: app,
         text: c.sentence,
+        sentence: true,
         style: panelTrStyle(t),
         frame: (w) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const LangDivider(), LangLine(en: false, child: w)]),
       );

@@ -19,7 +19,10 @@ class DeviceTranslation extends StatefulWidget {
   /// Wraps whatever is shown (the Turkish, the progress, the button), so a
   /// caller's label and divider disappear with it when nothing is shown.
   final Widget Function(Widget child)? frame;
-  const DeviceTranslation({super.key, required this.app, required this.text, this.style, this.frame});
+  /// [text] is a whole sentence. The offline OPUS-MT model on Windows only
+  /// helps with sentences, never with a word's meaning.
+  final bool sentence;
+  const DeviceTranslation({super.key, required this.app, required this.text, this.style, this.frame, this.sentence = false});
 
   @override
   State<DeviceTranslation> createState() => _DeviceTranslationState();
@@ -34,7 +37,7 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
   OfflineMt get offline => OfflineMt.instance;
 
   /// Windows with the offline model turned on.
-  bool get _offline => offline.active(widget.app.user);
+  bool get _offline => widget.sentence && offline.active(widget.app.user);
 
   Future<String?>? _ask() => _offline
       ? offline.translate(widget.app.user, widget.text)

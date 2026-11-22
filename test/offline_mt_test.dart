@@ -272,6 +272,37 @@ void main() {
       expect(mt.installed, isFalse);
     });
 
+    test('not enough disk space: refused with sizes, nothing downloaded', () async {
+      final server = FakeServer();
+      final mt = OfflineMt.test(fakeSpec())..init(dir);
+      mt.freeSpace = (_) => 1000;
+      expect(await mt.download(fetch: server.fetch), isFalse);
+      expect(server.asked, isEmpty);
+      expect(mt.state.status, OfflineMtStatus.failed);
+      expect(mt.state.errorTr, contains('Diskte yeterli yer yok'));
+      expect(mt.state.errorTr, contains('MB'));
+      expect(mt.state.errorEn, contains('Not enough disk space'));
+      expect(Directory(mt.modelDir!).existsSync(), isFalse);
+      // Room for what is missing plus the margin: it goes ahead.
+      mt.freeSpace = (_) => fakeSpec().totalBytes + OfflineMt.diskMargin;
+      expect(await mt.download(fetch: server.fetch), isTrue);
+      // Unknown free space (another system): not blocked.
+      expect(OfflineMt.diskFree(dir.path), Platform.isWindows ? isNotNull : isNull);
+    });
+
+    test('the room needed counts only the files still missing', () async {
+      final mt = OfflineMt.test(fakeSpec())..init(dir);
+      await mt.download(fetch: FakeServer().fetch);
+      File('${mt.modelDir}/onnx/model.onnx').deleteSync();
+      int? asked;
+      mt.freeSpace = (p) {
+        asked = 1;
+        return _b.length + OfflineMt.diskMargin;
+      };
+      expect(await mt.download(fetch: FakeServer().fetch), isTrue);
+      expect(asked, 1);
+    });
+
     test('a server error is reported', () async {
       final mt = OfflineMt.test(fakeSpec())..init(dir);
       final server = FakeServer()..error = const MtDownloadError('Sunucu dosyayı vermedi (HTTP 404).', 'The server did not send the file (HTTP 404).');
@@ -337,6 +368,22 @@ void main() {
       expect(app.user.mtCached(mt.spec.engine, 'en>tr', 'Boom.'), isNull);
     });
 
+    test('a helper only: dictionary, word meanings and learning records stay as they were', () async {
+      app.user.setWord('bank', WordStatus.learning, context: 'He sat on the bank of the river.');
+      app.user.setSentenceAi('He sat on the bank of the river.', 'Nehrin kıyısında oturdu.', null);
+      Map<String, String> rows() => {
+            for (final t in ['words', 'books', 'paras', 'sentence_ai', 'expr_ai', 'ctx_ai', 'ai_meaning', 'wfam_ai', 'missing_tr', 'sense_feedback'])
+              t: app.user.db.select('SELECT * FROM $t').map((r) => r.values.join('|')).join('\n'),
+          };
+      final before = rows();
+      final meaning = app.dict.meaningIn('bank', 'He sat on the bank of the river.').tr;
+      final mt = await ready(engine: (t) async => 'Banka nehrin yanındaydı.');
+      expect(await mt.translate(app.user, 'He sat on the bank of the river.'), 'Banka nehrin yanındaydı.');
+      expect(rows(), before);
+      expect(app.dict.meaningIn('bank', 'He sat on the bank of the river.').tr, meaning);
+      expect(app.user.sentenceAi('He sat on the bank of the river.')?.$1, 'Nehrin kıyısında oturdu.');
+    });
+
     test('an older user database gains the cache table and keeps its rows', () {
       app.user.setSetting('keep', 'me');
       app.user.db.execute('DROP TABLE mt_cache');
@@ -389,7 +436,7 @@ void main() {
     testWidgets('the panel line uses the model only when turned on, with no download button', (tester) async {
       final mt = OfflineMt.instance..init(dir);
       mt.debugEngine = (t) async => 'Uçak öğlen kalktı.';
-      Widget line() => Scaffold(body: DeviceTranslation(app: app, text: 'The plane took off at noon.'));
+      Widget line() => Scaffold(body: DeviceTranslation(app: app, text: 'The plane took off at noon.', sentence: true));
       // Not downloaded: nothing at all (and no button in the panel).
       await pump(tester, line());
       expect(find.text('Uçak öğlen kalktı.'), findsNothing);
@@ -411,6 +458,23 @@ void main() {
       expect(find.text('Uçak öğlen kalktı.'), findsNothing);
       mt.debugInstalled = false;
       expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a single word is never translated by the model', (tester) async {
+      final mt = OfflineMt.instance..init(dir);
+      var calls = 0;
+      mt.debugEngine = (t) async {
+        calls++;
+        return 'nehir';
+      };
+      mt.debugInstalled = true;
+      mt.setEnabled(app.user, true);
+      await pump(tester, Scaffold(body: DeviceTranslation(app: app, text: 'river')));
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(find.text('nehir'), findsNothing);
+      expect(calls, 0);
+      mt.setEnabled(app.user, false);
+      mt.debugInstalled = false;
     });
   });
 }
