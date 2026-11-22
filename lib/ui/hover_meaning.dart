@@ -7,7 +7,8 @@ import 'meaning_parts.dart';
 
 /// What the mouse bubble shows for a word: the head word (or expression),
 /// its part of speech and its first Turkish meaning.
-typedef HoverMeaning = ({String head, String? pos, String tr});
+/// [draft]: the meaning is an unreviewed AI draft (no checked source has one).
+typedef HoverMeaning = ({String head, String? pos, String tr, bool draft});
 
 /// The first meaning of token [i]: an underlined expression it is part of
 /// (one whose filter is on) first, otherwise the word's own dictionary
@@ -22,29 +23,30 @@ HoverMeaning? hoverMeaning(AppState app, List<Token> tokens, List<Match> matches
     if (m.tokens.length < 2 || !m.tokens.contains(i) || !app.enabledCats.contains(m.expr.cat) || m.expr.trShown == null) continue;
     if (best == null || m.tokens.length > best.tokens.length) best = m;
   }
-  if (best != null) return (head: displayPhrase(best.expr.phrase), pos: null, tr: best.expr.trShown!);
+  if (best != null) return (head: displayPhrase(best.expr.phrase), pos: null, tr: best.expr.trShown!, draft: best.expr.trShownIsDraft);
 
   final lower = tokens[i].lower.replaceAll('’', "'");
   final dict = app.dict;
-  final cands = <String>[...?dict.irregularOf[lower], ...dict.lemmatizer.lemmas(lower), lower];
-  // A common word beats a rare base form the suffix rules make ("never", not "neve").
-  if (cands.contains(lower) && dict.ownSenses(lower).isNotEmpty && dict.irregularOf[lower] == null) {
-    cands.remove(lower);
-    cands.insert(0, lower);
-  }
+  // The base form the word panel opens, then the wider list as a fallback.
+  final cands = <String>{for (final b in dict.baseForms(lower)) b.lemma, ...?dict.irregularOf[lower], ...dict.lemmatizer.lemmas(lower), lower}.toList();
   final opens = text != null && opensSentence(text, tokens[i]);
   for (final c in cands) {
     final own = dict.ownSenses(c);
     if (own.isEmpty) continue;
     final o = opens ? own.firstWhere((o) => o.pos == 'ünlem', orElse: () => own.first) : own.first;
-    return (head: c, pos: posLabel(o.pos), tr: o.tr);
+    return (head: c, pos: posLabel(o.pos), tr: o.tr, draft: false);
   }
   for (final c in cands) {
     final info = dict.lookup(c);
-    if (info.trFreeDict.isNotEmpty) return (head: c, pos: null, tr: info.trFreeDict.first);
+    if (info.trFreeDict.isNotEmpty) return (head: c, pos: null, tr: info.trFreeDict.first, draft: false);
     for (final s in info.senses) {
-      if (s.tr.isNotEmpty) return (head: c, pos: posLabel(s.pos), tr: s.tr.take(3).join(', '));
+      if (s.tr.isNotEmpty) return (head: c, pos: posLabel(s.pos), tr: s.tr.take(3).join(', '), draft: false);
     }
+  }
+  // Only an unreviewed AI draft has Turkish for it: shown, and marked as such.
+  for (final c in cands) {
+    final d = dict.draftSenses(c);
+    if (d.isNotEmpty) return (head: c, pos: posLabel(d.first.pos), tr: d.first.tr, draft: true);
   }
   return null;
 }
@@ -96,6 +98,10 @@ class HoverBubble extends StatelessWidget {
                 m.tr,
                 style: TextStyle(fontSize: 16.5, fontWeight: FontWeight.w700, height: 1.25, color: cs.onSurface),
               ),
+              if (m.draft) ...[
+                const SizedBox(height: 3),
+                Text(unverifiedAiLabel(), key: const ValueKey('hover-draft'), style: TextStyle(fontSize: 11.5, fontStyle: FontStyle.italic, color: cs.onSurfaceVariant)),
+              ],
               const SizedBox(height: 6),
               Text(L('Ayrıntılar için tıkla', 'Click for details'), style: TextStyle(fontSize: 11.5, color: cs.onSurfaceVariant)),
             ],

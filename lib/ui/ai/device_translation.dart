@@ -166,7 +166,7 @@ class _DeviceTranslationState extends State<DeviceTranslation> {
               SelectableText(t, style: trStyle(theme, widget.style)),
               Text(
                 offlineOn
-                    ? L('Çevrimdışı çeviri, OPUS-MT (makine çevirisi)', 'Offline translation, OPUS-MT (machine translation)')
+                    ? L('Otomatik çeviri (OPUS-MT, çevrimdışı) · hata içerebilir', 'Automatic translation (OPUS-MT, offline) · may contain mistakes')
                     : L('Cihaz içi anında çeviri (makine çevirisi)', 'Instant on-device translation (machine translation)'),
                 style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
               ),

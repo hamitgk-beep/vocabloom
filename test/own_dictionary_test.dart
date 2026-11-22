@@ -1,6 +1,7 @@
 // The own-dictionary fallback in DictDb.lookup(): with ownEnabled false the app reads exactly what
-// it reads today (ft); with ownEnabled true, own_word comes first and ft is used whenever there is
-// no own meaning or the table is missing. The released default is on (useOwnDictionary = true).
+// it reads today (ft); with ownEnabled true, a verified own row comes first and an unreviewed AI
+// draft never replaces ft (DictDb.sourcePolicy); ft is used whenever there is no own meaning or the
+// table is missing. The released default is on (useOwnDictionary = true).
 // The bundled database is never written to; every test works on a temporary copy.
 import 'dart:convert';
 import 'dart:io';
@@ -29,6 +30,8 @@ String _copy({required bool withOwn}) {
       INSERT INTO own_word(word, senses, keep_tr, status) VALUES
         ('book', '[{"tr":"yeni anlam","src":"fix"}]', '["eski anlam"]', 'auto_generated'),
         ('dog', '[]', '[]', 'auto_generated');
+      INSERT INTO own_word(word, senses, keep_tr, status, reviewed) VALUES
+        ('house', '[{"tr":"onaylı anlam","src":"storilex"}]', '["eski ev"]', 'contrib', 1);
     ''');
   }
   db.dispose();
@@ -61,15 +64,32 @@ void main() {
     expect(d.lookup('dog', ownEnabled: false).trFreeDict, baselineDog);
   });
 
-  test('flag on: own meanings come first, keep_tr before the new senses', () {
+  test('flag on: an unreviewed own row keeps keep_tr and ft; its senses are only drafts', () {
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('book', ownEnabled: true).trFreeDict, ['eski anlam', 'yeni anlam']);
+    expect(d.lookup('book', ownEnabled: true).trFreeDict, ['eski anlam', ...baselineBook]);
+    expect(d.lookup('book', ownEnabled: true).trDraft, ['yeni anlam']);
+  });
+
+  test('flag on: a verified own row comes first, then keep_tr, then ft', () {
+    final d = _open(_copy(withOwn: true));
+    final ft = _open(_asset).lookup('house', ownEnabled: false).trFreeDict;
+    expect(d.lookup('house', ownEnabled: true).trFreeDict, ['onaylı anlam', 'eski ev', ...ft.where((t) => t != 'eski ev')]);
+  });
+
+  test('policy off: keep_tr before the new senses, as before the source order', () {
+    DictDb.sourcePolicy = false;
+    try {
+      final d = _open(_copy(withOwn: true));
+      expect(d.lookup('book', ownEnabled: true).trFreeDict, ['eski anlam', 'yeni anlam']);
+    } finally {
+      DictDb.sourcePolicy = true;
+    }
   });
 
   test('flag on: a word without an own row still reads ft', () {
     final d = _open(_copy(withOwn: true));
-    expect(d.lookup('house', ownEnabled: true).trFreeDict,
-        _open(_asset).lookup('house', ownEnabled: false).trFreeDict);
+    expect(d.lookup('cat', ownEnabled: true).trFreeDict,
+        _open(_asset).lookup('cat', ownEnabled: false).trFreeDict);
   });
 
   test('flag on: an empty own row falls back to ft', () {
@@ -88,7 +108,7 @@ void main() {
     expect(File(_asset).lengthSync(), before);
   });
 
-  test('own expression meaning is the gloss when on, the old one when off', () {
+  test('own expression: an AI draft is kept apart when on, the gloss under the old order, the old one when off', () {
     final db = sqlite3.open(_asset, mode: OpenMode.readOnly);
     final row = db.select("SELECT senses FROM own_expr WHERE phrase = 'a dime a dozen' AND cat = 'idioms'");
     db.dispose();
@@ -104,11 +124,23 @@ void main() {
 
     final e1 = on.exprs.firstWhere((e) => e.phrase == 'a dime a dozen' && e.cat == 'idioms');
     final e2 = off.exprs.firstWhere((e) => e.phrase == 'a dime a dozen' && e.cat == 'idioms');
-    expect(e1.tr, contains(ownFirst['tr'] as String));
+    // The row is an unreviewed AI draft (DictDb.sourcePolicy): the gloss stays, the draft is apart.
+    expect(e1.tr, e2.tr);
+    expect(e1.trDraft, contains(ownFirst['tr'] as String));
     expect(e2.tr, isNot(contains(ownFirst['tr'] as String)));
+
+    DictDb.sourcePolicy = false;
+    try {
+      final old = DictDb();
+      old.db = sqlite3.open(_asset, mode: OpenMode.readOnly);
+      old.load(ownEnabled: true);
+      expect(old.exprs.firstWhere((e) => e.phrase == 'a dime a dozen' && e.cat == 'idioms').tr, contains(ownFirst['tr'] as String));
+    } finally {
+      DictDb.sourcePolicy = true;
+    }
   });
 
-  test('expression sheet: own senses first when on, the built-in library when off, and back again', () {
+  test('expression sheet: drafts only in their own list when on, the built-in library when off, and back again', () {
     final db = sqlite3.open(_asset, mode: OpenMode.readOnly);
     final row = db.select("SELECT senses FROM own_expr WHERE phrase = 'a dime a dozen' AND cat = 'idioms'");
     db.dispose();
@@ -117,9 +149,11 @@ void main() {
     final on = DictDb();
     on.db = sqlite3.open(_asset, mode: OpenMode.readOnly);
     on.load(ownEnabled: true);
-    final detailOn = jsonDecode(on.exprDetail('a dime a dozen', 'idioms')!) as List;
-    expect((detailOn.first as Map)['title_tr'], ownFirst['tr']);
-    expect((detailOn.first as Map)['explain_tr'], '');
+    final detailOn = on.exprDetail('a dime a dozen', 'idioms');
+    expect(detailOn == null || (jsonDecode(detailOn) as List).first['title_tr'] != ownFirst['tr'], isTrue);
+    final drafts = jsonDecode(on.exprDraftDetail('a dime a dozen', 'idioms')!) as List;
+    expect((drafts.first as Map)['title_tr'], ownFirst['tr']);
+    expect((drafts.first as Map)['explain_tr'], '');
 
     final off = DictDb();
     off.db = sqlite3.open(_asset, mode: OpenMode.readOnly);

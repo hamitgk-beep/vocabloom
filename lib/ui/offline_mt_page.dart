@@ -73,8 +73,8 @@ class OfflineMtPage extends StatelessWidget {
           final s = mt.state;
           return ListView(padding: const EdgeInsets.all(16), children: [
             Text(
-              L('Cümle panelinde Türkçe çeviriyi internetsiz ve ücretsiz gösterir. Yalnızca Windows içindir; sen indirmeden hiçbir şey indirilmez.',
-                  'Shows the Turkish of a sentence without internet, for free. Windows only; nothing is downloaded until you choose to.'),
+              L('Cümle panelinde Türkçe çeviriyi internetsiz ve ücretsiz gösterir. Yalnızca Windows içindir; sen indirmeden hiçbir şey indirilmez.\n\nÇeviriler bir yazılım tarafından otomatik üretilir ve hata içerebilir; özellikle deyimlerde ve birden çok anlamı olan kelimelerde. Yalnızca cümlenin Türkçesini göstermek için kullanılır: sözlük anlamlarını, deyimleri ve tekrar kartlarının puanlamasını değiştirmez.',
+                  'Shows the Turkish of a sentence without internet, for free. Windows only; nothing is downloaded until you choose to.\n\nThe translations are made automatically by software and may contain mistakes, especially with idioms and words that have several meanings. They are only used to show a sentence in Turkish: they never change dictionary meanings, idioms or how review cards are scored.'),
               style: theme.textTheme.bodyLarge,
             ),
             const SizedBox(height: 16),

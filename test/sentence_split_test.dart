@@ -73,8 +73,10 @@ void main() {
       'He came home. She was asleep.': ['He came home.', 'She was asleep.'],
       'So did I. Then we left.': ['So did I.', 'Then we left.'],
       'Where are you? I am here!': ['Where are you?', 'I am here!'],
-      '"Run!" she cried. "Now!"': ['"Run!"', 'she cried.', '"Now!"'],
-      "'Well!' thought Alice to herself. 'What a fall!'": ["'Well!'", 'thought Alice to herself.', "'What a fall!'"],
+      // The words after a quoted cry go on in small letters: one sentence.
+      '"Run!" she cried. "Now!"': ['"Run!" she cried.', '"Now!"'],
+      "'Well!' thought Alice to herself. 'What a fall!'": ["'Well!' thought Alice to herself.", "'What a fall!'"],
+      'He stopped — and then he ran. She saw it.': ['He stopped — and then he ran.', 'She saw it.'],
       'It was 35, seq. In this tale the giant wins.': ['It was 35, seq.', 'In this tale the giant wins.'],
       'They bought apples, pears, etc. Then they went home.': ['They bought apples, pears, etc.', 'Then they went home.'],
       'He said no. Then he left.': ['He said no.', 'Then he left.'],

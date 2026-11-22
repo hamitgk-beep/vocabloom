@@ -1,0 +1,184 @@
+# The only workflow that publishes the app. It never builds: it takes the
+# files of one finished, successful build.yml run of main (by default the
+# newest), checks them again and replaces the 'latest' release that every
+# installed app reads for updates. Nothing starts it automatically.
+#
+# Who can release (docs/RELEASING.md):
+#   1. it is started by hand (Actions > release > Run workflow) on main,
+#   2. by the repository owner, with "YAYINLA" typed into the confirm box,
+#   3. the "production" environment must have a required reviewer, and that
+#      reviewer approves the waiting "publish" job before anything changes.
+# A run started by a bot or another workflow (dictionary-data, tutor-data,
+# the GITHUB_TOKEN) stops in "prepare".
+name: release
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type YAYINLA to publish to every user'
+        required: true
+        default: ''
+      build_run_id:
+        description: 'build.yml run to publish (empty = newest successful build of main)'
+        required: false
+        default: ''
+      allow_older:
+        description: 'Roll back: allow a build older than the published one'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      run_id: ${{ steps.run.outputs.run_id }}
+      sha: ${{ steps.run.outputs.sha }}
+      build: ${{ steps.run.outputs.build }}
+      version: ${{ steps.version.outputs.version }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Who started it
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+          ACTOR: ${{ github.triggering_actor }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" != workflow_dispatch ] || [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "::error::A release is started by hand on main (started: $GITHUB_EVENT_NAME on $GITHUB_REF)."; exit 1
+          fi
+          if [ "$ACTOR" != "$OWNER" ]; then
+            echo "::error::Only $OWNER can start a release (started by $ACTOR)."; exit 1
+          fi
+          if [ "$CONFIRM" != YAYINLA ]; then
+            echo "::error::Type YAYINLA in the confirm box to publish."; exit 1
+          fi
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Approval is really required
+        run: |
+          if ! gh api "repos/$GH_REPO/environments/production" > env.json; then
+            echo "::error::The 'production' environment could not be read. Create it with a required reviewer (docs/RELEASING.md)."; exit 1
+          fi
+          python3 -I tools/release/release_check.py check-env env.json "${{ github.triggering_actor }}"
+      - id: run
+        name: Build to publish
+        env:
+          RUN_ID: ${{ inputs.build_run_id }}
+        run: |
+          if [ -z "$RUN_ID" ]; then
+            gh api "repos/$GH_REPO/actions/workflows/build.yml/runs?branch=main&status=success&per_page=50" > runs.json
+            RUN_ID=$(python3 -I tools/release/release_check.py pick-run runs.json) || { echo "$RUN_ID"; exit 1; }
+          fi
+          case "$RUN_ID" in *[!0-9]*|'') echo "::error::build_run_id must be a number"; exit 1;; esac
+          gh api "repos/$GH_REPO/actions/runs/$RUN_ID" > run.json
+          python3 -I tools/release/release_check.py check-run run.json > run.txt || { cat run.txt; exit 1; }
+          cat run.txt >> "$GITHUB_OUTPUT"
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+          sha=$(sed -n 's/^sha=//p' run.txt)
+          git fetch -q origin main
+          if ! git merge-base --is-ancestor "$sha" origin/main; then
+            echo "::error::Commit $sha of run $RUN_ID is not on main."; exit 1
+          fi
+          echo "Run $RUN_ID: commit $sha, build $(sed -n 's/^build=//p' run.txt)"
+      - id: version
+        run: echo "version=$(tools/release/version.sh ${{ steps.run.outputs.sha }})" >> "$GITHUB_OUTPUT"
+      - name: Newer than the published build
+        run: |
+          gh release view latest --json body --jq .body > latest-body.md || : > latest-body.md
+          python3 -I tools/release/release_check.py check-order latest-body.md "${{ steps.run.outputs.build }}" ${{ inputs.allow_older && '--allow-older' || '' }}
+      - name: Summary
+        run: |
+          {
+            echo "### Release waiting for approval"
+            echo "Storilex ${{ steps.version.outputs.version }}, build ${{ steps.run.outputs.build }}"
+            echo "Commit ${{ steps.run.outputs.sha }}, from build run $GITHUB_SERVER_URL/$GH_REPO/actions/runs/${{ steps.run.outputs.run_id }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    needs: prepare
+    runs-on: ubuntu-latest
+    # The run waits here until a required reviewer of "production" approves.
+    environment: production
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RUN_ID: ${{ needs.prepare.outputs.run_id }}
+      SHA: ${{ needs.prepare.outputs.sha }}
+      BUILD: ${{ needs.prepare.outputs.build }}
+      VERSION: ${{ needs.prepare.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, path: src, ref: '${{ needs.prepare.outputs.sha }}' }
+      # The release tools come from main as it is now, the app files from the build.
+      - uses: actions/checkout@v4
+        with: { path: tools-main }
+      - name: Files of the build
+        run: |
+          for a in Storilex-Windows Storilex-Android Storilex-iOS Storilex-macOS Storilex-Linux; do
+            gh run download "$RUN_ID" -n "$a" -D "dist/$a"
+          done
+      - name: Release text
+        run: |
+          tools-main/tools/release/make_body.sh src "$SHA" "$VERSION" "$BUILD" body.md
+          python3 -I tools-main/tools/release/release_check.py check-body body.md "$BUILD" "$VERSION"
+          cat body.md
+      - name: Package and check the files
+        run: |
+          tools-main/tools/release/package.sh dist
+          python3 -I tools-main/tools/release/release_check.py verify-dist dist | tee SHA256SUMS
+      - name: Keep a record of the release being replaced
+        run: |
+          mkdir -p previous
+          gh release view latest --json name,tagName,targetCommitish,body,assets,publishedAt > previous/latest.json || echo '{}' > previous/latest.json
+          cp body.md SHA256SUMS previous/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-record
+          path: previous
+          retention-days: 90
+      # Same publishing as before the split: the 'latest' tag, prerelease,
+      # the same ten file names, so every installed app keeps updating.
+      - name: Publish 'latest' release
+        id: publish
+        run: |
+          files=()
+          while read -r f; do files+=("dist/$f"); done < tools-main/tools/release/release_files.txt
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest --prerelease --target "$SHA" \
+            --title "Storilex $VERSION" \
+            --notes-file body.md \
+            "${files[@]}"
+      - name: Check the published release
+        run: |
+          gh release view latest --json name,body,targetCommitish,assets > published.json
+          python3 -I - <<'PY'
+          import json, os, sys
+          sys.path.insert(0, 'tools-main/tools/release')
+          import release_check as rc
+          r = json.load(open('published.json'))
+          names = {a['name']: a['size'] for a in r['assets']}
+          missing = [n for n in rc.release_files() if names.get(n) != os.path.getsize('dist/' + n)]
+          if missing or r['targetCommitish'] != os.environ['SHA'] or rc.body_build(r['body']) != int(os.environ['BUILD']):
+              print('::error::The published release is incomplete or wrong: %s. See docs/RELEASING.md, "If publishing fails".' % (missing or 'commit/build'))
+              sys.exit(1)
+          print('latest = Storilex %s, build %s, %d files' % (os.environ['VERSION'], os.environ['BUILD'], len(names)))
+          PY
+      - name: If publishing failed
+        if: failure() && steps.publish.outcome != 'skipped'
+        run: |
+          echo "::error::Publishing stopped part-way. The record of the replaced release is in the release-record artifact. Run release again with the same build_run_id (or the previous one with allow_older) as described in docs/RELEASING.md."

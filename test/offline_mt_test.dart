@@ -207,6 +207,27 @@ void main() {
     }, skip: skip, timeout: const Timeout(Duration(minutes: 2)));
   });
 
+  test('the model\'s answers reach only the sentence line, nothing that grades or defines', () {
+    // Allowed: the model, its settings page, the sentence line widget, the
+    // places that show it, and the cache in the user database.
+    const allowed = {
+      'lib/mt/offline_mt.dart', 'lib/mt/opus_mt.dart', 'lib/mt/sentencepiece.dart', 'lib/ui/offline_mt_page.dart',
+      'lib/ui/ai/device_translation.dart', 'lib/ui/settings_page.dart', 'lib/main.dart', 'lib/data/user_db.dart',
+      'lib/ui/context_sense_card.dart', 'lib/ui/word_sheet.dart',
+    };
+    final users = <String>[];
+    for (final f in Directory('lib').listSync(recursive: true).whereType<File>().where((f) => f.path.endsWith('.dart'))) {
+      final t = f.readAsStringSync();
+      if (RegExp(r'OfflineMt|mtCached|mt_cache|opus_mt|OpusMt').hasMatch(t)) users.add(f.path.replaceAll(r'\\', '/'));
+    }
+    expect(users.where((p) => !allowed.contains(p)), isEmpty, reason: 'only sentence display may use the offline model');
+    // In those two panels it only feeds a sentence line, never a word meaning.
+    for (final p in ['lib/ui/word_sheet.dart', 'lib/ui/context_sense_card.dart']) {
+      final t = File(p).readAsStringSync();
+      expect(RegExp(r'OfflineMt\.instance\.(translate|download)').hasMatch(t), isFalse, reason: p);
+    }
+  });
+
   group('download', () {
     test('the pinned model is the measured one, CC-BY 4.0, about 530 MB', () {
       const s = opusEnTr;
@@ -417,6 +438,8 @@ void main() {
       expect(find.byKey(const ValueKey('offline-mt-size')), findsOneWidget);
       expect(find.textContaining('CC-BY 4.0'), findsWidgets);
       expect(find.textContaining('MB'), findsWidgets);
+      expect(find.textContaining('hata içerebilir'), findsOneWidget);
+      await tester.scrollUntilVisible(find.byKey(const ValueKey('offline-mt-download')), 200);
       await tester.tap(find.byKey(const ValueKey('offline-mt-download')));
       await tester.pumpAndSettle();
       final dialog = find.byKey(const ValueKey('offline-mt-consent'));
@@ -458,6 +481,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
       expect(find.text('Uçak öğlen kalktı.'), findsOneWidget);
       expect(find.textContaining('OPUS-MT'), findsOneWidget);
+      expect(find.textContaining('hata içerebilir'), findsOneWidget);
       expect(app.user.mtCached(mt.spec.engine, 'en>tr', 'The plane took off at noon.'), 'Uçak öğlen kalktı.');
       // Turned off again: gone.
       mt.setEnabled(app.user, false);
