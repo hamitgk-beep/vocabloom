@@ -171,6 +171,8 @@ class UserDb {
         sentence TEXT, tr TEXT, model TEXT, status TEXT DEFAULT 'draft', dict_version TEXT, engine_version TEXT,
         UNIQUE(sentence, phrase, cat));
       CREATE TABLE IF NOT EXISTS sense_help(word TEXT, sentence TEXT, created INTEGER, PRIMARY KEY(word, sentence));
+      CREATE TABLE IF NOT EXISTS mt_cache(engine TEXT, dir TEXT, src TEXT, tr TEXT, created INTEGER,
+        PRIMARY KEY(engine, dir, src));
     ''');
     // Older databases have no withdrawn flag on the reports: add it, keep every row.
     // Sentence answers keep their direction and engine; older rows stay as
@@ -315,6 +317,17 @@ class UserDb {
   /// and the engine that made it (`ai:<provider>/<model>`).
   void setSentenceAi(String sentence, String tr, String? exp, {String dir = 'en>tr', String? engine}) =>
       db.execute('INSERT OR REPLACE INTO sentence_ai(sentence, tr, exp, dir, engine) VALUES (?,?,?,?,?)', [sentence, tr, exp, dir, engine]);
+
+  // ---- Offline machine translations: one answer per source text, direction
+  // and engine (with its model version), so another model never reuses it.
+  String? mtCached(String engine, String dir, String src) {
+    final r = db.select('SELECT tr FROM mt_cache WHERE engine=? AND dir=? AND src=?', [engine, dir, src]);
+    return r.isEmpty ? null : r.first['tr'] as String?;
+  }
+
+  void setMtCached(String engine, String dir, String src, String tr) => db.execute(
+      'INSERT OR REPLACE INTO mt_cache(engine, dir, src, tr, created) VALUES (?,?,?,?,?)',
+      [engine, dir, src, tr, DateTime.now().millisecondsSinceEpoch]);
 
   // ---- AI word families
   String? familyAi(String word) {

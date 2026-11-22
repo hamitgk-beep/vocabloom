@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'ai/key_ai.dart';
 import 'app_state.dart';
 import 'ai/device_translate.dart';
+import 'mt/offline_mt.dart';
 import 'data/dict_db.dart';
 import 'data/tr_en_dict.dart';
 import 'data/user_db.dart';
@@ -76,6 +77,9 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       user.lang = a.learnTurkish ? 'tr' : 'en';
       a.localAi = KeyAi(user);
       Speech.instance.init(dir, user);
+      // Offline translation on Windows: only finds a model the learner
+      // downloaded in Settings; nothing is fetched here.
+      OfflineMt.instance.init(dir);
       // Load the voice model early so the first tap on a speaker is quick.
       Future.delayed(const Duration(seconds: 3), Speech.instance.warmUp);
       // All voices come with the app: fetch the packs that are missing.

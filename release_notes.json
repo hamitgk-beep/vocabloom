@@ -2,6 +2,12 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "offline-translation-windows",
+      "area": "reader",
+      "tr": "Windows'ta cümle çevirisi artık internetsiz ve ücretsiz olabilir: Ayarlar > Çevrimdışı çeviri bölümünden OPUS-MT modelini (yaklaşık 530 MB, CC BY 4.0) kendin indirip açabilirsin. İndirmeden önce boyutu ve lisansı görürsün, indirmeyi iptal edebilirsin, her dosya doğrulanır. Model kendiliğinden indirilmez ve ücretli servis kullanmaz.",
+      "en": "On Windows, sentence translation can now work offline and for free: in Settings > Offline translation you can download and turn on the OPUS-MT model (about 530 MB, CC BY 4.0) yourself. You see its size and license first, can cancel the download, and every file is checked. Nothing is downloaded by itself and no paid service is used."
+    },
+    {
       "id": "sentence-word-analysis",
       "area": "reader",
       "tr": "Kelimeye dokunduğunda açılan anlam artık daha doğru kelimeye ve cümleye bakıyor: \"only\", \"thing\", \"letter\", \"offer\" gibi kelimeler başka bir kelimenin ekli hali sanılmıyor, \"years\" ve \"things\" tekil haliyle açılıyor, aksanlı harfli adlar (\"Zurbarán\") bölünmüyor. Bir cümlenin sonu ile sonrakinin başı birleşip yanlış bir deyim oluşturmuyor (\"…care. For…\"), paragrafın ikinci ve sonraki cümlelerindeki deyimler de doğru kelimelerle eşleşiyor. Kelimenin isim mi fiil mi sıfat mı olduğu virgül ve cümle sınırlarına bakılarak daha iyi bulunuyor. Deyimler daha sık tanınıyor; ama cümle deyimi açıkça desteklemiyorsa anlam \"olası\" olarak gösteriliyor, kesin diye sunulmuyor.",

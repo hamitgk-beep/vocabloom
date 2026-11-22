@@ -14,6 +14,7 @@ import 'theme.dart';
 import '../ai/tutor.dart';
 import '../app_state.dart';
 import '../l10n.dart';
+import '../mt/offline_mt.dart';
 import '../nlp/context_sense.dart';
 import '../nlp/text.dart';
 import 'ai/ai_key_help.dart';
@@ -458,7 +459,8 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
     // Every candidate here was saved for exactly this English sentence, in
     // this order: the verified translation of the book, the sentence cache
     // (the panel's own answer, then a saved one), the free on-device
-    // translation, and the paid AI only when the learner taps for it.
+    // translation (ML Kit, or the offline model on Windows), and the paid AI
+    // only when the learner taps for it.
     final tr = c.sentenceTr?.first ?? widget.tr ?? aiTr;
     final hasAi = AiService.fromSettings(app.user) != null;
     final mt = DeviceTranslate.instance;
@@ -481,13 +483,14 @@ class _BookSentenceCardState extends State<BookSentenceCard> {
         child: Text(tr, key: const ValueKey('ctx-sentence-tr'), style: panelTrStyle(t)),
         trailing: Speech.supported ? SpeakButton(tr, lang: 'tr', size: 20) : null,
       );
-    } else if (DeviceTranslate.supported && (!hasAi || mt.ready(app.user) || mt.downloading.value)) {
+    } else if ((DeviceTranslate.supported && (!hasAi || mt.ready(app.user) || mt.downloading.value)) || OfflineMt.instance.active(app.user)) {
       // Draws its own divider and line, and nothing at all when it cannot
       // translate the sentence.
       trLine = DeviceTranslation(
         key: ValueKey('mt-s-${c.sentence}'),
         app: app,
         text: c.sentence,
+        sentence: true,
         style: panelTrStyle(t),
         frame: (w) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const LangDivider(), LangLine(en: false, child: w)]),
       );
