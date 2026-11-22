@@ -1,0 +1,196 @@
+{
+ "mode": "legacy",
+ "bundle_license": "CC-BY-SA-4.0",
+ "records": 1443477,
+ "by_status": {
+  "blocked": 104062,
+  "needs_review": 832592,
+  "approved": 387735,
+  "unknown": 119088
+ },
+ "by_source": {
+  "ai_pretranslate": {
+   "unknown": 8820
+  },
+  "damdafayton": {
+   "blocked": 104061
+  },
+  "freedict_eng_tur": {
+   "blocked": 1
+  },
+  "frequencywords": {
+   "needs_review": 55364
+  },
+  "kaikki": {
+   "needs_review": 13414
+  },
+  "kaikki_en": {
+   "needs_review": 429573
+  },
+  "kenet": {
+   "needs_review": 27079
+  },
+  "kindle_en_tr_wiktionary_part": {
+   "needs_review": 40995
+  },
+  "own_dict_ai": {
+   "unknown": 94107
+  },
+  "princeton_wordnet": {
+   "approved": 373546,
+   "needs_review": 9080,
+   "unknown": 360
+  },
+  "storilex_categories": {
+   "needs_review": 902
+  },
+  "storilex_contrib": {
+   "approved": 14189
+  },
+  "storilex_expr_fixes": {
+   "needs_review": 234
+  },
+  "tatoeba": {
+   "needs_review": 262873
+  },
+  "unknown": {
+   "unknown": 16161
+  }
+ },
+ "by_license": {
+  "AI-output": {
+   "unknown": 102927
+  },
+  "CC-BY-2.0-FR": {
+   "needs_review": 262873
+  },
+  "CC-BY-SA-4.0": {
+   "needs_review": 511061
+  },
+  "GPL-2.0-or-later": {
+   "blocked": 1
+  },
+  "MIT": {
+   "blocked": 104061
+  },
+  "Storilex-contrib": {
+   "needs_review": 1136,
+   "approved": 14189
+  },
+  "WordNet-3.0": {
+   "approved": 373546,
+   "needs_review": 9080,
+   "unknown": 360
+  },
+  "unknown": {
+   "unknown": 16161,
+   "needs_review": 55364
+  }
+ },
+ "by_table": {
+  "dict.db/exc": {
+   "approved": 5952
+  },
+  "dict.db/exd": {
+   "unknown": 2510
+  },
+  "dict.db/exfreq": {
+   "needs_review": 4164
+  },
+  "dict.db/expr": {
+   "needs_review": 17183,
+   "unknown": 20345,
+   "approved": 4327,
+   "blocked": 1
+  },
+  "dict.db/exs": {
+   "needs_review": 63717,
+   "approved": 6388
+  },
+  "dict.db/fam": {
+   "approved": 31120
+  },
+  "dict.db/famg": {
+   "approved": 11874
+  },
+  "dict.db/ft": {
+   "blocked": 83381,
+   "needs_review": 33748
+  },
+  "dict.db/own_expr": {
+   "unknown": 13110,
+   "approved": 773
+  },
+  "dict.db/own_word": {
+   "unknown": 80997,
+   "approved": 199
+  },
+  "dict.db/sense": {
+   "approved": 206941
+  },
+  "dict.db/syn": {
+   "approved": 117659,
+   "needs_review": 19682,
+   "unknown": 1766
+  },
+  "dict.db/wfreq": {
+   "needs_review": 22491
+  },
+  "tr_en.db/ctx": {
+   "needs_review": 81972
+  },
+  "tr_en.db/ctxn": {
+   "needs_review": 7265
+  },
+  "tr_en.db/ex": {
+   "needs_review": 83264,
+   "approved": 1121
+  },
+  "tr_en.db/form": {
+   "needs_review": 401588
+  },
+  "tr_en.db/lemma": {
+   "needs_review": 97518,
+   "approved": 618,
+   "blocked": 20680,
+   "unknown": 360
+  },
+  "tr_en.db/meta": {
+   "approved": 763
+  }
+ },
+ "by_finding": {
+  "ai_needs_human_review": 120224,
+  "attribution_missing": 104061,
+  "commercial_use_unverified": 262352,
+  "license_claim_without_origin": 104061,
+  "license_compatibility_unclear": 158291,
+  "license_incompatible_with_bundle": 1,
+  "license_inherited": 54409,
+  "license_unknown": 102927,
+  "license_unverified": 55364,
+  "obligation_share_alike": 511062,
+  "origin_record_missing": 63717,
+  "per_record_license_missing": 262873,
+  "redistribution_unverified": 262352,
+  "source_inferred": 446366,
+  "source_unknown": 16161,
+  "source_version_missing": 838118
+ },
+ "ai": {
+  "none": 1323253,
+  "generated": 102927,
+  "assisted": 1136,
+  "unknown": 16161
+ },
+ "list_sizes": {
+  "missing_attribution": 104061,
+  "high_risk": 104062,
+  "publish_unclear": 951680,
+  "conflicts": 28598,
+  "ai_contribution": 120224,
+  "unknown_source": 16161
+ },
+ "removed_since_baseline": 0,
+ "release_ok": false
+}

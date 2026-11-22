@@ -1,0 +1,80 @@
+name: lexicon-provenance
+# Source traceability and licence gate for the dictionaries (Task 5C,
+# docs/lexicon_provenance/PUBLISH_GATE.md).
+#  1. Synthetic tests of the gate (tools/lexicon_provenance/test_provenance.py).
+#  2. Provenance records for assets/dict.db and assets/tr_en.db, read-only; the
+#     job fails if either file changes while it is read.
+#  3. The gate in "legacy" mode: it reports what the app ships today and never
+#     fails on it. A new public dictionary release runs it in "release" mode
+#     (see PUBLISH_GATE.md); this workflow does not publish anything.
+# The reports are uploaded as the "lexicon-provenance" artifact.
+on:
+  pull_request:
+    paths:
+      - 'tools/lexicon_provenance/**'
+      - 'docs/lexicon_provenance/**'
+      - 'assets/dict.db'
+      - 'assets/tr_en.db'
+      - 'tools/build_dict.py'
+      - 'tools/main_meanings.py'
+      - 'tools/data/main_meanings.jsonl.gz'
+      - 'tools/tr_en/**'
+      - 'tools/contrib/**'
+      - '.github/workflows/lexicon-provenance.yml'
+  workflow_dispatch:
+    inputs:
+      raw:
+        description: "also download KeNet, WordNet, FreeDict and the Wiktionary phrases to trace syn and expr (yes/no)"
+        default: "no"
+
+permissions:
+  contents: read
+
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gate tests (synthetic data)
+        run: python3 -I -m unittest discover -s tools/lexicon_provenance -p 'test_*.py' -v
+      - name: Raw build inputs (optional)
+        if: inputs.raw == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -e
+          mkdir -p raw && cd raw
+          curl -sSfLO https://raw.githubusercontent.com/StarlangSoftware/TurkishWordNet/master/kenet.xml
+          curl -sSfLO https://raw.githubusercontent.com/globalwordnet/cili/master/ili-map-pwn30.tab
+          curl -sSfLO https://raw.githubusercontent.com/freedict/fd-dictionaries/master/eng-tur/eng-tur.tei
+          curl -sSfL -o wn.zip https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/wordnet.zip
+          unzip -q wn.zip
+          gh release download data-wiktionary -p 'wiktionary_phrases.json.gz'
+      - name: Provenance records (read-only)
+        run: |
+          mkdir -p provenance-report
+          RAW=""
+          if [ -d raw ]; then RAW="--raw raw"; fi
+          python3 -I tools/lexicon_provenance/inventory.py --dict assets/dict.db --tr-en assets/tr_en.db --repo . $RAW \
+            --out provenance-report/records.jsonl.gz --stats provenance-report/inventory.json > provenance-report/inventory.log
+          tail -5 provenance-report/inventory.log
+      - name: Gate (legacy report of the shipped dictionaries)
+        run: |
+          python3 -I tools/lexicon_provenance/gate.py --records provenance-report/records.jsonl.gz --mode legacy \
+            --out provenance-report/gate | tee provenance-report/gate.log
+          python3 -I tools/lexicon_provenance/report.py provenance-report/records.jsonl.gz \
+            --json provenance-report/traceability.json --csv provenance-report/traceability.csv | tee provenance-report/traceability.log
+          {
+            echo "## Dictionary provenance (legacy report)"
+            echo '```'
+            cat provenance-report/traceability.log
+            echo '```'
+            echo "A new public release needs \`gate.py --mode release\` to pass; it does not today."
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lexicon-provenance
+          path: provenance-report

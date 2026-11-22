@@ -1,0 +1,81 @@
+{
+ "sha256": {
+  "assets/dict.db": "ab4a7a53b9fc5e1edbd682da5cb7193c0c109f93236655385bf6231d90221a9c",
+  "assets/tr_en.db": "49a661b9c8951259ab13fd6a95aa77b68e16f1c4716669dacfb6c12521cfa818"
+ },
+ "raw": {
+  "eng-tur.tei": "2bc21fa1a784f68df6d94edfcde900ac185e51a6088e3245d9e08d8563c0043e",
+  "ili-map-pwn30.tab": "13b6741395a8bdf20e5a19686ffa49167653696d4f523db17a79dce3211a6627",
+  "kenet.xml": "4023b4f815dcae78171c69d26e6f31aae3ba70c98fb2e44919a09e87d673d66c",
+  "tatoeba_en_tr.tsv.gz": "9e978d08837ed96900575fbe94eb44e89a807775b5d37559d16861eea453f0d5",
+  "wiktionary_phrases.json.gz": "cc275a4a9132f65b4e8545ff00937221131453c325b9b5c0c8458a410c1236a0"
+ },
+ "ft": {
+  "words": 42154,
+  "words_reproduced": 42154,
+  "terms_dm_only": 83381,
+  "primary_dm": 24314,
+  "words_dm": 24314,
+  "terms_wk_only": 21403,
+  "primary_wk": 17840,
+  "words_wk": 8167,
+  "words_dm_wk": 9673,
+  "terms_wk_and_dm": 12345,
+  "first_line_moved_by_dm": 671
+ },
+ "syn": {
+  "synsets_with_tr": 14171,
+  "tr_kenet": 19682,
+  "tr_ai": 1766
+ },
+ "expr": {
+  "rows": 18209,
+  "tr_storilex_categories": 902,
+  "en_unknown": 453,
+  "en_wiktionary": 12715,
+  "ex": 11412,
+  "entr_ai": 4184,
+  "tr_storilex_contrib": 2486,
+  "tr_ai_or_unknown": 6137,
+  "tr_wiktionary": 699,
+  "en_princeton_wordnet": 2158,
+  "tr_kenet": 475,
+  "tr_freedict_eng_tur": 1,
+  "tr_storilex_expr_fixes": 234
+ },
+ "own": {
+  "own_word_ai": 80997,
+  "own_word_storilex_in_draft_row": 99,
+  "own_word_contrib": 100,
+  "own_expr_ai": 13110,
+  "own_expr_storilex_in_draft_row": 82,
+  "own_expr_contrib": 691
+ },
+ "exs": {
+  "tatoeba": 63717,
+  "contrib": 6388
+ },
+ "tables": {
+  "sense": 206941,
+  "exc": 5952,
+  "fam": 31120,
+  "famg": 11874,
+  "wfreq": 22491,
+  "exfreq": 4164,
+  "exd": 2510
+ },
+ "tr_en": {
+  "lemmas": 55364,
+  "senses_kaikki": 27985,
+  "senses_contrib": 618,
+  "fd_refs_reproduced": 27927,
+  "fd_refs_from_dm": 20680,
+  "fd_refs_from_wk": 7247,
+  "wn_kenet": 6922,
+  "wn_ai": 360,
+  "ex_tatoeba": 83264,
+  "ex_contrib": 1121
+ },
+ "records_written": 613994,
+ "unchanged": true
+}
