@@ -9,12 +9,31 @@ download anything.** No Dart code changes.
 
 | | |
 |---|---|
-| Model | `Helsinki-NLP/opus-mt-tc-big-en-tr` (Marian transformer-big, OPUS + Tatoeba data) |
-| ONNX export used | `onnx-community/opus-mt-tc-big-en-tr` |
-| License | **CC-BY 4.0** on both model cards (checked on Hugging Face). Commercial use is allowed; the app must credit "OPUS-MT, Helsinki-NLP (Tiedemann et al.), CC-BY 4.0" wherever the model is offered. |
-| Files used | `source.spm`, `target.spm`, `vocab.json`, `config.json`, `onnx/encoder_model_int8.onnx` (135.7 MB, sha256 `58bfc076…805f46e`), `onnx/decoder_model_int8.onnx` (395.3 MB, sha256 `44264bac…ee5164b`) |
-| Total size | about 530 MB (int8). Too large to bundle; any app use must be an opt-in download. |
-| Special ids | decoder start = pad = 57059, eos = 43741, vocab 57060 |
+| Model | `Helsinki-NLP/opus-mt-tc-big-en-tr` (Marian transformer-big, OPUS + Tatoeba data), revision `e539fc16a8a1a0ea5950eb339b595bfcce990e90` |
+| ONNX export used | `onnx-community/opus-mt-tc-big-en-tr`, **pinned revision `ce128ea834a090aca240e4e113e7756e06cc78e0`** (its model card names the Helsinki-NLP model as `base_model`) |
+| Source | https://huggingface.co/onnx-community/opus-mt-tc-big-en-tr · https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-en-tr |
+| License | **CC BY 4.0** on both model cards (`license: cc-by-4.0` in the card metadata, checked again on 2026-11-22 through the Hugging Face API). Commercial use is allowed with credit: "OPUS-MT, Helsinki-NLP (Tiedemann et al.), opus-mt-tc-big-en-tr, CC BY 4.0". The app shows this credit in Settings > Offline translation and in Privacy and licenses. |
+| Total size | 533,340,371 bytes (about 530 MB, int8). Too large to bundle; the app only offers it as an opt-in download. |
+| Special ids | decoder start = pad = 57059, eos = 43741, unk = 52508, vocab 57060 |
+
+Files the app downloads (all from
+`https://huggingface.co/onnx-community/opus-mt-tc-big-en-tr/resolve/ce128ea834a090aca240e4e113e7756e06cc78e0/<file>`):
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `config.json` | 1,099 | `f377425d2cd0b78df07c120c621f1924d3215c46ff4d6e100707054d0a526f8c` |
+| `vocab.json` | 1,501,287 | `01ef522455d2bf22b0716416ee34688cc2b3f5fa257f742665d21b6acc450ac1` |
+| `source.spm` | 796,953 | `180d3f94ddfee5585d78b702290ded0f4f9bd40f299349c8383b32a579fefad4` |
+| `onnx/encoder_model_int8.onnx` | 135,730,164 | `58bfc076347346049a52a8d53b1f6e4664af74e9737aded374d7d1f78805f46e` |
+| `onnx/decoder_model_int8.onnx` | 395,310,868 | `44264bac42bc67e6ef5a9f37b9ef364e1b93277026399ca6d90eb5752ee5164b` |
+
+How the hashes were checked: the two ONNX hashes are the Git LFS SHA-256
+values the Hugging Face API lists for that revision (`?blobs=true`); the three
+small files were downloaded from the pinned revision and hashed with
+`sha256sum`. They match the files measured below. The app
+(`lib/mt/offline_mt.dart`, PR #108) carries the same list and refuses any file
+whose size or SHA-256 differs. `target.spm` is not needed by the app (decoding
+uses `vocab.json`), so it is not downloaded.
 
 Reported upstream scores: Tatoeba test chrF 0.687 / BLEU 42.3; FLORES-101 chrF
 0.628 / BLEU 31.4.
@@ -68,6 +87,34 @@ Examples:
 | Don't beat around the bush and tell me the truth. | Çalılıklarda gevezelik edip bana gerçeği söyleme. ✘ (idiom and negation wrong) |
 | There was a run on the bank that morning. | O sabah bankada bir koşu vardı. ✘ (polysemy) |
 | He opened the box …, lay a golden key … | … altın bir anahtar bıraktı. ✘ ("lay" read as "laid") |
+
+## Independent check of the 56 book sentences
+
+Each OPUS-MT answer for the corpus sentences (`corpus.tsv`: the reported
+notes, references, long sentences, dialogue, phrasal verbs, idioms, words
+with several meanings) was read and graded by hand. The grading was done by
+Claude, not by a native speaker, so treat it as indicative.
+
+| Grade | Sentences | Share |
+|---|---:|---:|
+| Correct (meaning right, Turkish natural enough) | 45 | 80 % |
+| Partly right (one word or clause off) | 6 | 11 % |
+| Wrong (meaning lost) | 5 | 9 % |
+
+Wrong: "Beanstalk" → "Fasulyeler"; "lay a golden key" → "bıraktı";
+"raining cats and dogs" → literal; "beat around the bush" → literal and
+negation lost; "a run on the bank" → "koşu". Partly right: the reported
+sentence C ("as told to me" attached to "deleted"), "The Constitutional" →
+"Anayasa", "Book of Noodles" → "Erişte Kitabı", "hiding in the copper" →
+"bakır", "a bag of stones" → "taş bir çanta", and an awkward reference
+sentence.
+
+The idiom and several-meanings set in PR #108
+(`test/fixtures/mt_eval_cases.json`, 31 sentences, checked with expected and
+forbidden Turkish words) gives: idioms 2/9, phrasal verbs 4/4, words with
+several meanings 13/17, tale names 0/1. Idioms are the clear weak spot, which
+is why the app labels these lines as automatic translation that may contain
+mistakes and never uses them for meanings, idioms or review scoring.
 
 ## Caveats
 
