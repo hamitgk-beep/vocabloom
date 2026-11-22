@@ -6,6 +6,12 @@
 // It downloads about 530 MB, so it runs only when OPUS_MT_LIVE=1 (the
 // Windows CI job sets it, with SHERPA_ONNX_LIB_DIR pointing at the ONNX
 // Runtime the app ships). MT_LIVE_OUT names a file for a short report.
+//
+// MT_LIVE_PHASE splits it in two runs around a firewall rule: "online"
+// (download, translate, keep the model in MT_LIVE_DIR), then "offline"
+// (this process cannot reach the internet: reopen, translate, a download
+// attempt fails clearly, delete). Without it ("all") everything runs once,
+// with the internet replaced by a failing download only.
 import 'dart:convert';
 import 'dart:io';
 
@@ -16,11 +22,13 @@ import 'package:kelime_okur/mt/offline_mt.dart';
 
 void main() {
   final live = Platform.environment['OPUS_MT_LIVE'] == '1';
+  final phase = Platform.environment['MT_LIVE_PHASE'] ?? 'all';
+  final fixedDir = Platform.environment['MT_LIVE_DIR'];
   final report = <String, Object?>{'os': Platform.operatingSystem, 'osVersion': Platform.operatingSystemVersion};
   late Directory dir;
 
   setUpAll(() {
-    dir = Directory.systemTemp.createTempSync('storilex_mt_live');
+    dir = fixedDir != null ? (Directory(fixedDir)..createSync(recursive: true)) : Directory.systemTemp.createTempSync('storilex_mt_live');
     // Off Windows (a developer's machine) the feature is only pretended on.
     if (!Platform.isWindows) OfflineMt.debugSupported = true;
     report['platformSupported'] = OfflineMt.platformSupported;
@@ -30,6 +38,7 @@ void main() {
     final out = Platform.environment['MT_LIVE_OUT'];
     if (out != null) File(out).writeAsStringSync(const JsonEncoder.withIndent(' ').convert(report));
     OfflineMt.debugSupported = null;
+    if (fixedDir != null) return; // the next phase uses it
     try {
       dir.deleteSync(recursive: true);
     } catch (_) {}
@@ -98,7 +107,9 @@ void main() {
     step('sha256', hashes);
     expect(hashes.values.every((v) => v), isTrue);
 
-    // 5. Off until turned on; then the first translation.
+    // 5. Off until turned on; then the first translation. Memory is the
+    // whole test process (the model runs in an isolate of it).
+    step('rssBeforeModelMB', ProcessInfo.currentRss ~/ 1000000);
     expect(await mt.translate(user, 'The plane took off at noon.'), isNull);
     mt.setEnabled(user, true);
     sw.reset();
@@ -110,6 +121,35 @@ void main() {
     final second = await mt.translate(user, 'He sat on the bank of the river.');
     step('secondTranslation', {'tr': second, 'ms': sw.elapsedMilliseconds});
     expect(second, isNotNull);
+    // A batch of sentences, as when paging through a chapter.
+    final batch = [
+      'Although the night was cold and the road was long, the old man kept walking.',
+      'When the giant came back, he looked under the bed and behind the door.',
+      '"Where are you going?" asked the wolf.',
+      'She had lived in the village all her life, and she knew every path.',
+      'They walked for hours; the sun went down, and still there was no house in sight.',
+      'He gave up smoking last year.',
+      'The farmer sold the cow for a handful of beans.',
+      'By the time the soldiers reached the bridge, the river had risen.',
+    ];
+    final times = <int>[];
+    for (final b in batch) {
+      sw.reset();
+      expect(await mt.translate(user, b), isNotNull, reason: b);
+      times.add(sw.elapsedMilliseconds);
+    }
+    times.sort();
+    step('batchMs', {'median': times[times.length ~/ 2], 'max': times.last, 'n': times.length});
+    step('rssWithModelMB', ProcessInfo.currentRss ~/ 1000000);
+    step('maxRssMB', ProcessInfo.maxRss ~/ 1000000);
+    if (phase == 'online') {
+      // Closed as on exit; the offline run reopens it.
+      await mt.closeEngine();
+      File('${dir.path}/before.json').writeAsStringSync(jsonEncode(before));
+      File('${dir.path}/first.txt').writeAsStringSync(first!);
+      user.db.close();
+      return;
+    }
 
     // 6. Reopening the app: the model is closed as on exit, then found on
     // disk, still on, nothing downloaded.
@@ -153,7 +193,63 @@ void main() {
     expect(reopenedUser.mtCached(opusEnTr.engine, 'en>tr', 'The plane took off at noon.'), first);
     step('deleted', true);
     reopenedUser.db.close();
-  }, skip: live ? null : 'set OPUS_MT_LIVE=1 (downloads about 530 MB)', timeout: const Timeout(Duration(minutes: 20)));
+  }, skip: !live ? 'set OPUS_MT_LIVE=1 (downloads about 530 MB)' : phase == 'offline' ? 'online steps ran before' : null, timeout: const Timeout(Duration(minutes: 20)));
+
+  test('without the internet (this process blocked by the firewall)', () async {
+    // The block is real: this process cannot reach the model's host.
+    Object? netError;
+    try {
+      final c = HttpClient()..connectionTimeout = const Duration(seconds: 15);
+      final r = await (await c.getUrl(Uri.parse('https://huggingface.co/'))).close().timeout(const Duration(seconds: 20));
+      step('networkStatusWhileBlocked', r.statusCode);
+      c.close(force: true);
+    } catch (e) {
+      netError = e;
+    }
+    step('networkBlocked', netError == null ? false : '$netError'.split('\n').first);
+    expect(netError, isNotNull, reason: 'the firewall rule must stop this process reaching the internet');
+
+    // Reopening the app without the internet: found, on, translating.
+    final user = UserDb.open(dir);
+    var mt = OfflineMt.test(opusEnTr)..init(dir);
+    expect(mt.installed, isTrue);
+    expect(mt.active(user), isTrue);
+    final first = File('${dir.path}/first.txt').readAsStringSync();
+    expect(await mt.translate(user, 'The plane took off at noon.'), first, reason: 'from the cache');
+    final sw = Stopwatch()..start();
+    final offline = await mt.translate(user, 'She put her money in the bank.');
+    step('offlineTranslation', {'tr': offline, 'ms': sw.elapsedMilliseconds});
+    expect(offline, contains('banka'));
+
+    // A download attempt now fails with a clear message, nothing broken.
+    await mt.closeEngine();
+    final cfg = File('${mt.modelDir}${Platform.pathSeparator}config.json');
+    final keep = cfg.readAsBytesSync();
+    cfg.deleteSync();
+    mt = OfflineMt.test(opusEnTr)..init(dir);
+    expect(mt.installed, isFalse);
+    expect(await mt.download(), isFalse);
+    expect(mt.state.status, OfflineMtStatus.failed);
+    step('downloadWhileOffline', mt.state.errorTr);
+    expect(Directory(mt.modelDir!).listSync(recursive: true).where((e) => e.path.endsWith('.part')), isEmpty);
+    cfg.writeAsBytesSync(keep);
+    mt = OfflineMt.test(opusEnTr)..init(dir);
+    expect(mt.installed, isTrue);
+
+    // The learner's records are as they were.
+    final before = jsonDecode(File('${dir.path}/before.json').readAsStringSync()) as Map<String, dynamic>;
+    expect(_learnerRows(user), before);
+    expect(user.statuses['river'], WordStatus.learning);
+    step('learnerRecordsUnchanged', true);
+
+    // Deleting without the internet.
+    await mt.remove(user);
+    expect(Directory(mt.modelDir!).existsSync(), isFalse);
+    expect(mt.active(user), isFalse);
+    expect(user.mtCached(opusEnTr.engine, 'en>tr', 'The plane took off at noon.'), first);
+    step('deleted', true);
+    user.db.close();
+  }, skip: live && phase == 'offline' ? null : 'runs as MT_LIVE_PHASE=offline after the online phase', timeout: const Timeout(Duration(minutes: 10)));
 }
 
 /// Row counts and contents of the learner's own tables (not the

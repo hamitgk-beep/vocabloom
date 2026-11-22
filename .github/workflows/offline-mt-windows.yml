@@ -33,15 +33,38 @@ jobs:
           Write-Host "ONNX Runtime: $($dll.FullName)"
       - name: Unit and screen tests
         run: flutter test test/offline_mt_test.dart
-      - name: End to end with the real model
+      - name: End to end with the real model (online)
         shell: pwsh
         env:
           OPUS_MT_LIVE: '1'
-          MT_LIVE_OUT: ${{ runner.temp }}\mt_live_windows.json
+          MT_LIVE_PHASE: online
+          MT_LIVE_DIR: ${{ runner.temp }}\mtlive
+          MT_LIVE_OUT: ${{ runner.temp }}\report\mt_live_online.json
+        run: |
+          New-Item -ItemType Directory -Force "$env:RUNNER_TEMP\report" | Out-Null
+          flutter test test/offline_mt_windows_test.dart --reporter expanded
+      - name: Block the internet for the test process
+        shell: pwsh
+        run: |
+          $tester = Get-ChildItem -Recurse -Filter flutter_tester.exe "$env:FLUTTER_ROOT\bin\cache" | Select-Object -First 1
+          if (-not $tester) { throw 'flutter_tester.exe not found' }
+          New-NetFirewallRule -DisplayName 'storilex-offline-test' -Direction Outbound -Action Block -Program $tester.FullName | Out-Null
+          Write-Host "Outbound blocked for $($tester.FullName)"
+      - name: End to end with the real model (no internet)
+        shell: pwsh
+        env:
+          OPUS_MT_LIVE: '1'
+          MT_LIVE_PHASE: offline
+          MT_LIVE_DIR: ${{ runner.temp }}\mtlive
+          MT_LIVE_OUT: ${{ runner.temp }}\report\mt_live_offline.json
         run: flutter test test/offline_mt_windows_test.dart --reporter expanded
+      - name: Allow the internet again
+        if: always()
+        shell: pwsh
+        run: Remove-NetFirewallRule -DisplayName 'storilex-offline-test' -ErrorAction SilentlyContinue
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: offline-mt-windows-report
-          path: ${{ runner.temp }}\mt_live_windows.json
+          path: ${{ runner.temp }}\report
           if-no-files-found: warn
