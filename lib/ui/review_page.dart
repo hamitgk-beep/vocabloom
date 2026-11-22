@@ -273,6 +273,19 @@ class _ReviewPageState extends State<ReviewPage> {
                             ],
                             if (meaning == null && gloss == null)
                               Text(L('Anlam kaydedilmemiş.', 'No meaning saved.'), style: theme.textTheme.bodyMedium),
+                            // Not confirmed for this sentence: said in neutral words; the saved meaning stays as it is.
+                            if (meaning != null && ans.unconfirmed) ...[
+                              const SizedBox(height: 8),
+                              Text(
+                                ans.saved
+                                    ? L('Kayıtlı anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                        'The saved meaning could not be confirmed for this sentence. This card is not graded.')
+                                    : L('Bu anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                        'This meaning could not be confirmed for this sentence. This card is not graded.'),
+                                key: const ValueKey('review-unconfirmed'),
+                                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, fontStyle: FontStyle.italic),
+                              ),
+                            ],
                             const SizedBox(height: 8),
                             TextButton.icon(
                               style: TextButton.styleFrom(padding: EdgeInsets.zero),

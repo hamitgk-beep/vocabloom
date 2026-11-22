@@ -29,36 +29,37 @@ void main() {
   });
 
   // Hamit: "through" saved from a book was asked as "aktarmasız, direkt"; the
-  // card must ask the word's most common meaning, not the book's sense. Cards
-  // saved with no meaning (option B): the common meaning by the source order,
-  // and no graded question when the sentence clearly uses another meaning.
-  test('review card: the right answer is the most common meaning, not the sentence one', () {
+  // card asks the word's most common meaning, not the book's sense, and only
+  // grades it when the context picker confirms it for the card's sentence
+  // (ReviewQuiz.confirms). Unconfirmed: a plain flashcard, nothing graded.
+  test('review card: the most common meaning, graded only when the sentence confirms it', () {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     const train = 'We took a through train from London to Edinburgh.';
     const golf = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
-    // KNOWN WEAKNESS (reported): the context picker is only "likely" on the river
-    // bank, so "banka" is still asked there.
-    for (final (lemma, s) in [('through', train), ('bank', 'They sat on the bank of the river.'), ('course', null)]) {
+    for (final (lemma, s, graded) in [
+      ('through', train, false),
+      ('bank', 'They sat on the bank of the river.', false),
+      ('bank', 'The bank approved the loan.', true),
+      ('course', golf, false),
+    ]) {
       final common = d.commonMeaning(lemma);
       expect(common.tr, isNotNull, reason: lemma);
       final q = ReviewQuiz(d, u, rnd: Random(1));
-      final ch = q.choiceFor(saved(lemma, s))!;
-      expect(ch.right, common.tr, reason: lemma);
-      expect(ch.options.toSet().length, 4, reason: lemma);
-      // The same word saved from another sentence asks the same meaning.
-      expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved(lemma, null))!.right, common.tr, reason: lemma);
+      expect(q.answerFor(saved(lemma, s)).tr, common.tr, reason: lemma);
+      final ch = q.choiceFor(saved(lemma, s));
+      expect(ch?.right, graded ? common.tr : null, reason: '$lemma in "$s"');
+      // The same word saved with no sentence asks the common meaning.
+      final plain = ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved(lemma, null))!;
+      expect(plain.right, common.tr, reason: lemma);
+      expect(plain.options.toSet().length, 4, reason: lemma);
     }
     // ft's first meaning (DictDb.sourcePolicy); the AI draft said "boyunca, baştan sona".
     expect(d.commonMeaning('through').tr, 'boyunca');
     expect(d.commonMeaning('except').tr, 'dışında, hariç'); // ft order; the AI draft said "hariç, dışında"
     // KNOWN WEAKNESS (reported): ft's first meaning of course is "mecra"; the AI draft's
-    // "kurs, ders" reads better but is unreviewed, so it is no longer the answer (DictDb.sourcePolicy).
+    // "kurs, ders" reads better but is unreviewed. It is only graded on a card with no sentence.
     expect(d.commonMeaning('course').tr, 'mecra');
     expect(d.commonMeaning('bank').tr, contains('banka'));
-    // The golf course clearly is not "mecra": shown as a flashcard, not graded.
-    final q = ReviewQuiz(d, u, rnd: Random(1));
-    expect(q.answerFor(saved('course', golf)).tr, 'mecra');
-    expect(q.choiceFor(saved('course', golf)), isNull);
     // A meaning the AI service gave for the sentence does not replace the
     // dictionary's common meaning, and does not make it graded.
     u.setContextAi('course', golf, 'saha, golf sahası');
@@ -70,8 +71,12 @@ void main() {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     const s = 'How often does some crime come to light simply by reason of a bit of unmitigated bungling, '
         'and each tune one asks oneself the question: If this hadn\'t been bungled, would anyone ever have known?';
-    final ch = ReviewQuiz(d, u, rnd: Random(2)).choiceFor(saved('simply', s))!;
+    final q = ReviewQuiz(d, u, rnd: Random(2));
     // ft's first meaning (DictDb.sourcePolicy); the AI draft said "sadece, yalnızca".
+    expect(q.answerFor(saved('simply', s)).tr, 'sadece');
+    // In this long sentence the context picker does not confirm it: shown, not graded.
+    expect(q.choiceFor(saved('simply', s)), isNull);
+    final ch = ReviewQuiz(d, u, rnd: Random(2)).choiceFor(saved('simply', null))!;
     expect(ch.right, 'sadece');
     expect(ch.options.toSet().length, 4);
   });
@@ -91,7 +96,7 @@ void main() {
     final rows = d.db.select(
         "SELECT substr(e.key, 3) AS w, e.en FROM exs e JOIN wfreq f ON f.word = substr(e.key, 3) "
         "WHERE e.key LIKE 'w:%' AND length(substr(e.key, 3)) > 3 GROUP BY e.key ORDER BY f.n DESC LIMIT 1500");
-    var asked = 0, flash = 0, unsure = 0, untranslatable = 0, notGraded = 0;
+    var asked = 0, flash = 0, unsure = 0, untranslatable = 0, notGraded = 0, other = 0, unknown = 0;
     final seenLemma = <String>{};
     final unsureList = <String>[];
     final bad = <String>[];
@@ -113,9 +118,12 @@ void main() {
       final ch = q.choiceFor(saved(w, s));
       final a = q.answerFor(saved(w, s));
       if (!a.choice) {
-        // The sentence clearly uses another meaning: a plain flashcard, never
-        // a wrong "right" answer (rule for cards saved with no meaning).
+        // Not confirmed for the sentence: a plain flashcard, never a wrong
+        // "right" answer.
         notGraded++;
+        final f = q.fit(w, s, a.tr!);
+        if (f == SentenceFit.other) other++;
+        if (f == SentenceFit.unknown) unknown++;
         continue;
       }
       if (ch == null) {
@@ -141,12 +149,15 @@ void main() {
       if (a.pos == 'n' && DictDb.isTrVerb(ch.right) && !ch.right.contains(' ')) bad.add('$w: noun answered with verb "${ch.right}"');
     }
     // ignore: avoid_print
-    print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards, $notGraded not graded (sentence uses another meaning), $unsure answers guessed, $untranslatable words with no Turkish at all');
+    print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards, $notGraded not graded (picker chose another meaning: $other, chose none: $unknown), $unsure answers guessed, $untranslatable words with no Turkish at all');
     final dump = Platform.environment['AUDIT_UNSURE'];
     if (dump != null) File(dump).writeAsStringSync(unsureList.join('\n'));
     expect(bad, isEmpty, reason: bad.take(30).join('\n'));
     expect(flash, 0);
-    expect(notGraded, lessThan(rows.length * 0.12));
+    // The price of never grading an unconfirmed answer (measured: 625 graded,
+    // 639 not, of 1,264). The floor keeps the share of graded cards from
+    // falling further unnoticed.
+    expect(asked, greaterThan(rows.length * 0.38));
     expect(untranslatable, lessThan(rows.length * 0.02));
     expect(unsure, lessThan(rows.length * 0.03));
   });

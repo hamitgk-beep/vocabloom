@@ -276,83 +276,98 @@ void main() {
     List<String> row(String lemma) =>
         user.db.select('SELECT * FROM words WHERE lemma LIKE ?', ['%$lemma']).map((r) => r.toString()).toList();
 
-    group('old card, meaning saved: the saved meaning is the answer', () {
-      for (final (lemma, ctx, meaning) in [
-        ('still', 'Keep still.', 'hareketsiz, durgun'), // the AI draft shown first before this change
-        ('course', golf, 'saha, golf sahası'),
-        ('through', train, 'boyunca, baştan sona'),
-        ('book', 'I booked a table for two.', 'rezerve etmek, ayırtmak'),
-        ('a dime a dozen', 'Talented singers are a dime a dozen in this city.', 'bol, ucuz'),
-      ]) {
-        test('$lemma', () {
-          app.setWord(lemma, WordStatus.learning, context: ctx, meaning: meaning);
-          final row0 = row(lemma);
-          final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma);
-          final q = ReviewQuiz(d, user, rnd: Random(1));
-          final a = q.answerFor(w);
-          expect(a.saved, isTrue);
-          final ch = q.choiceFor(w)!;
-          expect(ch.right, DictDb.shortTr(meaning));
-          expect(ch.options.toSet().length, 4);
-          // Building and answering the quiz do not rewrite the saved card.
-          expect(row(lemma), row0);
-          expect(user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma).meaning, meaning);
-        });
-      }
+    const evening = 'She took an evening course in English literature.';
+    const water = 'The water was perfectly still.';
+    const river = 'They sat on the bank of the river.';
 
-      test('a saved meaning of the wrong kind for the sentence is kept, but not graded', () {
-        // Saved by an old version: "akmak" (a verb) for the golf course (a noun).
-        final w = saved('course', golf, 'akmak, hızla akmak');
+    // The confidence rule (ReviewQuiz.confirms): an answer is graded only when
+    // the context picker confirms it for the card's sentence. Otherwise the
+    // card is a plain flashcard: no choices, nothing graded, nothing rewritten.
+    // (lemma, sentence, saved meaning, answer shown, graded)
+    final cases = <(String, String?, String?, String, bool)>[
+      // Hamit's four examples, saved with no meaning (old cards and new ones alike).
+      ('course', evening, null, 'mecra', false),
+      ('still', water, null, 'hâlâ', false),
+      ('bank', river, null, 'banka', false),
+      ('course', golf, null, 'mecra', false),
+      // The same, with the meaning an old version saved: kept, never graded as right.
+      ('course', golf, 'akmak, hızla akmak', 'akmak, hızla akmak', false),
+      ('course', evening, 'mecra', 'mecra', false),
+      ('still', water, 'hâlâ', 'hâlâ', false),
+      ('bank', river, 'banka', 'banka', false),
+      // The picker has no meaning it stands behind (grammar word): not graded either.
+      ('still', 'Keep still.', 'hareketsiz, durgun', 'hareketsiz, durgun', false),
+      ('through', train, 'boyunca, baştan sona', 'boyunca, baştan sona', false),
+      ('through', train, null, 'boyunca', false),
+      // Confirmed by the picker: graded, with the saved meaning as it was saved.
+      ('course', golf, 'saha, golf sahası', 'saha, golf sahası', true),
+      ('course', evening, 'kurs, ders', 'kurs, ders', true),
+      ('book', 'I booked a table for two.', 'rezerve etmek, ayırtmak', 'rezerve etmek, ayırtmak', true),
+      ('book', 'I read a good book.', null, 'kitap, betik', true),
+      ('bank', 'The bank approved the loan.', null, 'banka', true),
+      // No sentence on the card: nothing to contradict, the meaning is asked.
+      ('still', null, null, 'hâlâ', true),
+      ('through', null, null, 'boyunca', true),
+      ('course', null, 'kurs, ders', 'kurs, ders', true),
+    ];
+    for (final (lemma, ctx, meaning, shown, graded) in cases) {
+      test('$lemma | ${ctx ?? "no sentence"} | saved: ${meaning ?? "-"} → ${graded ? "graded" : "not graded"}', () {
+        final w = saved(lemma, ctx, meaning);
         final q = ReviewQuiz(d, user, rnd: Random(1));
-        expect(q.answerFor(w).tr, 'akmak, hızla akmak');
-        expect(q.answerFor(w).choice, isFalse);
-        expect(q.choiceFor(w), isNull);
+        final a = q.answerFor(w);
+        expect(a.tr, shown);
+        expect(a.saved, meaning != null);
+        expect(a.choice, graded);
+        expect(a.unconfirmed, !graded);
+        final ch = q.choiceFor(w);
+        if (graded) {
+          expect(ch!.right, shown);
+          expect(ch.options.toSet().length, 4);
+        } else {
+          expect(ch, isNull, reason: 'an unconfirmed answer is never one of four choices');
+        }
       });
+    }
 
-      test('an English definition saved when no Turkish was known is not a Turkish answer', () {
-        final gloss = d.lookup('still').senses.first.gloss;
-        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('still', null, gloss));
-        expect(a.saved, isFalse);
-        expect(a.tr, d.commonMeaning('still').tr);
-      });
+    test('the rule is general: no word is named in it, and a draft never confirms', () {
+      final src = File('lib/data/review_quiz.dart').readAsStringSync();
+      final rule = src.substring(src.indexOf('SentenceFit fit('), src.indexOf('static bool _overlap'));
+      for (final w in ['course', 'still', 'bank', 'mecra', 'banka', 'akmak', 'hâlâ']) {
+        expect(rule.contains("'$w'"), isFalse, reason: w);
+      }
+      final q = ReviewQuiz(d, user, rnd: Random(1));
+      // The picker's own choice confirms itself; an unrelated meaning does not.
+      final c = _sense(app, golf, 'course');
+      expect(q.fit('course', golf, c.tr!), SentenceFit.confirmed);
+      expect(q.fit('course', golf, 'banka'), SentenceFit.other);
+      expect(q.fit('still', water, 'hâlâ'), SentenceFit.unknown);
+      expect(q.fit('course', 'No such word here.', 'kurs'), SentenceFit.unknown);
     });
 
-    group('old card, no meaning saved: the source order, never a wrong right answer', () {
-      test('still', () {
-        final ch = ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('still', 'She is still here.', null))!;
-        expect(ch.right, 'hâlâ');
-        // KNOWN WEAKNESS (reported): the context picker treats "still" as a
-        // grammar word, so "perfectly still" (durgun) is not recognised and still asks "hâlâ".
-        expect(ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('still', 'The water was perfectly still.', null))!.right, 'hâlâ');
-      });
+    test('saved cards are not rewritten: meaning, status and schedule stay', () {
+      app.setWord('course', WordStatus.none);
+      app.setWord('course', WordStatus.learning, context: golf, meaning: 'akmak, hızla akmak');
+      final row0 = row('course');
+      final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'course');
+      final q = ReviewQuiz(d, user, rnd: Random(1));
+      expect(q.choiceFor(w), isNull);
+      expect(q.answerFor(w).tr, 'akmak, hızla akmak');
+      expect(row('course'), row0);
+    });
 
-      test('course: "mecra" is not graded for a golf course', () {
-        final q = ReviewQuiz(d, user, rnd: Random(1));
-        final a = q.answerFor(saved('course', golf, null));
-        expect(a.tr, 'mecra');
-        expect(a.choice, isFalse);
-        expect(q.choiceFor(saved('course', golf, null)), isNull);
-        // No sentence: the common meaning is asked.
-        expect(q.choiceFor(saved('course', null, null))!.right, 'mecra');
-      });
+    test('an English definition saved when no Turkish was known is not a Turkish answer', () {
+      final gloss = d.lookup('still').senses.first.gloss;
+      final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('still', null, gloss));
+      expect(a.saved, isFalse);
+      expect(a.tr, d.commonMeaning('still').tr);
+    });
 
-      test('through', () {
-        final ch = ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('through', train, null))!;
-        expect(ch.right, 'boyunca');
-      });
-
-      test('book: the common meaning, not the meaning a user added to the row', () {
-        final q = ReviewQuiz(d, user, rnd: Random(1));
-        expect(q.choiceFor(saved('book', 'I read a good book.', null))!.right, contains('kitap'));
-        // "I booked a table": the sentence clearly uses the verb, so "kitap" is not graded.
-        final a = q.answerFor(saved('book', 'I booked a table for two.', null));
-        expect(a.choice, isFalse);
-        expect(q.choiceFor(saved('book', 'I booked a table for two.', null)), isNull);
-      });
-
-      test('a dime a dozen: the dictionary meaning', () {
+    group('expressions and drafts', () {
+      test('a dime a dozen: the saved meaning is kept; with none, the dictionary meaning', () {
         final e = _expr(d, 'a dime a dozen', 'idioms');
-        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('a dime a dozen', null, null));
+        final q = ReviewQuiz(d, user, rnd: Random(1));
+        expect(q.answerFor(saved('a dime a dozen', 'Talented singers are a dime a dozen in this city.', 'bol, ucuz')).tr, 'bol, ucuz');
+        final a = q.answerFor(saved('a dime a dozen', null, null));
         expect(a.tr, DictDb.shortTr(e.tr!));
         expect(a.choice, isTrue);
       });
@@ -428,6 +443,7 @@ void main() {
       (golf, 'course', 'course', 'saha, pist'), // sure
       ('She took an evening course in English literature.', 'course', 'course', null), // only likely
       ('We took a through train from London to Edinburgh.', 'through', 'through', null),
+      ('They sat on the bank of the river.', 'bank', 'bank', null), // only likely
       ('I booked a table for two.', 'booked', 'book', 'rezerve etmek, rezerve ettirmek, rezervasyon yapmak'),
     ]) {
       testWidgets('$lemma in "$sentence"', (tester) async {
@@ -436,11 +452,14 @@ void main() {
         // The new card asks what was saved; with nothing saved, the review rules for empty meanings apply.
         final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma);
         final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(w);
+        // The same confidence rule as for old cards: graded only with a confirmed meaning.
+        expect(a.choice, want != null);
         if (want != null) {
           expect(a.tr, DictDb.shortTr(want));
           expect(a.saved, isTrue);
         } else {
           expect(a.saved, isFalse);
+          expect(a.unconfirmed, isTrue);
         }
       });
     }

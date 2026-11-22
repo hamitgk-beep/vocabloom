@@ -112,6 +112,13 @@ void main() {
     expect(st0.debugRight, isNull);
     expect(app.user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'course').meaning, 'akmak, hızla akmak');
     await shot(tester, 'course_question');
+    // Turned: the saved meaning as it is, with the neutral note that it could
+    // not be confirmed for this sentence. Nothing is corrected.
+    await tester.tap(find.textContaining('Görmek için dokun'));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('akmak, hızla akmak'), findsOneWidget);
+    expect(find.byKey(const ValueKey('review-unconfirmed')), findsOneWidget);
+    await shot(tester, 'course_unconfirmed');
 
     // 2. A meaning from the AI service for the sentence does not replace it.
     app.user.setContextAi('course', golf, 'saha, golf sahası');
@@ -120,18 +127,12 @@ void main() {
     expect(st.debugRight, isNull);
     expect(find.text('saha, golf sahası'), findsNothing);
 
-    // 2b. "through" saved from "a through train" with no meaning: the common
-    // meaning by the source order (ft's "boyunca"), not "aktarmasız".
+    // 2b. "through" saved from "a through train" with no meaning.
     await open(tester, 'through');
     final st2 = tester.state(find.byType(ReviewPage)) as dynamic;
-    expect(st2.debugRight, app.dict.commonMeaning('through').tr);
-    expect(st2.debugRight, 'boyunca');
+    // The picker has no meaning for "through" here it can stand behind: not graded.
+    expect(st2.debugRight, isNull);
     await shot(tester, 'through_question');
-    final right = find.text(st2.debugRight as String);
-    await tester.tap(right);
-    await tester.pump(const Duration(milliseconds: 200));
-    await shot(tester, 'through_answered', pumps: 2);
-    await tester.pump(const Duration(seconds: 1));
 
     await open(tester);
     // 3. Tapping the underlined asked word opens nothing; another word opens its panel.
