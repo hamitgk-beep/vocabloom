@@ -754,7 +754,26 @@ class SenseEngine {
         if (!c.literal) c.score -= 0.25;
       }
     }
-    final r = _decide(e.phrase, e.cat, headLemmas.firstOrNull, cands, ctx, shape, pos);
+    var r = _decide(e.phrase, e.cat, headLemmas.firstOrNull, cands, ctx, shape, pos);
+    // Idiom or words, and the sentence cannot tell which ("tough as old
+    // boots", "go with the flow"): an idiom meaning about as close as the
+    // word-by-word one is shown, as a guess, rather than hidden. A guess
+    // never grades a card ([fit] wants "sure" for an expression).
+    if (r.literalPhrase != null && r.best != null && r.confidence != SenseConfidence.none && e.cat != 'phrasal_verbs') {
+      final lead = r.best!.score;
+      final near = r.ranked.where((c) => !c.literal && c.tr.isNotEmpty && lead - c.score <= _idiomOrWords).toList();
+      if (near.isNotEmpty) {
+        final idiom = near.first;
+        return ContextSense(
+            headword: e.phrase,
+            cat: e.cat,
+            confidence: SenseConfidence.likely,
+            best: idiom,
+            others: _others([for (final c in r.ranked) if (!identical(c, idiom)) c], idiom),
+            reason: 'idiom or words: ${r.best!.id} ${lead.toStringAsFixed(3)}; ${idiom.id} ${idiom.score.toStringAsFixed(3)}',
+            ranked: r.ranked);
+      }
+    }
     // An idiom made of ordinary words can also be meant word by word ("on
     // board", "oil and water"), and nothing in the sentence tells the two
     // apart reliably (MAGPIE: a third of the "sure" idioms were literal). So
@@ -774,6 +793,10 @@ class SenseEngine {
     }
     return r;
   }
+
+  /// How close an idiom meaning must come to the word-by-word reading to be
+  /// shown instead of it (the margin [_decide] calls "close").
+  static const _idiomOrWords = 0.06;
 
   /// Whether the word after token [last] (in the same clause) carries on the
   /// noun group that ends the expression: "of", "one", or a noun that is not

@@ -77,6 +77,9 @@ class TrEnDict {
         if (r.isNotEmpty) return (r, false);
       }
     }
+    // Not in the tables: a guess. Every base word the endings allow is kept
+    // (at most three), so a wrong first guess is never the only one shown.
+    final guesses = <String>[];
     // Verb forms the tables leave out ("olduğumu", "yaptığını", "alabilir"):
     // cut a verb ending and look for the infinitive (ol -> olmak).
     for (final end in _verbEndings) {
@@ -84,13 +87,13 @@ class TrEnDict {
         var stem = w.substring(0, w.length - end.length);
         for (final st in {stem, if (stem.endsWith('d')) '${stem.substring(0, stem.length - 1)}t'}) {
           for (final inf in ['${st}mak', '${st}mek']) {
-            if (_has(inf)) return ([inf], true);
+            if (_has(inf) && !guesses.contains(inf)) guesses.add(inf);
           }
           // negative: "olmadığından" is ol-ma-dığından (olmak)
           if (st.length > 3 && (st.endsWith('ma') || st.endsWith('me'))) {
             final pos = st.substring(0, st.length - 2);
             for (final inf in ['${pos}mak', '${pos}mek']) {
-              if (_has(inf)) return ([inf], true);
+              if (_has(inf) && !guesses.contains(inf)) guesses.add(inf);
             }
           }
         }
@@ -99,9 +102,11 @@ class TrEnDict {
     // Noun endings the tables leave out ("tehlikesi", "hesabına",
     // "yatırımcıları"): plural, possessive and case endings that agree with
     // the word's last vowel, on a noun or adjective the dictionary has.
-    final noun = _nounStem(w);
-    if (noun != null) return ([noun], true);
-    return (const <String>[], false);
+    for (final n in _nounStems(w)) {
+      if (!guesses.contains(n)) guesses.add(n);
+    }
+    if (guesses.isEmpty) return (const <String>[], false);
+    return (guesses.take(3).toList(), true);
   }
 
   static final _formOf = RegExp(
@@ -162,11 +167,12 @@ class TrEnDict {
     return e != null && e.senses.any((s) => const {'noun', 'adj', 'name', 'pron'}.contains(s.pos));
   }
 
-  /// The noun a word with endings belongs to, or null. Consonants softened
+  /// The nouns a word with endings can belong to, the likeliest first. Consonants softened
   /// before a vowel are put back (hesab- → hesap, ağac- → ağaç) and a vowel
   /// dropped before an ending ("kadri" → kadir); the ending must follow the
   /// word's vowel harmony, and the rest must be two letters or more.
-  String? _nounStem(String w) {
+  List<String> _nounStems(String w) {
+    final out = <String>[];
     // First the word as written before the ending, then with a softened
     // consonant or a dropped vowel put back ("kendinden" is kendi, not kent).
     for (final altered in [false, true]) {
@@ -175,7 +181,7 @@ class TrEnDict {
         final st = w.substring(0, w.length - end.length);
         if (!_harmony(st, end)) continue;
         if (!altered) {
-          if (_isNominal(st)) return st;
+          if (!out.contains(st) && _isNominal(st)) out.add(st);
           continue;
         }
         // Softening happens only before a vowel.
@@ -189,11 +195,11 @@ class TrEnDict {
           for (final v in 'ıiuü'.split('')) '${st.substring(0, st.length - 1)}$v${st[st.length - 1]}',
       ];
         for (final o in opts) {
-          if (o.length >= 2 && _isNominal(o)) return o;
+          if (o.length >= 2 && !out.contains(o) && _isNominal(o)) out.add(o);
         }
       }
     }
-    return null;
+    return out;
   }
 
   static final List<String> _verbEndings = () {

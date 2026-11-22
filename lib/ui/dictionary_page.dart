@@ -66,9 +66,11 @@ class _DictionaryPageState extends State<DictionaryPage> {
     if (widget.app.learnTurkish) {
       // Learning Turkish: a Turkish word (any form), otherwise an English meaning.
       final d = widget.app.trEn!;
-      final l = d.lemmas(TrEnDict.lower(text.trim()));
+      final (l, guessed) = d.lemmasWithGuess(TrEnDict.lower(text.trim()));
       final en = l.isEmpty ? d.searchEnglish(t, limit: 1) : const <(String, String)>[];
-      if (l.isNotEmpty || en.isNotEmpty) _open(l.isNotEmpty ? l.first : en.first.$1);
+      // A guessed base word opens from the typed form, so the sheet says it is
+      // a guess and offers the other possible roots.
+      if (l.isNotEmpty || en.isNotEmpty) _open(l.isNotEmpty ? l.first : en.first.$1, typed: guessed ? text.trim() : null);
       return;
     }
     if (t.contains(' ')) {
@@ -102,9 +104,11 @@ class _DictionaryPageState extends State<DictionaryPage> {
     }
   }
 
-  Future<void> _open(String word) async {
+  /// Opens [word]; with [typed], a form whose base word [word] is only a
+  /// guess, the sheet opens from that form and shows the guess as one.
+  Future<void> _open(String word, {String? typed}) async {
     widget.app.user.setSetting(_recentKey, jsonEncode([word, ..._recent.where((w) => w != word)].take(20).toList()));
-    await showWordSheet(context, widget.app, word, lemma: word);
+    await showWordSheet(context, widget.app, typed ?? word, lemma: word);
     if (mounted) setState(() {});
   }
 
@@ -124,12 +128,19 @@ class _DictionaryPageState extends State<DictionaryPage> {
     final List<String> en;
     final List<(String, String?)> tr;
     final bool enFirst;
+    // Base words found only by cutting endings off what was typed.
+    String? guessFrom;
+    var guessedForms = const <String>{};
     if (learnTr) {
       // Learning Turkish: Turkish words first, then Turkish words for an English meaning.
       final d = app.trEn!;
       final key = TrEnDict.lower(q.trim());
       final direct = typing ? d.search(key, limit: 40) : const <String>[];
-      final forms = typing && direct.isEmpty ? d.lemmas(key) : const <String>[];
+      final (forms, guessed) = typing && direct.isEmpty ? d.lemmasWithGuess(key) : (const <String>[], false);
+      if (guessed) {
+        guessFrom = q.trim();
+        guessedForms = forms.toSet();
+      }
       en = [...direct, ...forms.where((f) => !direct.contains(f))];
       tr = typing ? [for (final (w, m) in d.searchEnglish(t, limit: 40)) (w, m)] : const [];
       enFirst = en.isNotEmpty && (en.first == key || tr.isEmpty || tr.first.$2?.toLowerCase() != t);
@@ -286,7 +297,7 @@ class _DictionaryPageState extends State<DictionaryPage> {
                           ? null
                           : Text(meaning, maxLines: 2, overflow: TextOverflow.ellipsis, style: (learnTr ? enStyle : trStyle)(theme, theme.textTheme.bodyMedium)),
                       trailing: st == null ? null : Icon(Icons.circle, size: 12, color: st == WordStatus.learning ? learningColor : learnedColor),
-                      onTap: () => _open(w),
+                      onTap: () => _open(w, typed: guessedForms.contains(w) ? guessFrom : null),
                     ),
                   ]);
                 },

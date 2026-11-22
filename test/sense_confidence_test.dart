@@ -130,6 +130,23 @@ void main() {
       }
     });
 
+    test('idiom or words, and the sentence cannot tell: the idiom meaning is shown, as a guess', () {
+      for (final (s, phrase) in [
+        ('Enjoy the ride down, let the wind fly through your hair, go with the flow, and wait.', 'go with the flow'),
+        ('He knew he had an image to keep up, tough as old boots and cool.', 'tough as old boots'),
+      ]) {
+        final q = SenseQuery.find(d, s, phrase);
+        expect(q.expr, isNotNull, reason: phrase);
+        final c = engine.resolve(q);
+        expect(c.cat, isNotNull, reason: '$phrase: ${c.reason}');
+        expect(c.literalPhrase, isNull, reason: c.reason);
+        expect(c.shown, isTrue, reason: c.reason);
+        expect(c.confidence, SenseConfidence.likely, reason: c.reason);
+        // Shown, never graded.
+        expect(engine.fit(phrase, s, c.tr!).confirmed, isFalse, reason: phrase);
+      }
+    });
+
     test('phrasal verbs keep their own checks: "looked up at the sky"', () {
       final c = engine.resolve(SenseQuery.find(d, 'She looked up at the sky.', 'look up'));
       expect(c.tr, contains('yukarı bakmak'));
