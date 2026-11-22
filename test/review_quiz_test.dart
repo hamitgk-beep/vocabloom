@@ -29,12 +29,16 @@ void main() {
   });
 
   // Hamit: "through" saved from a book was asked as "aktarmasız, direkt"; the
-  // card must ask the word's most common meaning, not the book's sense.
+  // card must ask the word's most common meaning, not the book's sense. Cards
+  // saved with no meaning (option B): the common meaning by the source order,
+  // and no graded question when the sentence clearly uses another meaning.
   test('review card: the right answer is the most common meaning, not the sentence one', () {
     final u = UserDb.open(Directory.systemTemp.createTempSync('rq'));
     const train = 'We took a through train from London to Edinburgh.';
     const golf = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
-    for (final (lemma, s) in [('through', train), ('course', golf), ('bank', 'They sat on the bank of the river.')]) {
+    // KNOWN WEAKNESS (reported): the context picker is only "likely" on the river
+    // bank, so "banka" is still asked there.
+    for (final (lemma, s) in [('through', train), ('bank', 'They sat on the bank of the river.'), ('course', null)]) {
       final common = d.commonMeaning(lemma);
       expect(common.tr, isNotNull, reason: lemma);
       final q = ReviewQuiz(d, u, rnd: Random(1));
@@ -51,10 +55,15 @@ void main() {
     // "kurs, ders" reads better but is unreviewed, so it is no longer the answer (DictDb.sourcePolicy).
     expect(d.commonMeaning('course').tr, 'mecra');
     expect(d.commonMeaning('bank').tr, contains('banka'));
+    // The golf course clearly is not "mecra": shown as a flashcard, not graded.
+    final q = ReviewQuiz(d, u, rnd: Random(1));
+    expect(q.answerFor(saved('course', golf)).tr, 'mecra');
+    expect(q.choiceFor(saved('course', golf)), isNull);
     // A meaning the AI service gave for the sentence does not replace the
-    // dictionary's common meaning.
+    // dictionary's common meaning, and does not make it graded.
     u.setContextAi('course', golf, 'saha, golf sahası');
-    expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved('course', golf))!.right, 'mecra');
+    expect(ReviewQuiz(d, u, rnd: Random(1)).answerFor(saved('course', golf)).tr, 'mecra');
+    expect(ReviewQuiz(d, u, rnd: Random(1)).choiceFor(saved('course', golf)), isNull);
   });
 
   test('simply is "sadece", with four choices', () {
@@ -82,7 +91,7 @@ void main() {
     final rows = d.db.select(
         "SELECT substr(e.key, 3) AS w, e.en FROM exs e JOIN wfreq f ON f.word = substr(e.key, 3) "
         "WHERE e.key LIKE 'w:%' AND length(substr(e.key, 3)) > 3 GROUP BY e.key ORDER BY f.n DESC LIMIT 1500");
-    var asked = 0, flash = 0, unsure = 0, untranslatable = 0;
+    var asked = 0, flash = 0, unsure = 0, untranslatable = 0, notGraded = 0;
     final seenLemma = <String>{};
     final unsureList = <String>[];
     final bad = <String>[];
@@ -103,6 +112,12 @@ void main() {
       if (!seenLemma.add(w)) continue;
       final ch = q.choiceFor(saved(w, s));
       final a = q.answerFor(saved(w, s));
+      if (!a.choice) {
+        // The sentence clearly uses another meaning: a plain flashcard, never
+        // a wrong "right" answer (rule for cards saved with no meaning).
+        notGraded++;
+        continue;
+      }
       if (ch == null) {
         flash++;
         bad.add('$w: no four-choice question for "$s"');
@@ -126,11 +141,12 @@ void main() {
       if (a.pos == 'n' && DictDb.isTrVerb(ch.right) && !ch.right.contains(' ')) bad.add('$w: noun answered with verb "${ch.right}"');
     }
     // ignore: avoid_print
-    print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards, $unsure answers guessed, $untranslatable words with no Turkish at all');
+    print('audit: ${rows.length} words, $asked four-choice questions, $flash flashcards, $notGraded not graded (sentence uses another meaning), $unsure answers guessed, $untranslatable words with no Turkish at all');
     final dump = Platform.environment['AUDIT_UNSURE'];
     if (dump != null) File(dump).writeAsStringSync(unsureList.join('\n'));
     expect(bad, isEmpty, reason: bad.take(30).join('\n'));
     expect(flash, 0);
+    expect(notGraded, lessThan(rows.length * 0.12));
     expect(untranslatable, lessThan(rows.length * 0.02));
     expect(unsure, lessThan(rows.length * 0.03));
   });

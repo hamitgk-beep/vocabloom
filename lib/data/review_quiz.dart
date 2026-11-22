@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import '../nlp/context_sense.dart';
+import '../nlp/text.dart';
 import 'dict_db.dart';
 import 'tr_en_dict.dart';
 import 'user_db.dart';
@@ -22,7 +24,15 @@ class QuizAnswer {
 
   /// WordNet sense used in the sentence, when known (for missing-word reports).
   final int? synId;
-  const QuizAnswer(this.tr, this.pos, this.gloss, {this.sure = true, this.synId});
+
+  /// False when [tr] must not be graded as the one right option: it does not
+  /// fit the card's sentence, or it rests only on an unverified AI draft. The
+  /// card is then a plain flashcard (no AI request, no missing-word report).
+  final bool choice;
+
+  /// True when [tr] is the meaning saved on the card (kept as it was saved).
+  final bool saved;
+  const QuizAnswer(this.tr, this.pos, this.gloss, {this.sure = true, this.synId, this.choice = true, this.saved = false});
 }
 
 class QuizChoice {
@@ -66,19 +76,88 @@ class ReviewQuiz {
       return QuizAnswer(m == null || m.trim().isEmpty ? null : DictDb.shortTr(m), null, null);
     }
     if (lemma.contains(' ')) {
-      // An expression: its own dictionary meaning, otherwise what was saved.
       final e = dict.exprs.where((e) => e.phrase == lemma).firstOrNull;
-      final tr = e?.trShown ?? (w.meaning != null && w.meaning != e?.en ? w.meaning : null);
-      return QuizAnswer(tr == null || tr.trim().isEmpty ? null : DictDb.shortTr(tr), null, e?.en);
+      // 1. The meaning saved on the card, as it was saved.
+      final kept = _keptMeaning(w, e?.en == null ? const [] : [e!.en!]);
+      if (kept != null) return QuizAnswer(DictDb.shortTr(kept), null, e?.en, saved: true);
+      // 2. Nothing saved: the dictionary's own meaning. An unverified AI draft
+      // (or an AI service meaning) is shown, but never graded as the answer.
+      final tr = e?.tr ?? e?.trShown;
+      return QuizAnswer(tr == null || tr.trim().isEmpty ? null : DictDb.shortTr(tr), null, e?.en, choice: e?.tr != null);
     }
-    // The word's most common meaning, not the one of the sentence it was
-    // saved from ("through" is "boyunca", even from "a through train").
+    final ctx = w.context;
+    // 1. The meaning saved on the card is kept, whatever the dictionary's
+    // order is now. Only a meaning of the wrong kind for the sentence (a verb
+    // for a noun: "akmak" for "a golf course") is not graded.
+    final kept = _keptMeaning(w, [for (final s in dict.lookup(lemma).senses) s.gloss, for (final o in dict.ownSenses(lemma)) o.en]);
+    if (kept != null) {
+      final k = DictDb.shortTr(kept);
+      final c = dict.commonMeaning(lemma);
+      final clash = ctx != null && _contradicts(lemma, ctx, k, posOnly: true);
+      return QuizAnswer(k, DictDb.isTrVerb(k) ? 'v' : (c.tr != null && _overlap(c.tr!, k) ? c.pos : null),
+          c.tr != null && _overlap(c.tr!, k) ? c.gloss : null,
+          choice: !clash, saved: true);
+    }
+    // 2. Nothing saved (old cards, or no reliable meaning when it was saved):
+    // what was shown then is not known, so the dictionary's common meaning by
+    // the source order. When the card's sentence clearly uses another meaning,
+    // it is not graded as the right answer ("bank" of a river is not "banka").
     final m = dict.commonMeaning(lemma);
-    // A one-word expression ("though", "however") has its own Turkish.
-    final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull?.trShown : null;
+    final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull : null;
     // Only with no Turkish at all: the meaning the AI service gave for the sentence.
-    final ai = m.tr != null || self != null || w.context == null ? null : user.contextAi(lemma, w.context!);
-    return QuizAnswer(m.tr ?? (self == null ? null : DictDb.shortTr(self)) ?? ai, m.pos, m.gloss);
+    final ai = m.tr != null || self != null || ctx == null ? null : user.contextAi(lemma, ctx);
+    if (m.tr == null) {
+      final st = self?.trShown;
+      return QuizAnswer((st == null ? null : DictDb.shortTr(st)) ?? ai, m.pos, m.gloss, choice: self == null || self.tr != null);
+    }
+    final fits = ctx == null || !_contradicts(lemma, ctx, m.tr!);
+    // The common meaning resting only on an AI draft is never graded.
+    final drafted = dict.lookup(lemma).trFreeDict.isEmpty && dict.ownSenses(lemma).isEmpty && dict.lookup(lemma).senses.every((s) => s.tr.isEmpty);
+    return QuizAnswer(m.tr, m.pos, m.gloss, choice: fits && !drafted);
+  }
+
+  /// The card's saved meaning, unless it is empty, a cross reference or an
+  /// English definition ([glosses]) saved when no Turkish was known.
+  static String? _keptMeaning(SavedWord w, Iterable<String> glosses) {
+    final k = w.meaning?.trim();
+    if (k == null || k.isEmpty || k.toLowerCase().contains('bakınız')) return null;
+    if (glosses.any((g) => g.trim() == k)) return null;
+    return k;
+  }
+
+  late final SenseEngine _senses = SenseEngine(dict);
+
+  /// Whether the card's sentence clearly uses [lemma] in another meaning than
+  /// [answer]: the context picker is sure (and not resting on an AI draft),
+  /// its Turkish shares nothing with [answer], and [answer] is of the other
+  /// kind (a verb for a noun or the other way round) or is the Turkish of
+  /// another WordNet sense of the word ("banka" for the bank of a river).
+  /// [posOnly]: only the first test (for a saved meaning, which is kept).
+  bool _contradicts(String lemma, String sentence, String answer, {bool posOnly = false}) {
+    final toks = tokenize(sentence);
+    final i = dict.indexOfLemma(toks, lemma);
+    if (i < 0) return false;
+    final c = _senses.resolve(SenseQuery(sentence: sentence, tokens: toks, index: i, lemma: lemma));
+    final b = c.best;
+    // Only a sure choice: "likely" ones would turn a fifth of the cards into
+    // flashcards (measured on 1,500 common words), mostly for synonyms.
+    if (c.confidence != SenseConfidence.sure || !c.shown || c.cat != null || b == null || b.unverified) return false;
+    if ([...b.tr, c.tr!].any((t) => _overlap(t, answer))) return false;
+    final p = b.pos;
+    if ((p == 'n' || p == 'v') && (p == 'v') != DictDb.isTrVerb(DictDb.shortTr(answer))) return true;
+    if (posOnly) return false;
+    final senses = dict.lookup(lemma).senses;
+    final tied = {for (final x in senses) if (_overlap(x.tr.join(', '), answer)) 'wn:${x.synId}'};
+    if (tied.isNotEmpty) return !tied.contains(b.id);
+    // [answer] belongs to no sense (a FreeDict meaning): only a clear choice
+    // of a rarer sense of the word counts ("saha" of a golf course, not "mecra").
+    final first = senses.where((x) => DictDb.normPos(x.pos) == p).firstOrNull;
+    return c.reason.startsWith('clear') && first != null && 'wn:${first.synId}' != b.id;
+  }
+
+  static bool _overlap(String a, String b) {
+    Set<String> p(String t) => t.toLowerCase().split(_split).map((e) => e.trim()).where((e) => e.isNotEmpty).toSet();
+    return p(a).intersection(p(b)).isNotEmpty;
   }
 
   late final List<SavedWord> _saved = [
@@ -92,6 +171,7 @@ class ReviewQuiz {
   /// [right] overrides the answer (a meaning the AI service just gave).
   QuizChoice? choiceFor(SavedWord w, {String? right}) {
     final a = answerFor(w);
+    if (!a.choice) return null;
     final r = right ?? a.tr;
     if (r == null || r.trim().isEmpty || r.toLowerCase().contains('bakınız')) return null;
     final rightShort = DictDb.shortTr(r);

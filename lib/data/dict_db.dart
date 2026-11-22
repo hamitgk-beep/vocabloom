@@ -7,6 +7,7 @@ import 'package:sqlite3/sqlite3.dart';
 
 import '../l10n.dart';
 import '../nlp/text.dart';
+import 'contrib_verified.dart';
 
 class Sense {
   final int synId;
@@ -127,11 +128,10 @@ class DictDb {
       final key = '${r['phrase']}|${r['cat']}';
       final own = ownExpr[key];
       if (own != null) {
-        final senses = (jsonDecode(own) as List).cast<Map>();
-        final rowOk = !draftExpr.contains(key);
+        final senses = tiered(jsonDecode(own) as List, !draftExpr.contains(key), 'e:$key');
         List<String> trs(bool draft) => [
               for (final x in senses)
-                if (draftSense(x, rowOk) == draft) (x['tr'] as String? ?? '').trim(),
+                if (x.$3 == draft) (x.$2['tr'] as String? ?? '').trim(),
             ].where((x) => x.isNotEmpty).toList();
         final t = trs(false), d = trs(true);
         if (t.isNotEmpty) trOwn = t.join(', ');
@@ -177,10 +177,35 @@ class DictDb {
   /// A row of own_word / own_expr is a verified contribution: the user checked it.
   static bool verifiedRow(Object? reviewed, Object? status) => reviewed == 1 && status != 'ai_draft_unreviewed';
 
-  /// One sense of an own row is an unreviewed AI draft. A meaning the user
-  /// contributed (tools/contrib/apply.py marks it src "storilex") is verified even
-  /// inside an AI draft row; "api_review" is an AI check, not a person's.
-  static bool draftSense(Map sense, bool rowVerified) => sourcePolicy && !rowVerified && sense['src'] != 'storilex';
+  /// The senses of an own row with their tier: (index in the row, sense, is an AI
+  /// draft). A verified row is verified throughout. In an AI draft row a sense is
+  /// verified only when it is marked src "storilex" AND matches a contribution
+  /// record ([contribVerified], tools/contrib/verified_senses.py); the label alone
+  /// is not enough. An idiom whose AI wording got the contributed one added
+  /// ("draft, contributed") is split: the contributed parts verified, the rest a
+  /// draft. "api_review" is an AI check, not a person's: a draft. [key] is
+  /// "w:word" or "e:phrase|cat".
+  static List<(int, Map<String, dynamic>, bool)> tiered(List senses, bool rowVerified, String key) {
+    final out = <(int, Map<String, dynamic>, bool)>[];
+    for (var i = 0; i < senses.length; i++) {
+      final s = (senses[i] as Map).cast<String, dynamic>();
+      if (!sourcePolicy || rowVerified) {
+        out.add((i, s, false));
+        continue;
+      }
+      final v = s['src'] == 'storilex' ? contribVerified['$key#$i'] : null;
+      if (v == null || v.$1 != s['tr']) {
+        out.add((i, s, true));
+        continue;
+      }
+      out.add((i, {...s, 'tr': v.$2}, false));
+      String n(String t) => t.trim().toLowerCase();
+      final mine = {for (final t in v.$2.split(RegExp('[,;]'))) n(t)};
+      final rest = [for (final t in '${s['tr']}'.split(RegExp('[,;]'))) if (t.trim().isNotEmpty && !mine.contains(n(t))) t.trim()];
+      if (rest.isNotEmpty) out.add((i, {...s, 'tr': rest.join(', '), 'src': null, 'more': null}, true));
+    }
+    return out;
+  }
 
   late final bool _ownHasReview = _hasOwnWord &&
       db.select('PRAGMA table_info(own_word)').any((r) => r['name'] == 'reviewed');
@@ -198,8 +223,17 @@ class DictDb {
         return verifiedRow(r.first['reviewed'], r.first['status']) ? SourceTier.verified : SourceTier.draft;
       });
 
-  /// Whether [sense] of [lemma]'s own_word row is an unreviewed AI draft.
-  bool isDraftSense(String lemma, Map sense) => draftSense(sense, ownTier(lemma) != SourceTier.draft);
+  /// [tiered] senses of [lemma]'s own_word row (empty without a row).
+  List<(int, Map<String, dynamic>, bool)> ownWordTiered(String lemma) {
+    if (!useOwnDictionary || !_hasOwnWord) return const [];
+    final r = db.select('SELECT senses FROM own_word WHERE word = ?', [lemma]);
+    if (r.isEmpty) return const [];
+    try {
+      return tiered(jsonDecode(r.first.columnAt(0) as String) as List, ownTier(lemma) != SourceTier.draft, 'w:$lemma');
+    } catch (_) {
+      return const [];
+    }
+  }
 
   /// Off until the own-dictionary tables have been checked on a copy of the database.
   /// While it is off, the app shows exactly the meanings it shows today.
@@ -216,6 +250,7 @@ class DictDb {
     // Off (the order before): keep_tr and the own senses of any row, ft only without them.
     var tr = <String>[];
     var draft = <String>[];
+    var added = <String>[];
     var verified = false;
     if (ownEnabled && _hasOwnWord) {
       final own = db.select('SELECT senses, keep_tr${_ownHasReview ? ', reviewed, status' : ''} FROM own_word WHERE word = ?', [lemma]);
@@ -223,16 +258,24 @@ class DictDb {
         final keep = (jsonDecode(own.first.columnAt(1) as String) as List).cast<String>();
         final rowOk = !_ownHasReview || verifiedRow(own.first['reviewed'], own.first['status']);
         final all = [
-          for (final s in jsonDecode(own.first.columnAt(0) as String) as List)
-            if ('${(s as Map)['tr'] ?? ''}'.trim().isNotEmpty) s,
+          for (final s in tiered(jsonDecode(own.first.columnAt(0) as String) as List, rowOk, 'w:$lemma'))
+            if ('${s.$2['tr'] ?? ''}'.trim().isNotEmpty) s,
         ];
-        final checked = [for (final s in all) if (!draftSense(s, rowOk)) '${s['tr']}'];
+        final checked = [for (final s in all) if (!s.$3) '${s.$2['tr']}'];
         if (!sourcePolicy) {
           tr = [...keep, ...checked];
         } else {
-          draft = [for (final s in all) if (draftSense(s, rowOk)) '${s['tr']}'];
-          tr = [...checked, ...keep.where((t) => !checked.contains(t))];
+          draft = [for (final s in all) if (s.$3) '${s.$2['tr']}'];
           verified = checked.isNotEmpty;
+          if (rowOk) {
+            tr = [...checked, ...keep.where((t) => !checked.contains(t))];
+          } else {
+            // A draft row's checked senses are meanings users added to it
+            // ("book": "sarı kart göstermek"): kept, after the dictionary's
+            // own first meanings rather than in their place.
+            tr = keep;
+            added = checked;
+          }
         }
       }
     }
@@ -241,6 +284,7 @@ class DictDb {
       final ftTr = ft.isEmpty ? <String>[] : (jsonDecode(ft.first.columnAt(0) as String) as List).cast<String>();
       tr = [...tr, ...ftTr.where((t) => !tr.contains(t))];
     }
+    tr = [...tr, ...added.where((t) => !tr.contains(t))];
     final senses = <Sense>[];
     for (final r in db.select(
         'SELECT s.id, s.pos, s.gloss, s.examples, s.words, s.tr${_hasExTr ? ', s.extr' : ''} FROM sense x JOIN syn s ON s.id = x.syn_id '
@@ -272,13 +316,10 @@ class DictDb {
   List<OwnSense> draftSenses(String lemma) => _ownSenses(lemma, draft: true);
 
   List<OwnSense> _ownSenses(String lemma, {required bool draft}) {
-    if (!useOwnDictionary || !_hasOwnWord) return const [];
-    final r = db.select('SELECT senses FROM own_word WHERE word = ?', [lemma]);
-    if (r.isEmpty) return const [];
     try {
       return [
-        for (final x in jsonDecode(r.first.columnAt(0) as String) as List)
-          if ('${(x as Map)['tr'] ?? ''}'.trim().isNotEmpty && isDraftSense(lemma, x) == draft)
+        for (final (_, x, d) in ownWordTiered(lemma))
+          if ('${x['tr'] ?? ''}'.trim().isNotEmpty && d == draft)
             // Older rows have no "ex": their "en" is the example, not a definition.
             '${x['ex'] ?? ''}'.trim().isEmpty
                 ? OwnSense('${x['pos'] ?? ''}'.trim(), '${x['tr']}'.trim(), '${x['note'] ?? ''}'.trim(), '',
@@ -344,7 +385,7 @@ class DictDb {
     final r = _hasExd ? db.select('SELECT json FROM exd WHERE phrase=? AND cat=?', [phrase, cat]) : const <Row>[];
     final exd = r.isEmpty ? null : r.first.columnAt(0) as String;
     // A draft row with meanings the user contributed: those first, then exd.
-    final mine = own == null ? const [] : [for (final s in jsonDecode(own.$1) as List) if (!draftSense(s as Map, false)) s];
+    final mine = own == null ? const [] : [for (final s in tiered(jsonDecode(own.$1) as List, false, 'e:$phrase|$cat')) if (!s.$3) s.$2];
     if (mine.isEmpty) return exd;
     final head = jsonDecode(_ownExprDetail(jsonEncode(mine))) as List;
     final titles = {for (final x in head) '${(x as Map)['title_tr']}'};
@@ -361,7 +402,7 @@ class DictDb {
   String? exprDraftDetail(String phrase, String cat) {
     final own = _ownExprRow(phrase, cat);
     if (own == null || own.$2 == null) return null;
-    final d = [for (final s in jsonDecode(own.$1) as List) if (draftSense(s as Map, false)) s];
+    final d = [for (final s in tiered(jsonDecode(own.$1) as List, false, 'e:$phrase|$cat')) if (s.$3) s.$2];
     return d.isEmpty ? null : _ownExprDetail(jsonEncode(d));
   }
 
@@ -590,7 +631,11 @@ class DictDb {
   /// first), otherwise the dictionary's first meaning. Review cards ask this
   /// one ("through" is "boyunca", even when it was saved from "a through train").
   ({String? tr, String? pos, String? gloss}) commonMeaning(String lemma) {
-    final own = ownSenses(lemma).where((s) => !s.tr.toLowerCase().contains('bakınız')).firstOrNull;
+    // A draft row's checked senses are user contributions added to it ("book":
+    // "sarı kart göstermek"), not its most common meaning, so they do not
+    // lead here; only a reviewed row's order does.
+    final ownLeads = !sourcePolicy || ownTier(lemma) != SourceTier.draft;
+    final own = ownLeads ? ownSenses(lemma).where((s) => !s.tr.toLowerCase().contains('bakınız')).firstOrNull : null;
     if (own != null) {
       final tr = shortTr(own.tr);
       // Prepositions, conjunctions …: no WordNet part of speech, so the

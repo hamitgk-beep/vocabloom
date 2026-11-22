@@ -488,13 +488,15 @@ class SenseEngine {
     if (r.isEmpty) return const [];
     final out = <SenseCandidate>[];
     try {
-      final list = jsonDecode(r.first.columnAt(0) as String) as List;
-      for (var i = 0; i < list.length; i++) {
-        final s = (list[i] as Map).cast<String, dynamic>();
+      // Tiered: an AI draft sense is marked, a merged idiom sense split ([DictDb.tiered]).
+      final list = DictDb.tiered(jsonDecode(r.first.columnAt(0) as String) as List, dict.ownTier(lemma) != SourceTier.draft, 'w:$lemma');
+      for (var k = 0; k < list.length; k++) {
+        final (i, s, draft) = list[k];
+        final idx = k > 0 && list[k - 1].$1 == i ? '${i}d' : '$i';
         final tr = _split('${s['tr'] ?? ''}');
         if (tr.isEmpty) continue;
         out.add(SenseCandidate(
-          id: 'od:$lemma#$i',
+          id: 'od:$lemma#$idx',
           source: 'own',
           lemma: lemma,
           pos: _posCodes['${s['pos']}'],
@@ -503,7 +505,7 @@ class SenseEngine {
           examples: [if ('${s['en'] ?? ''}'.isNotEmpty) '${s['en']}'],
           examplesTr: [if ('${s['ex_tr'] ?? ''}'.isNotEmpty) '${s['ex_tr']}'],
           rank: i + rankOffset,
-          unverified: dict.isDraftSense(lemma, s),
+          unverified: draft,
         ));
       }
     } catch (_) {}
@@ -516,13 +518,13 @@ class SenseEngine {
   /// and translated example, so a meaning WordNet has no Turkish for still
   /// gets one ("why" in "Why do you think ...?": neden, niçin).
   List<SenseCandidate> _ownWordCandidates(String lemma, int rankOffset) {
-    final r = dict.db.select('SELECT senses FROM own_word WHERE word=?', [lemma]);
-    if (r.isEmpty) return const [];
+    final list = dict.ownWordTiered(lemma);
+    if (list.isEmpty) return const [];
     final out = <SenseCandidate>[];
     try {
-      final list = jsonDecode(r.first.columnAt(0) as String) as List;
-      for (var i = 0; i < list.length; i++) {
-        final s = (list[i] as Map).cast<String, dynamic>();
+      for (var k = 0; k < list.length; k++) {
+        final (i, s, draft) = list[k];
+        final idx = k > 0 && list[k - 1].$1 == i ? '${i}d' : '$i';
         final tr = _split('${s['tr'] ?? ''}');
         if (tr.isEmpty) continue;
         final note = '${s['note'] ?? ''}'.trim();
@@ -533,7 +535,7 @@ class SenseEngine {
         // More checked sentences for this meaning (tools/contrib/apply.py).
         final more = [for (final m in (s['more'] as List? ?? const [])) (m as Map).cast<String, dynamic>()];
         out.add(SenseCandidate(
-          id: 'ow:$lemma#$i',
+          id: 'ow:$lemma#$idx',
           source: 'own',
           lemma: lemma,
           pos: _trPos['${s['pos']}'],
@@ -543,7 +545,7 @@ class SenseEngine {
           examples: [if (ex.isNotEmpty) ex, for (final m in more) '${m['en'] ?? ''}'],
           examplesTr: [if (ex.isNotEmpty) exTr, for (final m in more) '${m['tr'] ?? ''}'],
           rank: i + rankOffset,
-          unverified: dict.isDraftSense(lemma, s),
+          unverified: draft,
         ));
       }
     } catch (_) {}

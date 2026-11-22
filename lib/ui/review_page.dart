@@ -74,7 +74,7 @@ class _ReviewPageState extends State<ReviewPage> {
     if (ch == null && ans.tr == null && _askAi(w)) return null; // ask again when the answer arrives
     // The dictionary lacks the Turkish of this sense: remember it, so it can
     // be reported and added in a later dictionary update.
-    if ((ch == null || !ans.sure) && !w.lemma.contains(' ')) {
+    if ((ch == null || !ans.sure) && ans.choice && !w.lemma.contains(' ')) {
       try {
         app.user.addMissing(w.lemma, ans.synId, ans.gloss);
       } catch (_) {}

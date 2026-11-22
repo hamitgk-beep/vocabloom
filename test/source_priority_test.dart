@@ -19,6 +19,7 @@ import 'package:kelime_okur/nlp/context_sense.dart';
 import 'package:kelime_okur/nlp/text.dart';
 import 'package:kelime_okur/ui/expr_sheet.dart';
 import 'package:kelime_okur/ui/hover_meaning.dart';
+import 'package:kelime_okur/ui/paragraph_view.dart';
 import 'package:kelime_okur/ui/theme.dart';
 import 'package:kelime_okur/ui/word_sheet.dart';
 import 'package:sqlite3/sqlite3.dart';
@@ -47,8 +48,8 @@ String? _exprTr(DictDb d, String phrase, String cat) =>
 
 ContextSense _sense(AppState app, String sentence, String word) => app.senses.resolve(SenseQuery.find(app.dict, sentence, word));
 
-Future<void> _pump(WidgetTester tester, Widget panel) async {
-  tester.view.physicalSize = const Size(390, 2400);
+Future<void> _pump(WidgetTester tester, Widget panel, {double width = 390}) async {
+  tester.view.physicalSize = Size(width, 2400);
   tester.view.devicePixelRatio = 1;
   await tester.pumpWidget(MaterialApp(key: UniqueKey(), theme: buildTheme(Brightness.light), home: Scaffold(body: panel)));
   await tester.pump();
@@ -129,8 +130,13 @@ void main() {
     test('a meaning the user contributed inside an AI draft row is verified', () {
       // tools/contrib/apply.py added it to the draft row with src "storilex".
       expect(d.ownSenses('book').map((s) => s.tr), ['sarı kart göstermek, ceza yazmak']);
-      expect(d.lookup('book').trFreeDict.first, 'sarı kart göstermek, ceza yazmak');
-      expect(d.lookup('book').trFreeDict, containsAll(_ft(d, 'book')));
+      // It is a meaning added to the row, not the word's first one: it is kept
+      // (not hidden), after the dictionary's own first meanings.
+      final tr = d.lookup('book').trFreeDict;
+      expect(tr.first, _ft(d, 'book').first);
+      expect(tr, containsAll(_ft(d, 'book')));
+      expect(tr.last, 'sarı kart göstermek, ceza yazmak');
+      expect(d.commonMeaning('book').tr, contains('kitap'));
       expect(d.draftSenses('book').map((s) => s.tr), isNot(contains('sarı kart göstermek, ceza yazmak')));
     });
 
@@ -262,26 +268,129 @@ void main() {
   group('review cards', () {
     SavedWord saved(String lemma, String? ctx, String? meaning) => SavedWord(lemma, WordStatus.learning, ctx, null, meaning, DateTime(2026, 11, 1));
 
-    test('an old card keeps its saved record; the question follows the common meaning', () {
-      // A card saved before this change, with the AI draft as its saved meaning.
-      app.setWord('still', WordStatus.learning, context: 'Keep still.', meaning: 'hareketsiz, durgun');
-      final row0 = user.db.select("SELECT * FROM words WHERE lemma LIKE '%still'").map((r) => r.toString()).toList();
-      final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'still');
-      final q = ReviewQuiz(d, user, rnd: Random(1));
-      final ch = q.choiceFor(w)!;
-      expect(ch.right, 'hâlâ');
-      expect(ch.options.toSet().length, 4);
-      // Answering and building the quiz do not rewrite the saved card.
-      final row1 = user.db.select("SELECT * FROM words WHERE lemma LIKE '%still'").map((r) => r.toString()).toList();
-      expect(row1, row0);
-      expect(user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'still').meaning, 'hareketsiz, durgun');
+    // Hamit's rules for saved cards (option B): a filled saved meaning is
+    // kept and asked; an empty one follows the source order, but is not
+    // graded when the card's sentence clearly uses another meaning.
+    const golf = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
+    const train = 'We took a through train from London to Edinburgh.';
+    List<String> row(String lemma) =>
+        user.db.select('SELECT * FROM words WHERE lemma LIKE ?', ['%$lemma']).map((r) => r.toString()).toList();
+
+    group('old card, meaning saved: the saved meaning is the answer', () {
+      for (final (lemma, ctx, meaning) in [
+        ('still', 'Keep still.', 'hareketsiz, durgun'), // the AI draft shown first before this change
+        ('course', golf, 'saha, golf sahası'),
+        ('through', train, 'boyunca, baştan sona'),
+        ('book', 'I booked a table for two.', 'rezerve etmek, ayırtmak'),
+        ('a dime a dozen', 'Talented singers are a dime a dozen in this city.', 'bol, ucuz'),
+      ]) {
+        test('$lemma', () {
+          app.setWord(lemma, WordStatus.learning, context: ctx, meaning: meaning);
+          final row0 = row(lemma);
+          final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma);
+          final q = ReviewQuiz(d, user, rnd: Random(1));
+          final a = q.answerFor(w);
+          expect(a.saved, isTrue);
+          final ch = q.choiceFor(w)!;
+          expect(ch.right, DictDb.shortTr(meaning));
+          expect(ch.options.toSet().length, 4);
+          // Building and answering the quiz do not rewrite the saved card.
+          expect(row(lemma), row0);
+          expect(user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma).meaning, meaning);
+        });
+      }
+
+      test('a saved meaning of the wrong kind for the sentence is kept, but not graded', () {
+        // Saved by an old version: "akmak" (a verb) for the golf course (a noun).
+        final w = saved('course', golf, 'akmak, hızla akmak');
+        final q = ReviewQuiz(d, user, rnd: Random(1));
+        expect(q.answerFor(w).tr, 'akmak, hızla akmak');
+        expect(q.answerFor(w).choice, isFalse);
+        expect(q.choiceFor(w), isNull);
+      });
+
+      test('an English definition saved when no Turkish was known is not a Turkish answer', () {
+        final gloss = d.lookup('still').senses.first.gloss;
+        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('still', null, gloss));
+        expect(a.saved, isFalse);
+        expect(a.tr, d.commonMeaning('still').tr);
+      });
     });
 
-    test('a new card from the word panel saves the checked meaning', () {
-      expect(d.commonMeaning('still').tr, 'hâlâ');
-      final ch = ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('course', null, null))!;
-      expect(ch.right, d.commonMeaning('course').tr);
-      expect(ch.options.where((o) => o == ch.right), hasLength(1));
+    group('old card, no meaning saved: the source order, never a wrong right answer', () {
+      test('still', () {
+        final ch = ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('still', 'She is still here.', null))!;
+        expect(ch.right, 'hâlâ');
+        // KNOWN WEAKNESS (reported): the context picker treats "still" as a
+        // grammar word, so "perfectly still" (durgun) is not recognised and still asks "hâlâ".
+        expect(ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('still', 'The water was perfectly still.', null))!.right, 'hâlâ');
+      });
+
+      test('course: "mecra" is not graded for a golf course', () {
+        final q = ReviewQuiz(d, user, rnd: Random(1));
+        final a = q.answerFor(saved('course', golf, null));
+        expect(a.tr, 'mecra');
+        expect(a.choice, isFalse);
+        expect(q.choiceFor(saved('course', golf, null)), isNull);
+        // No sentence: the common meaning is asked.
+        expect(q.choiceFor(saved('course', null, null))!.right, 'mecra');
+      });
+
+      test('through', () {
+        final ch = ReviewQuiz(d, user, rnd: Random(1)).choiceFor(saved('through', train, null))!;
+        expect(ch.right, 'boyunca');
+      });
+
+      test('book: the common meaning, not the meaning a user added to the row', () {
+        final q = ReviewQuiz(d, user, rnd: Random(1));
+        expect(q.choiceFor(saved('book', 'I read a good book.', null))!.right, contains('kitap'));
+        // "I booked a table": the sentence clearly uses the verb, so "kitap" is not graded.
+        final a = q.answerFor(saved('book', 'I booked a table for two.', null));
+        expect(a.choice, isFalse);
+        expect(q.choiceFor(saved('book', 'I booked a table for two.', null)), isNull);
+      });
+
+      test('a dime a dozen: the dictionary meaning', () {
+        final e = _expr(d, 'a dime a dozen', 'idioms');
+        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('a dime a dozen', null, null));
+        expect(a.tr, DictDb.shortTr(e.tr!));
+        expect(a.choice, isTrue);
+      });
+
+      test('an expression with only an AI draft is shown, never graded', () {
+        final e = d.exprs.firstWhere((e) => e.tr == null && e.trDraft != null && e.phrase.contains(' '));
+        final q = ReviewQuiz(d, user, rnd: Random(1));
+        final a = q.answerFor(saved(e.phrase, null, null));
+        expect(a.tr, DictDb.shortTr(e.trDraft!));
+        expect(a.choice, isFalse);
+        expect(q.choiceFor(saved(e.phrase, null, null)), isNull);
+      });
+
+      test('a word whose only Turkish is an AI draft is never graded', () {
+        final r = d.db.select("SELECT o.word FROM own_word o WHERE o.reviewed = 0 AND NOT EXISTS (SELECT 1 FROM ft WHERE ft.word = o.word) "
+            "AND NOT EXISTS (SELECT 1 FROM sense x JOIN syn s ON s.id = x.syn_id WHERE x.lemma = o.word AND s.tr IS NOT NULL AND s.tr != '[]')");
+        final w = r.single['word'] as String;
+        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved(w, null, null));
+        expect(a.tr, isNotNull);
+        expect(a.choice, isFalse);
+      });
+    });
+
+    test('learning progress and review schedule are not touched by the quiz', () {
+      app.setWord('through', WordStatus.learning, context: train);
+      List<String> all() => [
+            for (final t in ['words', 'review', 'activity', 'review_log', 'missing_tr', 'ctx_ai'])
+              if (user.db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", [t]).isNotEmpty)
+                ...user.db.select('SELECT * FROM $t').map((r) => '$t ${r.toString()}'),
+          ];
+      final before = all();
+      final sched0 = app.review.due(now: DateTime(2030)).map((c) => '${c.word.lemma}:${c.word.status}').toList();
+      final q = ReviewQuiz(d, user, rnd: Random(1));
+      for (final w in user.words(WordStatus.learning)) {
+        q.choiceFor(w);
+      }
+      expect(all(), before);
+      expect(app.review.due(now: DateTime(2030)).map((c) => '${c.word.lemma}:${c.word.status}').toList(), sched0);
     });
 
     test('wrong options never repeat any meaning of the word, drafts included', () {
@@ -292,16 +401,62 @@ void main() {
       }
     });
 
-    test('expression card: the dictionary meaning, not the saved AI draft', () {
-      final e = _expr(d, 'a dime a dozen', 'idioms');
-      final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved('a dime a dozen', null, e.trDraft));
-      expect(a.tr, DictDb.shortTr(e.tr!));
+  });
+
+  group('new card: the saved meaning', () {
+    const golf = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
+    WordContext ctxOf(String sentence, String word) {
+      final a = analyze(app, sentence);
+      return buildContext(app, Para(1, 0, 'p', sentence), a, a.tokens.indexWhere((t) => t.lower == word));
+    }
+
+    Future<String?> saveFrom(WidgetTester tester, Widget panel, String key) async {
+      app.setWord(key, WordStatus.none);
+      // Wide: the test font is wider than the real one (expression cards' headers).
+      await _pump(tester, panel, width: 900);
+      await tester.ensureVisible(find.text('Öğreneceğim').first);
+      await tester.tap(find.text('Öğreneceğim').first);
+      await tester.pump();
+      return user.words(WordStatus.learning).firstWhere((w) => w.lemma == key).meaning;
+    }
+
+    // (sentence, word, lemma, saved meaning): the sentence's meaning only when
+    // the context picker is sure and it is not an AI draft; otherwise nothing.
+    for (final (sentence, word, lemma, want) in [
+      ('The sea was calm and the water was perfectly still.', 'still', 'still', null), // picker: grammar word
+      ('She is still here.', 'still', 'still', null),
+      (golf, 'course', 'course', 'saha, pist'), // sure
+      ('She took an evening course in English literature.', 'course', 'course', null), // only likely
+      ('We took a through train from London to Edinburgh.', 'through', 'through', null),
+      ('I booked a table for two.', 'booked', 'book', 'rezerve etmek, rezerve ettirmek, rezervasyon yapmak'),
+    ]) {
+      testWidgets('$lemma in "$sentence"', (tester) async {
+        final m = await saveFrom(tester, WordPanel(app: app, surface: word, lemma: lemma, ctx: ctxOf(sentence, word)), lemma);
+        expect(m, want);
+        // The new card asks what was saved; with nothing saved, the review rules for empty meanings apply.
+        final w = user.words(WordStatus.learning).firstWhere((w) => w.lemma == lemma);
+        final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(w);
+        if (want != null) {
+          expect(a.tr, DictDb.shortTr(want));
+          expect(a.saved, isTrue);
+        } else {
+          expect(a.saved, isFalse);
+        }
+      });
+    }
+
+    testWidgets('no sentence: the checked first meaning', (tester) async {
+      expect(await saveFrom(tester, WordPanel(app: app, surface: 'still'), 'still'), 'hâlâ');
+      expect(await saveFrom(tester, WordPanel(app: app, surface: 'book'), 'book'), contains('kitap'));
     });
 
-    test('expression card: an expression with only a draft asks the draft, as before', () {
-      final e = d.exprs.firstWhere((e) => e.tr == null && e.trDraft != null && e.phrase.contains(' '));
-      final a = ReviewQuiz(d, user, rnd: Random(1)).answerFor(saved(e.phrase, null, null));
-      expect(a.tr, DictDb.shortTr(e.trDraft!));
+    testWidgets('an idiom saves the dictionary meaning, never the AI draft', (tester) async {
+      final e = _expr(d, 'a dime a dozen', 'idioms');
+      const s = 'Talented singers are a dime a dozen in this city.';
+      final m = await saveFrom(tester, ExprPanel(app: app, expr: e, ctx: ctxOf(s, 'dime'), words: const ['a', 'dime', 'a', 'dozen']), e.phrase);
+      expect(m, isNotNull);
+      expect(m, isNot(e.trDraft));
+      expect(e.trDraft, isNot(contains(m)));
     });
   });
 

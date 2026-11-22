@@ -77,6 +77,15 @@ class _ExprPanelState extends State<ExprPanel> {
     if (widget.ctx != null) sense = ContextSenseCard.resolveExpr(app, widget.ctx!, expr);
   }
 
+  /// The meaning saved with a new card (its review's right answer): the
+  /// sentence's meaning only when it is sure and not an unverified AI draft,
+  /// otherwise the dictionary's checked meaning. A draft is never saved.
+  String? get _savedMeaning {
+    final s = sense;
+    if (s != null && s.shown && s.cat != null && s.confidence == SenseConfidence.sure && !s.best!.unverified) return s.tr;
+    return expr.tr;
+  }
+
   /// Index of the built-in sense the card chose ("ex:phrase|cat#1" → 1).
   int? get _chosen {
     final id = sense?.best?.id;
@@ -161,7 +170,7 @@ class _ExprPanelState extends State<ExprPanel> {
           status: st,
           onChanged: (s) {
             app.setWord(expr.phrase, s,
-                context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: expr.trShown ?? expr.en);
+                context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: _savedMeaning);
             setState(() {});
           },
         ),

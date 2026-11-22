@@ -250,10 +250,20 @@ class _WordPanelState extends State<WordPanel> {
     return null;
   }();
 
-  String? get _meaning => _ctxTr ?? opener?.tr ?? _trMain ?? best?.gloss;
+  /// The meaning saved with a new card, which its review asks as the right
+  /// answer: the meaning chosen for the sentence only when it is sure and not
+  /// an unverified AI draft; with no sentence, the dictionary's checked first
+  /// meaning. Otherwise nothing is saved and the review decides (it never
+  /// grades a guess as the right answer).
+  String? get _savedMeaning {
+    final s = sense;
+    if (widget.ctx == null) return _trMain;
+    if (_ctxTr != null && s!.confidence == SenseConfidence.sure && !s.best!.unverified) return _ctxTr;
+    return null;
+  }
 
   void _set(String key, WordStatus st) {
-    widget.app.setWord(key, st, context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: key == lemma ? _meaning : null);
+    widget.app.setWord(key, st, context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: key == lemma ? _savedMeaning : null);
     setState(() {});
   }
 
@@ -1062,7 +1072,7 @@ class _ExprCardState extends State<ExprCard> {
               StatusButtons(
                 status: st,
                 onChanged: (s) {
-                  app.setWord(expr.phrase, s, meaning: expr.trShown ?? expr.en);
+                  app.setWord(expr.phrase, s, meaning: expr.tr);
                   widget.onChanged();
                 },
               ),
