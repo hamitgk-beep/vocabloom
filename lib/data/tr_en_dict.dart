@@ -353,7 +353,9 @@ class TrSense {
   final String pos;
   final List<String> glosses;
 
-  /// Where the meaning comes from when not Wiktionary: 'wn' (KeNet / WordNet), 'fd' (FreeDict).
+  /// Where the meaning comes from when not Wiktionary: 'wn' (KeNet / WordNet), 'st' (Storilex
+  /// contributors), 'rv' or the older 'fd' (English → Turkish meanings reversed; despite the
+  /// name, not FreeDict). See trSenseSourceLabel in dictionary_sources.dart.
   final String? source;
   const TrSense(this.pos, this.glosses, [this.source]);
 }

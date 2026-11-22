@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app_state.dart';
+import '../data/dictionary_sources.dart';
 import '../data/tr_en_dict.dart';
 import '../data/user_db.dart';
 import '../l10n.dart';
@@ -243,11 +244,7 @@ class _TrWordPanelState extends State<TrWordPanel> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 4),
                 child: Text(
-                    switch (s.source) {
-                      'wn' => L('Kaynak: KeNet / WordNet', 'Source: KeNet / WordNet'),
-                      'st' => L('Kaynak: Storilex katkıları', 'Source: Storilex contributors'),
-                      _ => L('Kaynak: FreeDict', 'Source: FreeDict'),
-                    },
+                    trSenseSourceLabel(s.source)!,
                     style: TextStyle(fontSize: 11.5, color: theme.hintColor)),
               ),
             if (s.pos.isNotEmpty)

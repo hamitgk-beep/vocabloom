@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../app_state.dart';
+import '../data/dictionary_sources.dart';
 import '../l10n.dart';
 import '../mt/offline_mt.dart';
 import 'offline_mt_page.dart';
@@ -472,7 +473,7 @@ class AboutPage extends StatelessWidget {
           style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
         ),
         const SizedBox(height: 12),
-        Text(L('© 2026 Hamit Gök. Tüm hakları saklıdır.', '© 2026 Hamit Gök. All rights reserved.'), style: theme.textTheme.bodySmall),
+        Text(L('© 2026 Hamit Gök. Uygulama kodu GPL-3.0; sözlük verisinin kaynakları ve lisansları: Ayarlar > Gizlilik ve lisanslar.', '© 2026 Hamit Gök. App code GPL-3.0; sources and licences of the dictionary data: Settings > Privacy and licenses.'), style: theme.textTheme.bodySmall),
         const SizedBox(height: 14),
         const CheckUpdateButton(),
       ]),
@@ -505,28 +506,13 @@ class LicensesPage extends StatelessWidget {
       ]),
       SectionLabel(L('Sözlük kaynakları', 'Dictionary sources')),
       Panel(children: [
-        item(L('Kelime anlamları: Wiktionary çevirileri, kaikki.org üzerinden; Murat Uysal\'ın Kindle İngilizce–Türkçe sözlüğü derlemesi (CC BY-SA 4.0)',
-            'Word meanings: Wiktionary translations via kaikki.org, as compiled in Murat Uysal\'s Kindle English–Turkish dictionary (CC BY-SA 4.0)')),
-        item(L('Yardımcı kelime anlamları: damdafayton/eng-tur-dictionary (MIT)', 'Helper word meanings: damdafayton/eng-tur-dictionary (MIT)')),
-        item('FreeDict English–Turkish (GPL-2.0+)'),
-        item('Princeton WordNet 3.0 (WordNet License)'),
-        item(L('KeNet Türkçe WordNet, Starlang / Özyeğin Üniversitesi (CC BY-SA 4.0)', 'KeNet Turkish WordNet, Starlang / Özyeğin University (CC BY-SA 4.0)')),
-        item('Collaborative Interlingual Index (CC BY 4.0)'),
-        item(L('Kalıplar: İngilizce ve Türkçe Vikisözlük, kaikki.org üzerinden (CC BY-SA 4.0)', 'Expressions: English and Turkish Wiktionary via kaikki.org (CC BY-SA 4.0)')),
-        item(L('Çevirili örnek cümleler: Tatoeba (CC BY 2.0 FR)', 'Example sentences with translations: Tatoeba (CC BY 2.0 FR)')),
-        item(L('Storilex katkıları: kullanıcılarımızın elle hazırlayıp kontrol ettiği anlamlar, örnek cümleler, cümledeki anlamlar ve deyimler (iki yönde). Katkı verenler: Hamit',
-            'Storilex contributors: meanings, example sentences, meanings in context and idioms prepared and checked by hand by our users (both directions). Contributors: Hamit')),
+        for (final line in dictionarySourceLines()) item(line),
         item(L('Ücretsiz kitaplar: Pratham Books / StoryWeaver hikâyeleri (CC BY 4.0, yalnız metin, global-asp/pb-source üzerinden); Project Gutenberg kamu malı kitaplar',
             'Free books: Pratham Books / StoryWeaver stories (CC BY 4.0, text only, via global-asp/pb-source); public-domain books from Project Gutenberg')),
-        item(L('Türkçe → İngilizce sözlük: İngilizce Vikisözlük\'teki Türkçe kelimeler, kaikki.org üzerinden (CC BY-SA 4.0); kelime sıklığı: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); örnek cümleler: Tatoeba katkıcıları (CC BY 2.0 FR)',
-            'Turkish → English dictionary: Turkish entries of the English Wiktionary via kaikki.org (CC BY-SA 4.0); word frequency: FrequencyWords / OpenSubtitles 2018 (CC BY-SA 4.0); example sentences: Tatoeba contributors (CC BY 2.0 FR)')),
         item(L('Türkçe ücretsiz kitaplar: Vikikaynak\'taki kamu malı eserler (tr.wikisource.org; yazarları 1955\'ten önce ölmüş eserler ve anonim halk anlatıları); A1–B1 öyküler bu uygulama için yazıldı. Kelimenin cümledeki anlamı Tatoeba cümle çiftlerinden çıkarılır.',
             'Turkish free books: public-domain works from Turkish Wikisource (tr.wikisource.org; authors who died before 1955 and anonymous folk tales); the A1–B1 stories were written for this app. The meaning of a word in its sentence is learned from Tatoeba sentence pairs.')),
         item(L('İsteğe bağlı çevrimdışı çeviri (Windows, ayrıca indirilir): OPUS-MT opus-mt-tc-big-en-tr, Helsinki-NLP / Tiedemann ve ark.; ONNX sürümü onnx-community (CC BY 4.0)',
             'Optional offline translation (Windows, downloaded separately): OPUS-MT opus-mt-tc-big-en-tr, Helsinki-NLP / Tiedemann et al.; ONNX version by onnx-community (CC BY 4.0)')),
-        item(L('Kategori listeleri bu uygulama için hazırlandı (CC BY-SA 4.0)', 'Category lists written for this app (CC BY-SA 4.0)')),
-        item(L('Uygulamadaki sözlük veritabanı bu kaynaklardan uyarlanmıştır ve aynı lisansla (CC BY-SA 4.0) paylaşılır. Lisans metinleri: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0',
-            'The dictionary database in the app is adapted from these sources and shared under the same licence (CC BY-SA 4.0). Licence texts: creativecommons.org/licenses/by-sa/4.0 · gnu.org/licenses/gpl-3.0')),
       ]),
       SectionLabel(L('Yazı tipleri ve sesler', 'Fonts and voices')),
       Panel(children: [
@@ -541,7 +527,10 @@ class LicensesPage extends StatelessWidget {
           child: TextButton.icon(
             icon: const Icon(Icons.description_outlined, size: 18),
             label: Text(L('Kullanılan kütüphanelerin lisansları', 'Licences of the libraries used')),
-            onPressed: () => showLicensePage(context: context, applicationName: 'Storilex'),
+            onPressed: () {
+              registerDataLicences();
+              showLicensePage(context: context, applicationName: 'Storilex');
+            },
           ),
         ),
       ]),

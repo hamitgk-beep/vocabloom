@@ -1,0 +1,75 @@
+{
+ "ft_words": {
+  "base": 42154,
+  "candidate": 17840,
+  "removed": 24314,
+  "changed": 9784,
+  "primary_changed": 702
+ },
+ "tr_en_lemmas": {
+  "base": 55364,
+  "candidate": 39219,
+  "removed": 16145,
+  "tags": {
+   "null": 27985,
+   "st": 618,
+   "rv": 7005,
+   "wn": 6764
+  }
+ },
+ "removed_ft_words_now_show": {
+  "kenet_sense_turkish": 5628,
+  "ai_draft_only": 18610,
+  "nothing": 21,
+  "english_definition_only": 55
+ },
+ "removed_ft_words_not_known_to_lemmatizer": 4879,
+ "frequent_words_losing_ft": {
+  "1000": 104,
+  "5000": 636,
+  "10000": 1507
+ },
+ "frequent_words_losing_ft_examples": [
+  "the",
+  "a",
+  "going",
+  "had",
+  "said",
+  "an",
+  "can't",
+  "us",
+  "could",
+  "any",
+  "anything",
+  "let",
+  "made",
+  "am",
+  "done",
+  "off",
+  "used",
+  "things",
+  "children",
+  "away",
+  "tried",
+  "anyone",
+  "himself",
+  "else",
+  "trying",
+  "needs",
+  "talking",
+  "working",
+  "waiting",
+  "ago",
+  "decided",
+  "tonight",
+  "nobody",
+  "supposed",
+  "sick",
+  "likely",
+  "gone",
+  "playing",
+  "living",
+  "finished"
+ ],
+ "problems": []
+}
