@@ -501,6 +501,19 @@ class DictDb {
   static const _lyRules = [['ily', 'y'], ['ly', '']];
 
   final Map<String, List<BaseForm>> _baseFormCache = {};
+
+  bool _ownNounOrVerb(String w) {
+    final p = lemmaPos(w);
+    return p.contains('n') || p.contains('v');
+  }
+
+  /// Whether the other degree of a comparative or superlative is a word met
+  /// in text ("longer" → "longest", "biggest" → "bigger").
+  bool _otherDegreeMet(String w) {
+    final other = w.endsWith('est') ? '${w.substring(0, w.length - 3)}er' : w.endsWith('er') ? '${w.substring(0, w.length - 2)}est' : null;
+    return other != null && (_freq[other] ?? 0) > 0;
+  }
+
   final Map<String, List<(String, String?)>> _excPos = {};
 
   /// The dictionary words a written word can stand for, the most likely
@@ -561,6 +574,10 @@ class DictDb {
               // Grammar and direction words are not compared ("offer" is
               // not "off", "upper" not "up").
               if (identical(rs, _adjRules) && (stopWords.contains(b) || _directionWords.contains(b))) continue;
+              // A noun or verb of its own in "-er" / "-est" is a comparison
+              // only if the other degree is met too: "longer" (longest),
+              // but not "customer", "owner", "buffer", "opener".
+              if (identical(rs, _adjRules) && _ownNounOrVerb(w) && !_otherDegreeMet(w)) continue;
               final pos = lemmaPos(b).intersection(allowed);
               if (pos.isNotEmpty) add(b, pos);
             }

@@ -241,7 +241,7 @@ class SenseWeights {
 class SenseEngine {
   /// Bumped whenever the scoring changes, so cached and reported choices of an
   /// older engine are told apart.
-  static const version = '2';
+  static const version = '3';
 
   final DictDb dict;
   final SenseWeights w;
@@ -353,6 +353,24 @@ class SenseEngine {
     // tells the two apart no better than chance (measured on MAGPIE): only a
     // sure choice confirms an expression.
     if (q.expr != null && c.confidence != SenseConfidence.sure) return AnswerFit(SentenceFit.unknown, 'undecided', c);
+    // A checked meaning of the same part of speech with other Turkish ties
+    // with the chosen one: the sentence does not settle which is meant, so it
+    // grades nothing. (Measured on the review audit: counting every "close"
+    // rival as a conflict mostly dropped answers that were right.)
+    final tie = c.ranked.any((x) =>
+        x.id != b.id &&
+        !x.unverified &&
+        x.tr.isNotEmpty &&
+        !x.tr.any(b.tr.contains) &&
+        (x.pos == null || b.pos == null || x.pos == b.pos) &&
+        b.score - x.score <= _fitTie);
+    if (tie) return AnswerFit(SentenceFit.unknown, 'undecided', c);
+    // A noun's meaning never confirms a verb answer, or the other way round
+    // (also for a draft: "durak" for the verb "stop" is no match).
+    final shape = DictDb.isTrVerb(DictDb.shortTr(answer));
+    if ((b.pos == 'n' || b.pos == 'v') && (b.pos == 'v') != shape) {
+      return AnswerFit(SentenceFit.other, c.confidence == SenseConfidence.sure ? 'sure' : 'likely', c);
+    }
     if (b.unverified) {
       // The picker chose an unverified AI draft. Alone it proves nothing; it
       // counts only when [answer] is a checked meaning of the headword and the
@@ -362,11 +380,6 @@ class SenseEngine {
         return AnswerFit(SentenceFit.confirmed, 'same', c);
       }
       return AnswerFit(SentenceFit.unknown, 'draft only', c);
-    }
-    // A noun's meaning never confirms a verb answer, or the other way round.
-    final shape = DictDb.isTrVerb(DictDb.shortTr(answer));
-    if ((b.pos == 'n' || b.pos == 'v') && (b.pos == 'v') != shape) {
-      return AnswerFit(SentenceFit.other, c.confidence == SenseConfidence.sure ? 'sure' : 'likely', c);
     }
     String? link;
     for (final t in [...b.tr, c.tr!]) {
@@ -458,12 +471,35 @@ class SenseEngine {
       return ContextSense(headword: lemmas.firstOrNull ?? lower, confidence: SenseConfidence.none, reason: 'no dictionary meaning');
     }
     final ctx = _Context.of(this, q.tokens, {q.index}, q.prevSentence, q.nextSentence);
-    final pos = _guessPos(q.tokens, q.index, cands.map((c) => c.pos).whereType<String>().toSet(), breaks: clauseBreaks(q.sentence, q.tokens));
-    final shape = _Shape.inSentence(this, q.tokens, q.index, q.index);
+    final breaks = clauseBreaks(q.sentence, q.tokens);
+    final pos = _guessPos(q.tokens, q.index, cands.map((c) => c.pos).whereType<String>().toSet(), breaks: breaks);
+    final shape = _Shape.inSentence(this, q.tokens, q.index, q.index, breaks: breaks);
     for (final c in cands) {
       _score(c, ctx, pos, shape, q.tokens, q.index, q.index);
     }
-    return _decide(lemmas.first, null, null, cands, ctx, shape, pos);
+    final r = _decide(lemmas.first, null, null, cands, ctx, shape, pos);
+    // "the Nook", "Apple's new phone": a capitalised word inside a sentence
+    // may be a name. A common word's meaning ("köşe" for the Nook reader) is
+    // then only a guess; a name's own meaning ("Irak", "ocak") stays.
+    // When the dictionary itself knows the word as a name ("John" the
+    // apostle beside "john" the toilet), the common meaning is not shown.
+    if (r.confidence != SenseConfidence.none && r.best != null && !isNameSense(r.best!)) {
+      final asName = cands.any(isNameSense);
+      final t = q.index > 0 && q.index < q.tokens.length ? q.tokens[q.index].text : '';
+      // after a colon or a quote a capital may start a sentence: only a word
+      // the dictionary knows as a name counts there
+      final named = nameLike(q.sentence, q.tokens, q.index) || (asName && t.isNotEmpty && t[0] != t[0].toLowerCase() && t != t.toUpperCase());
+      if (named && (asName || r.confidence == SenseConfidence.sure)) {
+        return ContextSense(
+            headword: r.headword,
+            confidence: asName ? SenseConfidence.none : SenseConfidence.likely,
+            best: r.best,
+            others: r.others,
+            reason: '${asName ? 'a name' : 'maybe a name'}; ${r.reason}',
+            ranked: r.ranked);
+      }
+    }
+    return r;
   }
 
   static final Set<String> _closed = {
@@ -698,13 +734,60 @@ class SenseEngine {
     }
     final ctx = _Context.of(this, q.tokens, idx.toSet(), q.prevSentence, q.nextSentence);
     final last = idx.reduce(max);
-    final shape = _Shape.inSentence(this, q.tokens, headI, last);
-    final pos = e.cat == 'phrasal_verbs' ? 'v' : _guessPos(q.tokens, headI, cands.map((c) => c.pos).whereType<String>().toSet(), breaks: clauseBreaks(q.sentence, q.tokens));
+    final breaks = clauseBreaks(q.sentence, q.tokens);
+    final shape = _Shape.inSentence(this, q.tokens, headI, last, breaks: breaks);
+    final pos = e.cat == 'phrasal_verbs' ? 'v' : _guessPos(q.tokens, headI, cands.map((c) => c.pos).whereType<String>().toSet(), breaks: breaks);
     for (final c in cands) {
       _score(c, ctx, e.cat == 'phrasal_verbs' ? 'v' : (c.literal ? pos : null), shape, q.tokens, headI, c.literal ? headI : last,
           particles: c.literal ? e.pattern.skip(1).toList() : const [], phrase: c.literal ? null : e);
     }
-    return _decide(e.phrase, e.cat, headLemmas.firstOrNull, cands, ctx, shape, pos);
+    // "in the raw edges", "under a cloud of dust", "in the red one": the
+    // expression's last noun goes on into a longer noun group, so its words
+    // are meant one by one; the expression keeps only a guess.
+    // Only for an expression that is a prepositional phrase: an expression
+    // that is a noun group or a pair is used before a noun too ("a dog in the
+    // manger attitude", "the free and easy atmosphere").
+    final prepPhrase = e.cat == 'prepositional_phrases' || (e.cat != 'phrasal_verbs' && e.pattern.isNotEmpty && _preps.contains(e.pattern.first));
+    final continues = multi && prepPhrase && _nounGroupGoesOn(q.tokens, last, breaks);
+    if (continues) {
+      for (final c in cands) {
+        if (!c.literal) c.score -= 0.25;
+      }
+    }
+    final r = _decide(e.phrase, e.cat, headLemmas.firstOrNull, cands, ctx, shape, pos);
+    // An idiom made of ordinary words can also be meant word by word ("on
+    // board", "oil and water"), and nothing in the sentence tells the two
+    // apart reliably (MAGPIE: a third of the "sure" idioms were literal). So
+    // such an idiom is shown, but never as sure, and a card keeps no meaning
+    // for it without the learner's choice. Phrasal verbs are judged by their
+    // own checks.
+    final canBeLiteral = e.cat != 'phrasal_verbs' && cands.any((c) => c.literal && c.tr.isNotEmpty);
+    if ((continues || canBeLiteral) && r.confidence == SenseConfidence.sure && r.cat != null) {
+      return ContextSense(
+          headword: r.headword,
+          cat: r.cat,
+          confidence: SenseConfidence.likely,
+          best: r.best,
+          others: r.others,
+          reason: '${continues ? 'goes on' : 'can be literal'}: ${r.reason}',
+          ranked: r.ranked);
+    }
+    return r;
+  }
+
+  /// Whether the word after token [last] (in the same clause) carries on the
+  /// noun group that ends the expression: "of", "one", or a noun that is not
+  /// a verb form. The last word of the expression must be a noun or an
+  /// adjective itself.
+  bool _nounGroupGoesOn(List<Token> toks, int last, List<bool>? breaks) {
+    if (last + 1 >= toks.length || (breaks != null && breaks[last + 1])) return false;
+    final lw = toks[last].lower, next = toks[last + 1].lower;
+    final lp = dict.posOf(lw);
+    if (stopWords.contains(lw) || !(lp.contains('n') || lp.contains('a'))) return false;
+    if (next == 'of' || next == 'one' || next == 'ones') return true;
+    if (stopWords.contains(next) || _preps.contains(next) || _aux.contains(next) || next.endsWith('ing') || next.endsWith('ed') || next.endsWith('ly')) return false;
+    final np = dict.posOf(next);
+    return np.contains('n') && !np.contains('v') && !np.contains('r');
   }
 
   /// The built-in senses of an expression (title, explanation, examples),
@@ -876,6 +959,9 @@ class SenseEngine {
   static const _pathWords = {'through', 'along', 'across', 'around', 'over', 'into', 'down', 'up', 'past', 'between'};
   static final _spatial = RegExp(r'\b(distance|space|extend|extends|stretch|between|location|lie|lies|reach|span)\b');
 
+  static const _subjects = {'i', 'you', 'he', 'she', 'we', 'they', 'who', "let's", 'everyone', 'everybody', 'someone', 'somebody', 'nobody', 'anyone', 'anybody'};
+  static const _finite = {'is', 'are', 'was', 'were', 'has', 'have', 'had', 'will', 'would', 'can', 'could', 'should', 'must', 'may', 'might', "isn't", "wasn't", "won't", "can't"};
+
   static final Set<String> _objPersons = {'me', 'you', 'him', 'her', 'us', 'them', 'myself', 'yourself', 'himself', 'herself'};
 
   static final Set<String> _dets = {
@@ -897,6 +983,31 @@ class SenseEngine {
 
   final Map<String, bool> _personNoun = {};
 
+  /// Whether token [i] is written like a name: capitalised inside the
+  /// sentence (not after a colon or an opening quote), and not a heading in
+  /// capitals.
+  static bool nameLike(String sentence, List<Token> toks, int i) {
+    if (i <= 0 || i >= toks.length) return false;
+    final t = toks[i].text;
+    if (t.isEmpty || t[0] == t[0].toLowerCase()) return false;
+    // In capitals: a short one is an abbreviation ("AP", "HR"), a long one
+    // a heading ("MANAGEMENT").
+    if (t == t.toUpperCase() && (t.length < 2 || t.length > 4)) return false;
+    var k = toks[i].start - 1;
+    while (k >= 0 && k < sentence.length && sentence[k] == ' ') {
+      k--;
+    }
+    if (k < 0 || k >= sentence.length) return false;
+    return !':"“‘(\'[-–—•*>'.contains(sentence[k]);
+  }
+
+  /// Whether a meaning is a name's own (a place, a month, a firm): WordNet
+  /// writes such words with a capital, and so does their Turkish.
+  static bool isNameSense(SenseCandidate c) {
+    bool cap(String s) => s.isNotEmpty && s[0] != s[0].toLowerCase();
+    return c.synonyms.any(cap) || (c.tr.isNotEmpty && cap(c.tr.first.trim()));
+  }
+
   /// Whether a word names a person ("sister", "teacher", a name).
   bool isPerson(Token t, {bool sentenceStart = false}) {
     final w = t.lower;
@@ -913,8 +1024,32 @@ class SenseEngine {
     });
   }
 
+  /// The [guessPos] rule (or one of [_guessPos]'s own) that decided the
+  /// part of speech in the last [_guessPos] call; '-' when none did.
+  String posRule = '-';
+
+  /// Rules that decide the part of speech but are too often wrong to count
+  /// as proof of it (measured on UD English-EWT dev+test: 10 % or more of
+  /// their "sure" answers had another part of speech): with one of them, or
+  /// none, a meaning of another part of speech must lose on the words of the
+  /// sentence by [_posGap].
+  static const _weakPosRules = {
+    'participle', 'participleAfterBe', 'adjBeforeNoun', 'afterDegree', 'afterBe', 'nounSlot', 'adverbAfterVerb',
+    'aloneAdverb', 'adjBeforeName', 'afterDet', 'verbBeforeDet', 'afterPrep',
+  };
+  static const _posGap = 0.08;
+
+  /// How much more a later meaning must share with the sentence than the
+  /// first meaning of its part of speech to be called sure.
+  static const _firstSenseSem = 0.1;
+
+  /// A review card is not graded when a checked meaning with other Turkish
+  /// scores within this of the chosen one (a tie: the sentence does not tell).
+  static const _fitTie = 0.01;
+
   String? _guessPos(List<Token> toks, int i, Set<String> available, {List<bool>? breaks}) {
-    final p = guessPos(toks, i, available, posOf: dict.posOf, breaks: breaks);
+    posRule = '-';
+    final p = guessPos(toks, i, available, posOf: dict.posOf, breaks: breaks, why: (r) => posRule = r);
     if (p != null) return p;
     // Words on the far side of a comma or a full stop say nothing here.
     bool cut(int k) => breaks != null && breaks[k];
@@ -922,12 +1057,16 @@ class SenseEngine {
     final prev2 = i > 1 && !cut(i) && !cut(i - 1) ? toks[i - 2].lower : '';
     final w0 = toks[i].lower;
     // "which animal it …": after which / what / whose comes a noun.
-    if (available.contains('n') && const {'which', 'what', 'whose', 'whichever', 'whatever'}.contains(prev)) return 'n';
+    if (available.contains('n') && const {'which', 'what', 'whose', 'whichever', 'whatever'}.contains(prev)) {
+      posRule = 'afterWh';
+      return 'n';
+    }
     final verbForm = dict.irregularOf.containsKey(w0) || RegExp(r'(ed|ing)$').hasMatch(w0);
     // "the river bank": a noun after determiner + noun is a noun ("the
     // children came" is not: "came" is a verb form, "children" a plural).
     if (!verbForm && available.contains('n') && _dets.contains(prev2) && dict.posOf(prev).contains('n') && !prev.endsWith('s') &&
         !_persons.contains(prev)) {
+      posRule = 'nounAfterDetNoun';
       return 'n';
     }
     // An adjective stands before a noun or after be / seem; otherwise a
@@ -937,15 +1076,38 @@ class SenseEngine {
       final np = nextW.isEmpty ? const <String>{} : dict.posOf(nextW);
       final beforeNoun = np.contains('n') && !_preps.contains(nextW) && !_objPersons.contains(nextW) && nextW != 'it';
       const linking = {'is', 'are', 'was', 'were', 'be', 'been', 'being', 'seem', 'seems', 'seemed', 'look', 'looks', 'looked', 'feel', 'felt', 'become', 'became', 'very', 'so', 'too', 'quite', 'more', 'most'};
-      if (!beforeNoun && !linking.contains(prev)) return 'n';
+      // Only where a noun group goes: after a determiner, a preposition or a
+      // possessive ("the public", "in public"); after a verb or at the start
+      // the word is as often an adjective or an adverb ("seems clear", "Glad to").
+      final npSlot = _dets.contains(prev) || (_preps.contains(prev) && prev != 'to') || (i > 0 && !cut(i) && toks[i - 1].lower.endsWith("'s"));
+      if (!beforeNoun && !linking.contains(prev) && npSlot) {
+        posRule = 'nounSlot';
+        return 'n';
+      }
     }
     // "a long run": determiner + adjective + word.
-    if (!verbForm && available.contains('n') && _dets.contains(prev2) && dict.posOf(prev).contains('a')) return 'n';
+    if (!verbForm && available.contains('n') && _dets.contains(prev2) && dict.posOf(prev).contains('a')) {
+      posRule = 'nounAfterDetAdj';
+      return 'n';
+    }
     // "She runs a small company": a verb before a determiner.
     final next = nextW;
-    if (available.contains('v') && (_dets.contains(next) || _objPersons.contains(next)) && !_dets.contains(prev)) return 'v';
-    if (available.contains('v') && (_persons.contains(prev) || (prev.isNotEmpty && i > 0 && toks[i - 1].text[0] != toks[i - 1].lower[0]))) {
+    if (available.contains('v') && (_dets.contains(next) || _objPersons.contains(next)) && !_dets.contains(prev)) {
+      posRule = 'verbBeforeDet';
       return 'v';
+    }
+    // After a subject pronoun ("they run"). A name or a person noun before the
+    // word is as often the first half of a compound ("police station", "US
+    // troops", "Fallujah campaign"), so it says nothing.
+    if (available.contains('v') && _subjects.contains(prev)) {
+      posRule = 'afterSubject';
+      return 'v';
+    }
+    // "Rector's next stop was …": right before a finite verb, after anything
+    // but a subject, stands the subject: a noun.
+    if (available.contains('n') && _finite.contains(nextW) && !_subjects.contains(prev) && !_aux.contains(prev) && prev != 'to') {
+      posRule = 'beforeFinite';
+      return 'n';
     }
     return null;
   }
@@ -1144,6 +1306,21 @@ class SenseEngine {
       String? pos) {
     final cands = [...cands0]..sort((a, b) => b.score.compareTo(a.score));
     var best = cands.first;
+    // The dictionary's first meaning of the same part of speech and source:
+    // a later meaning has to win on what the sentence is about, not on the
+    // shape of the sentence or an example's wording, which are often chance.
+    SenseCandidate? firstOfPos;
+    for (final c in cands) {
+      if (c.pos == best.pos && c.source == best.source && !c.literal && c.literal == best.literal && (firstOfPos == null || c.rank < firstOfPos.rank)) firstOfPos = c;
+    }
+    // (Not for an expression's own senses: their examples were written to
+    // tell them apart, "look up at the sky" against "look up a word".)
+    final notFirst = firstOfPos != null &&
+        best.source != 'expr' &&
+        !identical(firstOfPos, best) &&
+        firstOfPos.tr.isNotEmpty &&
+        !firstOfPos.tr.any(best.tr.contains) &&
+        (best.parts['sem'] ?? 0) < (firstOfPos.parts['sem'] ?? 0) + _firstSenseSem;
     final isLiteral = cat != null && best.literal;
     // Turkish for a meaning that has none of its own.
     if (best.tr.isEmpty) {
@@ -1213,21 +1390,43 @@ class SenseEngine {
     final mainOk = mainFirst && gap >= -0.04;
     final samePos = cands.where((c) => c.tr.isNotEmpty && (pos == null || c.pos == null || c.pos == pos));
     final evidence = gap >= 0.08 || mainOk || samePos.every((c) => c.tr.any(shown.contains));
+    // The part of speech: when the words around do not settle it (no cue,
+    // or a cue that is often wrong), a meaning of another part of speech
+    // with other Turkish has to lose on what the sentence says, not on
+    // frequency or on that cue.
+    final weakPos = pos == null || _weakPosRules.contains(posRule);
+    final otherPos = rest.where((c) => c.pos != null && best.pos != null && c.pos != best.pos && !c.tr.any(shown.contains)).toList();
+    var posUnclear = false;
+    if (weakPos && otherPos.isNotEmpty) {
+      // The shape of the sentence (an object follows, …) is judged for verbs
+      // only, so across parts of speech it is no evidence either.
+      double nf(SenseCandidate c) =>
+          leadNf(c) - w.pos * ((best.parts['pos'] ?? 0.5) - (c.parts['pos'] ?? 0.5)) - w.pattern * ((best.parts['pat'] ?? 0.5) - (c.parts['pat'] ?? 0.5));
+      final g = otherPos.map(nf).reduce(min);
+      if (g < _posGap) posUnclear = true;
+    }
     final weak = best.score < 0.3;
-    // An AI draft alone is no proof: "sure" only when a checked source has the
-    // same Turkish (the main meaning list or a checked candidate).
+    // An AI draft alone is no proof: "sure" only when a checked meaning has
+    // the same Turkish. The main meaning list (ft) does not count: it has no part of speech
+    // (in "Rector's next stop" the noun's draft would be corroborated by the
+    // verb "durmak"), and the drafts were written from it, so the two are one
+    // source, not two. Only a checked meaning of the same part of speech does.
     final checked = <String>{
-      for (final t in ft) ..._split(t),
       for (final c in cands)
-        if (!c.unverified) ...c.tr.expand(_split),
+        if (!c.unverified && (c.pos == null || best.pos == null || c.pos == best.pos)) ...c.tr.expand(_split),
     };
     final uncorroborated = best.unverified && !shown.expand(_split).any(checked.contains);
+    // Turkish whose form does not fit the part of speech ("elaborate" the
+    // verb shown as "mufassal", the noun "stop" as "durmak") is a sign that
+    // the meaning or its Turkish is mixed up.
+    final trVerb = shown.where(DictDb.isTrVerb).length;
+    final shapeClash = best.pos != null && shown.isNotEmpty && (best.pos == 'v' ? trVerb == 0 : trVerb == shown.length);
     final SenseConfidence conf;
     String reason;
     if (weak) {
       conf = SenseConfidence.none;
       reason = 'weak ${best.score.toStringAsFixed(2)}';
-    } else if (best.trDerived || uncorroborated || dissent.isNotEmpty || !evidence) {
+    } else if (best.trDerived || uncorroborated || dissent.isNotEmpty || !evidence || posUnclear || notFirst || shapeClash) {
       conf = SenseConfidence.likely;
       reason = best.trDerived
           ? 'derived Turkish'
@@ -1235,7 +1434,13 @@ class SenseEngine {
               ? 'unverified draft'
               : dissent.isNotEmpty
                   ? 'close: ${dissent.map((c) => c.id).join(',')}'
-                  : 'no clear evidence';
+                  : !evidence
+                      ? 'no clear evidence'
+                      : posUnclear
+                          ? 'part of speech unclear'
+                          : notFirst
+                              ? 'not the first meaning'
+                              : 'Turkish does not fit the part of speech';
     } else {
       conf = SenseConfidence.sure;
       reason = 'clear';
@@ -1247,7 +1452,7 @@ class SenseEngine {
       confidence: conf,
       best: best,
       others: _others(rest, best),
-      reason: '$reason; ${best.id} ${best.score.toStringAsFixed(3)}',
+      reason: '$reason; ${best.id} ${best.score.toStringAsFixed(3)} pos:$posRule',
       ranked: cands,
     );
   }
@@ -1377,13 +1582,13 @@ class _Shape {
   final bool personSubject;
   _Shape(this.hasObject, this.personObject, this.subjectKnown, this.personSubject);
 
-  static _Shape inSentence(SenseEngine e, List<Token> toks, int head, int last) {
-    // object: what follows the word (or the last word of the expression)
+  static _Shape inSentence(SenseEngine e, List<Token> toks, int head, int last, {List<bool>? breaks}) {
+    // object: what follows the word (or the last word of the expression),
+    // in the same clause ("He showered, shaved": "shaved" is no object)
     final j = last + 1;
     var obj = false, personObj = false;
-    if (j < toks.length) {
+    if (j < toks.length && !(breaks != null && breaks[j])) {
       final n = toks[j].lower;
-      // the token must follow without punctuation in between (same clause)
       if (SenseEngine._dets.contains(n) || n == 'it' || SenseEngine._objPersons.contains(n)) {
         obj = true;
       } else if (!SenseEngine._preps.contains(n) && !SenseEngine._aux.contains(n) && !const {'and', 'or', 'but', 'when', 'while', 'if', 'because', 'so'}.contains(n)) {
@@ -1460,7 +1665,7 @@ class _Profile {
             }
           }
           // the example must end where the sentence ends or go on, not be cut
-          final sh = _Shape.inSentence(e, t, at, last);
+          final sh = _Shape.inSentence(e, t, at, last, breaks: clauseBreaks(ex, t));
           final endsHere = last + 1 >= t.length;
           objN++;
           if (sh.hasObject) obj++;

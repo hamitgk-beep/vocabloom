@@ -6,7 +6,8 @@
 // with tools/eval/build_text_eval.py and point $TEXT_EVAL_DIR at the folder.
 // text_eval_dev.jsonl is for development; text_eval_test.jsonl is measured
 // and never tuned on. $TEXT_EVAL_SET picks one ("dev", the default, or
-// "test"); $TEXT_EVAL_OUT gets every miss, to read.
+// "test"); $TEXT_EVAL_OUT gets every miss, to read ($TEXT_EVAL_ALLPOS: also
+// every right part of speech, with the rule that chose it, for error rates).
 //
 // It prints numbers and checks none of them.
 import 'dart:convert';
@@ -32,6 +33,7 @@ void main() {
     d.load();
     final eng = SenseEngine(d);
     final miss = StringBuffer();
+    final allPos = Platform.environment['TEXT_EVAL_ALLPOS'] != null;
 
     var goldB = 0, predB = 0, hitB = 0, goldS = 0, exactS = 0, parasMulti = 0, parasRight = 0;
     var words = 0, wordsFound = 0;
@@ -149,6 +151,7 @@ void main() {
           posSure++;
           if (!ok) posSureWrong++;
         }
+        if (ok && allPos) miss.writeln('POSOK\t$form\tgold $upos\tgot ${c.best!.pos} ${c.confidence.name}\t${text.substring(sr.$1, sr.$2).trim()}\t${c.reason}');
         if (!ok) {
           miss.writeln('POS\t$form\tgold $upos\tgot ${c.best!.pos} ${c.confidence.name}\t${text.substring(sr.$1, sr.$2).trim()}\t${c.reason} | ${c.ranked.take(3).map((x) => '${x.lemma}/${x.pos} ${x.score.toStringAsFixed(2)} ${x.parts.map((k, v) => MapEntry(k, v.toStringAsFixed(2)))}').join(' ; ')}');
         }
