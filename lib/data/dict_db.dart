@@ -36,6 +36,17 @@ class WordInfo {
   bool get isEmpty => trFreeDict.isEmpty && senses.isEmpty && trDraft.isEmpty;
 }
 
+/// A dictionary word a written word can stand for ([DictDb.baseForms]), and
+/// the parts of speech ('n', 'v', 'a', 'r') that reading allows; null: any.
+class BaseForm {
+  final String lemma;
+  final Set<String>? pos;
+  const BaseForm(this.lemma, this.pos);
+
+  @override
+  String toString() => pos == null ? lemma : '$lemma(${pos!.join()})';
+}
+
 /// How far a meaning can be trusted. One order for every screen:
 /// verified contribution > trusted source (ft, WordNet, expr, exd) > AI draft.
 enum SourceTier { verified, trusted, draft }
@@ -102,8 +113,9 @@ class DictDb {
       known.add(r.columnAt(0) as String);
     }
     final exc = <String, List<String>>{};
-    for (final r in db.select('SELECT form, lemma FROM exc')) {
+    for (final r in db.select('SELECT form, lemma, pos FROM exc')) {
       exc.putIfAbsent(r.columnAt(0) as String, () => []).add(r.columnAt(1) as String);
+      _excPos.putIfAbsent(r.columnAt(0) as String, () => []).add((r.columnAt(1) as String, r.columnAt(2) as String?));
     }
     lemmatizer = Lemmatizer(known, exc);
     exprs = [];
@@ -463,6 +475,127 @@ class DictDb {
         }
         return out;
       });
+
+  final Map<String, bool> _hasMeaningCache = {};
+
+  /// Whether the dictionary has a meaning for [lemma] itself (a WordNet sense
+  /// or a main Turkish meaning).
+  bool hasMeaning(String lemma) => _hasMeaningCache.putIfAbsent(lemma, () {
+        if (db.select('SELECT 1 FROM sense WHERE lemma=? LIMIT 1', [lemma]).isNotEmpty) return true;
+        return db.select("SELECT 1 FROM ft WHERE word=? AND tr != '[]'", [lemma]).isNotEmpty;
+      });
+
+  /// How many times more often than its base form a written form must be met
+  /// before it counts as a word of its own ("according" against "accord",
+  /// "born" against "bear"). An ordinary plural or past form is often as
+  /// common as its base ("things", "used"), so "as common" is not enough.
+  static const double ownWordRatio = 3;
+
+  static const _sRules = [
+    ['ies', 'y'], ['ves', 'f'], ['ves', 'fe'], ['ses', 's'], ['xes', 'x'], ['zes', 'z'],
+    ['ches', 'ch'], ['shes', 'sh'], ['men', 'man'], ['es', 'e'], ['es', ''], ['s', ''],
+  ];
+  static const _verbRules = [['ied', 'y'], ['ed', 'e'], ['ed', ''], ['ying', 'ie'], ['ing', 'e'], ['ing', '']];
+  static const _adjRules = [['ier', 'y'], ['iest', 'y'], ['er', 'e'], ['est', 'e'], ['er', ''], ['est', '']];
+  static const _directionWords = {'up', 'down', 'off', 'out', 'away', 'back', 'on', 'over', 'in', 'around', 'about', 'through'};
+  static const _lyRules = [['ily', 'y'], ['ly', '']];
+
+  final Map<String, List<BaseForm>> _baseFormCache = {};
+  final Map<String, List<(String, String?)>> _excPos = {};
+
+  /// The dictionary words a written word can stand for, the most likely
+  /// first, each with the parts of speech its ending allows.
+  ///
+  /// An ending says what the base is: "-ing" and "-ed" are put on verbs,
+  /// "-s" on nouns and verbs, "-er" and "-est" on adjectives and adverbs. So
+  /// "thing" is not "the", "letter" is not "let" and "writer" is not
+  /// "write"; and "training" can be the verb "train" but never the noun
+  /// (a train). "-ly" makes another word, so "only" is itself.
+  ///
+  /// The word panel, the hover bubble and the context picker all use this
+  /// list, so they name the same word. ([Lemmatizer.lemmas] stays the wide
+  /// list for finding expressions, grammar and saved words.)
+  List<BaseForm> baseForms(String lower) => _baseFormCache.putIfAbsent(lower, () {
+        var w = lower.replaceAll('’', "'");
+        if (w.endsWith("'s")) w = w.substring(0, w.length - 2);
+        final out = <BaseForm>[];
+        void add(String l, Set<String>? pos) {
+          if (l.isEmpty || !hasMeaning(l)) return;
+          final i = out.indexWhere((b) => b.lemma == l);
+          if (i < 0) {
+            out.add(BaseForm(l, pos));
+          } else if (out[i].pos != null) {
+            // Reached two ways ("leaves": leaf, leave): either reading holds.
+            out[i] = BaseForm(l, pos == null ? null : {...out[i].pos!, ...pos});
+          }
+        }
+
+        final irregular = irregularOf[w] != null && !this.irregular.containsKey(w);
+        if (irregular) {
+          for (final l in irregularOf[w]!) {
+            add(l, const {'v'});
+          }
+        }
+        // Listed irregular forms, each with the part of speech it is listed
+        // for ("leaves": the noun leaf; "better": the adjective good).
+        for (final (l, p) in _excPos[w] ?? const <(String, String?)>[]) {
+          if (l == w) continue;
+          final cmp = p == 'a' || p == 'r';
+          if (cmp && (stopWords.contains(l) || _directionWords.contains(l))) continue;
+          add(l, p == null ? null : (cmp ? const {'a', 'r'} : {p}));
+        }
+        void rules(List<List<String>> rs, Set<String> allowed) {
+          for (final r in rs) {
+            if (w.length <= r[0].length + 1 || !w.endsWith(r[0])) continue;
+            final base = w.substring(0, w.length - r[0].length) + r[1];
+            final bases = [
+              base,
+              // stopped -> stopp -> stop
+              if (r[1].isEmpty && base.length > 2 && base[base.length - 1] == base[base.length - 2]) base.substring(0, base.length - 1),
+            ];
+            for (final b in bases) {
+              if (b.length < 2) continue;
+              // "-es" with nothing put back is the plural after "o" only
+              // ("goes", "heroes"); "sites" is not "sit".
+              if (r[0] == 'es' && r[1].isEmpty && !b.endsWith('o')) continue;
+              // Grammar and direction words are not compared ("offer" is
+              // not "off", "upper" not "up").
+              if (identical(rs, _adjRules) && (stopWords.contains(b) || _directionWords.contains(b))) continue;
+              final pos = lemmaPos(b).intersection(allowed);
+              if (pos.isNotEmpty) add(b, pos);
+            }
+          }
+        }
+
+        // Grammar words take no endings ("as" is not "a", "its" is not "it");
+        // their irregular forms are listed above ("was" is "be").
+        if (!stopWords.contains(w)) {
+          if (!w.endsWith('ss')) rules(_sRules, const {'n', 'v'});
+          rules(_verbRules, const {'v'});
+          rules(_adjRules, const {'a', 'r'});
+        }
+        final self = hasMeaning(w);
+        if (!self) {
+          for (final r in _lyRules) {
+            if (w.length <= r[0].length + 1 || !w.endsWith(r[0])) continue;
+            final b = w.substring(0, w.length - r[0].length) + r[1];
+            if (lemmaPos(b).contains('a')) add(b, null);
+          }
+        }
+        if (self) {
+          final first = out.firstOrNull;
+          // A word of its own: nothing it could be a form of, or far more
+          // common than that base.
+          final own = first == null || (!irregular && (_freq[w] ?? 0) >= ownWordRatio * (_freq[first.lemma] ?? 0) && (_freq[w] ?? 0) > 0);
+          out.removeWhere((b) => b.lemma == w);
+          own ? out.insert(0, BaseForm(w, null)) : out.add(BaseForm(w, null));
+        }
+        return out;
+      });
+
+  /// The dictionary word a written word is shown under: the first of
+  /// [baseForms], or the word itself when the dictionary knows none.
+  String headword(String lower) => baseForms(lower).firstOrNull?.lemma ?? lower.replaceAll('’', "'");
 
   Set<String> posOf(String word) => _posCache.putIfAbsent(word, () {
         final out = <String>{};

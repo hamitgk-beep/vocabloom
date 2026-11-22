@@ -241,7 +241,7 @@ class SenseWeights {
 class SenseEngine {
   /// Bumped whenever the scoring changes, so cached and reported choices of an
   /// older engine are told apart.
-  static const version = '1';
+  static const version = '2';
 
   final DictDb dict;
   final SenseWeights w;
@@ -413,9 +413,11 @@ class SenseEngine {
 
   /// Whether the expression [e], matched on [idx], is used literally here
   /// ("lived in Kansas" is live + in, not the phrasal verb "live in").
-  bool isLiteral(Expr e, List<Token> toks, List<int> idx) {
+  bool isLiteral(Expr e, List<Token> toks, List<int> idx, {String? sentence, String? prev, String? next}) {
     if (idx.isEmpty || !e.phrase.contains(' ')) return false;
-    final r = resolve(SenseQuery(sentence: toks.map((t) => t.text).join(' '), tokens: toks, index: idx.first, expr: e, exprTokens: idx));
+    final r = resolve(SenseQuery(
+        sentence: sentence ?? toks.map((t) => t.text).join(' '), tokens: toks, index: idx.first, expr: e, exprTokens: idx,
+        prevSentence: prev, nextSentence: next));
     return r.literalPhrase != null;
   }
 
@@ -441,15 +443,22 @@ class SenseEngine {
           sentence: q.sentence, tokens: q.tokens, index: q.index, expr: sep.$1, exprTokens: sep.$2,
           prevSentence: q.prevSentence, nextSentence: q.nextSentence, contentId: q.contentId, lang: q.lang));
     }
-    final cands = <SenseCandidate>[];
+    var cands = <SenseCandidate>[];
     for (var li = 0; li < lemmas.length; li++) {
       cands.addAll(_wordCandidates(lemmas[li], rankOffset: li * 3));
     }
+    // The ending rules out some readings of a base form ("meaning" is the
+    // verb "mean", never the adjective).
+    final fits = [
+      for (final c in cands)
+        if (c.pos == null || (_allowedPos(lower, c.lemma)?.contains(c.pos) ?? true)) c,
+    ];
+    if (fits.isNotEmpty) cands = fits;
     if (cands.isEmpty) {
       return ContextSense(headword: lemmas.firstOrNull ?? lower, confidence: SenseConfidence.none, reason: 'no dictionary meaning');
     }
     final ctx = _Context.of(this, q.tokens, {q.index}, q.prevSentence, q.nextSentence);
-    final pos = _guessPos(q.tokens, q.index, cands.map((c) => c.pos).whereType<String>().toSet());
+    final pos = _guessPos(q.tokens, q.index, cands.map((c) => c.pos).whereType<String>().toSet(), breaks: clauseBreaks(q.sentence, q.tokens));
     final shape = _Shape.inSentence(this, q.tokens, q.index, q.index);
     for (final c in cands) {
       _score(c, ctx, pos, shape, q.tokens, q.index, q.index);
@@ -501,36 +510,22 @@ class SenseEngine {
     }
 
     if (preferred != null) add(preferred);
-    for (final l in dict.irregularOf[lower] ?? const <String>[]) {
-      add(l);
-    }
-    add(lemmaOf(lower));
-    for (final l in dict.lemmatizer.lemmas(lower)) {
-      add(l);
-    }
-    for (final l in dict.lemmatizer.exc[lower] ?? const <String>[]) {
-      add(l);
+    for (final b in dict.baseForms(lower)) {
+      add(b.lemma);
     }
     return out;
   }
 
-  /// The most likely base form: an irregular verb's base ("went" → go), the
-  /// word itself when it is a common word ("river", not "rive"), otherwise
-  /// the lemmatizer's first guess.
-  String lemmaOf(String lower) {
-    final irr = dict.irregularOf[lower];
-    if (irr != null && !dict.irregular.containsKey(lower)) return irr.first;
-    final ls = dict.lemmatizer.lemmas(lower);
-    final first = ls.first;
-    if (first != lower && ls.contains(lower) && (_freq[lower] ?? 0) >= (_freq[first] ?? 0)) return lower;
-    return first;
-  }
+  /// The parts of speech [lemma] can have when it is written [lower]
+  /// ("training" as "train" is the verb only); null when any.
+  Set<String>? _allowedPos(String lower, String lemma) =>
+      dict.baseForms(lower).where((b) => b.lemma == lemma).firstOrNull?.pos;
 
-  final Map<String, bool> _hasMeaningCache = {};
-  bool _hasMeaning(String l) => _hasMeaningCache.putIfAbsent(l, () {
-        if (dict.db.select('SELECT 1 FROM sense WHERE lemma=? LIMIT 1', [l]).isNotEmpty) return true;
-        return dict.db.select("SELECT 1 FROM ft WHERE word=? AND tr != '[]'", [l]).isNotEmpty;
-      });
+  /// The most likely base form ([DictDb.headword]): "went" → go, "things" →
+  /// thing, "only" → only.
+  String lemmaOf(String lower) => dict.headword(lower);
+
+  bool _hasMeaning(String l) => dict.hasMeaning(l);
 
   late final bool _hasOwn = dict.db.select("SELECT 1 FROM sqlite_master WHERE type='table' AND name='od'").isNotEmpty;
 
@@ -690,6 +685,7 @@ class SenseEngine {
       for (var li = 0; li < headLemmas.length && li < 2; li++) {
         for (final c in _wordCandidates(headLemmas[li], rankOffset: li * 3)) {
           if (e.cat == 'phrasal_verbs' && c.pos != null && c.pos != 'v') continue;
+          if (c.pos != null && !(_allowedPos(q.tokens[headI].lower, c.lemma)?.contains(c.pos) ?? true)) continue;
           cands.add(SenseCandidate(
             id: c.id, source: c.source, lemma: c.lemma, pos: c.pos, en: c.en, tr: c.tr, examples: c.examples,
             examplesTr: c.examplesTr, rank: c.rank, literal: true, synonyms: c.synonyms, note: c.note, unverified: c.unverified,
@@ -703,7 +699,7 @@ class SenseEngine {
     final ctx = _Context.of(this, q.tokens, idx.toSet(), q.prevSentence, q.nextSentence);
     final last = idx.reduce(max);
     final shape = _Shape.inSentence(this, q.tokens, headI, last);
-    final pos = e.cat == 'phrasal_verbs' ? 'v' : _guessPos(q.tokens, headI, cands.map((c) => c.pos).whereType<String>().toSet());
+    final pos = e.cat == 'phrasal_verbs' ? 'v' : _guessPos(q.tokens, headI, cands.map((c) => c.pos).whereType<String>().toSet(), breaks: clauseBreaks(q.sentence, q.tokens));
     for (final c in cands) {
       _score(c, ctx, e.cat == 'phrasal_verbs' ? 'v' : (c.literal ? pos : null), shape, q.tokens, headI, c.literal ? headI : last,
           particles: c.literal ? e.pattern.skip(1).toList() : const [], phrase: c.literal ? null : e);
@@ -917,11 +913,13 @@ class SenseEngine {
     });
   }
 
-  String? _guessPos(List<Token> toks, int i, Set<String> available) {
-    final p = guessPos(toks, i, available, posOf: dict.posOf);
+  String? _guessPos(List<Token> toks, int i, Set<String> available, {List<bool>? breaks}) {
+    final p = guessPos(toks, i, available, posOf: dict.posOf, breaks: breaks);
     if (p != null) return p;
-    final prev = i > 0 ? toks[i - 1].lower : '';
-    final prev2 = i > 1 ? toks[i - 2].lower : '';
+    // Words on the far side of a comma or a full stop say nothing here.
+    bool cut(int k) => breaks != null && breaks[k];
+    final prev = i > 0 && !cut(i) ? toks[i - 1].lower : '';
+    final prev2 = i > 1 && !cut(i) && !cut(i - 1) ? toks[i - 2].lower : '';
     final w0 = toks[i].lower;
     // "which animal it …": after which / what / whose comes a noun.
     if (available.contains('n') && const {'which', 'what', 'whose', 'whichever', 'whatever'}.contains(prev)) return 'n';
@@ -934,7 +932,7 @@ class SenseEngine {
     }
     // An adjective stands before a noun or after be / seem; otherwise a
     // word that is also a noun is a noun.
-    final nextW = i + 1 < toks.length ? toks[i + 1].lower : '';
+    final nextW = i + 1 < toks.length && !cut(i + 1) ? toks[i + 1].lower : '';
     if (available.contains('n') && available.contains('a') && !verbForm) {
       final np = nextW.isEmpty ? const <String>{} : dict.posOf(nextW);
       final beforeNoun = np.contains('n') && !_preps.contains(nextW) && !_objPersons.contains(nextW) && nextW != 'it';
@@ -944,7 +942,7 @@ class SenseEngine {
     // "a long run": determiner + adjective + word.
     if (!verbForm && available.contains('n') && _dets.contains(prev2) && dict.posOf(prev).contains('a')) return 'n';
     // "She runs a small company": a verb before a determiner.
-    final next = i + 1 < toks.length ? toks[i + 1].lower : '';
+    final next = nextW;
     if (available.contains('v') && (_dets.contains(next) || _objPersons.contains(next)) && !_dets.contains(prev)) return 'v';
     if (available.contains('v') && (_persons.contains(prev) || (prev.isNotEmpty && i > 0 && toks[i - 1].text[0] != toks[i - 1].lower[0]))) {
       return 'v';
@@ -988,7 +986,13 @@ class SenseEngine {
     final sem = 1 - exp(-raw / 1.2);
 
     // 2. Part of speech.
-    final posS = pos == null || c.pos == null ? 0.5 : (c.pos == pos ? 1.0 : 0.0);
+    // An expression found in its own words stands where its part of speech
+    // belongs: the word-by-word reading gets no head start from grammar, and
+    // has to win on what the sentence is about.
+    // That head start decides which meaning is shown, but it is no evidence:
+    // it is kept apart ("free") and left out when [_decide] asks how sure.
+    final posOwn = pos == null || c.pos == null ? 0.5 : (c.pos == pos ? 1.0 : 0.0);
+    final posS = phrase != null && !c.literal ? 1.0 : posOwn;
 
     // 3. Shape: object or not, who does it, what follows.
     // Object and subject say something about verbs only.
@@ -1074,6 +1078,9 @@ class SenseEngine {
     // A clear part of speech in the sentence ("a long run" is a noun) rules
     // out most of the other parts of speech.
     if (posS == 0.0) c.score *= 0.8;
+    var own = (w.semantic * sem + w.pos * posOwn + w.pattern * pat + w.example * exS + w.frequency * fr) * clash * spatial;
+    if (posOwn == 0.0) own *= 0.8;
+    c.parts['free'] = c.score - own;
     // A meaning with Turkish of its own wins a tie over one without.
     if (c.tr.isNotEmpty) c.score += 0.02;
     // A checked source wins a tie over an unreviewed AI draft.
@@ -1188,15 +1195,20 @@ class SenseEngine {
     final shown = best.tr.take(3).toSet();
 
     // How sure: a close rival with a different Turkish meaning makes it a guess.
+    // An expression's head start over the word-by-word reading decides what
+    // is shown, but it is not counted as evidence for the expression.
+    final free = best.parts['free'] ?? 0;
+    double lead(SenseCandidate c) => best.score - c.score - (c.literal && !best.literal ? free : 0);
+    double leadNf(SenseCandidate c) => lead(c) - w.frequency * ((best.parts['fr'] ?? 0) - (c.parts['fr'] ?? 0));
     const margin = 0.06;
-    final close = rest.where((c) => c.score >= best.score - margin).toList();
-    final dissent = close.where((c) => c.tr.isEmpty ? c.score >= best.score - 0.02 : !c.tr.any(shown.contains)).toList();
+    final close = rest.where((c) => lead(c) <= margin).toList();
+    final dissent = close.where((c) => c.tr.isEmpty ? lead(c) <= 0.02 : !c.tr.any(shown.contains)).toList();
     // Sure only when (a) the sentence itself, not frequency, sets this
     // meaning apart from the best rival with other Turkish, (b) it is the
     // word's main meaning and nothing close says otherwise, or (c) every
     // meaning of this part of speech has this Turkish.
     final rivals = rest.where((c) => c.tr.isNotEmpty && !c.tr.any(shown.contains)).toList();
-    final gap = rivals.isEmpty ? 1.0 : nonFreq(best) - nonFreq(rivals.first);
+    final gap = rivals.isEmpty ? 1.0 : leadNf(rivals.reduce((a, b) => lead(a) <= lead(b) ? a : b));
     final mainFirst = ft.isNotEmpty && _split(ft.first).any(shown.contains);
     final mainOk = mainFirst && gap >= -0.04;
     final samePos = cands.where((c) => c.tr.isNotEmpty && (pos == null || c.pos == null || c.pos == pos));

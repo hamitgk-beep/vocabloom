@@ -7,6 +7,9 @@
 //    Turkish is KeNet's Turkish of that synset (hand-made). An answer counts as
 //    right only when it shares a Turkish meaning with that reference, so a
 //    correct answer worded differently counts as wrong here (strict).
+//    $SENSE_EVAL_SEMCOR picks another draw: sense_eval_semcor_dev.tsv (looked
+//    at while the context picker was worked on, so not independent) or
+//    sense_eval_semcor_fresh.tsv (measured once, never tuned on).
 //  * $SENSE_EVAL_MAGPIE (optional, not in the repository): idioms in sentences
 //    labelled idiomatic or literal by annotators (MAGPIE).
 //
@@ -53,7 +56,7 @@ void main() {
 
   test('words in sentences with a human-chosen sense (SemCor, KeNet Turkish)', () {
     final rows = [
-      for (final l in File('test/data/sense_eval_semcor.tsv').readAsLinesSync())
+      for (final l in File(Platform.environment['SENSE_EVAL_SEMCOR'] ?? 'test/data/sense_eval_semcor.tsv').readAsLinesSync())
         if (!l.startsWith('#') && l.trim().isNotEmpty) l.split('\t'),
     ];
     expect(rows.length, greaterThanOrEqualTo(200));

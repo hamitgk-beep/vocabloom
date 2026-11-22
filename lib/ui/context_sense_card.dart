@@ -260,7 +260,7 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
       final ctx = widget.ctx;
       final phrase = widget.result.literalPhrase == null && !widget.result.headword.contains(' ')
           ? ctx.matches
-                .where((m) => m.tokens.length > 1 && m.tokens.contains(ctx.indexInSentence) && !widget.app.senses.isLiteral(m.expr, ctx.sentenceTokens, m.tokens))
+                .where((m) => m.tokens.length > 1 && m.tokens.contains(ctx.indexInSentence) && !widget.app.senses.isLiteral(m.expr, ctx.sentenceTokens, m.tokens, sentence: ctx.sentence, prev: ctx.prevSentence, next: ctx.nextSentence))
                 .map((m) => m.expr.phrase)
                 .firstOrNull
           : null;
