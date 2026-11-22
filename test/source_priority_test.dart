@@ -398,6 +398,16 @@ void main() {
         expect(app.senses.fit('want', 'I want it.', 'istemek', synonyms: false).confirmed, isFalse);
         // A noun's meaning never confirms a verb answer.
         expect(q.fit('book', 'I read a good book.', 'ayırtmak').confirmed, isFalse);
+        // "hafifletmek" is the first meaning of "relieve" and of "alleviate",
+        // whose first sense is the synset the picker chose here. (The synset's
+        // own Turkish in the data is another word; this checks the answer the
+        // card shows, not that record.)
+        const relieve = 'First of the problems attacked would be fatigue and emotional tension, since action relieves both.';
+        expect(d.commonMeaning('relieve').tr, 'hafifletmek');
+        final r = q.fit('relieve', relieve, 'hafifletmek');
+        expect(r.confirmed, isTrue);
+        expect(r.why, 'co-translation');
+        expect(q.answerFor(saved('relieve', relieve, null)).choice, isTrue);
         // Bringing up children is not "kaldırmak", although "rear" can mean both.
         expect(q.fit('raise', 'They raised their children in a town surrounded by nature.', 'kaldırmak').confirmed, isFalse);
       });
