@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import '../data/dict_db.dart';
+import 'pos_tagger.dart';
 import 'text.dart';
 
 enum SenseConfidence { sure, likely, none }
@@ -250,7 +251,12 @@ class SenseEngine {
   /// reuses an old choice.
   final String dictVersion;
 
-  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion}) : dictVersion = dictVersion ?? DictDb.version;
+  /// EXPERIMENTAL (Task 5E), off unless given: a part-of-speech tagger whose
+  /// tag, when it is one of the word's parts of speech, is used instead of the
+  /// hand-written rules. Null (the app's default) keeps the engine as it was.
+  final PosTagger? tagger;
+
+  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion, this.tagger}) : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
   final _cache = <String, ContextSense>{};
@@ -1059,6 +1065,9 @@ class SenseEngine {
   static const _weakPosRules = {
     'participle', 'participleAfterBe', 'adjBeforeNoun', 'afterDegree', 'afterBe', 'nounSlot', 'adverbAfterVerb',
     'aloneAdverb', 'adjBeforeName', 'afterDet', 'verbBeforeDet', 'afterPrep',
+    // The experimental tagger (Task 5E) chooses the part of speech, but is no
+    // proof of it: used as proof it made more wrong meanings "sure".
+    'tagger',
   };
   static const _posGap = 0.08;
 
@@ -1072,6 +1081,18 @@ class SenseEngine {
 
   String? _guessPos(List<Token> toks, int i, Set<String> available, {List<bool>? breaks}) {
     posRule = '-';
+    final tg = tagger;
+    if (tg != null) {
+      try {
+        final t = tg.posAt(toks, i);
+        if (t != null && available.contains(t)) {
+          posRule = 'tagger';
+          return t;
+        }
+      } catch (_) {
+        // a broken tagger never breaks the engine: the rules below decide
+      }
+    }
     final p = guessPos(toks, i, available, posOf: dict.posOf, breaks: breaks, why: (r) => posRule = r);
     if (p != null) return p;
     // Words on the far side of a comma or a full stop say nothing here.
