@@ -11,6 +11,7 @@ import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 import 'expr_sheet.dart';
 import 'grammar_mark_sheet.dart';
+import 'pages.dart';
 import 'paragraph_view.dart';
 import 'phrase_choice.dart';
 import 'sentence_sheet.dart';
@@ -33,6 +34,27 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   late List<Chapter> chapters;
   late int chapter;
   List<Para> paras = [];
+
+  /// The filter panel beside the book on wide screens: opened and closed with
+  /// the filter button, closed until the learner opens it (kept across visits).
+  late bool filtersOpen = widget.app.user.getSetting('reader_filters_open') == '1';
+
+  void _toggleFilters(bool wide) {
+    if (!wide) {
+      _scaffold.currentState!.openEndDrawer();
+      return;
+    }
+    setState(() => filtersOpen = !filtersOpen);
+    widget.app.user.setSetting('reader_filters_open', filtersOpen ? '1' : '0');
+  }
+
+  /// The chapter's pages ([pagesOf]) and the one on screen.
+  List<(int, int)> pages = const [(0, 0)];
+  int page = 0;
+
+  /// Pages of the original book (a PDF), for "page 12 / 65".
+  late final int? bookPages = app.user.bookPages(widget.book.id);
+  final _focus = FocusNode();
   final scroll = ScrollController();
   final _scaffold = GlobalKey<ScaffoldState>();
   final _paraKeys = <int, GlobalKey>{};
@@ -45,10 +67,10 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     super.initState();
     chapters = app.user.chapters(widget.book.id);
     chapter = widget.book.lastChapter.clamp(0, chapters.length - 1);
-    _load(restoreOffset: widget.book.lastParagraph.toDouble());
+    _load(restoreOffset: widget.book.lastParagraph.toDouble(), page: widget.book.lastPage);
     scroll.addListener(_saveSoon);
     app.addListener(_onApp);
-    reader.addListener(_onApp);
+    reader.addListener(_onSpeech);
     WidgetsBinding.instance.addObserver(this);
     _active.touch();
     _tick = Timer.periodic(const Duration(seconds: 15), (_) {
@@ -96,11 +118,49 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     _save();
     app.removeListener(_onApp);
     reader.dispose();
+    readingPanelTheme = null;
     scroll.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
   void _onApp() => setState(() {});
+
+  /// Reading aloud goes on to the next page: the page turns with it.
+  void _onSpeech() {
+    final c = reader.current;
+    if (c != null && c.para < paras.length) {
+      final pg = pageOfPara(pages, c.para);
+      if (pg != page) {
+        _markRead();
+        setState(() => page = pg);
+        _toTop();
+        _save();
+        return;
+      }
+    }
+    setState(() {});
+  }
+
+  void _toTop() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (scroll.hasClients) scroll.jumpTo(0);
+  });
+
+  /// Turns to the next (+1) or previous (-1) page, into the next or previous chapter at the ends.
+  void _turn(int d) {
+    _active.touch();
+    final p = page + d;
+    if (p >= 0 && p < pages.length) {
+      _markRead();
+      reader.stop();
+      setState(() => page = p);
+      _toTop();
+      _save();
+      return;
+    }
+    if (d > 0 && chapter < chapters.length - 1) _go(chapter + 1);
+    if (d < 0 && chapter > 0) _go(chapter - 1, lastPage: true);
+  }
 
   DateTime _lastSave = DateTime(0);
   void _saveSoon() {
@@ -116,11 +176,14 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final off = scroll.hasClients ? scroll.offset.round() : 0;
     widget.book.lastChapter = chapter;
     widget.book.lastParagraph = off;
-    app.user.saveProgress(widget.book.id, chapter, off);
+    widget.book.lastPage = page;
+    app.user.saveProgress(widget.book.id, chapter, off, page: page);
   }
 
-  void _load({double restoreOffset = 0}) {
+  void _load({double restoreOffset = 0, int page = 0}) {
     paras = app.user.paras(widget.book.id, chapter);
+    pages = pagesOf(paras);
+    this.page = page < 0 ? pages.length - 1 : page.clamp(0, pages.length - 1);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scroll.hasClients) scroll.jumpTo(restoreOffset.clamp(0, scroll.position.maxScrollExtent));
     });
@@ -129,13 +192,13 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     _readSoon = Timer(const Duration(seconds: 5), _markRead);
   }
 
-  void _go(int c) {
+  void _go(int c, {bool lastPage = false}) {
     if (c < 0 || c >= chapters.length) return;
     _markRead();
     reader.stop();
     setState(() {
       chapter = c;
-      _load();
+      _load(page: lastPage ? -1 : 0);
     });
     _save();
   }
@@ -166,7 +229,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
         best = e.key;
       }
     }
-    return best < 0 ? 0 : best;
+    return best < 0 ? pages[page].$1 : best;
   }
 
   /// The chapter's text on the clipboard, to paste anywhere (the reader's own
@@ -174,7 +237,8 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
   Future<void> _copyChapter() async {
     await Clipboard.setData(ClipboardData(text: '${chapters[chapter].title}\n\n${app.user.chapterText(widget.book.id, chapter)}'));
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(L('Bölümün metni panoya kopyalandı.', 'The chapter text was copied to the clipboard.'))));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(L('Bölümün metni panoya kopyalandı.', 'The chapter text was copied to the clipboard.'))));
   }
 
   Future<void> _toggleReadAloud() async {
@@ -185,52 +249,6 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     if (!await ensureVoicePack(context)) return;
     if (!mounted) return;
     reader.start(_firstVisiblePara());
-  }
-
-  Widget _speechBar(ThemeData theme) {
-    final s = Speech.instance;
-    return Material(
-      color: theme.colorScheme.surfaceContainerHigh,
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          child: Row(
-            children: [
-              const SizedBox(width: 6),
-              Icon(Icons.headphones_rounded, size: 20, color: theme.colorScheme.primary),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(s.voice.name, style: theme.textTheme.titleSmall, overflow: TextOverflow.ellipsis),
-              ),
-              IconButton(tooltip: L('Önceki cümle', 'Previous sentence'), onPressed: () => reader.skip(-1), icon: const Icon(Icons.skip_previous_rounded)),
-              IconButton.filled(
-                tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
-                onPressed: reader.toggle,
-                icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
-              ),
-              IconButton(tooltip: L('Sonraki cümle', 'Next sentence'), onPressed: () => reader.skip(1), icon: const Icon(Icons.skip_next_rounded)),
-              PopupMenuButton<double>(
-                tooltip: L('Hız', 'Speed'),
-                initialValue: s.speed,
-                onSelected: (v) {
-                  s.speed = v;
-                  reader.skip(0);
-                },
-                itemBuilder: (_) => [
-                  for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
-                ],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 0 : 2)}×', style: theme.textTheme.labelLarge),
-                ),
-              ),
-              IconButton(tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'), onPressed: reader.stop, icon: const Icon(Icons.close_rounded)),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   void _onWord(Para p, ParaAnalysis a, int i) async {
@@ -276,6 +294,84 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     if (mounted) setState(() {});
   }
 
+  /// "Sayfa 12 / 65" for a book with pages of its own, otherwise the page of the chapter.
+  String _pageLabel() {
+    final first = paras.isEmpty ? null : paras[pages[page].$1].page;
+    if (first != null && bookPages != null) return L('Sayfa ${first + 1} / $bookPages', 'Page ${first + 1} / $bookPages');
+    return L('Sayfa ${page + 1} / ${pages.length}', 'Page ${page + 1} / ${pages.length}');
+  }
+
+  /// A picture of the book, as wide as the book has it (at most the text's width).
+  Widget _picture(Para p) {
+    final file = app.user.imageFile(p);
+    final wr = ((p.meta['wr'] as num?)?.toDouble() ?? 1).clamp(0.3, 1.0);
+    return Padding(
+      padding: const EdgeInsets.only(top: 6, bottom: 10),
+      child: LayoutBuilder(
+        builder: (c, box) {
+          final w = box.maxWidth * wr;
+          final ar = p.aspect;
+          return Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Image.file(
+                file,
+                width: w,
+                height: ar == null ? null : w / ar,
+                fit: BoxFit.contain,
+                // The page colour shows through a white drawing in the dark theme.
+                color: Theme.of(c).brightness == Brightness.dark ? Colors.white.withValues(alpha: 0.88) : null,
+                colorBlendMode: Theme.of(c).brightness == Brightness.dark ? BlendMode.modulate : null,
+                errorBuilder: (_, _, _) => const SizedBox.shrink(),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  /// Buttons under the page: previous page, where we are, next page.
+  Widget _pageNav(ThemeData theme) {
+    final atStart = page == 0 && chapter == 0;
+    final atEnd = page == pages.length - 1 && chapter == chapters.length - 1;
+    final lastOfChapter = page == pages.length - 1;
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 10),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5))),
+      ),
+      // On a phone the previous button is an arrow only, so the row fits.
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final narrow = box.maxWidth < 440;
+          final back = atStart ? null : () => _turn(-1);
+          return Row(
+            children: [
+              narrow
+                  ? IconButton.outlined(onPressed: back, icon: const Icon(Icons.chevron_left), tooltip: L('Önceki', 'Previous'))
+                  : OutlinedButton.icon(onPressed: back, icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
+              Expanded(
+                child: Text(
+                  _pageLabel(),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                ),
+              ),
+              FilledButton.icon(
+                onPressed: atEnd ? null : () => _turn(1),
+                icon: const Icon(Icons.chevron_right),
+                label: Text(lastOfChapter ? L('Sonraki bölüm', 'Next chapter') : L('Sonraki', 'Next')),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -283,8 +379,14 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
     final wide = MediaQuery.sizeOf(context).width > 1000;
     final filters = FilterPanel(app: app);
     final paper = pageColor(app, theme);
+    final rt = readerTheme(app, theme);
+    // Panels opened from the book take the page's colours.
+    readingPanelTheme = rt;
+    final dark = theme.brightness == Brightness.dark;
+    final compact = MediaQuery.sizeOf(context).width < 600;
+    void setDark(bool v) => app.setTheme(v ? ThemeMode.dark : ThemeMode.light);
     return Theme(
-      data: readerTheme(app, theme),
+      data: rt,
       child: Scaffold(
         key: _scaffold,
         backgroundColor: paper,
@@ -296,7 +398,11 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(widget.book.title, style: theme.textTheme.titleMedium, overflow: TextOverflow.ellipsis),
-              Text('${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+              Text(
+                '${chapterName(ch.title)}  ·  ${chapter + 1}/${chapters.length}  ·  ${_pageLabel()}',
+                style: theme.textTheme.bodySmall,
+                overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
           bottom: PreferredSize(
@@ -309,21 +415,75 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             ),
           ),
           actions: [
-            if (Speech.supported)
+            if (!compact) ...[
+              DayNightToggle(dark: dark, onChanged: setDark),
+              const SizedBox(width: 8),
+            ] else
+              DayNightToggle(dark: dark, onChanged: setDark, compact: true),
+            if (Speech.supported && !compact)
               IconButton(
                 tooltip: reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud'),
                 icon: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
                 onPressed: _toggleReadAloud,
               ),
-            IconButton(tooltip: L('Okuma görünümü', 'Reading view'), icon: const Icon(Icons.text_fields_rounded), onPressed: () => showReadingSheet(context, app)),
-            IconButton(tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'), icon: const Icon(Icons.copy_all_rounded), onPressed: _copyChapter),
-            IconButton(tooltip: L('Bölümler', 'Chapters'), icon: const Icon(Icons.list), onPressed: () => _scaffold.currentState!.openDrawer()),
-            if (!wide)
+            IconButton(
+              tooltip: L('Okuma görünümü', 'Reading view'),
+              icon: const Icon(Icons.text_fields_rounded),
+              onPressed: () => showReadingSheet(context, app),
+            ),
+            if (!compact) ...[
               IconButton(
-                tooltip: L('Filtreler', 'Filters'),
-                icon: Badge(isLabelVisible: app.enabledCats.isNotEmpty, label: Text('${app.enabledCats.length}'), child: const Icon(Icons.filter_alt_outlined)),
-                onPressed: () => _scaffold.currentState!.openEndDrawer(),
+                tooltip: L('Bu bölümün metnini kopyala', 'Copy this chapter\'s text'),
+                icon: const Icon(Icons.copy_all_rounded),
+                onPressed: _copyChapter,
               ),
+              IconButton(
+                tooltip: L('Bölümler', 'Chapters'),
+                icon: const Icon(Icons.list),
+                onPressed: () => _scaffold.currentState!.openDrawer(),
+              ),
+            ],
+            if (!app.learnTurkish)
+            IconButton(
+              key: const ValueKey('reader-filters'),
+              tooltip: wide && filtersOpen ? L('Filtreleri kapat', 'Close filters') : L('Filtreler', 'Filters'),
+              isSelected: wide && filtersOpen,
+              icon: Badge(
+                isLabelVisible: app.enabledCats.isNotEmpty,
+                label: Text('${app.enabledCats.length}'),
+                child: Icon(wide && filtersOpen ? Icons.filter_alt_rounded : Icons.filter_alt_outlined),
+              ),
+              onPressed: () => _toggleFilters(wide),
+            ),
+            if (compact)
+              PopupMenuButton<String>(
+                key: const ValueKey('reader-more'),
+                tooltip: L('Diğer', 'More'),
+                icon: const Icon(Icons.more_horiz_rounded),
+                onSelected: (v) {
+                  switch (v) {
+                    case 'aloud':
+                      _toggleReadAloud();
+                    case 'chapters':
+                      _scaffold.currentState!.openDrawer();
+                    case 'copy':
+                      _copyChapter();
+                  }
+                },
+                itemBuilder: (_) => [
+                  if (Speech.supported)
+                    PopupMenuItem(
+                      value: 'aloud',
+                      child: ListTile(
+                        leading: Icon(reader.active ? Icons.headset_off_rounded : Icons.headphones_rounded),
+                        title: Text(reader.active ? L('Sesli okumayı durdur', 'Stop reading aloud') : L('Sesli oku', 'Read aloud')),
+                      ),
+                    ),
+                  PopupMenuItem(value: 'chapters', child: ListTile(leading: const Icon(Icons.list), title: Text(L('Bölümler', 'Chapters')))),
+                  PopupMenuItem(value: 'copy', child: ListTile(leading: const Icon(Icons.copy_all_rounded), title: Text(L('Bölümü kopyala', 'Copy the chapter')))),
+                ],
+              ),
+            const SizedBox(width: 4),
           ],
         ),
         drawer: Drawer(
@@ -335,7 +495,7 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
                   child: Row(
                     children: [
-                      BookCover(title: widget.book.title, format: widget.book.format, width: 44),
+                      BookCover(title: widget.book.title, format: widget.book.format, width: 44, image: app.user.coverFile(widget.book.id)),
                       const SizedBox(width: 14),
                       Expanded(
                         child: Column(
@@ -369,7 +529,10 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
                         chapterName(chapters[i].title),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodyLarge?.copyWith(fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500, color: i == chapter ? theme.colorScheme.primary : null),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: i == chapter ? FontWeight.w700 : FontWeight.w500,
+                          color: i == chapter ? theme.colorScheme.primary : null,
+                        ),
                       ),
                       onTap: () {
                         Navigator.pop(c);
@@ -382,79 +545,107 @@ class _ReaderPageState extends State<ReaderPage> with WidgetsBindingObserver {
             ),
           ),
         ),
-        bottomNavigationBar: reader.active ? _speechBar(theme) : null,
+        bottomNavigationBar: reader.active ? ReadAloudBar(reader: reader) : null,
         endDrawer: wide ? null : Drawer(width: 340, child: SafeArea(child: filters)),
-        body: Listener(
-          onPointerDown: (_) => _active.touch(),
-          onPointerSignal: (_) => _active.touch(),
-          child: Row(
-            children: [
-              Expanded(
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 760),
-                    child: ListView.builder(
-                      controller: scroll,
-                      padding: const EdgeInsets.fromLTRB(20, 16, 20, 40),
-                      itemCount: paras.length + 2,
-                      itemBuilder: (c, i) {
-                        if (i == 0) {
-                          return ch.summary == null || !app.showTr
-                              ? const SizedBox.shrink()
-                              : Container(
-                                  margin: const EdgeInsets.only(bottom: 20),
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55), borderRadius: BorderRadius.circular(16)),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
-                                          const SizedBox(width: 6),
-                                          Text(L('Bu bölümde neler anlatılıyor', 'What this chapter is about'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-                                        ],
+        body: CallbackShortcuts(
+          bindings: {
+            const SingleActivator(LogicalKeyboardKey.arrowRight): () => _turn(1),
+            const SingleActivator(LogicalKeyboardKey.arrowLeft): () => _turn(-1),
+            const SingleActivator(LogicalKeyboardKey.pageDown): () => _turn(1),
+            const SingleActivator(LogicalKeyboardKey.pageUp): () => _turn(-1),
+          },
+          child: Focus(
+            focusNode: _focus,
+            autofocus: true,
+            child: Listener(
+              onPointerDown: (_) => _active.touch(),
+              onPointerSignal: (_) => _active.touch(),
+              child: GestureDetector(
+                // A swipe to the side turns the page.
+                onHorizontalDragEnd: (d) {
+                  final v = d.primaryVelocity ?? 0;
+                  if (v.abs() > 300) _turn(v < 0 ? 1 : -1);
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 760),
+                          // The page scrolls; its buttons stay at the bottom of the screen.
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                  controller: scroll,
+                                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                                  itemCount: pages[page].$2 - pages[page].$1 + 1,
+                                  itemBuilder: (c, i) {
+                                    final first = pages[page].$1;
+                                    if (i == 0) {
+                                      return ch.summary == null || !app.showTr || page > 0
+                                          ? const SizedBox.shrink()
+                                          : Container(
+                                              margin: const EdgeInsets.only(bottom: 20),
+                                              padding: const EdgeInsets.all(16),
+                                              decoration: BoxDecoration(
+                                                color: theme.colorScheme.primaryContainer.withValues(alpha: 0.55),
+                                                borderRadius: BorderRadius.circular(16),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.auto_awesome_rounded, size: 16, color: theme.colorScheme.primary),
+                                                      const SizedBox(width: 6),
+                                                      Text(
+                                                        L('Bu bölümde neler anlatılıyor', 'What this chapter is about'),
+                                                        style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 6),
+                                                  Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
+                                                ],
+                                              ),
+                                            );
+                                    }
+                                    final k = first + i - 1;
+                                    final p = paras[k];
+                                    if (p.kind == 'i')
+                                      return KeyedSubtree(key: _paraKeys.putIfAbsent(k, GlobalKey.new), child: _picture(p));
+                                    return KeyedSubtree(
+                                      key: _paraKeys.putIfAbsent(k, GlobalKey.new),
+                                      child: ParagraphView(
+                                        key: ValueKey(p.id),
+                                        app: app,
+                                        para: p,
+                                        onWord: _onWord,
+                                        onSentence: _onSentence,
+                                        speaking: reader.rangeIn(k),
                                       ),
-                                      const SizedBox(height: 6),
-                                      Text(ch.summary!, style: theme.textTheme.bodyMedium?.copyWith(height: 1.5)),
-                                    ],
-                                  ),
-                                );
-                        }
-                        if (i == paras.length + 1) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 28),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                OutlinedButton.icon(onPressed: chapter > 0 ? () => _go(chapter - 1) : null, icon: const Icon(Icons.chevron_left), label: Text(L('Önceki', 'Previous'))),
-                                FilledButton.icon(
-                                  onPressed: chapter < chapters.length - 1 ? () => _go(chapter + 1) : null,
-                                  icon: const Icon(Icons.chevron_right),
-                                  label: Text(L('Sonraki bölüm', 'Next chapter')),
+                                    );
+                                  },
                                 ),
-                              ],
-                            ),
-                          );
-                        }
-                        final p = paras[i - 1];
-                        return KeyedSubtree(
-                          key: _paraKeys.putIfAbsent(i - 1, GlobalKey.new),
-                          child: ParagraphView(key: ValueKey(p.id), app: app, para: p, onWord: _onWord, onSentence: _onSentence, speaking: reader.rangeIn(i - 1)),
-                        );
-                      },
+                              ),
+                              SafeArea(top: false, child: _pageNav(theme)),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    if (wide && filtersOpen && !app.learnTurkish) ...[
+                      const VerticalDivider(width: 1),
+                      SizedBox(
+                        width: 320,
+                        child: Material(color: rt.colorScheme.surface, child: filters),
+                      ),
+                    ],
+                  ],
                 ),
               ),
-              if (wide) ...[
-                const VerticalDivider(width: 1),
-                SizedBox(
-                  width: 320,
-                  child: ColoredBox(color: theme.colorScheme.surface, child: filters),
-                ),
-              ],
-            ],
+            ),
           ),
         ),
       ),
@@ -508,14 +699,21 @@ class _FilterPanelState extends State<FilterPanel> {
           ),
         ),
         if (open) ...[
-          if (g == 1) Text(L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'), style: theme.textTheme.bodySmall),
+          if (g == 1)
+            Text(
+              L('Dokununca açıklaması ve ilgili Gramer konusu açılır.', 'Tap one to see the explanation and the matching Grammar topic.'),
+              style: theme.textTheme.bodySmall,
+            ),
           Row(
             children: [
               TextButton(onPressed: () => app.setCats(ids, true), child: Text(L('Bu grubun tümü', 'All in this group'))),
               TextButton(onPressed: () => app.setCats(ids, false), child: Text(L('Hiçbiri', 'None'))),
             ],
           ),
-          for (final id in ids) ...[_tile(theme, categoryById[id]!), if (id == 'g_tenses' && app.enabledCats.contains(id)) _tenseLegend(theme)],
+          for (final id in ids) ...[
+            _tile(theme, categoryById[id]!),
+            if (id == 'g_tenses' && app.enabledCats.contains(id)) _tenseLegend(theme),
+          ],
         ],
         const Divider(height: 1),
       ],
@@ -563,7 +761,13 @@ class _FilterPanelState extends State<FilterPanel> {
               TextButton(onPressed: () => app.setAllCats(false), child: Text(L('Hiçbiri', 'None'))),
             ],
           ),
-          Text(L('Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.', 'The types you pick are underlined in the book in their own color.'), style: theme.textTheme.bodySmall),
+          Text(
+            L(
+              'Seçtiğin türler kitapta kendi rengiyle altı çizili gösterilir.',
+              'The types you pick are underlined in the book in their own color.',
+            ),
+            style: theme.textTheme.bodySmall,
+          ),
           const SizedBox(height: 4),
           for (var g = 0; g < filterGroups.length; g++) _group(theme, g),
           const SizedBox(height: 8),
@@ -572,7 +776,10 @@ class _FilterPanelState extends State<FilterPanel> {
           _legend(learningColor, L('Öğreneceğim listesindeki kelimeler', 'Words on your To learn list')),
           _legend(learnedColor, L('Öğrendim dediğin kelimeler', 'Words you marked as Learned')),
           const SizedBox(height: 10),
-          Text(L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'), style: theme.textTheme.bodySmall),
+          Text(
+            L('İpucu: kelimeye dokun = anlam; uzun bas = cümle analizi.', 'Tip: tap a word = meaning; long press = sentence analysis.'),
+            style: theme.textTheme.bodySmall,
+          ),
         ],
       ),
     );
@@ -604,10 +811,113 @@ class _FilterPanelState extends State<FilterPanel> {
     padding: const EdgeInsets.symmetric(vertical: 3),
     child: Row(
       children: [
-        Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), color: c.withValues(alpha: 0.38), child: Text(L('kelime', 'words'))),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+          color: c.withValues(alpha: 0.38),
+          child: Text(L('kelime', 'words')),
+        ),
         const SizedBox(width: 8),
         Expanded(child: Text(t)),
       ],
     ),
   );
+}
+
+/// Read aloud: a small floating card over the page's foot, with pause,
+/// the sentence before / after, how far the chapter is, speed and close.
+class ReadAloudBar extends StatelessWidget {
+  final ReadAloud reader;
+  const ReadAloudBar({super.key, required this.reader});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final s = Speech.instance;
+    final cs = theme.colorScheme;
+    final dark = theme.brightness == Brightness.dark;
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+        // heightFactor 1: as the Scaffold's bottom bar a plain Center would
+        // take the whole page height and hide the book behind the card.
+        child: Center(
+          heightFactor: 1,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 560),
+            child: Material(
+              key: const ValueKey('speech-bar'),
+              color: dark ? Brand.dSurface : const Color(0xFFFBF7EF),
+              elevation: 8,
+              shadowColor: Colors.black.withValues(alpha: dark ? 0.5 : 0.2),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20), side: BorderSide(color: cs.outlineVariant)),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 8, 4, 8),
+                child: Row(
+                  children: [
+                    IconButton.filled(
+                      tooltip: reader.paused ? L('Devam', 'Resume') : L('Duraklat', 'Pause'),
+                      onPressed: reader.toggle,
+                      style: IconButton.styleFrom(
+                        backgroundColor: dark ? Brand.goldLight : const Color(0xFF5C3D14),
+                        foregroundColor: dark ? const Color(0xFF21180A) : Colors.white,
+                        fixedSize: const Size(46, 46),
+                      ),
+                      icon: Icon(reader.paused ? Icons.play_arrow_rounded : Icons.pause_rounded),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(L('Sesli okuma · ${s.voice.name}', 'Read aloud · ${s.voice.name}'), style: theme.textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        const SizedBox(height: 6),
+                        LinearProgressIndicator(
+                          value: reader.chapterProgress,
+                          minHeight: 4,
+                          borderRadius: BorderRadius.circular(2),
+                          backgroundColor: cs.surfaceContainerHigh,
+                        ),
+                      ]),
+                    ),
+                    IconButton(
+                      tooltip: L('Önceki cümle', 'Previous sentence'),
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () => reader.skip(-1),
+                      icon: const Icon(Icons.skip_previous_rounded),
+                    ),
+                    IconButton(
+                      tooltip: L('Sonraki cümle', 'Next sentence'),
+                      visualDensity: VisualDensity.compact,
+                      onPressed: () => reader.skip(1),
+                      icon: const Icon(Icons.skip_next_rounded),
+                    ),
+                    PopupMenuButton<double>(
+                      tooltip: L('Hız', 'Speed'),
+                      initialValue: s.speed,
+                      onSelected: (v) {
+                        s.speed = v;
+                        reader.skip(0);
+                      },
+                      itemBuilder: (_) => [
+                        for (final v in const [0.7, 0.8, 0.9, 1.0, 1.1, 1.25]) PopupMenuItem(value: v, child: Text('$v×')),
+                      ],
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), border: Border.all(color: cs.outlineVariant)),
+                        child: Text('${s.speed.toStringAsFixed(s.speed == s.speed.roundToDouble() ? 1 : 2)}×', style: theme.textTheme.labelLarge),
+                      ),
+                    ),
+                    IconButton(
+                      tooltip: L('Sesli okumayı kapat', 'Stop reading aloud'),
+                      onPressed: reader.stop,
+                      icon: const Icon(Icons.close_rounded),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

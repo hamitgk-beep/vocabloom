@@ -53,6 +53,7 @@ dependencies:
   ffi: ^2.1.0
   audioplayers: ^6.8.1
   google_mlkit_translation: ^1.0.3
+  image: ^4.12.0
 
 dev_dependencies:
   flutter_test:
@@ -69,11 +70,18 @@ dev_dependencies:
 flutter:
   assets:
     - assets/dict.db
+    - assets/tr_en.db
     - assets/brand/logo.png
+    - assets/brand/wordmark-light.png
+    - assets/brand/wordmark-dark.png
     - assets/grammar/lessons.json
     - assets/grammar/lessons_en.json
+    - assets/grammar/lessons_tr.json
     - assets/library/catalog.json
     - assets/library/stories.json.gz
+    - assets/library/catalog_tr.json
+    - assets/library/stories_tr.json.gz
+    - assets/library/catalog_tr_books.json
 
   fonts:
     - family: Inter
@@ -139,6 +147,8 @@ flutter_launcher_icons:
   android: true
   adaptive_icon_background: assets/brand/icon-adaptive-bg.png
   adaptive_icon_foreground: assets/brand/icon-adaptive-fg.png
+  # The picture already sits in the safe area (make_brand.py), so no extra margin.
+  adaptive_icon_foreground_inset: 0
   ios: true
   remove_alpha_ios: true
   windows:
@@ -149,15 +159,17 @@ flutter_launcher_icons:
     generate: true
     image_path: assets/brand/icon.png
 
+# Pictures in assets/brand: python3 tools/brand/make_brand.py
 # Launch screen: dart run flutter_native_splash:create
 flutter_native_splash:
-  color: "#F5F4F9"
+  color: "#FAF6EE"
   image: assets/brand/splash.png
-  color_dark: "#111117"
+  color_dark: "#17130F"
+  image_dark: assets/brand/splash-dark.png
   android_12:
-    color: "#F5F4F9"
-    color_dark: "#111117"
-    image: assets/brand/icon-adaptive-fg.png
-    icon_background_color: "#22185C"
-    icon_background_color_dark: "#22185C"
+    color: "#FAF6EE"
+    color_dark: "#17130F"
+    image: assets/brand/splash-android12.png
+    icon_background_color: "#2A1E14"
+    icon_background_color_dark: "#2A1E14"
   web: false

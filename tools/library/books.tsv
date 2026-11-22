@@ -29,3 +29,64 @@
 74	The-Adventures-of-Tom-Sawyer_74	74.txt	The Adventures of Tom Sawyer	Mark Twain	B2	
 768	Wuthering-Heights_768	?	Wuthering Heights	Emily Brontë	C1	
 514	Little-Women_514	?	Little Women	Louisa May Alcott	B2	
+14642	McGuffey-s-Eclectic-Primer-Revised-Edition_14642	?	McGuffey's Eclectic Primer	William Holmes McGuffey	A1	
+14640	McGuffey-s-First-Eclectic-Reader-Revised-Edition_14640	?	McGuffey's First Eclectic Reader	William Holmes McGuffey	A1	
+13853	New-National-First-Reader_13853	?	New National First Reader	Charles J. Barnes and J. Marshall Hawkes	A1	
+14668	McGuffey-s-Second-Eclectic-Reader_14668	?	McGuffey's Second Eclectic Reader	William Holmes McGuffey	A2	
+14766	McGuffey-s-Third-Eclectic-Reader_14766	?	McGuffey's Third Eclectic Reader	William Holmes McGuffey	A2	
+6936	Robinson-Crusoe---in-Words-of-One-Syllable_6936	?	Robinson Crusoe in Words of One Syllable	Mary Godolphin	A2	
+6692	The-Swiss-Family-Robinson-Told-in-Words-of-One-Syllable_6692	?	The Swiss Family Robinson in Words of One Syllable	Mary Godolphin	A2	
+11592	Children-s-Hour-with-Red-Riding-Hood-and-Other-Stories_11592	?	Little Red Riding Hood and Other Stories	Anonymous	A2	caps
+13213	The-Night-Before-Christmas-and-Other-Popular-Stories-For-Children_13213	?	The Night Before Christmas and Other Stories	Clement Clarke Moore and others	A2	caps
+14407	The-Tale-of-Benjamin-Bunny_14407	?	The Tale of Benjamin Bunny	Beatrix Potter	B1	
+14220	The-Tale-of-the-Flopsy-Bunnies_14220	?	The Tale of the Flopsy Bunnies	Beatrix Potter	B1	
+14814	The-Tale-of-Jemima-Puddle-Duck_14814	?	The Tale of Jemima Puddle-Duck	Beatrix Potter	B1	
+14837	The-Tale-of-Tom-Kitten_14837	?	The Tale of Tom Kitten	Beatrix Potter	B1	
+14848	The-Story-of-Miss-Moppet_14848	?	The Story of Miss Moppet	Beatrix Potter	B1	
+14872	The-Tale-of-Squirrel-Nutkin_14872	?	The Tale of Squirrel Nutkin	Beatrix Potter	B1	
+15077	The-Tale-of-Mr.-Jeremy-Fisher_15077	?	The Tale of Mr. Jeremy Fisher	Beatrix Potter	B1	
+12103	The-Tale-of-Mrs.-Tiggy-Winkle_12103	?	The Tale of Mrs. Tiggy-Winkle	Beatrix Potter	B1	
+14797	The-Tale-of-Timmy-Tiptoes_14797	?	The Tale of Timmy Tiptoes	Beatrix Potter	B1	
+14877	The-Tale-of-Ginger-and-Pickles_14877	?	The Tale of Ginger and Pickles	Beatrix Potter	B1	
+14868	The-Tailor-of-Gloucester_14868	?	The Tailor of Gloucester	Beatrix Potter	B1	
+2557	Old-Mother-West-Wind_2557	?	Old Mother West Wind	Thornton W. Burgess	B1	
+1825	The-Adventures-of-Reddy-Fox_1825	?	The Adventures of Reddy Fox	Thornton W. Burgess	B1	
+5844	The-Adventures-of-Johnny-Chuck_5844	?	The Adventures of Johnny Chuck	Thornton W. Burgess	B1	
+1448	Heidi_1448	?	Heidi	Johanna Spyri	B1	
+500	The-Adventures-of-Pinocchio_500	?	The Adventures of Pinocchio	Carlo Collodi	B1	
+479	Little-Lord-Fauntleroy_479	?	Little Lord Fauntleroy	Frances Hodgson Burnett	B1	
+778	Five-Children-and-It_778	?	Five Children and It	E. Nesbit	B1	re2:^CHAPTER \d+\b
+1874	The-Railway-Children_1874	?	The Railway Children	E. Nesbit	B1	
+1450	Pollyanna_1450	?	Pollyanna	Eleanor H. Porter	B1	
+7439	English-Fairy-Tales_7439	?	English Fairy Tales	Joseph Jacobs	B1	
+4018	Japanese-Fairy-Tales_4018	?	Japanese Fairy Tales	Yei Theodora Ozaki	B1	caps
+157	Daddy-Long-Legs_157	?	Daddy-Long-Legs	Jean Webster	B1	
+146	A-Little-Princess--13-Being-the-whole-story-of-Sara-Crewe-now-told-for-the-first-time_146	?	A Little Princess	Frances Hodgson Burnett	B1	toc
+12	Through-the-Looking-Glass_12	?	Through the Looking-Glass	Lewis Carroll	B2	
+289	The-Wind-in-the-Willows_289	?	The Wind in the Willows	Kenneth Grahame	B2	
+45	Anne-of-Green-Gables_45	?	Anne of Green Gables	L. M. Montgomery	B2	
+503	The-Blue-Fairy-Book_503	?	The Blue Fairy Book	Andrew Lang	B2	caps
+421	Kidnapped_421	?	Kidnapped	Robert Louis Stevenson	B2	
+558	The-Thirty-Nine-Steps_558	?	The Thirty-Nine Steps	John Buchan	B2	
+36	The-War-of-the-Worlds_36	?	The War of the Worlds	H. G. Wells	B2	
+139	The-Lost-World_139	?	The Lost World	Arthur Conan Doyle	B2	
+910	White-Fang_910	?	White Fang	Jack London	B2	
+244	A-Study-in-Scarlet_244	?	A Study in Scarlet	Arthur Conan Doyle	B2	
+2097	The-Sign-of-the-Four_2097	?	The Sign of the Four	Arthur Conan Doyle	B2	
+1937	The-Second-Jungle-Book_1937	?	The Second Jungle Book	Rudyard Kipling	B2	caps
+5230	The-Invisible-Man--A-Grotesque-Romance_5230	?	The Invisible Man	H. G. Wells	B2	
+5200	Metamorphosis_5200	?	Metamorphosis	Franz Kafka	C1	
+158	Emma_158	?	Emma	Jane Austen	C1	
+105	Persuasion_105	?	Persuasion	Jane Austen	C1	
+1400	Great-Expectations_1400	?	Great Expectations	Charles Dickens	C1	
+730	Oliver-Twist_730	?	Oliver Twist	Charles Dickens	C1	
+98	A-Tale-of-Two-Cities_98	?	A Tale of Two Cities	Charles Dickens	C1	
+219	Heart-of-Darkness_219	?	Heart of Darkness	Joseph Conrad	C1	
+844	The-Importance-of-Being-Earnest--A-Trivial-Comedy-for-Serious-People_844	?	The Importance of Being Earnest	Oscar Wilde	C1	re:^(FIRST|SECOND|THIRD) ACT$
+11065	Aunt-Mary-s-Primer--13-Adorned-with-a-Hundred-and-Twenty-Pretty-Pictures_11065	?	Aunt Mary's Primer	Anonymous	A1	caps
+15281	Uncle-Wiggily-s-Adventures_15281	?	Uncle Wiggily's Adventures	Howard R. Garis	A2	caps
+15282	Uncle-Wiggily-s-Travels_15282	?	Uncle Wiggily's Travels	Howard R. Garis	A2	toc
+3496	The-Japanese-Twins_3496	?	The Japanese Twins	Lucy Fitch Perkins	A2	caps
+3497	The-Swiss-Twins_3497	?	The Swiss Twins	Lucy Fitch Perkins	A2	
+4012	The-Dutch-Twins_4012	?	The Dutch Twins	Lucy Fitch Perkins	A2	
+3774	The-Eskimo-Twins_3774	?	The Eskimo Twins	Lucy Fitch Perkins	A2	

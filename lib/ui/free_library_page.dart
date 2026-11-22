@@ -20,8 +20,23 @@ class FreeLibraryPage extends StatefulWidget {
 
 class _FreeLibraryPageState extends State<FreeLibraryPage> {
   FreeLibrary? lib;
+
+  /// Why the library could not be read; shown instead of the spinner.
+  String? failed;
   String? level;
   String kind = 'all'; // all, story, book
+
+  /// Which texts are listed: 'tr' or 'en'. Starts at the language being
+  /// learned; the learner can look at the other one too.
+  late String textLang = switch (widget.app.user.getSetting('library_lang')) {
+    final v? when v == 'tr' || v == 'en' => v,
+    _ => widget.app.user.lang,
+  };
+
+  void _setTextLang(String v) {
+    widget.app.user.setSetting('library_lang', v);
+    setState(() => textLang = v);
+  }
   String query = '';
   final Map<String, double?> busy = {};
 
@@ -30,18 +45,74 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     super.initState();
     final saved = widget.app.user.getSetting('library_level');
     if (libraryLevels.contains(saved)) level = saved;
+    _load();
+  }
+
+  void _load() {
+    if (failed != null) setState(() => failed = null);
     FreeLibrary.load().then((l) {
       if (mounted) setState(() => lib = l);
+    }, onError: (Object e) {
+      if (mounted) setState(() => failed = '$e');
     });
   }
+
+  Widget _failure(ThemeData theme) => Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Icon(Icons.error_outline_rounded, size: 40, color: theme.colorScheme.error),
+            const SizedBox(height: 12),
+            Text(L('Kütüphane açılamadı.', 'The library could not be opened.'),
+                key: const Key('free-library-failed'), style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            SelectableText(failed!,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              onPressed: _load,
+              icon: const Icon(Icons.refresh_rounded),
+              label: Text(L('Tekrar dene', 'Try again')),
+            ),
+          ]),
+        ),
+      );
 
   void _setLevel(String? l) {
     setState(() => level = l);
     widget.app.user.setSetting('library_level', l);
   }
 
+  /// A text in the other language is read with that language's dictionary:
+  /// the learner switches the language they learn first.
+  Future<bool> _switchLanguageFor(LibraryItem it) async {
+    final app = widget.app;
+    if (it.lang == app.user.lang) return true;
+    if (it.lang == 'tr' && app.trEn == null) return true;
+    final name = it.lang == 'tr' ? L('Türkçe', 'Turkish') : L('İngilizce', 'English');
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: Text(L('Bu metin $name', 'This text is in $name')),
+        content: Text(L(
+          'Kelimeleri doğru sözlükle göstermek için öğrendiğin dil $name olarak değişecek. Ayarlar\'dan istediğin zaman geri alabilirsin.',
+          'To show its words with the right dictionary, the language you learn will change to $name. You can change it back in Settings at any time.',
+        )),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(c, false), child: Text(L('Vazgeç', 'Cancel'))),
+          FilledButton(key: const ValueKey('lib-switch-lang'), onPressed: () => Navigator.pop(c, true), child: Text(L('Değiştir ve aç', 'Change and open'))),
+        ],
+      ),
+    );
+    if (ok != true) return false;
+    app.setLanguages(learn: it.lang);
+    return true;
+  }
+
   Future<void> _open(LibraryItem it) async {
     if (busy.containsKey(it.id)) return;
+    if (!await _switchLanguageFor(it) || !mounted) return;
     final m = ScaffoldMessenger.of(context);
     final nav = Navigator.of(context);
     setState(() => busy[it.id] = null);
@@ -63,6 +134,21 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     }
   }
 
+  /// Replaces a text added before the library had pictures with the illustrated one.
+  Future<void> _refresh(LibraryItem it) async {
+    if (busy.containsKey(it.id)) return;
+    final m = ScaffoldMessenger.of(context);
+    setState(() => busy[it.id] = null);
+    try {
+      await replaceLibraryItem(widget.app.user, lib!, it, onProgress: (p) => mounted ? setState(() => busy[it.id] = p) : null);
+      if (mounted) setState(() => busy.remove(it.id));
+      m.showSnackBar(SnackBar(content: Text(L('Resimli sürüm kitaplığında.', 'The illustrated edition is in your library.'))));
+    } catch (e) {
+      if (mounted) setState(() => busy.remove(it.id));
+      m.showSnackBar(SnackBar(content: Text(L('İndirilemedi: ${errorText(e)}', 'Could not download: ${errorText(e)}'))));
+    }
+  }
+
   void _info(LibraryItem it) {
     final t = Theme.of(context);
     showModalBottomSheet(
@@ -80,7 +166,21 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
             _InfoRow(L('Uzunluk', 'Length'), _length(it)),
             _InfoRow(L('Lisans', 'License'), it.license == 'Public domain' ? L('Kamu malı (telifsiz)', 'Public domain') : it.license),
             _InfoRow(L('Emeği geçenler', 'Credits'), it.credit),
-            if (it.isBook && it.size != null) _InfoRow(L('İndirme', 'Download'), '${(it.size! / 1024).round()} KB'),
+            if (it.pics > 0) _InfoRow(L('Resimler', 'Pictures'), L('${it.pics} resim (kitaptaki gibi)', '${it.pics} pictures (as in the book)')),
+            if (it.isBook && it.size != null) _InfoRow(L('İndirme', 'Download'), _size((it.size ?? 0) + (it.picsSize ?? 0))),
+            if (lacksPictures(widget.app.user, it))
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: FilledButton.tonalIcon(
+                  key: const ValueKey('lib-refresh'),
+                  onPressed: () {
+                    Navigator.pop(c);
+                    _refresh(it);
+                  },
+                  icon: const Icon(Icons.image_outlined),
+                  label: Text(L('Resimli sürümle yenile', 'Get the illustrated edition')),
+                ),
+              ),
             const SizedBox(height: 6),
             Text(
               it.isBook
@@ -102,10 +202,15 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     );
   }
 
-  /// For the list: stories by words, books by chapters.
-  String _short(LibraryItem it) => it.isBook
-      ? '${L('${it.chapters} bölüm', '${it.chapters} chapters')} · ${_time(it)}'
-      : '${L('${_thousands(it.words)} kelime', '${_thousands(it.words)} words')} · ${_time(it)}';
+  String _size(int bytes) => bytes < 1024 * 1024 ? '${(bytes / 1024).round()} KB' : '${(bytes / 1024 / 1024).toStringAsFixed(1)} MB';
+
+  /// For the list: stories by words, books by chapters; illustrated ones say so.
+  String _short(LibraryItem it) {
+    final base = it.isBook
+        ? '${L('${it.chapters} bölüm', '${it.chapters} chapters')} · ${_time(it)}'
+        : '${L('${_thousands(it.words)} kelime', '${_thousands(it.words)} words')} · ${_time(it)}';
+    return it.pics > 1 ? '$base · ${L('resimli', 'illustrated')}' : base;
+  }
 
   String _time(LibraryItem it) {
     final mins = it.minutes;
@@ -127,10 +232,15 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     final l = lib;
     final have = widget.app.user.booksBySource();
     final q = query.trim().toLowerCase();
+    // Texts in the language picked above (at first the one being learned).
+    final lang = textLang;
+    final tr = lang == 'tr';
+    final hasBooks = l?.items.any((it) => it.lang == lang && it.isBook) ?? false;
     final shown = l == null
         ? <LibraryItem>[]
         : l.items
             .where((it) =>
+                it.lang == lang &&
                 (level == null || it.level == level) &&
                 (kind == 'all' || it.kind == kind) &&
                 (q.isEmpty || it.title.toLowerCase().contains(q) || (it.author ?? '').toLowerCase().contains(q)))
@@ -140,18 +250,32 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
     final width = MediaQuery.sizeOf(context).width;
     final pad = width >= 900 ? (width - 860) / 2 : 16.0;
     return Scaffold(
-      appBar: AppBar(title: Text(L('Ücretsiz kütüphane', 'Free library'))),
+      appBar: AppBar(title: Text(L('Ücretsiz kitaplar', 'Free books'))),
       body: l == null
-          ? const Center(child: CircularProgressIndicator())
+          ? (failed != null ? _failure(theme) : const Center(child: CircularProgressIndicator()))
           : ListView(
               padding: EdgeInsets.fromLTRB(pad, 4, pad, 40),
               children: [
                 Text(
-                  L('Telifsiz kısa hikâyeler ve klasik kitaplar. Seviyeni seç, dokun ve oku. Hikâyeler uygulamanın içinde; kitaplar ilk açılışta indirilir.',
-                      'Free short stories and classic books. Pick your level, tap and read. Stories come with the app; books are downloaded the first time you open them.'),
+                  tr
+                      ? L('Ücretsiz Türkçe metinler: başlangıç için yazılmış kısa öyküler, Nasreddin Hoca fıkraları ve Ömer Seyfettin gibi yazarların telifsiz öyküleri. Seviyeni seç, dokun ve oku.',
+                          'Free Turkish texts: short stories written for beginners, Nasreddin Hoca anecdotes and public-domain stories by classic Turkish writers. Pick your level, tap and read.')
+                      : L('Telifsiz kısa hikâyeler ve klasik kitaplar. Seviyeni seç, dokun ve oku. Hikâyeler uygulamanın içinde; kitaplar ilk açılışta indirilir.',
+                          'Free short stories and classic books. Pick your level, tap and read. Stories come with the app; books are downloaded the first time you open them.'),
                   style: theme.textTheme.bodyMedium?.copyWith(color: cs.onSurfaceVariant, height: 1.45),
                 ),
                 const SizedBox(height: 14),
+                SegmentedButton<String>(
+                  key: const ValueKey('lib-lang'),
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(value: 'tr', label: Text(L('Türkçe', 'Turkish'), key: const ValueKey('lib-lang-tr'))),
+                    ButtonSegment(value: 'en', label: Text(L('İngilizce', 'English'), key: const ValueKey('lib-lang-en'))),
+                  ],
+                  selected: {textLang},
+                  onSelectionChanged: (s) => _setTextLang(s.first),
+                ),
+                const SizedBox(height: 12),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: [
@@ -176,11 +300,11 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                 if (level != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: Text('${level!} · ${_levelName(level!)}: ${_levelNote(level!)}',
+                    child: Text('${level!} · ${_levelName(level!)}: ${_levelNote(level!, tr)}',
                         style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant, height: 1.4)),
                   ),
                 const SizedBox(height: 12),
-                Row(children: [
+                if (hasBooks) Row(children: [
                   Expanded(
                     child: SegmentedButton<String>(
                       showSelectedIcon: false,
@@ -207,7 +331,7 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 40),
                     child: Text(
-                      level == 'B2' || level == 'C1'
+                      hasBooks && (level == 'B2' || level == 'C1')
                           ? L('Bu seviyede kısa hikâye yok; Kitaplar\'a bak.', 'No short stories at this level; see Books.')
                           : L('Eşleşen bir şey yok.', 'Nothing matches.'),
                       textAlign: TextAlign.center,
@@ -232,8 +356,11 @@ class _FreeLibraryPageState extends State<FreeLibraryPage> {
                 ],
                 const SizedBox(height: 20),
                 Text(
-                  L('Hikâyeler: Pratham Books / StoryWeaver (CC BY 4.0), yalnız metin. Kitaplar: Project Gutenberg\'deki kamu malı eserler.',
-                      'Stories: Pratham Books / StoryWeaver (CC BY 4.0), text only. Books: public-domain works from Project Gutenberg.'),
+                  tr
+                      ? L('Metinler: Vikikaynak (tr.wikisource.org) ve Project Gutenberg\'deki kamu malı eserler. Seviye, kelimelerin ne kadar yaygın olduğuna ve cümle uzunluğuna göre tahmin edildi.',
+                          'Texts: public-domain works from Wikisource (tr.wikisource.org) and Project Gutenberg. The level is estimated from how common the words are and how long the sentences are.')
+                      : L('Hikâyeler: Pratham Books / StoryWeaver (CC BY 4.0), yalnız metin. Kitaplar: Project Gutenberg\'deki kamu malı eserler.',
+                          'Stories: Pratham Books / StoryWeaver (CC BY 4.0), text only. Books: public-domain works from Project Gutenberg.'),
                   style: theme.textTheme.bodySmall?.copyWith(color: cs.onSurfaceVariant, height: 1.4),
                 ),
               ],
@@ -260,12 +387,19 @@ String _levelName(String l) => switch (l) {
       _ => L('İleri', 'Advanced'),
     };
 
-String _levelNote(String l) => switch (l) {
+String _levelNote(String l, [bool tr = false]) => tr ? _levelNoteTr(l) : switch (l) {
       'A1' => L('çok kısa cümleler, en sık kelimeler.', 'very short sentences, the most common words.'),
       'A2' => L('kısa hikâyeler, günlük kelimeler.', 'short stories, everyday words.'),
       'B1' => L('daha uzun hikâyeler ve kolay klasikler.', 'longer stories and easy classics.'),
       'B2' => L('klasik romanlar ve öyküler.', 'classic novels and stories.'),
       _ => L('eski üsluplu, uzun ve zengin dilli romanlar.', 'long novels in older, richer English.'),
+    };
+
+String _levelNoteTr(String l) => switch (l) {
+      'A1' || 'A2' => L('kısa, sade metinler; günlük kelimeler.', 'short, plain texts; everyday words.'),
+      'B1' => L('kısa öyküler, sık kelimeler.', 'short stories, common words.'),
+      'B2' => L('öyküler; yer yer eski kelimeler.', 'stories with some older words.'),
+      _ => L('eski üsluplu, Osmanlıca kelimeli metinler.', 'texts in an older style, with Ottoman words.'),
     };
 
 class _Group extends StatelessWidget {

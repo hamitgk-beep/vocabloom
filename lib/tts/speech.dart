@@ -164,19 +164,16 @@ class Speech extends ChangeNotifier with WidgetsBindingObserver {
     notifyListeners();
   }
 
+  /// Language of the books being read ('en' or 'tr'): read-aloud and the
+  /// word panel's speaker use a voice of this language.
+  String bookLang = 'en';
+
   Voice voiceFor(String lang) => lang == 'tr' ? trVoice : voice;
 
   /// Reading speed (1.0 = normal).
   double get speed => double.tryParse(_user?.getSetting('tts_speed') ?? '') ?? 1.0;
   set speed(double v) {
     _user?.setSetting('tts_speed', v.toStringAsFixed(2));
-    notifyListeners();
-  }
-
-  /// Say a word as soon as its panel opens.
-  bool get autoWord => _user?.getSetting('tts_auto_word') == '1';
-  set autoWord(bool v) {
-    _user?.setSetting('tts_auto_word', v ? '1' : null);
     notifyListeners();
   }
 

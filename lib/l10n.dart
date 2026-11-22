@@ -11,6 +11,9 @@ bool uiEnglish = false;
 /// Picks the Turkish or English text for the interface.
 String L(String tr, String en) => uiEnglish ? en : tr;
 
+/// Capitals for headings: in Turkish i becomes İ (Dart's toUpperCase gives I).
+String upperUi(String s) => uiEnglish ? s.toUpperCase() : s.replaceAll('i', 'İ').toUpperCase();
+
 /// A percentage the way each language writes it: "%45" in Turkish, "45%" in English.
 String percent(num n) => uiEnglish ? '$n%' : '%$n';
 
@@ -43,3 +46,9 @@ String errorText(Object e) {
   if (e is FileSystemException) return L('Dosya okunamadı ya da yazılamadı.', 'A file could not be read or written.');
   return e.toString().replaceFirst(RegExp(r'^(Exception|ImportException|FormatException|Bad state|AiException): ?'), '');
 }
+
+/// Labels for unreviewed AI drafts of the own dictionary (DictDb.sourcePolicy):
+/// the closed section, the badge on a single meaning, and the short tag.
+String unverifiedAiSection() => L('Doğrulanmamış AI önerileri', 'Unverified AI suggestions');
+String unverifiedAiLabel() => L('Doğrulanmamış AI önerisi', 'Unverified AI suggestion');
+String unverifiedAiShort() => L('AI taslağı', 'AI draft');

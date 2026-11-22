@@ -16,11 +16,14 @@ import 'ai/local_ai_card.dart';
 import 'expr_sheet.dart';
 import 'panel.dart';
 import 'tap_text.dart';
-import 'sense_cards.dart';
 import 'context_sense_card.dart';
 import '../nlp/context_sense.dart';
 import '../l10n.dart';
 import 'paragraph_view.dart';
+import 'meaning_parts.dart';
+import 'unverified_section.dart';
+import 'theme.dart';
+import 'tr_word_sheet.dart';
 import '../tts/speech.dart';
 import '../tts/voice_ui.dart';
 
@@ -39,8 +42,7 @@ class WordContext {
   final int? paraId;
   final String? prevSentence;
   final String? nextSentence;
-  WordContext(this.sentence, this.sentenceTokens, this.indexInSentence, this.matches, this.sentenceTr, this.bookId, this.bookTitle,
-      {this.paraId, this.prevSentence, this.nextSentence});
+  WordContext(this.sentence, this.sentenceTokens, this.indexInSentence, this.matches, this.sentenceTr, this.bookId, this.bookTitle, {this.paraId, this.prevSentence, this.nextSentence});
 
   /// Id of the text for the meaning cache: book and paragraph.
   String get contentId => 'b${bookId ?? 0}:p${paraId ?? 0}';
@@ -48,27 +50,43 @@ class WordContext {
 
 /// Builds the context for token [ti] of paragraph [para].
 WordContext buildContext(AppState app, Para para, ParaAnalysis a, int ti, {int? bookId, String? bookTitle}) {
-  final t = a.tokens[ti];
-  final ranges = sentenceRanges(para.text);
-  var sIdx = 0;
-  for (var i = 0; i < ranges.length; i++) {
-    if (t.start >= ranges[i].$1 && t.start < ranges[i].$2) sIdx = i;
-  }
-  final r = ranges[sIdx];
-  final sentTokens = a.tokens.where((x) => x.start >= r.$1 && x.end <= r.$2).toList();
-  final idx = sentTokens.indexWhere((x) => x.start == t.start);
-  final matches = a.matches.where((m) => m.tokens.contains(ti)).toList();
-  final tr = app.user.paraTranslation(para.id);
-  String? at(int k) => k >= 0 && k < ranges.length ? para.text.substring(ranges[k].$1, ranges[k].$2).trim() : null;
-  return WordContext(para.text.substring(r.$1, r.$2).trim(), sentTokens, idx < 0 ? 0 : idx, matches,
-      tr != null && sIdx < tr.length ? [tr[sIdx]] : null, bookId, bookTitle,
-      paraId: para.id, prevSentence: at(sIdx - 1), nextSentence: at(sIdx + 1));
+  final s = sentenceAt(para.text, a.tokens, ti, ranges: a.sentences);
+  final sentTokens = s.tokens;
+  final idx = ti - s.first;
+  // The expressions on this word, their words counted inside the sentence
+  // like [WordContext.indexInSentence] (the paragraph counts them from its
+  // own start, which is another number in every sentence but the first).
+  final matches = [
+    for (final m in a.matches)
+      if (m.tokens.contains(ti) && m.tokens.every((x) => x >= s.first && x < s.first + sentTokens.length)) Match(m.expr, [for (final x in m.tokens) x - s.first]),
+  ];
+  final sentence = s.text;
+  // The saved Turkish is looked up by the English sentence itself, never by
+  // its position in the paragraph: a position can point at another sentence
+  // when the boundaries or the text changed since the translation was made.
+  final saved = app.user.paraTranslation(para.id)?.forSentence(sentence);
+  final sTr = saved != null && plausibleTranslation(sentence, saved) ? [saved] : null;
+  return WordContext(sentence, sentTokens, idx, matches, sTr, bookId, bookTitle, paraId: para.id, prevSentence: s.prev, nextSentence: s.next);
+}
+
+/// Whether a saved Turkish translation can belong to [en]: translations saved
+/// by older versions could slip onto a neighbouring sentence when the AI
+/// joined two sentences, and then are far longer or shorter than the English.
+bool plausibleTranslation(String en, String tr) {
+  if (tr.trim().isEmpty) return false;
+  final a = en.trim().length, b = tr.trim().length;
+  if (a < 12) return true;
+  final ratio = b / a;
+  return ratio >= 0.45 && ratio <= 2.2;
 }
 
 Future<void> showWordSheet(BuildContext context, AppState app, String surface, {WordContext? ctx, String? lemma}) {
   panelApp = app;
   app.stats.logLookup('word', lemma ?? surface);
-  return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc));
+  if (app.learnTurkish) {
+    return showPanel(context, (c, sc) => TrWordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc), short: true);
+  }
+  return showPanel(context, (c, sc) => WordPanel(app: app, surface: surface, ctx: ctx, lemma: lemma, scroll: sc), short: true);
 }
 
 class WordPanel extends StatefulWidget {
@@ -94,29 +112,18 @@ class _WordPanelState extends State<WordPanel> {
   /// or when the engine could not run).
   ContextSense? sense;
   List<String> bookExamples = [];
-  int tab = 0; // 0 = meaning, 1 = word family
 
   @override
   void initState() {
     super.initState();
     final app = widget.app;
     final lower = widget.surface.toLowerCase().replaceAll('’', "'");
-    final cands = app.dict.lemmatizer.lemmas(lower);
+    // The same base form the context picker and the hover bubble use
+    // ("things" is thing, "only" is only); the wider list is the fallback
+    // for words only the learner's own dictionary knows.
+    final forms = [for (final b in app.dict.baseForms(lower)) b.lemma];
+    final cands = [...forms, ...app.dict.lemmatizer.lemmas(lower).where((l) => !forms.contains(l))];
     lemma = widget.lemma ?? cands.first;
-    // A past form of an irregular verb belongs to that verb ("found" -> find,
-    // "fell" -> fall), unless it is a base form itself ("lay").
-    final irrBase = app.dict.irregularOf[lower];
-    final irr = widget.lemma == null && irrBase != null && !app.dict.irregular.containsKey(lower);
-    if (irr) lemma = irrBase.first;
-    // A word that is itself common beats a rare base form the suffix rules
-    // produce ("never" is not a form of "neve").
-    if (widget.lemma == null && !irr && lemma != lower && cands.contains(lower)) {
-      int freq(String w) {
-        final r = app.dict.db.select('SELECT n FROM wfreq WHERE word=?', [w]);
-        return r.isEmpty ? 0 : r.first['n'] as int;
-      }
-      if (freq(lower) >= freq(lemma)) lemma = lower;
-    }
     info = app.dict.lookup(lemma);
     if (info.isEmpty) {
       for (final c in cands) {
@@ -132,9 +139,7 @@ class _WordPanelState extends State<WordPanel> {
     // word instead of "not found". Not for names ("Harry" is not "hurry"):
     // a capitalised word only counts at the start of a sentence.
     final ctx0 = widget.ctx;
-    final named = widget.surface.isNotEmpty &&
-        widget.surface[0] != widget.surface[0].toLowerCase() &&
-        (ctx0 == null || ctx0.indexInSentence != 0);
+    final named = widget.surface.isNotEmpty && widget.surface[0] != widget.surface[0].toLowerCase() && (ctx0 == null || ctx0.indexInSentence != 0);
     if (info.isEmpty && widget.lemma == null && !named && (ctx0?.matches.isEmpty ?? true)) {
       final fix = app.dict.closestWord(lower);
       if (fix != null) {
@@ -181,13 +186,9 @@ class _WordPanelState extends State<WordPanel> {
       final list = info.trFreeDict;
       // A noun or adjective in the sentence never gets a verb meaning
       // ("a golf course" is not "akmak"), and a verb gets a verb meaning.
-      final fit = bestPos == null
-          ? list
-          : list.where((t) => DictDb.isTrVerb(t) == (bestPos == 'v')).toList();
+      final fit = bestPos == null ? list : list.where((t) => DictDb.isTrVerb(t) == (bestPos == 'v')).toList();
       final pool = fit.isEmpty ? list : fit;
-      final pick = bestPos == 'a' || bestPos == 's'
-          ? pool.firstWhere((t) => !t.contains('kimse') && !t.contains('kişi'), orElse: () => pool.first)
-          : pool.first;
+      final pick = bestPos == 'a' || bestPos == 's' ? pool.firstWhere((t) => !t.contains('kimse') && !t.contains('kişi'), orElse: () => pool.first) : pool.first;
       return pick.split(RegExp(r'[,;]')).map((x) => x.trim()).where((x) => x.isNotEmpty).take(3).join(', ');
     }
     return _selfExprTr;
@@ -206,18 +207,76 @@ class _WordPanelState extends State<WordPanel> {
   /// for this word itself (not for an expression it is part of).
   String? get _ctxTr => sense != null && sense!.shown && sense!.cat == null && sense!.headword == lemma ? sense!.tr : null;
 
-  bool get _cardShown => sense?.shown == true;
+  /// "Well, my boy ...", "So, what now?": a word that opens the sentence and
+  /// is followed by a comma is used as an interjection or discourse marker.
+  /// When the sense engine finds no meaning, that use is shown: the own
+  /// dictionary's interjection sense, or the matched expression of the word.
+  late final ({String tr, String pos, String? note})? opener = () {
+    final ctx = widget.ctx;
+    if (ctx == null || sense?.shown == true) return null;
+    final i = ctx.indexInSentence;
+    if (i < 0 || i >= ctx.sentenceTokens.length) return null;
+    final t = ctx.sentenceTokens[i];
+    final at = ctx.sentence.toLowerCase().replaceAll('’', "'").indexOf(t.lower);
+    if (at < 0) return null;
+    final before = ctx.sentence.substring(0, at);
+    final after = ctx.sentence.substring(at + t.text.length).trimLeft();
+    final opens = i == 0 && RegExp(r'''^[\s'"‘“(\[—–-]*$''').hasMatch(before) && after.startsWith(',');
+    if (opens) {
+      for (final o in own) {
+        if (o.pos == 'ünlem') return (tr: o.tr, pos: 'ünlem', note: o.note.isEmpty ? null : o.note);
+      }
+    }
+    for (final m in ctx.matches) {
+      if (m.tokens.length == 1 && m.expr.phrase == lemma && m.expr.trShown != null && (opens || m.expr.cat != 'discourse_markers')) {
+        return (tr: m.expr.trShown!, pos: opens ? 'ünlem' : '', note: m.expr.trShownIsDraft ? unverifiedAiLabel() : null);
+      }
+    }
+    // Only an unreviewed AI draft has the interjection: shown, and labelled.
+    if (opens) {
+      for (final o in drafts) {
+        if (o.pos == 'ünlem') return (tr: o.tr, pos: 'ünlem', note: unverifiedAiLabel());
+      }
+    }
+    return null;
+  }();
 
-  /// The card names the sense used here (even one without Turkish), so the
-  /// first dictionary meaning is not put above it as if it were the answer.
-  bool get _cardSpeaks => _cardShown || (sense?.best != null && sense!.best!.tr.isEmpty);
-
-  String? get _meaning => _ctxTr ?? _trMain ?? best?.gloss;
+  /// The meaning saved with a new card, which its review asks as the right
+  /// answer: the meaning chosen for the sentence only when it is sure and not
+  /// an unverified AI draft; with no sentence, the dictionary's checked first
+  /// meaning. Otherwise nothing is saved and the review decides (it never
+  /// grades a guess as the right answer).
+  String? get _savedMeaning {
+    final s = sense;
+    if (widget.ctx == null) return _trMain;
+    if (_ctxTr != null && s!.confidence == SenseConfidence.sure && !s.best!.unverified) return _ctxTr;
+    return null;
+  }
 
   void _set(String key, WordStatus st) {
-    widget.app.setWord(key, st,
-        context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: key == lemma ? _meaning : null);
+    widget.app.setWord(key, st, context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: key == lemma ? _savedMeaning : null);
     setState(() {});
+  }
+
+  /// The own dictionary's senses of the word (Turkish, English definition,
+  /// a translated example each).
+  late final List<OwnSense> own = widget.app.dict.ownSenses(lemma);
+
+  /// Unreviewed AI drafts of the word: only in the closed, labelled section,
+  /// and as the main meaning only when nothing checked has Turkish for it.
+  late final List<OwnSense> drafts = widget.app.dict.draftSenses(lemma);
+  bool familyOpen = false;
+
+  /// Index in [own] of the meaning shown at the top, so it is not listed again.
+  int? get _ownShown {
+    final id = sense?.shown == true && sense!.cat == null && sense!.best?.unverified != true ? sense!.best?.id : null;
+    if (id != null && id.startsWith('ow:$lemma#')) return int.tryParse(id.substring(id.indexOf('#') + 1));
+    final shownTr = sense?.shown == true && sense!.cat == null ? sense!.tr : null;
+    if (shownTr == null) return null;
+    for (var i = 0; i < own.length; i++) {
+      if (own[i].tr.split(RegExp(r'[,;]')).map((x) => x.trim()).any(shownTr.split(', ').contains)) return i;
+    }
+    return null;
   }
 
   @override
@@ -226,265 +285,342 @@ class _WordPanelState extends State<WordPanel> {
     final theme = Theme.of(context);
     final ctx = widget.ctx;
     final st = app.user.statuses[lemma] ?? WordStatus.none;
-    final tr = app.showTr, en = app.showEn;
 
     // Irregular verb: the header keeps the tapped form ("found") and the
     // V1/V2/V3 row under it shows the whole verb with that form in bold.
     final surface = widget.surface.toLowerCase().replaceAll('’', "'");
     final verbForms = app.dict.irregular[lemma];
     final head = verbForms != null && verbForms.contains(surface) ? surface : lemma;
+    final cardPos = sense?.shown == true && sense!.cat == null ? sense!.best?.pos : null;
+    final pos = cardPos ?? (opener != null && opener!.pos.isNotEmpty ? opener!.pos : null) ?? (ctx == null && own.isNotEmpty ? own.first.pos : best?.pos);
+    final card = ctx != null && sense != null && opener == null;
 
     final children = <Widget>[
-      Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        Flexible(child: Text(head, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700))),
-        if (Speech.supported)
-          Padding(
-            padding: const EdgeInsets.only(left: 2),
-            child: SpeakButton(head, key: ValueKey('say-$head'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), autoPlay: Speech.instance.autoWord, size: 28),
-          ),
-        if (surface != head)
-          Padding(
-            padding: const EdgeInsets.only(left: 8, bottom: 4),
-            child: Text('(${widget.surface})', style: theme.textTheme.titleMedium?.copyWith(color: theme.hintColor)),
-          ),
-        if (best != null)
-          Padding(
-            padding: const EdgeInsets.only(left: 8, bottom: 6),
-            child: Text(posNames[best!.pos] ?? '', style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-          ),
-      ]),
+      Padding(
+        padding: const EdgeInsets.only(right: 40),
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 4,
+          children: [
+            Text(
+              head,
+              style: TextStyle(fontFamily: readingFont, fontSize: 34, fontWeight: FontWeight.w700, height: 1.1, color: theme.colorScheme.onSurface),
+            ),
+            if (Speech.supported) SpeakButton(head, key: ValueKey('say-$head'), tooltip: L('Telaffuzu dinle', 'Hear the pronunciation'), size: 26),
+            if (surface != head) Text('(${widget.surface})', style: theme.textTheme.titleMedium?.copyWith(color: theme.hintColor)),
+            if (pos != null && posLabel(pos).isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(color: goldSoft(theme), borderRadius: BorderRadius.circular(20)),
+                child: Text(
+                  posLabel(pos),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: theme.colorScheme.primary),
+                ),
+              ),
+          ],
+        ),
+      ),
       if (corrected != null)
         Padding(
-          padding: const EdgeInsets.only(top: 4, bottom: 2),
-          child: Row(children: [
-            Icon(Icons.spellcheck, size: 18, color: theme.colorScheme.primary),
-            const SizedBox(width: 6),
-            Flexible(
-              child: Text(
-                L('"${widget.surface}" sözlükte yok, yazım hatası olabilir. Bunu mu demek istediniz: $corrected',
-                    '"${widget.surface}" is not in the dictionary; it may be a typo. Did you mean: $corrected'),
-                style: TextStyle(color: theme.hintColor, fontSize: 14),
+          padding: const EdgeInsets.only(top: 6, bottom: 2),
+          child: Row(
+            children: [
+              Icon(Icons.spellcheck, size: 18, color: theme.colorScheme.primary),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  L(
+                    '"${widget.surface}" sözlükte yok, yazım hatası olabilir. Bunu mu demek istediniz: $corrected',
+                    '"${widget.surface}" is not in the dictionary; it may be a typo. Did you mean: $corrected',
+                  ),
+                  style: TextStyle(color: theme.hintColor, fontSize: 14),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ),
       if (verbForms != null) VerbFormsRow(forms: verbForms, tapped: surface),
-      if (ctx != null && sense != null)
+    ];
+
+    // ---------------- to learn / learned: right under the meaning, so the
+    // short panel shows it without scrolling.
+    final statusRow = Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Row(
+        children: [
+          Expanded(
+            child: PanelPill(
+              key: const ValueKey('word-learning'),
+              icon: st == WordStatus.learning ? Icons.bookmark_rounded : Icons.bookmark_add_outlined,
+              label: L('Öğreneceğim', 'To learn'),
+              color: st == WordStatus.learning ? learningColor : null,
+              fill: st == WordStatus.learning ? learningColor.withValues(alpha: 0.2) : null,
+              onPressed: () => _set(lemma, st == WordStatus.learning ? WordStatus.none : WordStatus.learning),
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: PanelPill(
+              key: const ValueKey('word-learned'),
+              icon: st == WordStatus.learned ? Icons.check_circle_rounded : Icons.check_circle_outline,
+              label: L('Öğrendim', 'Learned'),
+              color: st == WordStatus.learned ? learnedColor : null,
+              fill: st == WordStatus.learned ? learnedColor.withValues(alpha: 0.2) : null,
+              onPressed: () => _set(lemma, st == WordStatus.learned ? WordStatus.none : WordStatus.learned),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // ---------------- the meaning here, and the book's sentence
+    final mainOwn = own.isEmpty ? null : own.first;
+    if (card) {
+      children.add(
         ContextSenseCard(
           key: ValueKey('ctx-${ctx.contentId}-${ctx.sentence.hashCode}-${ctx.indexInSentence}'),
           app: app,
           result: sense!,
           ctx: ctx,
-          highlight: {
-            widget.surface.toLowerCase(),
-            if (sense!.cat != null) ...sense!.headword.split(' '),
-          },
+          highlight: {widget.surface.toLowerCase(), if (sense!.cat != null) ...sense!.headword.split(' ')},
+          actions: statusRow,
         ),
-      if (en && best != null && ctx == null) Padding(padding: const EdgeInsets.only(top: 4), child: TapText(best!.gloss, style: enStyle(theme, theme.textTheme.titleMedium))),
-      if (tr && _trMain == null && !_cardSpeaks) DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge),
-      if (tr && _trMain != null && !_cardSpeaks)
-        Padding(
-          padding: const EdgeInsets.only(top: 2),
-          child: Row(children: [
-            Flexible(child: Text(_trMain!, style: trStyle(theme, theme.textTheme.titleLarge))),
-            if (Speech.supported) SpeakButton(_trMain!, lang: 'tr', size: 20),
-          ]),
-        ),
-      const SizedBox(height: 10),
-      Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-        StatusButtons(status: st, onChanged: (s) => _set(lemma, s)),
-        const SizedBox(width: 8),
-        LangToggles(app: app, onChanged: () => setState(() {})),
-      ]),
-      const SizedBox(height: 12),
-      SegmentedButton<int>(
-        segments: [
-          ButtonSegment(value: 0, label: Text(L('Anlam', 'Meaning')), icon: Icon(Icons.translate)),
-          ButtonSegment(value: 1, label: Text(L('Kelime ailesi', 'Word Family')), icon: Icon(Icons.account_tree_outlined)),
-        ],
-        selected: {tab},
-        showSelectedIcon: false,
-        onSelectionChanged: (s) => setState(() => tab = s.first),
-      ),
-    ];
-    if (tab == 1) {
-      children.add(WordFamilyView(app: app, lemma: lemma, key: ValueKey(lemma)));
-      return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
-    }
-
-    // ---------------- AI (the learner's own key): Turkish meaning for words
-    // the dictionary has no Turkish for ("pedicab"), and "Yapay zekâya sor"
-    // on every word, in the reader and the dictionary alike.
-    if (LocalAiCard.available(app)) {
-      children.add(LocalAiCard(
-        key: ValueKey('ai-word-$lemma'),
-        app: app,
-        cacheKey: 'word:$lemma|${ctx?.sentence ?? ''}',
-        title: L('Yapay zekâ: Türkçe anlamı', 'AI: meaning in Turkish'),
-        button: L('Yapay zekâ ile açıkla', 'Explain with AI'),
-        auto: tr && _trMain == null,
-        run: () => Tutor.of(app).wordMeaning(lemma,
-            sentence: ctx?.sentence, gloss: best?.gloss ?? info.senses.firstOrNull?.gloss, turkish: _trMain),
-      ));
-    } else if (tr && _trMain == null) {
-      children.add(Padding(
-        padding: const EdgeInsets.only(top: 12),
-        child: Text(
-            L('Bu kelimenin sözlükte Türkçesi yok. Aşağıdaki "Yapay zekâya sor" ile öğrenebilirsin.',
-                'The dictionary has no Turkish for this word. Use "Ask the AI" below.'),
-            style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
-      ));
-    }
-    children.add(AiAskBox(
-      key: ValueKey('ai-ask-$lemma'),
-      app: app,
-      title: L('Yapay zekâya sor', 'Ask the AI'),
-      suggestions: [
-        L('Bu kelimeyi detaylı anlat', 'Explain this word in detail'),
-        if (ctx != null) L('Bu cümlede ne anlama geliyor?', 'What does it mean in this sentence?'),
-        L('Başka örnek cümle ver', 'Give more example sentences'),
-        L('Benzer kelimelerden farkı ne?', 'How is it different from similar words?'),
-      ],
-      about: 'Kelime: $lemma\n'
-          '${(best?.gloss ?? info.senses.firstOrNull?.gloss) == null ? '' : 'İngilizce tanımı: ${best?.gloss ?? info.senses.first.gloss}\n'}'
-          '${_trMain == null ? '' : 'Türkçe karşılıkları: $_trMain\n'}'
-          '${ctx == null ? '' : 'Okuduğu cümle: "${ctx.sentence}"'}',
-    ));
-
-    // ---------------- in this sentence
-    if (ctx != null) {
-      children.add(_Section(L('Bu cümlede', 'In this sentence'), [
-        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Expanded(
-              child: sense == null
-                  ? SentenceText(ctx.sentence, widget.surface)
-                  : Text(L('Cümlenin çevirisi ve içindeki kalıplar', 'Translation of the sentence and its expressions'),
-                      style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor))),
-          if (Speech.supported) SpeakButton(ctx.sentence, tooltip: L('Cümleyi dinle', 'Listen to the sentence')),
-        ]),
-        if (ctx.sentenceTr == null && tr && DeviceTranslate.instance.ready(app.user))
-          DeviceTranslation(key: ValueKey('mt-s-${ctx.sentence}'), app: app, text: ctx.sentence, style: const TextStyle(fontStyle: FontStyle.italic)),
-        if (ctx.sentenceTr != null && tr) ...[
-          const SizedBox(height: 6),
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(child: Text(ctx.sentenceTr!.first, style: trStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false))),
-            if (Speech.supported) SpeakButton(ctx.sentenceTr!.first, lang: 'tr', size: 20),
-          ]),
-        ],
-        for (final m in ctx.matches) ExprCard(app: app, expr: m.expr, ctx: ctx, onChanged: () => setState(() {})),
-        if (!_cardShown && best != null && (en || (tr && _trMain != null && _trMain != _selfExprTr))) ...[
-          const SizedBox(height: 8),
-          Text(ctx.matches.any((m) => m.expr.phrase.contains(' ')) ? L('Kelimenin tek başına anlamı:', 'Meaning of the word on its own:') : L('Bu cümledeki anlamı:', 'Meaning in this sentence:'),
-              style: theme.textTheme.labelLarge),
-          const SizedBox(height: 4),
-          if (en) TapText(best!.gloss, style: enStyle(theme, theme.textTheme.bodyLarge)),
-          if (tr && _trMain != null) Text(_trMain!, style: trStyle(theme, theme.textTheme.titleMedium)),
-          for (var k = 0; k < best!.examples.length && k < 2; k++)
-            if (en || (tr && k < best!.examplesTr.length))
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  TapText('• ${best!.examples[k]}', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
-                  if (tr && k < best!.examplesTr.length)
-                    Padding(padding: const EdgeInsets.only(left: 12), child: Text(best!.examplesTr[k], style: trStyle(theme, null, false))),
-                ]),
-              ),
-        ],
-      ]));
-    }
-
-    // ---------------- teacher-style explanation (built-in library)
-    final wd = app.dict.wordDetail(lemma);
-    List<ExprSense>? wdSenses;
-    if (wd != null) {
-      try {
-        wdSenses = [for (final x in jsonDecode(wd.$2) as List) ExprSense.fromJson((x as Map).cast<String, dynamic>())];
-      } catch (_) {}
-    }
-    if (wdSenses != null && wdSenses.isNotEmpty) {
-      const posEn = {'v': 'verb', 'n': 'noun', 'a': 'adjective', 's': 'adjective', 'r': 'adverb'};
-      children.add(_Section(L('Anlamları ve kullanımı', 'Meanings and usage'), [
-        SenseCards(senses: wdSenses, en: en, tr: tr, color: theme.colorScheme.primary, highlightPos: ctx == null ? null : posEn[best?.pos]),
-        Text(L('Kaynak: dahili sözlük', 'Source: built-in dictionary'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-      ]));
-    }
-
-    // ---------------- Turkish meanings
-    if (tr && info.trFreeDict.isNotEmpty) {
-      children.add(_Section(L('Türkçe karşılıklar', 'Turkish equivalents'), [
-        for (var i = 0; i < info.trFreeDict.length && i < 12; i++)
-          Padding(padding: const EdgeInsets.only(bottom: 3), child: Text('${i + 1}. ${info.trFreeDict[i]}', style: trStyle(theme))),
-      ]));
-    }
-    if (surfaceInfo != null && tr && surfaceInfo!.trFreeDict.isNotEmpty) {
-      children.add(_Section(L('"${widget.surface}" biçimi', 'The form "${widget.surface}"'), [
-        for (final s in surfaceInfo!.trFreeDict.take(5)) Text('• $s'),
-      ]));
-    }
-
-    // ---------------- senses
-    // With the built-in explanation above, the WordNet list is extra detail for English readers.
-    if (info.senses.isNotEmpty && (wdSenses == null || wdSenses.isEmpty || en)) {
-      final byPos = <String, List<Sense>>{};
-      for (final s in info.senses) {
-        byPos.putIfAbsent(s.pos, () => []).add(s);
-      }
-      final items = <Widget>[];
-      for (final e in byPos.entries) {
-        final visible = [for (final s in e.value.take(8)) if (en || (tr && s.tr.isNotEmpty)) s];
-        if (visible.isEmpty) continue;
-        items.add(Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 2),
-          child: Text(posNames[e.key] ?? e.key, style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-        ));
-        for (final s in visible) {
-          items.add(Container(
-            margin: const EdgeInsets.only(bottom: 6),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: s == best ? theme.colorScheme.primaryContainer.withValues(alpha: 0.5) : null,
-              borderRadius: BorderRadius.circular(8),
+      );
+    } else {
+      // The own dictionary's first (verified) meaning is the word's main one.
+      final trMain0 = opener?.tr ?? mainOwn?.tr ?? _trMain;
+      // Nothing checked has Turkish for it: the AI draft's first meaning, labelled.
+      final draftMain = trMain0 == null ? drafts.firstOrNull : null;
+      final trMain = trMain0 ?? draftMain?.tr;
+      if (trMain != null) {
+        children.add(
+          MeaningBox(
+            key: const ValueKey('word-meaning-box'),
+            label: ctx != null ? L('BU CÜMLEDEKİ ANLAMI', 'MEANING IN THIS SENTENCE') : L('ANLAMI', 'MEANING'),
+            tr: trMain,
+            note: draftMain != null ? unverifiedAiLabel() : opener?.note,
+            en: opener != null ? null : (mainOwn != null ? mainOwn.en : (draftMain != null && draftMain.en.isNotEmpty ? draftMain.en : best?.gloss)),
+          ),
+        );
+      } else if (LocalAiCard.available(app)) {
+        // The learner's own (often paid) AI key is used only on a tap; the
+        // free on-device translation is shown meanwhile where there is one.
+        if (!info.isEmpty) children.add(DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge));
+        children.add(
+          LocalAiCard(
+            key: ValueKey('ai-word-$lemma'),
+            app: app,
+            cacheKey: 'word:$lemma|${ctx?.sentence ?? ''}',
+            title: L('Yapay zekâ: Türkçe anlamı', 'AI: meaning in Turkish'),
+            button: L('Yapay zekâ ile açıkla', 'Explain with AI'),
+            run: () => Tutor.of(app).wordMeaning(lemma, sentence: ctx?.sentence, gloss: best?.gloss ?? info.senses.firstOrNull?.gloss, turkish: null),
+          ),
+        );
+      } else if (!info.isEmpty) {
+        children.add(DeviceTranslation(key: ValueKey('mt-$lemma'), app: app, text: lemma, style: theme.textTheme.titleLarge));
+        children.add(
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              L('Bu kelimenin sözlükte Türkçesi yok. Aşağıdaki "Yapay zekâya sor" ile öğrenebilirsin.', 'The dictionary has no Turkish for this word. Use "Ask the AI" below.'),
+              style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
             ),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              if (en) TapText(s.gloss, style: enStyle(theme)),
-              if (tr && s.tr.isNotEmpty) Text(s.tr.join(', '), style: trStyle(theme)),
-              if (en && s.synonyms.isNotEmpty)
-                Text(L('eş anlamlı: ${s.synonyms.take(5).join(', ')}', 'synonyms: ${s.synonyms.take(5).join(', ')}'), style: TextStyle(color: theme.hintColor, fontSize: 13)),
-              for (var k = 0; k < s.examples.length && k < 2; k++)
-                if (en || (tr && k < s.examplesTr.length)) ...[
-                  TapText('“${s.examples[k]}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
-                  if (tr && k < s.examplesTr.length)
-                    Padding(padding: const EdgeInsets.only(left: 12), child: Text(s.examplesTr[k], style: trStyle(theme, null, false))),
-                ],
-            ]),
-          ));
+          ),
+        );
+      }
+      children.add(statusRow);
+      if (ctx != null) {
+        children.add(PanelHeading(L('KİTAPTAKİ CÜMLE', 'SENTENCE IN THE BOOK')));
+        children.add(BookSentenceCard(app: app, ctx: ctx, highlight: {widget.surface.toLowerCase()}));
+      }
+    }
+
+    // ---------------- expressions this word is part of here
+    // (an irregular verb's own entry is the V1/V2/V3 row above; each once)
+    final seen = <String>{};
+    final exprs = [
+      for (final m in ctx?.matches ?? const <Match>[])
+        if (m.expr.cat != 'irregular_verbs' && seen.add('${m.expr.phrase}|${m.expr.cat}')) m.expr,
+    ];
+    if (ctx != null && exprs.isNotEmpty) {
+      children.add(PanelHeading(L('BU CÜMLEDEKİ KALIPLAR', 'EXPRESSIONS IN THIS SENTENCE')));
+      for (final e in exprs) {
+        children.add(ExprCard(app: app, expr: e, ctx: ctx, onChanged: () => setState(() {})));
+      }
+    }
+
+    // ---------------- the other meanings: Turkish first, never English alone
+    final tiles = <Widget>[];
+    final hasTop = card ? sense!.shown : (opener != null || _trMain != null || mainOwn != null || drafts.isNotEmpty);
+    void tile(String? p, String tr, String? en, String? exEn, String? exTr) =>
+        tiles.add(SenseTile(number: tiles.length + (hasTop ? 2 : 1), pos: p, tr: tr, en: en, exEn: exEn, exTr: exTr, divider: tiles.isNotEmpty));
+    final openerOwn = opener == null ? -1 : own.indexWhere((o) => o.tr == opener!.tr);
+    final topShown = card ? (sense!.shown && sense!.cat == null ? _ownShown : null) : (opener != null ? (openerOwn < 0 ? null : openerOwn) : (mainOwn != null ? 0 : null));
+    if (own.isNotEmpty) {
+      for (var i = 0; i < own.length; i++) {
+        if (i == topShown) continue;
+        final o = own[i];
+        tile([posLabel(o.pos), if (o.note.isNotEmpty) o.note].join(' · '), o.tr, o.en, o.ex, o.ex.isEmpty ? null : o.exTr);
+      }
+    } else {
+      // No own entry: WordNet meanings that have Turkish, then the plain list.
+      final shownTr = card ? sense!.tr : _trMain;
+      for (final x in info.senses.take(12)) {
+        if (x.tr.isEmpty) continue;
+        final t = x.tr.take(3).join(', ');
+        if (t == shownTr) continue;
+        tile(posLabel(x.pos), t, x.gloss, x.examples.firstOrNull, x.examplesTr.firstOrNull);
+      }
+      if (tiles.isEmpty) {
+        for (final t in info.trFreeDict.take(8)) {
+          if (t == shownTr) continue;
+          tile(null, t, null, null, null);
         }
       }
-      if (items.isNotEmpty) children.add(_Section(en ? L('Anlamlar (WordNet)', 'Meanings (WordNet)') : L('Anlamlar', 'Meanings'), items));
+    }
+    if (tiles.isNotEmpty) {
+      children.add(PanelHeading(hasTop ? L('DİĞER ANLAMLARI', 'OTHER MEANINGS') : L('ANLAMLARI', 'MEANINGS')));
+      children.add(
+        PanelCard(
+          padding: const EdgeInsets.fromLTRB(14, 0, 12, 0),
+          child: Column(children: tiles),
+        ),
+      );
+    }
+    // Unreviewed AI drafts: closed and labelled, never in the list above.
+    if (drafts.isNotEmpty) {
+      children.add(UnverifiedAiSection(
+        key: ValueKey('unverified-ai-$lemma'),
+        count: drafts.length,
+        children: () => [
+          for (var i = 0; i < drafts.length; i++)
+            SenseTile(
+              number: i + 1,
+              pos: [posLabel(drafts[i].pos), if (drafts[i].note.isNotEmpty) drafts[i].note].join(' · '),
+              tr: drafts[i].tr,
+              en: drafts[i].en.isEmpty ? null : drafts[i].en,
+              exEn: drafts[i].ex.isEmpty ? null : drafts[i].ex,
+              exTr: drafts[i].ex.isEmpty ? null : drafts[i].exTr,
+              divider: i > 0,
+            ),
+        ],
+      ));
+    }
+    if (surfaceInfo != null && surfaceInfo!.trFreeDict.isNotEmpty) {
+      children.add(PanelHeading(L('"${widget.surface}" BİÇİMİ', 'THE FORM "${widget.surface}"')));
+      children.add(
+        PanelCard(
+          child: LangLine(en: false, child: Text(surfaceInfo!.trFreeDict.take(4).join('; '), style: panelTrStyle(theme))),
+        ),
+      );
     }
 
-    final exs = app.dict.examples('w:$lemma', limit: 3);
-    if (exs.isNotEmpty) {
-      children.add(_Section(L('Çevirili örnek cümleler', 'Example sentences with translations'), [
-        for (final (e, t) in exs)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TapText('• $e', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
-              if (tr) Padding(padding: const EdgeInsets.only(left: 12), child: Text(t, style: trStyle(theme, null, false))),
-            ]),
+    // ---------------- example sentences with their Turkish (when the own
+    // dictionary has none for this word)
+    if (own.isEmpty) {
+      final exs = app.dict.examples('w:$lemma', limit: 2);
+      if (exs.isNotEmpty) {
+        children.add(PanelHeading(L('ÖRNEK CÜMLELER', 'EXAMPLE SENTENCES')));
+        children.add(
+          PanelCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var k = 0; k < exs.length; k++) ...[
+                  if (k > 0) const SizedBox(height: 14),
+                  LangLine(en: true, child: TapText(exs[k].$1, style: panelEnStyle(theme, size: 14.5))),
+                  const SizedBox(height: 4),
+                  LangLine(en: false, child: Text(exs[k].$2, style: panelTrStyle(theme, size: 14.5))),
+                ],
+              ],
+            ),
           ),
-      ]));
+        );
+      }
     }
 
-    if (bookExamples.isNotEmpty) {
-      children.add(_Section(L('Kitaptan başka örnekler', 'More examples from the book'), [
-        for (final s in bookExamples)
-          Padding(padding: const EdgeInsets.only(bottom: 6), child: SentenceText(s, null, highlight: {lemma, widget.surface.toLowerCase()})),
-      ]));
+    // ---------------- another sentence from the book, only with its Turkish
+    if (bookExamples.isNotEmpty && DeviceTranslate.instance.ready(app.user)) {
+      final s0 = bookExamples.first;
+      children.add(PanelHeading(L('KİTAPTAN BAŞKA BİR CÜMLE', 'ANOTHER SENTENCE FROM THE BOOK')));
+      children.add(
+        PanelCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LangLine(
+                en: true,
+                child: TapText(s0, style: panelEnStyle(theme), highlight: {lemma, widget.surface.toLowerCase()}),
+              ),
+              const LangDivider(),
+              LangLine(
+                en: false,
+                child: DeviceTranslation(key: ValueKey('mt-b-$s0'), app: app, text: s0, style: panelTrStyle(theme)),
+              ),
+            ],
+          ),
+        ),
+      );
     }
-    if (info.isEmpty && (ctx?.matches.isEmpty ?? true)) {
-      children.add(Padding(padding: EdgeInsets.all(16), child: Text(L('Bu kelime sözlükte bulunamadı.', 'This word was not found in the dictionary.'))));
+
+    // ---------------- word family, opened on request
+    children.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 14),
+        child: Material(
+          color: theme.brightness == Brightness.dark ? const Color(0x0EFFECCD) : Color.lerp(theme.colorScheme.surfaceContainerLowest, Colors.white, 0.5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: theme.brightness == Brightness.dark ? const Color(0x1CFFE6BE) : theme.colorScheme.outlineVariant),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            key: const ValueKey('word-family'),
+            onTap: () => setState(() => familyOpen = !familyOpen),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+              child: Row(
+                children: [
+                  Icon(Icons.account_tree_outlined, size: 20, color: theme.colorScheme.primary),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(L('Kelime ailesi', 'Word Family'), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                  ),
+                  Icon(familyOpen ? Icons.expand_less_rounded : Icons.expand_more_rounded, color: theme.colorScheme.onSurfaceVariant),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    if (familyOpen) children.add(WordFamilyView(app: app, lemma: lemma, key: ValueKey(lemma)));
+
+    // ---------------- one AI question box when there is no book sentence
+    // (the sentence card has its own "Ask the AI")
+    if (!card) {
+      children.add(
+        AiAskBox(
+          key: ValueKey('ai-ask-$lemma'),
+          app: app,
+          title: L('Yapay zekâya sor', 'Ask the AI'),
+          suggestions: [
+            L('Bu kelimeyi detaylı anlat', 'Explain this word in detail'),
+            if (ctx != null) L('Bu cümlede ne anlama geliyor?', 'What does it mean in this sentence?'),
+            L('Başka örnek cümle ver', 'Give more example sentences'),
+            L('Benzer kelimelerden farkı ne?', 'How is it different from similar words?'),
+          ],
+          about:
+              'Kelime: $lemma\n'
+              '${(best?.gloss ?? info.senses.firstOrNull?.gloss) == null ? '' : 'İngilizce tanımı: ${best?.gloss ?? info.senses.first.gloss}\n'}'
+              '${_trMain == null ? '' : 'Türkçe karşılıkları: $_trMain\n'}'
+              '${ctx == null ? '' : 'Okuduğu cümle: "${ctx.sentence}"'}',
+        ),
+      );
+    }
+    if (info.isEmpty && own.isEmpty && (ctx?.matches.isEmpty ?? true)) {
+      children.add(Padding(padding: const EdgeInsets.all(16), child: Text(L('Bu kelime sözlükte bulunamadı.', 'This word was not found in the dictionary.'))));
     }
 
     return ListView(controller: widget.scroll, padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: children);
@@ -555,32 +691,37 @@ class _WordFamilyViewState extends State<WordFamilyView> {
     final hasAi = AiService.fromSettings(widget.app.user) != null;
     final out = <Widget>[];
     if (f == null) {
-      out.add(Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Text(loading
-            ? L('Kelime ailesi hazırlanıyor…', 'Preparing the word family…')
-            : hasAi
+      out.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Text(
+            loading
+                ? L('Kelime ailesi hazırlanıyor…', 'Preparing the word family…')
+                : hasAi
                 ? L('Sözlükte bu kelimenin ailesi yok.', 'The dictionary has no family for this word.')
-                : L('Sözlükte bu kelimenin ailesi yok. Ayarlar\'dan bir yapay zekâ servisi bağlarsan oluşturabilirim.', 'The dictionary has no family for this word. Connect an AI service in Settings and I can build one.')),
-      ));
-    } else {
-      out.add(Container(
-        margin: const EdgeInsets.only(top: 14),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.primaryContainer.withValues(alpha: 0.45),
-          borderRadius: BorderRadius.circular(10),
+                : L(
+                    'Sözlükte bu kelimenin ailesi yok. Ayarlar\'dan bir yapay zekâ servisi bağlarsan oluşturabilirim.',
+                    'The dictionary has no family for this word. Connect an AI service in Settings and I can build one.',
+                  ),
+          ),
         ),
-        child: Row(children: [
-          Text(L('Kök', 'Root'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
-          const SizedBox(width: 12),
-          Text(f.root, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-          if (f.rootTr != null && f.rootTr!.isNotEmpty && widget.app.showTr) ...[
-            const SizedBox(width: 8),
-            Flexible(child: Text('(${f.rootTr})', style: theme.textTheme.titleMedium)),
-          ],
-        ]),
-      ));
+      );
+    } else {
+      out.add(
+        Container(
+          margin: const EdgeInsets.only(top: 14),
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(color: theme.colorScheme.primaryContainer.withValues(alpha: 0.45), borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            children: [
+              Text(L('Kök', 'Root'), style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary)),
+              const SizedBox(width: 12),
+              Text(f.root, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+              if (f.rootTr != null && f.rootTr!.isNotEmpty && widget.app.showTr) ...[const SizedBox(width: 8), Flexible(child: Text('(${f.rootTr})', style: theme.textTheme.titleMedium))],
+            ],
+          ),
+        ),
+      );
       final groups = [('v', L('Fiil (Verb)', 'Verb')), ('n', L('İsim (Noun)', 'Noun')), ('a', L('Sıfat (Adjective)', 'Adjective')), ('r', L('Zarf (Adverb)', 'Adverb'))];
       for (final (pos, title) in groups) {
         final items = f.byPos(pos);
@@ -592,28 +733,35 @@ class _WordFamilyViewState extends State<WordFamilyView> {
     if (loading && f != null) {
       out.add(const Padding(padding: EdgeInsets.only(top: 12), child: LinearProgressIndicator()));
     }
-    if (error != null) out.add(Padding(padding: const EdgeInsets.only(top: 8), child: Text(error!, style: TextStyle(color: theme.colorScheme.error))));
-    if (hasAi && ai == null && !loading && offline != null) {
-      out.add(Padding(
-        padding: const EdgeInsets.only(top: 14),
-        child: OutlinedButton.icon(
-          onPressed: _askAi,
-          icon: const Icon(Icons.auto_awesome),
-          label: Text(L('Yapay zekâ ile ayrıntılı göster', 'Show details with AI')),
+    if (error != null)
+      out.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(error!, style: TextStyle(color: theme.colorScheme.error)),
         ),
-      ));
+      );
+    if (hasAi && ai == null && !loading && offline != null) {
+      out.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 14),
+          child: OutlinedButton.icon(onPressed: _askAi, icon: const Icon(Icons.auto_awesome), label: Text(L('Yapay zekâ ile ayrıntılı göster', 'Show details with AI'))),
+        ),
+      );
     }
     if (f != null) {
-      out.add(Padding(
-        padding: const EdgeInsets.only(top: 12),
-        child: Text(
+      out.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Text(
             builtIn
                 ? L('Kaynak: dahili sözlük', 'Source: built-in dictionary')
                 : f.fromAi
-                    ? L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)')
-                    : L('Kaynak: WordNet türetme bağlantıları', 'Source: WordNet derivation links'),
-            style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-      ));
+                ? L('Kaynak: yapay zekâ (cihaza kaydedildi)', 'Source: AI (saved on device)')
+                : L('Kaynak: WordNet türetme bağlantıları', 'Source: WordNet derivation links'),
+            style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+          ),
+        ),
+      );
     }
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: out);
   }
@@ -621,12 +769,14 @@ class _WordFamilyViewState extends State<WordFamilyView> {
   Widget _familyGroup(ThemeData theme, String title, List<FamilyEntry> items, {bool negative = false}) {
     return Padding(
       padding: const EdgeInsets.only(top: 14),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(title, style: theme.textTheme.labelLarge?.copyWith(color: negative ? theme.colorScheme.error : theme.colorScheme.primary)),
-        const SizedBox(height: 4),
-        for (final e in items)
-          _familyEntry(theme, e, negative),
-      ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: theme.textTheme.labelLarge?.copyWith(color: negative ? theme.colorScheme.error : theme.colorScheme.primary)),
+          const SizedBox(height: 4),
+          for (final e in items) _familyEntry(theme, e, negative),
+        ],
+      ),
     );
   }
 
@@ -635,41 +785,48 @@ class _WordFamilyViewState extends State<WordFamilyView> {
     if (e.exEn == null) {
       final x = widget.app.dict.examples('w:${e.word}', limit: 1);
       if (x.isNotEmpty) {
-        e = FamilyEntry(e.word, e.pos, tr: e.tr, affixNote: e.affixNote, affixNoteEn: e.affixNoteEn,
-            negative: e.negative, exEn: x.first.$1, exTr: x.first.$2);
+        e = FamilyEntry(e.word, e.pos, tr: e.tr, affixNote: e.affixNote, affixNoteEn: e.affixNoteEn, negative: e.negative, exEn: x.first.$1, exTr: x.first.$2);
       }
     }
     return Container(
-            width: double.infinity,
-            margin: const EdgeInsets.only(bottom: 6),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            decoration: BoxDecoration(
-              border: Border(left: BorderSide(color: negative ? theme.colorScheme.error : theme.colorScheme.primary, width: 3)),
-              color: theme.colorScheme.surfaceContainerLow,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text.rich(TextSpan(children: [
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(left: BorderSide(color: negative ? theme.colorScheme.error : theme.colorScheme.primary, width: 3)),
+        color: theme.colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text.rich(
+            TextSpan(
+              children: [
                 TextSpan(
                   text: e.word,
-                  style: enStyle(theme, TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                    decoration: e.word == widget.lemma ? TextDecoration.underline : null,
-                  )).copyWith(fontWeight: FontWeight.w700),
+                  style: enStyle(
+                    theme,
+                    TextStyle(fontWeight: FontWeight.w700, fontSize: 16, decoration: e.word == widget.lemma ? TextDecoration.underline : null),
+                  ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 if (e.tr != null && e.tr!.isNotEmpty && widget.app.showTr) TextSpan(text: '  ${e.tr}', style: trStyle(theme)),
-              ])),
-              if (e.note != null)
-                Text(e.note!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-              if (e.exEn != null && (widget.app.showEn || widget.app.showTr)) ...[
-                const SizedBox(height: 4),
-                TapText('“${e.exEn}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic, fontSize: 14), false)),
-                if (e.exTr != null && widget.app.showTr)
-                  Padding(padding: const EdgeInsets.only(left: 12), child: Text(e.exTr!, style: trStyle(theme, const TextStyle(fontSize: 14), false))),
               ],
-            ]),
-          );
+            ),
+          ),
+          if (e.note != null) Text(e.note!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+          if (e.exEn != null && (widget.app.showEn || widget.app.showTr)) ...[
+            const SizedBox(height: 4),
+            TapText('“${e.exEn}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic, fontSize: 14), false)),
+            if (e.exTr != null && widget.app.showTr)
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Text(e.exTr!, style: trStyle(theme, const TextStyle(fontSize: 14), false)),
+              ),
+          ],
+        ],
+      ),
+    );
   }
 }
 
@@ -705,24 +862,27 @@ class LangToggles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(spacing: 6, children: [
-      FilterChip(
-        label: const Text('Türkçe'),
-        selected: app.showTr,
-        onSelected: (v) {
-          app.setLang(tr: v);
-          onChanged();
-        },
-      ),
-      FilterChip(
-        label: const Text('English'),
-        selected: app.showEn,
-        onSelected: (v) {
-          app.setLang(en: v);
-          onChanged();
-        },
-      ),
-    ]);
+    return Wrap(
+      spacing: 6,
+      children: [
+        FilterChip(
+          label: const Text('Türkçe'),
+          selected: app.showTr,
+          onSelected: (v) {
+            app.setLang(tr: v);
+            onChanged();
+          },
+        ),
+        FilterChip(
+          label: const Text('English'),
+          selected: app.showEn,
+          onSelected: (v) {
+            app.setLang(en: v);
+            onChanged();
+          },
+        ),
+      ],
+    );
   }
 }
 
@@ -762,8 +922,15 @@ class _ExprCardState extends State<ExprCard> {
       } catch (_) {}
     }
     if (expr.ex != null && expr.exTr != null) return (expr.ex!, expr.exTr);
-    final t = app.dict.examples(key, limit: 1);
-    if (t.isNotEmpty) return (t.first.$1, t.first.$2);
+    // A one-word discourse marker ("well", "right") only with an example of
+    // that use: opening the sentence, before a comma ("Well, ..."), not
+    // "I did well".
+    final single = !expr.phrase.contains(' ');
+    final opener = RegExp('^\\W*${RegExp.escape(expr.phrase)},', caseSensitive: false);
+    final t = app.dict.examples(key, limit: single && expr.cat == 'discourse_markers' ? 12 : 1);
+    final fit = single && expr.cat == 'discourse_markers' ? t.where((x) => opener.hasMatch(x.$1)).toList() : t;
+    if (fit.isNotEmpty) return (fit.first.$1, fit.first.$2);
+    if (single && expr.cat == 'discourse_markers') return null;
     // An English-only example only when English is shown.
     return expr.ex == null || !app.showEn ? null : (expr.ex!, null);
   }();
@@ -790,88 +957,130 @@ class _ExprCardState extends State<ExprCard> {
     final c = categoryById[expr.cat]!;
     final theme = Theme.of(context);
     final tr = expr.trShown;
-    // Without a Turkish meaning, the English definition is always shown.
-    final showEn = app.showEn || tr == null;
+    // A one-word entry's English comes from the word's first dictionary
+    // sense ("well": "in a good manner"), not from this use, so it is left
+    // out when the Turkish is known. Without Turkish it is always shown.
+    final single = !expr.phrase.contains(' ');
+    final showEn = (app.showEn && !(single && tr != null)) || tr == null;
     final st = app.user.statuses[expr.phrase] ?? WordStatus.none;
+    final dark = theme.brightness == Brightness.dark;
     return Container(
-      margin: const EdgeInsets.only(top: 8),
-      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.fromLTRB(14, 12, 12, 10),
       decoration: BoxDecoration(
+        color: Color.alphaBlend(c.color.withValues(alpha: dark ? 0.10 : 0.07), dark ? const Color(0x0EFFECCD) : theme.colorScheme.surfaceContainerLowest),
+        borderRadius: BorderRadius.circular(18),
         border: Border(left: BorderSide(color: c.color, width: 4)),
-        color: c.color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(6),
       ),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
-          Expanded(child: Text(displayPhrase(expr.phrase), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16))),
-          Text(uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr, style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600)),
-        ]),
-        if (showEn && expr.en != null) TapText(expr.en!, style: enStyle(theme)),
-        if (app.showTr && tr != null) Text(tr, style: trStyle(theme)),
-        // No Turkish yet: at least the words one by one, never English alone.
-        if (app.showTr && tr == null && _gloss != null)
-          Text(L('Kelime kelime: $_gloss', 'Word by word: $_gloss'), style: trStyle(theme, null, false)),
-        if (app.showTr && expr.aiExp != null) Text(expr.aiExp!, style: trStyle(theme, null, false)),
-        if (translating)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Row(children: [
-              const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  displayPhrase(expr.phrase),
+                  style: TextStyle(fontFamily: readingFont, fontWeight: FontWeight.w700, fontSize: 18, color: theme.colorScheme.onSurface),
+                ),
+              ),
               const SizedBox(width: 8),
-              Text(L('Türkçeye çevriliyor…', 'Translating into Turkish…'), style: theme.textTheme.bodySmall),
-            ]),
+              Padding(
+                padding: const EdgeInsets.only(top: 3),
+                child: Text(
+                  uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr,
+                  style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
           ),
-        if (_example case final ex?)
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              TapText('“${ex.$1}”', style: enStyle(theme, const TextStyle(fontStyle: FontStyle.italic), false)),
-              if (app.showTr && ex.$2 != null)
-                Padding(padding: const EdgeInsets.only(left: 12), child: Text(ex.$2!, style: trStyle(theme, null, false))),
-            ]),
-          ),
-        const SizedBox(height: 6),
-        Wrap(spacing: 8, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
-          StatusButtons(
-            status: st,
-            onChanged: (s) {
-              app.setWord(expr.phrase, s, meaning: expr.trShown ?? expr.en);
-              widget.onChanged();
-            },
-          ),
-          if (expr.needsAi && !translating && AiService.fromSettings(app.user) != null)
-            TextButton.icon(
-              onPressed: _translateIfNeeded,
-              icon: const Icon(Icons.auto_awesome, size: 18),
-              label: Text(L('Türkçeye çevir', 'Translate to Turkish')),
+          if (app.showTr && tr != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: LangLine(
+                en: false,
+                child: Text(tr, style: panelTrStyle(theme, size: 17, weight: FontWeight.w700)),
+              ),
             ),
-          if (widget.ctx != null && expr.pattern.length > 1)
-            TextButton.icon(
-              onPressed: () => showExprSheet(context, app, expr, widget.ctx!, expr.phrase.split(' ')),
-              icon: const Icon(Icons.menu_book_outlined, size: 18),
-              label: Text(L('Anlamlar ve örnekler', 'Meanings and examples')),
+          if (app.showTr && tr != null && expr.trShownIsDraft)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(unverifiedAiLabel(), key: const ValueKey('expr-card-draft'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor, fontStyle: FontStyle.italic)),
             ),
-        ]),
-      ]),
-    );
-  }
-}
-
-class _Section extends StatelessWidget {
-  final String title;
-  final List<Widget> children;
-  const _Section(this.title, this.children);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 18),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(title.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(letterSpacing: 1.1, color: Theme.of(context).hintColor)),
-        const Divider(height: 10),
-        ...children,
-      ]),
+          // No Turkish yet: at least the words one by one, never English alone.
+          if (app.showTr && tr == null && _gloss != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: LangLine(
+                en: false,
+                child: Text(L('Kelime kelime: $_gloss', 'Word by word: $_gloss'), style: panelTrStyle(theme, size: 14.5, weight: FontWeight.w500)),
+              ),
+            ),
+          if (showEn && expr.en != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: LangLine(en: true, child: TapText(expr.en!, style: panelEnStyle(theme, size: 13.5))),
+            ),
+          if (app.showTr && expr.aiExp != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(expr.aiExp!, style: panelTrStyle(theme, size: 14, weight: FontWeight.w500)),
+            ),
+          if (translating)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Row(
+                children: [
+                  const SizedBox(width: 12, height: 12, child: CircularProgressIndicator(strokeWidth: 2)),
+                  const SizedBox(width: 8),
+                  Text(L('Türkçeye çevriliyor…', 'Translating into Turkish…'), style: theme.textTheme.bodySmall),
+                ],
+              ),
+            ),
+          if (_example case final ex?)
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(left: 10),
+              decoration: BoxDecoration(
+                border: Border(left: BorderSide(color: goldSoft(theme), width: 3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TapText(ex.$1, style: panelEnStyle(theme, size: 14)),
+                  if (app.showTr && ex.$2 != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(ex.$2!, style: panelTrStyle(theme, size: 14, weight: FontWeight.w500)),
+                    ),
+                ],
+              ),
+            ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              StatusButtons(
+                status: st,
+                onChanged: (s) {
+                  app.setWord(expr.phrase, s, meaning: expr.tr);
+                  widget.onChanged();
+                },
+              ),
+              if (expr.needsAi && !translating && AiService.fromSettings(app.user) != null)
+                TextButton.icon(onPressed: _translateIfNeeded, icon: const Icon(Icons.auto_awesome, size: 18), label: Text(L('Türkçeye çevir', 'Translate to Turkish'))),
+              if (widget.ctx != null && expr.pattern.length > 1)
+                TextButton.icon(
+                  onPressed: () => showExprSheet(context, app, expr, widget.ctx!, expr.phrase.split(' ')),
+                  icon: const Icon(Icons.menu_book_outlined, size: 18),
+                  label: Text(L('Anlamlar ve örnekler', 'Meanings and examples')),
+                ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -884,8 +1093,7 @@ class SentenceText extends StatelessWidget {
   const SentenceText(this.sentence, this.word, {this.highlight, this.lockHighlight = false});
 
   @override
-  Widget build(BuildContext context) =>
-      TapText(sentence, style: const TextStyle(fontSize: 16, height: 1.45), highlight: highlight ?? {word!.toLowerCase()}, lockHighlight: lockHighlight);
+  Widget build(BuildContext context) => TapText(sentence, style: const TextStyle(fontSize: 16, height: 1.45), highlight: highlight ?? {word!.toLowerCase()}, lockHighlight: lockHighlight);
 }
 
 /// "V1 find · V2 found · V3 found" under an irregular verb's header, with the
@@ -907,17 +1115,27 @@ class VerbFormsRow extends StatelessWidget {
     final spans = <InlineSpan>[];
     for (final (label, words) in groups) {
       if (spans.isNotEmpty) spans.add(const TextSpan(text: '    '));
-      spans.add(TextSpan(
+      spans.add(
+        TextSpan(
           text: '$label ',
-          style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w700)));
+          style: theme.textTheme.labelLarge?.copyWith(color: theme.colorScheme.primary, fontWeight: FontWeight.w700),
+        ),
+      );
       for (var i = 0; i < words.length; i++) {
-        if (i > 0) spans.add(TextSpan(text: ' / ', style: base.copyWith(color: theme.hintColor)));
+        if (i > 0)
+          spans.add(
+            TextSpan(
+              text: ' / ',
+              style: base.copyWith(color: theme.hintColor),
+            ),
+          );
         final on = words[i] == tapped;
-        spans.add(TextSpan(
+        spans.add(
+          TextSpan(
             text: words[i],
-            style: on
-                ? base.copyWith(fontWeight: FontWeight.w800, color: theme.colorScheme.onSurface)
-                : base.copyWith(fontWeight: FontWeight.w400, color: theme.colorScheme.onSurfaceVariant)));
+            style: on ? base.copyWith(fontWeight: FontWeight.w800, color: theme.colorScheme.onSurface) : base.copyWith(fontWeight: FontWeight.w400, color: theme.colorScheme.onSurfaceVariant),
+          ),
+        );
       }
     }
     return Padding(

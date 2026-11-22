@@ -55,7 +55,7 @@ class _TapTextState extends State<TapText> {
     var pos = 0;
     for (final t in tokenize(s)) {
       if (t.start > pos) spans.add(TextSpan(text: s.substring(pos, t.start)));
-      final word = RegExp(r'[A-Za-z]').hasMatch(t.text);
+      final word = RegExp(r'[A-Za-zÇĞİÖŞÜçğıöşüÂÎÛâîû]').hasMatch(t.text);
       final hl = _hl(t);
       TapGestureRecognizer? r;
       if (word && app != null && !(hl && widget.lockHighlight)) {

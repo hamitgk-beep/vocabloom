@@ -59,6 +59,25 @@ class StatsStore {
     return r.first['s'] as int;
   }
 
+  /// Books by when they were last read, the latest first (only books with reading time).
+  List<int> recentBookIds() => [
+        for (final r in user.db.select('SELECT book_id FROM reading_time GROUP BY book_id ORDER BY MAX(day) DESC, SUM(seconds) DESC'))
+          r['book_id'] as int,
+      ];
+
+  /// Days in a row with some reading, up to today (today may still be empty).
+  int readingStreak({DateTime? now}) {
+    final days = readingByDay(60, now: now);
+    var i = days.length - 1;
+    if (days[i].$2 == 0) i--;
+    var n = 0;
+    while (i >= 0 && days[i].$2 > 0) {
+      n++;
+      i--;
+    }
+    return n;
+  }
+
   /// Seconds read on each of the last [days] days, oldest first, ending [now].
   List<(DateTime, int)> readingByDay(int days, {DateTime? now}) {
     final n = now ?? DateTime.now();
@@ -106,7 +125,7 @@ class StatsStore {
     try {
       for (final p in paras) {
         if (p.idx > toIdx) break;
-        if (p.kind == 'c') continue;
+        if (p.kind == 'c' || p.kind == 'i') continue;
         st.execute([bookId, chapter, p.idx, countWords(p.text), day]);
       }
     } finally {
@@ -128,7 +147,7 @@ class StatsStore {
 
   int _countBook(int bookId) {
     var n = 0;
-    for (final r in user.db.select("SELECT text FROM paras WHERE book_id = ? AND kind != 'c'", [bookId])) {
+    for (final r in user.db.select("SELECT text FROM paras WHERE book_id = ? AND kind NOT IN ('c', 'i')", [bookId])) {
       n += countWords(r['text'] as String);
     }
     return n;

@@ -26,6 +26,7 @@ import 'package:kelime_okur/ai/grammar_practice.dart';
 import 'package:kelime_okur/ai/local_ai.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
+import 'package:kelime_okur/data/free_library.dart';
 import 'package:kelime_okur/data/user_db.dart';
 import 'package:kelime_okur/l10n.dart';
 import 'package:kelime_okur/main.dart';
@@ -123,7 +124,7 @@ const _enWords = {
 };
 /// Names, brands and terms that are written the same in both languages.
 final _sameInBoth = <RegExp>[
-  RegExp(r'^VocaBloom'), RegExp(r'^(Türkçe|English)$'), RegExp(r'^[A-C][12]$'), RegExp(r'^(BETA|OK|PDF|EPUB|API)$'),
+  RegExp(r'^(VocaBloom|Storilex)'), RegExp(r'^(Türkçe|English)$'), RegExp(r'^[A-C][12]$'), RegExp(r'^(BETA|OK|PDF|EPUB|API)$'),
   RegExp(r'^(Anthropic|OpenAI|Google|Microsoft|DeepSeek|Mistral|xAI|Groq|OpenRouter|Ollama)\b'),
   RegExp(r'^(Kokoro|Piper|Fahrettin|Fettah|Supertonic)\b'),
   RegExp(r'^Qwen'), RegExp(r'^Aa$'), RegExp(r'^A$'),
@@ -312,10 +313,11 @@ Future<void> allScreens(WidgetTester tester) async {
     app.user.deleteBook(b.id);
   }
   await tester.pumpWidget(shell(OnboardingPage(app: app, onDone: () {})));
-  for (var i = 0; i < 3; i++) {
-    await capture(tester, 'onboarding_${i + 1}');
+  // The language step, then the three introduction screens.
+  for (var i = 0; i < 4; i++) {
+    await capture(tester, i == 0 ? 'onboarding_languages' : 'onboarding_$i');
     final next = find.byType(FilledButton);
-    if (next.evaluate().isNotEmpty && i < 2) {
+    if (next.evaluate().isNotEmpty && i < 3) {
       await tester.tap(next.last);
       await _settle(tester);
     }
@@ -332,8 +334,15 @@ Future<void> allScreens(WidgetTester tester) async {
   app.user.setSetting('ai_tab', '1');
   await tester.pumpWidget(shell(HomePage(app: app)));
   await capture(tester, 'tab_library');
-  final names = ['library', 'my_words', 'dictionary', 'grammar', 'ai', 'settings'];
-  for (var i = 1; i < names.length && find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty; i++) {
+  final names = ['library', 'my_words', 'dictionary', 'grammar', 'free_library', 'stats', 'ai', 'settings'];
+  bool has(int i) => find.byKey(ValueKey('nav_$i')).evaluate().isNotEmpty;
+  for (var i = 1; i < names.length; i++) {
+    // On a phone the later pages are in the bottom bar's menu.
+    if (!has(i) && find.byKey(const ValueKey('nav-menu')).evaluate().isNotEmpty) {
+      await tester.tap(find.byKey(const ValueKey('nav-menu')));
+      await _settle(tester);
+    }
+    if (!has(i)) break;
     await tester.tap(find.byKey(ValueKey('nav_$i')));
     await capture(tester, 'tab_${names[i]}');
   }
@@ -389,6 +398,11 @@ Future<void> allScreens(WidgetTester tester) async {
   await tapIcon(tester, Icons.text_fields_rounded);
   await capture(tester, 'reader_reading_settings');
   await reader();
+  // On a phone the chapters are in the "more" menu of the top bar.
+  if (find.byIcon(Icons.list).evaluate().isEmpty && find.byKey(const ValueKey('reader-more')).evaluate().isNotEmpty) {
+    await tester.tap(find.byKey(const ValueKey('reader-more')));
+    await capture(tester, 'reader_more_menu');
+  }
   await tapIcon(tester, Icons.list);
   await capture(tester, 'reader_chapters');
   await reader();
@@ -580,6 +594,8 @@ void main() {
       }
     }
     content.add(sentence);
+    // The reading preview in Settings shows book text.
+    content.addAll(readingPreviewText.values);
     // Dictionary expressions and their English definitions.
     for (final e in d.exprs) {
       content.addAll([e.phrase, displayPhrase(e.phrase)]);
@@ -587,13 +603,22 @@ void main() {
     }
     // Meanings shown in the word lists, the dictionary tab and the quiz.
     content.addAll([for (final q in ['kopek', 'wor']) for (final (_, m) in d.searchTurkish(q)) m]);
-    for (final w in [...d.searchWords('wor', limit: 60), ...d.searchWords('b', limit: 101), ...d.commonWords(limit: 101), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
+    for (final w in [...d.searchWords('wor', limit: 60), ...d.searchWords('b', limit: 101), ...d.commonWords(limit: 101), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate', 'think', 'thought']) {
       final m = app.shortMeaning(w);
       if (m != null) content.addAll([m, ...m.split(', ')]);
       final info = d.lookup(w);
-      for (final t in [...info.trFreeDict, for (final s in info.senses) ...s.tr]) {
+      // Unverified AI drafts are dictionary content too (shown labelled, in a closed section).
+      for (final t in [...info.trFreeDict, ...info.trDraft, for (final s in info.senses) ...s.tr]) {
         content.addAll([t, ...t.split(',').map((x) => x.trim())]);
       }
+      // The own dictionary's senses: Turkish meaning, note, definition, example and its Turkish.
+      for (final o in [...d.ownSenses(w), ...d.draftSenses(w)]) {
+        content.addAll([o.tr, ...o.tr.split(',').map((x) => x.trim()), o.note, o.en, o.ex, o.exTr, o.pos, [o.pos, o.note].join(' · ')]);
+      }
+    }
+    // Titles and authors of the free library's books.
+    for (final it in (await FreeLibrary.load()).items) {
+      content.addAll([it.title, if (it.author != null) it.author!]);
     }
     // The English name of a grammar structure is shown under its Turkish title.
     for (final t in lessons) {

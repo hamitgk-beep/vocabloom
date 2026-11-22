@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:pdfrx/pdfrx.dart';
 
 import '../data/user_db.dart';
@@ -10,6 +12,7 @@ import 'importers.dart';
 import '../l10n.dart';
 import 'ocr.dart';
 import 'pdf_layout.dart';
+import 'pdf_pictures.dart';
 import 'text_repair.dart';
 import 'word_gaps.dart';
 
@@ -43,17 +46,37 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
     final n = doc.pages.length;
     final pages = <String>[];
     final ocrPages = <int>{};
+    final layouts = <PageLayout>[];
+    final images = <String, List<int>>{};
     for (var i = 0; i < n; i++) {
-      final raw = await doc.pages[i].loadText();
+      if (i % 5 == 0) onProgress?.call(L('Sayfalar okunuyor: ${i + 1}/$n', 'Reading pages: ${i + 1}/$n'));
+      final page = doc.pages[i];
+      final raw = await page.loadText();
       final boxes = raw == null
           ? const <GlyphBox>[]
           : [for (final r in raw.charRects) (left: r.left, top: r.top, right: r.right, bottom: r.bottom)];
       // PDFium marks a word broken at a line end with U+0002, which the layout
       // uses for captions: make it a soft hyphen (same length, so the letter boxes still match).
       final full = raw == null ? '' : raw.fullText.replaceAll(pdfiumBreak, softHyphen);
-      final t = raw == null ? '' : layoutPdfPage(full, boxes, isWord: isWord) ?? addGapSpaces(full, boxes, isWord);
+      final scanned = (raw?.fullText ?? '').trim().length < 25;
+      if (scanned) ocrPages.add(i);
+      // A scanned page without text is all picture to us; its text is read
+      // by OCR, so it gets no pictures of its own.
+      var pics = const <PagePicture>[];
+      final caps = <InkLetter>[];
+      if (!scanned || ocr == null) {
+        try {
+          pics = await findPictures(page, i, full, boxes, images, letters: caps);
+        } catch (e) {
+          debugPrint('PDF page ${i + 1}: pictures not read: $e');
+        }
+      }
+      final blocks = <LayoutBlock>[];
+      final t = raw == null
+          ? ''
+          : layoutPdfPage(full, boxes, isWord: isWord, blocks: blocks, dropCaps: caps) ?? addGapSpaces(full, boxes, isWord);
       pages.add(t);
-      if ((raw?.fullText ?? '').trim().length < 25) ocrPages.add(i);
+      layouts.add(PageLayout(page.width, page.height, blocks, pics));
     }
     if (ocrPages.isNotEmpty) {
       if (ocr == null) {
@@ -77,7 +100,7 @@ Future<ImportedBook> importPdf(String path, String fallbackTitle,
       }
     }
     onProgress?.call(L('Paragraflar düzenleniyor…', 'Arranging paragraphs…'));
-    return buildBookFromPages(pages, fallbackTitle, 'pdf', isWord: isWord);
+    return buildBookFromPages(pages, fallbackTitle, 'pdf', isWord: isWord, layouts: layouts, images: images);
   } finally {
     await doc.dispose();
   }
@@ -179,7 +202,117 @@ Set<int> _repeatedPages(List<String> pages) {
   return out;
 }
 
-ImportedBook buildBookFromPages(List<String> pages, String title, String format, {bool Function(String word)? isWord}) {
+/// What the layout found on one PDF page: its size, where its paragraphs and
+/// captions are, and its pictures.
+class PageLayout {
+  final double width, height;
+  final List<LayoutBlock> blocks;
+  final List<PagePicture> pictures;
+  PageLayout(this.width, this.height, this.blocks, this.pictures);
+}
+
+double _median(List<double> v) {
+  if (v.isEmpty) return 0;
+  final s = [...v]..sort();
+  return s[s.length ~/ 2];
+}
+
+/// How the book sets the paragraph [text] of page [pg]: its size compared
+/// with the body text and whether it is centred or justified ([Para.meta]).
+/// `_t`/`_b` (top and bottom on the page) are only used while importing.
+class _Styler {
+  final List<PageLayout> layouts;
+  late final double bodyX; // x-height of the body text
+  late final double colW; // width of a full line of text
+  final _used = <int, Set<int>>{};
+  _Styler(this.layouts) {
+    final xs = <double>[], ws = <double>[];
+    for (final l in layouts) {
+      for (final b in l.blocks) {
+        if (b.caption || b.lines.length < 3 || b.xHeight == null) continue;
+        for (final ln in b.lines) {
+          xs.add(b.xHeight!);
+          ws.add(ln.$2 - ln.$1);
+        }
+      }
+    }
+    bodyX = _median(xs);
+    ws.sort();
+    colW = ws.isEmpty ? 0 : ws[(ws.length * 0.8).floor().clamp(0, ws.length - 1)];
+  }
+
+  /// Centre of the text column of page [pg]: from its full lines, or the page's middle.
+  double _centre(int pg) {
+    final l = layouts[pg];
+    final cs = [
+      for (final b in l.blocks)
+        if (!b.caption)
+          for (final ln in b.lines)
+            if (colW > 0 && ln.$2 - ln.$1 >= colW * 0.92) (ln.$1 + ln.$2) / 2
+    ];
+    return cs.length >= 3 ? _median(cs) : l.width / 2;
+  }
+
+  final _centres = <int, double>{};
+
+  /// The layout block [text] came from (matched by its letters), if any.
+  LayoutBlock? find(int pg, String text, {required bool caption}) {
+    if (pg >= layouts.length) return null;
+    final k = layoutKey(text);
+    if (k.length < 2) return null;
+    final used = _used.putIfAbsent(pg, () => {});
+    final bs = layouts[pg].blocks;
+    var best = -1, bestLen = 0;
+    for (var i = 0; i < bs.length; i++) {
+      if (used.contains(i) || bs[i].caption != caption) continue;
+      final o = bs[i].key;
+      var n = 0;
+      while (n < k.length && n < o.length && k[n] == o[n]) {
+        n++;
+      }
+      // Also a block whose start was cut off (a drop cap, a joined line).
+      if (n < 6 && o.length >= 12 && k.contains(o.substring(0, 12))) n = 12;
+      if (n < 6 && k.length >= 12 && o.contains(k.substring(0, 12))) n = 12;
+      if (n > bestLen) {
+        bestLen = n;
+        best = i;
+      }
+    }
+    if (best < 0) return null;
+    final short = math.min(k.length, bs[best].key.length);
+    if (bestLen < 8 && bestLen < short * 0.6) return null;
+    used.add(best);
+    return bs[best];
+  }
+
+  Map<String, Object?> meta(int pg, String text, {bool caption = false}) {
+    final m = <String, Object?>{'pg': pg};
+    final b = find(pg, text, caption: caption);
+    if (b == null) return m;
+    m['_t'] = b.top;
+    m['_b'] = b.bottom;
+    if (b.xHeight != null && bodyX > 0) {
+      final sz = (b.xHeight! / bodyX * 20).round() / 20;
+      if ((sz - 1).abs() >= 0.08) m['sz'] = sz.clamp(0.6, 3.0);
+    }
+    if (b.lines.isEmpty || colW <= 0) return m;
+    final pw = layouts[pg].width;
+    final centre = _centres.putIfAbsent(pg, () => _centre(pg));
+    final ls = b.lines;
+    final inner = ls.length >= 2 ? ls.sublist(0, ls.length - 1) : ls;
+    final full = inner.every((l) => l.$2 - l.$1 >= colW * 0.9);
+    final centred = ls.every((l) => ((l.$1 + l.$2) / 2 - centre).abs() < pw * 0.035) && ls.any((l) => l.$2 - l.$1 < colW * 0.85);
+    m['al'] = centred ? 'c' : (ls.length >= 2 && full ? 'j' : 'l');
+    m['_c'] = (ls.map((l) => l.$1).reduce(math.min) + ls.map((l) => l.$2).reduce(math.max)) / 2;
+    m['_w'] = ls.map((l) => l.$2 - l.$1).reduce(math.max);
+    m['_n'] = ls.length;
+    return m;
+  }
+}
+
+ImportedBook buildBookFromPages(List<String> pages, String title, String format,
+    {bool Function(String word)? isWord, List<PageLayout>? layouts, Map<String, List<int>>? images}) {
+  final styler = layouts != null && layouts.length == pages.length ? _Styler(layouts) : null;
   final dup = _repeatedPages(pages);
   pages = [for (var i = 0; i < pages.length; i++) dup.contains(i) ? '' : pages[i]];
 
@@ -203,7 +336,10 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
 
   // 1. blocks per page
   final pageBlocks = <List<String>>[];
+  final pageMeta = <List<Map<String, Object?>>>[];
+  final pageToc = <List<bool>>[];
   final pageCaptions = <List<String>>[];
+  final pageCapMeta = <List<Map<String, Object?>>>[];
   final toc = <String>[];
   final tocPage = <int, String>{}; // printed page number -> chapter title
   final printed = <int?>[]; // printed page number of each page, from its header or footer
@@ -245,6 +381,7 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
         .where((l) => l.trim().isEmpty || (!_noise(l) && !repeated.contains(l.trim().replaceAll(RegExp(r'\d+'), '#'))))
         .toList();
     final blocks = <String>[];
+    final tocAt = <int>{}; // blocks that are lines of the table of contents
     void addLine(StringBuffer buf, String l) {
       final s = buf.toString();
       final broken = RegExp('([A-Za-z]+)[-$softHyphen]\$').firstMatch(s);
@@ -276,7 +413,9 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
         tocPage.putIfAbsent(int.parse(n.group(3)!), () => toc.last);
         return true;
       }
-      return false;
+      // Other lines of the contents page with a page number ("GLOSSARY 42")
+      // stay lines too, but are no chapters.
+      return hasContents && RegExp(r'^\D.{1,70}?\s\d{1,3}$').hasMatch(l) && l.split(' ').length <= 10;
     }
 
     if (fromOcr || fromLayout || text.contains(RegExp(r'\n\s*\n'))) {
@@ -286,7 +425,14 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
           if (buf.isNotEmpty) blocks.add(_clean(buf.toString()));
           buf.clear();
         } else {
-          if (tocEntry(l.trim())) continue;
+          if (tocEntry(l.trim())) {
+            // A line of the table of contents stays a line of its own.
+            if (buf.isNotEmpty) blocks.add(_clean(buf.toString()));
+            buf.clear();
+            tocAt.add(blocks.length);
+            blocks.add(_clean(l));
+            continue;
+          }
           addLine(buf, l.trim());
         }
       }
@@ -298,7 +444,13 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
         final buf = StringBuffer();
         for (final l0 in ls) {
           final l = l0.trim();
-          if (tocEntry(l)) continue;
+          if (tocEntry(l)) {
+            if (buf.isNotEmpty) blocks.add(_clean(buf.toString()));
+            buf.clear();
+            tocAt.add(blocks.length);
+            blocks.add(_clean(l));
+            continue;
+          }
           addLine(buf, l);
           if (_sentenceEnd.hasMatch(l) && l.length < typical * 0.75) {
             blocks.add(_clean(buf.toString()));
@@ -318,42 +470,144 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
     }
 
     String fix(String b) => repairPdfText(b, isWord);
-    pageBlocks.add([
-      for (final b in blocks.expand(splitAtBullets))
-        if (b.isNotEmpty && !garbage(b)) fix(b)
-    ]);
+    final pg = pageBlocks.length;
+    final kept = <String>[], keptMeta = <Map<String, Object?>>[], keptToc = <bool>[];
+    for (var bi = 0; bi < blocks.length; bi++) {
+      for (final b in splitAtBullets(blocks[bi])) {
+        if (b.isEmpty || garbage(b)) continue;
+        keptMeta.add(tocAt.contains(bi) ? {'pg': pg, 'al': 'l', 'toc': 1} : styler?.meta(pg, b) ?? {'pg': pg});
+        kept.add(fix(joinSpacedCaps(b, isWord)));
+        keptToc.add(tocAt.contains(bi));
+      }
+    }
+    pageBlocks.add(kept);
+    pageMeta.add(keptMeta);
+    pageToc.add(keptToc);
     printed.add(pageNo);
-    pageCaptions.add([
-      for (final c in captions)
-        if (!_noise(c)) fix(_clean(c))
-    ]);
+    final caps = <String>[], capMeta = <Map<String, Object?>>[];
+    for (final c in captions) {
+      if (_noise(c)) continue;
+      capMeta.add(styler?.meta(pg, c, caption: true) ?? {'pg': pg});
+      caps.add(fix(joinSpacedCaps(_clean(c), isWord)));
+    }
+    pageCaptions.add(caps);
+    pageCapMeta.add(capMeta);
   }
 
-  // 2. join paragraphs that continue on the next page; captions wait until
-  // the paragraph they interrupt is over.
-  final flat = <(int page, String kind, String text)>[];
-  final waiting = <(int, String, String)>[];
+  // 2. join paragraphs that continue on the next page; captions and
+  // pictures wait until the paragraph they interrupt is over.
+  final flat = <_Flat>[];
+  final waiting = <_Flat>[];
   for (var pg = 0; pg < pageBlocks.length; pg++) {
+    // Pictures of the page, top first, each with the caption set next to it.
+    final pics = [...?layouts?[pg].pictures]..sort((a, b) => b.top.compareTo(a.top));
+    final capOf = <int, List<int>>{};
+    final capFree = <int>[];
+    final ph = layouts?[pg].height ?? 0;
+    for (var c = 0; c < pageCaptions[pg].length; c++) {
+      final t = pageCapMeta[pg][c]['_t'] as double?, bt = pageCapMeta[pg][c]['_b'] as double?;
+      var best = -1;
+      var bestGap = ph * 0.12;
+      for (var q = 0; q < pics.length && t != null && bt != null; q++) {
+        final gap = math.min((pics[q].bottom - t).abs(), (bt - pics[q].top).abs());
+        final inside = t <= pics[q].top && bt >= pics[q].bottom;
+        if (inside || gap < bestGap) {
+          bestGap = inside ? -1 : gap;
+          best = q;
+        }
+      }
+      if (best < 0) {
+        capFree.add(c);
+      } else {
+        (capOf[best] ??= []).add(c);
+      }
+    }
+    final placed = <int>{};
+    void picturesAbove(double? top) {
+      for (var q = 0; q < pics.length; q++) {
+        if (placed.contains(q) || (top != null && (pics[q].top + pics[q].bottom) / 2 < top)) continue;
+        placed.add(q);
+        final pic = pics[q];
+        final lw = layouts![pg].width;
+        waiting.add(_Flat(pg, 'i', pic.name, {
+          'pg': pg,
+          'ar': (pic.width / pic.height * 1000).round() / 1000,
+          'wr': ((pic.right - pic.left) / lw * 100).round() / 100,
+        }));
+        for (final c in capOf[q] ?? const <int>[]) {
+          waiting.add(_Flat(pg, 'c', pageCaptions[pg][c], {...pageCapMeta[pg][c], 'al': 'c'}));
+        }
+      }
+    }
+
     for (var i = 0; i < pageBlocks[pg].length; i++) {
       final b = pageBlocks[pg][i];
-      final prev = flat.isEmpty || flat.last.$2 != 'p' ? '' : flat.last.$3;
+      final meta = pageMeta[pg][i];
+      // A short centred line right under a picture is its caption, even in the body's type.
+      final top = meta['_t'] as double?;
+      if (top != null && pics.isNotEmpty && meta['al'] == 'c' && (meta['_n'] as int? ?? 9) <= 2 && b.split(' ').length <= 25) {
+        var q = -1;
+        for (var k = 0; k < pics.length && q < 0; k++) {
+          final p = pics[k];
+          if (!placed.contains(k) && p.bottom >= top && p.bottom - top < ph * 0.06 &&
+              ((meta['_c'] as double) - (p.left + p.right) / 2).abs() < layouts![pg].width * 0.05) {
+            q = k;
+          }
+        }
+        if (q >= 0) {
+          (capOf[q] ??= []);
+          pageCaptions[pg].add(b);
+          pageCapMeta[pg].add(meta);
+          capOf[q]!.add(pageCaptions[pg].length - 1);
+          continue;
+        }
+      }
+      picturesAbove(top);
+      if (pageToc[pg][i]) {
+        flat.addAll(waiting);
+        waiting.clear();
+        flat.add(_Flat(pg, 'p', b, meta, toc: true));
+        continue;
+      }
+      final prevF = flat.isEmpty || flat.last.kind != 'p' || flat.last.toc ? null : flat.last;
+      final prev = prevF?.text ?? '';
       final open = prev.isNotEmpty && !RegExp(r'''[.!?]["”’)]?$''').hasMatch(prev);
       // A sentence cut by a picture or a page turn goes on with a small letter,
       // or after a comma with anything ("'But he knows my name,' | Aladdin said.").
-      final midSentence = open && prev.length > 25 && b.length > 40 && RegExp(r'''[,;]["”’']?$''').hasMatch(prev);
+      // Not a centred title or motto before body text.
+      final midSentence =
+          open &&
+          prev.length > 25 &&
+          b.length > 40 &&
+          RegExp(r'''[,;]["”’']?$''').hasMatch(prev) &&
+          (prevF!.meta['al'] != 'c' || meta['al'] == 'c');
       if (open && (RegExp(r'^[a-z]').hasMatch(b) || midSentence)) {
-        flat[flat.length - 1] = (flat.last.$1, 'p', '$prev $b');
+        prevF!.text = '$prev $b';
       } else {
         flat.addAll(waiting);
         waiting.clear();
-        flat.add((pg, 'p', b));
+        flat.add(_Flat(pg, 'p', b, meta));
       }
     }
-    for (final c in pageCaptions[pg]) {
-      waiting.add((pg, 'c', c));
+    picturesAbove(null);
+    for (final c in capFree) {
+      waiting.add(_Flat(pg, 'c', pageCaptions[pg][c], pageCapMeta[pg][c]));
     }
   }
   flat.addAll(waiting);
+  // Slips that only the whole book shows: "Herny" where "Henry" is on every
+  // page, "Dori an" for "Dorian".
+  if (isWord != null) {
+    final texts = [
+      for (final f in flat)
+        if (f.kind != 'i') f.text,
+    ];
+    final fixed = fixWithBookWords(texts, isWord);
+    var j = 0;
+    for (final f in flat) {
+      if (f.kind != 'i') f.text = fixed[j++];
+    }
+  }
 
   // 3. headings and chapters
   final tocKeys = {for (final t in toc) _key(t): t};
@@ -390,9 +644,16 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
   }
   final pageDone = <int>{};
   for (var fi = 0; fi < flat.length; fi++) {
-    var (pg, kind, b) = flat[fi];
-    if (kind == 'c') {
-      cur.paragraphs.add(('c', b));
+    final f = flat[fi];
+    final pg = f.page, kind = f.kind, meta = f.meta;
+    var b = f.text;
+    if (kind == 'c' || kind == 'i') {
+      // A picture the book file does not have (it was not kept) is left out.
+      if (kind == 'c' || (images?.containsKey(b) ?? false)) cur.add(kind, b, meta);
+      continue;
+    }
+    if (f.toc) {
+      cur.add('p', b, meta);
       continue;
     }
     var heading = isHeading(b);
@@ -409,10 +670,19 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
         cur = ImportedChapter(start, []);
         curStartPage = pg;
         usedToc.add(start);
-        // The heading is drawn as a picture on the page: show the contents' title.
-        cur.paragraphs
-          ..add(('h', start))
-          ..add(('p', b));
+        // The heading is drawn as a picture on the page: show the contents' title
+        // (and not also the picture of it, a wide strip at the top of the page).
+        for (final c in [cur, if (chapters.isNotEmpty) chapters.last]) {
+          final k = c.paragraphs.length - 1;
+          final m = c.metaAt(k);
+          if (k >= 0 && c.paragraphs[k].$1 == 'i' && m?['pg'] == pg && ((m?['ar'] as num?) ?? 0) > 2.5) {
+            c.paragraphs.removeAt(k);
+            if (k < c.meta.length) c.meta.removeAt(k);
+            break;
+          }
+        }
+        cur.add('h', start, {'pg': pg, 'sz': 1.5, 'al': 'c'});
+        cur.add('p', b, meta);
         continue;
       }
     }
@@ -420,7 +690,7 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
     final storyHeading = tocKeys.isEmpty &&
         heading &&
         fi + 3 < flat.length &&
-        flat.sublist(fi + 1, fi + 4).every((x) => x.$2 == 'c' || (!isHeading(x.$3) && x.$3.length > 60));
+        flat.sublist(fi + 1, fi + 4).every((x) => x.kind != 'p' || (!isHeading(x.text) && x.text.length > 60));
     // "Chapter 2", "CHAPTER XII. Alice's Evidence", "Bölüm 3" always start a chapter.
     final named = heading && _chapterWord.hasMatch(b) && b.length <= 70;
     final tocBreak = heading && ((fromToc != null && !usedToc.contains(fromToc)) || storyHeading || named);
@@ -429,21 +699,69 @@ ImportedBook buildBookFromPages(List<String> pages, String title, String format,
       b = fromToc;
     }
     // Long books without headings are cut every 25 pages, between paragraphs.
-    final prev = cur.paragraphs.lastWhere((p) => p.$1 != 'c', orElse: () => ('p', '.')).$2;
+    final prev = cur.paragraphs.lastWhere((p) => p.$1 != 'c' && p.$1 != 'i', orElse: () => ('p', '.')).$2;
     final pageBreak = pg - curStartPage >= (tocKeys.isEmpty ? 25 : 40) && RegExp(r'''[.!?]["”’)]?$''').hasMatch(prev);
     if ((tocBreak || pageBreak) && cur.paragraphs.isNotEmpty) {
       chapters.add(cur);
       cur = ImportedChapter(tocBreak ? b : '', []);
       curStartPage = pg;
     } else if (tocBreak && cur.title.isEmpty) {
-      cur = ImportedChapter(b, cur.paragraphs);
+      cur = ImportedChapter(b, cur.paragraphs, cur.meta);
       curStartPage = pg;
     }
-    cur.paragraphs.add((heading ? 'h' : 'p', b));
+    // In a book whose type sizes are known, a heading is set larger than the
+    // text; a short line in the text's own size is a line of the text.
+    final sz = (meta['sz'] as num?)?.toDouble();
+    // The chapter's name again in small type at the foot or head of a page.
+    if (fromToc != null && !tocBreak && usedToc.contains(fromToc) && meta['_t'] != null && (sz ?? 1) < 1.05) continue;
+    final shownAsHeading = heading && (styler == null || meta['_t'] == null || (sz ?? 1) >= 1.12 || fromToc != null);
+    cur.add(shownAsHeading ? 'h' : 'p', b, meta);
   }
   if (cur.paragraphs.isNotEmpty) chapters.add(cur);
-  for (var i = 0; i < chapters.length; i++) {
-    if (chapters[i].title.isEmpty) chapters[i] = ImportedChapter(L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), chapters[i].paragraphs);
+  // A book set justified: its paragraphs are shown justified too (the last
+  // lines of paragraphs and one-line paragraphs look left aligned anyway).
+  var justified = 0, ragged = 0;
+  for (final f in flat) {
+    if (f.kind != 'p' || f.meta['sz'] != null || (f.meta['_n'] as int? ?? 0) < 3) continue;
+    if (f.meta['al'] == 'j') justified++;
+    if (f.meta['al'] == 'l') ragged++;
   }
-  return ImportedBook(title, null, format, chapters);
+  if (justified > ragged) {
+    for (final c in chapters) {
+      for (var k = 0; k < c.paragraphs.length; k++) {
+        final m = c.metaAt(k);
+        if (c.paragraphs[k].$1 == 'p' && m != null && m['al'] == 'l' && m['sz'] == null && m['toc'] == null) m['al'] = 'j';
+      }
+    }
+  }
+  // Pages only go forward (a picture waiting for its paragraph keeps the
+  // page it was on), and the import-only keys go.
+  var page = 0;
+  for (var i = 0; i < chapters.length; i++) {
+    final c = chapters[i];
+    for (var k = 0; k < c.paragraphs.length; k++) {
+      final m = c.metaAt(k);
+      if (m == null) continue;
+      final pg = m['pg'] as int? ?? page;
+      if (pg > page) page = pg;
+      m['pg'] = page;
+      m.removeWhere((key, _) => key.startsWith('_'));
+    }
+    if (c.title.isEmpty) chapters[i] = ImportedChapter(L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), c.paragraphs, c.meta);
+  }
+  final used = {for (final c in chapters) for (final p in c.paragraphs) if (p.$1 == 'i') p.$2};
+  return ImportedBook(title, null, format, chapters, {
+    for (final e in (images ?? const <String, List<int>>{}).entries)
+      if (used.contains(e.key)) e.key: e.value
+  });
+}
+
+/// A paragraph, caption or picture of the book in reading order, while importing.
+class _Flat {
+  final int page;
+  final String kind;
+  String text;
+  final Map<String, Object?> meta;
+  final bool toc;
+  _Flat(this.page, this.kind, this.text, this.meta, {this.toc = false});
 }

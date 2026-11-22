@@ -17,7 +17,7 @@ an HTML comment that the app reads (lib/online/update_check.dart). The first
 line keeps "Sürüm X · Build: N", which older app versions look for."""
 import argparse, json, os, re
 
-KEEP = 40
+KEEP = 60  # entries kept in the release body (the hand-written file has ~40)
 MARK = 'vocabloom-notes'
 AREAS = {
     'dictionary': 'Sözlük', 'grammar': 'Gramer', 'reader': 'Okuyucu', 'words': 'Kelimelerim',
@@ -68,7 +68,7 @@ def build_body(version, build, prev_body, subjects, notes):
     entries.sort(key=lambda e: -int(e.get('build') or 0))
     entries = entries[:KEEP]
 
-    lines = ['Sürüm %s · Build: %d. Windows: zip\'i aç, VocaBloom.exe\'yi çalıştır. Android: APK\'yı kur. '
+    lines = ['Sürüm %s · Build: %d. Windows: Storilex-Windows.zip\'i aç, Storilex.exe\'yi çalıştır. Android: APK\'yı kur. '
              'iOS: imzasız IPA, Sideloadly/AltStore ile yükle.' % (version, build), '']
     new = [e for e in entries if e['build'] == build]
     if new:

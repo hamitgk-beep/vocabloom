@@ -7,9 +7,11 @@ import '../../l10n.dart';
 import 'ai_tools.dart';
 
 /// An answer from the learner's AI service inside the reading panels. Shown
-/// only when a service is connected with the learner's own key. It starts by itself when
-/// [auto] (the dictionary has nothing in Turkish), otherwise on a tap; the
-/// answer is kept, so the panel opens with it next time.
+/// only when a service is connected with the learner's own key. It starts by
+/// itself only when [auto], which a caller sets only right after the learner
+/// tapped to ask; otherwise it waits for a tap on its button, so a paid key is
+/// never used just by opening a panel. The answer is kept, so the panel opens
+/// with it next time.
 class LocalAiCard extends StatefulWidget {
   final AppState app;
 

@@ -18,7 +18,7 @@ import 'package:kelime_okur/l10n.dart';
 
 /// Texts that are written the same in both languages.
 final allowed = <RegExp>[
-  RegExp(r'^VocaBloom'),
+  RegExp(r'^(VocaBloom|Storilex)'),
   RegExp(r'^(Türkçe|English|Aa|A|BETA|Premium|Normal)$'),
   RegExp(r'^Uygulama dili / App language$'), // findable in either language
   RegExp(r'^• .*\((GPL|CC|WordNet|Apache)'), // licence lines

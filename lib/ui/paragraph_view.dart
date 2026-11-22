@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -5,6 +7,7 @@ import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/grammar_marks.dart';
 import '../nlp/text.dart';
+import 'hover_meaning.dart';
 import 'theme.dart';
 
 class ParaAnalysis {
@@ -12,6 +15,9 @@ class ParaAnalysis {
   final List<Token> tokens;
   final List<Match> matches;
   ParaAnalysis(this.text, this.tokens, this.matches);
+
+  /// The paragraph's sentences ([sentenceRanges]), found once.
+  late final List<(int, int)> sentences = sentenceRanges(text);
 
   List<GMark>? _grammar;
 
@@ -23,15 +29,20 @@ class ParaAnalysis {
 
   /// Whether [m] is used literally here ("lived in Kansas"), computed once.
   bool _isLiteral(AppState app, Match m) => _literal.putIfAbsent(m, () {
-        // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
-        // or collocation found in its own words is the expression.
-        if (m.expr.cat != 'phrasal_verbs') return false;
-        try {
-          return app.senses.isLiteral(m.expr, tokens, m.tokens);
-        } catch (_) {
-          return false;
-        }
-      });
+    // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
+    // or collocation found in its own words is the expression.
+    if (m.expr.cat != 'phrasal_verbs') return false;
+    try {
+      // Judged in its own sentence with the sentences around it, exactly as
+      // the panel judges it, so the underline and the panel agree.
+      final s = sentenceAt(text, tokens, m.tokens.first, ranges: sentences);
+      final idx = [for (final x in m.tokens) x - s.first];
+      if (idx.any((x) => x < 0 || x >= s.tokens.length)) return false;
+      return app.senses.isLiteral(m.expr, s.tokens, idx, sentence: s.text, prev: s.prev, next: s.next);
+    } catch (_) {
+      return false;
+    }
+  });
 
   /// The expressions that cover token [i] and are on in the filters, not
   /// used literally, the longest first (then in filter order). One rule for
@@ -42,16 +53,14 @@ class ParaAnalysis {
       for (final m in matches)
         if (app.enabledCats.contains(m.expr.cat) && m.tokens.contains(i) && !_isLiteral(app, m)) m,
     ]..sort((x, y) {
-        final byLen = y.tokens.length.compareTo(x.tokens.length);
-        return byLen != 0 ? byLen : order[x.expr.cat]!.compareTo(order[y.expr.cat]!);
-      });
+      final byLen = y.tokens.length.compareTo(x.tokens.length);
+      return byLen != 0 ? byLen : order[x.expr.cat]!.compareTo(order[y.expr.cat]!);
+    });
   }
 
   /// The expression category underlined on each token: the expression a tap
   /// on that token opens ([expressionsAt]), or null.
-  List<String?> expressionCats(AppState app) => [
-        for (var i = 0; i < tokens.length; i++) expressionsAt(app, i).firstOrNull?.expr.cat,
-      ];
+  List<String?> expressionCats(AppState app) => [for (var i = 0; i < tokens.length; i++) expressionsAt(app, i).firstOrNull?.expr.cat];
 
   /// The highlight that colours token [i]: the expression [expressionsAt]
   /// picks, else an enabled grammar structure. Returns the expression
@@ -120,6 +129,65 @@ class ParagraphView extends StatefulWidget {
 class _ParagraphViewState extends State<ParagraphView> {
   final _key = GlobalKey();
 
+  // ---------------------------------------------------------------- mouse
+  // Pointing at a word with the mouse shows its first meaning in a small
+  // bubble above it, without a click; a click opens the full panel.
+  OverlayEntry? _bubble;
+  int? _hoverToken;
+  Timer? _hoverTimer;
+
+  void _hover(Offset local, ParaAnalysis a) {
+    final i = _tokenAt(local, a);
+    if (i == _hoverToken) return;
+    _hideBubble();
+    _hoverToken = i;
+    if (i == null) return;
+    _hoverTimer = Timer(const Duration(milliseconds: 120), () => _showBubble(a, i));
+  }
+
+  void _showBubble(ParaAnalysis a, int i) {
+    final ro = _key.currentContext?.findRenderObject();
+    if (!mounted || ro is! RenderParagraph || !ro.attached) return;
+    final m = hoverMeaning(widget.app, a.tokens, a.matches, i, text: widget.para.text);
+    if (m == null) return;
+    final t = a.tokens[i];
+    final boxes = ro.getBoxesForSelection(TextSelection(baseOffset: t.start, extentOffset: t.end));
+    if (boxes.isEmpty) return;
+    final overlay = Overlay.maybeOf(context);
+    final ob = overlay?.context.findRenderObject();
+    if (overlay == null || ob is! RenderBox) return;
+    final word = boxes.first.toRect();
+    final topLeft = ro.localToGlobal(word.topLeft, ancestor: ob);
+    final theme = Theme.of(context);
+    final size = ob.size;
+    _bubble = OverlayEntry(
+      builder: (_) => Positioned(
+        left: (topLeft.dx - 14).clamp(8.0, (size.width - 308).clamp(8.0, double.infinity)),
+        bottom: size.height - topLeft.dy + 6,
+        child: IgnorePointer(
+          child: Theme(
+            data: theme,
+            child: HoverBubble(m: m),
+          ),
+        ),
+      ),
+    );
+    overlay.insert(_bubble!);
+  }
+
+  void _hideBubble() {
+    _hoverTimer?.cancel();
+    _hoverTimer = null;
+    _bubble?.remove();
+    _bubble = null;
+  }
+
+  @override
+  void dispose() {
+    _hideBubble();
+    super.dispose();
+  }
+
   @override
   void didUpdateWidget(ParagraphView old) {
     super.didUpdateWidget(old);
@@ -177,14 +245,21 @@ class _ParagraphViewState extends State<ParagraphView> {
     final heading = widget.para.kind == 'h';
     // A picture caption from a PDF: shown apart from the story text.
     final caption = widget.para.kind == 'c';
+    // A book with known type sizes (a PDF) is shown with the same sizes in
+    // proportion: a large title stays large, a small note small.
+    final para = widget.para;
+    final known = para.meta['pg'] != null && (para.meta.containsKey('sz') || para.meta.containsKey('al'));
+    final scale = known || para.meta.containsKey('sz')
+        ? para.size.clamp(0.7, 2.4)
+        : heading
+        ? 1.3
+        : caption
+        ? 0.88
+        : 1.0;
     final base = theme.textTheme.bodyLarge!.copyWith(
-      fontSize: heading
-          ? app.fontSize * 1.3
-          : caption
-          ? app.fontSize * 0.88
-          : app.fontSize,
+      fontSize: app.fontSize * scale,
       height: app.lineHeight,
-      fontWeight: heading ? FontWeight.w700 : FontWeight.w400,
+      fontWeight: heading || (known && para.size >= 1.3 && para.text.length < 80) ? FontWeight.w700 : FontWeight.w400,
       fontStyle: caption ? FontStyle.italic : null,
       color: caption ? theme.colorScheme.onSurfaceVariant : null,
       fontFamily: readingFont,
@@ -237,7 +312,12 @@ class _ParagraphViewState extends State<ParagraphView> {
         spans.add(
           TextSpan(
             text: text.substring(pos, t.start),
-            style: TextStyle(decoration: gc == null ? null : TextDecoration.underline, decorationColor: gc, decorationThickness: 2.2, backgroundColor: inSpeech(pos, t.start) ? speakBg : null),
+            style: TextStyle(
+              decoration: gc == null ? null : TextDecoration.underline,
+              decorationColor: gc,
+              decorationThickness: 2.2,
+              backgroundColor: inSpeech(pos, t.start) ? speakBg : null,
+            ),
           ),
         );
       }
@@ -266,22 +346,39 @@ class _ParagraphViewState extends State<ParagraphView> {
     }
     if (pos < text.length) spans.add(TextSpan(text: text.substring(pos)));
 
+    final align = switch (para.align) {
+      'c' => TextAlign.center,
+      'r' => TextAlign.right,
+      'j' => TextAlign.justify,
+      _ => caption ? TextAlign.center : TextAlign.start,
+    };
+    // Lines of a table of contents sit close together.
+    final toc = para.meta['toc'] != null;
     return Padding(
-      padding: EdgeInsets.only(bottom: heading ? 14 : 12, top: heading ? 12 : 0),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTapUp: (d) {
-          final i = _tokenAt(d.localPosition, a);
-          if (i != null) widget.onWord(widget.para, a, i);
+      padding: EdgeInsets.only(bottom: toc ? 4 : (heading ? 14 : 12), top: heading ? 12 : 0),
+      child: MouseRegion(
+        onHover: (e) => _hover(e.localPosition, a),
+        onExit: (_) {
+          _hideBubble();
+          _hoverToken = null;
         },
-        onLongPressStart: (d) {
-          final i = _tokenAt(d.localPosition, a);
-          if (i != null) widget.onSentence(widget.para, a, i);
-        },
-        child: RichText(
-          key: _key,
-          text: TextSpan(style: base, children: spans),
-          textScaler: MediaQuery.textScalerOf(context),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTapUp: (d) {
+            _hideBubble();
+            final i = _tokenAt(d.localPosition, a);
+            if (i != null) widget.onWord(widget.para, a, i);
+          },
+          onLongPressStart: (d) {
+            final i = _tokenAt(d.localPosition, a);
+            if (i != null) widget.onSentence(widget.para, a, i);
+          },
+          child: RichText(
+            key: _key,
+            textAlign: align,
+            text: TextSpan(style: base, children: spans),
+            textScaler: MediaQuery.textScalerOf(context),
+          ),
         ),
       ),
     );

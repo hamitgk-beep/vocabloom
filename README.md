@@ -1,4 +1,4 @@
-# VocaBloom
+# Storilex
 
 İngilizce kitapları okurken bilmediğin kelimeleri öğrenmen için çevrimdışı çalışan okuyucu.
 Windows, macOS, Linux, Android ve iOS için tek kod tabanı (Flutter).
@@ -80,7 +80,7 @@ sürümlerini otomatik derler.
 
 ## Lisanslar
 
-VocaBloom'un kaynak kodu GPL-3.0 lisanslıdır (`LICENSE`). eSpeak NG (GPL-3.0) uygulamayla birlikte dağıtıldığı için
+Storilex'in kaynak kodu GPL-3.0 lisanslıdır (`LICENSE`). eSpeak NG (GPL-3.0) uygulamayla birlikte dağıtıldığı için
 bu gereklidir; uygulama Play Store'da reklamlı/ücretli olsa da kaynak kodu bu depoda açık kalmalıdır.
 Sözlük veritabanı (`assets/dict.db`) aşağıdaki CC BY-SA kaynaklardan uyarlandığı için CC BY-SA 4.0 ile paylaşılır.
 Uygulamada Ayarlar > Gizlilik ve lisanslar bütün kaynakları ve kütüphane lisanslarını gösterir.

@@ -1,6 +1,10 @@
+import 'dart:ui' show PlatformDispatcher;
+
 import 'package:flutter/material.dart';
 
 import 'data/dict_db.dart';
+import 'data/tr_en_dict.dart';
+import 'tts/speech.dart';
 import 'nlp/context_sense.dart';
 import 'data/review.dart';
 import 'data/stats.dart';
@@ -93,6 +97,54 @@ const categories = <CategoryInfo>[
     Color(0xFFAA00FF),
     'V2/V3 biçimleri kurala uymayan fiiller (go-went-gone).',
     'Verbs whose V2/V3 forms do not follow the rule (go-went-gone).',
+  ),
+  CategoryInfo(
+    'dependent_prepositions',
+    'Dependent Prepositions',
+    'Fiil/sıfat + edat',
+    Color(0xFF00897B),
+    'Belli bir edatla kullanılan fiil ve sıfatlar (depend on, interested in, good at).',
+    'Verbs and adjectives that take a fixed preposition (depend on, interested in, good at).',
+  ),
+  CategoryInfo(
+    'similes',
+    'Similes',
+    'Benzetmeler',
+    Color(0xFFF4511E),
+    'as … as ile kalıp benzetmeler (as busy as a bee: arı gibi çalışkan).',
+    'Fixed comparisons with as … as (as busy as a bee).',
+  ),
+  CategoryInfo(
+    'polite_phrases',
+    'Polite Phrases',
+    'Kibar istek ve cevaplar',
+    Color(0xFF7CB342),
+    'Rica, izin, özür ve teşekkür kalıpları (Could you please …, Would you mind …).',
+    'Phrases for requests, permission, apologies and thanks (Could you please …, Would you mind …).',
+  ),
+  CategoryInfo(
+    'informal_slang',
+    'Informal & Slang',
+    'Gündelik konuşma ve argo',
+    Color(0xFFFFB300),
+    'Konuşma dilinde geçen gayriresmî sözler (no big deal, grab a bite).',
+    'Informal words of everyday speech (no big deal, grab a bite).',
+  ),
+  CategoryInfo(
+    'confusables',
+    'Confusable Words',
+    'Karıştırılan kelimeler',
+    Color(0xFF6D4C41),
+    'Birbirine benzeyip sık karıştırılan kelimeler (affect / effect, borrow / lend).',
+    'Words that look alike and are often mixed up (affect / effect, borrow / lend).',
+  ),
+  CategoryInfo(
+    'uk_us',
+    'British / American',
+    'İngiliz / Amerikan farkı',
+    Color(0xFF3949AB),
+    'Aynı şeyin İngiltere ve Amerika\'daki farklı adı (lorry / truck, autumn / fall).',
+    'The British and the American word for the same thing (lorry / truck, autumn / fall).',
   ),
 ];
 
@@ -207,7 +259,25 @@ const grammarFilters = <CategoryInfo>[
 
 /// The Filters menu in three groups; the colour priority still follows [allCategories].
 const filterGroups = <(String, String, List<String>)>[
-  ('Kalıplar ve deyimler', 'Phrases & idioms', ['phrasal_verbs', 'idioms', 'collocations', 'chunks', 'binomials', 'prepositional_phrases', 'proverbs', 'conjunctions', 'discourse_markers']),
+  (
+    'Kalıplar ve deyimler',
+    'Phrases & idioms',
+    [
+      'phrasal_verbs',
+      'idioms',
+      'collocations',
+      'dependent_prepositions',
+      'chunks',
+      'polite_phrases',
+      'informal_slang',
+      'binomials',
+      'similes',
+      'prepositional_phrases',
+      'proverbs',
+      'conjunctions',
+      'discourse_markers',
+    ],
+  ),
   (
     'Gramer yapıları',
     'Grammar structures',
@@ -228,7 +298,7 @@ const filterGroups = <(String, String, List<String>)>[
       'g_tags',
     ],
   ),
-  ('Kelime türleri', 'Word types', ['false_friends', 'irregular_verbs']),
+  ('Kelime türleri', 'Word types', ['false_friends', 'confusables', 'uk_us', 'irregular_verbs']),
 ];
 
 /// Colours of the tenses filter: present, past, future.
@@ -243,6 +313,14 @@ const learningColor = Color(0xFFFF9800);
 const learnedColor = Color(0xFF43A047);
 
 /// App-wide state: databases and the reader preferences.
+/// The saved theme: day or night. The old "system" choice became whichever
+/// of the two the device shows now, so nobody's screen changes on update.
+ThemeMode themeFromPrefs(Object? saved, Brightness device) => switch (saved) {
+      'dark' => ThemeMode.dark,
+      'system' => device == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
+      _ => ThemeMode.light,
+    };
+
 class AppState extends ChangeNotifier {
   final DictDb dict;
   final UserDb user;
@@ -250,7 +328,50 @@ class AppState extends ChangeNotifier {
 
   /// Grammar highlights in the reader (tenses, conditionals …).
   late final GrammarMarker grammar;
-  Set<String> enabledCats = {};
+  Set<String> _cats = {};
+
+  /// Filters switched on in the reader. They are English patterns and
+  /// grammar, so none apply while the learner reads Turkish.
+  Set<String> get enabledCats => learnTurkish ? <String>{} : _cats;
+  set enabledCats(Set<String> v) => _cats = v;
+
+  /// Turkish -> English dictionary (assets/tr_en.db); null if it could not be opened.
+  TrEnDict? trEn;
+
+  /// The language the learner reads and learns: 'en' (English books, the
+  /// meanings in Turkish or English) or 'tr' (Turkish books, English meanings).
+  String learnLang = 'en';
+  bool get learnTurkish => learnLang == 'tr' && trEn != null;
+
+  /// The learner's own language: the meanings follow it. The interface has
+  /// its own setting ([uiEnglish]), so a Turkish speaker can use the app in English.
+  String nativeLang = 'tr';
+
+  /// Sets the native and the learned language together; they are never the same.
+  void setLanguages({String? native, String? learn}) {
+    var n = native ?? nativeLang, l = learn ?? learnLang;
+    if (n == l) {
+      if (native != null) {
+        l = n == 'tr' ? 'en' : 'tr';
+      } else {
+        n = l == 'tr' ? 'en' : 'tr';
+      }
+    }
+    nativeLang = n;
+    learnLang = l;
+    if (l == 'tr') {
+      showEn = true;
+      showTr = false;
+    } else if (!showTr && !showEn || n == 'tr' && !showTr) {
+      showTr = true;
+    }
+    Speech.instance.bookLang = learnTurkish ? 'tr' : 'en';
+    user.lang = learnTurkish ? 'tr' : 'en';
+    _wordsVersion++;
+    _save();
+    notifyListeners();
+  }
+
   bool showTr = true;
   bool showEn = true;
   double fontSize = 19;
@@ -258,6 +379,10 @@ class AppState extends ChangeNotifier {
   /// Reader page in day mode: 'white' or 'sepia'.
   String paper = 'white';
   double lineHeight = 1.6;
+
+  /// Shade of each reading theme, 0..1: white to off-white, light to dark
+  /// sepia, and at night white to grey letters.
+  Map<String, double> tone = {'white': 0.3, 'sepia': 0.3, 'night': 0};
   ThemeMode themeMode = ThemeMode.light;
   int _wordsVersion = 0;
   late final AutoAnalyzer analyzer = AutoAnalyzer(user, dict);
@@ -312,16 +437,34 @@ class AppState extends ChangeNotifier {
     fontSize = (s['font'] as num?)?.toDouble() ?? 19;
     paper = s['paper'] as String? ?? 'white';
     lineHeight = (s['lh'] as num?)?.toDouble() ?? 1.6;
-    themeMode = ThemeMode.values.firstWhere((m) => m.name == s['theme'], orElse: () => ThemeMode.light);
+    final t = s['tone'];
+    if (t is Map) {
+      for (final e in t.entries) {
+        if (e.value is num) tone[e.key as String] = (e.value as num).toDouble().clamp(0, 1);
+      }
+    }
+    themeMode = themeFromPrefs(s['theme'], PlatformDispatcher.instance.platformBrightness);
     uiEnglish = s['ui'] == 'en';
+    // Before the app language had its own setting, 'ui' was the native language too.
+    nativeLang = (s['native'] ?? s['ui']) == 'en' ? 'en' : 'tr';
+    learnLang = s['learn'] == 'tr' ? 'tr' : 'en';
+    if (nativeLang == learnLang) learnLang = nativeLang == 'tr' ? 'en' : 'tr';
   }
 
   bool get englishUi => uiEnglish;
 
-  void setUiEnglish(bool v) {
-    uiEnglish = v;
+  /// The app (menu) language, on its own: the native language stays.
+  void setAppLanguage(String lang) {
+    uiEnglish = lang == 'en';
+    _wordsVersion++;
     _save();
     notifyListeners();
+  }
+
+  /// First start: one switch sets the app language and the native language.
+  void setUiEnglish(bool v) {
+    uiEnglish = v;
+    setLanguages(native: v ? 'en' : 'tr');
   }
 
   void setTheme(ThemeMode m) {
@@ -333,7 +476,7 @@ class AppState extends ChangeNotifier {
   int get wordsVersion => _wordsVersion;
 
   void _save() =>
-      user.setJson('prefs', {'cats': enabledCats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'paper': paper, 'lh': lineHeight});
+      user.setJson('prefs', {'cats': _cats.toList(), 'tr': showTr, 'en': showEn, 'font': fontSize, 'theme': themeMode.name, 'ui': uiEnglish ? 'en' : 'tr', 'native': nativeLang, 'paper': paper, 'lh': lineHeight, 'tone': tone, 'learn': learnLang});
 
   void toggleCat(String id) {
     enabledCats.contains(id) ? enabledCats.remove(id) : enabledCats.add(id);
@@ -362,6 +505,12 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setTone(String theme, double v) {
+    tone[theme] = v.clamp(0, 1);
+    _save();
+    notifyListeners();
+  }
+
   void setReading({String? paper, double? lineHeight}) {
     this.paper = paper ?? this.paper;
     this.lineHeight = lineHeight ?? this.lineHeight;
@@ -381,11 +530,14 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  final _trLemmas = <String, List<String>>{};
+
   /// Status of a token, looking at all its base-form candidates.
   WordStatus statusOf(Token t) {
     if (user.statuses.isEmpty) return WordStatus.none;
     var st = WordStatus.none;
-    for (final l in dict.lemmatizer.lemmas(t.lower)) {
+    final cands = learnTurkish ? (_trLemmas[t.lower] ??= trEn!.lemmas(t.lower)) : dict.lemmatizer.lemmas(t.lower);
+    for (final l in cands) {
       final s = user.statuses[l];
       if (s == WordStatus.learning) return s!;
       if (s == WordStatus.learned) st = s!;
@@ -403,11 +555,14 @@ class AppState extends ChangeNotifier {
 
   /// Short Turkish meaning used in lists.
   String? shortMeaning(String lemma) {
+    if (learnTurkish) return trEn!.shortMeaning(lemma);
     final info = dict.lookup(lemma);
     if (info.trFreeDict.isNotEmpty) return info.trFreeDict.first;
     for (final s in info.senses) {
       if (s.tr.isNotEmpty) return s.tr.take(3).join(', ');
     }
-    return info.senses.isNotEmpty ? info.senses.first.gloss : null;
+    if (info.senses.isNotEmpty) return info.senses.first.gloss;
+    // Only an unreviewed AI draft has a meaning: shown, never as the dictionary's.
+    return info.trDraft.isEmpty ? null : '${info.trDraft.first} (${unverifiedAiShort()})';
   }
 }

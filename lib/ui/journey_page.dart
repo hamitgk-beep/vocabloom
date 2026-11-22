@@ -23,7 +23,7 @@ class JourneyPage extends StatelessWidget {
     final days = app.stats.readingByDay(14);
     final looks = app.stats.lookupsByDay(14);
     return Scaffold(
-      appBar: AppBar(title: Text(L('İstatistiklerim', 'My stats'))),
+      appBar: AppBar(title: Text(L('İstatistikler', 'Statistics'))),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 980),
@@ -411,7 +411,7 @@ class _Grammar extends StatelessWidget {
     final answered = byTopic.values.fold(0, (a, x) => a + x.$1);
     final right = byTopic.values.fold(0, (a, x) => a + x.$2);
     return FutureBuilder<List<GrammarTopic>>(
-      future: loadGrammarTopics(),
+      future: loadAllGrammarTopics(),
       builder: (context, snap) {
         final topics = {for (final x in snap.data ?? const <GrammarTopic>[]) x.id: x};
         final progress = GrammarProgress(app.user);

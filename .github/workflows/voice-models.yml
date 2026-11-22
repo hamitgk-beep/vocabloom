@@ -28,7 +28,7 @@ jobs:
         run: |
           if ! gh release view voice-models >/dev/null 2>&1; then
             gh release create voice-models --prerelease --target "$GITHUB_SHA" \
-              --title "VocaBloom ses paketleri" \
+              --title "Storilex ses paketleri" \
               --notes "Uygulamanın bir kez indirdiği çevrimdışı ses paketleri. İngilizce: Kokoro-82M v1.0 (Apache 2.0). Türkçe: EMA Lightning (Apache 2.0) ve Piper Fahrettin (CC0 kayıtlar). sherpa-onnx (Apache 2.0) ve eSpeak NG (GPL-3.0) ile çalışır."
           fi
           gh release upload voice-models dist/*.zip --clobber

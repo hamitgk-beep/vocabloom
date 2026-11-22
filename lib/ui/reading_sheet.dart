@@ -7,33 +7,97 @@ import 'theme.dart';
 const sepiaPaper = Color(0xFFF4ECD8);
 const sepiaInk = Color(0xFF3B2F22);
 
-/// Page color behind the book text for the chosen reading theme.
-Color pageColor(AppState app, ThemeData t) =>
-    t.brightness == Brightness.dark ? readerPaper(t) : (app.paper == 'sepia' ? sepiaPaper : readerPaper(t));
+/// The page of each light theme at the two ends of its shade slider.
+const _whiteFrom = Color(0xFFFFFFFF), _whiteTo = Color(0xFFF1EBDD);
+const _sepiaFrom = Color(0xFFF8F1E0), _sepiaTo = Color(0xFFE2CFA6);
 
-/// Theme used inside the reader, so sepia also changes the text color.
+/// Letters at night: from white to grey.
+const _nightFrom = Color(0xFFF2F0EA), _nightTo = Color(0xFF9C9A95);
+
+Color whitePaper(double t) => Color.lerp(_whiteFrom, _whiteTo, t)!;
+Color sepiaShade(double t) => Color.lerp(_sepiaFrom, _sepiaTo, t)!;
+Color nightInk(double t) => Color.lerp(_nightFrom, _nightTo, t)!;
+
+/// Page color behind the book text for the chosen reading theme and shade.
+Color pageColor(AppState app, ThemeData t) => t.brightness == Brightness.dark
+    ? readerPaper(t)
+    : (app.paper == 'sepia' ? sepiaShade(app.tone['sepia'] ?? 0.3) : whitePaper(app.tone['white'] ?? 0.3));
+
+/// Theme used inside the reader, so sepia (and the night shade) also change
+/// the text color, and the filter menu, drawers and panels take the page's
+/// colour (a sepia page gets sepia panels, a shade change moves them too).
 ThemeData readerTheme(AppState app, ThemeData t) {
-  if (t.brightness == Brightness.dark || app.paper != 'sepia') return t;
+  if (t.brightness == Brightness.dark) {
+    final ink = nightInk(app.tone['night'] ?? 0);
+    return t.copyWith(
+      colorScheme: t.colorScheme.copyWith(onSurface: ink),
+      textTheme: t.textTheme.apply(bodyColor: ink, displayColor: ink),
+    );
+  }
+  final paper = pageColor(app, t);
+  const brown = Color(0xFF6B4A1E);
+  final card = Color.lerp(paper, Colors.white, 0.45)!;
+  final deep = Color.lerp(paper, brown, 0.05)!;
+  final high = Color.lerp(paper, brown, 0.10)!;
+  final line = Color.lerp(paper, brown, 0.20)!;
+  final sepia = app.paper == 'sepia';
+  final ink = sepia ? sepiaInk : t.colorScheme.onSurface;
   return t.copyWith(
-    colorScheme: t.colorScheme.copyWith(onSurface: sepiaInk),
-    textTheme: t.textTheme.apply(bodyColor: sepiaInk, displayColor: sepiaInk),
+    scaffoldBackgroundColor: paper,
+    canvasColor: paper,
+    colorScheme: t.colorScheme.copyWith(
+      surface: deep,
+      onSurface: ink,
+      surfaceContainerLowest: card,
+      surfaceContainerLow: deep,
+      surfaceContainer: deep,
+      surfaceContainerHigh: high,
+      surfaceContainerHighest: high,
+      outlineVariant: line,
+    ),
+    cardTheme: t.cardTheme.copyWith(color: card),
+    drawerTheme: t.drawerTheme.copyWith(backgroundColor: deep),
+    bottomSheetTheme: t.bottomSheetTheme.copyWith(backgroundColor: card, modalBackgroundColor: card),
+    textTheme: sepia ? t.textTheme.apply(bodyColor: ink, displayColor: ink) : t.textTheme,
   );
 }
 
+/// The reader's theme while a book is open, so the word, sentence and
+/// expression panels it opens match the page (null elsewhere).
+ThemeData? readingPanelTheme;
+
 /// Font size, line spacing and page color for the reader.
 Future<void> showReadingSheet(BuildContext context, AppState app) => showModalBottomSheet(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      builder: (_) => ListenableBuilder(
-        listenable: app,
-        builder: (c, _) => _ReadingSheet(app: app),
-      ),
-    );
+  context: context,
+  showDragHandle: true,
+  isScrollControlled: true,
+  builder: (_) => ListenableBuilder(
+    listenable: app,
+    builder: (c, _) => _ReadingSheet(app: app),
+  ),
+);
 
 class _ReadingSheet extends StatelessWidget {
   final AppState app;
   const _ReadingSheet({required this.app});
+
+  /// A small sample of a shade at one end of the slider.
+  Widget _dot(Color c, ThemeData theme, {bool night = false}) => Container(
+    width: 24,
+    height: 24,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      color: night ? Brand.dBg : c,
+      shape: BoxShape.circle,
+      border: Border.all(color: theme.colorScheme.outlineVariant),
+    ),
+    child: night
+        ? Text(
+            'A',
+            style: TextStyle(color: c, fontSize: 12, fontWeight: FontWeight.w700),
+          )
+        : null,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +116,29 @@ class _ReadingSheet extends StatelessWidget {
               app.setTheme(ThemeMode.light);
             }
           },
-          child: Column(children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              height: 64,
-              decoration: BoxDecoration(
-                color: bg,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: on ? theme.colorScheme.primary : theme.colorScheme.outlineVariant, width: on ? 2.5 : 1),
+          child: Column(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 150),
+                height: 64,
+                decoration: BoxDecoration(
+                  color: bg,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: on ? theme.colorScheme.primary : theme.colorScheme.outlineVariant, width: on ? 2.5 : 1),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  'Aa',
+                  style: TextStyle(fontFamily: readingFont, fontSize: 22, color: fg, fontWeight: FontWeight.w600),
+                ),
               ),
-              alignment: Alignment.center,
-              child: Text('Aa', style: TextStyle(fontFamily: readingFont, fontSize: 22, color: fg, fontWeight: FontWeight.w600)),
-            ),
-            const SizedBox(height: 6),
-            Text(label, style: theme.textTheme.labelMedium?.copyWith(color: on ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant)),
-          ]),
+              const SizedBox(height: 6),
+              Text(
+                label,
+                style: theme.textTheme.labelMedium?.copyWith(color: on ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant),
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -76,45 +148,99 @@ class _ReadingSheet extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Text(L('Okuma görünümü', 'Reading view'), style: theme.textTheme.titleLarge),
-          const SizedBox(height: 16),
-          Row(children: [
-            swatch('white', L('Beyaz', 'White'), const Color(0xFFFCFAF6), Brand.ink),
-            const SizedBox(width: 10),
-            swatch('sepia', L('Sepya', 'Sepia'), sepiaPaper, sepiaInk),
-            const SizedBox(width: 10),
-            swatch('night', L('Gece', 'Night'), Brand.dBg, Brand.dText),
-          ]),
-          const SizedBox(height: 22),
-          Text(L('Yazı boyutu', 'Font size'), style: theme.textTheme.titleSmall),
-          Row(children: [
-            const Text('A', style: TextStyle(fontSize: 14, fontFamily: readingFont)),
-            Expanded(
-              child: Slider(
-                value: app.fontSize,
-                min: 14,
-                max: 32,
-                divisions: 18,
-                label: app.fontSize.round().toString(),
-                onChanged: app.setFont,
-              ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(L('Okuma görünümü', 'Reading view'), style: theme.textTheme.titleLarge),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                swatch('white', L('Beyaz', 'White'), whitePaper(app.tone['white'] ?? 0.3), Brand.ink),
+                const SizedBox(width: 10),
+                swatch('sepia', L('Sepya', 'Sepia'), sepiaShade(app.tone['sepia'] ?? 0.3), sepiaInk),
+                const SizedBox(width: 10),
+                swatch('night', L('Gece', 'Night'), Brand.dBg, nightInk(app.tone['night'] ?? 0)),
+              ],
             ),
-            const Text('A', style: TextStyle(fontSize: 26, fontFamily: readingFont)),
-          ]),
-          const SizedBox(height: 6),
-          Text(L('Satır aralığı', 'Line spacing'), style: theme.textTheme.titleSmall),
-          const SizedBox(height: 10),
-          SegmentedButton<double>(
-            showSelectedIcon: false,
-            segments: [
-              for (final (v, l) in spacing)
-                ButtonSegment(value: v, label: Text(l), icon: Icon(v < 1.5 ? Icons.density_small_rounded : v < 1.8 ? Icons.density_medium_rounded : Icons.density_large_rounded)),
-            ],
-            selected: {selSpacing},
-            onSelectionChanged: (s) => app.setReading(lineHeight: s.first),
-          ),
-        ]),
+            const SizedBox(height: 14),
+            // The shade of the chosen theme.
+            Text(switch (current) {
+              'night' => L('Yazı rengi: beyazdan griye', 'Letters: white to grey'),
+              'sepia' => L('Ton: açık sepyadan koyu sepyaya', 'Shade: light to dark sepia'),
+              _ => L('Ton: beyazdan kırık beyaza', 'Shade: white to off-white'),
+            }, style: theme.textTheme.titleSmall),
+            Row(
+              children: [
+                _dot(
+                  switch (current) {
+                    'night' => nightInk(0),
+                    'sepia' => sepiaShade(0),
+                    _ => whitePaper(0),
+                  },
+                  theme,
+                  night: current == 'night',
+                ),
+                Expanded(
+                  child: Slider(
+                    key: const ValueKey('tone-slider'),
+                    value: app.tone[current] ?? 0,
+                    onChanged: (v) => app.setTone(current, v),
+                  ),
+                ),
+                _dot(
+                  switch (current) {
+                    'night' => nightInk(1),
+                    'sepia' => sepiaShade(1),
+                    _ => whitePaper(1),
+                  },
+                  theme,
+                  night: current == 'night',
+                ),
+              ],
+            ),
+            const SizedBox(height: 22),
+            Text(L('Yazı boyutu', 'Font size'), style: theme.textTheme.titleSmall),
+            Row(
+              children: [
+                const Text('A', style: TextStyle(fontSize: 14, fontFamily: readingFont)),
+                Expanded(
+                  child: Slider(
+                    value: app.fontSize,
+                    min: 14,
+                    max: 32,
+                    divisions: 18,
+                    label: app.fontSize.round().toString(),
+                    onChanged: app.setFont,
+                  ),
+                ),
+                const Text('A', style: TextStyle(fontSize: 26, fontFamily: readingFont)),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Text(L('Satır aralığı', 'Line spacing'), style: theme.textTheme.titleSmall),
+            const SizedBox(height: 10),
+            SegmentedButton<double>(
+              showSelectedIcon: false,
+              segments: [
+                for (final (v, l) in spacing)
+                  ButtonSegment(
+                    value: v,
+                    label: Text(l),
+                    icon: Icon(
+                      v < 1.5
+                          ? Icons.density_small_rounded
+                          : v < 1.8
+                          ? Icons.density_medium_rounded
+                          : Icons.density_large_rounded,
+                    ),
+                  ),
+              ],
+              selected: {selSpacing},
+              onSelectionChanged: (s) => app.setReading(lineHeight: s.first),
+            ),
+          ],
+        ),
       ),
     );
   }

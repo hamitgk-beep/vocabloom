@@ -2,6 +2,240 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "sentence-word-analysis",
+      "area": "reader",
+      "tr": "Kelimeye dokunduğunda açılan anlam artık daha doğru kelimeye ve cümleye bakıyor: \"only\", \"thing\", \"letter\", \"offer\" gibi kelimeler başka bir kelimenin ekli hali sanılmıyor, \"years\" ve \"things\" tekil haliyle açılıyor, aksanlı harfli adlar (\"Zurbarán\") bölünmüyor. Bir cümlenin sonu ile sonrakinin başı birleşip yanlış bir deyim oluşturmuyor (\"…care. For…\"), paragrafın ikinci ve sonraki cümlelerindeki deyimler de doğru kelimelerle eşleşiyor. Kelimenin isim mi fiil mi sıfat mı olduğu virgül ve cümle sınırlarına bakılarak daha iyi bulunuyor. Deyimler daha sık tanınıyor; ama cümle deyimi açıkça desteklemiyorsa anlam \"olası\" olarak gösteriliyor, kesin diye sunulmuyor.",
+      "en": "The meaning that opens when you tap a word now looks at the right word and the right sentence more often: words such as \"only\", \"thing\", \"letter\" and \"offer\" are no longer taken for another word with an ending, \"years\" and \"things\" open under their singular, and names with accented letters (\"Zurbarán\") are not cut. The end of one sentence and the start of the next no longer join into a wrong expression (\"…care. For…\"), and expressions in the second and later sentences of a paragraph are matched with the right words. Whether a word is a noun, a verb or an adjective is found better by looking at commas and sentence ends. Idioms are recognised more often; when the sentence does not clearly support the idiom, the meaning is shown as \"possible\", never as certain."
+    },
+    {
+      "id": "sentence-translation-match",
+      "area": "reader",
+      "tr": "Cümle analizinde Türkçe çeviri artık her zaman seçtiğin cümleye ait: \"Prof.\", \"Mr.\", \"No. 28\", \"p. 35\" gibi kısaltmalar cümleyi bölmüyor ve bir cümleye sonraki cümlenin çevirisi gelmiyor. Geçerli bir çeviri yoksa Türkçe satırı gösterilmiyor; önce ücretsiz cihaz içi çeviri deneniyor. Ücretli yapay zekâ ile otomatik kitap analizi artık sen Ayarlar'dan açana kadar kapalı, cümle açıklaması da yalnızca \"Ayrıntılı açıkla\" ile isteniyor. Kelime panelinde ve tekrarda yapay zekâ da artık kendiliğinden sorulmuyor, yalnızca düğmeye bastığında çalışıyor.",
+      "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation the Turkish line is left out, and the free on-device translation is tried first. Automatic book analysis with a paid AI service now stays off until you turn it on in Settings, and a sentence explanation is asked only with \"Explain in detail\". The word panel and the review no longer ask the AI by themselves either; it runs only when you tap its button."
+    },
+    {
+     "id": "review-confirmed-answers",
+     "area": "review",
+     "tr": "Tekrar kartlarında bir anlam, ancak kartın cümlesine uyduğu doğrulanırsa çoktan seçmeli soru olarak soruluyor. Doğrulanamayan kartlar puanlanmadan düz kart olarak gösteriliyor ve bunu belirten kısa bir not çıkıyor. Kayıtlı anlamların ve ilerlemen değişmiyor.",
+     "en": "A review card now asks a meaning as a four-choice question only when it is confirmed for the card's sentence. Cards that cannot be confirmed are shown as plain cards with a short note and are not graded. Your saved meanings and progress stay as they are."
+    },
+    {
+      "id": "dictionary-source-order",
+      "area": "dictionary",
+      "tr": "Kelime ve kalıp anlamlarında önce kaynağı belli sözlük anlamları geliyor. Henüz kontrol edilmemiş yapay zekâ taslakları silinmedi; panellerde kapalı \"Doğrulanmamış AI önerileri\" bölümünde duruyor ve bağlam kartında tek başına kesin anlam sayılmıyor.",
+      "en": "Word and expression meanings now come from sourced dictionaries first. AI drafts nobody has checked yet are kept, in a closed \"Unverified AI suggestions\" section of the panels, and the context card never treats them alone as a certain meaning."
+    },
+    {
+      "id": "onboarding-languages",
+      "area": "app",
+      "tr": "İlk açılışta önce ana dilini ve öğrenmek istediğin dili seçiyorsun; sonra Ayarlar > Dil bölümünden değiştirebilirsin.",
+      "en": "On first launch you now pick your native language and the language you want to learn; you can change them later in Settings > Language."
+    },
+    {
+      "id": "app-language-setting",
+      "area": "app",
+      "tr": "Ayarlar'da ayrı \"Uygulama dili\": menüleri İngilizce kullanırken kelime anlamları ana dilinde kalabilir. Ayarlar artık Görünüm, Dil, Öğrenme ve Hakkında gruplarında.",
+      "en": "A separate \"App language\" in Settings: use the menus in English while word meanings stay in your native language. Settings is now grouped into Appearance, Language, Learning and About."
+    },
+    {
+      "id": "menus-and-theme-cleanup",
+      "area": "app",
+      "tr": "Menü adları sadeleşti (Kitaplık, Kelimelerim, Ücretsiz kitaplar, İstatistikler). Tema yalnızca Açık ve Koyu. Kitaplıkta STORILEX başlığı sabit kalıyor; listelerin sonu artık alt menünün arkasında kalmıyor. Uygulama simgesi büyüdü.",
+      "en": "Clearer menu names (Library, My words, Free books, Statistics). The theme is just Light or Dark. The STORILEX header stays put in the library, and the end of every list no longer hides behind the bottom bar. A bigger app icon."
+    },
+    {
+      "id": "grammar-answer-colors",
+      "area": "grammar",
+      "tr": "Gramer alıştırmalarında açıklama kutusu doğru cevapta yeşil, yanlış cevapta kırmızı.",
+      "en": "In grammar practice the explanation box is green for a right answer and red for a wrong one."
+    },
+    {
+      "id": "read-aloud-text-visible",
+      "area": "voice",
+      "tr": "Sesli okumada kitap yeniden görünüyor ve okunan cümle renkli: kontrol kartı sayfanın altında duruyor. Kelimeye dokununca artık kendiliğinden seslendirilmiyor; dinlemek için hoparlör simgesine dokun.",
+      "en": "Read aloud shows the book again with the spoken sentence highlighted, and the control card stays at the foot of the page. Tapping a word no longer says it on its own; tap the speaker icon to hear it."
+    },
+    {
+      "id": "design-b-words",
+      "area": "words",
+      "tr": "Kelime defteri yenilendi: Öğreneceğim, Öğrendim ve Kitaba göre seçenekleri, üstte \"Bugünkü tekrar\" kartı ve her kelimede bir sonraki tekrarın ne zaman olduğu (bugün, yarın, 3 gün sonra).",
+      "en": "The word notebook is new: To learn, Learned and By book views, a \"Today's review\" card on top, and when each word comes up for review next (today, tomorrow, in 3 days)."
+    },
+    {
+      "id": "design-b-review",
+      "area": "review",
+      "tr": "Tekrar kartında üç cevap: Hatırlamadım, Zorlandım, Bildim; her birinin altında kelimenin ne zaman yeniden soracağı yazar.",
+      "en": "Three answers on the review card: Forgot, Hard, Knew it, each showing when the word comes back."
+    },
+    {
+      "id": "design-b-reading",
+      "area": "reader",
+      "tr": "Ayarlar'da okuma görünümü: yazı boyutu, satır aralığı ve sayfa rengini kitaptan bir örnekle önizle. Sesli okuma artık sayfanın altında küçük bir kart: duraklat, önceki/sonraki cümle, ilerleme ve hız.",
+      "en": "Reading view in Settings: preview text size, line spacing and page colour on a sample from a book. Read aloud is now a small card at the foot of the page: pause, previous/next sentence, progress and speed."
+    },
+    {
+      "id": "design-b-home",
+      "area": "app",
+      "tr": "Yeni görünüm: ana sayfanın üstünde altın Storilex yazısı, kelime arama kutusu, günlük hedef halkası ve tekrar düğmesiyle \"Bugün\" kartı, okuduğun kitap. Telefonda alt menü artık Okuma, Sözlük, Defterim ve Daha fazla; Daha fazla'dan gündüz, gece ya da sistem teması seçilir. Açılış ekranı ve uygulama simgesi yenilendi (altın S).",
+      "en": "New look: the gold Storilex wordmark on top of the home page, a word search field, a Today card with the daily goal ring and a review button, and the book you are reading. On phones the bottom bar is now Reading, Dictionary, My words and More; More has day, night or system theme. New launch screen and app icon (gold S)."
+    },
+    {
+      "id": "design-b-reader",
+      "area": "reader",
+      "tr": "Telefonda bir kelimeye dokununca önce ekranın yarısında kısa bir kart açılır, yukarı çekince tamamı gelir. Öğreneceğim / Öğrendim düğmeleri anlamın hemen altında. Gündüz renkleri daha okunaklı.",
+      "en": "On phones, tapping a word opens a short card on half the screen; pull it up for the whole panel. To learn / Learned sit right under the meaning. Day colours are easier to read."
+    },
+    {
+      "id": "contrib-hamit-6",
+      "area": "dictionary",
+      "tr": "Deyimler, öbek fiiller, edatlı ifadeler ve eşdizimler filtrelerine yaklaşık 4.700 yeni örnek cümle eklendi (dig oneself into a hole, take the rap, pull the wool over one's eyes, fizzle out …). Yüzlerce deyimin anlamına (İngiliz), (Amerikan), (eskice), (argo) gibi kullanım etiketleri geldi, yanlış anlamlar ve başlıklar düzeltildi, gerçek olmayan kayıtlar temizlendi. Sözlüğe yeni Türkçe anlamlar ve bağlam cümleleri de eklendi.",
+      "en": "About 4,700 new example sentences for idioms, phrasal verbs, prepositional phrases and collocations (dig oneself into a hole, take the rap, pull the wool over one's eyes, fizzle out …). Hundreds of idioms now carry usage labels such as British, American, dated or slang; wrong meanings and headings were fixed and bogus entries removed. The dictionary also got new Turkish meanings and context sentences."
+    },
+    {
+      "id": "contrib-hamit-5",
+      "area": "dictionary",
+      "tr": "Hazır kalıplar filtresine 210 yeni kalıp (Long time no see, Keep me posted, It's up to you …) ve Söylem belirteçlerine 27 yeni ifade (on top of that, that said, come to think of it …) eklendi. Sözlüğe müphem, yadsımak, kanıksamak, ubiquitous, meticulous gibi ileri seviye kelimeler, 57 yeni Türkçe anlam, 30 bağlam cümlesi ve öbek fiillerin örnek cümleleri geldi.",
+      "en": "210 new phrases in Chunks (Long time no see, Keep me posted, It's up to you …) and 27 in Discourse Markers (on top of that, that said, come to think of it …). The dictionary got advanced words such as müphem, yadsımak, kanıksamak, ubiquitous, meticulous, 57 new Turkish meanings, 30 context sentences and example sentences for phrasal verbs."
+    },
+    {
+      "id": "contrib-dictionary-hamit-4",
+      "area": "dictionary",
+      "tr": "Sözlüğe 100 yeni elle hazırlanmış deyim ve örnek cümlesi eklendi (çantada keklik, pot kırmak, spill the beans, cut corners …), ayrıca İngilizce kelime ailelerinden zarflar (effectively: etkili bir şekilde) ve öbek fiillerin Türkçe karşılıkları.",
+      "en": "100 new hand-made idioms with example sentences (çantada keklik, pot kırmak, spill the beans, cut corners …), plus adverbs from English word families (effectively) and Turkish equivalents of phrasal verbs."
+    },
+    {
+      "id": "filters-contrib-hamit-2",
+      "area": "reader",
+      "tr": "Filtrelere yeni kalıplar eklendi: Fiil/sıfat + edat filtresine 188 kalıp (accuse someone of, be famous for, be prone to …), 30 atasözü (better late than never: geç olsun güç olmasın), 20 ikili kalıp (trial and error), 20 yanıltıcı benzer kelime (magazine ≠ mağaza) ve 20 öbek fiil.",
+      "en": "New phrases in the filters: 188 in Dependent Prepositions (accuse someone of, be famous for, be prone to …), 30 proverbs (better late than never), 20 binomials (trial and error), 20 false friends (magazine ≠ mağaza) and 20 phrasal verbs."
+    },
+    {
+      "id": "contrib-dictionary-hamit-3",
+      "area": "dictionary",
+      "tr": "Sözlüğe yeni elle hazırlanmış veri eklendi: 24 yeni Türkçe anlam (örneğin \"tırmanmak\": to escalate), müsamaha, muamma, safsata gibi kelimeler, 30 bağlam cümlesi; İngilizcede abide by, alleviate, discrepancy gibi kelimeler ve bring about, iron out, rule out gibi öbek fiillerin örnek cümleleri.",
+      "en": "More hand-made dictionary data: 24 new Turkish meanings (e.g. \"tırmanmak\": to escalate), words such as müsamaha, muamma, safsata, 30 context sentences; in English, words such as abide by, alleviate, discrepancy and example sentences for phrasal verbs such as bring about, iron out, rule out."
+    },
+    {
+      "id": "filters-contrib-hamit-1",
+      "area": "reader",
+      "tr": "Okuma ekranına altı yeni filtre eklendi: Fiil/sıfat + edat (interested in), Benzetmeler (as busy as a bee), Kibar istek ve cevaplar (Could you please …), Gündelik konuşma ve argo, Karıştırılan kelimeler (affect / effect) ve İngiliz / Amerikan farkı (lorry / truck). Eşdizimler filtresine de 95 yeni kalıp geldi (heavy rain, strong coffee …). Her birinin Gramer'de kısa bir dersi var.",
+      "en": "Six new reading filters: Dependent Prepositions (interested in), Similes (as busy as a bee), Polite Phrases (Could you please …), Informal & Slang, Confusable Words (affect / effect) and British / American (lorry / truck). The Collocations filter got 95 new phrases (heavy rain, strong coffee …). Each has a short lesson in Grammar."
+    },
+    {
+      "id": "turkish-grammar-1",
+      "area": "grammar",
+      "tr": "Türkçe öğrenenler için Gramer sekmesinde artık İngilizce değil Türkçe dilbilgisi konuları var: ünlü uyumundan sıfat-fiillere 21 konu (A1-B2), İngilizce anlatım ve İngilizce cümleleri Türkçeye çevirme alıştırmaları.",
+      "en": "Learners of Turkish now get Turkish grammar in the Grammar tab instead of the English lessons: 21 topics from vowel harmony to participles (A1-B2), explained in English, with English sentences to translate into Turkish."
+    },
+    {
+      "id": "library-turkish-books-1",
+      "area": "app",
+      "tr": "Ücretsiz kütüphanede Türkçe kitaplar var ve seviye filtrelerinin üstünde Türkçe / İngilizce düğmeleri ile hangi dildeki metinlerin listeleneceğini seçebilirsin.",
+      "en": "The free library now has Turkish books, and Turkish / English buttons above the level filters choose which language's texts are listed."
+    },
+    {
+      "id": "no-intro-film",
+      "area": "app",
+      "tr": "Açılış filmi kaldırıldı; uygulama artık beklemeden açılıyor.",
+      "en": "The opening film was removed; the app now opens straight away."
+    },
+    {
+      "id": "contrib-dictionary-hamit-2",
+      "area": "dictionary",
+      "tr": "Sözlüğe ikinci büyük elle hazırlanmış veri paketi eklendi. Türkçe → İngilizce: 187 yeni anlam, 187 yeni kelime ve deyim (örneğin \"çorbada tuzu olmak\"), 309 örnek cümle; yaklaşık 200 yeni cümle kelimenin o cümledeki anlamını seçmeyi öğretiyor. İngilizce → Türkçe: 39 yeni anlam, 42 yeni deyim ve kalıp, 46 deyime yeni karşılık, 692 örnek cümle.",
+      "en": "A second large set of hand-made dictionary data was added. Turkish → English: 187 new meanings, 187 new words and idioms (e.g. \"çorbada tuzu olmak\"), 309 example sentences; about 200 new sentences teach which meaning a word has in its sentence. English → Turkish: 39 new meanings, 42 new idioms and phrases, new equivalents for 46 idioms, 692 example sentences."
+    },
+    {
+      "id": "contrib-dictionary-hamit-1",
+      "area": "dictionary",
+      "tr": "Sözlüğe elle hazırlanıp kontrol edilmiş veri eklendi. Türkçe → İngilizce: 39 yeni anlam, 36 yeni kelime ve deyim, 154 örnek cümle; 52 cümle, kelimenin o cümledeki anlamını seçmeyi öğretiyor (örneğin \"direksiyonu sağa kırmak\": to swerve). İngilizce → Türkçe: 14 yeni anlam, 5 yeni deyim, 14 deyime yeni karşılık, 153 örnek cümle. Elle hazırlanan örnekler artık önce gösteriliyor.",
+      "en": "Hand-checked data added to the dictionary. Turkish → English: 39 new meanings, 36 new words and idioms, 154 example sentences; 52 sentences teach which meaning a word has in its sentence (e.g. \"direksiyonu sağa kırmak\": to swerve). English → Turkish: 14 new meanings, 5 new idioms, new equivalents for 14 idioms, 153 example sentences. Hand-made examples are now shown first."
+    },
+    {
+      "id": "free-library-never-spins",
+      "area": "app",
+      "tr": "Ücretsiz kütüphane düzeltildi: bazı bilgisayarlarda sürekli yükleniyor gösterip hiçbir şey açmıyordu. Artık metinler doğrudan okunuyor; bir dosya okunamazsa diğer dildeki metinler yine açılıyor, hiçbiri okunamazsa sebebi ve \"Tekrar dene\" düğmesi gösteriliyor.",
+      "en": "Free library fixed: on some computers it kept showing the loading circle and never opened. The texts are now read directly; if one file can't be read the other language's texts still open, and if none can, the reason and a Try again button are shown."
+    },
+    {
+      "id": "tr-en-reverse-words-examples",
+      "area": "dictionary",
+      "tr": "Türkçe → İngilizce sözlük büyüdü: 29 bin yeni kelimeyle 55 bini aştı (KeNet Türkçe WordNet ve FreeDict'ten). Çevirili örnek cümle sayısı 29 binden 83 bine çıktı, kelime başına 10 örneğe kadar. Cümledeki anlamı seçilen kelime sayısı 4 bini geçti.",
+      "en": "The Turkish → English dictionary grew by 29,000 words to more than 55,000 (from KeNet Turkish WordNet and FreeDict). Translated example sentences went from 29,000 to 83,000, up to 10 for each word, and more than 4,000 words now get the meaning of their sentence."
+    },
+    {
+      "id": "learn-lang-separate-content",
+      "area": "app",
+      "tr": "Öğrenilen dil Türkçe olunca uygulamanın her bölümü Türkçeye geçiyor: Sözlük Türkçe kelime arıyor (İngilizce anlamdan da bulabilirsin: \"dog\" → köpek), Kelimelerim ve tekrar kartları her dil için ayrı tutuluyor, kitaplığında yalnız o dildeki kitaplar görünüyor Ücretsiz kütüphanede her seviyeden 100 Türkçe metin var (Ömer Seyfettin öyküleri, Nasreddin Hoca fıkraları, başlangıç için yeni yazılmış kısa öyküler). Türkçe kelimeye dokununca artık kelimenin ekleri (sür-müş-tür) ve her ekin görevi çıkıyor; kelimenin o cümledeki anlamı da en üstte gösteriliyor. İngilizceye döndüğünde İngilizce kelimelerin ve kitapların olduğu gibi duruyor.",
+      "en": "With Turkish as the language you learn, every part of the app switches to Turkish: the Dictionary searches Turkish words (or finds them from an English meaning: \"dog\" → köpek), My words and review cards are kept apart for each language, your library shows only books in that language, and the Free library has 100 Turkish texts for every level (Ömer Seyfettin stories, Nasreddin Hoca anecdotes, new short stories for beginners). Tapping a Turkish word now shows its parts (sür-müş-tür) and what each suffix does, with the meaning the word has in that sentence on top. Switch back to English and your English words and books are all still there."
+    },
+    {
+      "id": "native-learn-language-tr-en",
+      "area": "app",
+      "tr": "Ayarlar'da artık Ana dil ve Öğrenilen dil seçiliyor. Öğrenilen dil Türkçe olunca Türkçe kitaplar okunabiliyor: kelimeye dokununca kökü (Evlerimizden → ev), İngilizce anlamları, örnek cümleler ve Türkçe telaffuz çıkıyor. Türkçe → İngilizce sözlük ücretsiz açık kaynaklardan (Vikisözlük, Tatoeba) hazırlandı; 25 binden fazla kelime içeriyor.",
+      "en": "Settings now has a Native language and a Language you learn. With Turkish as the language you learn you can read Turkish books: tap a word to see its base word (Evlerimizden → ev), its English meanings, example sentences and the Turkish pronunciation. The Turkish → English dictionary is built from free, open sources (Wiktionary, Tatoeba) and has more than 25,000 words."
+    },
+    {
+      "id": "sentence-panel-ipad-translation",
+      "area": "reader",
+      "tr": "Güncellemeden sonra yeni sözlüğümüz cihazlara kopyalanmıyordu; bu yüzden bazı kelimelerde eski, yanlış anlamlar (\"well\" için \"kuyu\" gibi) ve Türkçesiz İngilizce tanımlar çıkıyordu. Artık yeni sözlük kullanılıyor. Cümle başında virgülle gelen \"Well,\" \"So,\" gibi kelimeler \"peki, şey\" gibi ünlem anlamıyla gösteriliyor. Cümle analizi paneli kelime paneliyle aynı görünümde: cümle ve Türkçesi EN/TR etiketli kartta, kalıplarda ve kelimelerde önce Türkçe. iPad ve iPhone'da Türkçe çeviri paketini indirirken uygulamanın kapanması düzeltildi; paket artık uygulama açılınca kendiliğinden iniyor.",
+      "en": "After updates our new dictionary was not copied to devices, so some words showed old, wrong meanings (\"kuyu\", a water well, for \"well\") and English definitions without Turkish. The new dictionary is used now. Words like \"Well,\" or \"So,\" at the start of a sentence before a comma get their interjection meaning (\"peki, şey\"). The sentence analysis panel matches the word panel: the sentence and its Turkish in a card with EN/TR tags, Turkish first for expressions and words. On iPad and iPhone the app no longer closes while downloading the Turkish translation package, and the package now downloads by itself when the app opens."
+    },
+    {
+      "id": "reader-colours-menu",
+      "area": "reader",
+      "tr": "Filtre menüsü, kelime ve cümle panelleri artık okuma sayfasının rengini alıyor: sepya ya da başka bir ton seçince onlar da aynı renkte. Okuyucunun üstüne güneş/ay düğmesi geldi, tek dokunuşla gündüz ve gece modu arasında geçebilirsin. Telefonda üst menüdeki düğmeler alt menüye taşındı: sağdaki Menü düğmesine dokununca alt çubuk yukarı açılıyor; gece/gündüz modu, Gramer, Ücretsiz kütüphane, İstatistiklerim ve Ayarlar orada. Bilgisayarda faresiyle bir kelimenin üzerine gelince küçük bir baloncukta ilk Türkçe anlamı hemen görünüyor; ayrıntı için tıkla. Kitaptaki cümlenin altında bazen başka bir cümlenin Türkçesi çıkıyordu, bu düzeltildi.",
+      "en": "The filter menu and the word and sentence panels now take the reading page's colour: pick sepia or another shade and they match it. A sun/moon button at the top of the reader switches day and night mode in one tap. On phones the top bar's buttons moved to the bottom bar: tap Menu on the right and the bar opens upward with night/day mode, Grammar, Free library, Stats and Settings. On computers, hovering over a word shows its first Turkish meaning in a small bubble right away; click for details. The Turkish under the book's sentence sometimes belonged to another sentence; this is fixed."
+    },
+    {
+      "id": "simple-word-panel",
+      "area": "reader",
+      "tr": "Kelime paneli sadeleşti: en üstte altın kutuda kelimenin bu cümledeki Türkçe anlamı, hemen altında kitaptaki cümle ve Türkçesi var. Diğer anlamlar önce Türkçe, sonra İngilizce tanım ve Türkçesiyle örnek cümleyle listeleniyor. İngilizce satırlar küçük ve mavi, yanlarında EN etiketi; Türkçe satırlar kalın, TR etiketli. Sözlükte Türkçesi olmayan anlamlar için artık yeni sözlüğümüzün Türkçesi kullanılıyor. Bilgisayarda cümle paneli ekranın solunda açılıyor; okuyucudaki filtre menüsü üstteki filtre düğmesiyle açılıp kapanıyor.",
+      "en": "The word panel is simpler: a gold box at the top gives the word's Turkish meaning in this sentence, with the book's sentence and its Turkish right below. Other meanings come Turkish first, then the English definition and an example with its Turkish. English lines are small and blue with an EN tag; Turkish lines are bold with a TR tag. Meanings the dictionary had no Turkish for now use our new dictionary's Turkish. On computers the sentence panel opens on the left, and the reader's filter menu opens and closes with the filter button at the top."
+    },
+    {
+      "id": "simpler-library-home",
+      "area": "app",
+      "tr": "Kitaplık sadeleşti: tekrar bekleyen kelimeler kartı ve \"Ücretsiz kütüphaneyi keşfet\" kartı kaldırıldı. Tekrar, Kelimelerim sayfasından; Ücretsiz kütüphane telefonda üstteki pusula düğmesinden, bilgisayarda sol menüden açılır.",
+      "en": "My library is simpler: the words-to-review card and the \"Explore the free library\" card are gone. Review from My words; open the free library from the compass button at the top on phones, or the side menu on computers."
+    },
+    {
+      "id": "dictionary-ai-meanings",
+      "area": "dictionary",
+      "tr": "Sözlük: 41.177 kelime ve 10.807 deyim için yeni Türkçe anlamlar ve İngilizce örnek cümleler (Türkçe çevirileriyle) eklendi. Bu anlamlar yapay zekâ ile yazıldı ve henüz bir insan tarafından kontrol edilmedi; hatalı görürseniz bildirin.",
+      "en": "Dictionary: new Turkish meanings and English example sentences, with Turkish translations, for 41,177 words and 10,807 phrases. These were written by AI and have not yet been checked by a person; tell us if you see a mistake."
+    },
+    {
+      "id": "side-word-panel",
+      "area": "reader",
+      "tr": "Bilgisayarda kelime, cümle ve kalıp panelleri artık ekranın sağında açılıyor; kitabın metni yanında okunur kalıyor, metne dokununca panel kapanıyor. Sol menünün altında bugünkü okuma hedefin ve \"Okumaya devam\" düğmesi var.",
+      "en": "On computers the word, sentence and expression panels now open on the right side of the screen, so the book stays readable beside them; tap the text to close the panel. The side menu shows today's reading goal and a \"Continue reading\" button at the bottom."
+    },
+    {
+      "id": "gold-look",
+      "area": "app",
+      "tr": "Yeni görünüm: gündüz krem ve altın, gece sıcak koyu kahve ve altın tonları. Yuvarlak kartlar, hap şeklinde altın butonlar ve yeni altın uygulama simgesi. Kitaplık'ta haftalık özet kartı (bugün, bu hafta, seri), yana kayan \"Okumaya devam et\" kartları ve büyük kapaklı kitap ızgarası var. Telefonda alt menü sadeleşti: ortadaki altın düğme son okuduğun kitabı açar; Ücretsiz kütüphane, İstatistik ve Ayarlar Kitaplık'ın üst kısmında.",
+      "en": "A new look: cream and gold by day, warm dark brown and gold at night, with rounded cards, gold pill buttons and a new gold app icon. My library has a weekly summary card (today, this week, streak), sideways \"Continue reading\" cards and a grid of big covers. On phones the bottom bar is simpler: the gold button in the middle opens the book you read last; Free library, Stats and Settings are at the top of My library."
+    },
+    {
+      "id": "free-library-pictures",
+      "area": "reader",
+      "tr": "Ücretsiz kütüphane yenilendi: hikâyeler ve kitaplar artık resimleriyle geliyor; resimli hikâyelerde her sayfa kitaptaki gibi kendi resmiyle açılıyor. Kütüphaneye A1'den C1'e 61 yeni telifsiz kitap eklendi (Beatrix Potter masalları, McGuffey okuma kitapları, Twins dizisi, Uncle Wiggily, Küçük Prenses, Yeşilin Kızı Anne, Büyük Umutlar, İki Şehrin Hikâyesi ve daha fazlası). Daha önce eklediğin bir kitabın bilgi sayfasındaki \"Resimli sürümle yenile\" düğmesi resimli sürümünü getirir, kaldığın bölüm korunur.",
+      "en": "The free library is renewed: stories and books now come with their pictures, and in picture stories each page opens with its own picture, as in the book. 61 new copyright-free books from A1 to C1 were added (Beatrix Potter's tales, McGuffey readers, the Twins series, Uncle Wiggily, A Little Princess, Anne of Green Gables, Great Expectations, A Tale of Two Cities and more). For a book you added before, \"Get the illustrated edition\" on its info sheet brings the illustrated edition and keeps your place."
+    },
+    {
+      "id": "picture-books",
+      "area": "reader",
+      "tr": "Resimli kitaplar: PDF, EPUB, Word, ODT ve FB2 kitaplarındaki resimler yerinde, altlarındaki açıklamalarla görünüyor; açıklamalar artık cümlelerin arasına karışmıyor. PDF'nin her sayfası okuyucuda bir sayfa, başlıklar büyük ve ortalı. Sesli okuma sayfayı kendisi çeviriyor, kitap kaldığın sayfada açılıyor. Taranmış PDF'lerde büyük ilk harfler (\"In the garden\"), boşluklu kelimeler (\"tre e\") ve simge sanılan harfler (\"sho\\ivs\") düzeltiliyor. Kitabın ilk sayfasındaki kapak resmi Kitaplığım'da kapak oluyor.",
+      "en": "Illustrated books: pictures in PDF, EPUB, Word, ODT and FB2 books show where the book has them, with their captions, and captions no longer get mixed into sentences. Each PDF page is a page in the reader, with titles large and centred. Reading aloud turns the page by itself, and a book opens on the page where you stopped. In scanned PDFs, large first letters (\"In the garden\"), words cut by spaces (\"tre e\") and letters read as symbols are repaired. The cover picture on a book's first page becomes its cover in My library."
+    },
+    {
+      "id": "reader-look",
+      "area": "reader",
+      "tr": "Okuma görünümünde her arka plan için bir ton ayarı: beyazdan kırık beyaza, açık sepyadan koyu sepyaya, gecede beyaz harflerden griye. Önceki/Sonraki düğmeleri ekranın altında sabit. Telefonda Ücretsiz kütüphane ve İstatistik alt menüde; menü sağa sola kayıyor.",
+      "en": "Reading view has a shade slider for each background: white to off-white, light to dark sepia, and white to grey letters at night. The Previous/Next buttons stay at the bottom of the screen. On phones Free library and Stats are in the bottom bar, which scrolls sideways."
+    },
+    {
       "id": "journey-dashboard",
       "area": "app",
       "tr": "İstatistiklerim: okuma süren, okuduğun kelimeler, sözlük kullanımın, tekrarların ve gramer alıştırmaların tek ekranda. Son 14 günün grafikleri var, bölümler tıklayınca açılıp kapanıyor. Geniş ekranda Ücretsiz kütüphane ve İstatistiklerim yeni sol menüde. Cümle analizinde dinleme düğmeleri cümlenin altına taşındı. Linux sürümü de yayında.",

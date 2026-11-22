@@ -27,7 +27,11 @@ class AutoAnalyzer {
 
   AutoAnalyzer(this.db, [this.dict]);
 
-  bool get enabled => db.getSetting('auto_analyze') != '0';
+  /// Uses the learner's paid AI service in the background, so it runs only
+  /// when they switched it on themselves ('1'). Older versions treated "no
+  /// value" as on and stored nothing when it was switched on, so an earlier
+  /// choice cannot be told apart from the default: no value is now off.
+  bool get enabled => db.getSetting('auto_analyze') == '1';
 
   void start() {
     _timer?.cancel();
@@ -51,7 +55,7 @@ class AutoAnalyzer {
     _running = true;
     try {
       if (!await svc.reachable()) return;
-      final books = db.books().where((b) => onlyBook == null || b.id == onlyBook);
+      final books = db.books(lang: 'en').where((b) => onlyBook == null || b.id == onlyBook);
       for (final b in books) {
         if (db.parasMissingTranslation(b.id).isEmpty) continue;
         _set(b.id, L('Çevrimiçi analiz başlıyor…', 'Starting online analysis…'));
@@ -80,11 +84,11 @@ class AutoAnalyzer {
   Future<void> _scanBooks() async {
     final d = dict;
     if (d == null) return;
-    for (final b in db.books()) {
+    for (final b in db.books(lang: 'en')) {
       if (!_scannedBooks.add(b.id)) continue;
       for (final ch in db.chapters(b.id)) {
         await Future<void>.delayed(Duration.zero); // keep the UI responsive
-        for (final p in db.paras(b.id, ch.idx)) {
+        for (final p in db.paras(b.id, ch.idx).where((p) => p.kind != 'i')) {
           for (final m in d.matcher.match(tokenize(p.text), text: p.text)) {
             _inBooks.add(m.expr.id);
           }
@@ -103,7 +107,7 @@ class AutoAnalyzer {
       dictStatus.value = null;
       return;
     }
-    final total = d.exprs.where((e) => e.en != null && e.tr == null).length;
+    final total = d.exprs.where((e) => e.en != null && e.tr == null && e.trDraft == null).length;
     const batch = 40;
     for (var i = 0; i < pending.length; i += batch) {
       if (!enabled) break;

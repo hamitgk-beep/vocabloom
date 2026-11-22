@@ -23,22 +23,64 @@ class DeviceTranslate {
   /// can decide at once, without a platform call).
   bool ready(UserDb user) => supported && user.getSetting(_readyKey) == '1';
 
+  /// True while the package is being downloaded (panels show "preparing"
+  /// instead of a button, and refresh when it is done).
+  final downloading = ValueNotifier<bool>(false);
+  Future<bool>? _running;
+
+  /// Set before a download starts and cleared when it ends. Still set at the
+  /// next start means the app closed during the download, so it is not
+  /// started on its own again (the learner can still press the button).
+  static const _tryKey = 'mt_tr_trying';
+
   /// Downloads the English and Turkish packages. Works on mobile data too.
-  Future<bool> download(UserDb user) async {
+  /// English is built in, so only Turkish is fetched.
+  Future<bool> download(UserDb user) => _running ??= _download(user).whenComplete(() => _running = null);
+
+  Future<bool> _download(UserDb user) async {
     if (!supported) return false;
-    final en = await _manager.downloadModel(TranslateLanguage.english.bcpCode, isWifiRequired: false);
-    final tr = await _manager.downloadModel(TranslateLanguage.turkish.bcpCode, isWifiRequired: false);
-    final ok = en && tr || await _manager.isModelDownloaded(TranslateLanguage.turkish.bcpCode);
-    if (ok) user.setSetting(_readyKey, '1');
-    return ok;
+    downloading.value = true;
+    user.setSetting(_tryKey, '1');
+    try {
+      final tr = TranslateLanguage.turkish.bcpCode;
+      var ok = await _manager.isModelDownloaded(tr);
+      if (!ok) ok = await _manager.downloadModel(tr, isWifiRequired: false);
+      if (!ok) ok = await _manager.isModelDownloaded(tr);
+      if (ok) user.setSetting(_readyKey, '1');
+      return ok;
+    } catch (_) {
+      return false;
+    } finally {
+      user.setSetting(_tryKey, '');
+      downloading.value = false;
+    }
   }
+
+  /// Gets the package ready by itself when the app starts, so the learner
+  /// never has to press a button: once, in the background. Skipped when an
+  /// earlier start closed during the download.
+  void prepare(UserDb user) {
+    if (!supported || ready(user)) return;
+    final t = user.getSetting(_tryKey);
+    if (t == '1' || t == 'closed') {
+      user.setSetting(_tryKey, 'closed');
+      return;
+    }
+    download(user);
+  }
+
+  /// Engine and direction in the saved answers' key: an answer is reused only
+  /// for the same text, the same direction and the same engine.
+  static const cachePrefix = 'mt:mlkit:en>tr:';
 
   /// Turkish of [text]; answers are kept, so a sentence is translated once.
   Future<String?> translate(UserDb user, String text) async {
     text = text.trim();
     if (!ready(user) || text.isEmpty) return null;
-    final key = 'mt:$text';
-    final saved = user.getSetting(key);
+    final key = '$cachePrefix$text';
+    // Saved by older versions under the bare text: the same engine and
+    // direction (ML Kit English > Turkish was the only one), so still valid.
+    final saved = user.getSetting(key) ?? user.getSetting('mt:$text');
     if (saved != null && saved.isNotEmpty) return saved;
     _translator ??= OnDeviceTranslator(sourceLanguage: TranslateLanguage.english, targetLanguage: TranslateLanguage.turkish);
     try {

@@ -1,5 +1,6 @@
-// Review card checks on a phone-sized screen: the right answer is the meaning
-// in the card's sentence, the asked word cannot be tapped (it would show the
+// Review card checks on a phone-sized screen: a card's saved meaning is kept;
+// one saved with no meaning asks the word's most common meaning, but is not
+// graded when its sentence clearly uses another meaning; the asked word cannot be tapped (it would show the
 // answer) while the other words can, and a book with a UUID file name shows a
 // real title. Screenshots go to $QA_OUT/review (default qa-report/review).
 import 'dart:io';
@@ -24,6 +25,7 @@ final outDir = Directory('${Platform.environment['QA_OUT'] ?? 'qa-report'}/revie
 const phone = Size(450, 1000);
 const uuid = '9bfdefed-8b6d-4c1e-9a7b-2f3c4d5e6f70';
 const golf = 'American-style supermarkets and a new golf course can now be found in Ho Chi Minh City.';
+const train = 'We took a through train from London to Edinburgh.';
 
 Future<void> _loadFonts() async {
   Future<void> family(String name, List<String> files) async {
@@ -52,8 +54,8 @@ Widget shell(Widget home) => MaterialApp(
       home: home,
     );
 
-Future<void> shot(WidgetTester tester, String name) async {
-  for (var i = 0; i < 10; i++) {
+Future<void> shot(WidgetTester tester, String name, {int pumps = 10}) async {
+  for (var i = 0; i < pumps; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
   final el = find.byType(MaterialApp).evaluate().first;
@@ -71,7 +73,7 @@ void main() {
   setUpAll(() async {
     await _loadFonts();
     final d = DictDb();
-    d.db = sqlite3.open('assets/dict.db', mode: OpenMode.readOnly);
+    d.db = sqlite3.open(Platform.environment['QA_DICT'] ?? 'assets/dict.db', mode: OpenMode.readOnly);
     d.load();
     final u = UserDb.open(Directory.systemTemp.createTempSync('vocabloom_review'));
     app = AppState(d, u);
@@ -81,14 +83,15 @@ void main() {
     ]));
     // Saved the way the old version did: under the UUID title, with the wrong meaning.
     u.setWord('course', WordStatus.learning, context: golf, book: uuid, meaning: 'akmak, hızla akmak');
+    u.setWord('through', WordStatus.learning, context: train, book: uuid);
     for (final w in ['narrow', 'storm', 'decision', 'island', 'village', 'important']) {
       u.setWord(w, WordStatus.learned);
     }
     u.repairBookTitles(looksGeneratedTitle, titleFromContent);
   });
 
-  Future<void> open(WidgetTester tester) async {
-    final cards = app.review.due(now: DateTime.now().add(const Duration(days: 1))).where((c) => c.word.lemma == 'course').toList();
+  Future<void> open(WidgetTester tester, [String lemma = 'course']) async {
+    final cards = app.review.due(now: DateTime.now().add(const Duration(days: 1))).where((c) => c.word.lemma == lemma).toList();
     await tester.pumpWidget(shell(ReviewPage(app: app, cards: cards)));
     await tester.pump(const Duration(milliseconds: 300));
   }
@@ -98,24 +101,40 @@ void main() {
     tester.view.physicalSize = phone * 2;
     tester.view.devicePixelRatio = 2;
 
-    // 1. Dictionary only: the built-in Turkish of "a ground laid out for a
-    // sport" makes it a four-choice question with the right meaning.
+    // 1. The card saved by the old version with "akmak" (a verb) for the golf
+    // course (a noun): the saved meaning is kept as it is, but it is not
+    // graded as a right answer; the card is a flashcard and shows no options.
     await open(tester);
     expect(find.textContaining('9bfdefed'), findsNothing);
     expect(find.text('Vietnam Opens Its Doors'), findsOneWidget);
-    expect(find.textContaining('akmak'), findsNothing);
+    expect(find.textContaining('akmak'), findsNothing); // hidden until the card is turned
     final st0 = tester.state(find.byType(ReviewPage)) as dynamic;
-    expect(st0.debugRight, 'golf sahası');
-    await shot(tester, 'course_dictionary_only');
+    expect(st0.debugRight, isNull);
+    expect(app.user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'course').meaning, 'akmak, hızla akmak');
+    await shot(tester, 'course_question');
+    // Turned: the saved meaning as it is, with the neutral note that it could
+    // not be confirmed for this sentence. Nothing is corrected.
+    await tester.tap(find.textContaining('Görmek için dokun'));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('akmak, hızla akmak'), findsOneWidget);
+    expect(find.byKey(const ValueKey('review-unconfirmed')), findsOneWidget);
+    await shot(tester, 'course_unconfirmed');
 
-    // 2. With the meaning from the AI service: four choices, the right one is "saha".
+    // 2. A meaning from the AI service for the sentence does not replace it.
     app.user.setContextAi('course', golf, 'saha, golf sahası');
     await open(tester);
     final st = tester.state(find.byType(ReviewPage)) as dynamic;
-    expect(st.debugRight, 'saha, golf sahası');
-    expect(find.text('saha, golf sahası'), findsOneWidget);
-    await shot(tester, 'course_question');
+    expect(st.debugRight, isNull);
+    expect(find.text('saha, golf sahası'), findsNothing);
 
+    // 2b. "through" saved from "a through train" with no meaning.
+    await open(tester, 'through');
+    final st2 = tester.state(find.byType(ReviewPage)) as dynamic;
+    // The picker has no meaning for "through" here it can stand behind: not graded.
+    expect(st2.debugRight, isNull);
+    await shot(tester, 'through_question');
+
+    await open(tester);
     // 3. Tapping the underlined asked word opens nothing; another word opens its panel.
     final rich = find.byWidgetPredicate((w) => w is RichText && w.text.toPlainText().contains('golf course'));
     expect(rich, findsOneWidget);

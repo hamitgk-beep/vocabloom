@@ -1,10 +1,17 @@
 name: build
+# Tests and builds every platform. It never publishes anything: a push to
+# main, a merged pull request or a manual start only builds and checks the
+# release files (job "package"). The real release is release.yml, started by
+# hand and approved in the "production" environment (docs/RELEASING.md).
 on:
   push:
     branches: [main]
-  # Pull requests build every platform too, but never publish a release.
   pull_request:
   workflow_dispatch:
+
+# Read-only token for every job here, whatever the repository default is.
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -18,10 +25,9 @@ jobs:
       # 0.1 (1.1, 1.2 ... 1.9, 2.0 ...). The build number stays for update checks.
       - id: version
         run: |
-          base=9cedfea
-          k=$(( $(git rev-list --count --first-parent "$base"..HEAD) ))
-          echo "version=$(( 1 + k / 10 )).$(( k % 10 ))" >> "$GITHUB_OUTPUT"
-          echo "Version $(( 1 + k / 10 )).$(( k % 10 ))"
+          v=$(tools/release/version.sh HEAD)
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "Version $v"
       - uses: subosito/flutter-action@v2
         with: { channel: stable, flutter-version: 3.50.0 }
       - run: flutter pub get
@@ -49,7 +55,7 @@ jobs:
       - run: flutter build windows --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-Windows
+          name: Storilex-Windows
           path: build/windows/x64/runner/Release
 
   android:
@@ -87,7 +93,7 @@ jobs:
       - run: flutter build apk --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-Android
+          name: Storilex-Android
           path: build/app/outputs/flutter-apk/app-release.apk
 
   linux:
@@ -105,7 +111,7 @@ jobs:
       - run: flutter build linux --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-Linux
+          name: Storilex-Linux
           path: build/linux/x64/release/bundle
 
   ios:
@@ -127,11 +133,19 @@ jobs:
         run: |
           mkdir -p Payload
           cp -R build/ios/iphoneos/Runner.app Payload/
-          zip -qr VocaBloom-unsigned.ipa Payload
+          # ML Kit is linked into the app itself, so it looks for its resource
+          # bundles (the translation model list, MLKitTranslate_resource) in
+          # the app folder, not inside its framework: without them the
+          # translation download closes the app.
+          for b in Payload/Runner.app/Frameworks/*.framework/*.bundle; do
+            [ -d "$b" ] && cp -R "$b" Payload/Runner.app/ && echo "copied $(basename "$b")"
+          done
+          test -d Payload/Runner.app/MLKitTranslate_resource.bundle
+          zip -qr Storilex-unsigned.ipa Payload
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-iOS
-          path: VocaBloom-unsigned.ipa
+          name: Storilex-iOS
+          path: Storilex-unsigned.ipa
 
   macos:
     needs: test
@@ -143,54 +157,46 @@ jobs:
       - run: flutter build macos --release --build-name=${{ needs.test.outputs.version }} --build-number=${{ github.run_number }} --dart-define=BUILD_NUMBER=${{ github.run_number }} --dart-define=APP_VERSION=${{ needs.test.outputs.version }}
       - uses: actions/upload-artifact@v4
         with:
-          name: VocaBloom-macOS
-          path: build/macos/Build/Products/Release/VocaBloom.app
+          name: Storilex-macOS
+          path: build/macos/Build/Products/Release/Storilex.app
 
-  release:
+  # Dry run of the release: the same packaging and checks release.yml uses,
+  # on every pull request and push, without creating, deleting, uploading or
+  # editing any release. The token here is read-only.
+  package:
     needs: [test, voice, windows, linux, android, ios, macos]
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - uses: actions/download-artifact@v4
-        with: { path: dist }
       - uses: actions/checkout@v4
         with: { fetch-depth: 0, path: src }
-      # "What's new" for the app's update banner: the hand-written entries in
-      # release_notes.json plus the nightly dictionary commits since the
-      # previous release (tools/release/release_notes.py).
-      - name: Release notes
+      - name: Only release.yml can change the 'latest' release
+        run: |
+          python3 -I src/tools/release/test_release_check.py
+          python3 -I src/tools/release/release_check.py check-workflows src/.github/workflows
+      - uses: actions/download-artifact@v4
+        with: { path: dist }
+      - name: Release text (read only)
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          gh release view latest --json body --jq .body > prev-body.md || true
-          prev=$(gh release view latest --json targetCommitish --jq .targetCommitish || true)
-          if [ -n "$prev" ] && git -C src cat-file -e "$prev^{commit}" 2>/dev/null; then
-            git -C src log --format=%s "$prev..$GITHUB_SHA" > commits.txt
-          else
-            : > commits.txt
-          fi
-          python3 -I src/tools/release/release_notes.py --version "${{ needs.test.outputs.version }}" \
-            --build "${{ github.run_number }}" --prev-body prev-body.md --commits commits.txt \
-            --notes src/release_notes.json > body.md
+          src/tools/release/make_body.sh src "$(git -C src rev-parse HEAD)" "${{ needs.test.outputs.version }}" "${{ github.run_number }}" body.md
+          python3 -I src/tools/release/release_check.py check-body body.md "${{ github.run_number }}" "${{ needs.test.outputs.version }}"
           cat body.md
       - name: Package files
+        run: src/tools/release/package.sh dist
+      - name: Check the release files
         run: |
-          cd dist
-          (cd VocaBloom-Windows && zip -qr ../VocaBloom-Windows.zip .)
-          cp VocaBloom-Android/app-release.apk VocaBloom-Android.apk
-          cp VocaBloom-iOS/VocaBloom-unsigned.ipa VocaBloom-iOS-unsigned.ipa
-          (cd VocaBloom-macOS && zip -qry ../VocaBloom-macOS.zip .)
-          tar -czf VocaBloom-Linux.tar.gz -C VocaBloom-Linux .
-      - name: Publish 'latest' release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          gh release delete latest --yes --cleanup-tag || true
-          gh release create latest --prerelease --target "$GITHUB_SHA" \
-            --title "VocaBloom ${{ needs.test.outputs.version }}" \
-            --notes-file body.md \
-            dist/VocaBloom-Windows.zip dist/VocaBloom-Android.apk dist/VocaBloom-iOS-unsigned.ipa dist/VocaBloom-macOS.zip dist/VocaBloom-Linux.tar.gz
+          python3 -I src/tools/release/release_check.py verify-dist dist | tee SHA256SUMS
+          ls -l dist/*.zip dist/*.apk dist/*.ipa dist/*.tar.gz
+          {
+            echo "### Release dry run (nothing published)"
+            echo "Version ${{ needs.test.outputs.version }}, build ${{ github.run_number }}. Publish with release.yml (docs/RELEASING.md)."
+            echo '```'; cat SHA256SUMS; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-preview
+          path: |
+            body.md
+            SHA256SUMS

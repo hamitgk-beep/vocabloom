@@ -46,6 +46,13 @@ class ReadAloud extends ChangeNotifier {
 
   SpokenSentence? get current => active && _idx < _items.length ? _items[_idx] : null;
 
+  /// How far the reading is through the chapter, 0 to 1.
+  double get chapterProgress {
+    final c = current;
+    final n = paras().length;
+    return c == null || n == 0 ? 0 : ((c.para + 1) / n).clamp(0.0, 1.0);
+  }
+
   /// Sentence currently read in paragraph [para], if any.
   (int, int)? rangeIn(int para) {
     final c = current;
@@ -56,6 +63,7 @@ class ReadAloud extends ChangeNotifier {
     final ps = paras();
     return [
       for (var i = fromPara; i < ps.length; i++)
+        if (ps[i].kind != 'i')
         for (final r in sentenceRanges(ps[i].text))
           if (RegExp(r'[A-Za-z0-9]').hasMatch(ps[i].text.substring(r.$1, r.$2)))
             for (final c in speechChunks(ps[i].text, r.$1, r.$2, maxWords: 22)) (para: i, start: c.$1, end: c.$2),
@@ -121,7 +129,7 @@ class ReadAloud extends ChangeNotifier {
 
   /// [urgent]: the listener waits for this piece now.
   Future<String> _future(int i, {bool urgent = false}) => _pending.putIfAbsent(i, () {
-    final f = speech.synth(_text(_items[i]), urgent: urgent);
+    final f = speech.synth(_text(_items[i]), v: speech.voiceFor(speech.bookLang), urgent: urgent);
     f.ignore();
     return f;
   });

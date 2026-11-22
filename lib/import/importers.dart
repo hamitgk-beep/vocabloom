@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as html;
+import 'package:image/image.dart' as im;
 import 'package:path/path.dart' as p;
 import 'package:xml/xml.dart';
 
@@ -17,6 +19,33 @@ import 'text_repair.dart';
 const supportedExtensions = [
   'epub', 'pdf', 'txt', 'md', 'markdown', 'html', 'htm', 'xhtml', 'docx', 'odt', 'fb2', 'rtf', 'jpg', 'jpeg', 'png'
 ];
+
+/// Keeps a picture of an e-book file for the reader and returns its name in
+/// [images], or null when it is not worth showing (an icon, a spacer, a
+/// format the reader cannot draw). The same file is kept once.
+String? keepPicture(Map<String, List<int>> images, Map<String, String> names, String path, List<int>? bytes) {
+  if (bytes == null || bytes.length < 600) return null;
+  final known = names[path];
+  if (known != null) return known;
+  final data = bytes is Uint8List ? bytes : Uint8List.fromList(bytes);
+  final dec = im.findDecoderForData(data);
+  if (dec == null) return null;
+  final ext = switch (dec.format) {
+    im.ImageFormat.jpg => 'jpg',
+    im.ImageFormat.png => 'png',
+    im.ImageFormat.gif => 'gif',
+    im.ImageFormat.webp => 'webp',
+    im.ImageFormat.bmp => 'bmp',
+    _ => null,
+  };
+  if (ext == null) return null;
+  final info = dec.startDecode(data);
+  if (info != null && (info.width < 60 || info.height < 60)) return null;
+  final name = 'e${images.length + 1}.$ext';
+  images[name] = data;
+  names[path] = name;
+  return name;
+}
 
 typedef ImportProgress = void Function(String message);
 
@@ -70,7 +99,7 @@ ImportedBook withReadableTitle(ImportedBook b) {
   if (!looksGeneratedTitle(b.title)) return b;
   final t = titleFromContent(
       [for (final c in b.chapters) c.title], [for (final c in b.chapters.take(2)) ...c.paragraphs.take(5)]);
-  return t.isEmpty ? b : ImportedBook(t, b.author, b.format, b.chapters);
+  return t.isEmpty ? b : ImportedBook(t, b.author, b.format, b.chapters, b.images);
 }
 
 /// Converts a book file into the app's own chapter/paragraph format.
@@ -121,11 +150,13 @@ ImportedBook importBytes(List<int> bytes, String ext, String fallbackTitle) {
     for (final c in book.chapters)
       ImportedChapter(cleanInvisible(c.title), [
         for (final p in c.paragraphs)
-          if (cleanInvisible(p.$2).isNotEmpty) (p.$1, cleanInvisible(p.$2))
+          if (cleanInvisible(p.$2).isNotEmpty) (p.$1, p.$1 == 'i' ? p.$2 : cleanInvisible(p.$2))
       ])
   ].where((c) => c.paragraphs.isNotEmpty).toList();
-  if (chapters.isEmpty) throw ImportException(L('Dosyada okunabilir metin bulunamadı.', 'No readable text was found in the file.'));
-  return ImportedBook(book.title, book.author, book.format, chapters);
+  if (!chapters.any((c) => c.paragraphs.any((p) => p.$1 != 'i'))) {
+    throw ImportException(L('Dosyada okunabilir metin bulunamadı.', 'No readable text was found in the file.'));
+  }
+  return ImportedBook(book.title, book.author, book.format, chapters, book.images);
 }
 
 String _decodeText(List<int> bytes) {
@@ -200,12 +231,68 @@ ImportedBook _fromPlain(String text, String title, String format, {required bool
   return _chunk(ImportedBook(title, null, format, chapters));
 }
 
-/// A text from the free library: Markdown made by tools/library/build_library.py,
-/// where `# Title` starts a chapter. [format] is shown on the cover (the level).
-ImportedBook importLibraryMarkdown(String md, String title, String? author, String format) {
-  final b = _fromPlain(md, title, format, markdown: true);
-  return ImportedBook(title, author, format, b.chapters);
+/// A text from the free library: Markdown made by tools/library/build_library.py.
+/// `# Title` starts a chapter, `### Title` is a heading inside it, a block
+/// that is only `![description](address "caption")` is a picture (with its
+/// caption when the book prints one), and a line `---` turns the page: a
+/// picture book keeps its pages, one picture and its text on each.
+/// [pictures] has the pictures' files by address; a picture that is not
+/// there is left out with its caption. [format] is shown on the cover (the level).
+ImportedBook importLibraryMarkdown(String md, String title, String? author, String format,
+    {Map<String, List<int>> pictures = const {}}) {
+  final images = <String, List<int>>{}, names = <String, String>{};
+  final paged = RegExp(r'^---\s*$', multiLine: true).hasMatch(md);
+  final chapters = <ImportedChapter>[];
+  var cur = ImportedChapter('', []);
+  var page = 0;
+  final picture = RegExp(r'^!\[([^\]]*)\]\(\s*(\S+?)(?:\s+"([^"]*)")?\s*\)$');
+  for (var b in md.replaceAll('\r\n', '\n').split(RegExp(r'\n\s*\n'))) {
+    b = b.trim();
+    if (b.isEmpty) continue;
+    Map<String, Object?>? meta() => paged ? {'pg': page} : null;
+    if (RegExp(r'^---$').hasMatch(b)) {
+      if (cur.paragraphs.isNotEmpty) page++;
+      continue;
+    }
+    final h = RegExp(r'^(#{1,6})\s+(.*)$').firstMatch(b);
+    if (h != null && h.group(1)!.length <= 2) {
+      if (cur.paragraphs.isNotEmpty) chapters.add(cur);
+      cur = ImportedChapter(_clean(h.group(2)!), []);
+      cur.add('h', _clean(h.group(2)!), meta());
+      continue;
+    }
+    if (h != null) {
+      cur.add('h', _clean(h.group(2)!), meta());
+      continue;
+    }
+    final pic = picture.firstMatch(b);
+    if (pic != null) {
+      final bytes = pictures[pic.group(2)!];
+      final name = keepPicture(images, names, pic.group(2)!, bytes);
+      if (name == null) continue;
+      final m = <String, Object?>{...?meta()};
+      final info = im.findDecoderForData(Uint8List.fromList(bytes!))?.startDecode(Uint8List.fromList(bytes));
+      if (info != null && info.height > 0) {
+        m['ar'] = (info.width / info.height * 1000).round() / 1000;
+        // A small drawing (an ornament, a vignette) stays small.
+        m['wr'] = (info.width / 640).clamp(0.3, 1.0);
+      }
+      cur.add('i', name, m);
+      final cap = _clean(pic.group(3) ?? '');
+      if (cap.isNotEmpty) cur.add('c', cap, {...?meta(), 'al': 'c'});
+      continue;
+    }
+    final t = _clean(b.replaceAllMapped(RegExp(r'\[([^\]]*)\]\([^)]*\)'), (m) => m.group(1)!).replaceAll(RegExp(r'[*_`>]+'), ''));
+    if (t.isNotEmpty) cur.add('p', t, meta());
+  }
+  if (cur.paragraphs.isNotEmpty) chapters.add(cur);
+  return _chunk(ImportedBook(title, author, format, chapters, images));
 }
+
+/// The addresses of the pictures in a free-library text, in order.
+List<String> libraryPictures(String md) => [
+  for (final m in RegExp(r'^!\[[^\]]*\]\(\s*(\S+?)(?:\s+"[^"]*")?\s*\)\s*$', multiLine: true).allMatches(md)) m.group(1)!,
+];
 
 /// Splits very long chapters so the reader stays fast; names unnamed chapters.
 ImportedBook _chunk(ImportedBook b, {int size = 80}) {
@@ -216,17 +303,18 @@ ImportedBook _chunk(ImportedBook b, {int size = 80}) {
       continue;
     }
     for (var i = 0; i < c.paragraphs.length; i += size) {
-      final part = c.paragraphs.sublist(i, (i + size).clamp(0, c.paragraphs.length));
-      out.add(ImportedChapter(c.title.isEmpty ? '' : '${c.title} (${i ~/ size + 1})', part));
+      final end = (i + size).clamp(0, c.paragraphs.length);
+      final part = c.paragraphs.sublist(i, end);
+      out.add(ImportedChapter(c.title.isEmpty ? '' : '${c.title} (${i ~/ size + 1})', part, [for (var k = i; k < end; k++) c.metaAt(k)]));
     }
   }
   for (var i = 0; i < out.length; i++) {
     if (out[i].title.isEmpty) {
       final h = out[i].paragraphs.where((x) => x.$1 == 'h').map((x) => x.$2).firstOrNull;
-      out[i] = ImportedChapter(h ?? L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), out[i].paragraphs);
+      out[i] = ImportedChapter(h ?? L('Bölüm ${i + 1}', 'Chapter ${i + 1}'), out[i].paragraphs, out[i].meta);
     }
   }
-  return ImportedBook(b.title, b.author, b.format, out);
+  return ImportedBook(b.title, b.author, b.format, out, b.images);
 }
 
 // ---------------------------------------------------------------- HTML / EPUB
@@ -237,7 +325,10 @@ const _blockTags = {
 };
 const _skipTags = {'script', 'style', 'head', 'svg', 'math', 'img', 'nav'};
 
-List<(String, String)> _htmlBlocks(dom.Element root) {
+/// Paragraphs of an HTML page. With [picture], pictures (`<img>`, an `<svg>`
+/// with an `<image>`) become 'i' paragraphs where they are, named by
+/// [picture] from their address, and a `<figcaption>` is a caption ('c').
+List<(String, String)> _htmlBlocks(dom.Element root, {String? Function(String src)? picture}) {
   final out = <(String, String)>[];
   final buf = StringBuffer();
   var kind = 'p';
@@ -255,6 +346,17 @@ List<(String, String)> _htmlBlocks(dom.Element root) {
     }
     if (n is! dom.Element) return;
     final tag = n.localName ?? '';
+    if (picture != null && (tag == 'img' || tag == 'svg')) {
+      final src = tag == 'img'
+          ? n.attributes['src']
+          : n.querySelector('image')?.attributes['xlink:href'] ?? n.querySelector('image')?.attributes['href'];
+      final name = src == null ? null : picture(src);
+      if (name != null) {
+        flush();
+        out.add(('i', name));
+      }
+      return;
+    }
     if (_skipTags.contains(tag)) return;
     // Project Gutenberg's notes and licence around the book.
     if ({'pg-header', 'pg-footer', 'pg-machine-header', 'pg-start-separator', 'pg-end-separator'}.contains(n.id) ||
@@ -272,6 +374,7 @@ List<(String, String)> _htmlBlocks(dom.Element root) {
       walk(c);
     }
     if (isHeading) kind = 'h';
+    if (tag == 'figcaption' && picture != null) kind = 'c';
     if (block) flush();
   }
 
@@ -320,6 +423,7 @@ ImportedBook _importEpub(List<int> bytes, String fallbackTitle) {
     }
   }
   final chapters = <ImportedChapter>[];
+  final images = <String, List<int>>{}, names = <String, String>{};
   for (final ref in opf.descendants.whereType<XmlElement>().where((e) => e.name.local == 'itemref')) {
     final href = manifest[ref.getAttribute('idref')];
     if (href == null) continue;
@@ -327,11 +431,18 @@ ImportedBook _importEpub(List<int> bytes, String fallbackTitle) {
     final f = find(full);
     if (f == null) continue;
     final doc = html.parse(read(f));
-    final blocks = _htmlBlocks(doc.body ?? doc.documentElement!);
+    String? picture(String src) {
+      if (src.startsWith('data:') || src.contains('://')) return null;
+      final path = p.posix.normalize(p.posix.join(p.posix.dirname(full), src.split('#').first));
+      return keepPicture(images, names, path, find(path)?.content as List<int>?);
+    }
+
+    final blocks = _htmlBlocks(doc.body ?? doc.documentElement!, picture: picture);
+    // A page with only a picture (the cover, a plate) is still a page of the book.
     if (blocks.isEmpty) continue;
     chapters.add(ImportedChapter(tocTitles[full] ?? '', blocks));
   }
-  return _chunk(ImportedBook(title?.isNotEmpty == true ? title! : fallbackTitle, author, 'epub', chapters));
+  return _chunk(ImportedBook(title?.isNotEmpty == true ? title! : fallbackTitle, author, 'epub', chapters, images));
 }
 
 // ---------------------------------------------------------------- DOCX / ODT / FB2
@@ -340,12 +451,32 @@ ImportedBook _importDocx(List<int> bytes, String fallbackTitle) {
   final f = arc.files.where((f) => f.name == 'word/document.xml').firstOrNull;
   if (f == null) throw ImportException(L('Geçersiz DOCX dosyası.', 'Invalid DOCX file.'));
   final doc = XmlDocument.parse(utf8.decode(f.content as List<int>));
+  // Pictures: <a:blip r:embed="rId5"/> names a file in word/_rels/document.xml.rels.
+  final rels = <String, String>{};
+  final relFile = arc.files.where((f) => f.name == 'word/_rels/document.xml.rels').firstOrNull;
+  if (relFile != null) {
+    for (final r in XmlDocument.parse(utf8.decode(relFile.content as List<int>)).descendants.whereType<XmlElement>()) {
+      final id = r.getAttribute('Id'), target = r.getAttribute('Target');
+      if (r.name.local == 'Relationship' && id != null && target != null) rels[id] = p.posix.normalize(p.posix.join('word', target));
+    }
+  }
+  final images = <String, List<int>>{}, names = <String, String>{};
   final chapters = <ImportedChapter>[];
   var cur = ImportedChapter('', []);
   for (final para in doc.descendants.whereType<XmlElement>().where((e) => e.name.local == 'p' && e.name.prefix == 'w')) {
     final style = para.descendants.whereType<XmlElement>().where((e) => e.name.local == 'pStyle').firstOrNull?.getAttribute('w:val') ?? '';
+    for (final blip in para.descendants.whereType<XmlElement>().where((e) => e.name.local == 'blip')) {
+      final path = rels[blip.getAttribute('r:embed') ?? ''];
+      if (path == null) continue;
+      final name = keepPicture(images, names, path, arc.files.where((f) => f.name == path).firstOrNull?.content as List<int>?);
+      if (name != null) cur.paragraphs.add(('i', name));
+    }
     final text = _clean(_docxText(para));
     if (text.isEmpty) continue;
+    if (RegExp(r'^(Caption|ResimYaz)', caseSensitive: false).hasMatch(style)) {
+      cur.paragraphs.add(('c', text));
+      continue;
+    }
     final heading = RegExp(r'^(Heading|Başlık|Title)', caseSensitive: false).hasMatch(style);
     if (heading && RegExp(r'(1|Title)$').hasMatch(style)) {
       if (cur.paragraphs.isNotEmpty) chapters.add(cur);
@@ -354,7 +485,7 @@ ImportedBook _importDocx(List<int> bytes, String fallbackTitle) {
     cur.paragraphs.add((heading ? 'h' : 'p', text));
   }
   if (cur.paragraphs.isNotEmpty) chapters.add(cur);
-  return _chunk(ImportedBook(fallbackTitle, null, 'docx', chapters));
+  return _chunk(ImportedBook(fallbackTitle, null, 'docx', chapters, images));
 }
 
 /// Text of a Word paragraph. Tabs and line breaks inside it separate words
@@ -410,8 +541,16 @@ ImportedBook _importOdt(List<int> bytes, String fallbackTitle) {
   if (f == null) throw ImportException(L('Geçersiz ODT dosyası.', 'Invalid ODT file.'));
   final doc = XmlDocument.parse(utf8.decode(f.content as List<int>));
   final chapters = <ImportedChapter>[];
+  final images = <String, List<int>>{}, names = <String, String>{};
   var cur = ImportedChapter('', []);
   for (final e in doc.descendants.whereType<XmlElement>().where((e) => e.name.prefix == 'text' && (e.name.local == 'p' || e.name.local == 'h'))) {
+    // Pictures anchored in this paragraph (not in a paragraph inside a frame of it).
+    for (final img in e.descendants.whereType<XmlElement>().where((x) => x.name.prefix == 'draw' && x.name.local == 'image')) {
+      final path = img.getAttribute('xlink:href');
+      if (path == null || path.contains('://')) continue;
+      final name = keepPicture(images, names, path, arc.files.where((f) => f.name == path).firstOrNull?.content as List<int>?);
+      if (name != null) cur.paragraphs.add(('i', name));
+    }
     final text = _clean(_odtText(e));
     if (text.isEmpty) continue;
     if (e.name.local == 'h') {
@@ -425,7 +564,7 @@ ImportedBook _importOdt(List<int> bytes, String fallbackTitle) {
     }
   }
   if (cur.paragraphs.isNotEmpty) chapters.add(cur);
-  return _chunk(ImportedBook(fallbackTitle, null, 'odt', chapters));
+  return _chunk(ImportedBook(fallbackTitle, null, 'odt', chapters, images));
 }
 
 ImportedBook _importFb2(String xml, String fallbackTitle) {
@@ -440,6 +579,24 @@ ImportedBook _importFb2(String xml, String fallbackTitle) {
       : _clean([first(authorEl, 'first-name')?.innerText, first(authorEl, 'last-name')?.innerText].whereType<String>().join(' '));
   final chapters = <ImportedChapter>[];
   final body = first(doc, 'body');
+  // Pictures: <image l:href="#id"/> and <binary id="id">base64</binary>.
+  final binaries = {
+    for (final b in doc.descendants.whereType<XmlElement>().where((e) => e.name.local == 'binary'))
+      if (b.getAttribute('id') != null) b.getAttribute('id')!: b.innerText,
+  };
+  final images = <String, List<int>>{}, names = <String, String>{};
+  String? fb2Picture(XmlElement e) {
+    final href = e.attributes.where((a) => a.name.local == 'href').firstOrNull?.value;
+    if (href == null || !href.startsWith('#')) return null;
+    final data = binaries[href.substring(1)];
+    if (data == null) return null;
+    try {
+      return keepPicture(images, names, href, base64.decode(data.replaceAll(RegExp(r'\s'), '')));
+    } catch (_) {
+      return null;
+    }
+  }
+
   // Sections can hold sections (parts with chapters): every section with its own
   // text becomes a chapter; the titles of the parts above it go first.
   final pending = <(String, String)>[];
@@ -451,9 +608,14 @@ ImportedBook _importFb2(String xml, String fallbackTitle) {
     pending.clear();
     if (title.isNotEmpty) paras.add(('h', title));
     final subs = s.childElements.where(isSection).toList();
-    for (final e in s.descendants.whereType<XmlElement>().where((e) => e.name.local == 'p' || e.name.local == 'v' || e.name.local == 'subtitle')) {
+    for (final e in s.descendants.whereType<XmlElement>().where((e) => e.name.local == 'p' || e.name.local == 'v' || e.name.local == 'subtitle' || e.name.local == 'image')) {
       final up = e.ancestors.whereType<XmlElement>().takeWhile((a) => a != s);
       if (up.any((a) => a.name.local == 'title' || isSection(a))) continue;
+      if (e.name.local == 'image') {
+        final name = fb2Picture(e);
+        if (name != null) paras.add(('i', name));
+        continue;
+      }
       final x = _clean(e.innerText);
       if (x.isNotEmpty) paras.add((e.name.local == 'subtitle' ? 'h' : 'p', x));
     }
@@ -473,7 +635,7 @@ ImportedBook _importFb2(String xml, String fallbackTitle) {
       sections.forEach(visit);
     }
   }
-  return _chunk(ImportedBook(title?.isNotEmpty == true ? title! : fallbackTitle, author, 'fb2', chapters));
+  return _chunk(ImportedBook(title?.isNotEmpty == true ? title! : fallbackTitle, author, 'fb2', chapters, images));
 }
 
 /// Plain text of an RTF document: paragraphs separated by blank lines, the

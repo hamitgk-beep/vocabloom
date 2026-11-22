@@ -1,5 +1,61 @@
 [
 {
+"id": "pg-11065",
+"kind": "book",
+"title": "Aunt Mary's Primer",
+"author": "Anonymous",
+"level": "A1",
+"words": 1358,
+"chapters": 8,
+"size": 3237,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/11065",
+"pics": 10,
+"picsSize": 238300
+},
+{
+"id": "pg-14642",
+"kind": "book",
+"title": "McGuffey's Eclectic Primer",
+"author": "William Holmes McGuffey",
+"level": "A1",
+"words": 2414,
+"chapters": 7,
+"size": 4472,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14642"
+},
+{
+"id": "pg-14640",
+"kind": "book",
+"title": "McGuffey's First Eclectic Reader",
+"author": "William Holmes McGuffey",
+"level": "A1",
+"words": 5334,
+"chapters": 5,
+"size": 10652,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14640"
+},
+{
+"id": "pg-13853",
+"kind": "book",
+"title": "New National First Reader",
+"author": "Charles J. Barnes and J. Marshall Hawkes",
+"level": "A1",
+"words": 5583,
+"chapters": 11,
+"size": 9541,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/13853",
+"pics": 33,
+"picsSize": 561085
+},
+{
 "id": "pb-0002",
 "kind": "story",
 "title": "Fat King Thin Dog",
@@ -8,7 +64,8 @@
 "words": 62,
 "license": "CC BY 4.0",
 "credit": "Text: Parismita; Illustration: Parismita. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0002_fat-king-thin-dog.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0002_fat-king-thin-dog.md",
+"pics": 8
 },
 {
 "id": "pb-0074",
@@ -19,7 +76,8 @@
 "words": 62,
 "license": "CC BY 4.0",
 "credit": "Text: Madhav Chavan; Illustration: Rijuta Ghate. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0074_naughty-or-not-tell-me-now-series.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0074_naughty-or-not-tell-me-now-series.md",
+"pics": 12
 },
 {
 "id": "pb-0209",
@@ -30,7 +88,8 @@
 "words": 63,
 "license": "CC BY 4.0",
 "credit": "Text: Ajay Puttam; Illustration: Prashant Miranda. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0209_the-man-likes-to-sing.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0209_the-man-likes-to-sing.md",
+"pics": 2
 },
 {
 "id": "pb-0072",
@@ -41,7 +100,8 @@
 "words": 64,
 "license": "CC BY 4.0",
 "credit": "Text: Madhav Chavan; Illustration: Rijuta Ghate. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0072_happy-and-sad-tell-me-now-series.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0072_happy-and-sad-tell-me-now-series.md",
+"pics": 12
 },
 {
 "id": "pb-0073",
@@ -52,7 +112,8 @@
 "words": 65,
 "license": "CC BY 4.0",
 "credit": "Text: Madhav Chavan; Illustration: Rijuta Ghate. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0073_colours-tell-me-now-series.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0073_colours-tell-me-now-series.md",
+"pics": 12
 },
 {
 "id": "pb-0414",
@@ -63,7 +124,8 @@
 "words": 67,
 "license": "CC BY 4.0",
 "credit": "Text: Mahiti Mahesh; Illustration: Vinayak Varma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0414_the-mango-tree.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0414_the-mango-tree.md",
+"pics": 2
 },
 {
 "id": "pb-0064",
@@ -74,7 +136,8 @@
 "words": 69,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Rajeev Verma 'Banjara'; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0064_my-friends.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0064_my-friends.md",
+"pics": 12
 },
 {
 "id": "pb-0193",
@@ -85,7 +148,8 @@
 "words": 78,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0193_timmi-s-dream.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0193_timmi-s-dream.md",
+"pics": 10
 },
 {
 "id": "pb-0162",
@@ -96,7 +160,8 @@
 "words": 81,
 "license": "CC BY 4.0",
 "credit": "Text: Baani Pahwa; Illustration: Ajit Narayan, Ketan Raut. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0162_climb-and-hop.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0162_climb-and-hop.md",
+"pics": 2
 },
 {
 "id": "pb-0223",
@@ -107,7 +172,8 @@
 "words": 82,
 "license": "CC BY 4.0",
 "credit": "Text: Avinash Kumar; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0223_mischievous-monkey.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0223_mischievous-monkey.md",
+"pics": 2
 },
 {
 "id": "pb-0301",
@@ -118,7 +184,8 @@
 "words": 87,
 "license": "CC BY 4.0",
 "credit": "Text: Krutarth Shah; Illustration: Greystroke, Ketan Raut, Muniza Shariq, Nimret Handa, Phidi Pulu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0301_and-this-is-how-the-earth-got-colour.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0301_and-this-is-how-the-earth-got-colour.md",
+"pics": 10
 },
 {
 "id": "pb-0100",
@@ -129,7 +196,8 @@
 "words": 89,
 "license": "CC BY 4.0",
 "credit": "Text: Mini Shrinivasan; Illustration: Deval Maniar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0100_i-can-climb.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0100_i-can-climb.md",
+"pics": 12
 },
 {
 "id": "pb-0285",
@@ -140,7 +208,8 @@
 "words": 90,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Radhika Pendse. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0285_zara.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0285_zara.md",
+"pics": 5
 },
 {
 "id": "pb-0103",
@@ -151,7 +220,8 @@
 "words": 91,
 "license": "CC BY 4.0",
 "credit": "Text: Mini Shrinivasan; Illustration: Tanvee Nabar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0103_i-can-make-things.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0103_i-can-make-things.md",
+"pics": 12
 },
 {
 "id": "pb-0219",
@@ -162,7 +232,8 @@
 "words": 96,
 "license": "CC BY 4.0",
 "credit": "Text: Sreedhar Vankadara; Illustration: Jaya Singh, kushagra agarwal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0219_be-greater-than-others.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0219_be-greater-than-others.md",
+"pics": 2
 },
 {
 "id": "pb-0271",
@@ -173,7 +244,8 @@
 "words": 97,
 "license": "CC BY 4.0",
 "credit": "Text: Lakshmi Stitha; Illustration: Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0271_best-friends-forever.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0271_best-friends-forever.md",
+"pics": 9
 },
 {
 "id": "pb-0059",
@@ -184,7 +256,8 @@
 "words": 101,
 "license": "CC BY 4.0",
 "credit": "Text: Radha HS; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0059_this-and-that.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0059_this-and-that.md",
+"pics": 8
 },
 {
 "id": "pb-0114",
@@ -195,7 +268,8 @@
 "words": 106,
 "license": "CC BY 4.0",
 "credit": "Text: Mini Shrinivasan; Illustration: Rayika Sen. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0114_i-am-not-afraid.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0114_i-am-not-afraid.md",
+"pics": 12
 },
 {
 "id": "pb-0385",
@@ -206,7 +280,8 @@
 "words": 109,
 "license": "CC BY 4.0",
 "credit": "Text: Jill Keeler; Illustration: Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0385_the-many-tails-of-jiril-the-squirrel.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0385_the-many-tails-of-jiril-the-squirrel.md",
+"pics": 7
 },
 {
 "id": "pb-0125",
@@ -217,7 +292,8 @@
 "words": 111,
 "license": "CC BY 4.0",
 "credit": "Text: Anupa Lal; Illustration: Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0125_my-best-friend.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0125_my-best-friend.md",
+"pics": 12
 },
 {
 "id": "pb-0048",
@@ -228,7 +304,8 @@
 "words": 114,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Rajeev Verma 'Banjara'; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0048_my-home.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0048_my-home.md",
+"pics": 16
 },
 {
 "id": "pb-0233",
@@ -239,7 +316,8 @@
 "words": 114,
 "license": "CC BY 4.0",
 "credit": "Text: Subhashree Beeman; Illustration: Abhishek Chakraborty, Nirvaan Pahwa. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0233_follow-your-dreams.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0233_follow-your-dreams.md",
+"pics": 2
 },
 {
 "id": "pb-0054",
@@ -250,7 +328,8 @@
 "words": 117,
 "license": "CC BY 4.0",
 "credit": "Text: Radha HS; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0054_do-and-don-t.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0054_do-and-don-t.md",
+"pics": 8
 },
 {
 "id": "pb-0041",
@@ -261,7 +340,8 @@
 "words": 120,
 "license": "CC BY 4.0",
 "credit": "Text: Pankaj Chaturvedi; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0041_look-at-me.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0041_look-at-me.md",
+"pics": 12
 },
 {
 "id": "pb-0115",
@@ -272,7 +352,8 @@
 "words": 120,
 "license": "CC BY 4.0",
 "credit": "Text: Mini Shrinivasan; Illustration: Aman Randhawa. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0115_i-can-help.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0115_i-can-help.md",
+"pics": 12
 },
 {
 "id": "pb-0203",
@@ -283,7 +364,8 @@
 "words": 120,
 "license": "CC BY 4.0",
 "credit": "Text: Kanti Jadia; Illustration: Deepa Balsavar, Madhuvanti Anantharajan, Preeti Krishnamurthy, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0203_the-train-journey.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0203_the-train-journey.md",
+"pics": 7
 },
 {
 "id": "pb-0237",
@@ -294,7 +376,8 @@
 "words": 123,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0237_the-missing-cat.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0237_the-missing-cat.md",
+"pics": 8
 },
 {
 "id": "pb-0156",
@@ -305,7 +388,8 @@
 "words": 126,
 "license": "CC BY 4.0",
 "credit": "Text: Arthi Anand-Navaneeth; Illustration: Greystroke, Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0156_subami-s-family.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0156_subami-s-family.md",
+"pics": 7
 },
 {
 "id": "pb-0264",
@@ -316,7 +400,8 @@
 "words": 127,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0264_the-perfect-project.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0264_the-perfect-project.md",
+"pics": 9
 },
 {
 "id": "pb-0230",
@@ -327,7 +412,8 @@
 "words": 139,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Kaveri Gopalakrishnan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0230_didi-s-knowledge.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0230_didi-s-knowledge.md",
+"pics": 11
 },
 {
 "id": "pb-0066",
@@ -338,7 +424,8 @@
 "words": 147,
 "license": "CC BY 4.0",
 "credit": "Text: Phidi Pulu; Illustration: Phidi Pulu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0066_my-car.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0066_my-car.md",
+"pics": 7
 },
 {
 "id": "pb-0392",
@@ -349,7 +436,8 @@
 "words": 155,
 "license": "CC BY 4.0",
 "credit": "Text: Oviee Sarwate; Illustration: Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0392_we-don-t-pick-up-dog-family.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0392_we-don-t-pick-up-dog-family.md",
+"pics": 1
 },
 {
 "id": "pb-0129",
@@ -360,7 +448,8 @@
 "words": 167,
 "license": "CC BY 4.0",
 "credit": "Text: Kanchan Bannerjee; Illustration: Deepa Balsavar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0129_naughty-dog.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0129_naughty-dog.md",
+"pics": 13
 },
 {
 "id": "pb-0231",
@@ -371,7 +460,8 @@
 "words": 170,
 "license": "CC BY 4.0",
 "credit": "Text: Anushka and Preeti Praveen; Illustration: Deepa Balsavar, Greystroke, Henu, Rajiv Eipe, Sheetal Thapa, Soumya Menon, Suvidha Mistry... Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0231_shruti-s-secret-to-winning.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0231_shruti-s-secret-to-winning.md",
+"pics": 10
 },
 {
 "id": "pb-0030",
@@ -382,7 +472,8 @@
 "words": 175,
 "license": "CC BY 4.0",
 "credit": "Text: Madhav Chavan; Illustration: Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0030_timmy-and-pepe.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0030_timmy-and-pepe.md",
+"pics": 12
 },
 {
 "id": "pb-0182",
@@ -393,7 +484,8 @@
 "words": 176,
 "license": "CC BY 4.0",
 "credit": "Text: Preksha Pc; Illustration: Ajit Narayan, Padmanabh, Rijuta Ghate, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0182_animals-are-kind.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0182_animals-are-kind.md",
+"pics": 8
 },
 {
 "id": "pb-0005",
@@ -404,7 +496,8 @@
 "words": 177,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0005_not-now-not-now.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0005_not-now-not-now.md",
+"pics": 8
 },
 {
 "id": "pb-0020",
@@ -415,7 +508,8 @@
 "words": 179,
 "license": "CC BY 4.0",
 "credit": "Text: Cheryl Rao; Illustration: Mayur Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0020_rani-s-first-day-at-school.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0020_rani-s-first-day-at-school.md",
+"pics": 7
 },
 {
 "id": "pb-0255",
@@ -426,7 +520,8 @@
 "words": 182,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Tanvi Choudhury. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0255_the-love-of-art.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0255_the-love-of-art.md",
+"pics": 11
 },
 {
 "id": "pb-0140",
@@ -437,7 +532,8 @@
 "words": 190,
 "license": "CC BY 4.0",
 "credit": "Text: Anushka Ravishankar; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0140_it-s-all-the-cat-s-fault.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0140_it-s-all-the-cat-s-fault.md",
+"pics": 10
 },
 {
 "id": "pb-0052",
@@ -448,7 +544,8 @@
 "words": 199,
 "license": "CC BY 4.0",
 "credit": "Text: Cheryl Rao; Illustration: Tanvi Choudhury. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0052_little-painters.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0052_little-painters.md",
+"pics": 12
 },
 {
 "id": "pb-0178",
@@ -459,7 +556,8 @@
 "words": 200,
 "license": "CC BY 4.0",
 "credit": "Text: Madhuri Pai; Illustration: Herminder Ohri, Sanjay Sarkar, Santosh Pujari, Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0178_long-water.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0178_long-water.md",
+"pics": 7
 },
 {
 "id": "pb-0341",
@@ -470,7 +568,8 @@
 "words": 202,
 "license": "CC BY 4.0",
 "credit": "Text: Vinuta Shirgopikar; Illustration: Greystroke, Srikrishna Kedilaya. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0341_fonky-s-fishy-party.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0341_fonky-s-fishy-party.md",
+"pics": 7
 },
 {
 "id": "pb-0277",
@@ -481,7 +580,8 @@
 "words": 213,
 "license": "CC BY 4.0",
 "credit": "Text: Vvs Prakash Bommisetti; Illustration: Radhika Pendse. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0277_the-brave-boy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0277_the-brave-boy.md",
+"pics": 1
 },
 {
 "id": "pb-0268",
@@ -492,7 +592,8 @@
 "words": 224,
 "license": "CC BY 4.0",
 "credit": "Text: Lakshmi Stitha; Illustration: Delwyn Remedios. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0268_the-girl-and-the-bear.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0268_the-girl-and-the-bear.md",
+"pics": 7
 },
 {
 "id": "pb-0337",
@@ -503,7 +604,8 @@
 "words": 224,
 "license": "CC BY 4.0",
 "credit": "Text: Kalyani Radhakrishnan; Illustration: Greystroke, Kavita Singh Kale, Somesh Kumar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0337_jack-and-anny-go-to-space.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0337_jack-and-anny-go-to-space.md",
+"pics": 5
 },
 {
 "id": "pb-0281",
@@ -514,7 +616,8 @@
 "words": 229,
 "license": "CC BY 4.0",
 "credit": "Text: Rajalakshmi Paramasivam; Illustration: Anita Sivakumar, Deepa Balsavar, Henu, Priya Kuriyan, Ruchi Shah, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0281_abhinav-and-the-cat.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0281_abhinav-and-the-cat.md",
+"pics": 8
 },
 {
 "id": "pb-0101",
@@ -525,7 +628,8 @@
 "words": 235,
 "license": "CC BY 4.0",
 "credit": "Text: Vidya Tiware; Illustration: Rijuta Ghate; Translation: Rohini Nilekani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0101_flying-high.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0101_flying-high.md",
+"pics": 9
 },
 {
 "id": "pb-0024",
@@ -536,7 +640,8 @@
 "words": 243,
 "license": "CC BY 4.0",
 "credit": "Text: Cheryl Rao; Illustration: Saurabh Pandey. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0024_no-smiles-today.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0024_no-smiles-today.md",
+"pics": 7
 },
 {
 "id": "pb-0112",
@@ -547,7 +652,8 @@
 "words": 260,
 "license": "CC BY 4.0",
 "credit": "Text: Sridala Swami; Illustration: Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0112_phani-s-funny-chappals.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0112_phani-s-funny-chappals.md",
+"pics": 13
 },
 {
 "id": "pb-0184",
@@ -558,7 +664,8 @@
 "words": 272,
 "license": "CC BY 4.0",
 "credit": "Text: Prakruti & Shruti Bhat; Illustration: Angie & Upesh, Deepa Balsavar, Padmanabh, Rijuta Ghate, Suvidha Mistry, Tanvi Choudhury. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0184_the-boy-who-hated-vegetables.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0184_the-boy-who-hated-vegetables.md",
+"pics": 16
 },
 {
 "id": "pb-0094",
@@ -569,7 +676,8 @@
 "words": 278,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0094_going-to-buy-a-book.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0094_going-to-buy-a-book.md",
+"pics": 10
 },
 {
 "id": "pb-0062",
@@ -580,7 +688,8 @@
 "words": 281,
 "license": "CC BY 4.0",
 "credit": "Text: Kiran Kasturia; Illustration: Shweta Mohapatra; Translation: Rajesh Khar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0062_bheema-the-sleepyhead.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0062_bheema-the-sleepyhead.md",
+"pics": 8
 },
 {
 "id": "pb-0132",
@@ -591,7 +700,8 @@
 "words": 284,
 "license": "CC BY 4.0",
 "credit": "Text: Madhav Chavan, Meera Tendolkar; Illustration: Santosh Pujari; Translation: Rohini Nilekani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0132_we-are-all-animals.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0132_we-are-all-animals.md",
+"pics": 29
 },
 {
 "id": "pb-0028",
@@ -602,7 +712,8 @@
 "words": 285,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0028_going-to-a-wedding.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0028_going-to-a-wedding.md",
+"pics": 12
 },
 {
 "id": "pb-0121",
@@ -613,7 +724,8 @@
 "words": 285,
 "license": "CC BY 4.0",
 "credit": "Text: Herminder Ohri; Illustration: Herminder Ohri. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0121_saboo-and-jojo.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0121_saboo-and-jojo.md",
+"pics": 9
 },
 {
 "id": "pb-0038",
@@ -624,7 +736,8 @@
 "words": 286,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Sheetal Thapa; Translation: Madhav Chavan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0038_my-balwadi.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0038_my-balwadi.md",
+"pics": 1
 },
 {
 "id": "pb-0138",
@@ -635,7 +748,8 @@
 "words": 286,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar; Illustration: Jithin Jacob. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0138_thangwang-and-bhalluka.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0138_thangwang-and-bhalluka.md",
+"pics": 8
 },
 {
 "id": "pb-0174",
@@ -646,7 +760,8 @@
 "words": 286,
 "license": "CC BY 4.0",
 "credit": "Text: Baani Pahwa; Illustration: Greystroke, Nirvaan Pahwa, Ruchi Shah, Vibhash Pandey. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0174_my-friend-trace-roger-the-robot.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0174_my-friend-trace-roger-the-robot.md",
+"pics": 5
 },
 {
 "id": "pb-0294",
@@ -657,7 +772,8 @@
 "words": 287,
 "license": "CC BY 4.0",
 "credit": "Text: Bharadwaj K P; Illustration: Angie & Upesh, Deval Maniar, Greystroke, Suvidha Mistry, Rakesh Naidu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0294_truth-alone-triumphs.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0294_truth-alone-triumphs.md",
+"pics": 7
 },
 {
 "id": "pb-0014",
@@ -668,7 +784,8 @@
 "words": 292,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar; Illustration: Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0014_i-want-that-one.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0014_i-want-that-one.md",
+"pics": 12
 },
 {
 "id": "pb-0029",
@@ -679,7 +796,8 @@
 "words": 292,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Ketan Raut, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0029_going-home.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0029_going-home.md",
+"pics": 12
 },
 {
 "id": "pb-0124",
@@ -690,7 +808,8 @@
 "words": 296,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Tanaya Vyas. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0124_grandma-s-glasses.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0124_grandma-s-glasses.md",
+"pics": 11
 },
 {
 "id": "pb-0078",
@@ -701,7 +820,8 @@
 "words": 302,
 "license": "CC BY 4.0",
 "credit": "Text: Sridala Swami; Illustration: Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0078_cheenu-s-gift.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0078_cheenu-s-gift.md",
+"pics": 12
 },
 {
 "id": "pb-0158",
@@ -712,7 +832,8 @@
 "words": 312,
 "license": "CC BY 4.0",
 "credit": "Text: Geetha Ravi; Illustration: Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0158_asha-gives-up-a-bad-habit.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0158_asha-gives-up-a-bad-habit.md",
+"pics": 1
 },
 {
 "id": "pb-0088",
@@ -723,7 +844,8 @@
 "words": 324,
 "license": "CC BY 4.0",
 "credit": "Text: Sridala Swami; Illustration: Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0088_the-flyaway-cradle.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0088_the-flyaway-cradle.md",
+"pics": 14
 },
 {
 "id": "pb-0344",
@@ -734,7 +856,8 @@
 "words": 325,
 "license": "CC BY 4.0",
 "credit": "Text: Sarita Shetty; Illustration: Bulbul Sharma, Herminder Ohri. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0344_gabbar-is-back.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0344_gabbar-is-back.md",
+"pics": 5
 },
 {
 "id": "pb-0151",
@@ -745,7 +868,8 @@
 "words": 337,
 "license": "CC BY 4.0",
 "credit": "Text: Sowmya Rajendran; Illustration: Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0151_ammu-s-puppy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0151_ammu-s-puppy.md",
+"pics": 17
 },
 {
 "id": "pb-0369",
@@ -756,7 +880,8 @@
 "words": 357,
 "license": "CC BY 4.0",
 "credit": "Text: Anusha Parthasarathy; Illustration: Deepa Balsavar, Greystroke, Nina Sabnani, Rajeev Verma 'Banjara', Rijuta Ghate. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0369_karthik-loves-to-read.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0369_karthik-loves-to-read.md",
+"pics": 6
 },
 {
 "id": "pb-0306",
@@ -767,7 +892,8 @@
 "words": 385,
 "license": "CC BY 4.0",
 "credit": "Text: Aryan NK; Illustration: Angie & Upesh, Greystroke, Henu, ayyagari anju. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0306_our-easy-escape.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0306_our-easy-escape.md",
+"pics": 7
 },
 {
 "id": "pb-0362",
@@ -778,7 +904,8 @@
 "words": 405,
 "license": "CC BY 4.0",
 "credit": "Text: Anusha Parthasarathy; Illustration: Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0362_shriya-and-her-piyali.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0362_shriya-and-her-piyali.md",
+"pics": 10
 },
 {
 "id": "pb-0366",
@@ -789,7 +916,8 @@
 "words": 426,
 "license": "CC BY 4.0",
 "credit": "Text: Anusha Parthasarathy; Illustration: Lavanya Karthik. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0366_little-madhu-s-dream.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0366_little-madhu-s-dream.md",
+"pics": 8
 },
 {
 "id": "pb-0167",
@@ -800,7 +928,8 @@
 "words": 434,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Kaveri Gopalakrishnan; Translation: Rukmini Banerji. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0167_didi-and-the-colourful-treasure.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0167_didi-and-the-colourful-treasure.md",
+"pics": 13
 },
 {
 "id": "pb-0417",
@@ -811,7 +940,8 @@
 "words": 438,
 "license": "CC BY 4.0",
 "credit": "Text: Havovi; Illustration: Ajit Narayan, Greystroke, Jagdish Joshi, Lavanya Karthik, Natasha Sharma, Srikrishna Kedilaya, Sunaina Coelho , Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0417_river-and-sun.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0417_river-and-sun.md",
+"pics": 12
 },
 {
 "id": "pb-0309",
@@ -822,7 +952,8 @@
 "words": 440,
 "license": "CC BY 4.0",
 "credit": "Text: Arushi Raj; Illustration: Kaveri Gopalakrishnan, Madhuvanti Anantharajan, Rajiv Eipe, Rijuta Ghate, Soumya Menon, Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0309_a-kind-boy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0309_a-kind-boy.md",
+"pics": 9
 },
 {
 "id": "pb-0276",
@@ -833,7 +964,8 @@
 "words": 465,
 "license": "CC BY 4.0",
 "credit": "Text: African Storybook Initiative; Illustration: Wiehan de Jager. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0276_king-of-birds.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0276_king-of-birds.md",
+"pics": 15
 },
 {
 "id": "pb-0412",
@@ -844,7 +976,8 @@
 "words": 484,
 "license": "CC BY 4.0",
 "credit": "Text: Sudesna Ghosh; Illustration: Maitreyi Jugran, Preeti Krishnamurthy, Saurabh Pandey, Suvidha Mistry, Tessa Welch, reddi sai. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0412_the-magic-pond.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0412_the-magic-pond.md",
+"pics": 6
 },
 {
 "id": "pb-0057",
@@ -855,7 +988,8 @@
 "words": 597,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar; Illustration: Henu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0057_ritu-s-letter-gets-longer.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0057_ritu-s-letter-gets-longer.md",
+"pics": 15
 },
 {
 "id": "pb-0406",
@@ -866,7 +1000,172 @@
 "words": 1682,
 "license": "CC BY 4.0",
 "credit": "Text: Payal Dhar; Illustration: Vartika Sharma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0406_a-helping-hand.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0406_a-helping-hand.md",
+"pics": 1
+},
+{
+"id": "pg-11592",
+"kind": "book",
+"title": "Little Red Riding Hood and Other Stories",
+"author": "Anonymous",
+"level": "A2",
+"words": 2655,
+"chapters": 5,
+"size": 5629,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/11592",
+"pics": 34,
+"picsSize": 1568644
+},
+{
+"id": "pg-13213",
+"kind": "book",
+"title": "The Night Before Christmas and Other Stories",
+"author": "Clement Clarke Moore and others",
+"level": "A2",
+"words": 6910,
+"chapters": 16,
+"size": 15124,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/13213",
+"pics": 63,
+"picsSize": 2841024
+},
+{
+"id": "pg-6936",
+"kind": "book",
+"title": "Robinson Crusoe in Words of One Syllable",
+"author": "Mary Godolphin",
+"level": "A2",
+"words": 9243,
+"chapters": 1,
+"size": 14959,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/6936"
+},
+{
+"id": "pg-14668",
+"kind": "book",
+"title": "McGuffey's Second Eclectic Reader",
+"author": "William Holmes McGuffey",
+"level": "A2",
+"words": 15685,
+"chapters": 1,
+"size": 34259,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14668"
+},
+{
+"id": "pg-3497",
+"kind": "book",
+"title": "The Swiss Twins",
+"author": "Lucy Fitch Perkins",
+"level": "A2",
+"words": 17144,
+"chapters": 6,
+"size": 33138,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/3497"
+},
+{
+"id": "pg-3496",
+"kind": "book",
+"title": "The Japanese Twins",
+"author": "Lucy Fitch Perkins",
+"level": "A2",
+"words": 19370,
+"chapters": 9,
+"size": 35609,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/3496"
+},
+{
+"id": "pg-4012",
+"kind": "book",
+"title": "The Dutch Twins",
+"author": "Lucy Fitch Perkins",
+"level": "A2",
+"words": 20041,
+"chapters": 6,
+"size": 35867,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/4012"
+},
+{
+"id": "pg-3774",
+"kind": "book",
+"title": "The Eskimo Twins",
+"author": "Lucy Fitch Perkins",
+"level": "A2",
+"words": 21525,
+"chapters": 46,
+"size": 38801,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/3774"
+},
+{
+"id": "pg-6692",
+"kind": "book",
+"title": "The Swiss Family Robinson in Words of One Syllable",
+"author": "Mary Godolphin",
+"level": "A2",
+"words": 26527,
+"chapters": 15,
+"size": 41511,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/6692"
+},
+{
+"id": "pg-14766",
+"kind": "book",
+"title": "McGuffey's Third Eclectic Reader",
+"author": "William Holmes McGuffey",
+"level": "A2",
+"words": 26598,
+"chapters": 1,
+"size": 56020,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14766"
+},
+{
+"id": "pg-15281",
+"kind": "book",
+"title": "Uncle Wiggily's Adventures",
+"author": "Howard R. Garis",
+"level": "A2",
+"words": 39488,
+"chapters": 35,
+"size": 67310,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/15281",
+"pics": 4,
+"picsSize": 147899
+},
+{
+"id": "pg-15282",
+"kind": "book",
+"title": "Uncle Wiggily's Travels",
+"author": "Howard R. Garis",
+"level": "A2",
+"words": 41560,
+"chapters": 30,
+"size": 71361,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/15282",
+"pics": 13,
+"picsSize": 1177498
 },
 {
 "id": "pb-0168",
@@ -877,7 +1176,8 @@
 "words": 62,
 "license": "CC BY 4.0",
 "credit": "Text: Baani Pahwa; Illustration: Sorit Gupto. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0168_my-anti-litter-poem.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0168_my-anti-litter-poem.md",
+"pics": 2
 },
 {
 "id": "pb-0218",
@@ -888,7 +1188,8 @@
 "words": 64,
 "license": "CC BY 4.0",
 "credit": "Text: Prabakaran Sadagopan; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0218_monkey-in-the-kitchen.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0218_monkey-in-the-kitchen.md",
+"pics": 2
 },
 {
 "id": "pb-0351",
@@ -899,7 +1200,8 @@
 "words": 71,
 "license": "CC BY 4.0",
 "credit": "Text: Harinishree Bala; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0351_moti-and-mohan.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0351_moti-and-mohan.md",
+"pics": 2
 },
 {
 "id": "pb-0382",
@@ -910,7 +1212,8 @@
 "words": 74,
 "license": "CC BY 4.0",
 "credit": "Text: Khushboo Awasthi; Illustration: Bulbul Sharma, Herminder Ohri. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0382_crocky-and-friends.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0382_crocky-and-friends.md",
+"pics": 8
 },
 {
 "id": "pb-0199",
@@ -921,7 +1224,8 @@
 "words": 79,
 "license": "CC BY 4.0",
 "credit": "Text: Rajesh CB; Illustration: Kushagra Agarwal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0199_the-magical-zoo.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0199_the-magical-zoo.md",
+"pics": 2
 },
 {
 "id": "pb-0427",
@@ -932,7 +1236,8 @@
 "words": 79,
 "license": "CC BY 4.0",
 "credit": "Text: Pahi Shrivastava; Illustration: Archana Sreenivasan, Diya Bahukhandi, Greystroke, Muniza Shariq, Reshma Barve, Sonal Goyal... Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0427_food-thieves.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0427_food-thieves.md",
+"pics": 7
 },
 {
 "id": "pb-0205",
@@ -943,7 +1248,8 @@
 "words": 81,
 "license": "CC BY 4.0",
 "credit": "Text: Swetapadma Satpathy; Illustration: Megha Vishwanath. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0205_golu-detective.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0205_golu-detective.md",
+"pics": 6
 },
 {
 "id": "pb-0226",
@@ -954,7 +1260,8 @@
 "words": 83,
 "license": "CC BY 4.0",
 "credit": "Text: Swathi Mandava; Illustration: Gayathri Manikandan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0226_diwali.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0226_diwali.md",
+"pics": 2
 },
 {
 "id": "pb-0173",
@@ -965,7 +1272,8 @@
 "words": 92,
 "license": "CC BY 4.0",
 "credit": "Text: Madhuri Pai; Illustration: Ajit Narayan, Greystroke, Shailja Jain Chougule. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0173_fun-with-balloon.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0173_fun-with-balloon.md",
+"pics": 6
 },
 {
 "id": "pb-0177",
@@ -976,7 +1284,8 @@
 "words": 98,
 "license": "CC BY 4.0",
 "credit": "Text: Jerina puthuran; Illustration: Deepa Balsavar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0177_amazing-ants.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0177_amazing-ants.md",
+"pics": 5
 },
 {
 "id": "pb-0319",
@@ -987,7 +1296,8 @@
 "words": 109,
 "license": "CC BY 4.0",
 "credit": "Text: Aditi; Illustration: Anjora Noronha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0319_a-brighter-day.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0319_a-brighter-day.md",
+"pics": 2
 },
 {
 "id": "pb-0208",
@@ -998,7 +1308,8 @@
 "words": 115,
 "license": "CC BY 4.0",
 "credit": "Text: Avinash Kumar; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0208_the-brave-kitten.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0208_the-brave-kitten.md",
+"pics": 2
 },
 {
 "id": "pb-0290",
@@ -1009,7 +1320,8 @@
 "words": 122,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Sorit Gupto. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0290_sheema-and-king-kenrykoof.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0290_sheema-and-king-kenrykoof.md",
+"pics": 9
 },
 {
 "id": "pb-0021",
@@ -1020,7 +1332,8 @@
 "words": 124,
 "license": "CC BY 4.0",
 "credit": "Text: Vinita Krishna; Illustration: Suvidha Mistry; Translation: Ritu Singh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0021_chhuk-chhuk-chhak.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0021_chhuk-chhuk-chhak.md",
+"pics": 8
 },
 {
 "id": "pb-0287",
@@ -1031,7 +1344,8 @@
 "words": 124,
 "license": "CC BY 4.0",
 "credit": "Text: Jyothi Tanu; Illustration: Sonal Goyal, Sumit Sakhuja, ayyagari anju. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0287_my-family.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0287_my-family.md",
+"pics": 2
 },
 {
 "id": "pb-0031",
@@ -1042,7 +1356,8 @@
 "words": 127,
 "license": "CC BY 4.0",
 "credit": "Text: Lubaina Bandukwala; Illustration: Zainab Tambawalla. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0031_cheep-cheep-drip-drip.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0031_cheep-cheep-drip-drip.md",
+"pics": 12
 },
 {
 "id": "pb-0296",
@@ -1053,7 +1368,8 @@
 "words": 129,
 "license": "CC BY 4.0",
 "credit": "Text: Reshma Krishnamurthy Sharma; Illustration: Priya Kuriyan, rakesh naidu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0296_rizwan-and-his-friends-having-fun-in-the-snow.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0296_rizwan-and-his-friends-having-fun-in-the-snow.md",
+"pics": 5
 },
 {
 "id": "pb-0235",
@@ -1064,7 +1380,8 @@
 "words": 134,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Megha Vishwanath. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0235_shambu-and-the-little-man.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0235_shambu-and-the-little-man.md",
+"pics": 6
 },
 {
 "id": "pb-0282",
@@ -1075,7 +1392,8 @@
 "words": 134,
 "license": "CC BY 4.0",
 "credit": "Text: Kalaiarasi Ramanan; Illustration: Kalaiarasi Ramanan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0282_the-avengers-and-the-age-of-powerful-mach-green-goblin.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0282_the-avengers-and-the-age-of-powerful-mach-green-goblin.md",
+"pics": 18
 },
 {
 "id": "pb-0046",
@@ -1086,7 +1404,8 @@
 "words": 141,
 "license": "CC BY 4.0",
 "credit": "Text: Vinita Krishna; Illustration: Suvidha Mistry; Translation: Ritu Singh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0046_aaloo-maaloo-kaaloo.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0046_aaloo-maaloo-kaaloo.md",
+"pics": 8
 },
 {
 "id": "pb-0053",
@@ -1097,7 +1416,8 @@
 "words": 143,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Angie & Upesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0053_the-moon-and-the-cap.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0053_the-moon-and-the-cap.md",
+"pics": 12
 },
 {
 "id": "pb-0172",
@@ -1108,7 +1428,8 @@
 "words": 146,
 "license": "CC BY 4.0",
 "credit": "Text: Madhuri Pai; Illustration: Ajit Narayan, Angie & Upesh, Henu, Padmanabh, Rijuta Ghate, Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0172_tree-on-a-plate.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0172_tree-on-a-plate.md",
+"pics": 8
 },
 {
 "id": "pb-0217",
@@ -1119,7 +1440,8 @@
 "words": 148,
 "license": "CC BY 4.0",
 "credit": "Text: Anusha Ravilla; Illustration: Prashant Miranda. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0217_the-king-and-his-music.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0217_the-king-and-his-music.md",
+"pics": 3
 },
 {
 "id": "pb-0300",
@@ -1130,7 +1452,8 @@
 "words": 149,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0300_toothpaste-trouble.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0300_toothpaste-trouble.md",
+"pics": 11
 },
 {
 "id": "pb-0181",
@@ -1141,7 +1464,8 @@
 "words": 163,
 "license": "CC BY 4.0",
 "credit": "Text: Prakruti & Shruti Bhat; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0181_prakruti.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0181_prakruti.md",
+"pics": 15
 },
 {
 "id": "pb-0389",
@@ -1152,7 +1476,8 @@
 "words": 165,
 "license": "CC BY 4.0",
 "credit": "Text: Neha Harsh; Illustration: Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0389_my-best-friend-and-i.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0389_my-best-friend-and-i.md",
+"pics": 5
 },
 {
 "id": "pb-0364",
@@ -1163,7 +1488,8 @@
 "words": 176,
 "license": "CC BY 4.0",
 "credit": "Text: Maryam Soni; Illustration: Archana Sreenivasan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0364_talking-tree-of-alpha-town.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0364_talking-tree-of-alpha-town.md",
+"pics": 8
 },
 {
 "id": "pb-0128",
@@ -1174,7 +1500,8 @@
 "words": 177,
 "license": "CC BY 4.0",
 "credit": "Text: Kanchan Bannerjee; Illustration: Deepa Balsavar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0128_noisy-crows.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0128_noisy-crows.md",
+"pics": 13
 },
 {
 "id": "pb-0195",
@@ -1185,7 +1512,8 @@
 "words": 179,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0195_the-party.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0195_the-party.md",
+"pics": 11
 },
 {
 "id": "pb-0303",
@@ -1196,7 +1524,8 @@
 "words": 182,
 "license": "CC BY 4.0",
 "credit": "Text: Jyothi Tanu; Illustration: Rijuta Ghate, Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0303_my-brother.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0303_my-brother.md",
+"pics": 3
 },
 {
 "id": "pb-0323",
@@ -1207,7 +1536,8 @@
 "words": 183,
 "license": "CC BY 4.0",
 "credit": "Text: Shivani Kumar; Illustration: Rayika Sen, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0323_chhoti-and-bade.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0323_chhoti-and-bade.md",
+"pics": 8
 },
 {
 "id": "pb-0008",
@@ -1218,7 +1548,8 @@
 "words": 185,
 "license": "CC BY 4.0",
 "credit": "Text: Suraj J Menon; Illustration: Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0008_my-fish-no-my-fish.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0008_my-fish-no-my-fish.md",
+"pics": 12
 },
 {
 "id": "pb-0257",
@@ -1229,7 +1560,8 @@
 "words": 191,
 "license": "CC BY 4.0",
 "credit": "Text: Adhvika Deepak; Illustration: Herminder Ohri, Preeti Krishnamurthy, Priya Kuriyan, Sanjay Sarkar, Sorit Gupto. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0257_nina-plays-with-the-butterflies.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0257_nina-plays-with-the-butterflies.md",
+"pics": 6
 },
 {
 "id": "pb-0126",
@@ -1240,7 +1572,8 @@
 "words": 192,
 "license": "CC BY 4.0",
 "credit": "Text: Kanchan Bannerjee; Illustration: Deepa Balsavar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0126_busy-ants.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0126_busy-ants.md",
+"pics": 12
 },
 {
 "id": "pb-0228",
@@ -1251,7 +1584,8 @@
 "words": 192,
 "license": "CC BY 4.0",
 "credit": "Text: Geeta Yadav; Illustration: Muniza Shariq. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0228_granny-and-her-bird-friend.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0228_granny-and-her-bird-friend.md",
+"pics": 1
 },
 {
 "id": "pb-0003",
@@ -1262,7 +1596,8 @@
 "words": 194,
 "license": "CC BY 4.0",
 "credit": "Text: Madhuri Pai; Illustration: Rijuta Ghate; Translation: Rohini Nilekani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0003_vayu-the-wind.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0003_vayu-the-wind.md",
+"pics": 11
 },
 {
 "id": "pb-0171",
@@ -1273,7 +1608,8 @@
 "words": 199,
 "license": "CC BY 4.0",
 "credit": "Text: Sandhya Sridhar; Illustration: Angie & Upesh, Hari Kumar Nair, Rajiv Eipe, Rijuta Ghate, Shailja Jain Chougule, Suvidha Mistry, Tapas Guha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0171_jaggee-s-mornings.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0171_jaggee-s-mornings.md",
+"pics": 8
 },
 {
 "id": "pb-0127",
@@ -1284,7 +1620,8 @@
 "words": 200,
 "license": "CC BY 4.0",
 "credit": "Text: Kanchan Bannerjee; Illustration: Deepa Balsavar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0127_clean-cat.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0127_clean-cat.md",
+"pics": 12
 },
 {
 "id": "pb-0149",
@@ -1295,7 +1632,8 @@
 "words": 200,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar, Manisha Chaudhry; Illustration: Soumya Menon; Translation: Mala Kumar, Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0149_where-is-gogo.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0149_where-is-gogo.md",
+"pics": 8
 },
 {
 "id": "pb-0357",
@@ -1306,7 +1644,8 @@
 "words": 200,
 "license": "CC BY 4.0",
 "credit": "Text: Menaka Raman; Illustration: Priya Kuriyan, Somesh Kumar, Suvidha Mistry, Vinayak Varma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0357_sam-the-dragon.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0357_sam-the-dragon.md",
+"pics": 13
 },
 {
 "id": "pb-0359",
@@ -1317,7 +1656,8 @@
 "words": 200,
 "license": "CC BY 4.0",
 "credit": "Text: Simoni Kothari; Illustration: Rupa Prakash. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0359_nosy-natasha-takes-a-note.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0359_nosy-natasha-takes-a-note.md",
+"pics": 8
 },
 {
 "id": "pb-0113",
@@ -1328,7 +1668,8 @@
 "words": 201,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Angie & Upesh; Translation: Rohini Nilekani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0113_topsy-turvy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0113_topsy-turvy.md",
+"pics": 12
 },
 {
 "id": "pb-0009",
@@ -1339,7 +1680,8 @@
 "words": 210,
 "license": "CC BY 4.0",
 "credit": "Text: Sridala Swami; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0009_susheela-s-kolams.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0009_susheela-s-kolams.md",
+"pics": 10
 },
 {
 "id": "pb-0106",
@@ -1350,7 +1692,8 @@
 "words": 210,
 "license": "CC BY 4.0",
 "credit": "Text: Hari Kumar Nair; Illustration: Hari Kumar Nair. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0106_what-if.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0106_what-if.md",
+"pics": 11
 },
 {
 "id": "pb-0400",
@@ -1361,7 +1704,8 @@
 "words": 219,
 "license": "CC BY 4.0",
 "credit": "Text: Paroma Sengupta; Illustration: Lavanya Karthik, Siraj Saxena, Tessa Welch. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0400_nanni-and-the-oil-spill.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0400_nanni-and-the-oil-spill.md",
+"pics": 5
 },
 {
 "id": "pb-0275",
@@ -1372,7 +1716,8 @@
 "words": 220,
 "license": "CC BY 4.0",
 "credit": "Text: Reddi Sai; Illustration: Lovely Samhitha, Naishmika Gopisetty, Radhika Pendse, ayyagari anju. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0275_cinderella.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0275_cinderella.md",
+"pics": 5
 },
 {
 "id": "pb-0085",
@@ -1383,7 +1728,8 @@
 "words": 222,
 "license": "CC BY 4.0",
 "credit": "Text: Nandini Nayar; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0085_when-amma-went-to-school.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0085_when-amma-went-to-school.md",
+"pics": 7
 },
 {
 "id": "pb-0102",
@@ -1394,7 +1740,8 @@
 "words": 226,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Henu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0102_rumniya.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0102_rumniya.md",
+"pics": 11
 },
 {
 "id": "pb-0428",
@@ -1405,7 +1752,8 @@
 "words": 226,
 "license": "CC BY 4.0",
 "credit": "Text: Pahi Shrivastava; Illustration: Angie & Upesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0428_shyamlal-your-work.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0428_shyamlal-your-work.md",
+"pics": 9
 },
 {
 "id": "pb-0261",
@@ -1416,7 +1764,8 @@
 "words": 227,
 "license": "CC BY 4.0",
 "credit": "Text: Rajalakshmi Paramasivam; Illustration: Ajit Narayan, Greystroke, Helga Parekh, Rijuta Ghate, Sorit Gupto, Suvidha Mistry, Taposhi Ghoshal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0261_aditi-s-trip-to-moon.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0261_aditi-s-trip-to-moon.md",
+"pics": 10
 },
 {
 "id": "pb-0175",
@@ -1427,7 +1776,8 @@
 "words": 230,
 "license": "CC BY 4.0",
 "credit": "Text: Varshini Vijay; Illustration: Helga Parekh, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0175_don-t-get-scared-try.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0175_don-t-get-scared-try.md",
+"pics": 6
 },
 {
 "id": "pb-0069",
@@ -1438,7 +1788,8 @@
 "words": 231,
 "license": "CC BY 4.0",
 "credit": "Text: Kiran Kasturia; Illustration: Zainab Tambawalla. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0069_the-red-raincoat.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0069_the-red-raincoat.md",
+"pics": 10
 },
 {
 "id": "pb-0176",
@@ -1449,7 +1800,8 @@
 "words": 238,
 "license": "CC BY 4.0",
 "credit": "Text: Kushagra Agarwal; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0176_nadir-s-pet.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0176_nadir-s-pet.md",
+"pics": 3
 },
 {
 "id": "pb-0311",
@@ -1460,7 +1812,8 @@
 "words": 240,
 "license": "CC BY 4.0",
 "credit": "Text: Vaishnavi guttikonda; Illustration: Nimret Handa, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0311_the-huge-beauty.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0311_the-huge-beauty.md",
+"pics": 6
 },
 {
 "id": "pb-0060",
@@ -1471,7 +1824,8 @@
 "words": 241,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Angie & Upesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0060_annual-haircut-day.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0060_annual-haircut-day.md",
+"pics": 20
 },
 {
 "id": "pb-0384",
@@ -1482,7 +1836,8 @@
 "words": 244,
 "license": "CC BY 4.0",
 "credit": "Text: David Keeler; Illustration: Kabini Amin. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0384_tilly-and-kyle-make-vegetable-curry.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0384_tilly-and-kyle-make-vegetable-curry.md",
+"pics": 9
 },
 {
 "id": "pb-0145",
@@ -1493,7 +1848,8 @@
 "words": 247,
 "license": "CC BY 4.0",
 "credit": "Text: Anvita Trivedi; Illustration: Niloufer Wadia, Sukhada Rahalkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0145_the-jolly-juggler.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0145_the-jolly-juggler.md",
+"pics": 3
 },
 {
 "id": "pb-0119",
@@ -1504,7 +1860,8 @@
 "words": 276,
 "license": "CC BY 4.0",
 "credit": "Text: Sanjiv Jaiswal 'Sanjay'; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0119_pehelwaan-ji-plays-cricket.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0119_pehelwaan-ji-plays-cricket.md",
+"pics": 16
 },
 {
 "id": "pb-0429",
@@ -1515,7 +1872,8 @@
 "words": 277,
 "license": "CC BY 4.0",
 "credit": "Text: Joysree Das; Illustration: Joysree Das, Parismita, Reshma Barve, Tessa Welch. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0429_the-nose-less-king.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0429_the-nose-less-king.md",
+"pics": 4
 },
 {
 "id": "pb-0320",
@@ -1526,7 +1884,8 @@
 "words": 281,
 "license": "CC BY 4.0",
 "credit": "Text: Arvind Eyunni; Illustration: Ajit Narayan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0320_the-rabbit-s-kite-tales.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0320_the-rabbit-s-kite-tales.md",
+"pics": 12
 },
 {
 "id": "pb-0332",
@@ -1537,7 +1896,8 @@
 "words": 285,
 "license": "CC BY 4.0",
 "credit": "Text: Yamini; Illustration: Manjari Chakravarti. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0332_oh-the-way-we-ran-in-the-fish-rain.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0332_oh-the-way-we-ran-in-the-fish-rain.md",
+"pics": 7
 },
 {
 "id": "pb-0254",
@@ -1548,7 +1908,8 @@
 "words": 286,
 "license": "CC BY 4.0",
 "credit": "Text: Gabriella Robes; Illustration: Aryan Deepak, Helga Parekh, Kruttika Susarla, Sonal Goyal, Sukhada Rahalkar, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0254_the-magical-jackal.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0254_the-magical-jackal.md",
+"pics": 7
 },
 {
 "id": "pb-0189",
@@ -1559,7 +1920,8 @@
 "words": 290,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Sonal Goyal, Sumit Sakhuja, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0189_tina-and-the-crazy-animal.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0189_tina-and-the-crazy-animal.md",
+"pics": 13
 },
 {
 "id": "pb-0314",
@@ -1570,7 +1932,8 @@
 "words": 296,
 "license": "CC BY 4.0",
 "credit": "Text: Rupa Prakash; Illustration: Rupa Prakash. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0314_loving-family.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0314_loving-family.md",
+"pics": 6
 },
 {
 "id": "pb-0363",
@@ -1581,7 +1944,8 @@
 "words": 299,
 "license": "CC BY 4.0",
 "credit": "Text: Simoni Kothari; Illustration: Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0363_pet-respect.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0363_pet-respect.md",
+"pics": 11
 },
 {
 "id": "pb-0170",
@@ -1592,7 +1956,8 @@
 "words": 305,
 "license": "CC BY 4.0",
 "credit": "Text: Nalini Sorensen; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0170_what-makes-you-special.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0170_what-makes-you-special.md",
+"pics": 10
 },
 {
 "id": "pb-0279",
@@ -1603,7 +1968,8 @@
 "words": 313,
 "license": "CC BY 4.0",
 "credit": "Text: Aahan Sarin; Illustration: Ajit Narayan, Greystroke, Ketan Raut, Santosh Pujari, Srikrishna Kedilaya. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0279_croaky-the-frog.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0279_croaky-the-frog.md",
+"pics": 8
 },
 {
 "id": "pb-0187",
@@ -1614,7 +1980,8 @@
 "words": 314,
 "license": "CC BY 4.0",
 "credit": "Text: Reshma Krishnamurthy Sharma; Illustration: Angie & Upesh, Greystroke, Zainab Tambawalla. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0187_happy-world.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0187_happy-world.md",
+"pics": 4
 },
 {
 "id": "pb-0316",
@@ -1625,7 +1992,8 @@
 "words": 316,
 "license": "CC BY 4.0",
 "credit": "Text: Rupa Prakash; Illustration: Rupa Prakash. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0316_everything-happens-for-the-good.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0316_everything-happens-for-the-good.md",
+"pics": 4
 },
 {
 "id": "pb-0401",
@@ -1636,7 +2004,8 @@
 "words": 321,
 "license": "CC BY 4.0",
 "credit": "Text: Nidhi Jha; Illustration: Nidhi Jha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0401_baby-in-the-clouds.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0401_baby-in-the-clouds.md",
+"pics": 4
 },
 {
 "id": "pb-0075",
@@ -1647,7 +2016,8 @@
 "words": 324,
 "license": "CC BY 4.0",
 "credit": "Text: Anupama Ajinkya Apte; Illustration: Anupama Ajinkya Apte. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0075_gulli-s-box-of-things.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0075_gulli-s-box-of-things.md",
+"pics": 12
 },
 {
 "id": "pb-0302",
@@ -1658,7 +2028,8 @@
 "words": 340,
 "license": "CC BY 4.0",
 "credit": "Text: Anirudh Raghava; Illustration: Ajit Narayan, Priya Kuriyan, Rajeev Verma 'Banjara', Rijuta Ghate, Soumya Menon, rakesh naidu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0302_oliver-beats-his-problem.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0302_oliver-beats-his-problem.md",
+"pics": 7
 },
 {
 "id": "pb-0409",
@@ -1669,7 +2040,8 @@
 "words": 342,
 "license": "CC BY 4.0",
 "credit": "Text: Reshma Krishnamurthy Sharma; Illustration: Greystroke, Suvidha Mistry, Upamanyu Bhattacharyya. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0409_the-wait.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0409_the-wait.md",
+"pics": 5
 },
 {
 "id": "pb-0136",
@@ -1680,7 +2052,8 @@
 "words": 348,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar, Manisha Chaudhry; Illustration: Shikha Nambiar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0136_tara-finds-her-stars.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0136_tara-finds-her-stars.md",
+"pics": 8
 },
 {
 "id": "pb-0267",
@@ -1691,7 +2064,8 @@
 "words": 348,
 "license": "CC BY 4.0",
 "credit": "Text: Nehasvita v; Illustration: Nehasvita v. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0267_the-little-girl-and-teddy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0267_the-little-girl-and-teddy.md",
+"pics": 2
 },
 {
 "id": "pb-0386",
@@ -1702,7 +2076,8 @@
 "words": 353,
 "license": "CC BY 4.0",
 "credit": "Text: Rasana Atreya; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0386_danny-the-dragon.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0386_danny-the-dragon.md",
+"pics": 12
 },
 {
 "id": "pb-0315",
@@ -1713,7 +2088,8 @@
 "words": 354,
 "license": "CC BY 4.0",
 "credit": "Text: Tulika Bathija; Illustration: Ajit Narayan, Angie & Upesh, Deepa Balsavar, Mohammad Faraaz, Rajeev Verma 'Banjara', Rijuta Ghate, Ruchi Shah, Siraj Saxena, Soumya Menon, Suvidha Mistry, Tanaya Vyas. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0315_chottu-the-little-boy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0315_chottu-the-little-boy.md",
+"pics": 14
 },
 {
 "id": "pb-0091",
@@ -1724,7 +2100,8 @@
 "words": 358,
 "license": "CC BY 4.0",
 "credit": "Text: Herminder Ohri; Illustration: Herminder Ohri. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0091_the-boat-ride.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0091_the-boat-ride.md",
+"pics": 9
 },
 {
 "id": "pb-0032",
@@ -1735,7 +2112,8 @@
 "words": 368,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0032_paper-play.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0032_paper-play.md",
+"pics": 1
 },
 {
 "id": "pb-0358",
@@ -1746,7 +2124,8 @@
 "words": 368,
 "license": "CC BY 4.0",
 "credit": "Text: Sarita Shetty; Illustration: Sarita Shetty. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0358_nanni-s-birthday-gift.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0358_nanni-s-birthday-gift.md",
+"pics": 6
 },
 {
 "id": "pb-0190",
@@ -1757,7 +2136,8 @@
 "words": 371,
 "license": "CC BY 4.0",
 "credit": "Text: N. Chokkan; Illustration: Megha Vishwanath; Translation: N. Chokkan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0190_kaushik-the-kind-detective.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0190_kaushik-the-kind-detective.md",
+"pics": 1
 },
 {
 "id": "pb-0016",
@@ -1768,7 +2148,8 @@
 "words": 402,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar, Manisha Chaudhry; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0016_kheer-on-a-full-moon-night.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0016_kheer-on-a-full-moon-night.md",
+"pics": 8
 },
 {
 "id": "pb-0310",
@@ -1779,7 +2160,8 @@
 "words": 405,
 "license": "CC BY 4.0",
 "credit": "Text: Nidhi Jha; Illustration: Nidhi Jha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0310_the-moon-and-the-stars.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0310_the-moon-and-the-stars.md",
+"pics": 6
 },
 {
 "id": "pb-0421",
@@ -1790,7 +2172,8 @@
 "words": 411,
 "license": "CC BY 4.0",
 "credit": "Text: Geeta Varma; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0421_under-the-sea.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0421_under-the-sea.md",
+"pics": 1
 },
 {
 "id": "pb-0056",
@@ -1801,7 +2184,8 @@
 "words": 421,
 "license": "CC BY 4.0",
 "credit": "Text: Preethi Nambiar; Illustration: Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0056_goodnight-tinku.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0056_goodnight-tinku.md",
+"pics": 12
 },
 {
 "id": "pb-0266",
@@ -1812,7 +2196,8 @@
 "words": 422,
 "license": "CC BY 4.0",
 "credit": "Text: Venkat Pavan; Illustration: Ajit Narayan, Padmanabh, Santosh Pujari, Tapas Guha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0266_intelligent-friends.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0266_intelligent-friends.md",
+"pics": 12
 },
 {
 "id": "pb-0423",
@@ -1823,7 +2208,8 @@
 "words": 435,
 "license": "CC BY 4.0",
 "credit": "Text: Pahi Shrivastava; Illustration: Deepa Balsavar, Priya Kuriyan, Somesh Kumar, Tanaya Vyas, Tapas Guha, Upamanyu Bhattacharyya... Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0423_the-mouse-dragon.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0423_the-mouse-dragon.md",
+"pics": 7
 },
 {
 "id": "pb-0273",
@@ -1834,7 +2220,8 @@
 "words": 463,
 "license": "CC BY 4.0",
 "credit": "Text: Debleena Roy; Illustration: Delwyn Remedios, ayyagari anju, pradnya ns. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0273_app-ily-ever-after.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0273_app-ily-ever-after.md",
+"pics": 7
 },
 {
 "id": "pb-0272",
@@ -1845,7 +2232,8 @@
 "words": 464,
 "license": "CC BY 4.0",
 "credit": "Text: Vaishnavi guttikonda; Illustration: Megha Vishwanath, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0272_life-s-lighter-moments.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0272_life-s-lighter-moments.md",
+"pics": 6
 },
 {
 "id": "pb-0422",
@@ -1856,7 +2244,8 @@
 "words": 465,
 "license": "CC BY 4.0",
 "credit": "Text: Pahi Shrivastava; Illustration: Ajit Narayan, Kavita Singh Kale, Madhuri Purandare, Priya Kuriyan, Rijuta Ghate... Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0422_happy-holi.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0422_happy-holi.md",
+"pics": 7
 },
 {
 "id": "pb-0394",
@@ -1867,7 +2256,8 @@
 "words": 468,
 "license": "CC BY 4.0",
 "credit": "Text: Karuna JP; Illustration: Lavanya Karthik, Shailja Jain Chougule, Sonal Gupta, Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0394_the-big-game.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0394_the-big-game.md",
+"pics": 4
 },
 {
 "id": "pb-0080",
@@ -1878,7 +2268,8 @@
 "words": 478,
 "license": "CC BY 4.0",
 "credit": "Text: Venkatramana Gowda; Illustration: Padmanabh; Translation: Divaspathy Hegde. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0080_the-day-the-vegetables-came-to-school.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0080_the-day-the-vegetables-came-to-school.md",
+"pics": 1
 },
 {
 "id": "pb-0418",
@@ -1889,7 +2280,8 @@
 "words": 485,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar; Illustration: Sonal Goyal, Sumit Sakhuja, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0418_can-you-smile-when-you-snore.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0418_can-you-smile-when-you-snore.md",
+"pics": 12
 },
 {
 "id": "pb-0331",
@@ -1900,7 +2292,8 @@
 "words": 508,
 "license": "CC BY 4.0",
 "credit": "Text: Rupa Prakash; Illustration: Rupa Prakash. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0331_everyone-needs-a-friend.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0331_everyone-needs-a-friend.md",
+"pics": 5
 },
 {
 "id": "pb-0201",
@@ -1911,7 +2304,8 @@
 "words": 512,
 "license": "CC BY 4.0",
 "credit": "Text: Dhriti Nut; Illustration: Chet Nut, Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0201_the-brave-girl.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0201_the-brave-girl.md",
+"pics": 5
 },
 {
 "id": "pb-0204",
@@ -1922,7 +2316,8 @@
 "words": 556,
 "license": "CC BY 4.0",
 "credit": "Text: Roopa Pai; Illustration: Prashant Miranda. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0204_the-story-of-stories.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0204_the-story-of-stories.md",
+"pics": 10
 },
 {
 "id": "pb-0207",
@@ -1933,7 +2328,8 @@
 "words": 616,
 "license": "CC BY 4.0",
 "credit": "Text: Kalyani Radhakrishnan; Illustration: Greystroke, Hari Kumar Nair, Mayur Mistry, Nina Sabnani, Suvidha Mistry, Tanvee Nabar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0207_no-tricking-kutti.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0207_no-tricking-kutti.md",
+"pics": 7
 },
 {
 "id": "pb-0111",
@@ -1944,7 +2340,8 @@
 "words": 621,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Angie & Upesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0111_too-much-noise.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0111_too-much-noise.md",
+"pics": 18
 },
 {
 "id": "pb-0081",
@@ -1955,7 +2352,8 @@
 "words": 668,
 "license": "CC BY 4.0",
 "credit": "Text: Venkatramana Gowda; Illustration: Padmanabh; Translation: Divaspathy Hegde. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0081_the-generous-crow.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0081_the-generous-crow.md",
+"pics": 15
 },
 {
 "id": "pb-0013",
@@ -1966,7 +2364,8 @@
 "words": 682,
 "license": "CC BY 4.0",
 "credit": "Text: Madhuri Purandare; Illustration: Madhuri Purandare; Translation: Pratham Books Team. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0013_aunty-jui-s-baby.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0013_aunty-jui-s-baby.md",
+"pics": 18
 },
 {
 "id": "pb-0157",
@@ -1977,7 +2376,8 @@
 "words": 696,
 "license": "CC BY 4.0",
 "credit": "Text: Anush-Adi Navaneeth; Illustration: Ajit Narayan, Madhuri Purandare, Preeti Krishnamurthy, Priya Kuriyan, Rijuta Ghate, Vibhash Pandey. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0157_my-musical-adventure.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0157_my-musical-adventure.md",
+"pics": 7
 },
 {
 "id": "pb-0107",
@@ -1988,7 +2388,8 @@
 "words": 717,
 "license": "CC BY 4.0",
 "credit": "Text: Bharati Jagannathan; Illustration: Preeti Krishnamurthy. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0107_samira-s-awful-lunch.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0107_samira-s-awful-lunch.md",
+"pics": 18
 },
 {
 "id": "pb-0153",
@@ -1999,7 +2400,8 @@
 "words": 719,
 "license": "CC BY 4.0",
 "credit": "Text: Shikha Gupta; Illustration: Shikha Gupta. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0153_the-woman-with-no-soul.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0153_the-woman-with-no-soul.md",
+"pics": 1
 },
 {
 "id": "pb-0180",
@@ -2010,7 +2412,8 @@
 "words": 735,
 "license": "CC BY 4.0",
 "credit": "Text: Prakruti & Shruti Bhat; Illustration: Ajit Narayan, Bulbul Sharma, Deepa Balsavar, Greystroke, Lavanya Karthik, Niloufer Wadia, Nimret Handa, Priya Kuriyan, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0180_the-rainbow-story.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0180_the-rainbow-story.md",
+"pics": 11
 },
 {
 "id": "pb-0116",
@@ -2021,7 +2424,8 @@
 "words": 851,
 "license": "CC BY 4.0",
 "credit": "Text: Greystroke; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0116_wailers-three-a-folktale-from-china.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0116_wailers-three-a-folktale-from-china.md",
+"pics": 1
 },
 {
 "id": "pb-0011",
@@ -2032,7 +2436,8 @@
 "words": 1002,
 "license": "CC BY 4.0",
 "credit": "Text: Roopa Pai; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0011_sister-sister-where-does-the-sun-go-at-night.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0011_sister-sister-where-does-the-sun-go-at-night.md",
+"pics": 16
 },
 {
 "id": "pb-0360",
@@ -2043,7 +2448,8 @@
 "words": 1003,
 "license": "CC BY 4.0",
 "credit": "Text: Anupa Lal; Illustration: Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0360_reeti-and-mithu.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0360_reeti-and-mithu.md",
+"pics": 20
 },
 {
 "id": "pb-0042",
@@ -2054,7 +2460,8 @@
 "words": 1059,
 "license": "CC BY 4.0",
 "credit": "Text: Roopa Pai; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0042_sister-sister-why-is-the-sky-so-blue.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0042_sister-sister-why-is-the-sky-so-blue.md",
+"pics": 19
 },
 {
 "id": "pb-0095",
@@ -2065,7 +2472,8 @@
 "words": 1081,
 "license": "CC BY 4.0",
 "credit": "Text: Sarvendra Vikram; Illustration: Vibhash Pandey; Translation: Rukmini Banerji. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0095_shobhini-and-nani.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0095_shobhini-and-nani.md",
+"pics": 10
 },
 {
 "id": "pb-0083",
@@ -2076,7 +2484,8 @@
 "words": 1302,
 "license": "CC BY 4.0",
 "credit": "Text: Greystroke; Illustration: P. G. Dinesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0083_three-for-free-a-folktale-from-taiwan.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0083_three-for-free-a-folktale-from-taiwan.md",
+"pics": 1
 },
 {
 "id": "pb-0410",
@@ -2087,7 +2496,8 @@
 "words": 1577,
 "license": "CC BY 4.0",
 "credit": "Text: Roopa Pai; Illustration: Delwyn Remedios. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0410_inside-the-world-wide-web.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0410_inside-the-world-wide-web.md",
+"pics": 1
 },
 {
 "id": "pb-0004",
@@ -2098,7 +2508,8 @@
 "words": 1600,
 "license": "Public domain",
 "credit": "Text: Sujatha Padmanabhan; Illustration: Madhuvanti Anantharajan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0004_chuskit-goes-to-school.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0004_chuskit-goes-to-school.md",
+"pics": 1
 },
 {
 "id": "pb-0380",
@@ -2109,7 +2520,8 @@
 "words": 1760,
 "license": "CC BY 4.0",
 "credit": "Text: Roopa Pai; Illustration: Jit Chowdhury. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0380_bonda-and-devi.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0380_bonda-and-devi.md",
+"pics": 1
 },
 {
 "id": "pb-0006",
@@ -2120,7 +2532,8 @@
 "words": 1955,
 "license": "CC BY 4.0",
 "credit": "Text: Rukmini Banerji; Illustration: Nina Sabnani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0006_counting-on-moru.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0006_counting-on-moru.md",
+"pics": 1
 },
 {
 "id": "pb-0143",
@@ -2131,7 +2544,8 @@
 "words": 2081,
 "license": "CC BY 4.0",
 "credit": "Text: Priyanka Talreja; Illustration: Angie & Upesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0143_the-lantern-queen.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0143_the-lantern-queen.md",
+"pics": 1
 },
 {
 "id": "pb-0027",
@@ -2142,7 +2556,53 @@
 "words": 3029,
 "license": "CC BY 4.0",
 "credit": "Text: Tanya Luther Agarwal; Illustration: Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0027_jungle-brew.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0027_jungle-brew.md",
+"pics": 24
+},
+{
+"id": "pg-14848",
+"kind": "book",
+"title": "The Story of Miss Moppet",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 280,
+"chapters": 1,
+"size": 886,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14848",
+"pics": 17,
+"picsSize": 247601
+},
+{
+"id": "pg-14837",
+"kind": "book",
+"title": "The Tale of Tom Kitten",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 778,
+"chapters": 1,
+"size": 2204,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14837",
+"pics": 28,
+"picsSize": 835099
+},
+{
+"id": "pg-15077",
+"kind": "book",
+"title": "The Tale of Mr. Jeremy Fisher",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 895,
+"chapters": 1,
+"size": 2440,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/15077",
+"pics": 31,
+"picsSize": 605988
 },
 {
 "id": "pg-14838",
@@ -2152,10 +2612,130 @@
 "level": "B1",
 "words": 1019,
 "chapters": 1,
-"size": 2568,
+"size": 2727,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/14838"
+"source": "https://www.gutenberg.org/ebooks/14838",
+"pics": 28,
+"picsSize": 764686
+},
+{
+"id": "pg-14220",
+"kind": "book",
+"title": "The Tale of the Flopsy Bunnies",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1059,
+"chapters": 1,
+"size": 2830,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14220",
+"pics": 31,
+"picsSize": 1884608
+},
+{
+"id": "pg-14407",
+"kind": "book",
+"title": "The Tale of Benjamin Bunny",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1200,
+"chapters": 1,
+"size": 3049,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14407",
+"pics": 27,
+"picsSize": 1589773
+},
+{
+"id": "pg-14877",
+"kind": "book",
+"title": "The Tale of Ginger and Pickles",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1214,
+"chapters": 1,
+"size": 3405,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14877",
+"pics": 32,
+"picsSize": 859319
+},
+{
+"id": "pg-14872",
+"kind": "book",
+"title": "The Tale of Squirrel Nutkin",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1296,
+"chapters": 1,
+"size": 3164,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14872",
+"pics": 27,
+"picsSize": 1244342
+},
+{
+"id": "pg-14814",
+"kind": "book",
+"title": "The Tale of Jemima Puddle-Duck",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1383,
+"chapters": 1,
+"size": 3545,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14814",
+"pics": 28,
+"picsSize": 1281480
+},
+{
+"id": "pg-12103",
+"kind": "book",
+"title": "The Tale of Mrs. Tiggy-Winkle",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1399,
+"chapters": 1,
+"size": 3347,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/12103"
+},
+{
+"id": "pg-14797",
+"kind": "book",
+"title": "The Tale of Timmy Tiptoes",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 1415,
+"chapters": 1,
+"size": 3573,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14797",
+"pics": 27,
+"picsSize": 1139656
+},
+{
+"id": "pg-14868",
+"kind": "book",
+"title": "The Tailor of Gloucester",
+"author": "Beatrix Potter",
+"level": "B1",
+"words": 2962,
+"chapters": 1,
+"size": 6656,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/14868",
+"pics": 30,
+"picsSize": 1358091
 },
 {
 "id": "pg-11757",
@@ -2165,10 +2745,51 @@
 "level": "B1",
 "words": 3990,
 "chapters": 1,
-"size": 8144,
+"size": 8221,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/11757"
+"source": "https://www.gutenberg.org/ebooks/11757",
+"pics": 7,
+"picsSize": 226205
+},
+{
+"id": "pg-7439",
+"kind": "book",
+"title": "English Fairy Tales",
+"author": "Joseph Jacobs",
+"level": "B1",
+"words": 7796,
+"chapters": 43,
+"size": 19514,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/7439"
+},
+{
+"id": "pg-1825",
+"kind": "book",
+"title": "The Adventures of Reddy Fox",
+"author": "Thornton W. Burgess",
+"level": "B1",
+"words": 14759,
+"chapters": 26,
+"size": 25567,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1825"
+},
+{
+"id": "pg-5844",
+"kind": "book",
+"title": "The Adventures of Johnny Chuck",
+"author": "Thornton W. Burgess",
+"level": "B1",
+"words": 16259,
+"chapters": 25,
+"size": 28166,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/5844"
 },
 {
 "id": "pg-902",
@@ -2178,10 +2799,25 @@
 "level": "B1",
 "words": 16375,
 "chapters": 5,
-"size": 30429,
+"size": 30546,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/902"
+"source": "https://www.gutenberg.org/ebooks/902",
+"pics": 13,
+"picsSize": 878963
+},
+{
+"id": "pg-2557",
+"kind": "book",
+"title": "Old Mother West Wind",
+"author": "Thornton W. Burgess",
+"level": "B1",
+"words": 16946,
+"chapters": 16,
+"size": 26480,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/2557"
 },
 {
 "id": "pg-18442",
@@ -2191,10 +2827,25 @@
 "level": "B1",
 "words": 32720,
 "chapters": 51,
-"size": 58646,
+"size": 58974,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/18442"
+"source": "https://www.gutenberg.org/ebooks/18442",
+"pics": 23,
+"picsSize": 1482313
+},
+{
+"id": "pg-157",
+"kind": "book",
+"title": "Daddy-Long-Legs",
+"author": "Jean Webster",
+"level": "B1",
+"words": 35069,
+"chapters": 15,
+"size": 74019,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/157"
 },
 {
 "id": "pg-11339",
@@ -2204,10 +2855,12 @@
 "level": "B1",
 "words": 38308,
 "chapters": 285,
-"size": 76324,
+"size": 76905,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/11339"
+"source": "https://www.gutenberg.org/ebooks/11339",
+"pics": 79,
+"picsSize": 4178846
 },
 {
 "id": "pg-55",
@@ -2221,6 +2874,110 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/55"
+},
+{
+"id": "pg-500",
+"kind": "book",
+"title": "The Adventures of Pinocchio",
+"author": "Carlo Collodi",
+"level": "B1",
+"words": 39993,
+"chapters": 36,
+"size": 76356,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/500"
+},
+{
+"id": "pg-778",
+"kind": "book",
+"title": "Five Children and It",
+"author": "E. Nesbit",
+"level": "B1",
+"words": 53477,
+"chapters": 11,
+"size": 106061,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/778"
+},
+{
+"id": "pg-1450",
+"kind": "book",
+"title": "Pollyanna",
+"author": "Eleanor H. Porter",
+"level": "B1",
+"words": 56806,
+"chapters": 32,
+"size": 111465,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1450"
+},
+{
+"id": "pg-479",
+"kind": "book",
+"title": "Little Lord Fauntleroy",
+"author": "Frances Hodgson Burnett",
+"level": "B1",
+"words": 58940,
+"chapters": 15,
+"size": 111068,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/479"
+},
+{
+"id": "pg-1874",
+"kind": "book",
+"title": "The Railway Children",
+"author": "E. Nesbit",
+"level": "B1",
+"words": 60017,
+"chapters": 14,
+"size": 118091,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1874"
+},
+{
+"id": "pg-146",
+"kind": "book",
+"title": "A Little Princess",
+"author": "Frances Hodgson Burnett",
+"level": "B1",
+"words": 67096,
+"chapters": 19,
+"size": 129240,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/146"
+},
+{
+"id": "pg-4018",
+"kind": "book",
+"title": "Japanese Fairy Tales",
+"author": "Yei Theodora Ozaki",
+"level": "B1",
+"words": 70742,
+"chapters": 24,
+"size": 130198,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/4018"
+},
+{
+"id": "pg-1448",
+"kind": "book",
+"title": "Heidi",
+"author": "Johanna Spyri",
+"level": "B1",
+"words": 91610,
+"chapters": 23,
+"size": 168580,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1448"
 },
 {
 "id": "pg-2591",
@@ -2244,7 +3001,8 @@
 "words": 63,
 "license": "CC BY 4.0",
 "credit": "Text: Vvs Prakash Bommisetti; Illustration: Wiehan de Jager. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0280_the-day-of-an-owl.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0280_the-day-of-an-owl.md",
+"pics": 10
 },
 {
 "id": "pb-0284",
@@ -2255,7 +3013,8 @@
 "words": 63,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0284_our-earth-is-precious.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0284_our-earth-is-precious.md",
+"pics": 12
 },
 {
 "id": "pb-0244",
@@ -2266,7 +3025,8 @@
 "words": 71,
 "license": "CC BY 4.0",
 "credit": "Text: Vinayak Varma; Illustration: Vinayak Varma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0244_when-the-wind-blew-today.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0244_when-the-wind-blew-today.md",
+"pics": 6
 },
 {
 "id": "pb-0055",
@@ -2277,7 +3037,8 @@
 "words": 73,
 "license": "CC BY 4.0",
 "credit": "Text: Radha HS; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0055_curly-and-straight.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0055_curly-and-straight.md",
+"pics": 14
 },
 {
 "id": "pb-0243",
@@ -2288,7 +3049,8 @@
 "words": 74,
 "license": "CC BY 4.0",
 "credit": "Text: Vedic Kashyap; Illustration: Megha Vishwanath, suyeon song. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0243_where-is-my-home.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0243_where-is-my-home.md",
+"pics": 2
 },
 {
 "id": "pb-0212",
@@ -2299,7 +3061,8 @@
 "words": 80,
 "license": "CC BY 4.0",
 "credit": "Text: Sreedhar Vankadara; Illustration: Kaveri Gopalakrishnan, Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0212_clean-surroundings-and-keep-bright.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0212_clean-surroundings-and-keep-bright.md",
+"pics": 2
 },
 {
 "id": "pb-0197",
@@ -2310,7 +3073,8 @@
 "words": 84,
 "license": "CC BY 4.0",
 "credit": "Text: Kushagra Agarwal; Illustration: Greystroke, kushagra agarwal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0197_the-race.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0197_the-race.md",
+"pics": 4
 },
 {
 "id": "pb-0155",
@@ -2321,7 +3085,8 @@
 "words": 86,
 "license": "CC BY 4.0",
 "credit": "Text: Yuman Hussain; Illustration: Sanjay Sarkar, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0155_when-percy-said-sorry.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0155_when-percy-said-sorry.md",
+"pics": 2
 },
 {
 "id": "pb-0220",
@@ -2332,7 +3097,8 @@
 "words": 90,
 "license": "CC BY 4.0",
 "credit": "Text: Pradeep Saran; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0220_monkey-and-yummy-mangoes.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0220_monkey-and-yummy-mangoes.md",
+"pics": 2
 },
 {
 "id": "pb-0224",
@@ -2343,7 +3109,8 @@
 "words": 90,
 "license": "CC BY 4.0",
 "credit": "Text: Lavanya thota; Illustration: Shyrus Joseph. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0224_hoggy-and-ramu.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0224_hoggy-and-ramu.md",
+"pics": 2
 },
 {
 "id": "pb-0256",
@@ -2354,7 +3121,8 @@
 "words": 94,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Niloufer Wadia. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0256_my-juggling-grandma.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0256_my-juggling-grandma.md",
+"pics": 7
 },
 {
 "id": "pb-0001",
@@ -2365,7 +3133,8 @@
 "words": 102,
 "license": "CC BY 4.0",
 "credit": "Text: Sanjiv Jaiswal 'Sanjay'; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0001_smile-please.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0001_smile-please.md",
+"pics": 12
 },
 {
 "id": "pb-0415",
@@ -2376,7 +3145,8 @@
 "words": 105,
 "license": "CC BY 4.0",
 "credit": "Text: Aparna Ganapathy; Illustration: Delwyn Remedios, Vartika Sharma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0415_frog-in-the-movie.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0415_frog-in-the-movie.md",
+"pics": 3
 },
 {
 "id": "pb-0010",
@@ -2387,7 +3157,8 @@
 "words": 108,
 "license": "CC BY 4.0",
 "credit": "Text: Sanjiv Jaiswal 'Sanjay'; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0010_pehelwaan-ji.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0010_pehelwaan-ji.md",
+"pics": 16
 },
 {
 "id": "pb-0087",
@@ -2398,7 +3169,8 @@
 "words": 109,
 "license": "CC BY 4.0",
 "credit": "Text: Sanjiv Jaiswal 'Sanjay'; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0087_rain-rain.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0087_rain-rain.md",
+"pics": 12
 },
 {
 "id": "pb-0379",
@@ -2409,7 +3181,8 @@
 "words": 117,
 "license": "CC BY 4.0",
 "credit": "Text: Payoshni Saraf; Illustration: Padmanabh, Wiehan de Jager. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0379_lalu-the-owl.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0379_lalu-the-owl.md",
+"pics": 9
 },
 {
 "id": "pb-0047",
@@ -2420,7 +3193,8 @@
 "words": 120,
 "license": "CC BY 4.0",
 "credit": "Text: Sorit Gupto; Illustration: Sorit Gupto. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0047_bunty-and-bubbly.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0047_bunty-and-bubbly.md",
+"pics": 12
 },
 {
 "id": "pb-0137",
@@ -2431,7 +3205,8 @@
 "words": 122,
 "license": "CC BY 4.0",
 "credit": "Text: Natasha Sharma; Illustration: Archana Sreenivasan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0137_spot-and-spike.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0137_spot-and-spike.md",
+"pics": 7
 },
 {
 "id": "pb-0033",
@@ -2442,7 +3217,8 @@
 "words": 125,
 "license": "CC BY 4.0",
 "credit": "Text: Anupa Lal; Illustration: Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0033_suraj-and-sher-singh.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0033_suraj-and-sher-singh.md",
+"pics": 8
 },
 {
 "id": "pb-0269",
@@ -2453,7 +3229,8 @@
 "words": 126,
 "license": "CC BY 4.0",
 "credit": "Text: Reshma Krishnamurthy Sharma; Illustration: Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0269_hooray-it-s-sunday-time-for-leisure-shower-and-fun-time.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0269_hooray-it-s-sunday-time-for-leisure-shower-and-fun-time.md",
+"pics": 4
 },
 {
 "id": "pb-0286",
@@ -2464,7 +3241,8 @@
 "words": 132,
 "license": "CC BY 4.0",
 "credit": "Text: Likhith Avileli; Illustration: Muniza Shariq, Padmanabh, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0286_the-clever-tortoise-and-the-foolish-fox.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0286_the-clever-tortoise-and-the-foolish-fox.md",
+"pics": 3
 },
 {
 "id": "pb-0270",
@@ -2475,7 +3253,8 @@
 "words": 135,
 "license": "CC BY 4.0",
 "credit": "Text: Swathi Vivo; Illustration: Greystroke, Sheetal Thapa, Sorit Gupto, Soumya Menon. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0270_viva-the-curious-girl.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0270_viva-the-curious-girl.md",
+"pics": 5
 },
 {
 "id": "pb-0063",
@@ -2486,7 +3265,8 @@
 "words": 138,
 "license": "CC BY 4.0",
 "credit": "Text: Sanjiv Jaiswal 'Sanjay'; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0063_playtime.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0063_playtime.md",
+"pics": 11
 },
 {
 "id": "pb-0123",
@@ -2497,7 +3277,8 @@
 "words": 139,
 "license": "CC BY 4.0",
 "credit": "Text: Anupa Lal; Illustration: Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0123_under-my-bed.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0123_under-my-bed.md",
+"pics": 12
 },
 {
 "id": "pb-0214",
@@ -2508,7 +3289,8 @@
 "words": 139,
 "license": "CC BY 4.0",
 "credit": "Text: Prateek Chandrawal; Illustration: Herminder Ohri, Muniza Shariq, Nirvaan Pahwa, Rajeev Verma 'Banjara'. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0214_chameleon-life.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0214_chameleon-life.md",
+"pics": 4
 },
 {
 "id": "pb-0338",
@@ -2519,7 +3301,8 @@
 "words": 151,
 "license": "CC BY 4.0",
 "credit": "Text: Storyweaver, Pratham Books; Illustration: Megha Vishwanath. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0338_the-birthday-party.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0338_the-birthday-party.md",
+"pics": 1
 },
 {
 "id": "pb-0067",
@@ -2530,7 +3313,8 @@
 "words": 153,
 "license": "CC BY 4.0",
 "credit": "Text: Sukhada Rahalkar; Illustration: Sukhada Rahalkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0067_lost-and-found.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0067_lost-and-found.md",
+"pics": 12
 },
 {
 "id": "pb-0278",
@@ -2541,7 +3325,8 @@
 "words": 154,
 "license": "CC BY 4.0",
 "credit": "Text: Lakshmi Prasanna; Illustration: Lovely Samhitha, anil k, ayyagari anju. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0278_queen-s-village.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0278_queen-s-village.md",
+"pics": 4
 },
 {
 "id": "pb-0298",
@@ -2552,7 +3337,8 @@
 "words": 160,
 "license": "CC BY 4.0",
 "credit": "Text: Payoshni Saraf; Illustration: Muniza Shariq, Sangeeta Das. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0298_inhabitants-of-the-sea.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0298_inhabitants-of-the-sea.md",
+"pics": 8
 },
 {
 "id": "pb-0071",
@@ -2563,7 +3349,8 @@
 "words": 168,
 "license": "CC BY 4.0",
 "credit": "Text: Bulbul Sharma; Illustration: Bulbul Sharma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0071_colours-of-nature.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0071_colours-of-nature.md",
+"pics": 17
 },
 {
 "id": "pb-0036",
@@ -2574,7 +3361,8 @@
 "words": 181,
 "license": "CC BY 4.0",
 "credit": "Text: Lavanya Karthik; Illustration: Lavanya Karthik. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0036_what-does-anu-see.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0036_what-does-anu-see.md",
+"pics": 12
 },
 {
 "id": "pb-0139",
@@ -2585,7 +3373,8 @@
 "words": 188,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar, Manisha Chaudhry; Illustration: Niloufer Wadia; Translation: Mala Kumar, Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0139_my-juggling-granny.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0139_my-juggling-granny.md",
+"pics": 8
 },
 {
 "id": "pb-0295",
@@ -2596,7 +3385,8 @@
 "words": 188,
 "license": "CC BY 4.0",
 "credit": "Text: Dhairya Salwan; Illustration: Ruchi Shah, Shweta Mohapatra, Tapas Guha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0295_silly-billy-meet-the-ministry-of-petrol-pumps.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0295_silly-billy-meet-the-ministry-of-petrol-pumps.md",
+"pics": 4
 },
 {
 "id": "pb-0161",
@@ -2607,7 +3397,8 @@
 "words": 203,
 "license": "CC BY 4.0",
 "credit": "Text: Shrey Dave; Illustration: Angie & Upesh, Muniza Shariq, Padmanabh, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0161_the-cave-party.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0161_the-cave-party.md",
+"pics": 5
 },
 {
 "id": "pb-0291",
@@ -2618,7 +3409,8 @@
 "words": 203,
 "license": "CC BY 4.0",
 "credit": "Text: Nisha Sridhar; Illustration: Ajit Narayan, Archana Sreenivasan, Greystroke, Hari Kumar Nair, Lavanya Karthik, Ruchi Shah, Sorit Gupto. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0291_akash-s-sweet-lesson-to-brush.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0291_akash-s-sweet-lesson-to-brush.md",
+"pics": 10
 },
 {
 "id": "pb-0260",
@@ -2629,7 +3421,8 @@
 "words": 206,
 "license": "CC BY 4.0",
 "credit": "Text: Divena & Navika Bharadwaj; Illustration: Greystroke, Rijuta Ghate, Sunita Venkatachalam. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0260_guess-this-place-ghost-town.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0260_guess-this-place-ghost-town.md",
+"pics": 5
 },
 {
 "id": "pb-0191",
@@ -2640,7 +3433,8 @@
 "words": 207,
 "license": "CC BY 4.0",
 "credit": "Text: Lotte Van Oijen; Illustration: Angie & Upesh, Deepa Balsavar, Greystroke, Lavanya Karthik, Rijuta Ghate. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0191_richard-s-unlucky-day.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0191_richard-s-unlucky-day.md",
+"pics": 7
 },
 {
 "id": "pb-0325",
@@ -2651,7 +3445,8 @@
 "words": 207,
 "license": "CC BY 4.0",
 "credit": "Text: Payoshni Saraf; Illustration: Vinayak Varma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0325_trip-to-the-dragon-land.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0325_trip-to-the-dragon-land.md",
+"pics": 6
 },
 {
 "id": "pb-0381",
@@ -2662,7 +3457,8 @@
 "words": 213,
 "license": "CC BY 4.0",
 "credit": "Text: Sarita Shetty; Illustration: Rajeev Verma 'Banjara'. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0381_am-i-alone.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0381_am-i-alone.md",
+"pics": 6
 },
 {
 "id": "pb-0185",
@@ -2673,7 +3469,8 @@
 "words": 218,
 "license": "CC BY 4.0",
 "credit": "Text: Ad Sarin; Illustration: Ad Sarin. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0185_the-surprise.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0185_the-surprise.md",
+"pics": 7
 },
 {
 "id": "pb-0108",
@@ -2684,7 +3481,8 @@
 "words": 223,
 "license": "CC BY 4.0",
 "credit": "Text: Sanjiv Jaiswal 'Sanjay'; Illustration: Ajit Narayan; Translation: Manisha Chaudhry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0108_the-royal-toothache.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0108_the-royal-toothache.md",
+"pics": 12
 },
 {
 "id": "pb-0370",
@@ -2695,7 +3493,8 @@
 "words": 230,
 "license": "CC BY 4.0",
 "credit": "Text: Vinuta Shirgopikar; Illustration: Deepa Balsavar, Priya Kuriyan, Santosh Pujari. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0370_terrific-trio.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0370_terrific-trio.md",
+"pics": 6
 },
 {
 "id": "pb-0333",
@@ -2706,7 +3505,8 @@
 "words": 232,
 "license": "CC BY 4.0",
 "credit": "Text: Dinaz Irani; Illustration: Dinaz Irani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0333_the-indigo-fairy-and-the-lizard.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0333_the-indigo-fairy-and-the-lizard.md",
+"pics": 5
 },
 {
 "id": "pb-0334",
@@ -2717,7 +3517,8 @@
 "words": 233,
 "license": "CC BY 4.0",
 "credit": "Text: Samidha Gunjal; Illustration: Samidha Gunjal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0334_kardi.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0334_kardi.md",
+"pics": 7
 },
 {
 "id": "pb-0247",
@@ -2728,7 +3529,8 @@
 "words": 239,
 "license": "CC BY 4.0",
 "credit": "Text: Akshara Rajesh; Illustration: Rijuta Ghate, Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0247_it-s-bath-time.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0247_it-s-bath-time.md",
+"pics": 10
 },
 {
 "id": "pb-0200",
@@ -2739,7 +3541,8 @@
 "words": 241,
 "license": "CC BY 4.0",
 "credit": "Text: Srividya Suryanarayanan; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0200_the-unusual-rainmaking-duet.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0200_the-unusual-rainmaking-duet.md",
+"pics": 9
 },
 {
 "id": "pb-0044",
@@ -2750,7 +3553,8 @@
 "words": 242,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Ashok; Illustration: Helga Parekh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0044_ramya-s-stars.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0044_ramya-s-stars.md",
+"pics": 10
 },
 {
 "id": "pb-0322",
@@ -2761,7 +3565,8 @@
 "words": 244,
 "license": "CC BY 4.0",
 "credit": "Text: Rupa Prakash; Illustration: Rupa Prakash. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0322_the-carpenter-s-last-job.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0322_the-carpenter-s-last-job.md",
+"pics": 4
 },
 {
 "id": "pb-0154",
@@ -2772,7 +3577,8 @@
 "words": 245,
 "license": "CC BY 4.0",
 "credit": "Text: Uma Balamurali; Illustration: Ajit Narayan, Ketan Raut, Padmanabh, Preeti Krishnamurthy, Rayika Sen, Sanjay Sarkar, Tapas Guha... Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0154_the-princess-and-the-veggy-lion.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0154_the-princess-and-the-veggy-lion.md",
+"pics": 11
 },
 {
 "id": "pb-0356",
@@ -2783,7 +3589,8 @@
 "words": 245,
 "license": "CC BY 4.0",
 "credit": "Text: Batul Bhanpurawala; Illustration: Aditi Dilip, Lavanya Karthik, Manjari Chakravarti, Preeti Krishnamurthy, Vibhash Pandey. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0356_life-full-of-dreams.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0356_life-full-of-dreams.md",
+"pics": 7
 },
 {
 "id": "pb-0240",
@@ -2794,7 +3601,8 @@
 "words": 255,
 "license": "CC BY 4.0",
 "credit": "Text: Ramendra Kumar; Illustration: Delwyn Remedios. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0240_the-day-it-rained-fish.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0240_the-day-it-rained-fish.md",
+"pics": 8
 },
 {
 "id": "pb-0192",
@@ -2805,7 +3613,8 @@
 "words": 256,
 "license": "CC BY 4.0",
 "credit": "Text: Kushagra Agarwal; Illustration: Megha Vishwanath, kushagra agarwal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0192_the-disaster.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0192_the-disaster.md",
+"pics": 6
 },
 {
 "id": "pb-0105",
@@ -2816,7 +3625,8 @@
 "words": 260,
 "license": "CC BY 4.0",
 "credit": "Text: Sowmya Rajendran; Illustration: Tanaya Vyas. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0105_mouse-in-the-house.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0105_mouse-in-the-house.md",
+"pics": 12
 },
 {
 "id": "pb-0339",
@@ -2827,7 +3637,8 @@
 "words": 262,
 "license": "CC BY 4.0",
 "credit": "Text: Dinaz Irani; Illustration: Dinaz Irani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0339_the-indigo-fairy-and-the-water-buffaloes.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0339_the-indigo-fairy-and-the-water-buffaloes.md",
+"pics": 9
 },
 {
 "id": "pb-0328",
@@ -2838,7 +3649,8 @@
 "words": 266,
 "license": "CC BY 4.0",
 "credit": "Text: Mohan Bambha; Illustration: Kavita Singh Kale. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0328_little-blue-alien.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0328_little-blue-alien.md",
+"pics": 8
 },
 {
 "id": "pb-0246",
@@ -2849,7 +3661,8 @@
 "words": 269,
 "license": "CC BY 4.0",
 "credit": "Text: Srividya Suryanarayanan; Illustration: Rayika Sen. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0246_crumbled-tear-laden-walls.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0246_crumbled-tear-laden-walls.md",
+"pics": 1
 },
 {
 "id": "pb-0179",
@@ -2860,7 +3673,8 @@
 "words": 271,
 "license": "CC BY 4.0",
 "credit": "Text: Aahan Sarin; Illustration: Aahan Sarin, Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0179_stripey-the-bee.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0179_stripey-the-bee.md",
+"pics": 5
 },
 {
 "id": "pb-0321",
@@ -2871,7 +3685,8 @@
 "words": 277,
 "license": "CC BY 4.0",
 "credit": "Text: Anushka Kapse; Illustration: Priya Kuriyan, Somesh Kumar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0321_drigo-lost-in-space.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0321_drigo-lost-in-space.md",
+"pics": 7
 },
 {
 "id": "pb-0165",
@@ -2882,7 +3697,8 @@
 "words": 283,
 "license": "CC BY 4.0",
 "credit": "Text: Greystroke; Illustration: Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0165_the-story-pooping-cat.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0165_the-story-pooping-cat.md",
+"pics": 7
 },
 {
 "id": "pb-0034",
@@ -2893,7 +3709,8 @@
 "words": 294,
 "license": "CC BY 4.0",
 "credit": "Text: Richa Ingle Deo; Illustration: Reshma Barve. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0034_veeru-goes-to-the-circus.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0034_veeru-goes-to-the-circus.md",
+"pics": 10
 },
 {
 "id": "pb-0241",
@@ -2904,7 +3721,8 @@
 "words": 294,
 "license": "CC BY 4.0",
 "credit": "Text: Reshma Krishnamurthy Sharma; Illustration: Delwyn Remedios. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0241_rachel-and-big-ben.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0241_rachel-and-big-ben.md",
+"pics": 6
 },
 {
 "id": "pb-0424",
@@ -2915,7 +3733,8 @@
 "words": 313,
 "license": "CC BY 4.0",
 "credit": "Text: Joysree Das; Illustration: Aditi Dilip, Alison Byrnes, Helga Parekh, Lovely Samhitha, Muniza Shariq, Prashant Miranda. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0424_the-moon-and-daisy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0424_the-moon-and-daisy.md",
+"pics": 6
 },
 {
 "id": "pb-0152",
@@ -2926,7 +3745,8 @@
 "words": 319,
 "license": "CC BY 4.0",
 "credit": "Text: Sreedevi Gopakumar; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0152_mangoes-for-moidootty.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0152_mangoes-for-moidootty.md",
+"pics": 20
 },
 {
 "id": "pb-0037",
@@ -2937,7 +3757,8 @@
 "words": 322,
 "license": "CC BY 4.0",
 "credit": "Text: Madhav Chavan, Meera Tendolkar; Illustration: Ketan Raut. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0037_the-jungle-school.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0037_the-jungle-school.md",
+"pics": 10
 },
 {
 "id": "pb-0134",
@@ -2948,7 +3769,8 @@
 "words": 355,
 "license": "CC BY 4.0",
 "credit": "Text: Mala Kumar, Manisha Chaudhry; Illustration: Sangeeta Das. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0134_pishi-caught-in-a-storm.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0134_pishi-caught-in-a-storm.md",
+"pics": 10
 },
 {
 "id": "pb-0258",
@@ -2959,7 +3781,8 @@
 "words": 356,
 "license": "CC BY 4.0",
 "credit": "Text: Preethi Unnithan; Illustration: Sorit Gupto. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0258_gargi-and-soapy.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0258_gargi-and-soapy.md",
+"pics": 11
 },
 {
 "id": "pb-0188",
@@ -2970,7 +3793,8 @@
 "words": 360,
 "license": "CC BY 4.0",
 "credit": "Text: Aadya Das; Illustration: Greystroke, Rijuta Ghate, Srikrishna Kedilaya. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0188_where-is-my-mother.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0188_where-is-my-mother.md",
+"pics": 4
 },
 {
 "id": "pb-0312",
@@ -2981,7 +3805,8 @@
 "words": 361,
 "license": "CC BY 4.0",
 "credit": "Text: Aditya nema; Illustration: Ajit Narayan, Deepa Balsavar, Greystroke, Naishmika Gopisetty, Rajiv Eipe, Ruchi Shah, Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0312_the-bizarre-island.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0312_the-bizarre-island.md",
+"pics": 9
 },
 {
 "id": "pb-0390",
@@ -2992,7 +3817,8 @@
 "words": 381,
 "license": "CC BY 4.0",
 "credit": "Text: Rajalakshmi Paramasivam; Illustration: Greystroke, Jagdish Joshi, Prashant Miranda, Reshma Barve, Ruchi Shah, Rupa Prakash, Sanjay Sarkar, Zainab Tambawalla, aditi rajaraman. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0390_browny-the-horse.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0390_browny-the-horse.md",
+"pics": 11
 },
 {
 "id": "pb-0248",
@@ -3003,7 +3829,8 @@
 "words": 388,
 "license": "CC BY 4.0",
 "credit": "Text: Laasya Puranam; Illustration: Muniza Shariq, Sanjay Sarkar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0248_ham-and-lily.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0248_ham-and-lily.md",
+"pics": 1
 },
 {
 "id": "pb-0329",
@@ -3014,7 +3841,8 @@
 "words": 408,
 "license": "CC BY 4.0",
 "credit": "Text: Shaunak Kolhapure; Illustration: Kavita Singh Kale, Megha Vishwanath. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0329_the-change.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0329_the-change.md",
+"pics": 1
 },
 {
 "id": "pb-0433",
@@ -3025,7 +3853,8 @@
 "words": 408,
 "license": "CC BY 4.0",
 "credit": "Text: Usha Rane; Illustration: Ketan Raut; Translation: Madhav Chavan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0433_the-tree.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0433_the-tree.md",
+"pics": 1
 },
 {
 "id": "pb-0432",
@@ -3036,7 +3865,8 @@
 "words": 427,
 "license": "CC BY 4.0",
 "credit": "Text: Madhuri Purandare; Illustration: Madhuri Purandare; Translation: Sai Keskar. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0432_daddy-s-mo.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0432_daddy-s-mo.md",
+"pics": 9
 },
 {
 "id": "pb-0252",
@@ -3047,7 +3877,8 @@
 "words": 428,
 "license": "CC BY 4.0",
 "credit": "Text: Rachita Uday Kumar; Illustration: Ajit Narayan, Angie & Upesh, Bulbul Sharma, Kaveri Gopalakrishnan, Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0252_the-book-of-poems.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0252_the-book-of-poems.md",
+"pics": 6
 },
 {
 "id": "pb-0342",
@@ -3058,7 +3889,8 @@
 "words": 434,
 "license": "CC BY 4.0",
 "credit": "Text: Sriram Tantri; Illustration: Amar Soni. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0342_unbreakable-frendship.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0342_unbreakable-frendship.md",
+"pics": 7
 },
 {
 "id": "pb-0120",
@@ -3069,7 +3901,8 @@
 "words": 442,
 "license": "CC BY 4.0",
 "credit": "Text: Natasha Sharma; Illustration: Ruchi Shah. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0120_anaya-s-thumb.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0120_anaya-s-thumb.md",
+"pics": 10
 },
 {
 "id": "pb-0305",
@@ -3080,7 +3913,8 @@
 "words": 471,
 "license": "CC BY 4.0",
 "credit": "Text: Nidhi Jha; Illustration: Nidhi Jha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0305_the-cloud-dragon.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0305_the-cloud-dragon.md",
+"pics": 6
 },
 {
 "id": "pb-0023",
@@ -3091,7 +3925,8 @@
 "words": 474,
 "license": "CC BY 4.0",
 "credit": "Text: Anupa Lal; Illustration: Ajit Narayan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0023_little-by-little.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0023_little-by-little.md",
+"pics": 16
 },
 {
 "id": "pb-0098",
@@ -3102,7 +3937,8 @@
 "words": 485,
 "license": "CC BY 4.0",
 "credit": "Text: Venkatramana Gowda; Illustration: Padmanabh; Translation: Divaspathy Hegde. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0098_the-hare-the-tortoise-again.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0098_the-hare-the-tortoise-again.md",
+"pics": 1
 },
 {
 "id": "pb-0050",
@@ -3113,7 +3949,8 @@
 "words": 492,
 "license": "CC BY 4.0",
 "credit": "Text: Rohini Nilekani; Illustration: Angie & Upesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0050_too-many-bananas.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0050_too-many-bananas.md",
+"pics": 27
 },
 {
 "id": "pb-0307",
@@ -3124,7 +3961,8 @@
 "words": 495,
 "license": "CC BY 4.0",
 "credit": "Text: Ann Nduku; Illustration: Wiehan de Jager. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0307_hyena-and-raven.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0307_hyena-and-raven.md",
+"pics": 11
 },
 {
 "id": "pb-0035",
@@ -3135,7 +3973,8 @@
 "words": 514,
 "license": "CC BY 4.0",
 "credit": "Text: Shamim Padamsee; Illustration: Tanaya Vyas. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0035_the-scarecrows-on-parade.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0035_the-scarecrows-on-parade.md",
+"pics": 14
 },
 {
 "id": "pb-0407",
@@ -3146,7 +3985,8 @@
 "words": 531,
 "license": "CC BY 4.0",
 "credit": "Text: Vibhy Batra; Illustration: Madhuvanti Anantharajan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0407_jamun-has-her-wish.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0407_jamun-has-her-wish.md",
+"pics": 14
 },
 {
 "id": "pb-0097",
@@ -3157,7 +3997,8 @@
 "words": 542,
 "license": "CC BY 4.0",
 "credit": "Text: Herminder Ohri; Illustration: Herminder Ohri. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0097_sniffles-the-crocodile-and-punch-the-butterfly.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0097_sniffles-the-crocodile-and-punch-the-butterfly.md",
+"pics": 13
 },
 {
 "id": "pb-0025",
@@ -3168,7 +4009,8 @@
 "words": 556,
 "license": "CC BY 4.0",
 "credit": "Text: Vaishali Shroff; Illustration: Tapas Guha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0025_the-missing-bat.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0025_the-missing-bat.md",
+"pics": 11
 },
 {
 "id": "pb-0086",
@@ -3179,7 +4021,8 @@
 "words": 565,
 "license": "CC BY 4.0",
 "credit": "Text: Venkatramana Gowda; Illustration: Srikrishna Kedilaya; Translation: Divaspathy Hegde. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0086_grandpa-fish-and-the-radio.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0086_grandpa-fish-and-the-radio.md",
+"pics": 1
 },
 {
 "id": "pb-0274",
@@ -3190,7 +4033,8 @@
 "words": 565,
 "license": "CC BY 4.0",
 "credit": "Text: Anusri; Illustration: Prashant Miranda, Sangeeta Das, Sanjay Sarkar, Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0274_wonders-of-martina-s-adventure.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0274_wonders-of-martina-s-adventure.md",
+"pics": 5
 },
 {
 "id": "pb-0304",
@@ -3201,7 +4045,8 @@
 "words": 572,
 "license": "CC BY 4.0",
 "credit": "Text: Nabanita Deshmukh; Illustration: Zainab Tambawalla. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0304_why-do-bees-buzz.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0304_why-do-bees-buzz.md",
+"pics": 1
 },
 {
 "id": "pb-0368",
@@ -3212,7 +4057,8 @@
 "words": 575,
 "license": "CC BY 4.0",
 "credit": "Text: Annapurna Sharma; Illustration: Annapurna Sharma. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0368_anty-s-team.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0368_anty-s-team.md",
+"pics": 1
 },
 {
 "id": "pb-0159",
@@ -3223,7 +4069,8 @@
 "words": 586,
 "license": "CC BY 4.0",
 "credit": "Text: Uma Balamurali; Illustration: Deepa Balsavar, Greystroke, Madhuri Purandare, Natasha Sharma, Preeti Krishnamurthy, Priya Kuriyan, Santosh Pujari, Soumya Menon, Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0159_the-puppy-that-did-not-bark.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0159_the-puppy-that-did-not-bark.md",
+"pics": 12
 },
 {
 "id": "pb-0092",
@@ -3234,7 +4081,8 @@
 "words": 596,
 "license": "CC BY 4.0",
 "credit": "Text: Venkatramana Gowda; Illustration: Padmanabh; Translation: Divaspathy Hegde. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0092_the-sparrow-and-the-fruit.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0092_the-sparrow-and-the-fruit.md",
+"pics": 13
 },
 {
 "id": "pb-0051",
@@ -3245,7 +4093,8 @@
 "words": 619,
 "license": "CC BY 4.0",
 "credit": "Text: Bharati Jagannathan; Illustration: Preeti Krishnamurthy. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0051_the-timid-train.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0051_the-timid-train.md",
+"pics": 12
 },
 {
 "id": "pb-0361",
@@ -3256,7 +4105,8 @@
 "words": 622,
 "license": "CC BY 4.0",
 "credit": "Text: Sitara Nikhil; Illustration: Sitara Nikhil. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0361_journey-to-many-lands.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0361_journey-to-many-lands.md",
+"pics": 5
 },
 {
 "id": "pb-0263",
@@ -3267,7 +4117,8 @@
 "words": 627,
 "license": "CC BY 4.0",
 "credit": "Text: the- okers; Illustration: the- okers. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0263_hacking-is-life-part-2-the-kid-can-t-be-kidnapped.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0263_hacking-is-life-part-2-the-kid-can-t-be-kidnapped.md",
+"pics": 1
 },
 {
 "id": "pb-0324",
@@ -3278,7 +4129,8 @@
 "words": 658,
 "license": "CC BY 4.0",
 "credit": "Text: Nabanita Deshmukh; Illustration: Samidha Gunjal. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0324_why-can-t-we-glow-like-fireflies.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0324_why-can-t-we-glow-like-fireflies.md",
+"pics": 14
 },
 {
 "id": "pb-0122",
@@ -3289,7 +4141,8 @@
 "words": 666,
 "license": "CC BY 4.0",
 "credit": "Text: Nabanita Deshmukh; Illustration: Phidi Pulu. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0122_first-house.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0122_first-house.md",
+"pics": 9
 },
 {
 "id": "pb-0202",
@@ -3300,7 +4153,8 @@
 "words": 671,
 "license": "CC BY 4.0",
 "credit": "Text: Srividya Suryanarayanan; Illustration: Sanjay Sarkar, Suvidha Mistry. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0202_sheela-learns-to-make-friends.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0202_sheela-learns-to-make-friends.md",
+"pics": 10
 },
 {
 "id": "pb-0299",
@@ -3311,7 +4165,8 @@
 "words": 675,
 "license": "CC BY 4.0",
 "credit": "Text: Veena Prasad; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0299_how-does-the-toothpaste-get-into-the-tube.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0299_how-does-the-toothpaste-get-into-the-tube.md",
+"pics": 1
 },
 {
 "id": "pb-0340",
@@ -3322,7 +4177,8 @@
 "words": 675,
 "license": "CC BY 4.0",
 "credit": "Text: Dinaz Irani; Illustration: Dinaz Irani. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0340_the-indigo-fairy-and-the-frogs.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0340_the-indigo-fairy-and-the-frogs.md",
+"pics": 12
 },
 {
 "id": "pb-0416",
@@ -3333,7 +4189,8 @@
 "words": 735,
 "license": "CC BY 4.0",
 "credit": "Text: Rajiv Eipe; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0416_dive.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0416_dive.md",
+"pics": 20
 },
 {
 "id": "pb-0388",
@@ -3344,7 +4201,8 @@
 "words": 792,
 "license": "CC BY 4.0",
 "credit": "Text: Radha HS; Illustration: Kruttika Susarla. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0388_where-did-your-dimples-go.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0388_where-did-your-dimples-go.md",
+"pics": 1
 },
 {
 "id": "pb-0348",
@@ -3355,7 +4213,8 @@
 "words": 901,
 "license": "CC BY 4.0",
 "credit": "Text: Aditi Sarawagi; Illustration: Lavanya Karthik. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0348_how-do-aeroplanes-fly.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0348_how-do-aeroplanes-fly.md",
+"pics": 13
 },
 {
 "id": "pb-0117",
@@ -3366,7 +4225,8 @@
 "words": 903,
 "license": "CC BY 4.0",
 "credit": "Text: Vidya Pradhan; Illustration: Reshma Barve. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0117_tok-tok.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0117_tok-tok.md",
+"pics": 18
 },
 {
 "id": "pb-0082",
@@ -3377,7 +4237,8 @@
 "words": 1051,
 "license": "CC BY 4.0",
 "credit": "Text: Veena Seshadri; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0082_the-woodcutter-of-gura-a-folktale-from-ethiopia.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0082_the-woodcutter-of-gura-a-folktale-from-ethiopia.md",
+"pics": 1
 },
 {
 "id": "pb-0040",
@@ -3388,7 +4249,8 @@
 "words": 1058,
 "license": "CC BY 4.0",
 "credit": "Text: Roopa Pai; Illustration: Greystroke. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0040_sister-sister-where-does-thunder-come-from.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0040_sister-sister-where-does-thunder-come-from.md",
+"pics": 16
 },
 {
 "id": "pb-0404",
@@ -3399,7 +4261,8 @@
 "words": 1092,
 "license": "CC BY 4.0",
 "credit": "Text: Ananya Ganesh; Illustration: Deepa Balsavar, Rijuta Ghate. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0404_the-mango-pickle.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0404_the-mango-pickle.md",
+"pics": 2
 },
 {
 "id": "pb-0089",
@@ -3410,7 +4273,8 @@
 "words": 1138,
 "license": "CC BY 4.0",
 "credit": "Text: Greystroke; Illustration: P. G. Dinesh. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0089_the-magic-powder-a-folktale-from-myanmar.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0089_the-magic-powder-a-folktale-from-myanmar.md",
+"pics": 8
 },
 {
 "id": "pb-0206",
@@ -3421,7 +4285,8 @@
 "words": 1176,
 "license": "CC BY 4.0",
 "credit": "Text: Srividya Suryanarayanan; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0206_the-duet-of-rainmakers.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0206_the-duet-of-rainmakers.md",
+"pics": 1
 },
 {
 "id": "pb-0058",
@@ -3432,7 +4297,8 @@
 "words": 1379,
 "license": "CC BY 4.0",
 "credit": "Text: Subhadra Sen Gupta; Illustration: Tapas Guha. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0058_sailing-home.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0058_sailing-home.md",
+"pics": 8
 },
 {
 "id": "pb-0391",
@@ -3443,7 +4309,8 @@
 "words": 1412,
 "license": "CC BY 4.0",
 "credit": "Text: Padmaparna Ghosh; Illustration: Sunaina Coelho. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0391_up-world-down-world.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0391_up-world-down-world.md",
+"pics": 1
 },
 {
 "id": "pb-0131",
@@ -3454,7 +4321,8 @@
 "words": 1446,
 "license": "CC BY 4.0",
 "credit": "Text: Arefa Tehsin; Illustration: Sonal Goyal, Sumit Sakhuja. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0131_the-elephant-bird.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0131_the-elephant-bird.md",
+"pics": 20
 },
 {
 "id": "pb-0227",
@@ -3465,7 +4333,8 @@
 "words": 1634,
 "license": "CC BY 4.0",
 "credit": "Text: Ria r; Illustration: Prashant Miranda, Priya Kuriyan. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0227_the-dog.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0227_the-dog.md",
+"pics": 2
 },
 {
 "id": "pb-0133",
@@ -3476,7 +4345,8 @@
 "words": 1817,
 "license": "CC BY 4.0",
 "credit": "Text: Umesh P N; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0133_the-boy-and-the-drum-a-shorter-version.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0133_the-boy-and-the-drum-a-shorter-version.md",
+"pics": 1
 },
 {
 "id": "pb-0130",
@@ -3487,7 +4357,8 @@
 "words": 2936,
 "license": "CC BY 4.0",
 "credit": "Text: Umesh P N; Illustration: Rajiv Eipe. Pratham Books, StoryWeaver.",
-"source": "https://github.com/global-asp/pb-source/blob/master/en/0130_the-boy-and-the-drum.md"
+"source": "https://github.com/global-asp/pb-source/blob/master/en/0130_the-boy-and-the-drum.md",
+"pics": 1
 },
 {
 "id": "pg-11",
@@ -3510,10 +4381,25 @@
 "level": "B2",
 "words": 28710,
 "chapters": 5,
-"size": 60499,
+"size": 60632,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/46"
+"source": "https://www.gutenberg.org/ebooks/46",
+"pics": 8,
+"picsSize": 364340
+},
+{
+"id": "pg-12",
+"kind": "book",
+"title": "Through the Looking-Glass",
+"author": "Lewis Carroll",
+"level": "B2",
+"words": 29619,
+"chapters": 12,
+"size": 57797,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/12"
 },
 {
 "id": "pg-2781",
@@ -3555,6 +4441,45 @@
 "source": "https://www.gutenberg.org/ebooks/35"
 },
 {
+"id": "pg-558",
+"kind": "book",
+"title": "The Thirty-Nine Steps",
+"author": "John Buchan",
+"level": "B2",
+"words": 41166,
+"chapters": 10,
+"size": 82283,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/558"
+},
+{
+"id": "pg-2097",
+"kind": "book",
+"title": "The Sign of the Four",
+"author": "Arthur Conan Doyle",
+"level": "B2",
+"words": 43430,
+"chapters": 12,
+"size": 88454,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/2097"
+},
+{
+"id": "pg-244",
+"kind": "book",
+"title": "A Study in Scarlet",
+"author": "Arthur Conan Doyle",
+"level": "B2",
+"words": 43499,
+"chapters": 14,
+"size": 90996,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/244"
+},
+{
 "id": "pg-16",
 "kind": "book",
 "title": "Peter Pan",
@@ -3568,6 +4493,19 @@
 "source": "https://www.gutenberg.org/ebooks/16"
 },
 {
+"id": "pg-5230",
+"kind": "book",
+"title": "The Invisible Man",
+"author": "H. G. Wells",
+"level": "B2",
+"words": 48833,
+"chapters": 28,
+"size": 101024,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/5230"
+},
+{
 "id": "pg-236",
 "kind": "book",
 "title": "The Jungle Book",
@@ -3575,10 +4513,12 @@
 "level": "B2",
 "words": 51625,
 "chapters": 12,
-"size": 98277,
+"size": 98347,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/236"
+"source": "https://www.gutenberg.org/ebooks/236",
+"pics": 3,
+"picsSize": 171573
 },
 {
 "id": "pg-1597",
@@ -3607,6 +4547,19 @@
 "source": "https://www.gutenberg.org/ebooks/2852"
 },
 {
+"id": "pg-289",
+"kind": "book",
+"title": "The Wind in the Willows",
+"author": "Kenneth Grahame",
+"level": "B2",
+"words": 59551,
+"chapters": 12,
+"size": 124865,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/289"
+},
+{
 "id": "pg-271",
 "kind": "book",
 "title": "Black Beauty",
@@ -3618,6 +4571,19 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/271"
+},
+{
+"id": "pg-36",
+"kind": "book",
+"title": "The War of the Worlds",
+"author": "H. G. Wells",
+"level": "B2",
+"words": 60294,
+"chapters": 27,
+"size": 125412,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/36"
 },
 {
 "id": "pg-103",
@@ -3633,6 +4599,19 @@
 "source": "https://www.gutenberg.org/ebooks/103"
 },
 {
+"id": "pg-1937",
+"kind": "book",
+"title": "The Second Jungle Book",
+"author": "Rudyard Kipling",
+"level": "B2",
+"words": 65154,
+"chapters": 16,
+"size": 127953,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1937"
+},
+{
 "id": "pg-120",
 "kind": "book",
 "title": "Treasure Island",
@@ -3640,10 +4619,12 @@
 "level": "B2",
 "words": 68493,
 "chapters": 34,
-"size": 135785,
+"size": 136326,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/120"
+"source": "https://www.gutenberg.org/ebooks/120",
+"pics": 75,
+"picsSize": 5612514
 },
 {
 "id": "pg-74",
@@ -3653,10 +4634,53 @@
 "level": "B2",
 "words": 71093,
 "chapters": 35,
-"size": 148536,
+"size": 149597,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/74"
+"source": "https://www.gutenberg.org/ebooks/74",
+"pics": 157,
+"picsSize": 8809377
+},
+{
+"id": "pg-910",
+"kind": "book",
+"title": "White Fang",
+"author": "Jack London",
+"level": "B2",
+"words": 72775,
+"chapters": 25,
+"size": 140891,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/910"
+},
+{
+"id": "pg-139",
+"kind": "book",
+"title": "The Lost World",
+"author": "Arthur Conan Doyle",
+"level": "B2",
+"words": 76506,
+"chapters": 16,
+"size": 158979,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/139"
+},
+{
+"id": "pg-421",
+"kind": "book",
+"title": "Kidnapped",
+"author": "Robert Louis Stevenson",
+"level": "B2",
+"words": 80304,
+"chapters": 30,
+"size": 155056,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/421",
+"pics": 93,
+"picsSize": 5418554
 },
 {
 "id": "pg-113",
@@ -3672,6 +4696,19 @@
 "source": "https://www.gutenberg.org/ebooks/113"
 },
 {
+"id": "pg-45",
+"kind": "book",
+"title": "Anne of Green Gables",
+"author": "L. M. Montgomery",
+"level": "B2",
+"words": 103013,
+"chapters": 38,
+"size": 205523,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/45"
+},
+{
 "id": "pg-1661",
 "kind": "book",
 "title": "The Adventures of Sherlock Holmes",
@@ -3683,6 +4720,19 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/1661"
+},
+{
+"id": "pg-503",
+"kind": "book",
+"title": "The Blue Fairy Book",
+"author": "Andrew Lang",
+"level": "B2",
+"words": 138755,
+"chapters": 41,
+"size": 250940,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/503"
 },
 {
 "id": "pg-514",
@@ -3698,6 +4748,32 @@
 "source": "https://www.gutenberg.org/ebooks/514"
 },
 {
+"id": "pg-844",
+"kind": "book",
+"title": "The Importance of Being Earnest",
+"author": "Oscar Wilde",
+"level": "C1",
+"words": 20586,
+"chapters": 3,
+"size": 40783,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/844"
+},
+{
+"id": "pg-5200",
+"kind": "book",
+"title": "Metamorphosis",
+"author": "Franz Kafka",
+"level": "C1",
+"words": 22045,
+"chapters": 3,
+"size": 41757,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/5200"
+},
+{
 "id": "pg-42",
 "kind": "book",
 "title": "The Strange Case of Dr Jekyll and Mr Hyde",
@@ -3709,6 +4785,19 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/42"
+},
+{
+"id": "pg-219",
+"kind": "book",
+"title": "Heart of Darkness",
+"author": "Joseph Conrad",
+"level": "C1",
+"words": 38755,
+"chapters": 3,
+"size": 82008,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/219"
 },
 {
 "id": "pg-84",
@@ -3737,6 +4826,19 @@
 "source": "https://www.gutenberg.org/ebooks/174"
 },
 {
+"id": "pg-105",
+"kind": "book",
+"title": "Persuasion",
+"author": "Jane Austen",
+"level": "C1",
+"words": 83586,
+"chapters": 24,
+"size": 164800,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/105"
+},
+{
 "id": "pg-768",
 "kind": "book",
 "title": "Wuthering Heights",
@@ -3763,6 +4865,47 @@
 "source": "https://www.gutenberg.org/ebooks/1342"
 },
 {
+"id": "pg-98",
+"kind": "book",
+"title": "A Tale of Two Cities",
+"author": "Charles Dickens",
+"level": "C1",
+"words": 136965,
+"chapters": 45,
+"size": 280247,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/98",
+"pics": 14,
+"picsSize": 807402
+},
+{
+"id": "pg-730",
+"kind": "book",
+"title": "Oliver Twist",
+"author": "Charles Dickens",
+"level": "C1",
+"words": 158259,
+"chapters": 53,
+"size": 331525,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/730"
+},
+{
+"id": "pg-158",
+"kind": "book",
+"title": "Emma",
+"author": "Jane Austen",
+"level": "C1",
+"words": 160873,
+"chapters": 55,
+"size": 312287,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/158"
+},
+{
 "id": "pg-345",
 "kind": "book",
 "title": "Dracula",
@@ -3776,6 +4919,21 @@
 "source": "https://www.gutenberg.org/ebooks/345"
 },
 {
+"id": "pg-1400",
+"kind": "book",
+"title": "Great Expectations",
+"author": "Charles Dickens",
+"level": "C1",
+"words": 186438,
+"chapters": 59,
+"size": 369282,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1400",
+"pics": 15,
+"picsSize": 1616456
+},
+{
 "id": "pg-1260",
 "kind": "book",
 "title": "Jane Eyre",
@@ -3783,9 +4941,11 @@
 "level": "C1",
 "words": 187399,
 "chapters": 38,
-"size": 399171,
+"size": 399503,
 "license": "Public domain",
 "credit": "Project Gutenberg",
-"source": "https://www.gutenberg.org/ebooks/1260"
+"source": "https://www.gutenberg.org/ebooks/1260",
+"pics": 14,
+"picsSize": 1671377
 }
 ]

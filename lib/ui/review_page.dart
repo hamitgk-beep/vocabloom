@@ -48,7 +48,7 @@ class _ReviewPageState extends State<ReviewPage> {
   /// Multiple-choice state per card position (null: a plain flashcard).
   final _choices = <int, QuizChoice?>{};
   int? picked;
-  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user);
+  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user, trEn: app.trEn, senses: app.senses);
 
   /// Cards whose meaning in their sentence is being asked from the AI service.
   final _asking = <String>{};
@@ -67,12 +67,14 @@ class _ReviewPageState extends State<ReviewPage> {
     final w = queue[i].word;
     // A guessed meaning: the AI service (when set up) gives the exact one.
     final ans = _quiz.answerFor(w);
+    if (app.learnTurkish) return _choices[i] = _quiz.choiceFor(w);
     if (!ans.sure && _askAi(w)) return null;
     final ch = _quiz.choiceFor(w);
-    if (ch == null && _askAi(w)) return null; // ask again when the answer arrives
+    // Only a word the dictionary has no Turkish for: the AI service is asked.
+    if (ch == null && ans.tr == null && _askAi(w)) return null; // ask again when the answer arrives
     // The dictionary lacks the Turkish of this sense: remember it, so it can
     // be reported and added in a later dictionary update.
-    if ((ch == null || !ans.sure) && !w.lemma.contains(' ')) {
+    if ((ch == null || !ans.sure) && ans.choice && !w.lemma.contains(' ')) {
       try {
         app.user.addMissing(w.lemma, ans.synId, ans.gloss);
       } catch (_) {}
@@ -88,6 +90,9 @@ class _ReviewPageState extends State<ReviewPage> {
     final key = '${w.lemma}|$ctx';
     if (_asking.contains(key)) return true;
     if (_aiFailed.contains(key)) return false;
+    // The learner's own (often paid) key is used in the background only
+    // when they turned on automatic AI analysis in Settings.
+    if (!app.analyzer.enabled) return false;
     final svc = AiService.fromSettings(app.user);
     if (svc == null) return false;
     _asking.add(key);
@@ -202,7 +207,7 @@ class _ReviewPageState extends State<ReviewPage> {
     final ch = _choiceFor(pos);
     final waiting = ch == null && _waiting(pos);
     final ans = _quiz.answerFor(w);
-    // What the word means in its own sentence (never an unrelated sense).
+    // The word's most common meaning.
     final meaning = ch?.right ?? ans.tr;
     final gloss = ans.gloss;
     final answered = picked != null;
@@ -238,7 +243,7 @@ class _ReviewPageState extends State<ReviewPage> {
                 constraints: BoxConstraints(minHeight: box.maxHeight),
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const SizedBox(height: 16),
-                  Text(displayPhrase(w.lemma), style: enStyle(theme, theme.textTheme.headlineLarge).copyWith(fontWeight: FontWeight.w800)),
+                  Text(displayPhrase(w.lemma), style: (app.learnTurkish ? trStyle : enStyle)(theme, theme.textTheme.headlineLarge).copyWith(fontWeight: FontWeight.w800)),
                   if (w.context != null) ...[
                     const SizedBox(height: 16),
                     DefaultTextStyle.merge(
@@ -255,13 +260,15 @@ class _ReviewPageState extends State<ReviewPage> {
                         : !reveal
                         ? Text(
                             ch != null
-                                ? L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.')
+                                ? (app.learnTurkish
+                                    ? L('Doğru İngilizce anlamı seç.', 'Pick the right English meaning.')
+                                    : L('Doğru Türkçe anlamı seç.', 'Pick the right Turkish meaning.'))
                                 : L('Anlamını hatırlıyor musun? Görmek için dokun.', 'Do you remember the meaning? Tap to see it.'),
                             key: const ValueKey(0), style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant))
                         : Column(key: const ValueKey(1), crossAxisAlignment: CrossAxisAlignment.start, children: [
                             const Divider(height: 1),
                             const SizedBox(height: 20),
-                            if (meaning != null && app.showTr) Text(meaning, style: trStyle(theme, theme.textTheme.titleLarge)),
+                            if (meaning != null && (app.showTr || app.learnTurkish)) Text(meaning, style: (app.learnTurkish ? enStyle : trStyle)(theme, theme.textTheme.titleLarge)),
                             // With no Turkish for this sense the English definition is the answer.
                             if (gloss != null && (app.showEn || meaning == null)) ...[
                               const SizedBox(height: 8),
@@ -269,6 +276,22 @@ class _ReviewPageState extends State<ReviewPage> {
                             ],
                             if (meaning == null && gloss == null)
                               Text(L('Anlam kaydedilmemiş.', 'No meaning saved.'), style: theme.textTheme.bodyMedium),
+                            // Not confirmed for this sentence: said in neutral words; the saved meaning stays as it is.
+                            if (meaning != null && ans.unconfirmed) ...[
+                              const SizedBox(height: 8),
+                              Text(
+                                w.context == null
+                                    ? L('Bu anlamın kelimenin ana anlamı olduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                        'This meaning could not be confirmed as the main meaning of the word. This card is not graded.')
+                                    : ans.saved
+                                        ? L('Kayıtlı anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                            'The saved meaning could not be confirmed for this sentence. This card is not graded.')
+                                        : L('Bu anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                            'This meaning could not be confirmed for this sentence. This card is not graded.'),
+                                key: const ValueKey('review-unconfirmed'),
+                                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, fontStyle: FontStyle.italic),
+                              ),
+                            ],
                             const SizedBox(height: 8),
                             TextButton.icon(
                               style: TextButton.styleFrom(padding: EdgeInsets.zero),
@@ -331,12 +354,34 @@ class _ReviewPageState extends State<ReviewPage> {
             child: Text(L('Cevabı göster', 'Show answer')),
           )
         else
-          Row(children: [
-            _AnswerButton(label: L('Tekrar', 'Again'), hint: _hint(ReviewAnswer.again, c.box), color: const Color(0xFFE5484D), onTap: () => _answer(ReviewAnswer.again)),
-            const SizedBox(width: 10),
-            _AnswerButton(label: L('Zor', 'Hard'), hint: _hint(ReviewAnswer.hard, c.box), color: learningColor, onTap: () => _answer(ReviewAnswer.hard)),
-            const SizedBox(width: 10),
-            _AnswerButton(label: L('Biliyorum', 'Got it'), hint: _hint(ReviewAnswer.good, c.box), color: learnedColor, onTap: () => _answer(ReviewAnswer.good)),
+          Column(children: [
+            Text(L('Ne kadar iyi hatırladın?', 'How well did you remember it?'), style: theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            const SizedBox(height: 10),
+            Row(children: [
+              _AnswerButton(
+                  key: const ValueKey('review-again'),
+                  icon: Icons.replay_rounded,
+                  label: L('Hatırlamadım', 'Forgot'),
+                  hint: _hint(ReviewAnswer.again, c.box),
+                  color: learnColor(theme),
+                  onTap: () => _answer(ReviewAnswer.again)),
+              const SizedBox(width: 10),
+              _AnswerButton(
+                  key: const ValueKey('review-hard'),
+                  icon: Icons.schedule_rounded,
+                  label: L('Zorlandım', 'Hard'),
+                  hint: _hint(ReviewAnswer.hard, c.box),
+                  color: theme.colorScheme.primary,
+                  onTap: () => _answer(ReviewAnswer.hard)),
+              const SizedBox(width: 10),
+              _AnswerButton(
+                  key: const ValueKey('review-good'),
+                  icon: Icons.check_circle_outline_rounded,
+                  label: L('Bildim', 'Knew it'),
+                  hint: _hint(ReviewAnswer.good, c.box),
+                  color: learnedColor,
+                  onTap: () => _answer(ReviewAnswer.good)),
+            ]),
           ]),
       ]),
     );
@@ -369,7 +414,7 @@ class _ReviewPageState extends State<ReviewPage> {
     final out = {words.first};
     if (w.context == null) return out;
     for (final t in tokenize(w.context!)) {
-      final ls = app.dict.lemmatizer.lemmas(t.lower);
+      final ls = app.learnTurkish ? app.trEn!.lemmas(t.lower) : app.dict.lemmatizer.lemmas(t.lower);
       if (words.length == 1 ? (t.lower == w.lemma || ls.contains(w.lemma)) : words.any((x) => x.length > 2 && (t.lower == x || ls.contains(x)))) {
         out.add(t.lower);
       }
@@ -382,7 +427,9 @@ class _ReviewPageState extends State<ReviewPage> {
     return Padding(
       padding: const EdgeInsets.all(28),
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        const BrandMark(size: 96),
+        const Wordmark(height: 34),
+        const SizedBox(height: 10),
+        const GoldRule(width: 160),
         const SizedBox(height: 24),
         Text(L('Harika iş!', 'Great job!'), style: theme.textTheme.headlineMedium),
         const SizedBox(height: 8),
@@ -393,7 +440,7 @@ class _ReviewPageState extends State<ReviewPage> {
           const SizedBox(width: 10),
           _Stat(icon: Icons.check_circle_rounded, color: learnedColor, value: '$known', label: L('biliyordun', 'known')),
           const SizedBox(width: 10),
-          _Stat(icon: Icons.verified_rounded, color: Brand.violet, value: '$graduated', label: L('öğrenildi', 'learned')),
+          _Stat(icon: Icons.verified_rounded, color: Brand.gold, value: '$graduated', label: L('öğrenildi', 'learned')),
         ]),
         const SizedBox(height: 32),
         if (_missing.isNotEmpty) ...[
@@ -497,13 +544,15 @@ class _OptionButton extends StatelessWidget {
 
 class _AnswerButton extends StatelessWidget {
   final String label, hint;
+  final IconData icon;
   final Color color;
   final VoidCallback onTap;
-  const _AnswerButton({required this.label, required this.hint, required this.color, required this.onTap});
+  const _AnswerButton({super.key, required this.icon, required this.label, required this.hint, required this.color, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context);
+    final fg = t.brightness == Brightness.dark ? Color.lerp(color, Colors.white, 0.3)! : Color.lerp(color, Colors.black, 0.25)!;
     return Expanded(
       child: Material(
         color: color.withValues(alpha: t.brightness == Brightness.dark ? 0.22 : 0.12),
@@ -512,9 +561,14 @@ class _AnswerButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           onTap: onTap,
           child: SizedBox(
-            height: 62,
+            height: 82,
             child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(label, style: t.textTheme.titleSmall?.copyWith(color: t.brightness == Brightness.dark ? Color.lerp(color, Colors.white, 0.3) : Color.lerp(color, Colors.black, 0.25), fontWeight: FontWeight.w700)),
+              Icon(icon, size: 22, color: fg),
+              const SizedBox(height: 4),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(label, maxLines: 1, style: t.textTheme.titleSmall?.copyWith(color: fg, fontWeight: FontWeight.w700)),
+              ),
               const SizedBox(height: 2),
               Text(hint, style: t.textTheme.labelSmall?.copyWith(color: t.colorScheme.onSurfaceVariant)),
             ]),

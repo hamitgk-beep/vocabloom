@@ -28,7 +28,7 @@ void main() {
     // The service itself first, with its own error text and timing, on a
     // few models: time to the first words (streaming) and to the end.
     String? works;
-    for (final m in [null, 'gemini-flash-latest', 'gemini-2.5-flash']) {
+    for (final m in [null, 'gemini-flash-latest']) {
       // null: the app's default model.
       u.setSetting('ai_model_$provider', m);
       final svc = AiService(AiConfig(providerById[provider]!, key!, m ?? providerById[provider]!.defaultModel, ''));

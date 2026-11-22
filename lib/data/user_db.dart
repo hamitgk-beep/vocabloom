@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 import 'package:sqlite3/sqlite3.dart';
 
+import 'sentence_translation.dart';
+
 enum WordStatus { none, learning, learned }
 
 class Book {
@@ -13,13 +15,18 @@ class Book {
   final String format;
   final int chapterCount;
   int lastChapter;
+
+  /// Scroll offset in the page last read.
   int lastParagraph;
+
+  /// Page of [lastChapter] last read (counted from 0 in that chapter).
+  int lastPage;
   final DateTime added;
 
   /// Id of the free-library item this book came from (pb-0002, pg-1342), if any.
   final String? source;
   Book(this.id, this.title, this.author, this.format, this.chapterCount, this.lastChapter,
-      this.lastParagraph, this.added, {this.source});
+      this.lastParagraph, this.added, {this.source, this.lastPage = 0});
 }
 
 class Chapter {
@@ -32,9 +39,27 @@ class Chapter {
 class Para {
   final int id;
   final int idx;
-  final String kind; // p, h
+
+  /// p (paragraph), h (heading), c (picture caption), i (picture: [text] is
+  /// its file, relative to the app folder).
+  final String kind;
   final String text;
-  Para(this.id, this.idx, this.kind, this.text);
+
+  /// How the book sets it, from the import (see [ParaMeta]); empty when unknown.
+  final Map<String, dynamic> meta;
+  Para(this.id, this.idx, this.kind, this.text, [this.meta = const {}]);
+
+  /// Page of the original book (from 0), when the book has pages (PDF).
+  int? get page => (meta['pg'] as num?)?.toInt();
+
+  /// Type size compared with the book's body text (1 = the same).
+  double get size => (meta['sz'] as num?)?.toDouble() ?? 1;
+
+  /// l (left), c (centre), r (right), j (justified); null when unknown.
+  String? get align => meta['al'] as String?;
+
+  /// Width / height of a picture.
+  double? get aspect => (meta['ar'] as num?)?.toDouble();
 }
 
 class SavedWord {
@@ -53,22 +78,73 @@ class ImportedBook {
   final String? author;
   final String format;
   final List<ImportedChapter> chapters;
-  ImportedBook(this.title, this.author, this.format, this.chapters);
+
+  /// Pictures of the book by name; an 'i' paragraph's text is one of these names.
+  final Map<String, List<int>> images;
+  ImportedBook(this.title, this.author, this.format, this.chapters, [Map<String, List<int>>? images]) : images = images ?? {};
 }
 
 class ImportedChapter {
   final String title;
   final List<(String kind, String text)> paragraphs;
-  ImportedChapter(this.title, this.paragraphs);
+
+  /// How each paragraph is set ([Para.meta]); shorter than [paragraphs] (or
+  /// empty) when not known.
+  final List<Map<String, Object?>?> meta;
+  ImportedChapter(this.title, this.paragraphs, [List<Map<String, Object?>?>? meta]) : meta = meta ?? [];
+
+  Map<String, Object?>? metaAt(int i) => i >= 0 && i < meta.length ? meta[i] : null;
+
+  /// Adds a paragraph with its [m] (kept in step with [paragraphs]).
+  void add(String kind, String text, [Map<String, Object?>? m]) {
+    while (meta.length < paragraphs.length) {
+      meta.add(null);
+    }
+    paragraphs.add((kind, text));
+    meta.add(m);
+  }
 }
 
 /// Everything the user creates lives here, on the device.
 class UserDb {
   late final Database db;
+
+  /// The app folder: the database and the books' pictures (`books/<id>/`).
+  late final String dir;
+  /// Saved words of the language being learned, by lemma. Turkish words are
+  /// stored with a `tr:` key so the two languages never mix.
   final Map<String, WordStatus> statuses = {};
+
+  /// The language being learned: 'en' or 'tr'.
+  String get lang => _lang;
+  String _lang = 'en';
+  set lang(String v) {
+    if (v == _lang) return;
+    _lang = v;
+    _loadStatuses();
+  }
+
+  String get _prefix => _lang == 'en' ? '' : '$_lang:';
+
+  /// The stored key of [lemma] in the language being learned.
+  String key(String lemma) => '$_prefix$lemma';
+
+  String get _langWhere => _lang == 'en' ? "lemma NOT LIKE 'tr:%'" : "lemma LIKE '$_prefix%'";
+
+  /// Reads the saved words again (after a backup was restored).
+  void reloadStatuses() => _loadStatuses();
+
+  void _loadStatuses() {
+    statuses.clear();
+    for (final r in db.select('SELECT lemma, status FROM words WHERE $_langWhere')) {
+      final k = r['lemma'] as String;
+      statuses[k.substring(_prefix.length)] = WordStatus.values[r['status'] as int];
+    }
+  }
 
   static UserDb open(Directory dir) {
     final u = UserDb();
+    u.dir = dir.path;
     u.db = sqlite3.open(p.join(dir.path, 'user.db'));
     u.db.execute('PRAGMA journal_mode=WAL');
     u.db.execute('''
@@ -97,14 +173,22 @@ class UserDb {
       CREATE TABLE IF NOT EXISTS sense_help(word TEXT, sentence TEXT, created INTEGER, PRIMARY KEY(word, sentence));
     ''');
     // Older databases have no withdrawn flag on the reports: add it, keep every row.
+    // Sentence answers keep their direction and engine; older rows stay as
+    // they are (no direction = English > Turkish, the only one then).
+    final sa = u.db.select('PRAGMA table_info(sentence_ai)').map((r) => r['name']).toSet();
+    if (!sa.contains('dir')) u.db.execute('ALTER TABLE sentence_ai ADD COLUMN dir TEXT');
+    if (!sa.contains('engine')) u.db.execute('ALTER TABLE sentence_ai ADD COLUMN engine TEXT');
     final fb = u.db.select('PRAGMA table_info(sense_feedback)').map((r) => r['name']).toSet();
     if (!fb.contains('withdrawn')) u.db.execute('ALTER TABLE sense_feedback ADD COLUMN withdrawn INTEGER DEFAULT 0');
     final cols = u.db.select('PRAGMA table_info(books)').map((r) => r['name']).toSet();
     if (!cols.contains('analyzed')) u.db.execute('ALTER TABLE books ADD COLUMN analyzed INTEGER DEFAULT 0');
     if (!cols.contains('source')) u.db.execute('ALTER TABLE books ADD COLUMN source TEXT');
-    for (final r in u.db.select('SELECT lemma, status FROM words')) {
-      u.statuses[r['lemma'] as String] = WordStatus.values[r['status'] as int];
-    }
+    if (!cols.contains('last_page')) u.db.execute('ALTER TABLE books ADD COLUMN last_page INTEGER DEFAULT 0');
+    // The language of the book's text ('en', 'tr'): each language shows its own books.
+    if (!cols.contains('lang')) u.db.execute("ALTER TABLE books ADD COLUMN lang TEXT DEFAULT 'en'");
+    final pc = u.db.select('PRAGMA table_info(paras)').map((r) => r['name']).toSet();
+    if (!pc.contains('meta')) u.db.execute('ALTER TABLE paras ADD COLUMN meta TEXT');
+    u._loadStatuses();
     return u;
   }
 
@@ -216,13 +300,21 @@ class UserDb {
   void setExprDetail(String key, String json) =>
       db.execute('INSERT OR REPLACE INTO expr_detail(key, json) VALUES (?,?)', [key, json]);
 
-  (String, String?)? sentenceAi(String sentence) {
-    final r = db.select('SELECT tr, exp FROM sentence_ai WHERE sentence=?', [sentence]);
-    return r.isEmpty ? null : (r.first['tr'] as String, r.first['exp'] as String?);
+  /// The AI's translation and explanation saved for exactly [sentence], in
+  /// the direction [dir]. Rows saved before the direction was kept have none:
+  /// they were all English > Turkish, the only direction asked then.
+  (String, String?)? sentenceAi(String sentence, {String dir = 'en>tr'}) {
+    final r = db.select('SELECT tr, exp, dir FROM sentence_ai WHERE sentence=?', [sentence]);
+    if (r.isEmpty) return null;
+    final d = r.first['dir'] as String?;
+    if (d != null && d != dir) return null;
+    return (r.first['tr'] as String, r.first['exp'] as String?);
   }
 
-  void setSentenceAi(String sentence, String tr, String? exp) =>
-      db.execute('INSERT OR REPLACE INTO sentence_ai(sentence, tr, exp) VALUES (?,?,?)', [sentence, tr, exp]);
+  /// Saves the answer under its source sentence, with the language direction
+  /// and the engine that made it (`ai:<provider>/<model>`).
+  void setSentenceAi(String sentence, String tr, String? exp, {String dir = 'en>tr', String? engine}) =>
+      db.execute('INSERT OR REPLACE INTO sentence_ai(sentence, tr, exp, dir, engine) VALUES (?,?,?,?,?)', [sentence, tr, exp, dir, engine]);
 
   // ---- AI word families
   String? familyAi(String word) {
@@ -259,7 +351,7 @@ class UserDb {
     const key = 'repair_joined_words_v1';
     if (getSetting(key) != null) return;
     final rows = db.select(
-        "SELECT p.id, p.text FROM paras p JOIN books b ON b.id = p.book_id WHERE b.format IN ('pdf', 'image')");
+        "SELECT p.id, p.text FROM paras p JOIN books b ON b.id = p.book_id WHERE b.format IN ('pdf', 'image') AND p.kind != 'i'");
     db.execute('BEGIN');
     try {
       final upd = db.prepare('UPDATE paras SET text=? WHERE id=?');
@@ -285,7 +377,7 @@ class UserDb {
   void repairImportedTextOnce(String Function(String text, String format) fix) {
     const key = 'repair_imported_text_v1';
     if (getSetting(key) != null) return;
-    final rows = db.select('SELECT p.id, p.text, b.format FROM paras p JOIN books b ON b.id = p.book_id');
+    final rows = db.select("SELECT p.id, p.text, b.format FROM paras p JOIN books b ON b.id = p.book_id WHERE p.kind != 'i'");
     db.execute('BEGIN');
     try {
       final upd = db.prepare('UPDATE paras SET text=? WHERE id=?');
@@ -325,19 +417,56 @@ class UserDb {
   void setJson(String key, Map<String, dynamic> v) => setSetting(key, jsonEncode(v));
 
   // ---- books
-  int insertBook(ImportedBook b, {String? source}) {
+  /// The language of a book's text: 'tr' when Turkish letters are common in
+  /// it (ç ğ ı ö ş ü), otherwise 'en'.
+  static String textLang(ImportedBook b) {
+    var letters = 0, tr = 0;
+    for (final c in b.chapters) {
+      for (final (kind, text) in c.paragraphs) {
+        if (kind == 'i') continue;
+        for (final r in text.runes) {
+          if (_trLetters.contains(r)) {
+            tr++;
+            letters++;
+          } else if (r >= 65 && r <= 90 || r >= 97 && r <= 122) {
+            letters++;
+          }
+        }
+        if (letters > 20000) break;
+      }
+      if (letters > 20000) break;
+    }
+    return letters > 0 && tr / letters > 0.01 ? 'tr' : 'en';
+  }
+
+  static final _trLetters = 'çğıöşüÇĞİÖŞÜ'.runes.toSet();
+
+  int insertBook(ImportedBook b, {String? source, String? lang}) {
     db.execute('BEGIN');
     try {
-      db.execute('INSERT INTO books(title, author, format, chapters, added, source) VALUES (?,?,?,?,?,?)',
-          [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch, source]);
+      db.execute('INSERT INTO books(title, author, format, chapters, added, source, lang) VALUES (?,?,?,?,?,?,?)',
+          [b.title, b.author, b.format, b.chapters.length, DateTime.now().millisecondsSinceEpoch, source, lang ?? textLang(b)]);
       final id = db.lastInsertRowId;
+      // Pictures go to books/<id>/ in the app folder.
+      final imgDir = p.join('books', '$id');
+      if (b.images.isNotEmpty) Directory(p.join(dir, imgDir)).createSync(recursive: true);
+      for (final e in b.images.entries) {
+        File(p.join(dir, imgDir, e.key)).writeAsBytesSync(e.value);
+      }
       final ch = db.prepare('INSERT INTO chapters(book_id, idx, title) VALUES (?,?,?)');
-      final pa = db.prepare('INSERT INTO paras(book_id, chapter, idx, kind, text) VALUES (?,?,?,?,?)');
+      final pa = db.prepare('INSERT INTO paras(book_id, chapter, idx, kind, text, meta) VALUES (?,?,?,?,?,?)');
       for (var c = 0; c < b.chapters.length; c++) {
         ch.execute([id, c, b.chapters[c].title]);
         final ps = b.chapters[c].paragraphs;
+        var n = 0;
         for (var i = 0; i < ps.length; i++) {
-          pa.execute([id, c, i, ps[i].$1, ps[i].$2]);
+          final m = b.chapters[c].metaAt(i);
+          var text = ps[i].$2;
+          if (ps[i].$1 == 'i') {
+            if (!b.images.containsKey(text)) continue; // a picture that was not kept
+            text = p.posix.join('books', '$id', text);
+          }
+          pa.execute([id, c, n++, ps[i].$1, text, m == null || m.isEmpty ? null : jsonEncode(m)]);
         }
       }
       ch.close();
@@ -350,25 +479,65 @@ class UserDb {
     }
   }
 
-  List<Book> books() => [
-        for (final r in db.select('SELECT * FROM books ORDER BY added DESC'))
+  /// Books in [lang], by default the language being learned.
+  List<Book> books({String? lang}) => [
+        for (final r in db.select("SELECT * FROM books WHERE coalesce(lang, 'en')=? ORDER BY added DESC", [lang ?? _lang]))
           Book(r['id'] as int, r['title'] as String, r['author'] as String?, r['format'] as String,
               r['chapters'] as int, r['last_chapter'] as int, r['last_para'] as int,
               DateTime.fromMillisecondsSinceEpoch(r['added'] as int),
-              source: r['source'] as String?)
+              source: r['source'] as String?, lastPage: (r['last_page'] as int?) ?? 0)
       ];
 
   /// Free-library item id → the book made from it.
+  /// How many pictures the book has.
+  int pictureCount(int bookId) => db.select("SELECT COUNT(*) AS n FROM paras WHERE book_id=? AND kind='i'", [bookId]).first['n'] as int;
+
   Map<String, Book> booksBySource() => {for (final b in books()) if (b.source != null) b.source!: b};
 
   void deleteBook(int id) {
     db.execute('DELETE FROM paras WHERE book_id=?', [id]);
     db.execute('DELETE FROM chapters WHERE book_id=?', [id]);
     db.execute('DELETE FROM books WHERE id=?', [id]);
+    try {
+      final d = Directory(p.join(dir, 'books', '$id'));
+      if (d.existsSync()) d.deleteSync(recursive: true);
+    } catch (_) {}
   }
 
-  void saveProgress(int bookId, int chapter, int para) =>
-      db.execute('UPDATE books SET last_chapter=?, last_para=? WHERE id=?', [chapter, para, bookId]);
+  /// Number of pages of the original book (a PDF), null when it has none.
+  int? bookPages(int bookId) {
+    try {
+      final r = db.select("SELECT MAX(CAST(json_extract(meta, '\$.pg') AS INTEGER)) AS m FROM paras WHERE book_id=?", [bookId]);
+      final m = r.first['m'] as int?;
+      return m == null ? null : m + 1;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// A picture's file on this device.
+  File imageFile(Para para) => File(p.join(dir, para.text));
+
+  /// The book's cover: a picture at the very start of the book (most books
+  /// open with their cover), when its file is there. Null otherwise.
+  File? coverFile(int bookId) {
+    final r = db.select(
+      "SELECT text, meta FROM paras WHERE book_id=? AND kind='i' AND chapter=(SELECT MIN(chapter) FROM paras WHERE book_id=?) "
+      'AND idx < 4 ORDER BY idx LIMIT 1',
+      [bookId, bookId],
+    );
+    if (r.isEmpty) return null;
+    final meta = r.first['meta'] == null ? const {} : jsonDecode(r.first['meta'] as String) as Map;
+    // A PDF's picture must be on its first page; a small icon is no cover.
+    if ((meta['pg'] as int? ?? 0) > 0) return null;
+    final ar = (meta['ar'] as num?)?.toDouble();
+    if (ar != null && (ar < 0.45 || ar > 1.1)) return null;
+    final f = File(p.join(dir, r.first['text'] as String));
+    return f.existsSync() ? f : null;
+  }
+
+  void saveProgress(int bookId, int chapter, int para, {int page = 0}) =>
+      db.execute('UPDATE books SET last_chapter=?, last_para=?, last_page=? WHERE id=?', [chapter, para, page, bookId]);
 
   List<Chapter> chapters(int bookId) => [
         for (final r in db.select('SELECT idx, title, summary FROM chapters WHERE book_id=? ORDER BY idx', [bookId]))
@@ -399,6 +568,7 @@ class UserDb {
   String chapterText(int bookId, int chapter) {
     final out = StringBuffer();
     for (final p in paras(bookId, chapter)) {
+      if (p.kind == 'i') continue;
       out
         ..writeln(p.kind == 'c' ? '[${p.text}]' : p.text)
         ..writeln();
@@ -408,26 +578,27 @@ class UserDb {
 
   List<Para> paras(int bookId, int chapter) => [
         for (final r in db.select(
-            'SELECT id, idx, kind, text FROM paras WHERE book_id=? AND chapter=? ORDER BY idx', [bookId, chapter]))
-          Para(r['id'] as int, r['idx'] as int, r['kind'] as String, r['text'] as String)
+            'SELECT id, idx, kind, text, meta FROM paras WHERE book_id=? AND chapter=? ORDER BY idx', [bookId, chapter]))
+          Para(r['id'] as int, r['idx'] as int, r['kind'] as String, r['text'] as String,
+              r['meta'] == null ? const {} : (jsonDecode(r['meta'] as String) as Map<String, dynamic>))
       ];
 
-  /// Sentence translations stored by the online analysis (JSON list).
-  List<String>? paraTranslation(int paraId) {
+  /// Sentence translations stored by the online analysis, each tied to its
+  /// English sentence (see sentence_translation.dart). Null when none.
+  ParaTranslations? paraTranslation(int paraId) {
     final r = db.select('SELECT tr FROM paras WHERE id=?', [paraId]);
-    final s = r.isEmpty ? null : r.first['tr'] as String?;
-    return s == null ? null : (jsonDecode(s) as List).cast<String>();
+    return ParaTranslations.decode(r.isEmpty ? null : r.first['tr'] as String?);
   }
 
-  void setParaTranslation(int paraId, List<String> tr) =>
-      db.execute('UPDATE paras SET tr=? WHERE id=?', [jsonEncode(tr), paraId]);
+  void setParaTranslation(int paraId, ParaTranslations tr) =>
+      db.execute('UPDATE paras SET tr=? WHERE id=?', [tr.encode(), paraId]);
 
   void setChapterSummary(int bookId, int idx, String summary) =>
       db.execute('UPDATE chapters SET summary=? WHERE book_id=? AND idx=?', [summary, bookId, idx]);
 
   List<({int id, String text})> parasMissingTranslation(int bookId) => [
         for (final r in db.select(
-            'SELECT id, text FROM paras WHERE book_id=? AND tr IS NULL ORDER BY chapter, idx', [bookId]))
+            "SELECT id, text FROM paras WHERE book_id=? AND tr IS NULL AND kind != 'i' ORDER BY chapter, idx", [bookId]))
           (id: r['id'] as int, text: r['text'] as String)
       ];
 
@@ -450,24 +621,26 @@ class UserDb {
 
   // ---- words
   void setWord(String lemma, WordStatus status, {String? context, String? book, String? meaning}) {
+    final k = key(lemma);
     if (status == WordStatus.none) {
-      db.execute('DELETE FROM words WHERE lemma=?', [lemma]);
+      db.execute('DELETE FROM words WHERE lemma=?', [k]);
       statuses.remove(lemma);
       return;
     }
-    final exists = db.select('SELECT 1 FROM words WHERE lemma=?', [lemma]).isNotEmpty;
+    final exists = db.select('SELECT 1 FROM words WHERE lemma=?', [k]).isNotEmpty;
     if (exists) {
-      db.execute('UPDATE words SET status=? WHERE lemma=?', [status.index, lemma]);
+      db.execute('UPDATE words SET status=? WHERE lemma=?', [status.index, k]);
     } else {
       db.execute('INSERT INTO words VALUES (?,?,?,?,?,?)',
-          [lemma, status.index, context, book, meaning, DateTime.now().millisecondsSinceEpoch]);
+          [k, status.index, context, book, meaning, DateTime.now().millisecondsSinceEpoch]);
     }
     statuses[lemma] = status;
   }
 
+  /// Saved words of the language being learned.
   List<SavedWord> words(WordStatus status) => [
-        for (final r in db.select('SELECT * FROM words WHERE status=? ORDER BY added DESC', [status.index]))
-          SavedWord(r['lemma'] as String, status, r['context'] as String?, r['book'] as String?,
+        for (final r in db.select('SELECT * FROM words WHERE status=? AND ($_langWhere) ORDER BY added DESC', [status.index]))
+          SavedWord((r['lemma'] as String).substring(_prefix.length), status, r['context'] as String?, r['book'] as String?,
               r['meaning'] as String?, DateTime.fromMillisecondsSinceEpoch(r['added'] as int))
       ];
 }
