@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import '../nlp/context_sense.dart';
 import 'dict_db.dart';
 import 'tr_en_dict.dart';
 import 'user_db.dart';
@@ -22,7 +23,19 @@ class QuizAnswer {
 
   /// WordNet sense used in the sentence, when known (for missing-word reports).
   final int? synId;
-  const QuizAnswer(this.tr, this.pos, this.gloss, {this.sure = true, this.synId});
+
+  /// False when [tr] must not be graded as the one right option: it does not
+  /// fit the card's sentence, or it rests only on an unverified AI draft. The
+  /// card is then a plain flashcard (no AI request, no missing-word report).
+  final bool choice;
+
+  /// True when [tr] is the meaning saved on the card (kept as it was saved).
+  final bool saved;
+
+  /// True when [tr] could not be confirmed for the card's sentence (the card
+  /// says so, in neutral words; nothing is corrected).
+  final bool unconfirmed;
+  const QuizAnswer(this.tr, this.pos, this.gloss, {this.sure = true, this.synId, this.choice = true, this.saved = false, this.unconfirmed = false});
 }
 
 class QuizChoice {
@@ -44,7 +57,12 @@ class ReviewQuiz {
   final Random rnd;
   /// Turkish dictionary, for review cards while learning Turkish.
   final TrEnDict? trEn;
-  ReviewQuiz(this.dict, this.user, {Random? rnd, this.trEn}) : rnd = rnd ?? Random();
+
+  /// The context picker (the app's own, so the panels and the cards decide alike).
+  final SenseEngine senses;
+  ReviewQuiz(this.dict, this.user, {Random? rnd, this.trEn, SenseEngine? senses})
+      : rnd = rnd ?? Random(),
+        senses = senses ?? SenseEngine(dict);
 
   /// Learning Turkish: the answers are English meanings.
   bool get _tr => user.lang == 'tr' && trEn != null;
@@ -65,21 +83,107 @@ class ReviewQuiz {
       final m = w.meaning ?? trEn!.shortMeaning(lemma);
       return QuizAnswer(m == null || m.trim().isEmpty ? null : DictDb.shortTr(m), null, null);
     }
+    final ctx = w.context;
     if (lemma.contains(' ')) {
-      // An expression: its own dictionary meaning, otherwise what was saved.
       final e = dict.exprs.where((e) => e.phrase == lemma).firstOrNull;
-      final tr = e?.trShown ?? (w.meaning != null && w.meaning != e?.en ? w.meaning : null);
-      return QuizAnswer(tr == null || tr.trim().isEmpty ? null : DictDb.shortTr(tr), null, e?.en);
+      // 1. The meaning saved on the card, as it was saved; 2. nothing saved:
+      // the dictionary's own meaning (an unverified AI draft or an AI service
+      // meaning is shown, never graded).
+      final kept = _keptMeaning(w, e?.en == null ? const [] : [e!.en!]);
+      final tr = kept ?? e?.tr ?? e?.trShown;
+      if (tr == null || tr.trim().isEmpty) return QuizAnswer(null, null, e?.en);
+      // The expression as a whole: confirmed in the card's sentence (not when
+      // it is used literally there); with no sentence, a checked meaning.
+      final ok = ctx != null ? confirms(lemma, ctx, tr) : (e?.tr != null && dict.trLink(e!.tr!, tr) == 'same');
+      return QuizAnswer(DictDb.shortTr(tr), null, e?.en, choice: ok, unconfirmed: !ok, saved: kept != null);
     }
-    // The word's most common meaning, not the one of the sentence it was
-    // saved from ("through" is "boyunca", even from "a through train").
+    // 1. The meaning saved on the card is kept, whatever the dictionary's
+    // order is now. 2. Nothing saved (old cards, or no reliable meaning when it
+    // was saved): the dictionary's common meaning by the source order.
+    // Either is graded only when it is confirmed: by the context picker for
+    // the card's sentence, or, with no sentence, as a main meaning of the word.
+    final kept = _keptMeaning(w, [for (final s in dict.lookup(lemma).senses) s.gloss, for (final o in dict.ownSenses(lemma)) o.en]);
     final m = dict.commonMeaning(lemma);
-    // A one-word expression ("though", "however") has its own Turkish.
-    final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull?.trShown : null;
+    if (kept != null) {
+      final k = DictDb.shortTr(kept);
+      final ok = ctx != null ? confirms(lemma, ctx, kept) : mainMeaning(lemma, kept);
+      final common = m.tr != null && dict.trLink(m.tr!, k) == 'same';
+      return QuizAnswer(k, DictDb.isTrVerb(k) ? 'v' : (common ? m.pos : null), common ? m.gloss : null,
+          choice: ok, unconfirmed: !ok, saved: true);
+    }
+    final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull : null;
     // Only with no Turkish at all: the meaning the AI service gave for the sentence.
-    final ai = m.tr != null || self != null || w.context == null ? null : user.contextAi(lemma, w.context!);
-    return QuizAnswer(m.tr ?? (self == null ? null : DictDb.shortTr(self)) ?? ai, m.pos, m.gloss);
+    final ai = m.tr != null || self != null || ctx == null ? null : user.contextAi(lemma, ctx);
+    if (m.tr == null) {
+      final st = self?.trShown;
+      return QuizAnswer((st == null ? null : DictDb.shortTr(st)) ?? ai, m.pos, m.gloss, choice: self == null || self.tr != null);
+    }
+    final ok = ctx != null ? confirms(lemma, ctx, m.tr!) : mainMeaning(lemma, m.tr!);
+    return QuizAnswer(m.tr, m.pos, m.gloss, choice: ok, unconfirmed: !ok);
   }
+
+  /// A card with no sentence: whether [answer] can be asked as the meaning of
+  /// [lemma]. The first meaning of one dictionary is not taken on trust for a
+  /// word with several senses ("sound" is not "Øresund", "subject" is not
+  /// first of all "kul"). It needs a second, independent checked source:
+  ///  * a verified contribution says it, or
+  ///  * it is the Turkish of one of the word's WordNet senses in KeNet (the
+  ///    same Turkish or a KeNet synonym), or
+  ///  * the word's own one-word entry in the expression list says it
+  ///    ("still": "yine de, hâlâ"), or
+  ///  * it is used in the human Turkish translations of at least two of the
+  ///    word's example sentences ("su" in the sentences of "water").
+  /// A word with a single sense needs only a checked meaning. An unverified
+  /// AI draft alone never passes.
+  bool mainMeaning(String lemma, String answer) {
+    final info = dict.lookup(lemma);
+    if (dict.ownTier(lemma) == SourceTier.verified && dict.ownSenses(lemma).any((o) => dict.trLink(o.tr, answer) == 'same')) return true;
+    for (final s in info.senses) {
+      if (s.tr.isNotEmpty && dict.sameTr(s.tr.join(', '), answer, pos: s.pos)) return true;
+    }
+    if (dict.exprs.any((e) => e.phrase == lemma && e.tr != null && dict.trLink(e.tr!, answer) == 'same')) return true;
+    if (info.senses.length <= 1 && info.trFreeDict.any((t) => dict.trLink(t, answer) == 'same')) return true;
+    return _inTranslations(lemma, answer) >= 2;
+  }
+
+  static final _trWord = RegExp(r'[a-zçğıöşüâîû]+');
+
+  /// In how many of the word's example sentences the human Turkish translation
+  /// uses [answer] (one of its parts, every word of it, in any inflected form).
+  int _inTranslations(String lemma, String answer) {
+    final t = trEn;
+    if (t == null) return 0;
+    final parts = [
+      for (final p in answer.split(_split))
+        if (p.trim().isNotEmpty) _trWord.allMatches(TrEnDict.lower(p)).map((m) => m.group(0)!).toList(),
+    ].where((p) => p.isNotEmpty).toList();
+    var n = 0;
+    for (final (_, tr) in dict.examples('w:$lemma', limit: 8)) {
+      final seen = <String>{};
+      for (final m in _trWord.allMatches(TrEnDict.lower(tr))) {
+        seen.addAll(t.lemmas(m.group(0)!));
+      }
+      if (parts.any((p) => p.every(seen.contains))) n++;
+    }
+    return n;
+  }
+
+  /// The card's saved meaning, unless it is empty, a cross reference or an
+  /// English definition ([glosses]) saved when no Turkish was known.
+  static String? _keptMeaning(SavedWord w, Iterable<String> glosses) {
+    final k = w.meaning?.trim();
+    if (k == null || k.isEmpty || k.toLowerCase().contains('bakınız')) return null;
+    if (glosses.any((g) => g.trim() == k)) return null;
+    return k;
+  }
+
+  /// The confidence rule of review cards is [SenseEngine.fit]: an answer is
+  /// graded as the right option only when the context picker confirms it for
+  /// the card's sentence. Anything else is a plain flashcard, nothing graded.
+  bool confirms(String headword, String sentence, String answer) => fit(headword, sentence, answer).confirmed;
+
+  AnswerFit fit(String headword, String sentence, String answer) => senses.fit(headword, sentence, answer);
+
 
   late final List<SavedWord> _saved = [
     for (final st in [WordStatus.learning, WordStatus.learned]) ...user.words(st),
@@ -92,6 +196,7 @@ class ReviewQuiz {
   /// [right] overrides the answer (a meaning the AI service just gave).
   QuizChoice? choiceFor(SavedWord w, {String? right}) {
     final a = answerFor(w);
+    if (!a.choice) return null;
     final r = right ?? a.tr;
     if (r == null || r.trim().isEmpty || r.toLowerCase().contains('bakınız')) return null;
     final rightShort = DictDb.shortTr(r);

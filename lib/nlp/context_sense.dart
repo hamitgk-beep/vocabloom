@@ -60,6 +60,11 @@ class SenseCandidate {
   /// Synonyms (WordNet).
   final List<String> synonyms;
 
+  /// The meaning comes from an unreviewed AI draft (own_word / own_expr with
+  /// reviewed = 0). It still competes, but alone it is never proof enough for a
+  /// "sure" meaning ([DictDb.sourcePolicy]).
+  final bool unverified;
+
   double score = 0;
   final Map<String, double> parts = {};
 
@@ -82,12 +87,13 @@ class SenseCandidate {
     this.rank = 0,
     this.literal = false,
     this.synonyms = const [],
+    this.unverified = false,
   });
 
   SenseCandidate withTr(List<String> t, {bool derived = false}) => SenseCandidate(
         id: id, source: source, lemma: lemma, pos: pos, en: en, tr: t, trDerived: derived, explainTr: explainTr,
         explainEn: explainEn, note: note, examples: examples, examplesTr: examplesTr, rank: rank, literal: literal,
-        synonyms: synonyms,
+        synonyms: synonyms, unverified: unverified,
       )
         ..score = score
         ..parts.addAll(parts);
@@ -207,6 +213,24 @@ class SenseQuery {
   }
 }
 
+/// How a given Turkish answer stands in a sentence, by the context picker:
+/// [confirmed] the picker chose that meaning (the same Turkish or a KeNet
+/// synonym of it), [other] it chose another meaning (or the expression is
+/// used literally), [unknown] it chose none it can stand behind.
+enum SentenceFit { confirmed, other, unknown }
+
+/// The result of [SenseEngine.fit], with the reason (tests and quality checks).
+class AnswerFit {
+  final SentenceFit fit;
+
+  /// confirmed: 'same' or 'synonym'. other: 'sure', 'likely' or 'literal'.
+  /// unknown: 'not in sentence', 'grammar word', 'no Turkish', 'draft only' or 'undecided'.
+  final String why;
+  final ContextSense? sense;
+  const AnswerFit(this.fit, this.why, [this.sense]);
+  bool get confirmed => fit == SentenceFit.confirmed;
+}
+
 /// Weights of the scoring criteria (sum 1). A starting point, tuned on the
 /// tests in test/context_sense_test.dart.
 class SenseWeights {
@@ -243,6 +267,7 @@ class SenseEngine {
       q.expr == null ? '' : '${q.expr!.phrase}|${q.expr!.cat}',
       dictVersion,
       version,
+      DictDb.policyVersion,
       q.lang,
     ].join('|');
   }
@@ -288,6 +313,102 @@ class SenseEngine {
     _cache[key] = r;
     if (_cache.length > _cacheMax) _cache.remove(_cache.keys.first);
     return r;
+  }
+
+  /// The one confidence rule for a Turkish [answer] of [headword] (a word's
+  /// base form, or an expression) in [sentence]. Review cards grade an answer
+  /// only when it is [SentenceFit.confirmed]; the word panel saves a meaning
+  /// with a new card under the same condition. Confirmed means: the picker
+  /// shows a meaning for the headword there, that meaning does not rest on an
+  /// unverified AI draft, and it is the same Turkish as [answer] or a KeNet
+  /// synonym of it of the same part of speech ([DictDb.sameTr]). An
+  /// expression is looked at as a whole and is not confirmed when it is used
+  /// literally. [synonyms] off: only the same Turkish counts (for measuring).
+  AnswerFit fit(String headword, String sentence, String answer, {bool synonyms = true}) {
+    final SenseQuery q;
+    if (headword.contains(' ')) {
+      q = SenseQuery.find(dict, sentence, headword);
+      if (q.expr == null) return const AnswerFit(SentenceFit.unknown, 'not in sentence');
+    } else {
+      final toks = tokenize(sentence);
+      final i = dict.indexOfLemma(toks, headword);
+      if (i < 0) return const AnswerFit(SentenceFit.unknown, 'not in sentence');
+      q = SenseQuery(sentence: sentence, tokens: toks, index: i, lemma: headword);
+    }
+    final c = resolve(q);
+    if (q.expr != null && c.literalPhrase != null) return AnswerFit(SentenceFit.other, 'literal', c);
+    final b = c.best;
+    // A word that is part of an expression here ("give" in "give up") is not
+    // judged as the word alone.
+    if ((q.expr == null) != (c.cat == null)) return AnswerFit(SentenceFit.unknown, 'undecided', c);
+    if (!c.shown || b == null) {
+      final why = c.reason == 'grammar word'
+          ? 'grammar word'
+          : c.ranked.every((x) => x.tr.isEmpty)
+              ? 'no Turkish'
+              : 'undecided';
+      return AnswerFit(SentenceFit.unknown, why, c);
+    }
+    // An expression can also be meant word by word, and the picker's "likely"
+    // tells the two apart no better than chance (measured on MAGPIE): only a
+    // sure choice confirms an expression.
+    if (q.expr != null && c.confidence != SenseConfidence.sure) return AnswerFit(SentenceFit.unknown, 'undecided', c);
+    if (b.unverified) {
+      // The picker chose an unverified AI draft. Alone it proves nothing; it
+      // counts only when [answer] is a checked meaning of the headword and the
+      // draft says the very same Turkish (two sources, then, not one).
+      final same = [...b.tr, c.tr!].any((t) => dict.trLink(t, answer) == 'same');
+      if (same && _checkedTr(headword, q.expr).any((t) => dict.trLink(t, answer) == 'same')) {
+        return AnswerFit(SentenceFit.confirmed, 'same', c);
+      }
+      return AnswerFit(SentenceFit.unknown, 'draft only', c);
+    }
+    // A noun's meaning never confirms a verb answer, or the other way round.
+    final shape = DictDb.isTrVerb(DictDb.shortTr(answer));
+    if ((b.pos == 'n' || b.pos == 'v') && (b.pos == 'v') != shape) {
+      return AnswerFit(SentenceFit.other, c.confidence == SenseConfidence.sure ? 'sure' : 'likely', c);
+    }
+    String? link;
+    for (final t in [...b.tr, c.tr!]) {
+      final l = synonyms ? dict.trLink(t, answer, pos: b.pos) : (dict.trLink(t, answer) == 'same' ? 'same' : null);
+      if (l == 'same') {
+        link = l;
+        break;
+      }
+      link ??= l;
+    }
+    if (link == null && synonyms && q.expr == null && _coTranslated(headword, b, answer)) link = 'co-translation';
+    if (link != null) return AnswerFit(SentenceFit.confirmed, link, c);
+    return AnswerFit(SentenceFit.other, c.confidence == SenseConfidence.sure ? 'sure' : 'likely', c);
+  }
+
+  /// Checked (not AI draft) Turkish meanings of a word or expression.
+  Iterable<String> _checkedTr(String headword, Expr? e) {
+    if (e != null) return [if (e.tr != null) e.tr!];
+    final info = dict.lookup(headword);
+    return [...info.trFreeDict, for (final s in info.senses) ...s.tr];
+  }
+
+  /// Whether [answer] is also the main checked Turkish meaning of another
+  /// English word whose main sense is the chosen WordNet synset [b]: "istemek"
+  /// is the first meaning of "want" and of "desire", and that synset is the
+  /// first sense of "desire", so "istemek" belongs to it as "arzu etmek" does.
+  /// Only the synonym's first sense of that part of speech and its first two
+  /// meanings count: "rear" also means "kaldırmak", but bringing up children
+  /// is not its first sense, so "kaldırmak" is not joined to "yetiştirmek".
+  bool _coTranslated(String lemma, SenseCandidate b, String answer) {
+    if (!b.id.startsWith('wn:') || b.pos == null) return false;
+    final id = int.tryParse(b.id.substring(3));
+    final sense = dict.lookup(lemma).senses.where((x) => x.synId == id).firstOrNull;
+    if (sense == null) return false;
+    final verb = b.pos == 'v';
+    for (final w in sense.synonyms.where((w) => !w.contains(' ') && !w.contains('_') && w.toLowerCase() != lemma).take(6)) {
+      final si = dict.lookup(w.toLowerCase());
+      if (si.senses.where((x) => DictDb.normPos(x.pos) == b.pos).firstOrNull?.synId != id) continue;
+      final pool = si.trFreeDict.where((t) => DictDb.isTrVerb(t) == verb).take(2);
+      if (pool.any((t) => dict.trLink(t, answer) == 'same')) return true;
+    }
+    return false;
   }
 
   /// Whether the expression [e], matched on [idx], is used literally here
@@ -461,8 +582,9 @@ class SenseEngine {
     }
     if (_hasOwn) out.addAll(_ownCandidates(lemma, rankOffset));
     // A word with Turkish meanings but no WordNet senses (function words,
-    // new words): its main meanings, in the dictionary's order.
-    if (out.isEmpty) {
+    // new words): its main meanings, in the dictionary's order. AI drafts do
+    // not stand in for them ([DictDb.sourcePolicy]).
+    if (out.every((c) => c.unverified)) {
       final ft = mainTr(lemma);
       for (var i = 0; i < ft.length; i++) {
         out.add(SenseCandidate(id: 'ft:$lemma#$i', source: 'ft', lemma: lemma, tr: _split(ft[i]), rank: i + rankOffset));
@@ -480,13 +602,15 @@ class SenseEngine {
     if (r.isEmpty) return const [];
     final out = <SenseCandidate>[];
     try {
-      final list = jsonDecode(r.first.columnAt(0) as String) as List;
-      for (var i = 0; i < list.length; i++) {
-        final s = (list[i] as Map).cast<String, dynamic>();
+      // Tiered: an AI draft sense is marked, a merged idiom sense split ([DictDb.tiered]).
+      final list = DictDb.tiered(jsonDecode(r.first.columnAt(0) as String) as List, dict.ownTier(lemma) != SourceTier.draft, 'w:$lemma');
+      for (var k = 0; k < list.length; k++) {
+        final (i, s, draft) = list[k];
+        final idx = k > 0 && list[k - 1].$1 == i ? '${i}d' : '$i';
         final tr = _split('${s['tr'] ?? ''}');
         if (tr.isEmpty) continue;
         out.add(SenseCandidate(
-          id: 'od:$lemma#$i',
+          id: 'od:$lemma#$idx',
           source: 'own',
           lemma: lemma,
           pos: _posCodes['${s['pos']}'],
@@ -495,6 +619,7 @@ class SenseEngine {
           examples: [if ('${s['en'] ?? ''}'.isNotEmpty) '${s['en']}'],
           examplesTr: [if ('${s['ex_tr'] ?? ''}'.isNotEmpty) '${s['ex_tr']}'],
           rank: i + rankOffset,
+          unverified: draft,
         ));
       }
     } catch (_) {}
@@ -507,13 +632,13 @@ class SenseEngine {
   /// and translated example, so a meaning WordNet has no Turkish for still
   /// gets one ("why" in "Why do you think ...?": neden, niçin).
   List<SenseCandidate> _ownWordCandidates(String lemma, int rankOffset) {
-    final r = dict.db.select('SELECT senses FROM own_word WHERE word=?', [lemma]);
-    if (r.isEmpty) return const [];
+    final list = dict.ownWordTiered(lemma);
+    if (list.isEmpty) return const [];
     final out = <SenseCandidate>[];
     try {
-      final list = jsonDecode(r.first.columnAt(0) as String) as List;
-      for (var i = 0; i < list.length; i++) {
-        final s = (list[i] as Map).cast<String, dynamic>();
+      for (var k = 0; k < list.length; k++) {
+        final (i, s, draft) = list[k];
+        final idx = k > 0 && list[k - 1].$1 == i ? '${i}d' : '$i';
         final tr = _split('${s['tr'] ?? ''}');
         if (tr.isEmpty) continue;
         final note = '${s['note'] ?? ''}'.trim();
@@ -524,7 +649,7 @@ class SenseEngine {
         // More checked sentences for this meaning (tools/contrib/apply.py).
         final more = [for (final m in (s['more'] as List? ?? const [])) (m as Map).cast<String, dynamic>()];
         out.add(SenseCandidate(
-          id: 'ow:$lemma#$i',
+          id: 'ow:$lemma#$idx',
           source: 'own',
           lemma: lemma,
           pos: _trPos['${s['pos']}'],
@@ -534,6 +659,7 @@ class SenseEngine {
           examples: [if (ex.isNotEmpty) ex, for (final m in more) '${m['en'] ?? ''}'],
           examplesTr: [if (ex.isNotEmpty) exTr, for (final m in more) '${m['tr'] ?? ''}'],
           rank: i + rankOffset,
+          unverified: draft,
         ));
       }
     } catch (_) {}
@@ -566,7 +692,7 @@ class SenseEngine {
           if (e.cat == 'phrasal_verbs' && c.pos != null && c.pos != 'v') continue;
           cands.add(SenseCandidate(
             id: c.id, source: c.source, lemma: c.lemma, pos: c.pos, en: c.en, tr: c.tr, examples: c.examples,
-            examplesTr: c.examplesTr, rank: c.rank, literal: true, synonyms: c.synonyms, note: c.note,
+            examplesTr: c.examplesTr, rank: c.rank, literal: true, synonyms: c.synonyms, note: c.note, unverified: c.unverified,
           ));
         }
       }
@@ -589,16 +715,20 @@ class SenseEngine {
   /// otherwise its one dictionary meaning.
   List<SenseCandidate> _exprCandidates(Expr e) {
     final out = <SenseCandidate>[];
-    final js = dict.exprDetail(e.phrase, e.cat);
-    if (js != null) {
+    // Checked senses (a verified own row, otherwise exd) as "ex:", then the AI
+    // draft's senses as "xd:" ([DictDb.sourcePolicy]): drafts compete, marked.
+    final drafts = <SenseCandidate>[];
+    void read(String? js, bool draft) {
+      if (js == null) return;
       try {
         final list = jsonDecode(js) as List;
         for (var i = 0; i < list.length; i++) {
           final s = (list[i] as Map).cast<String, dynamic>();
           final exs = [for (final x in (s['examples'] as List? ?? const [])) (x as Map).cast<String, dynamic>()];
           final title = '${s['title_tr'] ?? ''}'.trim();
-          out.add(SenseCandidate(
-            id: 'ex:${e.phrase}|${e.cat}#$i',
+          (draft ? drafts : out).add(SenseCandidate(
+            id: '${draft ? 'xd' : 'ex'}:${e.phrase}|${e.cat}#$i',
+            unverified: draft,
             source: 'expr',
             lemma: e.phrase,
             pos: e.cat == 'phrasal_verbs' ? 'v' : null,
@@ -613,16 +743,27 @@ class SenseEngine {
         }
       } catch (_) {}
     }
-    if (out.isEmpty && (e.trShown != null || e.en != null)) {
+
+    read(dict.exprDetail(e.phrase, e.cat), false);
+    read(dict.exprDraftDetail(e.phrase, e.cat), true);
+    // The expression's one dictionary meaning (or the user's own AI translation).
+    final plain = e.tr ?? e.aiTr;
+    if (out.isEmpty && (plain != null || (e.en != null && drafts.isEmpty))) {
       out.add(SenseCandidate(
         id: 'ex:${e.phrase}|${e.cat}#0',
         source: 'expr',
         lemma: e.phrase,
         pos: e.cat == 'phrasal_verbs' ? 'v' : null,
         en: e.en?.split('; ').first,
-        tr: e.trShown == null ? const [] : [e.trShown!],
+        tr: plain == null ? const [] : [plain],
         examples: [if (e.ex != null) e.ex!],
         examplesTr: [if (e.exTr != null) e.exTr!],
+      ));
+    }
+    for (final d in drafts) {
+      out.add(SenseCandidate(
+        id: d.id, source: d.source, lemma: d.lemma, pos: d.pos, en: d.en, tr: d.tr, explainTr: d.explainTr,
+        explainEn: d.explainEn, examples: d.examples, examplesTr: d.examplesTr, rank: d.rank + out.length, unverified: true,
       ));
     }
     return out;
@@ -935,6 +1076,8 @@ class SenseEngine {
     if (posS == 0.0) c.score *= 0.8;
     // A meaning with Turkish of its own wins a tie over one without.
     if (c.tr.isNotEmpty) c.score += 0.02;
+    // A checked source wins a tie over an unreviewed AI draft.
+    if (c.unverified) c.score -= 0.01;
     if (c.literal) c.score -= 0.06; // the expression wins a near tie
   }
 
@@ -1059,18 +1202,28 @@ class SenseEngine {
     final samePos = cands.where((c) => c.tr.isNotEmpty && (pos == null || c.pos == null || c.pos == pos));
     final evidence = gap >= 0.08 || mainOk || samePos.every((c) => c.tr.any(shown.contains));
     final weak = best.score < 0.3;
+    // An AI draft alone is no proof: "sure" only when a checked source has the
+    // same Turkish (the main meaning list or a checked candidate).
+    final checked = <String>{
+      for (final t in ft) ..._split(t),
+      for (final c in cands)
+        if (!c.unverified) ...c.tr.expand(_split),
+    };
+    final uncorroborated = best.unverified && !shown.expand(_split).any(checked.contains);
     final SenseConfidence conf;
     String reason;
     if (weak) {
       conf = SenseConfidence.none;
       reason = 'weak ${best.score.toStringAsFixed(2)}';
-    } else if (best.trDerived || dissent.isNotEmpty || !evidence) {
+    } else if (best.trDerived || uncorroborated || dissent.isNotEmpty || !evidence) {
       conf = SenseConfidence.likely;
       reason = best.trDerived
           ? 'derived Turkish'
-          : dissent.isNotEmpty
-              ? 'close: ${dissent.map((c) => c.id).join(',')}'
-              : 'no clear evidence';
+          : uncorroborated
+              ? 'unverified draft'
+              : dissent.isNotEmpty
+                  ? 'close: ${dissent.map((c) => c.id).join(',')}'
+                  : 'no clear evidence';
     } else {
       conf = SenseConfidence.sure;
       reason = 'clear';

@@ -11,6 +11,8 @@ import 'panel.dart';
 import 'tap_text.dart';
 import '../l10n.dart';
 import 'word_sheet.dart';
+import 'meaning_parts.dart';
+import 'unverified_section.dart';
 import 'ai/ai_ask_box.dart';
 import 'context_sense_card.dart';
 import '../nlp/context_sense.dart';
@@ -39,6 +41,17 @@ class ExprPanel extends StatefulWidget {
 class _ExprPanelState extends State<ExprPanel> {
   List<ExprSense>? senses;
 
+  /// Unreviewed AI draft senses (own_expr, reviewed = 0): only in the closed section.
+  late final List<ExprSense> drafts = () {
+    final js = app.dict.exprDraftDetail(expr.phrase, expr.cat);
+    if (js == null) return const <ExprSense>[];
+    try {
+      return [for (final s in (jsonDecode(js) as List)) ExprSense.fromJson((s as Map).cast<String, dynamic>())];
+    } catch (_) {
+      return const <ExprSense>[];
+    }
+  }();
+
   /// The meaning chosen for the book's sentence.
   ContextSense? sense;
   bool fromAi = false;
@@ -62,6 +75,15 @@ class _ExprPanelState extends State<ExprPanel> {
       fromAi = cached != null;
     }
     if (widget.ctx != null) sense = ContextSenseCard.resolveExpr(app, widget.ctx!, expr);
+  }
+
+  /// The meaning saved with a new card (its review's right answer): the
+  /// sentence's meaning only when it is sure and not an unverified AI draft,
+  /// otherwise the dictionary's checked meaning. A draft is never saved.
+  String? get _savedMeaning {
+    final s = sense;
+    if (s != null && s.shown && s.cat != null && s.confidence == SenseConfidence.sure && !s.best!.unverified) return s.tr;
+    return expr.tr;
   }
 
   /// Index of the built-in sense the card chose ("ex:phrase|cat#1" → 1).
@@ -148,7 +170,7 @@ class _ExprPanelState extends State<ExprPanel> {
           status: st,
           onChanged: (s) {
             app.setWord(expr.phrase, s,
-                context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: expr.trShown ?? expr.en);
+                context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: _savedMeaning);
             setState(() {});
           },
         ),
@@ -227,6 +249,10 @@ class _ExprPanelState extends State<ExprPanel> {
       }
       if (tr && expr.trShown != null) {
         children.add(Text(expr.trShown!, style: trStyle(theme, const TextStyle(fontSize: 16))));
+        if (expr.trShownIsDraft) {
+          children.add(Text(unverifiedAiLabel(),
+              key: const ValueKey('expr-sheet-draft'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor, fontStyle: FontStyle.italic)));
+        }
       }
       // No Turkish yet for the expression: its words one by one, so nothing is English only.
       if (tr && expr.trShown == null && head == null) {
@@ -292,6 +318,25 @@ class _ExprPanelState extends State<ExprPanel> {
           ]),
         ));
       }
+    }
+
+    // Unreviewed AI drafts: closed and labelled, after the checked meanings.
+    if (drafts.isNotEmpty) {
+      children.add(UnverifiedAiSection(
+        key: ValueKey('unverified-ai-e-${expr.phrase}'),
+        count: drafts.length,
+        children: () => [
+          for (var i = 0; i < drafts.length; i++)
+            SenseTile(
+              number: i + 1,
+              tr: drafts[i].titleTr,
+              en: drafts[i].titleEn.isEmpty || drafts[i].titleEn == drafts[i].titleTr ? null : drafts[i].titleEn,
+              exEn: drafts[i].examples.firstOrNull?.$1,
+              exTr: drafts[i].examples.firstOrNull?.$2,
+              divider: i > 0,
+            ),
+        ],
+      ));
     }
 
     // Real sentences with translations (Tatoeba), offline.

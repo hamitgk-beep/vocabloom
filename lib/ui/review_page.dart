@@ -48,7 +48,7 @@ class _ReviewPageState extends State<ReviewPage> {
   /// Multiple-choice state per card position (null: a plain flashcard).
   final _choices = <int, QuizChoice?>{};
   int? picked;
-  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user, trEn: app.trEn);
+  late final ReviewQuiz _quiz = ReviewQuiz(app.dict, app.user, trEn: app.trEn, senses: app.senses);
 
   /// Cards whose meaning in their sentence is being asked from the AI service.
   final _asking = <String>{};
@@ -74,7 +74,7 @@ class _ReviewPageState extends State<ReviewPage> {
     if (ch == null && ans.tr == null && _askAi(w)) return null; // ask again when the answer arrives
     // The dictionary lacks the Turkish of this sense: remember it, so it can
     // be reported and added in a later dictionary update.
-    if ((ch == null || !ans.sure) && !w.lemma.contains(' ')) {
+    if ((ch == null || !ans.sure) && ans.choice && !w.lemma.contains(' ')) {
       try {
         app.user.addMissing(w.lemma, ans.synId, ans.gloss);
       } catch (_) {}
@@ -273,6 +273,22 @@ class _ReviewPageState extends State<ReviewPage> {
                             ],
                             if (meaning == null && gloss == null)
                               Text(L('Anlam kaydedilmemiş.', 'No meaning saved.'), style: theme.textTheme.bodyMedium),
+                            // Not confirmed for this sentence: said in neutral words; the saved meaning stays as it is.
+                            if (meaning != null && ans.unconfirmed) ...[
+                              const SizedBox(height: 8),
+                              Text(
+                                w.context == null
+                                    ? L('Bu anlamın kelimenin ana anlamı olduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                        'This meaning could not be confirmed as the main meaning of the word. This card is not graded.')
+                                    : ans.saved
+                                        ? L('Kayıtlı anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                            'The saved meaning could not be confirmed for this sentence. This card is not graded.')
+                                        : L('Bu anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
+                                            'This meaning could not be confirmed for this sentence. This card is not graded.'),
+                                key: const ValueKey('review-unconfirmed'),
+                                style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, fontStyle: FontStyle.italic),
+                              ),
+                            ],
                             const SizedBox(height: 8),
                             TextButton.icon(
                               style: TextButton.styleFrom(padding: EdgeInsets.zero),

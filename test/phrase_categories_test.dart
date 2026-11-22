@@ -90,7 +90,7 @@ void main() {
     expect(a.expressionsAt(app, 2).first.expr.phrase, 'break the ice');
   });
 
-  test('reading: an English idiom is recognised in a sentence and shows its own Turkish meaning', () {
+  test('reading: an English idiom is recognised; the dictionary meaning is shown, the AI draft kept apart', () {
     app.enabledCats..clear()..add('idioms');
     const sentence = 'Talented singers are a dime a dozen in this city.';
     final a = analyze(app, sentence);
@@ -99,6 +99,9 @@ void main() {
     final row = app.dict.db.select("SELECT senses FROM own_expr WHERE phrase = 'a dime a dozen' AND cat = 'idioms'");
     expect(row, isNotEmpty);
     final ownTr = ((jsonDecode(row.first.columnAt(0) as String) as List).first as Map)['tr'] as String;
-    expect(found.first.expr.tr, contains(ownTr), reason: 'the own Turkish meaning is what the reader shows');
+    // The row is an unreviewed AI draft: the dictionary's own meaning stays (DictDb.sourcePolicy).
+    final exprTr = app.dict.db.select("SELECT tr FROM expr WHERE phrase = 'a dime a dozen' AND cat = 'idioms'").first.columnAt(0);
+    expect(found.first.expr.tr, exprTr, reason: 'the dictionary meaning is what the reader shows');
+    expect(found.first.expr.trDraft, contains(ownTr), reason: 'the draft is kept as a suggestion');
   });
 }
