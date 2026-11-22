@@ -111,8 +111,10 @@ void main() {
     step('secondTranslation', {'tr': second, 'ms': sw.elapsedMilliseconds});
     expect(second, isNotNull);
 
-    // 6. Reopening the app: found on disk, still on, nothing downloaded.
-    mt.debugEngine = null;
+    // 6. Reopening the app: the model is closed as on exit, then found on
+    // disk, still on, nothing downloaded.
+    await mt.closeEngine();
+    user.db.close();
     final reopenedUser = UserDb.open(dir);
     var downloads = 0;
     mt = OfflineMt.test(opusEnTr)..init(dir);
@@ -150,6 +152,7 @@ void main() {
     expect(again.installed, isFalse);
     expect(reopenedUser.mtCached(opusEnTr.engine, 'en>tr', 'The plane took off at noon.'), first);
     step('deleted', true);
+    reopenedUser.db.close();
   }, skip: live ? null : 'set OPUS_MT_LIVE=1 (downloads about 530 MB)', timeout: const Timeout(Duration(minutes: 20)));
 }
 

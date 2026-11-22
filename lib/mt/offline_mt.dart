@@ -166,7 +166,7 @@ class OfflineMt extends ChangeNotifier {
   /// Turns the feature on or off (the model stays on disk until removed).
   void setEnabled(UserDb user, bool on) {
     user.setSetting(_enabledKey, on ? '1' : '0');
-    if (!on) _closeEngine();
+    if (!on) unawaited(closeEngine());
     notifyListeners();
   }
 
@@ -348,11 +348,27 @@ class OfflineMt extends ChangeNotifier {
   /// stay (they name their model version).
   Future<void> remove(UserDb user) async {
     cancel();
-    _closeEngine();
-    setEnabled(user, false);
-    final d = modelDir;
-    if (d != null && Directory(d).existsSync()) await Directory(d).delete(recursive: true);
+    user.setSetting(_enabledKey, '0');
+    await closeEngine();
     _installed = false;
+    final d = modelDir;
+    if (d != null && Directory(d).existsSync()) {
+      // Windows may hold a just-closed file for a moment: a few tries.
+      for (var i = 0;; i++) {
+        try {
+          await Directory(d).delete(recursive: true);
+          break;
+        } on FileSystemException {
+          if (i >= 4) {
+            _set(const OfflineMtState(OfflineMtStatus.failed,
+                errorTr: 'Model dosyaları silinemedi. Uygulamayı kapatıp açtıktan sonra tekrar dene.',
+                errorEn: 'The model files could not be deleted. Restart the app and try again.'));
+            return;
+          }
+          await Future<void>.delayed(const Duration(milliseconds: 500));
+        }
+      }
+    }
     _set(const OfflineMtState(OfflineMtStatus.notInstalled));
   }
 
@@ -388,10 +404,19 @@ class OfflineMt extends ChangeNotifier {
   Future<OpusMtWorker>? _worker;
   OpusMtWorker? _live;
 
-  void _closeEngine() {
-    _live?.close();
+  /// Closes the model (when turned off, before deleting, on exit).
+  Future<void> closeEngine() async {
+    final w = _live;
+    final pending = _worker;
     _live = null;
     _worker = null;
+    if (w != null) {
+      await w.close();
+    } else if (pending != null) {
+      try {
+        await (await pending).close();
+      } catch (_) {}
+    }
   }
 
   Future<String?> _run(String text) async {
@@ -401,7 +426,7 @@ class OfflineMt extends ChangeNotifier {
     try {
       return await (await _worker!).translate(text);
     } catch (_) {
-      _closeEngine();
+      unawaited(closeEngine());
       rethrow;
     }
   }

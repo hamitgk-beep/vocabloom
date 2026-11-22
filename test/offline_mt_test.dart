@@ -116,7 +116,13 @@ void main() {
   tearDown(() {
     OfflineMt.debugSupported = null;
     OfflineMt.instance.debugEngine = null;
-    dir.deleteSync(recursive: true);
+    // Windows cannot delete an open database file: close it first.
+    app.user.db.close();
+    try {
+      dir.deleteSync(recursive: true);
+    } on FileSystemException {
+      // A leftover temporary folder is harmless.
+    }
   });
 
   group('SentencePiece', () {
@@ -197,7 +203,7 @@ void main() {
     test('the isolate translates and then closes', () async {
       final w = await OpusMtWorker.start(modelDir!, threads: 2, libDir: libDir);
       expect(await w.translate('The plane took off at noon.'), contains('kalktı'));
-      w.close();
+      await w.close();
     }, skip: skip, timeout: const Timeout(Duration(minutes: 2)));
   });
 
@@ -391,6 +397,7 @@ void main() {
       expect(again.getSetting('keep'), 'me');
       again.setMtCached('e', 'en>tr', 'a', 'b');
       expect(again.mtCached('e', 'en>tr', 'a'), 'b');
+      again.db.close();
     });
   });
 

@@ -107,9 +107,14 @@ class OpusMtWorker {
   final ReceivePort _inbox;
   final _waiting = <int, Completer<String?>>{};
   var _next = 0;
+  final _closed = Completer<void>();
 
   OpusMtWorker._(this._isolate, this._port, this._inbox) {
     _inbox.listen((m) {
+      if (m == 'closed') {
+        if (!_closed.isCompleted) _closed.complete();
+        return;
+      }
       if (m is List && m.length == 3) {
         final c = _waiting.remove(m[0] as int);
         if (c == null) return;
@@ -154,7 +159,9 @@ class OpusMtWorker {
         return;
       }
       if (m == 'close') {
+        // Releases the model files (Windows cannot delete open files).
         model.close();
+        out?.send('closed');
         port.close();
         return;
       }
@@ -174,13 +181,19 @@ class OpusMtWorker {
     return c.future;
   }
 
-  void close() {
-    _port.send('close');
+  /// Closes the model; done once its files are released.
+  Future<void> close() async {
     for (final c in _waiting.values) {
       c.completeError(OrtError('closed'));
     }
     _waiting.clear();
+    _port.send('close');
+    try {
+      await _closed.future.timeout(const Duration(seconds: 10));
+    } on TimeoutException {
+      // A translation still running: the isolate is stopped below.
+    }
     _inbox.close();
-    Future.delayed(const Duration(seconds: 2), () => _isolate.kill());
+    _isolate.kill();
   }
 }
