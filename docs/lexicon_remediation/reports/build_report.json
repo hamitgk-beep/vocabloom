@@ -1,0 +1,112 @@
+{
+ "profile": "blocked-out",
+ "input_sha256": {
+  "dict.db": "ab4a7a53b9fc5e1edbd682da5cb7193c0c109f93236655385bf6231d90221a9c",
+  "tr_en.db": "49a661b9c8951259ab13fd6a95aa77b68e16f1c4716669dacfb6c12521cfa818"
+ },
+ "records": "records.jsonl.gz",
+ "records_sha256": "628682f8496daa2888df775bed90e56a479ae14f29bd19cbdd6c07088cbb417f",
+ "ft": {
+  "terms_removed": 83381,
+  "words_removed": 24314,
+  "terms_kept": 33748,
+  "words_same": 8056,
+  "words_changed": 9784,
+  "primary_changed": 702
+ },
+ "syn": {
+  "terms_removed": 1766,
+  "synsets_changed": 1239,
+  "synsets_left_without_tr": 1239
+ },
+ "expr": {
+  "tr_removed": 1
+ },
+ "tr_en": {
+  "rv_removed_damdafayton": 20680,
+  "rv_kept": 7247,
+  "fd_groups_retagged": 7005,
+  "lemmas_changed": 8057,
+  "wn_removed": 360,
+  "ex_rows_removed": 2249,
+  "ctx_rows_removed": 129,
+  "ctxn_rows_removed": 68,
+  "lemmas_removed": 16145,
+  "ctx_renumbered": 87,
+  "ctxn_renumbered": 6,
+  "meta_ctx_renumbered": 2
+ },
+ "counts_before": {
+  "dict.db": {
+   "meta": 2,
+   "ft": 42154,
+   "syn": 117659,
+   "sense": 206941,
+   "exc": 5952,
+   "famg": 11874,
+   "fam": 31120,
+   "expr": 18209,
+   "exd": 2510,
+   "exs": 70105,
+   "wfreq": 22491,
+   "exfreq": 4164,
+   "wd": 0,
+   "own_word": 41269,
+   "own_expr": 10781
+  },
+  "tr_en.db": {
+   "meta": 771,
+   "lemma": 55364,
+   "form": 401588,
+   "ex": 84385,
+   "ctx": 81972,
+   "ctxn": 7265
+  }
+ },
+ "counts_after": {
+  "dict.db": {
+   "meta": 3,
+   "ft": 17840,
+   "syn": 117659,
+   "sense": 206941,
+   "exc": 5952,
+   "famg": 11874,
+   "fam": 31120,
+   "expr": 18209,
+   "exd": 2510,
+   "exs": 70105,
+   "wfreq": 22491,
+   "exfreq": 4164,
+   "wd": 0,
+   "own_word": 41269,
+   "own_expr": 10781
+  },
+  "tr_en.db": {
+   "meta": 772,
+   "lemma": 39219,
+   "form": 401588,
+   "ex": 82136,
+   "ctx": 81843,
+   "ctxn": 7197
+  }
+ },
+ "removed_lemmas": 16145,
+ "quarantine": {
+  "dict.db/expr/freedict_gpl": 1,
+  "dict.db/ft/damdafayton_only": 83381,
+  "dict.db/syn/ai_not_kenet": 1766,
+  "tr_en.db/ctx/lemma_removed": 3,
+  "tr_en.db/ctxn/lemma_removed": 14,
+  "tr_en.db/ex/lemma_removed": 687,
+  "tr_en.db/lemma/damdafayton_reverse": 20680,
+  "tr_en.db/lemma/no_meaning_left": 16145,
+  "tr_en.db/lemma/reverse_of_ai_syn_tr": 360
+ },
+ "output_sha256": {
+  "dict.db": "70a10b76bd5fd594c3fbffa25862847978a691647360f6455d9d2b7e223e5566",
+  "tr_en.db": "0f11a12f7051a90c508ae7e51749c1b3b83944e8984ea7b86e43fbc39ac823aa"
+ },
+ "ft_ids_changed": 42013,
+ "ft_ids_lost": 40444,
+ "quarantine_sha256": "c961efe8d7dad20f94abad564d662ea2a8b3076752abda3270cb7d4ab6874785"
+}

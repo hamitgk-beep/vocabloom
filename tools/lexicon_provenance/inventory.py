@@ -12,7 +12,7 @@ How each source is found (no text-similarity guessing):
     tools/main_meanings.merged() is run again for every word and must give the
     stored row exactly. Each Turkish term is then traced to the Kindle
     Wiktionary paragraphs ("wk") or to damdafayton ("dm").
-  * tr_en senses marked "fd": add_reverse.py is re-run in memory from the
+  * tr_en senses marked "fd" (or "rv" since 5D): add_reverse.py is re-run in memory from the
     current ft; every reference must be reproduced, and takes the ft term's origin.
   * syn, expr (optional, --raw): the build steps of tools/build_dict.py are
     re-run on the raw inputs (kenet.xml, ili-map-pwn30.tab, wordnet/,
@@ -474,7 +474,7 @@ def tr_en_records(t, d, ft_origin, raw_info, stats):
                 st['senses_contrib'] += 1
                 yield rec('tr_en.db', 'lemma', word, 'sense', 'translation',
                           [src('storilex_contrib', f'storilex_contrib.json:{word}', method='declared')], human=True, idx=i)
-            elif tag == 'fd':
+            elif tag in ('fd', 'rv'):
                 for k, e in enumerate(s['g'][0].split('; ')):
                     if e in fd.get(word, []):
                         o = piece_origin.get((word, e), 'unknown')
@@ -489,7 +489,8 @@ def tr_en_records(t, d, ft_origin, raw_info, stats):
                     yield rec('tr_en.db', 'lemma', word, 'sense', 'translation', sources, idx=f'{i}.{k}',
                               transforms=['add_reverse.py (reverse of dict.db ft)'],
                               notes=['conflict: marked "fd" (FreeDict) but rebuilt from dict.db ft, which has held '
-                                     'Kindle-Wiktionary + damdafayton meanings since 2026-11-17'])
+                                     'Kindle-Wiktionary + damdafayton meanings since 2026-11-17'] if tag == 'fd' else
+                              ['marked "rv": reverse of dict.db ft'])
             elif tag == 'wn':
                 for k, g in enumerate(s['g']):
                     hits = wn_text.get(g, [])

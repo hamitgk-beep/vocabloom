@@ -8,6 +8,12 @@
 #   2. by the repository owner, with "YAYINLA" typed into the confirm box,
 #   3. the "production" environment must have a required reviewer, and that
 #      reviewer approves the waiting "publish" job before anything changes.
+#   4. "dictionary-gate" opens the dictionaries inside the build files and
+#      stops the release unless tools/lexicon_remediation/dictionary_manifest.json
+#      allows exactly those files: provenance records that pass the licence gate
+#      in release mode, or an exception the owner approved in a pull request
+#      (docs/lexicon_remediation/RELEASE_GATE_INTEGRATION.md). A green CI run is
+#      not an approval.
 # A run started by a bot or another workflow (dictionary-data, tutor-data,
 # the GITHUB_TOKEN) stops in "prepare".
 name: release
@@ -106,8 +112,47 @@ jobs:
             echo "Commit ${{ steps.run.outputs.sha }}, from build run $GITHUB_SERVER_URL/$GH_REPO/actions/runs/${{ steps.run.outputs.run_id }}"
           } >> "$GITHUB_STEP_SUMMARY"
 
-  publish:
+  # The dictionaries in the build files themselves, before anyone approves
+  # "publish". No "if:" and no continue-on-error: when this job fails or is
+  # skipped, publish does not run.
+  dictionary-gate:
     needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      dict_sha: ${{ steps.gate.outputs.dict_sha }}
+      tr_en_sha: ${{ steps.gate.outputs.tr_en_sha }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RUN_ID: ${{ needs.prepare.outputs.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: src, ref: '${{ needs.prepare.outputs.sha }}' }
+      # The gate and its manifest come from main as it is now.
+      - uses: actions/checkout@v4
+        with: { path: tools-main }
+      - name: Files of the build
+        run: |
+          for a in Storilex-Windows Storilex-Android Storilex-iOS Storilex-macOS Storilex-Linux; do
+            gh run download "$RUN_ID" -n "$a" -D "dist/$a"
+          done
+      - id: gate
+        name: Dictionary licence gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -I tools-main/tools/lexicon_remediation/release_gate.py check-workflow tools-main/.github/workflows/release.yml
+          python3 -I tools-main/tools/lexicon_remediation/release_gate.py check --dist dist --src src \
+            --manifest tools-main/tools/lexicon_remediation/dictionary_manifest.json \
+            --owner "${{ github.repository_owner }}" --out gate-report --github-output "$GITHUB_OUTPUT" | tee gate.log
+          { echo "### Dictionary gate"; echo '```'; cat gate.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    needs: [prepare, dictionary-gate]
     runs-on: ubuntu-latest
     # The run waits here until a required reviewer of "production" approves.
     environment: production
@@ -132,13 +177,19 @@ jobs:
           for a in Storilex-Windows Storilex-Android Storilex-iOS Storilex-macOS Storilex-Linux; do
             gh run download "$RUN_ID" -n "$a" -D "dist/$a"
           done
+      - name: Same dictionaries as the gate checked
+        run: |
+          python3 -I tools-main/tools/lexicon_remediation/release_gate.py same-dbs --dist dist \
+            --dict-sha "${{ needs.dictionary-gate.outputs.dict_sha }}" --tr-en-sha "${{ needs.dictionary-gate.outputs.tr_en_sha }}"
       - name: Release text
         run: |
           tools-main/tools/release/make_body.sh src "$SHA" "$VERSION" "$BUILD" body.md
           python3 -I tools-main/tools/release/release_check.py check-body body.md "$BUILD" "$VERSION"
           cat body.md
       - name: Package and check the files
+        shell: bash
         run: |
+          set -euo pipefail
           tools-main/tools/release/package.sh dist
           python3 -I tools-main/tools/release/release_check.py verify-dist dist | tee SHA256SUMS
       - name: Keep a record of the release being replaced

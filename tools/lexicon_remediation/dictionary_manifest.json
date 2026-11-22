@@ -1,0 +1,49 @@
+{
+ "schema": 1,
+ "about": "Dictionaries the release gate (tools/lexicon_remediation/release_gate.py) may let through, by SHA-256. A new dictionary needs decision \"gate\" with provenance records that pass gate --mode release. docs/lexicon_remediation/RELEASE_GATE_INTEGRATION.md",
+ "entries": [
+  {
+   "name": "Storilex 8.3 dictionaries (published, legacy)",
+   "dict.db": {
+    "sha256": "ab4a7a53b9fc5e1edbd682da5cb7193c0c109f93236655385bf6231d90221a9c",
+    "tables": {
+     "exc": 5952,
+     "exd": 2510,
+     "exfreq": 4164,
+     "expr": 18209,
+     "exs": 70105,
+     "fam": 31120,
+     "famg": 11874,
+     "ft": 42154,
+     "meta": 2,
+     "own_expr": 10781,
+     "own_word": 41269,
+     "sense": 206941,
+     "syn": 117659,
+     "wd": 0,
+     "wfreq": 22491
+    }
+   },
+   "tr_en.db": {
+    "sha256": "49a661b9c8951259ab13fd6a95aa77b68e16f1c4716669dacfb6c12521cfa818",
+    "tables": {
+     "ctx": 81972,
+     "ctxn": 7265,
+     "ex": 84385,
+     "form": 401588,
+     "lemma": 55364,
+     "meta": 771
+    }
+   },
+   "decision": "legacy_exception_proposed",
+   "exception": {
+    "reason": "Same files as the published 'latest' release (Storilex 8.3). They fail gate --mode release (104,062 blocked records: damdafayton meanings and references). An app-only release would ship them again unchanged; no new dictionary content.",
+    "doc": "docs/lexicon_remediation/RELEASE_GATE_INTEGRATION.md#legacy-exception",
+    "published_in": "release 'latest', target 7721b01 (Storilex 8.3)",
+    "approved_by": "",
+    "approved_on": "",
+    "expires_on": ""
+   }
+  }
+ ]
+}
