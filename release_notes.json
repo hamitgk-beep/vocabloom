@@ -8,6 +8,18 @@
       "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation the Turkish line is left out, and the free on-device translation is tried first. Automatic book analysis with a paid AI service now stays off until you turn it on in Settings, and a sentence explanation is asked only with \"Explain in detail\". The word panel and the review no longer ask the AI by themselves either; it runs only when you tap its button."
     },
     {
+     "id": "review-confirmed-answers",
+     "area": "review",
+     "tr": "Tekrar kartlarında bir anlam, ancak kartın cümlesine uyduğu doğrulanırsa çoktan seçmeli soru olarak soruluyor. Doğrulanamayan kartlar puanlanmadan düz kart olarak gösteriliyor ve bunu belirten kısa bir not çıkıyor. Kayıtlı anlamların ve ilerlemen değişmiyor.",
+     "en": "A review card now asks a meaning as a four-choice question only when it is confirmed for the card's sentence. Cards that cannot be confirmed are shown as plain cards with a short note and are not graded. Your saved meanings and progress stay as they are."
+    },
+    {
+      "id": "dictionary-source-order",
+      "area": "dictionary",
+      "tr": "Kelime ve kalıp anlamlarında önce kaynağı belli sözlük anlamları geliyor. Henüz kontrol edilmemiş yapay zekâ taslakları silinmedi; panellerde kapalı \"Doğrulanmamış AI önerileri\" bölümünde duruyor ve bağlam kartında tek başına kesin anlam sayılmıyor.",
+      "en": "Word and expression meanings now come from sourced dictionaries first. AI drafts nobody has checked yet are kept, in a closed \"Unverified AI suggestions\" section of the panels, and the context card never treats them alone as a certain meaning."
+    },
+    {
       "id": "onboarding-languages",
       "area": "app",
       "tr": "İlk açılışta önce ana dilini ve öğrenmek istediğin dili seçiyorsun; sonra Ayarlar > Dil bölümünden değiştirebilirsin.",

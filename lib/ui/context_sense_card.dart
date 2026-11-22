@@ -220,12 +220,17 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
-                        b.trDerived
+                        b.unverified
                             ? L(
-                                'Bu anlam bağlama göre tahmin edildi; Türkçesi sözlükte bu anlama ayrıca yazılmamış.',
-                                'This meaning is a guess from the context; the dictionary has no Turkish written for it.',
+                                'Bu anlam doğrulanmamış bir AI önerisine dayanıyor; kesin değil.',
+                                'This meaning comes from an unverified AI suggestion; it is not certain.',
                               )
-                            : L('Bu anlam bağlama göre tahmin edildi, kesin değil.', 'This meaning is a guess from the context, not certain.'),
+                            : b.trDerived
+                                ? L(
+                                    'Bu anlam bağlama göre tahmin edildi; Türkçesi sözlükte bu anlama ayrıca yazılmamış.',
+                                    'This meaning is a guess from the context; the dictionary has no Turkish written for it.',
+                                  )
+                                : L('Bu anlam bağlama göre tahmin edildi, kesin değil.', 'This meaning is a guess from the context, not certain.'),
                         style: TextStyle(fontSize: 12.5, color: fg.withValues(alpha: 0.85)),
                       ),
                     ),

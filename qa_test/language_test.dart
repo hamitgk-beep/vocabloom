@@ -603,15 +603,16 @@ void main() {
     }
     // Meanings shown in the word lists, the dictionary tab and the quiz.
     content.addAll([for (final q in ['kopek', 'wor']) for (final (_, m) in d.searchTurkish(q)) m]);
-    for (final w in [...d.searchWords('wor', limit: 60), ...d.searchWords('b', limit: 101), ...d.commonWords(limit: 101), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate']) {
+    for (final w in [...d.searchWords('wor', limit: 60), ...d.searchWords('b', limit: 101), ...d.commonWords(limit: 101), 'though', 'work', 'differ', ...quizWords, 'give up', 'decide', 'remember', 'improve', 'careful', 'borrow', 'journey', 'achieve', 'enough', 'suddenly', 'weather', 'appreciate', 'think', 'thought']) {
       final m = app.shortMeaning(w);
       if (m != null) content.addAll([m, ...m.split(', ')]);
       final info = d.lookup(w);
-      for (final t in [...info.trFreeDict, for (final s in info.senses) ...s.tr]) {
+      // Unverified AI drafts are dictionary content too (shown labelled, in a closed section).
+      for (final t in [...info.trFreeDict, ...info.trDraft, for (final s in info.senses) ...s.tr]) {
         content.addAll([t, ...t.split(',').map((x) => x.trim())]);
       }
       // The own dictionary's senses: Turkish meaning, note, definition, example and its Turkish.
-      for (final o in d.ownSenses(w)) {
+      for (final o in [...d.ownSenses(w), ...d.draftSenses(w)]) {
         content.addAll([o.tr, ...o.tr.split(',').map((x) => x.trim()), o.note, o.en, o.ex, o.exTr, o.pos, [o.pos, o.note].join(' · ')]);
       }
     }

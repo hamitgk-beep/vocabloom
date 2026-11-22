@@ -1,5 +1,6 @@
-// Review card checks on a phone-sized screen: the right answer is the word's
-// most common meaning (not the one of the card's sentence), the asked word cannot be tapped (it would show the
+// Review card checks on a phone-sized screen: a card's saved meaning is kept;
+// one saved with no meaning asks the word's most common meaning, but is not
+// graded when its sentence clearly uses another meaning; the asked word cannot be tapped (it would show the
 // answer) while the other words can, and a book with a UUID file name shows a
 // real title. Screenshots go to $QA_OUT/review (default qa-report/review).
 import 'dart:io';
@@ -100,35 +101,38 @@ void main() {
     tester.view.physicalSize = phone * 2;
     tester.view.devicePixelRatio = 2;
 
-    // 1. The right answer is the word's most common meaning ("kurs, ders"),
-    // not "golf sahası" of the sentence, and never the saved "akmak".
+    // 1. The card saved by the old version with "akmak" (a verb) for the golf
+    // course (a noun): the saved meaning is kept as it is, but it is not
+    // graded as a right answer; the card is a flashcard and shows no options.
     await open(tester);
     expect(find.textContaining('9bfdefed'), findsNothing);
     expect(find.text('Vietnam Opens Its Doors'), findsOneWidget);
-    expect(find.textContaining('akmak'), findsNothing);
+    expect(find.textContaining('akmak'), findsNothing); // hidden until the card is turned
     final st0 = tester.state(find.byType(ReviewPage)) as dynamic;
-    expect(st0.debugRight, app.dict.commonMeaning('course').tr);
-    expect(st0.debugRight, contains('ders'));
+    expect(st0.debugRight, isNull);
+    expect(app.user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'course').meaning, 'akmak, hızla akmak');
     await shot(tester, 'course_question');
+    // Turned: the saved meaning as it is, with the neutral note that it could
+    // not be confirmed for this sentence. Nothing is corrected.
+    await tester.tap(find.textContaining('Görmek için dokun'));
+    await tester.pump(const Duration(milliseconds: 400));
+    expect(find.text('akmak, hızla akmak'), findsOneWidget);
+    expect(find.byKey(const ValueKey('review-unconfirmed')), findsOneWidget);
+    await shot(tester, 'course_unconfirmed');
 
     // 2. A meaning from the AI service for the sentence does not replace it.
     app.user.setContextAi('course', golf, 'saha, golf sahası');
     await open(tester);
     final st = tester.state(find.byType(ReviewPage)) as dynamic;
-    expect(st.debugRight, contains('ders'));
+    expect(st.debugRight, isNull);
     expect(find.text('saha, golf sahası'), findsNothing);
 
-    // 2b. "through" saved from "a through train": the common meaning, not "aktarmasız".
+    // 2b. "through" saved from "a through train" with no meaning.
     await open(tester, 'through');
     final st2 = tester.state(find.byType(ReviewPage)) as dynamic;
-    expect(st2.debugRight, app.dict.commonMeaning('through').tr);
-    expect(st2.debugRight, 'boyunca, baştan sona');
+    // The picker has no meaning for "through" here it can stand behind: not graded.
+    expect(st2.debugRight, isNull);
     await shot(tester, 'through_question');
-    final right = find.text(st2.debugRight as String);
-    await tester.tap(right);
-    await tester.pump(const Duration(milliseconds: 200));
-    await shot(tester, 'through_answered', pumps: 2);
-    await tester.pump(const Duration(seconds: 1));
 
     await open(tester);
     // 3. Tapping the underlined asked word opens nothing; another word opens its panel.

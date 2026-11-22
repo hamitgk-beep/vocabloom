@@ -561,6 +561,8 @@ class AppState extends ChangeNotifier {
     for (final s in info.senses) {
       if (s.tr.isNotEmpty) return s.tr.take(3).join(', ');
     }
-    return info.senses.isNotEmpty ? info.senses.first.gloss : null;
+    if (info.senses.isNotEmpty) return info.senses.first.gloss;
+    // Only an unreviewed AI draft has a meaning: shown, never as the dictionary's.
+    return info.trDraft.isEmpty ? null : '${info.trDraft.first} (${unverifiedAiShort()})';
   }
 }

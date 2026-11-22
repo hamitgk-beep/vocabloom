@@ -21,6 +21,7 @@ import '../nlp/context_sense.dart';
 import '../l10n.dart';
 import 'paragraph_view.dart';
 import 'meaning_parts.dart';
+import 'unverified_section.dart';
 import 'theme.dart';
 import 'tr_word_sheet.dart';
 import '../tts/speech.dart';
@@ -240,27 +241,47 @@ class _WordPanelState extends State<WordPanel> {
     }
     for (final m in ctx.matches) {
       if (m.tokens.length == 1 && m.expr.phrase == lemma && m.expr.trShown != null && (opens || m.expr.cat != 'discourse_markers')) {
-        return (tr: m.expr.trShown!, pos: opens ? 'ünlem' : '', note: null);
+        return (tr: m.expr.trShown!, pos: opens ? 'ünlem' : '', note: m.expr.trShownIsDraft ? unverifiedAiLabel() : null);
+      }
+    }
+    // Only an unreviewed AI draft has the interjection: shown, and labelled.
+    if (opens) {
+      for (final o in drafts) {
+        if (o.pos == 'ünlem') return (tr: o.tr, pos: 'ünlem', note: unverifiedAiLabel());
       }
     }
     return null;
   }();
 
-  String? get _meaning => _ctxTr ?? opener?.tr ?? _trMain ?? best?.gloss;
+  /// The meaning saved with a new card, which its review asks as the right
+  /// answer: the meaning chosen for the sentence only when it is sure and not
+  /// an unverified AI draft; with no sentence, the dictionary's checked first
+  /// meaning. Otherwise nothing is saved and the review decides (it never
+  /// grades a guess as the right answer).
+  String? get _savedMeaning {
+    final s = sense;
+    if (widget.ctx == null) return _trMain;
+    if (_ctxTr != null && s!.confidence == SenseConfidence.sure && !s.best!.unverified) return _ctxTr;
+    return null;
+  }
 
   void _set(String key, WordStatus st) {
-    widget.app.setWord(key, st, context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: key == lemma ? _meaning : null);
+    widget.app.setWord(key, st, context: widget.ctx?.sentence, book: widget.ctx?.bookTitle, meaning: key == lemma ? _savedMeaning : null);
     setState(() {});
   }
 
   /// The own dictionary's senses of the word (Turkish, English definition,
   /// a translated example each).
   late final List<OwnSense> own = widget.app.dict.ownSenses(lemma);
+
+  /// Unreviewed AI drafts of the word: only in the closed, labelled section,
+  /// and as the main meaning only when nothing checked has Turkish for it.
+  late final List<OwnSense> drafts = widget.app.dict.draftSenses(lemma);
   bool familyOpen = false;
 
   /// Index in [own] of the meaning shown at the top, so it is not listed again.
   int? get _ownShown {
-    final id = sense?.shown == true && sense!.cat == null ? sense!.best?.id : null;
+    final id = sense?.shown == true && sense!.cat == null && sense!.best?.unverified != true ? sense!.best?.id : null;
     if (id != null && id.startsWith('ow:$lemma#')) return int.tryParse(id.substring(id.indexOf('#') + 1));
     final shownTr = sense?.shown == true && sense!.cat == null ? sense!.tr : null;
     if (shownTr == null) return null;
@@ -379,16 +400,19 @@ class _WordPanelState extends State<WordPanel> {
         ),
       );
     } else {
-      // The own dictionary's first meaning is the word's main one.
-      final trMain = opener?.tr ?? mainOwn?.tr ?? _trMain;
+      // The own dictionary's first (verified) meaning is the word's main one.
+      final trMain0 = opener?.tr ?? mainOwn?.tr ?? _trMain;
+      // Nothing checked has Turkish for it: the AI draft's first meaning, labelled.
+      final draftMain = trMain0 == null ? drafts.firstOrNull : null;
+      final trMain = trMain0 ?? draftMain?.tr;
       if (trMain != null) {
         children.add(
           MeaningBox(
             key: const ValueKey('word-meaning-box'),
             label: ctx != null ? L('BU CÜMLEDEKİ ANLAMI', 'MEANING IN THIS SENTENCE') : L('ANLAMI', 'MEANING'),
             tr: trMain,
-            note: opener?.note,
-            en: opener != null ? null : (mainOwn != null ? mainOwn.en : best?.gloss),
+            note: draftMain != null ? unverifiedAiLabel() : opener?.note,
+            en: opener != null ? null : (mainOwn != null ? mainOwn.en : (draftMain != null && draftMain.en.isNotEmpty ? draftMain.en : best?.gloss)),
           ),
         );
       } else if (LocalAiCard.available(app)) {
@@ -440,7 +464,7 @@ class _WordPanelState extends State<WordPanel> {
 
     // ---------------- the other meanings: Turkish first, never English alone
     final tiles = <Widget>[];
-    final hasTop = card ? sense!.shown : (opener != null || _trMain != null || mainOwn != null);
+    final hasTop = card ? sense!.shown : (opener != null || _trMain != null || mainOwn != null || drafts.isNotEmpty);
     void tile(String? p, String tr, String? en, String? exEn, String? exTr) =>
         tiles.add(SenseTile(number: tiles.length + (hasTop ? 2 : 1), pos: p, tr: tr, en: en, exEn: exEn, exTr: exTr, divider: tiles.isNotEmpty));
     final openerOwn = opener == null ? -1 : own.indexWhere((o) => o.tr == opener!.tr);
@@ -475,6 +499,25 @@ class _WordPanelState extends State<WordPanel> {
           child: Column(children: tiles),
         ),
       );
+    }
+    // Unreviewed AI drafts: closed and labelled, never in the list above.
+    if (drafts.isNotEmpty) {
+      children.add(UnverifiedAiSection(
+        key: ValueKey('unverified-ai-$lemma'),
+        count: drafts.length,
+        children: () => [
+          for (var i = 0; i < drafts.length; i++)
+            SenseTile(
+              number: i + 1,
+              pos: [posLabel(drafts[i].pos), if (drafts[i].note.isNotEmpty) drafts[i].note].join(' · '),
+              tr: drafts[i].tr,
+              en: drafts[i].en.isEmpty ? null : drafts[i].en,
+              exEn: drafts[i].ex.isEmpty ? null : drafts[i].ex,
+              exTr: drafts[i].ex.isEmpty ? null : drafts[i].exTr,
+              divider: i > 0,
+            ),
+        ],
+      ));
     }
     if (surfaceInfo != null && surfaceInfo!.trFreeDict.isNotEmpty) {
       children.add(PanelHeading(L('"${widget.surface}" BİÇİMİ', 'THE FORM "${widget.surface}"')));
@@ -971,6 +1014,11 @@ class _ExprCardState extends State<ExprCard> {
                 child: Text(tr, style: panelTrStyle(theme, size: 17, weight: FontWeight.w700)),
               ),
             ),
+          if (app.showTr && tr != null && expr.trShownIsDraft)
+            Padding(
+              padding: const EdgeInsets.only(top: 2),
+              child: Text(unverifiedAiLabel(), key: const ValueKey('expr-card-draft'), style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor, fontStyle: FontStyle.italic)),
+            ),
           // No Turkish yet: at least the words one by one, never English alone.
           if (app.showTr && tr == null && _gloss != null)
             Padding(
@@ -1029,7 +1077,7 @@ class _ExprCardState extends State<ExprCard> {
               StatusButtons(
                 status: st,
                 onChanged: (s) {
-                  app.setWord(expr.phrase, s, meaning: expr.trShown ?? expr.en);
+                  app.setWord(expr.phrase, s, meaning: expr.tr);
                   widget.onChanged();
                 },
               ),
