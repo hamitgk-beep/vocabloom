@@ -1,0 +1,2868 @@
+{
+ "set": "final5k",
+ "rules_version": "5K-rules-v2",
+ "systems": {
+  "baseline": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.795,
+     "R": 0.833,
+     "F1": 0.814
+    },
+    "idiom_vs_literal": {
+     "P": 0.87,
+     "R": 0.888,
+     "F1": 0.879,
+     "FPR": 0.483,
+     "FPR_CI95": [
+      0.416,
+      0.551
+     ],
+     "TP": 675,
+     "FP": 101,
+     "FN": 85
+    },
+    "undecided": 32,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 85,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 323,
+     "var": 453
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 0,
+    "old_ok_new_wrong": 0,
+    "both_ok": 783,
+    "both_wrong": 186,
+    "mcnemar_exact_p": 1.0,
+    "acc_diff_CI95": [
+     0.0,
+     0.0
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.874,
+      "R": 0.942,
+      "F1": 0.907,
+      "FPR": 0.488,
+      "wrong_sure": 0,
+      "undecided": 4
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.819,
+      "R": 0.859,
+      "F1": 0.839,
+      "FPR": 0.464,
+      "wrong_sure": 0,
+      "undecided": 21
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.958,
+      "R": 0.9,
+      "F1": 0.928,
+      "FPR": 0.692,
+      "wrong_sure": 0,
+      "undecided": 7
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.918,
+      "R": 1.0,
+      "F1": 0.957,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.886,
+      "R": 0.86,
+      "F1": 0.873,
+      "FPR": 0.513,
+      "wrong_sure": 0,
+      "undecided": 23
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.811,
+      "R": 0.94,
+      "F1": 0.871,
+      "FPR": 0.407,
+      "wrong_sure": 0,
+      "undecided": 9
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.899,
+      "R": 0.87,
+      "F1": 0.884,
+      "FPR": 0.553,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.791,
+      "R": 0.949,
+      "F1": 0.863,
+      "FPR": 0.415,
+      "wrong_sure": 0,
+      "undecided": 13
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.2,
+      "F1": 0.333,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.962,
+      "R": 1.0,
+      "F1": 0.981,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.4,
+      "R": 0.8,
+      "F1": 0.533,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.143,
+      "R": 1.0,
+      "F1": 0.25,
+      "FPR": 0.857,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.889,
+      "R": 0.968,
+      "F1": 0.927,
+      "FPR": 0.875,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.853,
+      "R": 0.953,
+      "F1": 0.901,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules_noparser": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.795,
+     "R": 0.833,
+     "F1": 0.814
+    },
+    "idiom_vs_literal": {
+     "P": 0.87,
+     "R": 0.888,
+     "F1": 0.879,
+     "FPR": 0.483,
+     "FPR_CI95": [
+      0.416,
+      0.551
+     ],
+     "TP": 675,
+     "FP": 101,
+     "FN": 85
+    },
+    "undecided": 32,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 85,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 323,
+     "var": 453
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 0,
+    "old_ok_new_wrong": 0,
+    "both_ok": 783,
+    "both_wrong": 186,
+    "mcnemar_exact_p": 1.0,
+    "acc_diff_CI95": [
+     0.0,
+     0.0
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.874,
+      "R": 0.942,
+      "F1": 0.907,
+      "FPR": 0.488,
+      "wrong_sure": 0,
+      "undecided": 4
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.819,
+      "R": 0.859,
+      "F1": 0.839,
+      "FPR": 0.464,
+      "wrong_sure": 0,
+      "undecided": 21
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.958,
+      "R": 0.9,
+      "F1": 0.928,
+      "FPR": 0.692,
+      "wrong_sure": 0,
+      "undecided": 7
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.918,
+      "R": 1.0,
+      "F1": 0.957,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.886,
+      "R": 0.86,
+      "F1": 0.873,
+      "FPR": 0.513,
+      "wrong_sure": 0,
+      "undecided": 23
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.811,
+      "R": 0.94,
+      "F1": 0.871,
+      "FPR": 0.407,
+      "wrong_sure": 0,
+      "undecided": 9
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.899,
+      "R": 0.87,
+      "F1": 0.884,
+      "FPR": 0.553,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.791,
+      "R": 0.949,
+      "F1": 0.863,
+      "FPR": 0.415,
+      "wrong_sure": 0,
+      "undecided": 13
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.2,
+      "F1": 0.333,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.962,
+      "R": 1.0,
+      "F1": 0.981,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.4,
+      "R": 0.8,
+      "F1": 0.533,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.143,
+      "R": 1.0,
+      "F1": 0.25,
+      "FPR": 0.857,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.889,
+      "R": 0.968,
+      "F1": 0.927,
+      "FPR": 0.875,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.853,
+      "R": 0.953,
+      "F1": 0.901,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules+spacy_sm": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.802,
+     "R": 0.83,
+     "F1": 0.816
+    },
+    "idiom_vs_literal": {
+     "P": 0.879,
+     "R": 0.85,
+     "F1": 0.864,
+     "FPR": 0.426,
+     "FPR_CI95": [
+      0.361,
+      0.494
+     ],
+     "TP": 646,
+     "FP": 89,
+     "FN": 114
+    },
+    "undecided": 64,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 114,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 305,
+     "var": 430
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 12,
+    "old_ok_new_wrong": 29,
+    "both_ok": 754,
+    "both_wrong": 174,
+    "mcnemar_exact_p": 0.0115,
+    "acc_diff_CI95": [
+     -0.03,
+     -0.005
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.873,
+      "R": 0.935,
+      "F1": 0.903,
+      "FPR": 0.488,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.831,
+      "R": 0.811,
+      "F1": 0.821,
+      "FPR": 0.405,
+      "wrong_sure": 0,
+      "undecided": 41
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.97,
+      "R": 0.857,
+      "F1": 0.91,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 18
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.918,
+      "R": 1.0,
+      "F1": 0.957,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.894,
+      "R": 0.854,
+      "F1": 0.874,
+      "FPR": 0.47,
+      "wrong_sure": 0,
+      "undecided": 22
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.817,
+      "R": 0.768,
+      "F1": 0.792,
+      "FPR": 0.321,
+      "wrong_sure": 0,
+      "undecided": 42
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.907,
+      "R": 0.865,
+      "F1": 0.885,
+      "FPR": 0.505,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.792,
+      "R": 0.801,
+      "F1": 0.797,
+      "FPR": 0.349,
+      "wrong_sure": 0,
+      "undecided": 45
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.133,
+      "F1": 0.235,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.958,
+      "R": 0.902,
+      "F1": 0.929,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.444,
+      "R": 0.8,
+      "F1": 0.571,
+      "FPR": 0.5,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.143,
+      "R": 1.0,
+      "F1": 0.25,
+      "FPR": 0.857,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.9,
+      "R": 0.911,
+      "F1": 0.906,
+      "FPR": 0.732,
+      "wrong_sure": 0,
+      "undecided": 44
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.867,
+      "R": 0.953,
+      "F1": 0.908,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules+spacy_md": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.802,
+     "R": 0.829,
+     "F1": 0.815
+    },
+    "idiom_vs_literal": {
+     "P": 0.878,
+     "R": 0.846,
+     "F1": 0.862,
+     "FPR": 0.426,
+     "FPR_CI95": [
+      0.361,
+      0.494
+     ],
+     "TP": 643,
+     "FP": 89,
+     "FN": 117
+    },
+    "undecided": 66,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 117,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 302,
+     "var": 430
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 12,
+    "old_ok_new_wrong": 32,
+    "both_ok": 751,
+    "both_wrong": 174,
+    "mcnemar_exact_p": 0.0037,
+    "acc_diff_CI95": [
+     -0.034,
+     -0.007
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.873,
+      "R": 0.929,
+      "F1": 0.9,
+      "FPR": 0.488,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.83,
+      "R": 0.808,
+      "F1": 0.819,
+      "FPR": 0.405,
+      "wrong_sure": 0,
+      "undecided": 42
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.97,
+      "R": 0.852,
+      "F1": 0.907,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 19
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.918,
+      "R": 1.0,
+      "F1": 0.957,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.894,
+      "R": 0.852,
+      "F1": 0.873,
+      "FPR": 0.47,
+      "wrong_sure": 0,
+      "undecided": 22
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.814,
+      "R": 0.755,
+      "F1": 0.784,
+      "FPR": 0.321,
+      "wrong_sure": 0,
+      "undecided": 44
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.906,
+      "R": 0.863,
+      "F1": 0.884,
+      "FPR": 0.505,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.79,
+      "R": 0.79,
+      "F1": 0.79,
+      "FPR": 0.349,
+      "wrong_sure": 0,
+      "undecided": 47
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 0.882,
+      "F1": 0.938,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.133,
+      "F1": 0.235,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.957,
+      "R": 0.882,
+      "F1": 0.918,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.444,
+      "R": 0.8,
+      "F1": 0.571,
+      "FPR": 0.5,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.143,
+      "R": 1.0,
+      "F1": 0.25,
+      "FPR": 0.857,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.9,
+      "R": 0.911,
+      "F1": 0.906,
+      "FPR": 0.732,
+      "wrong_sure": 0,
+      "undecided": 44
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.867,
+      "R": 0.953,
+      "F1": 0.908,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules+stanza": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.802,
+     "R": 0.828,
+     "F1": 0.815
+    },
+    "idiom_vs_literal": {
+     "P": 0.879,
+     "R": 0.862,
+     "F1": 0.87,
+     "FPR": 0.431,
+     "FPR_CI95": [
+      0.365,
+      0.498
+     ],
+     "TP": 655,
+     "FP": 90,
+     "FN": 105
+    },
+    "undecided": 51,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 105,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 308,
+     "var": 437
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 11,
+    "old_ok_new_wrong": 20,
+    "both_ok": 763,
+    "both_wrong": 175,
+    "mcnemar_exact_p": 0.1496,
+    "acc_diff_CI95": [
+     -0.021,
+     0.002
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.874,
+      "R": 0.897,
+      "F1": 0.885,
+      "FPR": 0.465,
+      "wrong_sure": 0,
+      "undecided": 10
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.835,
+      "R": 0.835,
+      "F1": 0.835,
+      "FPR": 0.405,
+      "wrong_sure": 0,
+      "undecided": 31
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.962,
+      "R": 0.883,
+      "F1": 0.921,
+      "FPR": 0.615,
+      "wrong_sure": 0,
+      "undecided": 10
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.917,
+      "R": 0.982,
+      "F1": 0.948,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.895,
+      "R": 0.852,
+      "F1": 0.873,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 22
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.819,
+      "R": 0.841,
+      "F1": 0.83,
+      "FPR": 0.346,
+      "wrong_sure": 0,
+      "undecided": 29
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.908,
+      "R": 0.861,
+      "F1": 0.884,
+      "FPR": 0.495,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.796,
+      "R": 0.864,
+      "F1": 0.828,
+      "FPR": 0.368,
+      "wrong_sure": 0,
+      "undecided": 32
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.2,
+      "F1": 0.333,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.959,
+      "R": 0.922,
+      "F1": 0.94,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": null,
+      "R": null,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.4,
+      "R": 0.8,
+      "F1": 0.533,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.143,
+      "R": 1.0,
+      "F1": 0.25,
+      "FPR": 0.857,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.9,
+      "R": 0.929,
+      "F1": 0.914,
+      "FPR": 0.75,
+      "wrong_sure": 0,
+      "undecided": 36
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.867,
+      "R": 0.953,
+      "F1": 0.908,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules+udpipe_ewt25": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.801,
+     "R": 0.825,
+     "F1": 0.813
+    },
+    "idiom_vs_literal": {
+     "P": 0.879,
+     "R": 0.857,
+     "F1": 0.867,
+     "FPR": 0.431,
+     "FPR_CI95": [
+      0.365,
+      0.498
+     ],
+     "TP": 651,
+     "FP": 90,
+     "FN": 109
+    },
+    "undecided": 54,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 109,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 307,
+     "var": 434
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 11,
+    "old_ok_new_wrong": 24,
+    "both_ok": 759,
+    "both_wrong": 175,
+    "mcnemar_exact_p": 0.041,
+    "acc_diff_CI95": [
+     -0.025,
+     -0.001
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.87,
+      "R": 0.91,
+      "F1": 0.89,
+      "FPR": 0.488,
+      "wrong_sure": 0,
+      "undecided": 9
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.835,
+      "R": 0.824,
+      "F1": 0.83,
+      "FPR": 0.399,
+      "wrong_sure": 0,
+      "undecided": 34
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.962,
+      "R": 0.874,
+      "F1": 0.916,
+      "FPR": 0.615,
+      "wrong_sure": 0,
+      "undecided": 11
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.915,
+      "R": 0.964,
+      "F1": 0.939,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.893,
+      "R": 0.851,
+      "F1": 0.871,
+      "FPR": 0.47,
+      "wrong_sure": 0,
+      "undecided": 22
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.822,
+      "R": 0.828,
+      "F1": 0.825,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 32
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.906,
+      "R": 0.858,
+      "F1": 0.881,
+      "FPR": 0.505,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.798,
+      "R": 0.852,
+      "F1": 0.824,
+      "FPR": 0.358,
+      "wrong_sure": 0,
+      "undecided": 35
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.133,
+      "F1": 0.235,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.957,
+      "R": 0.882,
+      "F1": 0.918,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.4,
+      "R": 0.8,
+      "F1": 0.533,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.143,
+      "R": 1.0,
+      "F1": 0.25,
+      "FPR": 0.857,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.902,
+      "R": 0.926,
+      "F1": 0.914,
+      "FPR": 0.732,
+      "wrong_sure": 0,
+      "undecided": 35
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.867,
+      "R": 0.953,
+      "F1": 0.908,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules+udpipe_bnosac21": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.801,
+     "R": 0.818,
+     "F1": 0.809
+    },
+    "idiom_vs_literal": {
+     "P": 0.88,
+     "R": 0.847,
+     "F1": 0.863,
+     "FPR": 0.421,
+     "FPR_CI95": [
+      0.356,
+      0.489
+     ],
+     "TP": 644,
+     "FP": 88,
+     "FN": 116
+    },
+    "undecided": 57,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 116,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 303,
+     "var": 429
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 13,
+    "old_ok_new_wrong": 31,
+    "both_ok": 752,
+    "both_wrong": 173,
+    "mcnemar_exact_p": 0.0096,
+    "acc_diff_CI95": [
+     -0.032,
+     -0.005
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.876,
+      "R": 0.91,
+      "F1": 0.892,
+      "FPR": 0.465,
+      "wrong_sure": 0,
+      "undecided": 8
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.835,
+      "R": 0.808,
+      "F1": 0.821,
+      "FPR": 0.392,
+      "wrong_sure": 0,
+      "undecided": 37
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.962,
+      "R": 0.87,
+      "F1": 0.913,
+      "FPR": 0.615,
+      "wrong_sure": 0,
+      "undecided": 12
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.914,
+      "R": 0.946,
+      "F1": 0.93,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.894,
+      "R": 0.843,
+      "F1": 0.868,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 22
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.826,
+      "R": 0.815,
+      "F1": 0.82,
+      "FPR": 0.321,
+      "wrong_sure": 0,
+      "undecided": 35
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.907,
+      "R": 0.849,
+      "F1": 0.877,
+      "FPR": 0.495,
+      "wrong_sure": 0,
+      "undecided": 19
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.8,
+      "R": 0.841,
+      "F1": 0.82,
+      "FPR": 0.349,
+      "wrong_sure": 0,
+      "undecided": 38
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.133,
+      "F1": 0.235,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.955,
+      "R": 0.824,
+      "F1": 0.884,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.4,
+      "R": 0.8,
+      "F1": 0.533,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.167,
+      "R": 1.0,
+      "F1": 0.286,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.901,
+      "R": 0.916,
+      "F1": 0.908,
+      "FPR": 0.732,
+      "wrong_sure": 0,
+      "undecided": 37
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.872,
+      "R": 0.953,
+      "F1": 0.911,
+      "FPR": 0.706,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "rules+spacy_sm&udpipe_bnosac21": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.802,
+     "R": 0.83,
+     "F1": 0.816
+    },
+    "idiom_vs_literal": {
+     "P": 0.88,
+     "R": 0.83,
+     "F1": 0.854,
+     "FPR": 0.411,
+     "FPR_CI95": [
+      0.347,
+      0.479
+     ],
+     "TP": 631,
+     "FP": 86,
+     "FN": 129
+    },
+    "undecided": 82,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 129,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 295,
+     "var": 422
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 15,
+    "old_ok_new_wrong": 44,
+    "both_ok": 739,
+    "both_wrong": 171,
+    "mcnemar_exact_p": 0.0002,
+    "acc_diff_CI95": [
+     -0.045,
+     -0.015
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.876,
+      "R": 0.91,
+      "F1": 0.892,
+      "FPR": 0.465,
+      "wrong_sure": 0,
+      "undecided": 10
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.831,
+      "R": 0.789,
+      "F1": 0.81,
+      "FPR": 0.392,
+      "wrong_sure": 0,
+      "undecided": 51
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.97,
+      "R": 0.843,
+      "F1": 0.902,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 21
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 0.914,
+      "R": 0.946,
+      "F1": 0.93,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.894,
+      "R": 0.843,
+      "F1": 0.868,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 29
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.821,
+      "R": 0.728,
+      "F1": 0.772,
+      "FPR": 0.296,
+      "wrong_sure": 0,
+      "undecided": 50
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.907,
+      "R": 0.849,
+      "F1": 0.877,
+      "FPR": 0.495,
+      "wrong_sure": 0,
+      "undecided": 29
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.794,
+      "R": 0.767,
+      "F1": 0.78,
+      "FPR": 0.33,
+      "wrong_sure": 0,
+      "undecided": 53
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 0.806,
+      "R": 0.518,
+      "F1": 0.63,
+      "FPR": 0.189,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.133,
+      "F1": 0.235,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.953,
+      "R": 0.804,
+      "F1": 0.872,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 10
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 0.091,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": 0.444,
+      "R": 0.8,
+      "F1": 0.571,
+      "FPR": 0.5,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": 0.167,
+      "R": 1.0,
+      "F1": 0.286,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.9,
+      "R": 0.887,
+      "F1": 0.893,
+      "FPR": 0.714,
+      "wrong_sure": 0,
+      "undecided": 55
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.872,
+      "R": 0.953,
+      "F1": 0.911,
+      "FPR": 0.706,
+      "wrong_sure": 0,
+      "undecided": 7
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": 0.833,
+      "R": 0.667,
+      "F1": 0.741,
+      "FPR": 0.333,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.8,
+      "F1": 0.889,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  },
+  "amalgram_retrained": {
+   "score": {
+    "n": 969,
+    "gold_expr": 760,
+    "gold_nonexpr": 209,
+    "detect_exact_span": {
+     "P": 0.826,
+     "R": 0.1,
+     "F1": 0.178
+    },
+    "idiom_vs_literal": {
+     "P": 0.882,
+     "R": 0.108,
+     "F1": 0.192,
+     "FPR": 0.053,
+     "FPR_CI95": [
+      0.03,
+      0.092
+     ],
+     "TP": 82,
+     "FP": 11,
+     "FN": 678
+    },
+    "undecided": 0,
+    "no_candidate": 161,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 678,
+    "coverage_candidate": 0.834,
+    "turkish_for_expr_decisions": {
+     "taslak-yeterli-kaynak-yok": 34,
+     "var": 59
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 93,
+    "old_ok_new_wrong": 596,
+    "both_ok": 187,
+    "both_wrong": 93,
+    "mcnemar_exact_p": 0.0,
+    "acc_diff_CI95": [
+     -0.561,
+     -0.477
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 198,
+      "gold_expr": 155,
+      "P": 0.929,
+      "R": 0.252,
+      "F1": 0.396,
+      "FPR": 0.07,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "3": {
+      "n": 528,
+      "gold_expr": 375,
+      "P": 0.844,
+      "R": 0.101,
+      "F1": 0.181,
+      "FPR": 0.046,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "4+": {
+      "n": 243,
+      "gold_expr": 230,
+      "P": 0.833,
+      "R": 0.022,
+      "F1": 0.042,
+      "FPR": 0.077,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 63,
+      "gold_expr": 56,
+      "P": 1.0,
+      "R": 0.036,
+      "F1": 0.069,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.2,
+      "F1": 0.333,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 659,
+      "gold_expr": 542,
+      "P": 0.867,
+      "R": 0.096,
+      "F1": 0.173,
+      "FPR": 0.068,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 3,
+      "gold_expr": 0,
+      "P": null,
+      "R": null,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 232,
+      "gold_expr": 151,
+      "P": 0.9,
+      "R": 0.179,
+      "F1": 0.298,
+      "FPR": 0.037,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "proverbs": {
+      "n": 3,
+      "gold_expr": 3,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "other": {
+      "n": 687,
+      "gold_expr": 584,
+      "P": 0.915,
+      "R": 0.092,
+      "F1": 0.168,
+      "FPR": 0.049,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prep-initial": {
+      "n": 282,
+      "gold_expr": 176,
+      "P": 0.824,
+      "R": 0.159,
+      "F1": 0.267,
+      "FPR": 0.057,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "magpie_variant": {
+     "case": {
+      "n": 17,
+      "gold_expr": 17,
+      "P": 1.0,
+      "R": 0.118,
+      "F1": 0.211,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-inflection": {
+      "n": 93,
+      "gold_expr": 56,
+      "P": 1.0,
+      "R": 0.036,
+      "F1": 0.069,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "combined-other": {
+      "n": 33,
+      "gold_expr": 15,
+      "P": 1.0,
+      "R": 0.067,
+      "F1": 0.125,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dashes": {
+      "n": 53,
+      "gold_expr": 51,
+      "P": 0.944,
+      "R": 0.333,
+      "F1": 0.493,
+      "FPR": 0.5,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "deletion-determiner": {
+      "n": 11,
+      "gold_expr": 0,
+      "P": null,
+      "R": null,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-broad": {
+      "n": 15,
+      "gold_expr": 5,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "determiner-narrow": {
+      "n": 8,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "identical": {
+      "n": 462,
+      "gold_expr": 406,
+      "P": 0.857,
+      "R": 0.118,
+      "F1": 0.208,
+      "FPR": 0.143,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "inflection": {
+      "n": 205,
+      "gold_expr": 171,
+      "P": 0.846,
+      "R": 0.064,
+      "F1": 0.12,
+      "FPR": 0.059,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-determiner": {
+      "n": 9,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "insertion-other": {
+      "n": 30,
+      "gold_expr": 11,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "misc": {
+      "n": 21,
+      "gold_expr": 15,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "objective": {
+      "n": 5,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.2,
+      "F1": 0.333,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "possessive": {
+      "n": 7,
+      "gold_expr": 6,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 969
+  }
+ }
+}

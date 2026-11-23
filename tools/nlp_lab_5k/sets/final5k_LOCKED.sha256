@@ -1,0 +1,4 @@
+# Task 5K: written and committed before any system (baseline or candidate) ran on these sets.
+# final5k_magpie.tsv: build_final_5k.py (seed 20261123), LOCAL ONLY (BNC text). STREUSLE: commit 8ba61fe4f216e7967500a862554a4fff79d25f5d.
+6bafef4672e8457232cea06d2489b0e8a721418fefd0b33261c71cc97192b6ae  final5k_magpie.tsv
+f8144e6227db2e845cda4aa832f8d5644cb40b9e743d1dbe05663dd687d2c70c  streusle/test/streusle.ud_test.json

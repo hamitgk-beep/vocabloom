@@ -1,0 +1,20 @@
+{
+ "inputs": {
+  "MAGPIE_unfiltered.jsonl": "541ee535e93d71eff85351351665115e2a9f22ad736423881da5774a93bc880e",
+  "MAGPIE_filtered_split_random.jsonl": "c08744eb74c7f435117bf31bf1ed3f9ff3a7d92e67ed152d28319c582331959b",
+  "dict.db": "ab4a7a53b9fc5e1edbd682da5cb7193c0c109f93236655385bf6231d90221a9c",
+  "5f/final5f_magpie.tsv": "6874e6501b4b42aa88349601b0ff0f5efa06b518be25521298a79a8bc592b38a",
+  "5g/final5g_magpie.tsv": "ce55c3bb456d41ec60dcfec18bb5a9fe3d93985c882f5856f2bc2983c6faea60",
+  "5h/dev5h_magpie.tsv": "5e81b1beb5a11cb1e656d057d5dcbcf50cf1cf90213e918e18d5cdaab21829cd",
+  "5h/tune5h_magpie.tsv": "197f7faf2a76fe7675ecb083e752b59c433f88ff005a422731209e4d40b20707",
+  "5h/final5h_magpie.tsv": "d479d256a72bc4bffb4d77f210dda711517d96230fd616453e88da99dd88e22c",
+  "5i/final5i_magpie.tsv": "a50d77ca95384f9e83098b95f7923180f2865d15e9b03d2d3dbb51e3f8b446a0",
+  "5j/final5j_magpie.tsv": "27034bd80f1b2e575dabe3516293be4988bba3ec7a841d9d475b3577812198c7",
+  "5j/hold5j_magpie.tsv": "1cd67546d67532503d7e48fddce9e4c71f48ec32e267dd5be0cc5ef8bff469ca"
+ },
+ "seed": 20261123,
+ "cap": 3,
+ "outputs": {
+  "final5k_magpie.tsv": "6bafef4672e8457232cea06d2489b0e8a721418fefd0b33261c71cc97192b6ae"
+ }
+}

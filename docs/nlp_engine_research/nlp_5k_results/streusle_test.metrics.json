@@ -1,0 +1,2302 @@
+{
+ "set": "streusle_test",
+ "rules_version": "5K-rules-v2",
+ "systems": {
+  "baseline": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.6,
+     "R": 0.823,
+     "F1": 0.694
+    },
+    "idiom_vs_literal": {
+     "P": 0.639,
+     "R": 0.938,
+     "F1": 0.76,
+     "FPR": 0.896,
+     "FPR_CI95": [
+      0.8,
+      0.948
+     ],
+     "TP": 106,
+     "FP": 60,
+     "FN": 7
+    },
+    "undecided": 1,
+    "no_candidate": 0,
+    "wrong_sure": 3,
+    "wrong_card_approval": 3,
+    "idiom_missed": 7,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 148,
+     "taslak-yeterli-kaynak-yok": 18
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 0,
+    "old_ok_new_wrong": 0,
+    "both_ok": 113,
+    "both_wrong": 67,
+    "mcnemar_exact_p": 1.0,
+    "acc_diff_CI95": [
+     0.0,
+     0.0
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.656,
+      "R": 0.93,
+      "F1": 0.769,
+      "FPR": 0.857,
+      "wrong_sure": 3,
+      "undecided": 1
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.528,
+      "R": 0.95,
+      "F1": 0.679,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.489,
+      "R": 1.0,
+      "F1": 0.657,
+      "FPR": 0.958,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.8,
+      "R": 0.8,
+      "F1": 0.8,
+      "FPR": 0.538,
+      "wrong_sure": 3,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.533,
+      "R": 1.0,
+      "F1": 0.696,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.664,
+      "R": 0.926,
+      "F1": 0.773,
+      "FPR": 0.863,
+      "wrong_sure": 3,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.559,
+      "R": 1.0,
+      "F1": 0.717,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules_noparser": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.597,
+     "R": 0.814,
+     "F1": 0.689
+    },
+    "idiom_vs_literal": {
+     "P": 0.636,
+     "R": 0.929,
+     "F1": 0.755,
+     "FPR": 0.896,
+     "FPR_CI95": [
+      0.8,
+      0.948
+     ],
+     "TP": 105,
+     "FP": 60,
+     "FN": 8
+    },
+    "undecided": 1,
+    "no_candidate": 0,
+    "wrong_sure": 3,
+    "wrong_card_approval": 3,
+    "idiom_missed": 8,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 147,
+     "taslak-yeterli-kaynak-yok": 18
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 0,
+    "old_ok_new_wrong": 1,
+    "both_ok": 112,
+    "both_wrong": 67,
+    "mcnemar_exact_p": 1.0,
+    "acc_diff_CI95": [
+     -0.016,
+     0.005
+    ],
+    "correct_cards_blocked": 0
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.653,
+      "R": 0.919,
+      "F1": 0.763,
+      "FPR": 0.857,
+      "wrong_sure": 3,
+      "undecided": 1
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.528,
+      "R": 0.95,
+      "F1": 0.679,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.489,
+      "R": 1.0,
+      "F1": 0.657,
+      "FPR": 0.958,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.794,
+      "R": 0.771,
+      "F1": 0.783,
+      "FPR": 0.538,
+      "wrong_sure": 3,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.533,
+      "R": 1.0,
+      "F1": 0.696,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.662,
+      "R": 0.915,
+      "F1": 0.768,
+      "FPR": 0.863,
+      "wrong_sure": 3,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.559,
+      "R": 1.0,
+      "F1": 0.717,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules+spacy_sm": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.608,
+     "R": 0.823,
+     "F1": 0.699
+    },
+    "idiom_vs_literal": {
+     "P": 0.656,
+     "R": 0.912,
+     "F1": 0.763,
+     "FPR": 0.806,
+     "FPR_CI95": [
+      0.696,
+      0.883
+     ],
+     "TP": 103,
+     "FP": 54,
+     "FN": 10
+    },
+    "undecided": 8,
+    "no_candidate": 0,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 10,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 142,
+     "taslak-yeterli-kaynak-yok": 15
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 6,
+    "old_ok_new_wrong": 3,
+    "both_ok": 110,
+    "both_wrong": 61,
+    "mcnemar_exact_p": 0.5078,
+    "acc_diff_CI95": [
+     -0.016,
+     0.049
+    ],
+    "correct_cards_blocked": 3
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.67,
+      "R": 0.895,
+      "F1": 0.766,
+      "FPR": 0.776,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.559,
+      "R": 0.95,
+      "F1": 0.704,
+      "FPR": 0.882,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.489,
+      "R": 1.0,
+      "F1": 0.657,
+      "FPR": 0.958,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.818,
+      "R": 0.771,
+      "F1": 0.794,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.609,
+      "R": 0.875,
+      "F1": 0.718,
+      "FPR": 0.643,
+      "wrong_sure": 0,
+      "undecided": 7
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.667,
+      "R": 0.915,
+      "F1": 0.771,
+      "FPR": 0.843,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.63,
+      "R": 0.895,
+      "F1": 0.739,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 7
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules+spacy_md": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.608,
+     "R": 0.823,
+     "F1": 0.699
+    },
+    "idiom_vs_literal": {
+     "P": 0.658,
+     "R": 0.92,
+     "F1": 0.768,
+     "FPR": 0.806,
+     "FPR_CI95": [
+      0.696,
+      0.883
+     ],
+     "TP": 104,
+     "FP": 54,
+     "FN": 9
+    },
+    "undecided": 7,
+    "no_candidate": 0,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 9,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 143,
+     "taslak-yeterli-kaynak-yok": 15
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 6,
+    "old_ok_new_wrong": 2,
+    "both_ok": 111,
+    "both_wrong": 61,
+    "mcnemar_exact_p": 0.2891,
+    "acc_diff_CI95": [
+     -0.008,
+     0.053
+    ],
+    "correct_cards_blocked": 3
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.672,
+      "R": 0.907,
+      "F1": 0.772,
+      "FPR": 0.776,
+      "wrong_sure": 0,
+      "undecided": 5
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.559,
+      "R": 0.95,
+      "F1": 0.704,
+      "FPR": 0.882,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.489,
+      "R": 1.0,
+      "F1": 0.657,
+      "FPR": 0.958,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.818,
+      "R": 0.771,
+      "F1": 0.794,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.625,
+      "R": 0.938,
+      "F1": 0.75,
+      "FPR": 0.643,
+      "wrong_sure": 0,
+      "undecided": 6
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.667,
+      "R": 0.915,
+      "F1": 0.771,
+      "FPR": 0.843,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.643,
+      "R": 0.947,
+      "F1": 0.766,
+      "FPR": 0.667,
+      "wrong_sure": 0,
+      "undecided": 6
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules+stanza": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.609,
+     "R": 0.814,
+     "F1": 0.697
+    },
+    "idiom_vs_literal": {
+     "P": 0.664,
+     "R": 0.894,
+     "F1": 0.762,
+     "FPR": 0.761,
+     "FPR_CI95": [
+      0.647,
+      0.847
+     ],
+     "TP": 101,
+     "FP": 51,
+     "FN": 12
+    },
+    "undecided": 11,
+    "no_candidate": 0,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 12,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 138,
+     "taslak-yeterli-kaynak-yok": 14
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 9,
+    "old_ok_new_wrong": 5,
+    "both_ok": 108,
+    "both_wrong": 58,
+    "mcnemar_exact_p": 0.424,
+    "acc_diff_CI95": [
+     -0.018,
+     0.063
+    ],
+    "correct_cards_blocked": 4
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.676,
+      "R": 0.872,
+      "F1": 0.761,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 8
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.576,
+      "R": 0.95,
+      "F1": 0.717,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.488,
+      "R": 0.955,
+      "F1": 0.646,
+      "FPR": 0.917,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.818,
+      "R": 0.771,
+      "F1": 0.794,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.65,
+      "R": 0.812,
+      "F1": 0.722,
+      "FPR": 0.5,
+      "wrong_sure": 0,
+      "undecided": 10
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.669,
+      "R": 0.904,
+      "F1": 0.769,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.667,
+      "R": 0.842,
+      "F1": 0.744,
+      "FPR": 0.533,
+      "wrong_sure": 0,
+      "undecided": 10
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules+udpipe_ewt25": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.612,
+     "R": 0.823,
+     "F1": 0.702
+    },
+    "idiom_vs_literal": {
+     "P": 0.662,
+     "R": 0.903,
+     "F1": 0.764,
+     "FPR": 0.776,
+     "FPR_CI95": [
+      0.663,
+      0.859
+     ],
+     "TP": 102,
+     "FP": 52,
+     "FN": 11
+    },
+    "undecided": 10,
+    "no_candidate": 0,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 11,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 139,
+     "taslak-yeterli-kaynak-yok": 15
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 8,
+    "old_ok_new_wrong": 4,
+    "both_ok": 109,
+    "both_wrong": 59,
+    "mcnemar_exact_p": 0.3877,
+    "acc_diff_CI95": [
+     -0.015,
+     0.06
+    ],
+    "correct_cards_blocked": 4
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.679,
+      "R": 0.884,
+      "F1": 0.768,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 8
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.559,
+      "R": 0.95,
+      "F1": 0.704,
+      "FPR": 0.882,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.5,
+      "R": 1.0,
+      "F1": 0.667,
+      "FPR": 0.917,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.818,
+      "R": 0.771,
+      "F1": 0.794,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.619,
+      "R": 0.812,
+      "F1": 0.703,
+      "FPR": 0.571,
+      "wrong_sure": 0,
+      "undecided": 9
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.672,
+      "R": 0.915,
+      "F1": 0.775,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.64,
+      "R": 0.842,
+      "F1": 0.727,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 9
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules+udpipe_bnosac21": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.609,
+     "R": 0.814,
+     "F1": 0.697
+    },
+    "idiom_vs_literal": {
+     "P": 0.658,
+     "R": 0.885,
+     "F1": 0.755,
+     "FPR": 0.776,
+     "FPR_CI95": [
+      0.663,
+      0.859
+     ],
+     "TP": 100,
+     "FP": 52,
+     "FN": 13
+    },
+    "undecided": 11,
+    "no_candidate": 0,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 13,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 138,
+     "taslak-yeterli-kaynak-yok": 14
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 8,
+    "old_ok_new_wrong": 6,
+    "both_ok": 107,
+    "both_wrong": 59,
+    "mcnemar_exact_p": 0.7905,
+    "acc_diff_CI95": [
+     -0.03,
+     0.052
+    ],
+    "correct_cards_blocked": 4
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.673,
+      "R": 0.86,
+      "F1": 0.755,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 9
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.559,
+      "R": 0.95,
+      "F1": 0.704,
+      "FPR": 0.882,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.488,
+      "R": 0.955,
+      "F1": 0.646,
+      "FPR": 0.917,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.818,
+      "R": 0.771,
+      "F1": 0.794,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.6,
+      "R": 0.75,
+      "F1": 0.667,
+      "FPR": 0.571,
+      "wrong_sure": 0,
+      "undecided": 10
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.669,
+      "R": 0.904,
+      "F1": 0.769,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 1
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.625,
+      "R": 0.789,
+      "F1": 0.698,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 10
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "rules+spacy_sm&udpipe_bnosac21": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.608,
+     "R": 0.823,
+     "F1": 0.699
+    },
+    "idiom_vs_literal": {
+     "P": 0.658,
+     "R": 0.885,
+     "F1": 0.755,
+     "FPR": 0.776,
+     "FPR_CI95": [
+      0.663,
+      0.859
+     ],
+     "TP": 100,
+     "FP": 52,
+     "FN": 13
+    },
+    "undecided": 13,
+    "no_candidate": 0,
+    "wrong_sure": 0,
+    "wrong_card_approval": 0,
+    "idiom_missed": 13,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 138,
+     "taslak-yeterli-kaynak-yok": 14
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 8,
+    "old_ok_new_wrong": 6,
+    "both_ok": 107,
+    "both_wrong": 59,
+    "mcnemar_exact_p": 0.7905,
+    "acc_diff_CI95": [
+     -0.03,
+     0.052
+    ],
+    "correct_cards_blocked": 3
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.673,
+      "R": 0.86,
+      "F1": 0.755,
+      "FPR": 0.735,
+      "wrong_sure": 0,
+      "undecided": 11
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 0.559,
+      "R": 0.95,
+      "F1": 0.704,
+      "FPR": 0.882,
+      "wrong_sure": 0,
+      "undecided": 2
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": 0.875,
+      "R": 1.0,
+      "F1": 0.933,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 0.833,
+      "R": 1.0,
+      "F1": 0.909,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 0.75,
+      "R": 1.0,
+      "F1": 0.857,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": 0.6,
+      "R": 1.0,
+      "F1": 0.75,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.455,
+      "R": 1.0,
+      "F1": 0.625,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 0.333,
+      "R": 1.0,
+      "F1": 0.5,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.488,
+      "R": 0.955,
+      "F1": 0.646,
+      "FPR": 0.917,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.818,
+      "R": 0.771,
+      "F1": 0.794,
+      "FPR": 0.462,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.6,
+      "R": 0.75,
+      "F1": 0.667,
+      "FPR": 0.571,
+      "wrong_sure": 0,
+      "undecided": 10
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": 0.0,
+      "R": null,
+      "F1": null,
+      "FPR": 1.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.669,
+      "R": 0.904,
+      "F1": 0.769,
+      "FPR": 0.824,
+      "wrong_sure": 0,
+      "undecided": 3
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.625,
+      "R": 0.789,
+      "F1": 0.698,
+      "FPR": 0.6,
+      "wrong_sure": 0,
+      "undecided": 10
+     }
+    }
+   },
+   "items_covered": 180
+  },
+  "amalgram_retrained": {
+   "score": {
+    "n": 180,
+    "gold_expr": 113,
+    "gold_nonexpr": 67,
+    "detect_exact_span": {
+     "P": 0.859,
+     "R": 0.593,
+     "F1": 0.702
+    },
+    "idiom_vs_literal": {
+     "P": 0.867,
+     "R": 0.637,
+     "F1": 0.735,
+     "FPR": 0.164,
+     "FPR_CI95": [
+      0.094,
+      0.271
+     ],
+     "TP": 72,
+     "FP": 11,
+     "FN": 41
+    },
+    "undecided": 0,
+    "no_candidate": 0,
+    "wrong_sure": 2,
+    "wrong_card_approval": 2,
+    "idiom_missed": 41,
+    "coverage_candidate": 1.0,
+    "turkish_for_expr_decisions": {
+     "var": 79,
+     "taslak-yeterli-kaynak-yok": 4
+    }
+   },
+   "paired_vs_baseline": {
+    "old_wrong_new_ok": 58,
+    "old_ok_new_wrong": 43,
+    "both_ok": 70,
+    "both_wrong": 9,
+    "mcnemar_exact_p": 0.1633,
+    "acc_diff_CI95": [
+     -0.025,
+     0.192
+    ],
+    "correct_cards_blocked": 4
+   },
+   "slices": {
+    "length": {
+     "2": {
+      "n": 135,
+      "gold_expr": 86,
+      "P": 0.859,
+      "R": 0.779,
+      "F1": 0.817,
+      "FPR": 0.224,
+      "wrong_sure": 2,
+      "undecided": 0
+     },
+     "3": {
+      "n": 37,
+      "gold_expr": 20,
+      "P": 1.0,
+      "R": 0.25,
+      "F1": 0.4,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "4+": {
+      "n": 8,
+      "gold_expr": 7,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "category": {
+     "binomials": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.2,
+      "F1": 0.333,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "chunks": {
+      "n": 6,
+      "gold_expr": 5,
+      "P": 1.0,
+      "R": 0.6,
+      "F1": 0.75,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "collocations": {
+      "n": 12,
+      "gold_expr": 9,
+      "P": 1.0,
+      "R": 0.778,
+      "F1": 0.875,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "conjunctions": {
+      "n": 5,
+      "gold_expr": 3,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "dependent_prepositions": {
+      "n": 11,
+      "gold_expr": 5,
+      "P": 0.5,
+      "R": 0.2,
+      "F1": 0.286,
+      "FPR": 0.167,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "discourse_markers": {
+      "n": 3,
+      "gold_expr": 1,
+      "P": 1.0,
+      "R": 1.0,
+      "F1": 1.0,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "idioms": {
+      "n": 46,
+      "gold_expr": 22,
+      "P": 0.8,
+      "R": 0.545,
+      "F1": 0.649,
+      "FPR": 0.125,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "modal_verbs": {
+      "n": 11,
+      "gold_expr": 11,
+      "P": 1.0,
+      "R": 0.909,
+      "F1": 0.952,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "phrasal_verbs": {
+      "n": 48,
+      "gold_expr": 35,
+      "P": 0.812,
+      "R": 0.743,
+      "F1": 0.776,
+      "FPR": 0.462,
+      "wrong_sure": 2,
+      "undecided": 0
+     },
+     "polite_phrases": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": null,
+      "R": null,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "prepositional_phrases": {
+      "n": 30,
+      "gold_expr": 16,
+      "P": 0.917,
+      "R": 0.688,
+      "F1": 0.786,
+      "FPR": 0.071,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "proverbs": {
+      "n": 1,
+      "gold_expr": 1,
+      "P": null,
+      "R": 0.0,
+      "F1": null,
+      "FPR": null,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    },
+    "first_word": {
+     "be+": {
+      "n": 1,
+      "gold_expr": 0,
+      "P": null,
+      "R": null,
+      "F1": null,
+      "FPR": 0.0,
+      "wrong_sure": 0,
+      "undecided": 0
+     },
+     "other": {
+      "n": 145,
+      "gold_expr": 94,
+      "P": 0.857,
+      "R": 0.638,
+      "F1": 0.732,
+      "FPR": 0.196,
+      "wrong_sure": 2,
+      "undecided": 0
+     },
+     "prep-initial": {
+      "n": 34,
+      "gold_expr": 19,
+      "P": 0.923,
+      "R": 0.632,
+      "F1": 0.75,
+      "FPR": 0.067,
+      "wrong_sure": 0,
+      "undecided": 0
+     }
+    }
+   },
+   "items_covered": 180
+  }
+ },
+ "streusle_span_level": {
+  "baseline": {
+   "exact": {
+    "P": 0.583,
+    "R": 0.25,
+    "F1": 0.35
+   },
+   "partial_precision": 0.718,
+   "token_level": {
+    "P": 0.673,
+    "R": 0.286,
+    "F1": 0.401
+   },
+   "pred_units": 156,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.86
+  },
+  "rules_noparser": {
+   "exact": {
+    "P": 0.581,
+    "R": 0.247,
+    "F1": 0.347
+   },
+   "partial_precision": 0.716,
+   "token_level": {
+    "P": 0.671,
+    "R": 0.284,
+    "F1": 0.399
+   },
+   "pred_units": 155,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.849
+  },
+  "rules+spacy_sm": {
+   "exact": {
+    "P": 0.584,
+    "R": 0.247,
+    "F1": 0.347
+   },
+   "partial_precision": 0.714,
+   "token_level": {
+    "P": 0.673,
+    "R": 0.284,
+    "F1": 0.399
+   },
+   "pred_units": 154,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.849
+  },
+  "rules+spacy_md": {
+   "exact": {
+    "P": 0.584,
+    "R": 0.247,
+    "F1": 0.347
+   },
+   "partial_precision": 0.714,
+   "token_level": {
+    "P": 0.673,
+    "R": 0.284,
+    "F1": 0.399
+   },
+   "pred_units": 154,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.849
+  },
+  "rules+stanza": {
+   "exact": {
+    "P": 0.586,
+    "R": 0.245,
+    "F1": 0.345
+   },
+   "partial_precision": 0.717,
+   "token_level": {
+    "P": 0.675,
+    "R": 0.281,
+    "F1": 0.397
+   },
+   "pred_units": 152,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.839
+  },
+  "rules+udpipe_ewt25": {
+   "exact": {
+    "P": 0.588,
+    "R": 0.247,
+    "F1": 0.348
+   },
+   "partial_precision": 0.719,
+   "token_level": {
+    "P": 0.677,
+    "R": 0.284,
+    "F1": 0.4
+   },
+   "pred_units": 153,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.849
+  },
+  "rules+udpipe_bnosac21": {
+   "exact": {
+    "P": 0.586,
+    "R": 0.245,
+    "F1": 0.345
+   },
+   "partial_precision": 0.717,
+   "token_level": {
+    "P": 0.675,
+    "R": 0.281,
+    "F1": 0.397
+   },
+   "pred_units": 152,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.839
+  },
+  "rules+spacy_sm&udpipe_bnosac21": {
+   "exact": {
+    "P": 0.584,
+    "R": 0.247,
+    "F1": 0.347
+   },
+   "partial_precision": 0.714,
+   "token_level": {
+    "P": 0.673,
+    "R": 0.284,
+    "F1": 0.399
+   },
+   "pred_units": 154,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.849
+  },
+  "amalgram_retrained": {
+   "exact": {
+    "P": 0.797,
+    "R": 0.173,
+    "F1": 0.284
+   },
+   "partial_precision": 0.899,
+   "token_level": {
+    "P": 0.883,
+    "R": 0.171,
+    "F1": 0.286
+   },
+   "pred_units": 79,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.656
+  },
+  "amalgram_native": {
+   "exact": {
+    "P": 0.648,
+    "R": 0.475,
+    "F1": 0.548
+   },
+   "partial_precision": 0.798,
+   "token_level": {
+    "P": 0.776,
+    "R": 0.539,
+    "F1": 0.636
+   },
+   "pred_units": 267,
+   "gold_units": 364,
+   "in_lexicon_gold": 93,
+   "in_lexicon_exact_recall": 0.656
+  }
+ }
+}

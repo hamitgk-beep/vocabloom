@@ -1,0 +1,1 @@
+host: curl https://www.cs.cmu.edu/~ark/LexSem/ -> 000 (no connection); https://lindat.mff.cuni.cz/ -> 000; https://drive.google.com -> 000/403 (proxy policy)
