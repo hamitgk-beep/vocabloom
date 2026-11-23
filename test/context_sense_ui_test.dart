@@ -155,6 +155,28 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  // Task 5H (sentence written by Claude, an AI): the dictionary cannot tell
+  // the idiom from the words and has no Turkish for the word-by-word reading.
+  // The panel says the Turkish could not be checked; it shows no meaning, no
+  // "used word by word" claim and no English definition as a meaning.
+  testWidgets('cannot tell idiom from words: an honest note, nothing passed off as Turkish', (tester) async {
+    const s = 'The prisoner was on the run for three weeks.';
+    final e = app.dict.exprs.firstWhere((e) => e.phrase == 'on the run');
+    for (final panel in [
+      ExprPanel(app: app, expr: e, ctx: ctxFor(s, 'run'), words: const ['on', 'the', 'run']),
+      WordPanel(app: app, surface: 'run', ctx: ctxFor(s, 'run')),
+    ]) {
+      await pumpPanel(tester, panel, height: 3000);
+      expect(find.byKey(const ValueKey('ctx-sense-gap-idiomOrWords')), findsOneWidget);
+      expect(find.textContaining('Türkçe karşılık doğrulanamadı'), findsOneWidget);
+      expect(find.byKey(const ValueKey('ctx-sense-tr')), findsNothing);
+      expect(find.byKey(const ValueKey('ctx-sense-en-def')), findsNothing);
+      expect(find.textContaining('düz anlamıyla kullanılmış'), findsNothing);
+      expect(find.byKey(const ValueKey('ctx-sense-wrong')), findsNothing);
+      expect(tester.takeException(), isNull);
+    }
+  });
+
   testWidgets('opened from a list (no sentence): no card, panel as before', (tester) async {
     await pumpPanel(tester, WordPanel(app: app, surface: 'bank', lemma: 'bank'));
     expect(find.byKey(const ValueKey('ctx-sense-card')), findsNothing);
@@ -228,7 +250,12 @@ void main() {
     await shot(tester, 'tr_why_light', WordPanel(app: app, surface: 'Why', ctx: wctx), height: 1600);
     await shot(tester, 'tr_why_dark', WordPanel(app: app, surface: 'Why', ctx: wctx), b: Brightness.dark, height: 1600);
     await shot(tester, 'tr_why_list', WordPanel(app: app, surface: 'why', lemma: 'why'), height: 1300);
+    const run = 'The prisoner was on the run for three weeks.';
+    final onTheRun = app.dict.exprs.firstWhere((e) => e.phrase == 'on the run');
+    await shot(tester, 'tr_on_the_run_cannot_tell', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
+    await shot(tester, 'tr_hot_air_literal_guess', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')), b: Brightness.dark);
     uiEnglish = true;
+    await shot(tester, 'en_on_the_run_cannot_tell', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
     await shot(tester, 'en_looked_up_sky', expr('She looked up at the sky.', 'look up', const ['looked', 'up'], 'looked'));
     uiEnglish = false;
   });

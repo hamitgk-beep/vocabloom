@@ -17,6 +17,38 @@ import 'text.dart';
 
 enum SenseConfidence { sure, likely, none }
 
+/// Why a panel shows no meaning for the sentence ([ContextSense.gap]), so the
+/// panel can say so honestly and tests can check it (Task 5H).
+enum SenseGap {
+  /// The tapped word or expression is not in the sentence.
+  notInSentence,
+
+  /// A grammar word: the panel's own explanation covers it.
+  grammarWord,
+
+  /// The dictionary has no meaning for it at all.
+  noMeaning,
+
+  /// A meaning was chosen (often with an English definition), but the
+  /// dictionary has no checked Turkish for it. The English definition is not
+  /// a Turkish meaning and is never shown as one.
+  noTurkish,
+
+  /// A matched expression whose word-by-word reading has no Turkish, and the
+  /// sentence does not tell whether it is meant as the expression or word by
+  /// word: neither is claimed.
+  idiomOrWords,
+
+  /// The word is probably a name here.
+  name,
+
+  /// The sentence does not settle the meaning (too weak a fit).
+  undecided,
+
+  /// Something went wrong; the ordinary dictionary takes over.
+  error,
+}
+
 /// One meaning the dictionary has for the word or expression.
 class SenseCandidate {
   /// Stable id, kept in feedback records: "wn:85073" (WordNet synset),
@@ -147,6 +179,19 @@ class ContextSense {
   /// The Turkish meaning shown for the sentence, or null.
   String? get tr => shown ? best!.trShown : null;
 
+  /// Why no meaning is shown; null when one is.
+  SenseGap? get gap {
+    if (shown) return null;
+    if (reason.startsWith('error')) return SenseGap.error;
+    if (reason == 'word not in sentence') return SenseGap.notInSentence;
+    if (reason == 'grammar word') return SenseGap.grammarWord;
+    if (reason.startsWith('idiom or words')) return SenseGap.idiomOrWords;
+    if (best == null) return SenseGap.noMeaning;
+    if (best!.tr.isEmpty) return SenseGap.noTurkish;
+    if (reason.startsWith('a name')) return SenseGap.name;
+    return SenseGap.undecided;
+  }
+
   @override
   String toString() => '$headword ${confidence.name} ${best?.trShown} [$reason]';
 }
@@ -244,7 +289,7 @@ class SenseWeights {
 class SenseEngine {
   /// Bumped whenever the scoring changes, so cached and reported choices of an
   /// older engine are told apart.
-  static const version = '5';
+  static const version = '6';
 
   final DictDb dict;
   final SenseWeights w;
@@ -262,7 +307,24 @@ class SenseEngine {
   static const defaultLiteralCues = true;
   final bool literalCues;
 
-  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion, this.literalCues = defaultLiteralCues})
+  /// Task 5H: how a matched expression read word by word (not phrasal
+  /// verbs) is shown. The engine tells an idiom from a literal use poorly
+  /// (MAGPIE), so (1) that reading is never "sure", like the idiom itself
+  /// (5F); (2) when it has no Turkish and nothing in the sentence's form says
+  /// "literal" (the 5G cues), the panel no longer claims the words are meant
+  /// one by one: it says it cannot tell ([SenseGap.idiomOrWords]); (3) when a
+  /// form cue does say so, the head word's own meaning in the sentence is
+  /// used, from checked sources only (never an AI draft), as a guess. Nothing
+  /// is translated or derived from English. Off: the 5G engine
+  /// (docs/nlp_engine_research/EMPTY_MEANING_AND_VARIANTS_5H.md).
+  static const defaultLiteralGuard = true;
+  final bool literalGuard;
+
+  SenseEngine(this.dict,
+      {this.w = const SenseWeights(),
+      String? dictVersion,
+      this.literalCues = defaultLiteralCues,
+      this.literalGuard = defaultLiteralGuard})
       : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
@@ -283,6 +345,7 @@ class SenseEngine {
       DictDb.policyVersion,
       q.lang,
       if (literalCues) 'cues',
+      if (literalGuard) 'guard',
     ].join('|');
   }
 
@@ -309,17 +372,10 @@ class SenseEngine {
     ContextSense r;
     try {
       computed++;
-      r = q.expr != null ? _resolvePhrase(q) : _resolveWord(q);
-      // No Turkish for the meaning chosen here: choose again among the own
-      // dictionary's senses, which all have Turkish ("why" -> neden, niçin).
-      if (q.expr == null && !r.shown && r.reason != 'grammar word' && _hasOwnWord) {
-        _ownOnly = true;
-        try {
-          final o = _resolveWord(q);
-          if (o.shown) r = o;
-        } finally {
-          _ownOnly = false;
-        }
+      if (q.expr != null) {
+        r = _resolvePhrase(q);
+      } else {
+        r = _wordWithOwn(q);
       }
     } catch (e) {
       r = ContextSense(headword: q.index >= 0 && q.index < q.tokens.length ? q.tokens[q.index].lower : '', confidence: SenseConfidence.none, reason: 'error: $e');
@@ -327,6 +383,69 @@ class SenseEngine {
     _cache[key] = r;
     if (_cache.length > _cacheMax) _cache.remove(_cache.keys.first);
     return r;
+  }
+
+  /// The meaning for a single tapped word ([q] has no expression), with the
+  /// expressions [matches] found in its sentence (the word panel).
+  /// A match holding the word that is read word by word gives the answer
+  /// ("run" in "cracks run through the wall"). With [literalGuard], a match
+  /// holding the word that cannot be told apart ([SenseGap.idiomOrWords])
+  /// gives that "cannot tell" answer too: the word's own meaning would be a
+  /// guess about the word-by-word reading, which the engine just found no
+  /// checked Turkish for (measured: about half of those guesses were wrong).
+  /// Else the word alone.
+  ContextSense resolveTap(SenseQuery q, Iterable<Match> matches) {
+    ContextSense? undecided;
+    for (final m in matches) {
+      if (m.tokens.length < 2 || !m.tokens.contains(q.index)) continue;
+      final r = resolve(SenseQuery(
+          sentence: q.sentence, tokens: q.tokens, index: q.index, expr: m.expr, exprTokens: m.tokens,
+          prevSentence: q.prevSentence, nextSentence: q.nextSentence, contentId: q.contentId, lang: q.lang, lemma: q.lemma));
+      if (r.literalPhrase != null) return r;
+      if (literalGuard && r.gap == SenseGap.idiomOrWords) undecided ??= r;
+    }
+    return undecided ?? resolve(q);
+  }
+
+  ContextSense _wordWithOwn(SenseQuery q) {
+    var r = _resolveWord(q);
+    // No Turkish for the meaning chosen here: choose again among the own
+    // dictionary's senses, which all have Turkish ("why" -> neden, niçin).
+    if (!r.shown && r.reason != 'grammar word' && _hasOwnWord) {
+      _ownOnly = true;
+      try {
+        final o = _resolveWord(q);
+        if (o.shown) r = o;
+      } finally {
+        _ownOnly = false;
+      }
+    }
+    return r;
+  }
+
+  /// [literalGuard]: the phrase [lit] is read word by word, a form cue says
+  /// so, but that reading has no Turkish. The head word (the one [_resolvePhrase] reads)
+  /// is judged as if tapped alone in the sentence. Its meaning is used only
+  /// when it is shown there, rests on no AI draft, is the word itself (not a
+  /// phrasal verb it starts) and is of the same base form; it is always a
+  /// guess. Otherwise null: the panel says the Turkish could not be checked.
+  ContextSense? _literalWord(SenseQuery q, ContextSense lit) {
+    final idx = q.exprTokens.isEmpty ? [q.index] : q.exprTokens;
+    final headI = idx.firstWhere((i) => !stopWords.contains(q.tokens[i].lower), orElse: () => idx.first);
+    final w = _wordWithOwn(SenseQuery(
+        sentence: q.sentence, tokens: q.tokens, index: headI, prevSentence: q.prevSentence, nextSentence: q.nextSentence,
+        contentId: q.contentId, lang: q.lang));
+    final b = w.best;
+    if (!w.shown || b == null || w.cat != null || w.literalPhrase != null || b.unverified) return null;
+    if (lit.best != null && lit.best!.lemma != b.lemma) return null;
+    return ContextSense(
+        headword: w.headword,
+        literalPhrase: lit.literalPhrase,
+        confidence: SenseConfidence.likely,
+        best: b,
+        others: w.others,
+        reason: 'literal, word alone: ${w.reason}',
+        ranked: w.ranked);
   }
 
   /// The one confidence rule for a Turkish [answer] of [headword] (a word's
@@ -814,6 +933,31 @@ class SenseEngine {
     // reading (Task 5F). Only an expression with a word that has no meaning of
     // its own cannot be literal.
     final canBeLiteral = e.cat != 'phrasal_verbs' && (cands.any((c) => c.literal) || _ordinaryWords(q.tokens, idx));
+    // Task 5H ([literalGuard]): a word-by-word reading is a guess; with no
+    // Turkish and no form cue the panel claims neither reading.
+    if (literalGuard && r.literalPhrase != null && e.cat != 'phrasal_verbs') {
+      final cued = formChanged || continues || cues.literalWord;
+      if (!r.shown) {
+        if (cued) return _literalWord(q, r) ?? r;
+        return ContextSense(
+            headword: e.phrase,
+            cat: e.cat,
+            confidence: SenseConfidence.none,
+            others: r.others,
+            reason: 'idiom or words, no Turkish: ${r.reason}',
+            ranked: r.ranked);
+      }
+      if (r.confidence == SenseConfidence.sure) {
+        return ContextSense(
+            headword: r.headword,
+            literalPhrase: r.literalPhrase,
+            confidence: SenseConfidence.likely,
+            best: r.best,
+            others: r.others,
+            reason: 'words, not sure: ${r.reason}',
+            ranked: r.ranked);
+      }
+    }
     // Talked about as words ("the idiom …", in quotes): not meant either way.
     if ((continues || canBeLiteral || cues.mention) && r.confidence == SenseConfidence.sure && r.cat != null) {
       return ContextSense(
