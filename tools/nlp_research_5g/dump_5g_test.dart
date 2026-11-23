@@ -4,7 +4,7 @@
 //   NLP_5G_SETS=dev=/path/dev5g_magpie.tsv,claude=test/data/idiom_5f_claude.tsv NLP_5G_OUT=/path/out \
 //   [NLP_5G_MODE=baseline|cues] [NLP_5G_MATCH=1] flutter test tools/nlp_research_5g/dump_5g_test.dart
 //
-// NLP_5G_MODE=cues turns on SenseEngine.literalCues (off in the app unless decided otherwise);
+// NLP_5G_MODE=cues turns SenseEngine.literalCues on, baseline (default) off (= the 5F engine);
 // NLP_5G_MATCH=1 uses the experimental wider matcher (PhraseMatcher.variants), measured apart.
 // Set formats: MAGPIE (idiom, label, cat, id, sentence, variant, confidence) or the Claude set
 // (part, phrase, expected, case, sentence), told apart by the first column.

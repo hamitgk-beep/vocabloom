@@ -244,7 +244,7 @@ class SenseWeights {
 class SenseEngine {
   /// Bumped whenever the scoring changes, so cached and reported choices of an
   /// older engine are told apart.
-  static const version = '4';
+  static const version = '5';
 
   final DictDb dict;
   final SenseWeights w;
@@ -253,11 +253,16 @@ class SenseEngine {
   /// reuses an old choice.
   final String dictVersion;
 
-  /// Task 5G, off by default: word-by-word cues in the sentence (see
-  /// [_literalCue]) can make an idiom's word-by-word reading win.
+  /// Task 5G: a prepositional idiom whose determiner or number changed in the
+  /// sentence ("on the roll" for "on a roll") is read word by word, and an
+  /// expression talked about as words ("the idiom …", in quotes) is never
+  /// sure ([literalCuesOf]). Measured on a locked MAGPIE set
+  /// (docs/nlp_engine_research/IDIOM_LITERAL_DISAMBIGUATION_5G.md). Switch it
+  /// off here to get the 5F engine back.
+  static const defaultLiteralCues = true;
   final bool literalCues;
 
-  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion, this.literalCues = false})
+  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion, this.literalCues = defaultLiteralCues})
       : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
