@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import '../data/dict_db.dart';
+import 'literal_cues.dart';
 import 'text.dart';
 
 enum SenseConfidence { sure, likely, none }
@@ -252,7 +253,12 @@ class SenseEngine {
   /// reuses an old choice.
   final String dictVersion;
 
-  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion}) : dictVersion = dictVersion ?? DictDb.version;
+  /// Task 5G, off by default: word-by-word cues in the sentence (see
+  /// [_literalCue]) can make an idiom's word-by-word reading win.
+  final bool literalCues;
+
+  SenseEngine(this.dict, {this.w = const SenseWeights(), String? dictVersion, this.literalCues = false})
+      : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
   final _cache = <String, ContextSense>{};
@@ -271,6 +277,7 @@ class SenseEngine {
       version,
       DictDb.policyVersion,
       q.lang,
+      if (literalCues) 'cues',
     ].join('|');
   }
 
@@ -756,12 +763,23 @@ class SenseEngine {
         if (!c.literal) c.score -= 0.25;
       }
     }
+    // Task 5G (behind [literalCues]): a prepositional idiom does not change
+    // its form, a phrase meant word by word does ("on the roll" for "on a
+    // roll", "to our turn", "for the songs", "in the docks"). Then the
+    // word-by-word reading is shown; the idiom stays among the other meanings.
+    final cues = literalCues && multi ? literalCuesOf(dict, e, q.tokens, idx, q.sentence) : LiteralCues.none;
+    final formChanged = prepPhrase && (cues.determiner || cues.number) && cands.any((c) => c.literal);
+    if (formChanged) {
+      for (final c in cands) {
+        if (!c.literal) c.score -= 1.0;
+      }
+    }
     var r = _decide(e.phrase, e.cat, headLemmas.firstOrNull, cands, ctx, shape, pos);
     // Idiom or words, and the sentence cannot tell which ("tough as old
     // boots", "go with the flow"): an idiom meaning about as close as the
     // word-by-word one is shown, as a guess, rather than hidden. A guess
     // never grades a card ([fit] wants "sure" for an expression).
-    if (r.literalPhrase != null && r.best != null && r.confidence != SenseConfidence.none && e.cat != 'phrasal_verbs') {
+    if (!formChanged && r.literalPhrase != null && r.best != null && r.confidence != SenseConfidence.none && e.cat != 'phrasal_verbs') {
       final lead = r.best!.score;
       final near = r.ranked.where((c) => !c.literal && c.tr.isNotEmpty && lead - c.score <= _idiomOrWords).toList();
       if (near.isNotEmpty) {
@@ -791,14 +809,15 @@ class SenseEngine {
     // reading (Task 5F). Only an expression with a word that has no meaning of
     // its own cannot be literal.
     final canBeLiteral = e.cat != 'phrasal_verbs' && (cands.any((c) => c.literal) || _ordinaryWords(q.tokens, idx));
-    if ((continues || canBeLiteral) && r.confidence == SenseConfidence.sure && r.cat != null) {
+    // Talked about as words ("the idiom …", in quotes): not meant either way.
+    if ((continues || canBeLiteral || cues.mention) && r.confidence == SenseConfidence.sure && r.cat != null) {
       return ContextSense(
           headword: r.headword,
           cat: r.cat,
           confidence: SenseConfidence.likely,
           best: r.best,
           others: r.others,
-          reason: '${continues ? 'goes on' : 'can be literal'}: ${r.reason}',
+          reason: '${continues ? 'goes on' : canBeLiteral ? 'can be literal' : 'mentioned'}: ${r.reason}',
           ranked: r.ranked);
     }
     return r;

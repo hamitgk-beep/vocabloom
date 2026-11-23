@@ -271,7 +271,11 @@ class Expr {
 class Match {
   final Expr expr;
   final List<int> tokens; // token indexes that belong to the expression
-  Match(this.expr, this.tokens);
+
+  /// How a match found only by [PhraseMatcher.match]'s `variants` differs from
+  /// the dictionary form ('insertion', 'possessive'); null for an ordinary match.
+  final String? variant;
+  Match(this.expr, this.tokens, {this.variant});
 }
 
 /// Matches multi-word expressions (and single-word category members) in a
@@ -295,19 +299,42 @@ class PhraseMatcher {
     }
   }
 
-  bool _tokMatches(String p, Token t) {
+  /// Parts of speech of a word ('n', 'v', 'a', 'r'), for the experimental
+  /// matching of [match]'s `variants`; set by the dictionary.
+  Set<String> Function(String)? posOf;
+
+  bool _tokMatches(String p, Token t, {bool variants = false}) {
     if (p == t.lower) return true;
-    if (p == "one's") return _poss.contains(t.lower);
+    if (p == "one's") return _poss.contains(t.lower) || (variants && _ownerS(t.lower));
+    // Task 5G, experimental: the dictionary writes "someone's" in 218
+    // expressions ("burst someone's bubble"); a text has "his", "Oliver's".
+    if (variants && p == "someone's") return _poss.contains(t.lower) || _ownerS(t.lower);
     if (p == 'oneself') return _reflexive.contains(t.lower);
     if (p == 'a' || p == 'an' || p == 'the') return _det.contains(t.lower);
     return lem.lemmas(t.lower).contains(p);
   }
 
-  /// Returns the token indexes matched, or null.
-  List<int>? _matchAt(Expr e, List<Token> toks, int i) {
+  /// A noun or name with a possessive "'s" ("Oliver's", "people's").
+  static bool _ownerS(String w) => (w.endsWith("'s") || w.endsWith('’s')) && w.length > 3;
+
+  /// Words that may stand inside an expression in the experimental matching
+  /// ("run the whole gamut", "cut a greater dash"): an adjective, an adverb
+  /// or a participle before a word of the expression that is not a grammar word.
+  bool _insertable(String w) {
+    if (stopWords.contains(w) || _det.contains(w) || w.contains("'") || w.contains('’')) return false;
+    if (w.endsWith('ing') || w.endsWith('ed')) return true;
+    final pos = posOf?.call(w) ?? const <String>{};
+    return pos.contains('a') || pos.contains('r');
+  }
+
+  /// Returns the token indexes matched, or null. With [variants] (Task 5G,
+  /// experimental) one modifier may stand between two words of an expression
+  /// of three or more words, and "someone's" / "one's" take any possessive.
+  List<int>? _matchAt(Expr e, List<Token> toks, int i, {bool variants = false, List<String>? kind}) {
     final pat = e.pattern;
     final idx = <int>[];
     var j = i;
+    var inserted = false;
     for (var k = 0; k < pat.length; k++) {
       final p = pat[k];
       if (p == 'sb' || p == 'sth' || p == 'someone' || p == 'something') {
@@ -329,9 +356,26 @@ class PhraseMatcher {
         continue;
       }
       if (j >= toks.length) return null;
-      if (_tokMatches(p, toks[j])) {
+      if (_tokMatches(p, toks[j], variants: variants)) {
+        if (variants && (p == "someone's" || p == "one's") && !_poss.contains(toks[j].lower) && p != toks[j].lower) kind?.add('possessive');
+        if (variants && p == "someone's" && _poss.contains(toks[j].lower)) kind?.add('possessive');
         idx.add(j);
         j++;
+        continue;
+      }
+      if (variants &&
+          !inserted &&
+          k > 0 &&
+          pat.length >= 3 &&
+          e.cat != 'phrasal_verbs' &&
+          !stopWords.contains(p) &&
+          j + 1 < toks.length &&
+          _insertable(toks[j].lower) &&
+          _tokMatches(p, toks[j + 1], variants: variants)) {
+        inserted = true;
+        kind?.add('insertion');
+        idx.add(j + 1);
+        j += 2;
         continue;
       }
       // separable phrasal verbs: "give it up"
@@ -395,7 +439,7 @@ class PhraseMatcher {
 
   /// All expressions in a tokenized paragraph. With [text] (the paragraph the
   /// tokens come from) phrasal verbs split by a noun object are found too.
-  List<Match> match(List<Token> toks, {String? text}) {
+  List<Match> match(List<Token> toks, {String? text, bool variants = false}) {
     final out = <Match>[];
     // The sentence each token is in: an expression is inside one sentence
     // ("Take care. For now …" is not "care for").
@@ -424,7 +468,13 @@ class PhraseMatcher {
           // not the verb of a phrasal verb.
           if (e.cat == 'phrasal_verbs' && i > 0 && _det.contains(toks[i - 1].lower)) continue;
           final m = _matchAt(e, toks, i);
-          if (m != null && oneSentence(m)) out.add(Match(e, m));
+          if (m != null && oneSentence(m)) {
+            out.add(Match(e, m));
+          } else if (variants) {
+            final kind = <String>[];
+            final v = _matchAt(e, toks, i, variants: true, kind: kind);
+            if (v != null && oneSentence(v)) out.add(Match(e, v, variant: kind.isEmpty ? 'other' : kind.join('+')));
+          }
         }
       }
       for (final e in _byForm[t.lower] ?? const <Expr>[]) {
