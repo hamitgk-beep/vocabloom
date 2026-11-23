@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../l10n.dart';
@@ -65,11 +67,18 @@ class PanelHeading extends StatelessWidget {
     final t = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(top: 20, bottom: 9),
-      child: Row(children: [
-        Text(text, style: t.textTheme.labelMedium?.copyWith(letterSpacing: 1.0, fontWeight: FontWeight.w700, color: t.colorScheme.onSurfaceVariant)),
-        const SizedBox(width: 8),
-        Expanded(child: Divider(height: 1, color: t.colorScheme.outlineVariant)),
-      ]),
+      // A long heading ("EXPRESSIONS IN THIS SENTENCE") wraps on a narrow
+      // phone instead of overflowing; the line keeps at least 24 px (5I check).
+      child: LayoutBuilder(
+        builder: (context, box) => Row(children: [
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: box.maxWidth.isFinite ? max(0, box.maxWidth - 32) : double.infinity),
+            child: Text(text, style: t.textTheme.labelMedium?.copyWith(letterSpacing: 1.0, fontWeight: FontWeight.w700, color: t.colorScheme.onSurfaceVariant)),
+          ),
+          const SizedBox(width: 8),
+          Expanded(child: Divider(height: 1, color: t.colorScheme.outlineVariant)),
+        ]),
+      ),
     );
   }
 }

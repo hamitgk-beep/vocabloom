@@ -320,11 +320,31 @@ class SenseEngine {
   static const defaultLiteralGuard = true;
   final bool literalGuard;
 
+  /// Task 5I: when the word-by-word reading leads by a hair but has no
+  /// Turkish ("on the run" read as "run" = a machine's working time), a
+  /// checked idiom meaning that close is shown as a guess instead of "cannot
+  /// tell" — the rule 5G already applies when the leader has Turkish. AI
+  /// drafts are left out; never sure; cards are not graded
+  /// OFF: on the 5H dev/tune sets (mostly idiomatic sentences) it fixed 22
+  /// panels and broke 1, but on the locked 5I final (mostly literal) it fixed
+  /// 1 and put an idiom meaning on 5 literal sentences
+  /// (docs/nlp_engine_research/CONTEXT_SENSE_RECOVERY_5I.md).
+  static const defaultIdiomRecovery = false;
+  final bool idiomRecovery;
+
+  /// Task 5I (research): the head word of a word-by-word reading takes its
+  /// base form from its own word of the expression ("hole" in "in the
+  /// hole"), not the expression's first word ("in": inch, indium).
+  static const defaultHeadFromPattern = false;
+  final bool headFromPattern;
+
   SenseEngine(this.dict,
       {this.w = const SenseWeights(),
       String? dictVersion,
       this.literalCues = defaultLiteralCues,
-      this.literalGuard = defaultLiteralGuard})
+      this.literalGuard = defaultLiteralGuard,
+      this.idiomRecovery = defaultIdiomRecovery,
+      this.headFromPattern = defaultHeadFromPattern})
       : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
@@ -346,6 +366,8 @@ class SenseEngine {
       q.lang,
       if (literalCues) 'cues',
       if (literalGuard) 'guard',
+      if (idiomRecovery) 'recover',
+      if (headFromPattern) 'head',
     ].join('|');
   }
 
@@ -393,7 +415,8 @@ class SenseEngine {
   /// gives that "cannot tell" answer too: the word's own meaning would be a
   /// guess about the word-by-word reading, which the engine just found no
   /// checked Turkish for (measured: about half of those guesses were wrong).
-  /// Else the word alone.
+  /// With [idiomRecovery], an expression meaning recovered that way is the
+  /// answer for the same reason. Else the word alone.
   ContextSense resolveTap(SenseQuery q, Iterable<Match> matches) {
     ContextSense? undecided;
     for (final m in matches) {
@@ -403,6 +426,10 @@ class SenseEngine {
           prevSentence: q.prevSentence, nextSentence: q.nextSentence, contentId: q.contentId, lang: q.lang, lemma: q.lemma));
       if (r.literalPhrase != null) return r;
       if (literalGuard && r.gap == SenseGap.idiomOrWords) undecided ??= r;
+      // 5I: the expression's meaning was recovered over a word-by-word
+      // reading with no Turkish: the word's own meaning would be a guess
+      // about that reading, so the word panel shows the expression's guess.
+      if (idiomRecovery && r.reason.startsWith('idiom recovered')) undecided ??= r;
     }
     return undecided ?? resolve(q);
   }
@@ -848,7 +875,17 @@ class SenseEngine {
     // The literal reading competes with the expression: the meaning of the
     // first content word, with the other words in their plain sense.
     final headI = idx.firstWhere((i) => !stopWords.contains(q.tokens[i].lower), orElse: () => idx.first);
-    final headLemmas = _lemmaCandidates(q.tokens[headI].lower, e.pattern.isNotEmpty && e.pattern.first == q.tokens[headI].lower ? null : (e.pattern.firstOrNull));
+    // The base form the expression gives the head word: its own word in the
+    // pattern ("hole" in "in the hole"), with [headFromPattern]; else (5H and
+    // before) the pattern's first word.
+    final String? patWord;
+    if (headFromPattern) {
+      final k = idx.indexOf(headI);
+      patWord = k >= 0 && k < e.pattern.length ? e.pattern[k] : null;
+    } else {
+      patWord = e.pattern.firstOrNull;
+    }
+    final headLemmas = _lemmaCandidates(q.tokens[headI].lower, patWord == q.tokens[headI].lower ? null : patWord);
     final multi = idx.length > 1;
     if (multi) {
       for (var li = 0; li < headLemmas.length && li < 2; li++) {
@@ -903,9 +940,18 @@ class SenseEngine {
     // boots", "go with the flow"): an idiom meaning about as close as the
     // word-by-word one is shown, as a guess, rather than hidden. A guess
     // never grades a card ([fit] wants "sure" for an expression).
-    if (!formChanged && r.literalPhrase != null && r.best != null && r.confidence != SenseConfidence.none && e.cat != 'phrasal_verbs') {
+    // Task 5I ([idiomRecovery]): the same when the word-by-word leader has
+    // no Turkish at all ("on the run": the leader is "run" = a machine's
+    // working time, with no Turkish), so far "cannot tell". Only a checked
+    // idiom meaning (no AI draft) and only with no form cue for "literal";
+    // still a guess, never sure, never grading a card.
+    final noTrLead = idiomRecovery && r.literalPhrase != null && r.best != null && r.best!.tr.isEmpty &&
+        !continues && !cues.literalWord && !cues.mention;
+    if (!formChanged && r.literalPhrase != null && r.best != null && (r.confidence != SenseConfidence.none || noTrLead) && e.cat != 'phrasal_verbs') {
       final lead = r.best!.score;
-      final near = r.ranked.where((c) => !c.literal && c.tr.isNotEmpty && lead - c.score <= _idiomOrWords).toList();
+      final near = r.ranked
+          .where((c) => !c.literal && c.tr.isNotEmpty && lead - c.score <= _idiomOrWords && (r.best!.tr.isNotEmpty || !c.unverified))
+          .toList();
       if (near.isNotEmpty) {
         final idiom = near.first;
         return ContextSense(
@@ -914,7 +960,7 @@ class SenseEngine {
             confidence: SenseConfidence.likely,
             best: idiom,
             others: _others([for (final c in r.ranked) if (!identical(c, idiom)) c], idiom),
-            reason: 'idiom or words: ${r.best!.id} ${lead.toStringAsFixed(3)}; ${idiom.id} ${idiom.score.toStringAsFixed(3)}',
+            reason: '${r.best!.tr.isEmpty ? 'idiom recovered' : 'idiom or words'}: ${r.best!.id} ${lead.toStringAsFixed(3)}; ${idiom.id} ${idiom.score.toStringAsFixed(3)}',
             ranked: r.ranked);
       }
     }

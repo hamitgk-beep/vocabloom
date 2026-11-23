@@ -56,8 +56,10 @@ void main() {
     return c.ranked.firstWhere((x) => !x.literal && x.tr.isNotEmpty).tr.first;
   }
 
-  SenseEngine on() => SenseEngine(d, literalGuard: true);
-  SenseEngine off() => SenseEngine(d, literalGuard: false);
+  // The 5H rules alone: Task 5I's idiom recovery (on by default since 5I,
+  // test/context_recovery_5i_test.dart) is left out here.
+  SenseEngine on() => SenseEngine(d, literalGuard: true, idiomRecovery: false);
+  SenseEngine off() => SenseEngine(d, literalGuard: false, idiomRecovery: false);
 
   test('the guard is on by default (switch: SenseEngine.defaultLiteralGuard)', () {
     expect(SenseEngine(d).literalGuard, isTrue);
