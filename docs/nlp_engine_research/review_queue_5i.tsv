@@ -1,0 +1,102 @@
+# Task 5I review queue (read-only analysis; nothing approved or written to any DB). reason: ranking = checked Turkish exists but a word-by-word reading led; draft_only = only an unreviewed AI draft; no_tr = no Turkish. source = provenance of the expression's checked Turkish (unknown = not traceable without the raw build inputs).
+phrase	category	empty_panels	ranking	draft_only	no_tr	gold_idiom	gold_literal	cannot_tell	source	leading_word_lemma
+for crying out loud	idioms	5	0	0	5	5	0	0	no_expr_tr	cry
+over the hill	prepositional_phrases	5	0	5	0	1	4	1	no_expr_tr	over
+in the hole	prepositional_phrases	4	0	4	0	1	3	3	no_expr_tr	in
+lead someone up the garden path	idioms	4	0	4	0	4	0	4	no_expr_tr	lead
+on the run	prepositional_phrases	4	4	0	0	4	0	4	unknown	run
+have a ball	idioms	3	0	3	0	2	1	3	no_expr_tr	ball
+in broad daylight	prepositional_phrases	3	0	3	0	3	0	3	no_expr_tr	broad
+in the offing	prepositional_phrases	3	0	3	0	3	0	3	no_expr_tr	in
+in the running	prepositional_phrases	3	0	3	0	0	3	0	no_expr_tr	in
+in your face	idioms	3	3	0	0	2	1	3	unknown	face
+as a rule	idioms	2	0	2	0	2	0	1	no_expr_tr	as,rule
+crash and burn	binomials	2	2	0	0	2	0	2	unknown	crash
+cut a rug	idioms	2	0	2	0	2	0	2	no_expr_tr	cut
+down the road	prepositional_phrases	2	0	2	0	1	1	1	no_expr_tr	down
+early bird	idioms	2	2	0	0	2	0	2	unknown	early
+fill the bill	idioms	2	0	2	0	2	0	2	no_expr_tr	fill
+get stuck in	idioms	2	0	2	0	1	1	2	no_expr_tr	get
+give someone enough rope	idioms	2	0	2	0	2	0	2	no_expr_tr	give
+go to town	idioms	2	2	0	0	0	2	2	unknown	go
+in the buff	prepositional_phrases	2	2	0	0	1	1	1	unknown	buff,in
+in the clear	prepositional_phrases	2	2	0	0	0	2	1	unknown	clear,in
+in the pipeline	prepositional_phrases	2	0	2	0	1	1	1	no_expr_tr	in
+leave no stone unturned	idioms	2	2	0	0	2	0	2	unknown	leave
+on the house	prepositional_phrases	2	2	0	0	1	1	1	unknown	house
+on the trot	prepositional_phrases	2	2	0	0	2	0	2	unknown	trot
+out of pocket	idioms	2	0	2	0	2	0	2	no_expr_tr	pocket,out
+out on a limb	idioms	2	0	2	0	2	0	2	no_expr_tr	limb,out
+over the top	idioms	2	0	2	0	0	2	1	no_expr_tr	over
+pull a fast one	idioms	2	2	0	0	2	0	2	unknown	pull
+push the boat out	idioms	2	0	2	0	1	1	2	no_expr_tr	push
+run the gamut	idioms	2	0	2	0	2	0	2	no_expr_tr	run
+turn the corner	idioms	2	0	2	0	0	2	2	no_expr_tr	turn
+against the grain	prepositional_phrases	1	0	1	0	0	1	0	no_expr_tr	against
+at a loose end	prepositional_phrases	1	0	1	0	1	0	1	no_expr_tr	loose
+at death's door	prepositional_phrases	1	1	0	0	1	0	1	unknown	death
+bear in mind	collocations	1	1	0	0	1	0	1	storilex_categories	bear
+beard the lion in his den	idioms	1	0	1	0	1	0	1	no_expr_tr	beard
+behind bars	prepositional_phrases	1	1	0	0	1	0	1	unknown	behind
+blow hot and cold	idioms	1	0	1	0	1	0	1	no_expr_tr	blow
+brass monkey	idioms	1	0	1	0	1	0	1	no_expr_tr	brass
+bring home the bacon	idioms	1	1	0	0	1	0	1	unknown	bring
+bring up the rear	idioms	1	0	1	0	1	0	1	no_expr_tr	bring
+by no stretch of the imagination	prepositional_phrases	1	0	1	0	1	0	1	no_expr_tr	no
+call the tune	idioms	1	0	1	0	1	0	1	no_expr_tr	call
+carry the can	idioms	1	0	1	0	0	1	1	no_expr_tr	carry
+cast the first stone	idioms	1	0	1	0	1	0	1	no_expr_tr	cast
+cut a dash	idioms	1	1	0	0	1	0	1	unknown	cut
+cut both ways	idioms	1	0	1	0	1	0	1	no_expr_tr	cut
+do the right thing	idioms	1	0	1	0	0	1	1	no_expr_tr	right
+do the trick	idioms	1	0	1	0	1	0	1	no_expr_tr	trick
+down at heel	idioms	1	1	0	0	1	0	0	unknown	down
+draw a bead on	idioms	1	1	0	0	1	0	1	unknown	draw
+dressed to kill	idioms	1	0	1	0	1	0	1	no_expr_tr	dress
+fall into place	idioms	1	1	0	0	1	0	1	unknown	fall
+fly the flag	idioms	1	1	0	0	1	0	1	unknown	fly
+free and easy	binomials	1	1	0	0	1	0	1	unknown	free
+full speed ahead	idioms	1	1	0	0	1	0	1	unknown	full
+full tilt	idioms	1	1	0	0	1	0	1	unknown	full
+go overboard	idioms	1	1	0	0	0	1	1	unknown	go
+have been around	idioms	1	0	1	0	1	0	1	no_expr_tr	have
+heavy hitter	idioms	1	0	1	0	1	0	1	no_expr_tr	heavy
+hit the sack	idioms	1	1	0	0	1	0	1	storilex_categories	hit
+in a fog	prepositional_phrases	1	1	0	0	0	1	0	unknown	in
+in business	idioms	1	1	0	0	0	1	0	unknown	in
+in the blink of an eye	prepositional_phrases	1	1	0	0	1	0	1	unknown	blink
+in the family way	prepositional_phrases	1	0	1	0	1	0	1	no_expr_tr	in
+in the final analysis	prepositional_phrases	1	0	1	0	1	0	1	no_expr_tr	in
+in the long term	prepositional_phrases	1	0	1	0	1	0	0	no_expr_tr	in
+in the raw	prepositional_phrases	1	1	0	0	1	0	1	unknown	in
+in the red	prepositional_phrases	1	0	1	0	0	1	1	no_expr_tr	in
+in the works	prepositional_phrases	1	0	1	0	1	0	1	no_expr_tr	work
+jump through hoops	idioms	1	0	1	0	1	0	1	no_expr_tr	jump
+kick the habit	idioms	1	1	0	0	1	0	1	unknown	kick
+lay a finger on	idioms	1	1	0	0	0	1	1	unknown	lay
+make short work of	idioms	1	0	1	0	1	0	1	no_expr_tr	make
+many moons ago	idioms	1	0	1	0	1	0	1	no_expr_tr	many
+no two ways about it	idioms	1	0	1	0	1	0	1	no_expr_tr	no
+on and off	prepositional_phrases	1	1	0	0	0	1	1	storilex_categories	on
+on ice	prepositional_phrases	1	1	0	0	0	1	1	unknown	on
+on the ball	idioms	1	1	0	0	0	1	1	storilex_categories	ball
+on the bounce	prepositional_phrases	1	0	1	0	1	0	0	no_expr_tr	on
+on the double	prepositional_phrases	1	0	1	0	0	1	0	no_expr_tr	on
+on the rocks	prepositional_phrases	1	0	1	0	0	1	0	no_expr_tr	rock
+out of sight	prepositional_phrases	1	1	0	0	1	0	1	storilex_categories	sight
+out of sorts	idioms	1	0	1	0	1	0	1	no_expr_tr	sort
+play hard to get	idioms	1	0	1	0	1	0	1	no_expr_tr	play
+play to the gallery	idioms	1	0	1	0	1	0	1	no_expr_tr	play
+poor as a church mouse	idioms	1	0	1	0	1	0	1	no_expr_tr	poor
+reinvent the wheel	idioms	1	0	1	0	1	0	1	no_expr_tr	reinvent
+ride high	idioms	1	1	0	0	1	0	1	unknown	ride
+round the bend	prepositional_phrases	1	0	1	0	0	1	0	no_expr_tr	round
+see eye to eye	idioms	1	1	0	0	1	0	1	storilex_contrib	see
+see the light	idioms	1	1	0	0	0	1	1	storilex_categories	see
+sick as a parrot	idioms	1	0	1	0	1	0	1	no_expr_tr	sick
+stand the test of time	idioms	1	1	0	0	1	0	1	no_expr_tr	stand
+take a shine to	idioms	1	0	1	0	1	0	1	no_expr_tr	take
+take something as read	idioms	1	0	1	0	1	0	1	no_expr_tr	take
+take to the hills	idioms	1	1	0	0	1	0	1	unknown	take
+throw caution to the wind	idioms	1	1	0	0	1	0	1	no_expr_tr	throw
+to a turn	prepositional_phrases	1	0	1	0	0	1	0	no_expr_tr	turn

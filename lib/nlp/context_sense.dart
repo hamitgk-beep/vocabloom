@@ -325,8 +325,11 @@ class SenseEngine {
   /// checked idiom meaning that close is shown as a guess instead of "cannot
   /// tell" — the rule 5G already applies when the leader has Turkish. AI
   /// drafts are left out; never sure; cards are not graded
+  /// OFF: on the 5H dev/tune sets (mostly idiomatic sentences) it fixed 22
+  /// panels and broke 1, but on the locked 5I final (mostly literal) it fixed
+  /// 1 and put an idiom meaning on 5 literal sentences
   /// (docs/nlp_engine_research/CONTEXT_SENSE_RECOVERY_5I.md).
-  static const defaultIdiomRecovery = true;
+  static const defaultIdiomRecovery = false;
   final bool idiomRecovery;
 
   /// Task 5I (research): the head word of a word-by-word reading takes its

@@ -36,9 +36,13 @@ void main() {
   SenseEngine on() => SenseEngine(d, idiomRecovery: true);
   SenseEngine off() => SenseEngine(d, idiomRecovery: false);
 
-  test('defaults: recovery on, 5H guard and 5G cues still on, head-word research switch off', () {
+  test('defaults: recovery OFF (the locked 5I final did not support it), 5H guard and 5G cues on, head-word switch off', () {
     final e = SenseEngine(d);
-    expect(e.idiomRecovery, isTrue);
+    expect(e.idiomRecovery, isFalse);
+    // Off means the 5H engine, answer for answer.
+    const s = 'The prisoner was on the run for three weeks.';
+    expect(e.resolve(q(s, 'on the run')).toString(), off().resolve(q(s, 'on the run')).toString());
+    expect(e.resolve(q(s, 'on the run')).gap, SenseGap.idiomOrWords);
     expect(e.literalGuard, isTrue);
     expect(e.literalCues, isTrue);
     expect(e.headFromPattern, isFalse);

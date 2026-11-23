@@ -159,9 +159,9 @@ void main() {
   // the idiom from the words and has no Turkish for the word-by-word reading.
   // The panel says the Turkish could not be checked; it shows no meaning, no
   // "used word by word" claim and no English definition as a meaning.
-  // (Task 5I: "on the run" in "The prisoner was on the run …" now gets the
-  // idiom's checked meaning as a guess; a sentence whose idiom has only an AI
-  // draft still cannot be told apart.)
+  // (Task 5I: a second case; with SenseEngine.idiomRecovery, off by
+  // default, "on the run" would get its checked meaning as a guess, but an
+  // idiom with only an AI draft, like this one, never does.)
   testWidgets('cannot tell idiom from words: an honest note, nothing passed off as Turkish', (tester) async {
     const s = 'Pour the water back in the hole and press the soil down.';
     final e = app.dict.exprs.firstWhere((e) => e.phrase == 'in the hole');
@@ -178,21 +178,6 @@ void main() {
       expect(find.byKey(const ValueKey('ctx-sense-wrong')), findsNothing);
       expect(tester.takeException(), isNull);
     }
-  });
-
-  // Task 5I (sentences written by Claude, an AI). The idiom's checked
-  // meaning, close behind a word-by-word reading with no Turkish, is shown as
-  // a possible meaning instead of "cannot tell".
-  testWidgets('5I: on the run gets its checked meaning as a guess, not "cannot tell"', (tester) async {
-    const s = 'The prisoner was on the run for three weeks.';
-    final e = app.dict.exprs.firstWhere((e) => e.phrase == 'on the run');
-    await pumpPanel(tester, ExprPanel(app: app, expr: e, ctx: ctxFor(s, 'run'), words: const ['on', 'the', 'run']), height: 3000);
-    expect(find.byKey(const ValueKey('ctx-sense-gap-idiomOrWords')), findsNothing);
-    expect(find.textContaining('Türkçe karşılık doğrulanamadı'), findsNothing);
-    expect(find.byKey(const ValueKey('ctx-sense-tr')), findsOneWidget);
-    expect(find.textContaining('firarda'), findsWidgets);
-    expect(find.text('Bu cümledeki anlamı'), findsNothing, reason: 'a guess is never labelled as the meaning');
-    expect(tester.takeException(), isNull);
   });
 
   // Task 5I: an expression found in the sentence but read word by word there
@@ -308,13 +293,11 @@ void main() {
     const hole = 'Pour the water back in the hole and press the soil down.';
     final inTheHole = app.dict.exprs.firstWhere((e) => e.phrase == 'in the hole');
     await shot(tester, 'tr_in_the_hole_cannot_tell_5i', ExprPanel(app: app, expr: inTheHole, ctx: ctxFor(hole, 'hole'), words: const ['in', 'the', 'hole']));
-    await shot(tester, 'tr_on_the_run_olasi_5i', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
     await shot(tester, 'tr_hot_air_kalip_notu_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')), height: 1800);
     await shot(tester, 'tr_hot_air_kalip_notu_dark_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')),
         b: Brightness.dark, height: 1800);
     await shot(tester, 'tr_hot_air_deyim_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('His speech was just a lot of hot air.', 'hot')), height: 1800);
     uiEnglish = true;
-    await shot(tester, 'en_on_the_run_possible_5i', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
     await shot(tester, 'en_hot_air_note_dark_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')),
         b: Brightness.dark, height: 1800);
     await shot(tester, 'en_on_the_run_cannot_tell', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));

@@ -910,7 +910,10 @@ class _ExprCardState extends State<ExprCard> {
   /// one by one here ("hot air rises"). The card stays (the learner keeps
   /// every meaning of the expression) with a calm note above the meaning, so
   /// the meaning does not read as the one in this sentence.
-  late final bool _maybeNotHere = widget.ctx != null && ContextSenseCard.resolveExpr(app, widget.ctx!, expr)?.literalPhrase != null;
+  /// Switch for the note (one line to roll back).
+  static const showMaybeNotHere = true;
+  late final bool _maybeNotHere =
+      showMaybeNotHere && widget.ctx != null && ContextSenseCard.resolveExpr(app, widget.ctx!, expr)?.literalPhrase != null;
 
   /// An example with its Turkish when one is known: the built-in sense
   /// examples first, then a translated Tatoeba sentence, then the list's own
