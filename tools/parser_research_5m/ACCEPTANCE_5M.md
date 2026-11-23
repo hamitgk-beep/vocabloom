@@ -27,3 +27,11 @@ but a candidate SenseEngine calls "sure" with a checked meaning is never hidden)
 
 If any criterion fails, the flag stays OFF and the report says which one failed. Either way the flag stays OFF in
 this PR: turning it on is Hamit's decision (known trade-off: "The TV was on all night" loses its "be on" underline).
+
+## Addendum (written after the `unit` final run, BEFORE any neural final run)
+
+Secondary research system `unn3`: the unit scorer re-trained with one more signal, the tiny neural tagger
+(google/bert_uncased_L-4_H-256_A-4 + B/I/O head, 4,4 M parameters, trained on STREUSLE train+dev). Its training
+features use 2-fold cross-fitted tagger predictions (`stack_nn_5m.py`); weights in `unit_nn_model_5m.json`, threshold
+0.30 (chosen on DiMSUM test / PARSEME). Python only (the app has no neural runtime). Judged with the same six criteria
+against `cur`, and compared with `unit`. The final tagger predictions are made once, with the full-data tiny model.
