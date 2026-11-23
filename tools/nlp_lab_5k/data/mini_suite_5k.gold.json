@@ -236,6 +236,26 @@
    ],
    "surface": "give up",
    "label": "EXPR"
+  },
+  {
+   "id": "A11",
+   "phrase": "say the word",
+   "spans": [
+    [
+     4,
+     8
+    ],
+    [
+     9,
+     12
+    ],
+    [
+     13,
+     18
+    ]
+   ],
+   "surface": "said the words",
+   "label": "LIT"
   }
  ]
 }
