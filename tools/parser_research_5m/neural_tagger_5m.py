@@ -50,10 +50,10 @@ def encode(tok, words, labels=None, maxlen=160):
 
 
 def train(out, name, path, epochs=3):
-    tok = AutoTokenizer.from_pretrained(name, add_prefix_space=True) if "roberta" in name else AutoTokenizer.from_pretrained(name)
+    tok = AutoTokenizer.from_pretrained(name, add_prefix_space=True) if "roberta" in name or "ettin" in name else AutoTokenizer.from_pretrained(name)
     model = AutoModelForTokenClassification.from_pretrained(name, num_labels=3)
     data = [r for r in rows(path) if r["words"]]
-    opt = torch.optim.AdamW(model.parameters(), lr=5e-5 if "L-4" in name or "MiniLM" in name else 3e-5)
+    opt = torch.optim.AdamW(model.parameters(), lr=5e-5 if "L-4" in name or "MiniLM" in name or "ettin" in name else 3e-5)
     g = torch.Generator().manual_seed(5)
     t0 = time.time()
     model.train()
