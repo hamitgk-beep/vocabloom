@@ -1006,11 +1006,15 @@ class _ExprCardState extends State<ExprCard> {
                 ),
               ),
               const SizedBox(width: 8),
-              Padding(
-                padding: const EdgeInsets.only(top: 3),
-                child: Text(
-                  uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr,
-                  style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600),
+              // Task 5L: may wrap ("Prepositional phrases" overflowed a 320 px phone).
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Text(
+                    uiEnglish || (app.showEn && !app.showTr) ? c.name : c.tr,
+                    textAlign: TextAlign.end,
+                    style: TextStyle(color: c.color, fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
             ],
