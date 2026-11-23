@@ -200,3 +200,16 @@ NLP_5L_IN=OUT/hold_dimsum.tsv NLP_5L_OUT=W/d.jsonl NLP_5L_SYSTEMS="base,A" flutt
 python3 -I tools/nlp_research_5l/metrics_5l.py W/d.jsonl OUT/hold_dimsum.gold.jsonl dimsum     # --show: yalnız yerel
 NLP_5L_AUDIT=docs/nlp_engine_research/EXPRESSION_OVERLAP_AUDIT_5L.tsv flutter test tools/nlp_research_5l/audit_5l_test.dart
 ```
+
+## 11. Doğrulama (bu makine: Linux, Flutter 3.50.1 stable; CI 3.50.0 kullanır)
+
+* `assets/dict.db` `ab4a7a53…221a9c`, `assets/tr_en.db` `49a661b9…cfa818`: önce ve sonra aynı. `assets/`, `pubspec.*`
+  değişmedi; kullanıcı kayıtlarına/şemaya dokunan kod yok (testler geçici `UserDb` klasörü kullanır).
+* `flutter analyze`: 0 hata, 0 uyarı, 127 info (#121'de 126; +1 yeni widget testinin diğer testlerle aynı
+  `material.dart` deprecation info'su).
+* `flutter test`: **623 geçti**, 12 atlandı, 3 başarısız (#121: 601/12/3). Başarısız üçü aynı bilinen PDFium
+  `setUpAll` ortam sorunu (`import_completeness`, `picture_book`, `text_repair`). Yeni testler: 22 (hepsi geçti).
+* `flutter test qa_test`: 39 geçti, 1 atlandı.
+* `pytest tools/nlp_lab_5k/tests`: 7 geçti, 2 atlandı (modelsiz). `pytest tools/nlp_research_5l/tests`: 4 geçti.
+* Dar ekranda (320 px, EN, koyu) `ExprCard` başlığında **önceden var olan** 15 px taşma bulundu ("Prepositional
+  Phrases" etiketi): etiket artık satır kırabiliyor (`lib/ui/word_sheet.dart`, tek widget).
