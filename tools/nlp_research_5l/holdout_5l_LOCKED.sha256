@@ -1,0 +1,11 @@
+# Task 5L: locked BEFORE any 5L rule was written or run. Built by build_sets_5l.py (local only, never committed).
+# Sources: dimsum16/dimsum-data @3af1dd34ce49783e0ab99f31e989dd6171f75433 (dimsum16.test),
+#          parseme/sharedtask-data @012ee7d75f6741a4ccf91fa524ddc79307dae2e4 (1.1/EN train.cupt + test.cupt),
+#          nert-nlp/streusle @8ba61fe4f216e7967500a862554a4fff79d25f5d (only to drop sentences 5K saw).
+# Counts: dev_streusle 3279, hold_dimsum 1000, hold_parseme 6844 (592 PARSEME sentences dropped: in STREUSLE / mini / duplicate).
+d4a813e1e6ced21c99d498230b438f585d79a4c267da862f0a838b376ce9d693  dev_streusle.tsv
+22a0036cf7c3eff173bfa3cb31efceab00a2a4466d86f757fae1a251d41e34bc  dev_streusle.gold.jsonl
+d38e89c5ceb8215120e66758bf61c96638859eb7a34017d211fa59092d838313  hold_dimsum.tsv
+d4790ced8881f2e64cc8faf875185819db956e6f03be9a47c253c30430773558  hold_dimsum.gold.jsonl
+e281c2f20c2c3523900c22decaa3060a53561574e2810cc091b2ddaee954b570  hold_parseme.tsv
+97e87b53cf71100e3f88e446619c213843405ff6eb475e7d61378e057784489e  hold_parseme.gold.jsonl
