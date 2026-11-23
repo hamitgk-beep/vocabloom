@@ -194,8 +194,10 @@ class SenseQuery {
     final toks = tokenize(sentence);
     final parts = word.toLowerCase().split(' ');
     if (parts.length > 1) {
+      // Inside one sentence: a stored context of two sentences ("… could not
+      // break. The ice …") does not hold the expression.
       final ms = dict.matcher
-          .match(toks)
+          .match(toks, text: sentence)
           .where((m) => m.expr.phrase == word.toLowerCase() && (category == null || m.expr.cat == category))
           .toList();
       if (ms.length > occurrence) {
@@ -241,7 +243,7 @@ class SenseWeights {
 class SenseEngine {
   /// Bumped whenever the scoring changes, so cached and reported choices of an
   /// older engine are told apart.
-  static const version = '3';
+  static const version = '4';
 
   final DictDb dict;
   final SenseWeights w;
@@ -780,7 +782,15 @@ class SenseEngine {
     // such an idiom is shown, but never as sure, and a card keeps no meaning
     // for it without the learner's choice. Phrasal verbs are judged by their
     // own checks.
-    final canBeLiteral = e.cat != 'phrasal_verbs' && cands.any((c) => c.literal && c.tr.isNotEmpty);
+    // Finding the expression is not proof that it is meant as one, and
+    // neither is a word-by-word reading with no Turkish in the dictionary:
+    // "a literal case of poacher turned gamekeeper", "circling its wagons",
+    // "she'll be right over" are meant word by word, and their words have no
+    // Turkish here (or, "she'll", no entry at all). So the test is whether the
+    // words can be read one by one, not whether the dictionary translates that
+    // reading (Task 5F). Only an expression with a word that has no meaning of
+    // its own cannot be literal.
+    final canBeLiteral = e.cat != 'phrasal_verbs' && (cands.any((c) => c.literal) || _ordinaryWords(q.tokens, idx));
     if ((continues || canBeLiteral) && r.confidence == SenseConfidence.sure && r.cat != null) {
       return ContextSense(
           headword: r.headword,
@@ -792,6 +802,23 @@ class SenseEngine {
           ranked: r.ranked);
     }
     return r;
+  }
+
+  /// Whether every word of a matched expression is a grammar word or has a
+  /// meaning of its own in the dictionary (with or without Turkish), so the
+  /// expression can also be read word by word. "she'll" counts by "she";
+  /// a hyphenated word by each of its parts.
+  bool _ordinaryWords(List<Token> toks, List<int> idx) {
+    bool known(String w) =>
+        w.isEmpty || stopWords.contains(w) || _hasMeaning(w) || dict.baseForms(w).any((b) => _hasMeaning(b.lemma));
+    for (final i in idx) {
+      if (i < 0 || i >= toks.length) return false;
+      for (final part in toks[i].lower.split('-')) {
+        if (known(part) || known(part.split(RegExp("['’]")).first)) continue;
+        return false;
+      }
+    }
+    return true;
   }
 
   /// How close an idiom meaning must come to the word-by-word reading to be
@@ -1666,7 +1693,12 @@ class _Profile {
 
   static final Map<String, _Profile> _cache = {};
 
-  static _Profile of(SenseEngine e, SenseCandidate c, Expr? phrase) => _cache.putIfAbsent('${e.dictVersion}|${c.id}|${c.literal}', () {
+  // The profile is read for the candidate's own word ([SenseCandidate.lemma]):
+  // a WordNet meaning is shared by its synonyms ("get" and "become"), so the
+  // word is part of the key. Without it a meaning looked at first for one
+  // word was reused for the other, and an answer depended on what had been
+  // tapped before (the reader and a review card could disagree; Task 5F).
+  static _Profile of(SenseEngine e, SenseCandidate c, Expr? phrase) => _cache.putIfAbsent('${e.dictVersion}|${c.id}|${c.lemma}|${c.literal}', () {
         var objN = 0, obj = 0, subjN = 0, subj = 0, pObj = 0;
         final parts = c.lemma.split(' ');
         for (final ex in c.examples) {
