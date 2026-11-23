@@ -390,7 +390,10 @@ class AppState extends ChangeNotifier {
   late final StatsStore stats = StatsStore(user);
 
   /// Chooses the meaning a word has in the sentence being read (offline).
-  late final SenseEngine senses = SenseEngine(dict);
+  late final SenseEngine senses = SenseEngine(dict, wordCardGuard: debugWordCardGuard ?? SenseEngine.defaultWordCardGuard);
+
+  /// Tests only: the Task 5J word-card guard of [senses] (off by default).
+  static WordCardGuard? debugWordCardGuard;
 
   /// Offline AI tutor ("Yapay Zekâ" section). Set in main() before the UI starts.
   late final LocalAi localAi;

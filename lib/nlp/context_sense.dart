@@ -361,8 +361,13 @@ class SenseEngine {
   /// does not grade the word alone where that reading says the expression
   /// may be meant ([WordCardGuard]). Never a new "right" answer: the card is
   /// a plain flashcard the learner rates. No expression list of its own.
-  /// (docs/nlp_engine_research/IDIOM_WORD_CARD_SAFETY_5J.md)
-  static const defaultWordCardGuard = WordCardGuard.idiom;
+  /// OFF: on the 5H dev/tune sets [WordCardGuard.idiom] (with [cardCarries])
+  /// stopped about four in five word-card accepts on idiomatic sentences,
+  /// but on the locked 5J final most of those accepts were right (MAGPIE's
+  /// "idiomatic" label covers "catch fire", "in the long term"), and three
+  /// in four accepts on literal sentences were lost; [WordCardGuard.undecided]
+  /// changed one card. (docs/nlp_engine_research/IDIOM_WORD_CARD_SAFETY_5J.md)
+  static const defaultWordCardGuard = WordCardGuard.off;
   final WordCardGuard wordCardGuard;
 
   SenseEngine(this.dict,

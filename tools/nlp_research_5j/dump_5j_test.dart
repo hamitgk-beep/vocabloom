@@ -136,6 +136,10 @@ void main() {
             sw[g]!.start();
             row[g] = card(d, engines[g]!, quizzes[g]!, s, toks, i, all);
             sw[g]!.stop();
+            // The expression card and reading under this mode (must not change).
+            final cg = engines[g]!.resolve(SenseQuery(sentence: s, tokens: toks, index: m.tokens.first, expr: m.expr, exprTokens: m.tokens));
+            (row[g] as Map<String, Object?>)['exprReading'] = cg.toString();
+            if (e?.tr != null) (row[g] as Map<String, Object?>)['exprFit'] = engines[g]!.fit(phrase, s, e!.tr!).fit.name;
           }
           sink.writeln(jsonEncode(row));
         }

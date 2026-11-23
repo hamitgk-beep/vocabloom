@@ -6,8 +6,10 @@
 // (docs/nlp_engine_research/IDIOM_WORD_CARD_SAFETY_5J.md).
 import 'dart:io';
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kelime_okur/app_state.dart';
 import 'package:kelime_okur/data/dict_db.dart';
@@ -27,6 +29,36 @@ const hotLiteral = 'Hot air rises and cold air sinks.';
 const loan = 'The bank approved the loan.';
 const gaveUp = 'I gave up smoking last year.';
 
+/// J5_SHOTS=<folder> also saves screenshots of the review note (fonts loaded like test/context_sense_ui_test.dart).
+final shots = Platform.environment['J5_SHOTS'];
+
+Future<void> loadFonts() async {
+  Future<void> family(String name, List<String> files) async {
+    final l = FontLoader(name);
+    for (final f in files) {
+      l.addFont(Future.value(ByteData.sublistView(File(f).readAsBytesSync())));
+    }
+    await l.load();
+  }
+
+  final fonts = Directory('assets/fonts').listSync().whereType<File>().map((f) => f.path).toList();
+  await family('Inter', fonts.where((f) => f.contains('Inter')).toList());
+  await family('Literata', fonts.where((f) => f.contains('Literata')).toList());
+  final icons = File('${Platform.environment['FLUTTER_ROOT'] ?? ''}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf');
+  if (icons.existsSync()) await family('MaterialIcons', [icons.path]);
+}
+
+Future<void> saveShot(WidgetTester tester, String name) async {
+  if (shots == null) return;
+  await tester.runAsync(() async {
+    final img = await captureImage(find.byType(MaterialApp).evaluate().first);
+    final png = await img.toByteData(format: ui.ImageByteFormat.png);
+    File('$shots/$name.png')
+      ..parent.createSync(recursive: true)
+      ..writeAsBytesSync(png!.buffer.asUint8List());
+  });
+}
+
 SavedWord card(String lemma, String? ctx, {String? meaning}) => SavedWord(lemma, WordStatus.learning, ctx, null, meaning, DateTime(2026));
 
 void main() {
@@ -41,7 +73,11 @@ void main() {
     expect(SenseEngine.defaultIdiomRecovery, isFalse);
     expect(SenseEngine.defaultHeadFromPattern, isFalse);
     expect(SenseEngine.defaultCardCarries, isTrue);
-    expect(on.wordCardGuard, SenseEngine.defaultWordCardGuard);
+    // Off by default (the locked final did not support it): the app grades cards as the 5I engine did.
+    expect(SenseEngine.defaultWordCardGuard, WordCardGuard.off);
+    expect(on.wordCardGuard, WordCardGuard.off);
+    expect(on.fit('run', prisoner, 'koşmak').fit, SentenceFit.confirmed);
+    expect(AppState(d, UserDb.open(Directory.systemTemp.createTempSync('rq5j0'))).senses.wordCardGuard, WordCardGuard.off);
   });
 
   group('SenseEngine.fit for a word inside an expression', () {
@@ -174,13 +210,18 @@ void main() {
   });
 
   group('screens', () {
+    setUpAll(() async {
+      if (shots != null) await loadFonts();
+    });
     late Directory dir;
     late AppState app;
     setUp(() {
       dir = Directory.systemTemp.createTempSync('storilex_5j');
+      AppState.debugWordCardGuard = WordCardGuard.idiom; // the experimental guard, switched on for these screens
       app = AppState(d, UserDb.open(dir));
     });
     tearDown(() {
+      AppState.debugWordCardGuard = null;
       uiEnglish = false;
       dir.deleteSync(recursive: true);
     });
@@ -196,7 +237,6 @@ void main() {
 
     for (final english in [false, true]) {
       testWidgets('review: the card says it is not graded and why; the learner rates it (${english ? 'EN' : 'TR'})', (tester) async {
-        if (SenseEngine.defaultWordCardGuard == WordCardGuard.off) return; // the note needs the guard on
         uiEnglish = english;
         app.setWord('run', WordStatus.learning, context: prisoner);
         await pump(tester, ReviewPage(app: app, cards: [ReviewCard(card('run', prisoner), 0)]));
@@ -206,6 +246,7 @@ void main() {
         expect(find.byKey(const ValueKey('review-in-expression')), findsOneWidget);
         expect(find.textContaining('on the run'), findsWidgets);
         expect(find.textContaining(english ? 'not graded automatically' : 'otomatik puanlanmıyor'), findsOneWidget);
+        await saveShot(tester, english ? 'en_review_in_expression_5j' : 'tr_review_in_expression_5j');
         // The learner's own rating is kept apart and still recorded.
         await tester.tap(find.byKey(const ValueKey('review-good')));
         await tester.pumpAndSettle();
@@ -217,11 +258,11 @@ void main() {
     }
 
     testWidgets('review: 320 px, dark theme, no overflow', (tester) async {
-      if (SenseEngine.defaultWordCardGuard == WordCardGuard.off) return;
       await pump(tester, ReviewPage(app: app, cards: [ReviewCard(card('run', prisoner), 0)]), width: 320, b: Brightness.dark);
       await tester.tap(find.text('Cevabı göster'));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('review-in-expression')), findsOneWidget);
+      await saveShot(tester, 'tr_review_in_expression_320_dark_5j');
       expect(tester.takeException(), isNull);
     });
 
@@ -246,7 +287,7 @@ void main() {
       await tester.pump();
       final w = app.user.words(WordStatus.learning).firstWhere((w) => w.lemma == 'weather');
       expect(w.context, s, reason: 'the card is still saved with its sentence');
-      if (SenseEngine.defaultWordCardGuard != WordCardGuard.off) expect(w.meaning, isNull);
+      expect(w.meaning, isNull);
       // "Learned" stays the learner's own choice.
       await tester.tap(find.byKey(const ValueKey('word-learned')));
       await tester.pump();
