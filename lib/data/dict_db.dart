@@ -169,7 +169,7 @@ class DictDb {
         }
       }
     }
-    matcher = PhraseMatcher(lemmatizer, exprs, forms);
+    matcher = PhraseMatcher(lemmatizer, exprs, forms)..posOf = posOf;
   }
 
   late final bool _hasExTr = db.select('PRAGMA table_info(syn)').any((r) => r['name'] == 'extr');
