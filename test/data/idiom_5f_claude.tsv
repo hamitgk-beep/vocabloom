@@ -1,0 +1,75 @@
+# Task 5F: sentences WRITTEN AND LABELLED BY CLAUDE (an AI), not by a human annotator, not checked by anyone else.
+# They cover cases MAGPIE does not (split phrasal verbs, negation, quotes, very short context, sentence boundary,
+# proper names, collocations, an idiom whose word-by-word reading has no Turkish). Licence: written for this project (GPL-3.0).
+# Columns: part (dev/final, by phrase: no phrase in both), phrase, expected reading (idiom / literal / either / none),
+# case, sentence. "either": the sentence alone cannot tell; "none": the expression is not complete in one sentence.
+dev	break the ice	idiom	figurative	The host told a joke to break the ice at the start of the meeting.
+dev	break the ice	literal	literal	He used a hammer to break the ice on the frozen pond.
+dev	break the ice	either	short context	They tried to break the ice.
+dev	break the ice	none	sentence boundary	We could not break. The ice was too thick for the boat.
+dev	spill the beans	idiom	inflected	Who spilled the beans about the surprise party?
+dev	spill the beans	literal	inflected literal	She tripped and spilled the beans all over the kitchen floor.
+dev	spill the beans	idiom	negation	Promise me you won't spill the beans to anyone.
+dev	on the house	idiom	figurative	The coffee is on the house today.
+dev	on the house	literal	literal	Snow fell on the house all night.
+dev	kick the bucket	idiom	figurative	The old farmer finally kicked the bucket last winter.
+dev	kick the bucket	literal	literal	The angry boy kicked the bucket across the yard.
+dev	kick the bucket	idiom	quotation	"I'm not ready to kick the bucket yet," he laughed.
+dev	in the dark	idiom	figurative	The staff were kept in the dark about the merger.
+dev	in the dark	literal	literal	We sat in the dark until the power came back.
+dev	look up	idiom	split phrasal verb	Look the word up in a dictionary.
+dev	look up	idiom	phrasal verb, plain sense of its own	She looked up at the sky.
+dev	give up	idiom	split phrasal verb	He gave it up after a week.
+dev	rule of thumb	idiom	figurative	As a rule of thumb, save a tenth of what you earn.
+dev	to and fro	idiom	fixed binomial	The branches swayed to and fro in the wind.
+dev	hit the road	idiom	figurative	It's late, so we should hit the road.
+dev	hit the road	literal	literal	The glass fell from the truck and hit the road.
+dev	hit the road	idiom	proper name	Jack Kerouac decided to hit the road again.
+final	piece of cake	idiom	figurative	The exam was a piece of cake.
+final	piece of cake	literal	literal	She ate a piece of cake with her tea.
+final	piece of cake	either	short context	It was a piece of cake.
+final	bite the bullet	idiom	figurative	We have to bite the bullet and pay the fine.
+final	bite the bullet	literal	literal	In old films, wounded soldiers would bite the bullet while the doctor worked.
+final	cut corners	idiom	figurative	The builders cut corners and the roof leaked.
+final	cut corners	literal	literal	Use scissors to cut corners off the paper squares.
+final	out of the blue	idiom	figurative	She called me out of the blue after ten years.
+final	face the music	idiom	figurative	After the scandal, the minister had to face the music.
+final	face the music	literal	literal	The dancers turned to face the music stand.
+final	sit on the fence	idiom	figurative	You can't sit on the fence forever; choose a side.
+final	sit on the fence	literal	literal	The children like to sit on the fence and watch the horses.
+final	under the table	idiom	figurative	He was paid under the table.
+final	under the table	literal	literal	The cat is sleeping under the table.
+final	in the same boat	idiom	figurative	Don't worry, we are all in the same boat.
+final	in the same boat	literal	literal	The two fishermen spent the night in the same boat.
+final	on thin ice	idiom	figurative	After missing three deadlines, he is on thin ice with his boss.
+final	on thin ice	literal	literal	The skaters fell through because they were on thin ice.
+final	red tape	idiom	figurative	Starting a business here means a lot of red tape.
+final	red tape	literal	literal	She wrapped the box with red tape.
+final	throw in the towel	idiom	figurative	The boxer's coach threw in the towel in the fifth round.
+final	throw in the towel	literal	literal	Please throw in the towel with the other laundry.
+final	call it a day	idiom	figurative	We've done enough, let's call it a day.
+final	the last straw	idiom	figurative	His rude email was the last straw.
+final	the last straw	literal	literal	The child drank the juice with the last straw in the box.
+final	break a leg	idiom	figurative	Break a leg tonight, everyone!
+final	break a leg	literal	literal	Be careful on the ice or you'll break a leg.
+final	full of beans	idiom	figurative	The kids were full of beans after the party.
+final	full of beans	literal	literal	The jar on the shelf is full of beans.
+final	get cold feet	idiom	figurative	He got cold feet the day before the wedding.
+final	get cold feet	literal	literal	If you walk in the snow without boots, you will get cold feet.
+final	behind the scenes	idiom	figurative	A lot of work happens behind the scenes.
+final	on fire	literal	literal	The house was on fire.
+final	turn off	idiom	split phrasal verb	Please turn the light off.
+final	turn off	idiom	phrasal verb	Turn off the radio, please.
+final	carry on	idiom	phrasal verb	Carry on with your work.
+final	take off	idiom	phrasal verb	The plane will take off soon.
+final	make a decision	idiom	collocation	We need to make a decision today.
+final	by and large	idiom	fixed binomial	By and large, the trip went well.
+final	once in a blue moon	idiom	figurative	He visits us once in a blue moon.
+final	see eye to eye	idiom	negation	They don't see eye to eye on politics.
+final	cost an arm and a leg	idiom	figurative	That car cost an arm and a leg.
+final	beat around the bush	idiom	figurative	Stop beating around the bush and tell me.
+final	in hot water	idiom	figurative	He is in hot water for lying to the police.
+final	in hot water	literal	literal	Wash the shirts in hot water.
+final	cut corners	none	sentence boundary	They had to cut. Corners of the map were torn.
+final	sit on the fence	none	sentence boundary	Where should we sit? On the fence, there is paint.
+final	on thin ice	none	partial	The ice was thin, so nobody went on it.
