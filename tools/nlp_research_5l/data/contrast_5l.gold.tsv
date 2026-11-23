@@ -1,0 +1,40 @@
+# PROXY labels written by Claude for regression/demo only (not human-verified, never success evidence).
+# id	phrase	gold(EXPR|LIT)
+A01	be on	LIT
+A01	on hand	EXPR
+A02	be on	LIT
+A03	be on	LIT
+A03	on the run	EXPR
+A05	be on	LIT
+A05	on duty	EXPR
+A06	be on	EXPR
+A07	turn on	EXPR
+A08	give up	EXPR
+A10	be on	LIT
+A10	on the run	EXPR
+A12	look up	EXPR
+A14	give up	EXPR
+C01	be on	LIT
+C02	be on	EXPR
+C03	be on	EXPR
+C04	be on	EXPR
+C05	be on	EXPR
+C06	be on	LIT
+C06	on time	EXPR
+C07	on hold	EXPR
+C08	put on	EXPR
+C09	be on	LIT
+C10	be on	LIT
+C11	be on	EXPR
+C12	be on	LIT
+C13	get on	EXPR
+C14	get on	EXPR
+C14	on board	EXPR
+C15	turn on	EXPR
+C16	be after	EXPR
+C17	be on	EXPR
+C18	be on	EXPR
+C19	be on	LIT
+C19	on the run	EXPR
+C20	be on	LIT
+C20	on hand	EXPR

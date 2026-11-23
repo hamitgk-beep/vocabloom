@@ -13,6 +13,7 @@ import 'dart:math';
 
 import '../data/dict_db.dart';
 import 'literal_cues.dart';
+import 'overlap_rules.dart';
 import 'text.dart';
 
 enum SenseConfidence { sure, likely, none }
@@ -370,6 +371,15 @@ class SenseEngine {
   static const defaultWordCardGuard = WordCardGuard.off;
   final WordCardGuard wordCardGuard;
 
+  /// Task 5L (research): structural checks for overlapping expressions and
+  /// for a particle that has its own object ([OverlapRules]). They change
+  /// the expression's reading itself, so the underline (via [isLiteral]), the
+  /// panel and card grading ([fit]) follow the same decision. OFF: see
+  /// docs/nlp_engine_research/EXPRESSION_OVERLAP_RESOLVER_5L.md for the
+  /// measurement and why.
+  static const defaultOverlap = OverlapRules.none;
+  final OverlapRules overlap;
+
   SenseEngine(this.dict,
       {this.w = const SenseWeights(),
       String? dictVersion,
@@ -378,7 +388,8 @@ class SenseEngine {
       this.idiomRecovery = defaultIdiomRecovery,
       this.headFromPattern = defaultHeadFromPattern,
       this.wordCardGuard = defaultWordCardGuard,
-      this.cardCarries = defaultCardCarries})
+      this.cardCarries = defaultCardCarries,
+      this.overlap = defaultOverlap})
       : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
@@ -402,6 +413,7 @@ class SenseEngine {
       if (literalGuard) 'guard',
       if (idiomRecovery) 'recover',
       if (headFromPattern) 'head',
+      if (overlap.any) 'ov${overlap.key}',
     ].join('|');
   // [wordCardGuard] changes no reading (only [fit]'s verdict), so it is not
   // part of the key: every screen keeps the same reading of a sentence.
@@ -990,6 +1002,95 @@ class SenseEngine {
   // ---------------------------------------------------------- expressions
 
   ContextSense _resolvePhrase(SenseQuery q) {
+    final r = _resolvePhrase0(q);
+    if (!overlap.any || q.exprTokens.length < 2) return r;
+    return _overlapChecks(q, r);
+  }
+
+  /// Task 5L ([overlap]): the reading [r] of [q]'s expression after the
+  /// structural checks. Only ever reads an expression word by word or makes
+  /// it less sure; never a new meaning.
+  ContextSense _overlapChecks(SenseQuery q, ContextSense r) {
+    final e = q.expr!;
+    final idx = q.exprTokens;
+    if (r.literalPhrase != null) return r;
+    final breaks = clauseBreaks(q.sentence, q.tokens);
+    final contiguous = idx.last - idx.first == idx.length - 1;
+    final pv2 = e.cat == 'phrasal_verbs' && e.pattern.length == 2 && idx.length == 2 && contiguous;
+    final p = idx.last;
+    // A: "be" + particle with its own noun phrase.
+    if (overlap.copulaObject && pv2 && isCopulaParticle(e) && particleHasObject(dict, q.tokens, p, breaks) &&
+        checkedSensesStranded(dict, e, [
+          for (final c in r.ranked)
+            if (!c.literal && c.source == 'expr') (examples: c.examples, draft: c.unverified),
+        ])) {
+      return _readLiteral(q, r, '5L A: particle has an object');
+    }
+    // A2: the senses whose examples never give the particle an object.
+    if (overlap.senseFrame && pv2 && particleHasObject(dict, q.tokens, p, breaks)) {
+      final out = <String>{
+        for (final c in r.ranked)
+          if (!c.literal && c.source == 'expr' && strandedOnly(dict, e, c.examples) == true) c.id,
+      };
+      if (out.isNotEmpty && r.best != null && out.contains(r.best!.id)) {
+        // An AI draft sense never stands in for the checked one it replaces.
+        final left = [for (final c in r.ranked) if (!out.contains(c.id) && c.tr.isNotEmpty && !c.unverified) c];
+        final next = left.firstOrNull;
+        if (next == null || next.literal) return _readLiteral(q, r, '5L A2: examples take no object');
+        return ContextSense(
+            headword: r.headword, cat: r.cat, confidence: SenseConfidence.likely, best: next,
+            others: _others([for (final c in r.ranked) if (!identical(c, next)) c], next),
+            reason: '5L A2: other sense; ${r.reason}', ranked: r.ranked);
+      }
+    }
+    final rivals = [
+      for (final m in _sentenceMatches(q.tokens))
+        if (m.tokens.length >= 2 && !_sameSpan(m.tokens, idx) && m.tokens.any(idx.contains) &&
+            !m.tokens.every(idx.contains) && !idx.every(m.tokens.contains)) m,
+    ];
+    // B: the particle starts another expression that is not a phrasal verb.
+    if (overlap.prepPhraseTakesParticle && pv2 &&
+        rivals.any((m) => m.tokens.first == p && m.expr.cat != 'phrasal_verbs')) {
+      return _readLiteral(q, r, '5L B: particle starts ${rivals.firstWhere((m) => m.tokens.first == p && m.expr.cat != 'phrasal_verbs').expr.phrase}');
+    }
+    final sure = r.confidence == SenseConfidence.sure;
+    if (sure && ((overlap.sharedNotSure && rivals.isNotEmpty) || (overlap.copulaNeverSure && pv2 && isCopulaParticle(e)))) {
+      return ContextSense(
+          headword: r.headword, cat: r.cat, literalPhrase: r.literalPhrase, confidence: SenseConfidence.likely,
+          best: r.best, others: r.others,
+          reason: '5L ${overlap.sharedNotSure && rivals.isNotEmpty ? 'C: shares words with ${rivals.first.expr.phrase}' : 'D: be + particle'}; ${r.reason}',
+          ranked: r.ranked);
+    }
+    return r;
+  }
+
+  static bool _sameSpan(List<int> a, List<int> b) => a.length == b.length && a.every(b.contains);
+
+  final _matchCache = <String, List<Match>>{};
+  List<Match> _sentenceMatches(List<Token> toks) {
+    final k = toks.map((t) => '${t.start}:${t.lower}').join(' ');
+    final hit = _matchCache[k];
+    if (hit != null) return hit;
+    if (_matchCache.length > 200) _matchCache.clear();
+    return _matchCache[k] = dict.matcher.match(toks);
+  }
+
+  /// [r]'s expression read word by word: the best meaning of its words when
+  /// it has Turkish (a guess, never sure), else no meaning.
+  ContextSense _readLiteral(SenseQuery q, ContextSense r, String why) {
+    final lit = r.ranked.where((c) => c.literal && c.tr.isNotEmpty).firstOrNull;
+    final head = q.exprTokens.first;
+    return ContextSense(
+        headword: lit?.lemma ?? q.tokens[head].lower,
+        literalPhrase: q.expr!.phrase,
+        confidence: lit == null ? SenseConfidence.none : SenseConfidence.likely,
+        best: lit,
+        others: lit == null ? r.others : _others([for (final c in r.ranked) if (!identical(c, lit)) c], lit),
+        reason: '$why; ${r.reason}',
+        ranked: r.ranked);
+  }
+
+  ContextSense _resolvePhrase0(SenseQuery q) {
     final e = q.expr!;
     final idx = q.exprTokens.isEmpty ? [q.index] : q.exprTokens;
     final cands = <SenseCandidate>[..._exprCandidates(e)];

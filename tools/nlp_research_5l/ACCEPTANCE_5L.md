@@ -29,3 +29,10 @@ Card accept (proxy) = EXPR + sure + checked Turkish (not an AI draft).
 4. span exact-match F1 does not drop by more than 0.005 on either holdout;
 5. the regression pairs keep: "The TV was on all night" still offers `be on`, "on the run" / "hot air" (5I) unchanged.
 Otherwise the rule stays OFF (research). Too few changed decisions (< 3) = not enough evidence = OFF.
+
+## Frozen candidate (added after the dev ablation, before any holdout run)
+Dev (STREUSLE train+dev, 2,033 candidates; vs the 5K engine): A +13/−0 (all in `be`+particle, wrong sure 92→88,
+cards unchanged); A2 +20/−7 (3 right cards blocked); B +18/−10; C wrong sure 92→85 but right sure 153→145 and
+3 right cards blocked; D wrong sure 92→88, no decision changed; A+B +28/−10. Only **A** (`copulaObject`) meets the
+dev bar; it is the one candidate run against the holdouts. A2, B, C, D are reported there for information only and
+cannot be switched on from that run.
