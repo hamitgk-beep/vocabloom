@@ -159,12 +159,15 @@ void main() {
   // the idiom from the words and has no Turkish for the word-by-word reading.
   // The panel says the Turkish could not be checked; it shows no meaning, no
   // "used word by word" claim and no English definition as a meaning.
+  // (Task 5I: "on the run" in "The prisoner was on the run …" now gets the
+  // idiom's checked meaning as a guess; a sentence whose idiom has only an AI
+  // draft still cannot be told apart.)
   testWidgets('cannot tell idiom from words: an honest note, nothing passed off as Turkish', (tester) async {
-    const s = 'The prisoner was on the run for three weeks.';
-    final e = app.dict.exprs.firstWhere((e) => e.phrase == 'on the run');
+    const s = 'Pour the water back in the hole and press the soil down.';
+    final e = app.dict.exprs.firstWhere((e) => e.phrase == 'in the hole');
     for (final panel in [
-      ExprPanel(app: app, expr: e, ctx: ctxFor(s, 'run'), words: const ['on', 'the', 'run']),
-      WordPanel(app: app, surface: 'run', ctx: ctxFor(s, 'run')),
+      ExprPanel(app: app, expr: e, ctx: ctxFor(s, 'hole'), words: const ['in', 'the', 'hole']),
+      WordPanel(app: app, surface: 'hole', ctx: ctxFor(s, 'hole')),
     ]) {
       await pumpPanel(tester, panel, height: 3000);
       expect(find.byKey(const ValueKey('ctx-sense-gap-idiomOrWords')), findsOneWidget);
@@ -175,6 +178,54 @@ void main() {
       expect(find.byKey(const ValueKey('ctx-sense-wrong')), findsNothing);
       expect(tester.takeException(), isNull);
     }
+  });
+
+  // Task 5I (sentences written by Claude, an AI). The idiom's checked
+  // meaning, close behind a word-by-word reading with no Turkish, is shown as
+  // a possible meaning instead of "cannot tell".
+  testWidgets('5I: on the run gets its checked meaning as a guess, not "cannot tell"', (tester) async {
+    const s = 'The prisoner was on the run for three weeks.';
+    final e = app.dict.exprs.firstWhere((e) => e.phrase == 'on the run');
+    await pumpPanel(tester, ExprPanel(app: app, expr: e, ctx: ctxFor(s, 'run'), words: const ['on', 'the', 'run']), height: 3000);
+    expect(find.byKey(const ValueKey('ctx-sense-gap-idiomOrWords')), findsNothing);
+    expect(find.textContaining('Türkçe karşılık doğrulanamadı'), findsNothing);
+    expect(find.byKey(const ValueKey('ctx-sense-tr')), findsOneWidget);
+    expect(find.textContaining('firarda'), findsWidgets);
+    expect(find.text('Bu cümledeki anlamı'), findsNothing, reason: 'a guess is never labelled as the meaning');
+    expect(tester.takeException(), isNull);
+  });
+
+  // Task 5I: an expression found in the sentence but read word by word there
+  // keeps its card under "Expressions in this sentence", with a calm note.
+  testWidgets('5I: hot air read word by word: its card says it may not be meant here', (tester) async {
+    for (final english in [false, true]) {
+      uiEnglish = english;
+      await pumpPanel(tester, WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')), height: 3000);
+      expect(find.byKey(const ValueKey('expr-card-maybe-not-here')), findsOneWidget);
+      expect(
+          find.textContaining(english ? 'may not be used as an expression in this sentence' : 'kalıp olarak kullanılmamış olabilir'), findsOneWidget);
+      expect(find.textContaining('boş laf'), findsWidgets, reason: 'the idiom meaning stays reachable');
+      expect(tester.takeException(), isNull);
+    }
+    uiEnglish = false;
+    // In an idiomatic sentence: no such note.
+    await pumpPanel(tester, WordPanel(app: app, surface: 'hot', ctx: ctxFor('His speech was just a lot of hot air.', 'hot')), height: 3000);
+    expect(find.byKey(const ValueKey('expr-card-maybe-not-here')), findsNothing);
+    expect(find.textContaining('boş laf'), findsWidgets);
+    // Sentence analysis lists it the same way.
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('5I: the note fits a small screen and a long text without overflow (dark theme)', (tester) async {
+    tester.view.physicalSize = const Size(320, 3000);
+    tester.view.devicePixelRatio = 1;
+    await tester.pumpWidget(MaterialApp(
+        key: UniqueKey(),
+        theme: buildTheme(Brightness.dark),
+        home: Scaffold(body: WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')))));
+    await tester.pump();
+    expect(find.byKey(const ValueKey('expr-card-maybe-not-here')), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('opened from a list (no sentence): no card, panel as before', (tester) async {
@@ -254,7 +305,18 @@ void main() {
     final onTheRun = app.dict.exprs.firstWhere((e) => e.phrase == 'on the run');
     await shot(tester, 'tr_on_the_run_cannot_tell', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
     await shot(tester, 'tr_hot_air_literal_guess', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')), b: Brightness.dark);
+    const hole = 'Pour the water back in the hole and press the soil down.';
+    final inTheHole = app.dict.exprs.firstWhere((e) => e.phrase == 'in the hole');
+    await shot(tester, 'tr_in_the_hole_cannot_tell_5i', ExprPanel(app: app, expr: inTheHole, ctx: ctxFor(hole, 'hole'), words: const ['in', 'the', 'hole']));
+    await shot(tester, 'tr_on_the_run_olasi_5i', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
+    await shot(tester, 'tr_hot_air_kalip_notu_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')), height: 1800);
+    await shot(tester, 'tr_hot_air_kalip_notu_dark_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')),
+        b: Brightness.dark, height: 1800);
+    await shot(tester, 'tr_hot_air_deyim_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('His speech was just a lot of hot air.', 'hot')), height: 1800);
     uiEnglish = true;
+    await shot(tester, 'en_on_the_run_possible_5i', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
+    await shot(tester, 'en_hot_air_note_dark_5i', WordPanel(app: app, surface: 'hot', ctx: ctxFor('Hot air rises and cold air sinks.', 'hot')),
+        b: Brightness.dark, height: 1800);
     await shot(tester, 'en_on_the_run_cannot_tell', ExprPanel(app: app, expr: onTheRun, ctx: ctxFor(run, 'run'), words: const ['on', 'the', 'run']));
     await shot(tester, 'en_looked_up_sky', expr('She looked up at the sky.', 'look up', const ['looked', 'up'], 'looked'));
     uiEnglish = false;

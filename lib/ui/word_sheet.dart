@@ -906,6 +906,12 @@ class _ExprCardState extends State<ExprCard> {
 
   late final String? _gloss = expr.trShown == null ? wordGloss(app.dict, expr.phrase) : null;
 
+  /// Task 5I: found in the sentence, but the context engine reads its words
+  /// one by one here ("hot air rises"). The card stays (the learner keeps
+  /// every meaning of the expression) with a calm note above the meaning, so
+  /// the meaning does not read as the one in this sentence.
+  late final bool _maybeNotHere = widget.ctx != null && ContextSenseCard.resolveExpr(app, widget.ctx!, expr)?.literalPhrase != null;
+
   /// An example with its Turkish when one is known: the built-in sense
   /// examples first, then a translated Tatoeba sentence, then the list's own
   /// English example.
@@ -995,12 +1001,34 @@ class _ExprCardState extends State<ExprCard> {
               ),
             ],
           ),
+          if (_maybeNotHere)
+            Padding(
+              key: const ValueKey('expr-card-maybe-not-here'),
+              padding: const EdgeInsets.only(top: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1),
+                    child: Icon(Icons.info_outline, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      L('Bu cümlede kalıp olarak kullanılmamış olabilir; kelimeler düz anlamında görünüyor. Kalıp olarak anlamı:',
+                          'It may not be used as an expression in this sentence; the words look literal. As an expression it means:'),
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, height: 1.35),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           if (app.showTr && tr != null)
             Padding(
               padding: const EdgeInsets.only(top: 6),
               child: LangLine(
                 en: false,
-                child: Text(tr, style: panelTrStyle(theme, size: 17, weight: FontWeight.w700)),
+                child: Text(tr, style: panelTrStyle(theme, size: _maybeNotHere ? 15.5 : 17, weight: _maybeNotHere ? FontWeight.w600 : FontWeight.w700)),
               ),
             ),
           if (app.showTr && tr != null && expr.trShownIsDraft)
