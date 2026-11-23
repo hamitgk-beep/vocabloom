@@ -1,0 +1,28 @@
+name: nlp-lab-5k
+# Task 5K NLP lab (tools/nlp_lab_5k): offline tests only. No model, venv or NLP library is installed here and
+# nothing from the lab enters the Flutter build; model-backed tests skip themselves. dict.db is read-only and
+# its hash is checked before and after.
+on:
+  pull_request:
+    paths:
+      - 'tools/nlp_lab_5k/**'
+      - '.github/workflows/nlp-lab-5k.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lab-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pytest==8.3.5
+      - name: Offline lab tests (dict.db must not change)
+        run: |
+          before=$(sha256sum assets/dict.db assets/tr_en.db)
+          python -m pytest -q tools/nlp_lab_5k/tests
+          [ "$before" = "$(sha256sum assets/dict.db assets/tr_en.db)" ] || { echo "::error::a database changed"; exit 1; }

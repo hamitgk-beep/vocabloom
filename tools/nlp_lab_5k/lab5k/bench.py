@@ -125,14 +125,33 @@ def items_mini(recs):
     return [o for o in out if o["gold"] != "AMBIG"]
 
 
+def read_final5k(path=None):
+    """Rows of the locked final5k file. Two MAGPIE sentences hold a line break (ids 2435, 45719), which splits their
+    TSV row; they are read back whole and then left out of every system's measurement (rule fixed before any
+    result on final5k was read)."""
+    path = path or os.environ.get("NLP_5K_FINAL", "/home/user/lab5k/sets/5k/final5k_magpie.tsv")
+    raw = open(path, encoding="utf-8").read().split("\n")
+    rows, cur = [], None
+    for l in raw[1:]:
+        if not l:
+            continue
+        f = l.split("\t")
+        if cur is None:
+            cur = f
+        else:
+            cur[-1] += "\n" + f[0]
+            cur += f[1:]
+        if len(cur) >= 8:
+            rows.append(cur)
+            cur = None
+    return rows
+
+
 def items_final5k():
     rows = []
-    p = "/home/user/lab5k/sets/5k/final5k_magpie.tsv"
-    p = os.environ.get("NLP_5K_FINAL", p)
-    for l in open(p, encoding="utf-8"):
-        if l.startswith("#") or not l.strip():
+    for idiom, lab, cat, mid, s, spans, vt, conf in read_final5k():
+        if "\n" in s:
             continue
-        idiom, lab, cat, mid, s, spans, vt, conf = l.rstrip("\n").split("\t")
         rows.append((idiom, lab, cat, mid, [tuple(map(int, x.split(":"))) for x in spans.split(",")], vt))
     return rows
 
