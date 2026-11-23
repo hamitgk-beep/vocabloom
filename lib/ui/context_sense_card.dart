@@ -42,18 +42,7 @@ class ContextSenseCard extends StatefulWidget {
   /// Runs the engine for a tap; null (no card) when anything goes wrong.
   static ContextSense? resolve(AppState app, WordContext ctx, {Expr? expr, List<int>? exprTokens, String? lemma}) {
     try {
-      // A word inside an expression that is used literally here ("run" in
-      // "cracks run through the wall"): the phrase path weighs the particle
-      // too, and gives the word's own sense, so use its answer.
-      if (expr == null) {
-        for (final m in ctx.matches) {
-          if (m.tokens.length < 2 || !m.tokens.contains(ctx.indexInSentence)) continue;
-          final r = resolve(app, ctx, expr: m.expr, exprTokens: m.tokens, lemma: lemma);
-          if (r != null && r.literalPhrase != null) return r;
-        }
-      }
-      return app.senses.resolve(
-        SenseQuery(
+      final q = SenseQuery(
           sentence: ctx.sentence,
           tokens: ctx.sentenceTokens,
           index: ctx.indexInSentence,
@@ -64,8 +53,12 @@ class ContextSenseCard extends StatefulWidget {
           contentId: ctx.contentId,
           lang: uiEnglish ? 'en' : 'tr',
           lemma: lemma,
-        ),
-      );
+        );
+      // A word inside an expression that is used literally here ("run" in
+      // "cracks run through the wall"): the phrase path weighs the particle
+      // too, and gives the word's own sense, so its answer is used
+      // ([SenseEngine.resolveTap]).
+      return expr == null ? app.senses.resolveTap(q, ctx.matches) : app.senses.resolve(q);
     } catch (_) {
       return null;
     }
@@ -191,10 +184,15 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Text(
-            L(
-              'Burada "${displayPhrase(r.literalPhrase!)}" kalıp olarak değil, kelimelerin düz anlamıyla kullanılmış.',
-              'Here "${displayPhrase(r.literalPhrase!)}" is not used as an expression but with the plain meaning of its words.',
-            ),
+            r.confidence == SenseConfidence.sure
+                ? L(
+                    'Burada "${displayPhrase(r.literalPhrase!)}" kalıp olarak değil, kelimelerin düz anlamıyla kullanılmış.',
+                    'Here "${displayPhrase(r.literalPhrase!)}" is not used as an expression but with the plain meaning of its words.',
+                  )
+                : L(
+                    'Burada "${displayPhrase(r.literalPhrase!)}" büyük olasılıkla kalıp olarak değil, kelimelerin düz anlamıyla kullanılmış.',
+                    'Here "${displayPhrase(r.literalPhrase!)}" is probably not used as an expression but with the plain meaning of its words.',
+                  ),
             style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
           ),
         ),
@@ -275,14 +273,26 @@ class _ContextSenseCardState extends State<ContextSenseCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                phrase != null
+                key: ValueKey('ctx-sense-gap-${r.gap?.name}'),
+                r.gap == SenseGap.idiomOrWords
+                    ? L(
+                        'Türkçe karşılık doğrulanamadı: burada "${displayPhrase(r.headword)}" kalıp olarak mı, kelimelerin düz anlamıyla mı kullanılmış, sözlük ayırt edemiyor. Sözlükteki anlamlar aşağıda.',
+                        'The Turkish could not be checked: the dictionary cannot tell whether "${displayPhrase(r.headword)}" is used as an expression here or with the plain meaning of its words. The dictionary meanings are below.',
+                      )
+                    : phrase != null
                     ? L('Bu kelime burada "$phrase" kalıbının parçası; anlamı aşağıdaki kalıp kutusunda.', 'Here this word is part of "$phrase"; its meaning is in the expression box below.')
                     : b != null && b.tr.isEmpty && b.en != null
-                    ? L('Bu cümledeki anlamın Türkçesi sözlükte yok. Yapay zekâya sorabilirsin.', 'The dictionary has no Turkish for the meaning used here. You can ask the AI.')
+                    ? L(
+                        'Türkçe karşılık doğrulanamadı: bu cümledeki anlamın doğrulanmış Türkçesi sözlükte yok. Aşağıdaki İngilizce tanım bir çeviri değildir; yapay zekâya sorabilirsin.',
+                        'The Turkish could not be checked: the dictionary has no checked Turkish for the meaning used here. The English definition below is not a translation; you can ask the AI.',
+                      )
                     : L('Bu cümle için anlam güvenilir biçimde seçilemedi. Sözlükteki anlamlar aşağıda.', 'No meaning could be chosen reliably for this sentence. The dictionary meanings are below.'),
                 style: theme.textTheme.bodyMedium,
               ),
-              if (phrase == null && b != null && b.tr.isEmpty && b.en != null) ...[const SizedBox(height: 8), LangLine(en: true, child: TapText(b.en!, style: panelEnStyle(theme, size: 14)))],
+              if (phrase == null && r.gap != SenseGap.idiomOrWords && b != null && b.tr.isEmpty && b.en != null) ...[
+                const SizedBox(height: 8),
+                LangLine(en: true, child: TapText(b.en!, key: const ValueKey('ctx-sense-en-def'), style: panelEnStyle(theme, size: 14))),
+              ],
               if (!helpOpen)
                 Align(
                   alignment: Alignment.centerRight,
