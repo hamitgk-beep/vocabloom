@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'data/dict_db.dart';
 import 'data/tr_en_dict.dart';
 import 'tts/speech.dart';
+import 'nlp/construction.dart';
 import 'nlp/context_sense.dart';
 import 'data/review.dart';
 import 'data/stats.dart';
@@ -14,6 +15,7 @@ import 'nlp/grammar.dart';
 import 'nlp/grammar_marks.dart';
 import 'online/auto_analyzer.dart';
 import 'nlp/text.dart';
+import 'nlp/unit_weights_5m.dart';
 import 'l10n.dart';
 
 class CategoryInfo {
@@ -390,6 +392,9 @@ class AppState extends ChangeNotifier {
   late final StatsStore stats = StatsStore(user);
 
   /// Chooses the meaning a word has in the sentence being read (offline).
+  /// Task 5M sentence analyzer (used only when sentenceAnalyzer5m is on).
+  late final SentenceAnalyzer sentenceAnalyzer = SentenceAnalyzer(dict, unitScorer5m);
+
   late final SenseEngine senses = SenseEngine(dict, wordCardGuard: debugWordCardGuard ?? SenseEngine.defaultWordCardGuard);
 
   /// Tests only: the Task 5J word-card guard of [senses] (off by default).
