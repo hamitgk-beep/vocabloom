@@ -35,7 +35,12 @@ class QuizAnswer {
   /// True when [tr] could not be confirmed for the card's sentence (the card
   /// says so, in neutral words; nothing is corrected).
   final bool unconfirmed;
-  const QuizAnswer(this.tr, this.pos, this.gloss, {this.sure = true, this.synId, this.choice = true, this.saved = false, this.unconfirmed = false});
+
+  /// Task 5J: the expression of the card's sentence the word may be part of
+  /// ("on the run" for "run"), when that is why [tr] is not graded.
+  final String? inExpression;
+  const QuizAnswer(this.tr, this.pos, this.gloss,
+      {this.sure = true, this.synId, this.choice = true, this.saved = false, this.unconfirmed = false, this.inExpression});
 }
 
 class QuizChoice {
@@ -106,10 +111,11 @@ class ReviewQuiz {
     final m = dict.commonMeaning(lemma);
     if (kept != null) {
       final k = DictDb.shortTr(kept);
-      final ok = ctx != null ? confirms(lemma, ctx, kept) : mainMeaning(lemma, kept);
+      final f = ctx != null ? fit(lemma, ctx, kept) : null;
+      final ok = f != null ? f.confirmed : mainMeaning(lemma, kept);
       final common = m.tr != null && dict.trLink(m.tr!, k) == 'same';
       return QuizAnswer(k, DictDb.isTrVerb(k) ? 'v' : (common ? m.pos : null), common ? m.gloss : null,
-          choice: ok, unconfirmed: !ok, saved: true);
+          choice: ok, unconfirmed: !ok, saved: true, inExpression: f?.inExpression?.phrase);
     }
     final self = m.tr == null ? dict.exprs.where((e) => e.phrase == lemma && e.trShown != null).firstOrNull : null;
     // Only with no Turkish at all: the meaning the AI service gave for the sentence.
@@ -118,8 +124,9 @@ class ReviewQuiz {
       final st = self?.trShown;
       return QuizAnswer((st == null ? null : DictDb.shortTr(st)) ?? ai, m.pos, m.gloss, choice: self == null || self.tr != null);
     }
-    final ok = ctx != null ? confirms(lemma, ctx, m.tr!) : mainMeaning(lemma, m.tr!);
-    return QuizAnswer(m.tr, m.pos, m.gloss, choice: ok, unconfirmed: !ok);
+    final f = ctx != null ? fit(lemma, ctx, m.tr!) : null;
+    final ok = f != null ? f.confirmed : mainMeaning(lemma, m.tr!);
+    return QuizAnswer(m.tr, m.pos, m.gloss, choice: ok, unconfirmed: !ok, inExpression: f?.inExpression?.phrase);
   }
 
   /// A card with no sentence: whether [answer] can be asked as the meaning of

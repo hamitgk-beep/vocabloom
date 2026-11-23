@@ -272,12 +272,27 @@ class AnswerFit {
   final SentenceFit fit;
 
   /// confirmed: 'same' or 'synonym'. other: 'sure', 'likely' or 'literal'.
-  /// unknown: 'not in sentence', 'grammar word', 'no Turkish', 'draft only' or 'undecided'.
+  /// unknown: 'not in sentence', 'grammar word', 'no Turkish', 'draft only',
+  /// 'undecided' or 'in expression' ([inExpression]).
   final String why;
   final ContextSense? sense;
-  const AnswerFit(this.fit, this.why, [this.sense]);
+
+  /// Task 5J: the expression of the sentence the word may be part of; its
+  /// meaning alone is then not graded ([SenseEngine.wordCardGuard]).
+  final Expr? inExpression;
+  const AnswerFit(this.fit, this.why, [this.sense, this.inExpression]);
   bool get confirmed => fit == SentenceFit.confirmed;
 }
+
+/// Task 5J: when a word card is not graded because the word sits inside an
+/// expression of its sentence (see [SenseEngine.wordCardGuard]).
+///  * [off]: never (the 5I engine).
+///  * [undecided]: only where the word panel says it cannot tell the
+///    expression from its words ([SenseGap.idiomOrWords]).
+///  * [idiom]: also where the expression's own meaning is shown, as a guess
+///    or sure (the engine reads it as the expression).
+///  * [notLiteral]: unless the engine reads the expression word by word.
+enum WordCardGuard { off, undecided, idiom, notLiteral }
 
 /// Weights of the scoring criteria (sum 1). A starting point, tuned on the
 /// tests in test/context_sense_test.dart.
@@ -338,13 +353,32 @@ class SenseEngine {
   static const defaultHeadFromPattern = false;
   final bool headFromPattern;
 
+  /// Task 5J: a single-word card ("run" saved from "on the run") is graded
+  /// by [fit] with the word alone, so the word's own meaning ("koşmak") was
+  /// confirmed even inside an idiom. With this guard [fit] first looks at the
+  /// expressions of the sentence holding the word, decided by the same
+  /// expression reading the panels use ([resolve] with the expression), and
+  /// does not grade the word alone where that reading says the expression
+  /// may be meant ([WordCardGuard]). Never a new "right" answer: the card is
+  /// a plain flashcard the learner rates. No expression list of its own.
+  /// OFF: on the 5H dev/tune sets [WordCardGuard.idiom] (with [cardCarries])
+  /// stopped about four in five word-card accepts on idiomatic sentences,
+  /// but on the locked 5J final most of those accepts were right (MAGPIE's
+  /// "idiomatic" label covers "catch fire", "in the long term"), and three
+  /// in four accepts on literal sentences were lost; [WordCardGuard.undecided]
+  /// changed one card. (docs/nlp_engine_research/IDIOM_WORD_CARD_SAFETY_5J.md)
+  static const defaultWordCardGuard = WordCardGuard.off;
+  final WordCardGuard wordCardGuard;
+
   SenseEngine(this.dict,
       {this.w = const SenseWeights(),
       String? dictVersion,
       this.literalCues = defaultLiteralCues,
       this.literalGuard = defaultLiteralGuard,
       this.idiomRecovery = defaultIdiomRecovery,
-      this.headFromPattern = defaultHeadFromPattern})
+      this.headFromPattern = defaultHeadFromPattern,
+      this.wordCardGuard = defaultWordCardGuard,
+      this.cardCarries = defaultCardCarries})
       : dictVersion = dictVersion ?? DictDb.version;
 
   // ------------------------------------------------------------------ cache
@@ -369,6 +403,8 @@ class SenseEngine {
       if (idiomRecovery) 'recover',
       if (headFromPattern) 'head',
     ].join('|');
+  // [wordCardGuard] changes no reading (only [fit]'s verdict), so it is not
+  // part of the key: every screen keeps the same reading of a sentence.
   }
 
   static String _hash(String s) {
@@ -496,6 +532,12 @@ class SenseEngine {
       q = SenseQuery(sentence: sentence, tokens: toks, index: i, lemma: headword);
     }
     final c = resolve(q);
+    // Task 5J: a word that may be part of an expression of the sentence is
+    // not graded alone, unless the expression's Turkish carries the answer.
+    if (q.expr == null && wordCardGuard != WordCardGuard.off && c.reason != 'grammar word') {
+      final m = cardBlocker(sentence, q.tokens, headword, answer: answer);
+      if (m != null) return AnswerFit(SentenceFit.unknown, 'in expression', c, m.expr);
+    }
     if (q.expr != null && c.literalPhrase != null) return AnswerFit(SentenceFit.other, 'literal', c);
     final b = c.best;
     // A word that is part of an expression here ("give" in "give up") is not
@@ -553,6 +595,85 @@ class SenseEngine {
     if (link == null && synonyms && q.expr == null && _coTranslated(headword, b, answer)) link = 'co-translation';
     if (link != null) return AnswerFit(SentenceFit.confirmed, link, c);
     return AnswerFit(SentenceFit.other, c.confidence == SenseConfidence.sure ? 'sure' : 'likely', c);
+  }
+
+  /// Task 5J: the expression of [sentence] that makes a card for the single
+  /// word [lemma] unsafe to grade, or null ([wordCardGuard]). A card keeps
+  /// only its sentence, not which word was tapped, so every place [lemma]
+  /// stands in the sentence is looked at, and one is enough ("run" twice,
+  /// once in "on the run": the card cannot tell which one it is for).
+  /// Only expressions of two or more words that hold the word itself count,
+  /// inside the same sentence, matched like the reader does.
+  Match? cardBlocker(String sentence, List<Token> toks, String lemma, {String? answer, List<Match>? matches, WordCardGuard? guard, bool? carries}) {
+    final g = guard ?? wordCardGuard;
+    final useCarries = carries ?? cardCarries;
+    if (g == WordCardGuard.off) return null;
+    final at = <int>[
+      for (var i = 0; i < toks.length; i++)
+        if (toks[i].lower == lemma || dict.lemmatizer.lemmas(toks[i].lower).contains(lemma)) i,
+    ];
+    if (at.isEmpty) return null;
+    final ms = matches ?? dict.matcher.match(toks, text: sentence);
+    for (final m in ms) {
+      if (m.tokens.length < 2 || !m.tokens.any(at.contains)) continue;
+      if (useCarries && answer != null && exprCarries(m.expr, answer)) continue;
+      final r = resolve(SenseQuery(sentence: sentence, tokens: toks, index: m.tokens.first, expr: m.expr, exprTokens: m.tokens));
+      if (blocksWordCard(r, g)) return m;
+    }
+    return null;
+  }
+
+  /// Task 5J: whether the expression's own checked Turkish (never an AI
+  /// draft) carries the word's [answer]: "in prison" is "hapiste" and the
+  /// card asks "hapis", "go to sleep" is "uyumak" and the card asks
+  /// "uyumak". Then the word keeps its meaning inside the expression and the
+  /// card is right whichever way the sentence means it. "give up"
+  /// ("vazgeçmek") does not carry "vermek", "on the run" ("firarda,
+  /// kaçmakta, koşturmaca içinde") does not carry "koşmak". A Turkish word
+  /// carries a part of the answer when it is that word or that word with a
+  /// short ending ("hapis" -> "hapiste"; a verb by its stem, "uyu-maya"),
+  /// also with the usual softening of a last p/ç/t/k ("kitap" -> "kitabı").
+  bool exprCarries(Expr e, String answer) {
+    final tr = e.tr;
+    if (tr == null || tr.trim().isEmpty) return false;
+    final words = _trWords.allMatches(tr.toLowerCase()).map((m) => m.group(0)!).toList();
+    for (final part in answer.toLowerCase().split(RegExp(r'[,;]'))) {
+      final ws = _trWords.allMatches(part).map((m) => m.group(0)!).toList();
+      if (ws.isEmpty) continue;
+      // The part's own word: a verb phrase by its first word ("teşekkür etmek" -> "teşekkür").
+      var stem = ws.first;
+      if (ws.length == 1 && (stem.endsWith('mak') || stem.endsWith('mek')) && stem.length > 5) stem = stem.substring(0, stem.length - 3);
+      if (stem.length < 3) continue;
+      final soft = const {'p': 'b', 'ç': 'c', 't': 'd', 'k': 'ğ'}[stem[stem.length - 1]];
+      final stems = [stem, if (soft != null) stem.substring(0, stem.length - 1) + soft];
+      for (final w in words) {
+        for (final st in stems) {
+          if (w.startsWith(st) && w.length - st.length <= 4) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  static final _trWords = RegExp(r'[a-zçğıöşüâîû]+');
+
+  /// Task 5J: with [cardCarries], an expression whose checked Turkish
+  /// carries the card's answer ([exprCarries]) never keeps it from being graded.
+  static const defaultCardCarries = true;
+  final bool cardCarries;
+
+  /// Whether the reading [r] of an expression keeps a card of one of its
+  /// words from being graded, by [guard].
+  static bool blocksWordCard(ContextSense r, WordCardGuard guard) {
+    final literal = r.literalPhrase != null;
+    final undecided = r.gap == SenseGap.idiomOrWords;
+    final idiom = !literal && r.cat != null && r.shown;
+    return switch (guard) {
+      WordCardGuard.off => false,
+      WordCardGuard.undecided => undecided,
+      WordCardGuard.idiom => undecided || idiom,
+      WordCardGuard.notLiteral => !literal,
+    };
   }
 
   /// Checked (not AI draft) Turkish meanings of a word or expression.

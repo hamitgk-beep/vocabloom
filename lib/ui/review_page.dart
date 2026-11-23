@@ -280,7 +280,11 @@ class _ReviewPageState extends State<ReviewPage> {
                             if (meaning != null && ans.unconfirmed) ...[
                               const SizedBox(height: 8),
                               Text(
-                                w.context == null
+                                ans.inExpression != null
+                                    // Task 5J: the word may be part of an expression of the sentence.
+                                    ? L('Bu cümlede kelime “${displayPhrase(ans.inExpression!)}” kalıbının parçası olabilir; tek başına anlamı bu cümle için doğrulanamadı. Bu kart otomatik puanlanmıyor, kendin değerlendirebilirsin.',
+                                        'In this sentence the word may be part of the expression “${displayPhrase(ans.inExpression!)}”; its meaning alone could not be confirmed here. This card is not graded automatically; you can rate it yourself.')
+                                    : w.context == null
                                     ? L('Bu anlamın kelimenin ana anlamı olduğu doğrulanamadı. Bu kart puanlanmıyor.',
                                         'This meaning could not be confirmed as the main meaning of the word. This card is not graded.')
                                     : ans.saved
@@ -288,7 +292,7 @@ class _ReviewPageState extends State<ReviewPage> {
                                             'The saved meaning could not be confirmed for this sentence. This card is not graded.')
                                         : L('Bu anlamın bu cümleye uyduğu doğrulanamadı. Bu kart puanlanmıyor.',
                                             'This meaning could not be confirmed for this sentence. This card is not graded.'),
-                                key: const ValueKey('review-unconfirmed'),
+                                key: ValueKey(ans.inExpression != null ? 'review-in-expression' : 'review-unconfirmed'),
                                 style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant, fontStyle: FontStyle.italic),
                               ),
                             ],
