@@ -249,8 +249,19 @@ class _WordPanelState extends State<WordPanel> {
   /// grades a guess as the right answer).
   String? get _savedMeaning {
     final s = sense;
-    if (widget.ctx == null) return _trMain;
-    if (_ctxTr != null && s!.confidence == SenseConfidence.sure && !s.best!.unverified) return _ctxTr;
+    final ctx = widget.ctx;
+    if (ctx == null) return _trMain;
+    if (_ctxTr != null && s!.confidence == SenseConfidence.sure && !s.best!.unverified) {
+      // Task 5J: not when the word may be part of an expression of the
+      // sentence whose Turkish does not carry this meaning ("run" in "on the
+      // run"): the review would not grade it either ([SenseEngine.cardBlocker]).
+      try {
+        if (widget.app.senses.cardBlocker(ctx.sentence, ctx.sentenceTokens, lemma, answer: _ctxTr) != null) return null;
+      } catch (_) {
+        return null;
+      }
+      return _ctxTr;
+    }
     return null;
   }
 
