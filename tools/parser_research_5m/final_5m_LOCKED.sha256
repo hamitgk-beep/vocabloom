@@ -1,0 +1,7 @@
+# Task 5M: locked BEFORE any 5M code (parser, templates, rules) was written or run. Built by build_final_5m.py
+# (local only, never committed). Source: dimsum16/dimsum-data @3af1dd34ce49783e0ab99f31e989dd6171f75433,
+# dimsum16.train minus its ewtb (= STREUSLE) part: Lowlands + Ritter tweets. Dropped: text also in STREUSLE (any split),
+# dimsum16.test, PARSEME 1.1 EN, the 5K mini suite, or a duplicate (18 sentences). Counts: final_tweets 969.
+# Rebuilding the 5L sets with the same script gives the 5L hashes unchanged (checked).
+b2caf3281426e3680177615d4828382544b10fbbd6e3d2af2d651816ff250cb7  final_tweets.tsv
+e31e99abb04e2c53f87b7ed6461588944687f912c9584d76a483f115d88d5fde  final_tweets.gold.jsonl

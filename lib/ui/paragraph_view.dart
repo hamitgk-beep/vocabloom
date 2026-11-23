@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 import '../app_state.dart';
 import '../data/user_db.dart';
 import '../nlp/grammar_marks.dart';
+import '../nlp/construction.dart';
+import '../nlp/context_sense.dart';
 import '../nlp/text.dart';
 import 'hover_meaning.dart';
 import 'theme.dart';
@@ -29,6 +31,8 @@ class ParaAnalysis {
 
   /// Whether [m] is used literally here ("lived in Kansas"), computed once.
   bool _isLiteral(AppState app, Match m) => _literal.putIfAbsent(m, () {
+    // Task 5M (off by default): the unit scorer may hide any category.
+    if (sentenceAnalyzer5m && _notAUnit(app, m)) return true;
     // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
     // or collocation found in its own words is the expression.
     if (m.expr.cat != 'phrasal_verbs') return false;
@@ -43,6 +47,21 @@ class ParaAnalysis {
       return false;
     }
   });
+
+  /// Task 5M: [SentenceAnalyzer.notAUnit] with the panel's own confidence.
+  bool _notAUnit(AppState app, Match m) {
+    try {
+      final s = sentenceAt(text, tokens, m.tokens.first, ranges: sentences);
+      final idx = [for (final x in m.tokens) x - s.first];
+      if (idx.any((x) => x < 0 || x >= s.tokens.length)) return false;
+      final r = app.senses.resolve(SenseQuery(
+          sentence: s.text, tokens: s.tokens, index: idx.first, expr: m.expr, exprTokens: idx, prevSentence: s.prev, nextSentence: s.next));
+      final shared = matches.any((o) => !identical(o, m) && o.tokens.any(m.tokens.contains));
+      return app.sentenceAnalyzer.notAUnit(m.expr, s.text, s.tokens, idx, conf: r.confidence.name, variant: m.variant, shared: shared);
+    } catch (_) {
+      return false;
+    }
+  }
 
   /// The expressions that cover token [i] and are on in the filters, not
   /// used literally, the longest first (then in filter order). One rule for
@@ -100,12 +119,14 @@ Color highlightColor(ThemeData theme, String cat, [GMark? mark]) {
 final _cache = <String, ParaAnalysis>{};
 
 ParaAnalysis analyze(AppState app, String text) {
-  final c = _cache[text];
+  final key = sentenceAnalyzer5m ? '5M\u0000$text' : text;
+  final c = _cache[key];
   if (c != null) return c;
   final toks = tokenize(text);
-  final a = ParaAnalysis(text, toks, app.dict.matcher.match(toks, text: text));
+  final seq = app.dict.matcher.match(toks, text: text);
+  final a = ParaAnalysis(text, toks, sentenceAnalyzer5m ? app.sentenceAnalyzer.matches(text, toks, seq) : seq);
   if (_cache.length > 3000) _cache.clear();
-  _cache[text] = a;
+  _cache[key] = a;
   return a;
 }
 

@@ -1,0 +1,24 @@
+dimsum: 573 candidates, gold EXPR 219, sentences 969; base = cur
+system P R F1 FPR[95%] und% wrong_sure right_sure card_ok wrong_card right_card_blocked fixed broken p span_P span_R span_F1
+cur 0.362 0.767 0.492 0.836[0.79-0.87] 1.7 22 45 21 5 0 0 0 1 0.333 0.144 0.201
+tpl 0.362 0.776 0.493 0.847[0.81-0.88] 1.7 22 45 21 5 0 6 8 0.791 0.333 0.146 0.203
+unit 0.487 0.703 0.576 0.458[0.41-0.51] 1.9 13 45 21 5 0 142 22 1.09e-22 0.453 0.135 0.208
+unitS 0.474 0.703 0.566 0.483[0.43-0.54] 1.9 22 45 21 5 0 133 22 1.5e-20 0.440 0.135 0.207
+unn3 0.483 0.712 0.576 0.472[0.42-0.52] 1.7 12 45 21 5 0 134 17 9.74e-24 0.441 0.134 0.206
+slices (class: n, goldEXPR | per system fixed/broken, wrong_sure)
+  alone: 476, 182 | tpl:+1/-4/ws19 unit:+124/-17/ws10 unitS:+115/-17/ws19 unn3:+118/-14/ws10
+  phrasal_verb: 223, 141 | tpl:+1/-0/ws22 unit:+22/-4/ws13 unitS:+13/-4/ws22 unn3:+25/-4/ws12
+  idioms: 98, 32 | tpl:+5/-7/ws0 unit:+26/-9/ws0 unitS:+26/-9/ws0 unn3:+26/-6/ws0
+  shares-a-token: 97, 37 | tpl:+5/-4/ws3 unit:+18/-5/ws3 unitS:+18/-5/ws3 unn3:+16/-3/ws2
+  prepositional_phrases: 93, 20 | tpl:+0/-0/ws0 unit:+30/-3/ws0 unitS:+30/-3/ws0 unn3:+26/-1/ws0
+  chunks: 43, 10 | tpl:+0/-0/ws0 unit:+17/-3/ws0 unitS:+17/-3/ws0 unn3:+15/-4/ws0
+  dependent_prepositions: 32, 0 | tpl:+0/-0/ws0 unit:+4/-0/ws0 unitS:+4/-0/ws0 unn3:+4/-0/ws0
+  modal_verbs: 24, 1 | tpl:+0/-0/ws0 unit:+12/-0/ws0 unitS:+12/-0/ws0 unn3:+10/-0/ws0
+  collocations: 17, 5 | tpl:+0/-1/ws0 unit:+8/-0/ws0 unitS:+8/-0/ws0 unn3:+8/-0/ws0
+  discourse_markers: 17, 4 | tpl:+0/-0/ws0 unit:+10/-1/ws0 unitS:+10/-1/ws0 unn3:+10/-1/ws0
+  conjunctions: 13, 2 | tpl:+0/-0/ws0 unit:+11/-0/ws0 unitS:+11/-0/ws0 unn3:+8/-0/ws0
+  be+particle: 8, 0 | tpl:+0/-0/ws0 unit:+2/-0/ws0 unitS:+2/-0/ws0 unn3:+2/-0/ws0
+  binomials: 3, 3 | tpl:+0/-0/ws0 unit:+0/-2/ws0 unitS:+0/-2/ws0 unn3:+0/-1/ws0
+  informal_slang: 1, 1 | tpl:+0/-0/ws0 unit:+0/-0/ws0 unitS:+0/-0/ws0 unn3:+0/-0/ws0
+  proverbs: 1, 0 | tpl:+0/-0/ws0 unit:+0/-0/ws0 unitS:+0/-0/ws0 unn3:+0/-0/ws0
+JSON {"cur": {"P": 0.3620689655172414, "R": 0.7671232876712328, "F1": 0.4919472913616399, "FPR": 0.8361581920903954, "und": 10, "wrong_sure": 22, "right_sure": 45, "card": 21, "wrong_card": 5, "right_card_blocked": 0, "fixed": 0, "broken": 0, "p": 1.0, "spanP": 0.3333333333333333, "spanR": 0.14416058394160583, "spanF1": 0.20127388535031845}, "tpl": {"P": 0.3617021276595745, "R": 0.776255707762557, "F1": 0.4934687953555878, "FPR": 0.847457627118644, "und": 10, "wrong_sure": 22, "right_sure": 45, "card": 21, "wrong_card": 5, "right_card_blocked": 0, "fixed": 6, "broken": 8, "p": 0.79052734375, "spanP": 0.3333333333333333, "spanR": 0.145985401459854, "spanF1": 0.20304568527918782}, "unit": {"P": 0.4873417721518987, "R": 0.7031963470319634, "F1": 0.5757009345794392, "FPR": 0.4576271186440678, "und": 11, "wrong_sure": 13, "right_sure": 45, "card": 21, "wrong_card": 5, "right_card_blocked": 0, "fixed": 142, "broken": 22, "p": 1.0949052544603354e-22, "spanP": 0.4525993883792049, "spanR": 0.13503649635036497, "spanF1": 0.20801124385101896}, "unitS": {"P": 0.47384615384615386, "R": 0.7031963470319634, "F1": 0.5661764705882353, "FPR": 0.4830508474576271, "und": 11, "wrong_sure": 22, "right_sure": 45, "card": 21, "wrong_card": 5, "right_card_blocked": 0, "fixed": 133, "broken": 22, "p": 1.4980018736787064e-20, "spanP": 0.44047619047619047, "spanR": 0.13503649635036497, "spanF1": 0.20670391061452514}, "unn3": {"P": 0.48297213622291024, "R": 0.7123287671232876, "F1": 0.5756457564575646, "FPR": 0.4717514124293785, "und": 10, "wrong_sure": 12, "right_sure": 45, "card": 21, "wrong_card": 5, "right_card_blocked": 0, "fixed": 134, "broken": 17, "p": 9.742730122960855e-24, "spanP": 0.44144144144144143, "spanR": 0.13412408759124086, "spanF1": 0.20573827851644502}}
