@@ -6,6 +6,7 @@ on:
   pull_request:
     paths:
       - 'tools/nlp_lab_5k/**'
+      - 'tools/nlp_research_5l/**'
       - '.github/workflows/nlp-lab-5k.yml'
   workflow_dispatch:
 
@@ -24,5 +25,5 @@ jobs:
       - name: Offline lab tests (dict.db must not change)
         run: |
           before=$(sha256sum assets/dict.db assets/tr_en.db)
-          python -m pytest -q tools/nlp_lab_5k/tests
+          python -m pytest -q tools/nlp_lab_5k/tests tools/nlp_research_5l/tests
           [ "$before" = "$(sha256sum assets/dict.db assets/tr_en.db)" ] || { echo "::error::a database changed"; exit 1; }

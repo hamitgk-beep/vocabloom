@@ -305,7 +305,7 @@ class SenseWeights {
 class SenseEngine {
   /// Bumped whenever the scoring changes, so cached and reported choices of an
   /// older engine are told apart.
-  static const version = '6';
+  static const version = '7';
 
   final DictDb dict;
   final SenseWeights w;
@@ -371,13 +371,18 @@ class SenseEngine {
   static const defaultWordCardGuard = WordCardGuard.off;
   final WordCardGuard wordCardGuard;
 
-  /// Task 5L (research): structural checks for overlapping expressions and
-  /// for a particle that has its own object ([OverlapRules]). They change
-  /// the expression's reading itself, so the underline (via [isLiteral]), the
-  /// panel and card grading ([fit]) follow the same decision. OFF: see
-  /// docs/nlp_engine_research/EXPRESSION_OVERLAP_RESOLVER_5L.md for the
-  /// measurement and why.
-  static const defaultOverlap = OverlapRules.none;
+  /// Task 5L: structural checks for overlapping expressions and for a
+  /// particle that has its own object ([OverlapRules]). They change the
+  /// expression's reading itself, so the underline (via [isLiteral]), the
+  /// panel and card grading ([fit]) follow the same decision. Only
+  /// [OverlapRules.copulaObject] is on: "be on" in "was on the bridge" / "was
+  /// on hand" is read word by word (the particle has its own noun phrase and
+  /// the dictionary's checked senses of "be on" never do), so "on hand" keeps
+  /// its "on". On the locked DiMSUM + PARSEME holdouts it changed 22
+  /// decisions, all right, and no card; the other checks (A2, B, C, D) were
+  /// mixed on the development set and stay off. [OverlapRules.none] gives the
+  /// 5K engine back. (docs/nlp_engine_research/EXPRESSION_OVERLAP_RESOLVER_5L.md)
+  static const defaultOverlap = OverlapRules(copulaObject: true);
   final OverlapRules overlap;
 
   SenseEngine(this.dict,
@@ -472,6 +477,9 @@ class SenseEngine {
       final r = resolve(SenseQuery(
           sentence: q.sentence, tokens: q.tokens, index: q.index, expr: m.expr, exprTokens: m.tokens,
           prevSentence: q.prevSentence, nextSentence: q.nextSentence, contentId: q.contentId, lang: q.lang, lemma: q.lemma));
+      // Task 5L: "on" in "was on the bridge" is the preposition itself, not
+      // the verb the 5L check reads word by word ("olmak"): the word alone.
+      if (r.literalPhrase != null && r.reason.startsWith('5L') && q.index != m.tokens.first) continue;
       if (r.literalPhrase != null) return r;
       if (literalGuard && r.gap == SenseGap.idiomOrWords) undecided ??= r;
       // 5I: the expression's meaning was recovered over a word-by-word
