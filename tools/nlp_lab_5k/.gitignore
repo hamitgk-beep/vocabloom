@@ -1,0 +1,11 @@
+# Development lab: never commit environments, model weights, third-party sources or licensed text.
+.venv/
+venv*/
+models/
+external/
+logs/
+out/
+*.whl
+*.udpipe
+__pycache__/
+.pytest_cache/

@@ -1,0 +1,241 @@
+{
+ "provenance": "written by Claude (AI) from the Task 5K brief; proxy labels, not independent human annotation",
+ "items": [
+  {
+   "id": "A01",
+   "phrase": "on hand",
+   "spans": [
+    [
+     20,
+     27
+    ]
+   ],
+   "surface": "on hand",
+   "label": "EXPR"
+  },
+  {
+   "id": "A01",
+   "phrase": "be on",
+   "spans": [
+    [
+     16,
+     22
+    ]
+   ],
+   "surface": "was on",
+   "label": "LIT"
+  },
+  {
+   "id": "A02",
+   "phrase": "be on",
+   "spans": [
+    [
+     3,
+     9
+    ]
+   ],
+   "surface": "was on",
+   "label": "LIT"
+  },
+  {
+   "id": "A03",
+   "phrase": "on the run",
+   "spans": [
+    [
+     7,
+     17
+    ]
+   ],
+   "surface": "on the run",
+   "label": "EXPR"
+  },
+  {
+   "id": "A03",
+   "phrase": "be on",
+   "spans": [
+    [
+     3,
+     9
+    ]
+   ],
+   "surface": "was on",
+   "label": "LIT"
+  },
+  {
+   "id": "A04",
+   "phrase": "hot air",
+   "spans": [
+    [
+     0,
+     7
+    ]
+   ],
+   "surface": "Hot air",
+   "label": "LIT"
+  },
+  {
+   "id": "A05",
+   "phrase": "on duty",
+   "spans": [
+    [
+     8,
+     15
+    ]
+   ],
+   "surface": "on duty",
+   "label": "EXPR"
+  },
+  {
+   "id": "A05",
+   "phrase": "be on",
+   "spans": [
+    [
+     4,
+     10
+    ]
+   ],
+   "surface": "was on",
+   "label": "LIT"
+  },
+  {
+   "id": "A06",
+   "phrase": "be on",
+   "spans": [
+    [
+     7,
+     13
+    ]
+   ],
+   "surface": "was on",
+   "label": "LIT"
+  },
+  {
+   "id": "A07",
+   "phrase": "turn on",
+   "spans": [
+    [
+     3,
+     9
+    ],
+    [
+     20,
+     22
+    ]
+   ],
+   "surface": "turned ... on",
+   "label": "EXPR"
+  },
+  {
+   "id": "A08",
+   "phrase": "give up",
+   "spans": [
+    [
+     3,
+     10
+    ]
+   ],
+   "surface": "gave up",
+   "label": "EXPR"
+  },
+  {
+   "id": "A08",
+   "phrase": "walk away",
+   "spans": [
+    [
+     15,
+     26
+    ]
+   ],
+   "surface": "walked away",
+   "label": "AMBIG"
+  },
+  {
+   "id": "A09",
+   "phrase": "hot air",
+   "spans": [
+    [
+     12,
+     19
+    ]
+   ],
+   "surface": "hot air",
+   "label": "LIT"
+  },
+  {
+   "id": "A10",
+   "phrase": "on the run",
+   "spans": [
+    [
+     17,
+     27
+    ]
+   ],
+   "surface": "on the run",
+   "label": "EXPR"
+  },
+  {
+   "id": "A10",
+   "phrase": "be on",
+   "spans": [
+    [
+     13,
+     19
+    ]
+   ],
+   "surface": "was on",
+   "label": "LIT"
+  },
+  {
+   "id": "A11",
+   "phrase": "on the run",
+   "spans": [
+    [
+     20,
+     30
+    ]
+   ],
+   "surface": "on the run",
+   "label": "MENTION"
+  },
+  {
+   "id": "A12",
+   "phrase": "look up",
+   "spans": [
+    [
+     3,
+     9
+    ],
+    [
+     19,
+     21
+    ]
+   ],
+   "surface": "looked ... up",
+   "label": "EXPR"
+  },
+  {
+   "id": "A13",
+   "phrase": "hot air",
+   "spans": [
+    [
+     26,
+     33
+    ]
+   ],
+   "surface": "hot air",
+   "label": "EXPR"
+  },
+  {
+   "id": "A14",
+   "phrase": "give up",
+   "spans": [
+    [
+     6,
+     13
+    ]
+   ],
+   "surface": "give up",
+   "label": "EXPR"
+  }
+ ]
+}
