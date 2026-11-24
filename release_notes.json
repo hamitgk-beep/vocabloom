@@ -2,6 +2,18 @@
   "about": "What's new, shown in the app's update banner. Add an entry at the top for every change a user will notice (newest first). The release job stamps each new entry with the build that first ships it; nightly dictionary commits are added on their own. Areas: dictionary, grammar, reader, words, review, ai, voice, app.",
   "entries": [
     {
+      "id": "library-checked-readings-6a",
+      "area": "reader",
+      "tr": "Uygulamayla gelen hikâyelerde kelimeye dokununca çıkan anlam artık tek tek kontrol edilmiş anlam: 309 hikâyenin bütün cümleleri okunup düzeltildi. \"king\", \"boy\", \"man\" gibi kelimelerin anlamı artık çıkıyor; \"carried the princess on his back\" gibi cümleler yanlışlıkla \"carry on\" olarak okunmuyor. Kütüphaneye 10 yeni klasik kitap eklendi (Anne of Avonlea, The Prince and the Pauper, Ozma of Oz ve diğerleri).",
+      "en": "In the stories that come with the app, the meaning you see when you tap a word is now a checked one: every sentence of the 309 stories was read and corrected. Words such as \"king\", \"boy\" and \"man\" now show their meaning, and sentences like \"carried the princess on his back\" are no longer read as \"carry on\". Ten more classic books were added to the library (Anne of Avonlea, The Prince and the Pauper, Ozma of Oz and others)."
+    },
+    {
+      "id": "dictionary-verified-senses-6a",
+      "area": "dictionary",
+      "tr": "Sözlükte Türkçesi eksik olan 649 anlam dolduruldu (ör. friend: arkadaş, house: ev, help: yardım etmek). Her biri kütüphanedeki en az iki cümlede kontrol edildi ve açık sözlüklerde de geçiyor.",
+      "en": "649 dictionary meanings that had no Turkish now have it (e.g. friend: arkadaş, house: ev, help: yardım etmek). Each was checked in at least two sentences of the library and is also in open dictionaries."
+    },
+    {
       "id": "offline-translation-windows",
       "area": "reader",
       "tr": "Windows'ta cümle çevirisi artık internetsiz ve ücretsiz olabilir: Ayarlar > Çevrimdışı çeviri bölümünden OPUS-MT modelini (yaklaşık 530 MB, CC BY 4.0) kendin indirip açabilirsin. İndirmeden önce boyutu ve lisansı görürsün, indirmeyi iptal edebilirsin, her dosya doğrulanır. Model kendiliğinden indirilmez ve ücretli servis kullanmaz.",
@@ -20,10 +32,10 @@
       "en": "In sentence analysis the Turkish now always belongs to the sentence you picked: abbreviations such as \"Prof.\", \"Mr.\", \"No. 28\" and \"p. 35\" no longer cut a sentence, and a sentence never shows the next one's translation. When there is no valid translation the Turkish line is left out, and the free on-device translation is tried first. Automatic book analysis with a paid AI service now stays off until you turn it on in Settings, and a sentence explanation is asked only with \"Explain in detail\". The word panel and the review no longer ask the AI by themselves either; it runs only when you tap its button."
     },
     {
-     "id": "review-confirmed-answers",
-     "area": "review",
-     "tr": "Tekrar kartlarında bir anlam, ancak kartın cümlesine uyduğu doğrulanırsa çoktan seçmeli soru olarak soruluyor. Doğrulanamayan kartlar puanlanmadan düz kart olarak gösteriliyor ve bunu belirten kısa bir not çıkıyor. Kayıtlı anlamların ve ilerlemen değişmiyor.",
-     "en": "A review card now asks a meaning as a four-choice question only when it is confirmed for the card's sentence. Cards that cannot be confirmed are shown as plain cards with a short note and are not graded. Your saved meanings and progress stay as they are."
+      "id": "review-confirmed-answers",
+      "area": "review",
+      "tr": "Tekrar kartlarında bir anlam, ancak kartın cümlesine uyduğu doğrulanırsa çoktan seçmeli soru olarak soruluyor. Doğrulanamayan kartlar puanlanmadan düz kart olarak gösteriliyor ve bunu belirten kısa bir not çıkıyor. Kayıtlı anlamların ve ilerlemen değişmiyor.",
+      "en": "A review card now asks a meaning as a four-choice question only when it is confirmed for the card's sentence. Cards that cannot be confirmed are shown as plain cards with a short note and are not graded. Your saved meanings and progress stay as they are."
     },
     {
       "id": "dictionary-source-order",
