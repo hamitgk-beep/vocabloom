@@ -168,7 +168,10 @@ def apply(db):
           'without a Turkish meaning now', len(old - set(ft)))
 
     # WordNet senses: keep only Turkish words the new sources also give.
-    allowed = {w: {y for line in t for x in _terms(line) for y in [x.strip().lower(), *x.lower().split()] if len(y) > 2}
+    # A whole meaning counts at any length ("ev" for house, "su" for water); single words split out of a longer
+    # meaning only from three letters on, so "ve" or "bu" does not let any sense word through.
+    allowed = {w: {x.strip().lower() for line in t for x in _terms(line)}
+               | {y for line in t for x in _terms(line) for y in x.lower().split() if len(y) > 2}
                for w, t in ft.items()}
     lemmas = {}
     for lemma, syn in db.execute('SELECT lemma, syn_id FROM sense'):

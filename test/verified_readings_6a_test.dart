@@ -113,4 +113,18 @@ void main() {
     expect(r.tr, contains('görmek'));
     expect(r.confidence, SenseConfidence.sure);
   });
+  test('a particle with its own noun phrase is not a split phrasal verb', () {
+    final e = SenseEngine(d);
+    for (final (s, w, head) in [
+      ('The elephant carried the princess on his back, through the woods.', 'carried', 'carry'),
+      ('Today Amma has worn a saree that is just the colour of the sun in the picture.', 'colour', 'colour'),
+      ('Call the clinic on 9th Street and update his info.', 'Call', 'call'),
+    ]) {
+      expect(word(e, s, w).headword, head, reason: s);
+    }
+    // a particle that closes the clause still makes the phrasal verb
+    expect(word(e, 'Please turn the light off.', 'turn').headword, 'turn off');
+    expect(word(e, 'Please turn the light off before you leave.', 'turn').headword, 'turn off');
+    expect(word(e, 'He picked the cup up and left.', 'picked').headword, 'pick up');
+  });
 }

@@ -2863,6 +2863,19 @@
 "picsSize": 4178846
 },
 {
+"id": "pg-486",
+"kind": "book",
+"title": "Ozma of Oz",
+"author": "L. Frank Baum",
+"level": "B1",
+"words": 38880,
+"chapters": 21,
+"size": 75838,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/486"
+},
+{
 "id": "pg-55",
 "kind": "book",
 "title": "The Wonderful Wizard of Oz",
@@ -2887,6 +2900,32 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/500"
+},
+{
+"id": "pg-420",
+"kind": "book",
+"title": "Dorothy and the Wizard in Oz",
+"author": "L. Frank Baum",
+"level": "B1",
+"words": 41327,
+"chapters": 20,
+"size": 80907,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/420"
+},
+{
+"id": "pg-708",
+"kind": "book",
+"title": "The Princess and the Goblin",
+"author": "George MacDonald",
+"level": "B1",
+"words": 51101,
+"chapters": 32,
+"size": 96452,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/708"
 },
 {
 "id": "pg-778",
@@ -2941,6 +2980,19 @@
 "source": "https://www.gutenberg.org/ebooks/1874"
 },
 {
+"id": "pg-836",
+"kind": "book",
+"title": "The Phoenix and the Carpet",
+"author": "E. Nesbit",
+"level": "B1",
+"words": 62352,
+"chapters": 12,
+"size": 124631,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/836"
+},
+{
 "id": "pg-146",
 "kind": "book",
 "title": "A Little Princess",
@@ -2965,6 +3017,19 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/4018"
+},
+{
+"id": "pg-498",
+"kind": "book",
+"title": "Rebecca of Sunnybrook Farm",
+"author": "Kate Douglas Wiggin",
+"level": "B1",
+"words": 73887,
+"chapters": 32,
+"size": 157663,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/498"
 },
 {
 "id": "pg-1448",
@@ -4627,6 +4692,19 @@
 "picsSize": 5612514
 },
 {
+"id": "pg-1837",
+"kind": "book",
+"title": "The Prince and the Pauper",
+"author": "Mark Twain",
+"level": "B2",
+"words": 69710,
+"chapters": 33,
+"size": 150586,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/1837"
+},
+{
 "id": "pg-74",
 "kind": "book",
 "title": "The Adventures of Tom Sawyer",
@@ -4696,6 +4774,45 @@
 "source": "https://www.gutenberg.org/ebooks/113"
 },
 {
+"id": "pg-47",
+"kind": "book",
+"title": "Anne of Avonlea",
+"author": "L. M. Montgomery",
+"level": "B2",
+"words": 88769,
+"chapters": 30,
+"size": 183188,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/47"
+},
+{
+"id": "pg-225",
+"kind": "book",
+"title": "At the Back of the North Wind",
+"author": "George MacDonald",
+"level": "B2",
+"words": 89099,
+"chapters": 38,
+"size": 162037,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/225"
+},
+{
+"id": "pg-573",
+"kind": "book",
+"title": "Tales from Shakespeare",
+"author": "Charles and Mary Lamb",
+"level": "B2",
+"words": 102037,
+"chapters": 22,
+"size": 199191,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/573"
+},
+{
 "id": "pg-45",
 "kind": "book",
 "title": "Anne of Green Gables",
@@ -4707,6 +4824,19 @@
 "license": "Public domain",
 "credit": "Project Gutenberg",
 "source": "https://www.gutenberg.org/ebooks/45"
+},
+{
+"id": "pg-164",
+"kind": "book",
+"title": "Twenty Thousand Leagues under the Sea",
+"author": "Jules Verne",
+"level": "B2",
+"words": 103229,
+"chapters": 46,
+"size": 215882,
+"license": "Public domain",
+"credit": "Project Gutenberg",
+"source": "https://www.gutenberg.org/ebooks/164"
 },
 {
 "id": "pg-1661",

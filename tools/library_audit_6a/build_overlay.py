@@ -1,22 +1,32 @@
 """Task 6A: join the audit answers to the items and build the app's checked readings and the audit tables.
 
-usage: python3 -I tools/library_audit_6a/build_overlay.py ITEMS_DIR ANSWERS_DIR OUT_ASSET.json.gz OUT_DIR
+usage: python3 -I tools/library_audit_6a/build_overlay.py ITEMS_DIR ANSWERS_DIR OUT_ASSET.json.gz OUT_DIR [--db DICT_DB]
 
 ITEMS_DIR: make_items.py's output (index.jsonl). ANSWERS_DIR: answer files *.jsonl ({"q", "unit", "pick", "why", ...}).
 Writes OUT_ASSET (assets/library/verified_6a.json.gz, lib/nlp/verified_readings.dart) and in OUT_DIR:
   labels.jsonl  every item with its answer (training data for later rounds)
   stats.json    agreement of today's reader and of the 5N engine with the audit
   gaps.tsv      words where no dictionary meaning fits ("missing"), or the fitting one has no Turkish
+--db: read the current Turkish of WordNet meanings ("wn:<id>") from the dictionary (read-only), so a meaning whose
+Turkish was added after the items were made (apply_tr_6a.py) counts as having Turkish.
 Standard library only. Reads nothing else; writes only these files.
 """
 import collections, glob, gzip, json, os, sys
 
 
-def main(items_dir, answers_dir, out_asset, out_dir):
+def main(items_dir, answers_dir, out_asset, out_dir, db=None):
+    syn_tr = {}
+    if db:
+        import sqlite3
+        c = sqlite3.connect(f'file:{db}?mode=ro', uri=True)
+        syn_tr = {f'wn:{i}': t for i, t in c.execute("SELECT id, tr FROM syn WHERE tr IS NOT NULL AND tr != '[]'")}
     idx = {}
     with open(os.path.join(items_dir, 'index.jsonl'), encoding='utf-8') as f:
         for l in f:
             x = json.loads(l)
+            if syn_tr and x['kind'] == 'word':
+                x['choice_tr'] = [t if t is not None or i not in syn_tr else ', '.join(json.loads(syn_tr[i]))
+                                  for i, t in zip(x['choice_ids'], x['choice_tr'])]
             idx[x['q']] = x
     ans = {}
     for p in sorted(glob.glob(os.path.join(answers_dir, '*.jsonl'))):
@@ -135,4 +145,10 @@ def main(items_dir, answers_dir, out_asset, out_dir):
 
 
 if __name__ == '__main__':
-    main(*sys.argv[1:5])
+    a = sys.argv[1:]
+    db = None
+    if '--db' in a:
+        i = a.index('--db')
+        db = a[i + 1]
+        a = a[:i] + a[i + 2:]
+    main(*a[:4], db=db)

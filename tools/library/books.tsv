@@ -90,3 +90,13 @@
 3497	The-Swiss-Twins_3497	?	The Swiss Twins	Lucy Fitch Perkins	A2	
 4012	The-Dutch-Twins_4012	?	The Dutch Twins	Lucy Fitch Perkins	A2	
 3774	The-Eskimo-Twins_3774	?	The Eskimo Twins	Lucy Fitch Perkins	A2	
+708	The-Princess-and-the-Goblin_708	708.txt	The Princess and the Goblin	George MacDonald	B1
+225	At-the-Back-of-the-North-Wind_225	225.txt	At the Back of the North Wind	George MacDonald	B2
+486	Ozma-of-Oz_486	486.txt	Ozma of Oz	L. Frank Baum	B1	re:^\d+\.\s+\S
+420	Dorothy-and-the-Wizard-in-Oz_420	420.txt	Dorothy and the Wizard in Oz	L. Frank Baum	B1	re:^\d+\.\s+\S
+498	Rebecca-of-Sunnybrook-Farm_498	498.txt	Rebecca of Sunnybrook Farm	Kate Douglas Wiggin	B1
+836	The-Phoenix-and-the-Carpet_836	836.txt	The Phoenix and the Carpet	E. Nesbit	B1
+47	Anne-of-Avonlea_47	47.txt	Anne of Avonlea	L. M. Montgomery	B2
+1837	The-Prince-and-the-Pauper_1837	1837.txt	The Prince and the Pauper	Mark Twain	B2
+573	Tales-from-Shakespeare_573	573.txt	Tales from Shakespeare	Charles and Mary Lamb	B2	caps
+164	Twenty-Thousand-Leagues-under-the-Sea_164	164.txt	Twenty Thousand Leagues under the Sea	Jules Verne	B2

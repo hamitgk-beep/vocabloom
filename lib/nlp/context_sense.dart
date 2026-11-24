@@ -819,7 +819,7 @@ class SenseEngine {
     final lemmas = _lemmaCandidates(lower, q.lemma);
     // "turn the light off": a phrasal verb split by its object, which the
     // reader does not underline.
-    final sep = _separable(q.tokens, q.index, lemmas);
+    final sep = _separable(q.tokens, q.index, lemmas, clauseBreaks(q.sentence, q.tokens));
     if (sep != null) {
       return _resolvePhrase(SenseQuery(
           sentence: q.sentence, tokens: q.tokens, index: q.index, expr: sep.$1, exprTokens: sep.$2,
@@ -886,14 +886,31 @@ class SenseEngine {
 
   /// A phrasal verb whose particle comes after the object ("turn the light
   /// off", "look the word up"): the expression and its token indexes.
-  (Expr, List<int>)? _separable(List<Token> toks, int i, List<String> lemmas) {
+  ///
+  /// Task 6A: the particle must close the clause ("carried the princess on his back" is carry + "on his back", not
+  /// "carry on"), the word must not follow a determiner ("the book on animals" has the noun "book"), and nothing
+  /// between the word and the particle may be a preposition or start a new clause ("the colour of the sun in the
+  /// picture"). These are the rules the 5M construction parser uses for the same reading.
+  (Expr, List<int>)? _separable(List<Token> toks, int i, List<String> lemmas, [List<bool>? breaks]) {
+    if (i > 0 && (_nounDets.contains(toks[i - 1].lower) || toks[i - 1].lower.endsWith("'s"))) return null;
+    bool brk(int j) => breaks != null && j < breaks.length && breaks[j];
+    if (i + 1 < toks.length && (_preps.contains(toks[i + 1].lower) || brk(i + 1))) return null;
     for (var k = i + 2; k < toks.length && k <= i + 5; k++) {
       final p = toks[k].lower;
+      if (brk(k)) return null;
       if (!_particles.contains(p)) {
         // the object must be a short noun phrase
-        if (k > i + 1 && (_preps.contains(p) || const {'and', 'or', 'but', 'that', 'which', 'who'}.contains(p))) return null;
+        if (_preps.contains(p) ||
+            const {'and', 'or', 'but', 'that', 'which', 'who'}.contains(p) ||
+            (p.endsWith('ing') && !p.endsWith('thing') && p.length > 4)) {
+          return null;
+        }
         continue;
       }
+      final next = k + 1 < toks.length ? toks[k + 1].lower : '';
+      final closes = k + 1 >= toks.length || brk(k + 1) || _sepClosers.contains(next) || next.endsWith('ly') ||
+          ((p == 'up' || p == 'out') && _preps.contains(next));
+      if (!closes) return null;
       for (final l in lemmas.take(2)) {
         final e = _phrasal['$l $p'];
         if (e != null) return (e, [i, k]);
@@ -902,6 +919,24 @@ class SenseEngine {
     }
     return null;
   }
+
+  /// The two meanings' Turkish are forms of one Turkish verb ("durmak" and its causative "durdurmak" for "stop"):
+  /// choosing the later meaning then changes little, so it needs no extra proof (Task 6A, when "durmak" was added).
+  static bool _sameVerbRoot(List<String> first, List<String> best) {
+    for (final a in first.where(DictDb.isTrVerb)) {
+      final stem = a.replaceFirst(RegExp(r'm[ae]k$'), '');
+      if (stem.length >= 3 && !stem.contains(' ') && best.any((b) => DictDb.isTrVerb(b) && b != a && b.startsWith(stem))) return true;
+    }
+    return false;
+  }
+
+  static const _nounDets = {'a', 'an', 'the', 'my', 'your', 'his', 'its', 'our', 'their', 'this', 'these', 'those', 'every', 'each', 'another'};
+
+  static const _sepClosers = {
+    'and', 'but', 'or', 'then', 'again', 'now', 'too', 'first', 'before', 'after', 'when', 'while', 'because', 'so',
+    'until', 'till', 'if', 'unless', 'once', 'as', 'soon', 'later', 'today', 'tonight', 'tomorrow', 'please', 'here',
+    'there', 'for', 'with', 'to', 'at', 'from',
+  };
 
   late final Map<String, Expr> _phrasal = {
     for (final e in dict.exprs)
@@ -1886,6 +1921,7 @@ class SenseEngine {
         !identical(firstOfPos, best) &&
         firstOfPos.tr.isNotEmpty &&
         !firstOfPos.tr.any(best.tr.contains) &&
+        !_sameVerbRoot(firstOfPos.tr, best.tr) &&
         (best.parts['sem'] ?? 0) < (firstOfPos.parts['sem'] ?? 0) + _firstSenseSem;
     final isLiteral = cat != null && best.literal;
     // Turkish for a meaning that has none of its own.

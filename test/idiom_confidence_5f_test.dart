@@ -63,7 +63,11 @@ void main() {
         final (c, e) = panel(engine, s, phrase);
         expect(c, isNotNull, reason: 'the matcher should find $phrase');
         // The mechanism of the 5E finding: no word-by-word meaning with Turkish.
-        expect(c!.ranked.where((x) => x.literal && x.tr.isNotEmpty), isEmpty, reason: 'test premise');
+        // (Task 6A gave "circle", travel around, its Turkish "etrafında dolaşmak"; the idiom must still not be sure there.)
+        c!;
+        if (phrase != 'circle the wagons') {
+          expect(c.ranked.where((x) => x.literal && x.tr.isNotEmpty), isEmpty, reason: 'test premise');
+        }
         expect(c.confidence, isNot(SenseConfidence.sure), reason: c.reason);
         // The review card path agrees with the panel: nothing is graded.
         expect(engine.fit(phrase, s, e!.tr!).confirmed, isFalse, reason: phrase);
