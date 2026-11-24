@@ -608,7 +608,8 @@ void main() {
       if (m != null) content.addAll([m, ...m.split(', ')]);
       final info = d.lookup(w);
       // Unverified AI drafts are dictionary content too (shown labelled, in a closed section).
-      for (final t in [...info.trFreeDict, ...info.trDraft, for (final s in info.senses) ...s.tr]) {
+      // A sense's Turkish is shown joined too ("düşünmek, saymak" for a sense of "think").
+      for (final t in [...info.trFreeDict, ...info.trDraft, for (final s in info.senses) ...[...s.tr, s.tr.join(', ')]]) {
         content.addAll([t, ...t.split(',').map((x) => x.trim())]);
       }
       // The own dictionary's senses: Turkish meaning, note, definition, example and its Turkish.
