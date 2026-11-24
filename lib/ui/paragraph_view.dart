@@ -33,6 +33,9 @@ class ParaAnalysis {
   bool _isLiteral(AppState app, Match m) => _literal.putIfAbsent(m, () {
     // Task 5M (off by default): the unit scorer may hide any category.
     if (sentenceAnalyzer5m && _notAUnit(app, m)) return true;
+    // Task 6A: a checked reading of this sentence (bundled stories) decides, in every category.
+    final checked = _checked(app, m);
+    if (checked != null) return !checked;
     // The literal check is for phrasal verbs ("lived in Kansas"); an idiom
     // or collocation found in its own words is the expression.
     if (m.expr.cat != 'phrasal_verbs') return false;
@@ -47,6 +50,19 @@ class ParaAnalysis {
       return false;
     }
   });
+
+  /// Task 6A: whether the checked readings say [m] is used as its expression here (null: not checked).
+  bool? _checked(AppState app, Match m) {
+    if (app.senses.verified == null) return null;
+    try {
+      final s = sentenceAt(text, tokens, m.tokens.first, ranges: sentences);
+      final idx = [for (final x in m.tokens) x - s.first];
+      if (idx.any((x) => x < 0 || x >= s.tokens.length)) return null;
+      return app.senses.verifiedUnit(s.text, m.expr, idx);
+    } catch (_) {
+      return null;
+    }
+  }
 
   /// Task 5M: [SentenceAnalyzer.notAUnit] with the panel's own confidence.
   bool _notAUnit(AppState app, Match m) {

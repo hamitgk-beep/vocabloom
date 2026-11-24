@@ -8,6 +8,7 @@ import 'ai/key_ai.dart';
 import 'app_state.dart';
 import 'ai/device_translate.dart';
 import 'mt/offline_mt.dart';
+import 'nlp/verified_readings.dart';
 import 'data/dict_db.dart';
 import 'data/tr_en_dict.dart';
 import 'data/user_db.dart';
@@ -73,6 +74,8 @@ class _KelimeOkurAppState extends State<KelimeOkurApp> {
       final user = UserDb.open(dir);
       final a = AppState(dict, user);
       a.trEn = await TrEnDict.open(dir);
+      // Task 6A: checked readings of the bundled stories (null when missing: the reader works as before).
+      a.senses.verified = await VerifiedReadings.load();
       Speech.instance.bookLang = a.learnTurkish ? 'tr' : 'en';
       user.lang = a.learnTurkish ? 'tr' : 'en';
       a.localAi = KeyAi(user);

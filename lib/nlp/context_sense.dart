@@ -15,6 +15,7 @@ import '../data/dict_db.dart';
 import 'literal_cues.dart';
 import 'overlap_rules.dart';
 import 'text.dart';
+import 'verified_readings.dart';
 
 enum SenseConfidence { sure, likely, none }
 
@@ -404,7 +405,13 @@ class SenseEngine {
 
   String cacheKey(SenseQuery q) {
     final t = q.index >= 0 && q.index < q.tokens.length ? q.tokens[q.index] : null;
-    final span = q.exprTokens.isEmpty ? '${t?.start}-${t?.end}' : q.exprTokens.map((i) => q.tokens[i].start).join(',');
+    // Places are counted from the sentence's first token: a reader sentence keeps its paragraph's offsets, while a
+    // sentence tokenized alone starts at 0, so the same number could name another word of the same sentence
+    // (Task 6A: "the" got the answer cached for "old"). The word itself is part of the key too.
+    final o = q.tokens.isEmpty ? 0 : q.tokens.first.start;
+    final span = q.exprTokens.isEmpty
+        ? '${t == null ? null : t.start - o}-${t == null ? null : t.end - o}:${t?.lower}'
+        : q.exprTokens.map((i) => '${q.tokens[i].start - o}:${q.tokens[i].lower}').join(',');
     return [
       q.contentId,
       _hash(q.sentence),
@@ -434,6 +441,62 @@ class SenseEngine {
 
   void clearCache() => _cache.clear();
 
+  // ------------------------------------------------------- checked readings
+  VerifiedReadings? _verified;
+
+  /// Task 6A: the checked readings of the bundled library stories ([VerifiedReadings]); null = none.
+  VerifiedReadings? get verified => _verified;
+  set verified(VerifiedReadings? v) {
+    _verified = v;
+    _cache.clear();
+  }
+
+  /// Whether the checked readings say the words [idx] of [sentence] are used as [e] (true), as separate words
+  /// (false), or say nothing (null).
+  bool? verifiedUnit(String sentence, Expr e, List<int> idx) => _verified?.unit(sentence, e.phrase, e.cat, idx);
+
+  /// The engine's answer [r], with the checked reading of [q] when there is one. The checked meaning must be one the
+  /// engine itself considered ([ContextSense.ranked]); otherwise [r] stands. A checked meaning is shown as sure
+  /// only when its Turkish was written for it and rests on no AI draft; else as likely. When no dictionary meaning
+  /// fits ('-') or the fitting one has no Turkish, no meaning is shown as the answer.
+  ContextSense _applyVerified(SenseQuery q, ContextSense r) {
+    final v = _verified!;
+    final String? id;
+    if (q.expr == null) {
+      id = v.word(q.sentence, q.index);
+    } else {
+      if (q.exprTokens.isEmpty || r.literalPhrase != null) return r;
+      id = v.exprMeaning(q.sentence, q.expr!.phrase, q.expr!.cat, q.exprTokens);
+    }
+    if (id == null) return r;
+    if (id == '~') {
+      // the fitting meaning has no Turkish of its own: the engine's answer stays, but not as sure
+      if (r.confidence != SenseConfidence.sure) return r;
+      return ContextSense(
+          headword: r.headword, cat: r.cat, literalPhrase: r.literalPhrase, confidence: SenseConfidence.likely, best: r.best,
+          others: r.others, reason: 'checked 6A: fitting meaning has no Turkish; ${r.reason}', ranked: r.ranked);
+    }
+    if (id == '-') {
+      return ContextSense(
+          headword: r.headword, cat: r.cat, confidence: SenseConfidence.none, others: [if (r.best != null) r.best!, ...r.others],
+          reason: 'checked 6A: no dictionary meaning fits; ${r.reason}', ranked: r.ranked);
+    }
+    final c = r.ranked.where((x) => x.id == id).firstOrNull;
+    if (c == null) return r;
+    if (identical(c, r.best) && r.confidence == SenseConfidence.sure) return r;
+    final conf = c.tr.isEmpty
+        ? SenseConfidence.none
+        : (c.trDerived || c.unverified ? SenseConfidence.likely : SenseConfidence.sure);
+    return ContextSense(
+        headword: r.headword,
+        cat: r.cat,
+        confidence: conf,
+        best: c,
+        others: _others([for (final x in r.ranked) if (!identical(x, c)) x], c),
+        reason: 'checked 6A; ${r.reason}',
+        ranked: r.ranked);
+  }
+
   /// The meaning of the tapped word or expression in its sentence. Never
   /// throws: on any problem the result is "none" and the panel shows the
   /// ordinary dictionary.
@@ -455,6 +518,7 @@ class SenseEngine {
     } catch (e) {
       r = ContextSense(headword: q.index >= 0 && q.index < q.tokens.length ? q.tokens[q.index].lower : '', confidence: SenseConfidence.none, reason: 'error: $e');
     }
+    if (_verified != null) r = _applyVerified(q, r);
     _cache[key] = r;
     if (_cache.length > _cacheMax) _cache.remove(_cache.keys.first);
     return r;
@@ -474,6 +538,8 @@ class SenseEngine {
     ContextSense? undecided;
     for (final m in matches) {
       if (m.tokens.length < 2 || !m.tokens.contains(q.index)) continue;
+      // Task 6A: checked as separate words in this sentence.
+      if (verifiedUnit(q.sentence, m.expr, m.tokens) == false) continue;
       final r = resolve(SenseQuery(
           sentence: q.sentence, tokens: q.tokens, index: q.index, expr: m.expr, exprTokens: m.tokens,
           prevSentence: q.prevSentence, nextSentence: q.nextSentence, contentId: q.contentId, lang: q.lang, lemma: q.lemma));
@@ -729,6 +795,8 @@ class SenseEngine {
   /// ("lived in Kansas" is live + in, not the phrasal verb "live in").
   bool isLiteral(Expr e, List<Token> toks, List<int> idx, {String? sentence, String? prev, String? next}) {
     if (idx.isEmpty || !e.phrase.contains(' ')) return false;
+    final checked = sentence == null ? null : verifiedUnit(sentence, e, idx);
+    if (checked != null) return !checked;
     final r = resolve(SenseQuery(
         sentence: sentence ?? toks.map((t) => t.text).join(' '), tokens: toks, index: idx.first, expr: e, exprTokens: idx,
         prevSentence: prev, nextSentence: next));
@@ -804,7 +872,9 @@ class SenseEngine {
   }
 
   static final Set<String> _closed = {
-    ...stopWords, ..._preps, ..._aux, ..._dets, ..._persons.where((p) => p.length < 6),
+    // Short person words that are pronouns. The nouns among them ("king", "boy", "baby") have meanings of their own
+    // (Task 6A: "king" was a grammar word, so its card said no meaning could be chosen).
+    ..._dets, ..._preps, ..._aux, ...stopWords, ..._persons.where((p) => p.length < 6 && !_personNouns.contains(p)),
     'very', 'rather', 'quite', 'too', 'so', 'just', 'even', 'only', 'also', 'well', 'still', 'yet', 'ever', 'never',
     'again', 'already', 'almost', 'enough', 'perhaps', 'maybe', 'please', 'than', 'then', 'because', 'although',
     'though', 'unless', 'while', 'whether', 'however', 'therefore', 'except', 'upon', 'against', 'among', 'beside',
@@ -1449,6 +1519,8 @@ class SenseEngine {
     'wife', 'husband', 'son', 'daughter', 'king', 'queen', 'baby', 'police', 'nanny', 'myself', 'yourself', 'himself',
     'herself', 'ourselves', 'themselves',
   };
+
+  static const _personNouns = {'man', 'men', 'woman', 'women', 'boy', 'girl', 'child', 'son', 'wife', 'king', 'queen', 'baby', 'nanny'};
 
   static const _pathWords = {'through', 'along', 'across', 'around', 'over', 'into', 'down', 'up', 'past', 'between'};
   static final _spatial = RegExp(r'\b(distance|space|extend|extends|stretch|between|location|lie|lies|reach|span)\b');
