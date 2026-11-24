@@ -104,4 +104,13 @@ void main() {
     expect(e.computed, n);
     expect(villagers.headword, 'villager');
   });
+
+  test('the bundled checked readings load and give "sees" its seeing meaning', () {
+    final v = VerifiedReadings.fromBytes(File(VerifiedReadings.asset).readAsBytesSync());
+    expect(v.length, greaterThan(8000));
+    final e = SenseEngine(d)..verified = v;
+    final r = word(e, 'The dog sees a bird.', 'sees');
+    expect(r.tr, contains('görmek'));
+    expect(r.confidence, SenseConfidence.sure);
+  });
 }

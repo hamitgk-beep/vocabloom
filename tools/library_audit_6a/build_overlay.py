@@ -58,6 +58,9 @@ def main(items_dir, answers_dir, out_asset, out_dir):
                 pick = a.get('pick')
                 if unit and isinstance(pick, int) and 0 <= pick < len(x['choice_ids']):
                     s[text]['m'][key] = x['choice_ids'][pick]
+                if unit and pick == -1:
+                    st['expr_no_meaning_fits'] += 1
+                    gaps.append((x['phrase'], x['cat'], 'expr_meaning_missing', '', '', text))
             else:
                 st['expr_not_in_reader'] += 1
                 if unit:
@@ -102,6 +105,10 @@ def main(items_dir, answers_dir, out_asset, out_dir):
         else:
             why = a.get('why') or 'other'
             st[f'word_none_{why}'] += 1
+            if why == 'other' and ' ' in x['head'] and x['head'].split()[0] != x['word'].lower():
+                st['word_wrong_phrasal_head'] += 1
+            if why == 'other':
+                gaps.append((x['head'], x['word'], 'engine_wrong_head', '', a.get('note') or '', text))
             if why == 'missing':
                 gaps.append((x['head'], x['word'], 'missing', '', a.get('need') or '', text))
                 if x['cur'] is not None:
@@ -116,7 +123,7 @@ def main(items_dir, answers_dir, out_asset, out_dir):
         for l in labels:
             f.write(json.dumps(l, ensure_ascii=False) + '\n')
     with open(os.path.join(out_dir, 'gaps.tsv'), 'w', encoding='utf-8') as f:
-        f.write('headword\tword\tkind\tsense_id\tneeded_meaning_en\tsentence\n')
+        f.write('headword\tword_or_cat\tkind\tsense_id\tneeded_meaning_en_or_note\tsentence\n')
         for g in sorted(gaps):
             f.write('\t'.join(str(v).replace('\t', ' ') for v in g) + '\n')
     st['sentences_in_asset'] = len(out['s'])
