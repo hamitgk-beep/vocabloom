@@ -1,0 +1,16 @@
+{
+ "asset_expr_entries": 0,
+ "asset_word_entries": 402,
+ "cur_ok": 95,
+ "cur_wrong": 668,
+ "eng_none": 624,
+ "sentences_in_asset": 334,
+ "word": 1089,
+ "word_fit": 624,
+ "word_fit_no_turkish": 535,
+ "word_none_expr": 232,
+ "word_none_missing": 139,
+ "word_none_name": 59,
+ "word_none_other": 35,
+ "word_wrong_phrasal_head": 9
+}

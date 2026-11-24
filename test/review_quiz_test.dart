@@ -76,8 +76,9 @@ void main() {
     final q = ReviewQuiz(d, u, rnd: Random(2));
     // ft's first meaning (DictDb.sourcePolicy); the AI draft said "sadece, yalnızca".
     expect(q.answerFor(saved('simply', s)).tr, 'sadece');
-    // In this long sentence the context picker does not confirm it: shown, not graded.
-    expect(q.choiceFor(saved('simply', s)), isNull);
+    // Task 6A gave the meaning "and nothing more" its Turkish "sadece, yalnızca": the context picker now finds that
+    // meaning with the saved Turkish in this sentence, so the card is graded (before, it was shown only).
+    expect(q.choiceFor(saved('simply', s)), isNotNull);
     // No sentence: "sadece" is in the human translations of the word's example sentences.
     final trEn = TrEnDict(sqlite3.open('assets/tr_en.db', mode: OpenMode.readOnly));
     final ch = ReviewQuiz(d, u, rnd: Random(2), trEn: trEn).choiceFor(saved('simply', null))!;

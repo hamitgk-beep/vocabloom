@@ -1,0 +1,400 @@
+{"q": "e101", "unit": true}
+{"q": "e124", "unit": true}
+{"q": "e166", "unit": true}
+{"q": "w320", "pick": 1}
+{"q": "e324", "unit": false}
+{"q": "w347", "pick": 0}
+{"q": "e402", "unit": false}
+{"q": "e809", "unit": true, "pick": 0}
+{"q": "w836", "pick": 2}
+{"q": "w886", "pick": 2}
+{"q": "w899", "pick": 8}
+{"q": "e1218", "unit": true, "pick": 0}
+{"q": "w1269", "pick": 5}
+{"q": "e1295", "unit": true}
+{"q": "e1319", "unit": false}
+{"q": "w1334", "pick": 1}
+{"q": "w1530", "pick": 0}
+{"q": "w1601", "pick": 2}
+{"q": "e1645", "unit": false}
+{"q": "w1756", "pick": 0}
+{"q": "e1788", "unit": true, "pick": 0}
+{"q": "w1828", "pick": -1, "why": "missing", "need": "take part in (a race)"}
+{"q": "w1843", "pick": 0}
+{"q": "e1907", "unit": true, "pick": 0}
+{"q": "w2034", "pick": 1}
+{"q": "e2047", "unit": false}
+{"q": "w2078", "pick": 2}
+{"q": "w2109", "pick": 2}
+{"q": "w2274", "pick": 7}
+{"q": "e2308", "unit": true}
+{"q": "w2345", "pick": 0}
+{"q": "e2496", "unit": true, "pick": 0}
+{"q": "w2570", "pick": 0}
+{"q": "w2718", "pick": 0}
+{"q": "w2730", "pick": 6}
+{"q": "w2741", "pick": 3}
+{"q": "w2742", "pick": 3}
+{"q": "e2743", "unit": false}
+{"q": "w2828", "pick": 11}
+{"q": "w2829", "pick": 5}
+{"q": "w2895", "pick": 2}
+{"q": "w3006", "pick": -1, "why": "name"}
+{"q": "w3036", "pick": 10}
+{"q": "w3101", "pick": 0}
+{"q": "w3163", "pick": 4}
+{"q": "w3187", "pick": 4}
+{"q": "w3308", "pick": 0}
+{"q": "w3391", "pick": 0}
+{"q": "w3555", "pick": 0}
+{"q": "w3677", "pick": 1}
+{"q": "w3751", "pick": 0}
+{"q": "w3768", "pick": 0}
+{"q": "w3790", "pick": 2}
+{"q": "e4078", "unit": true, "pick": 1}
+{"q": "w4273", "pick": 1}
+{"q": "e4306", "unit": true}
+{"q": "w4314", "pick": -1, "why": "missing", "need": "allow or permit (someone to do something)"}
+{"q": "w4372", "pick": 3}
+{"q": "w4389", "pick": 2}
+{"q": "e4497", "unit": true, "pick": 1}
+{"q": "w4628", "pick": 1}
+{"q": "e4678", "unit": false}
+{"q": "w4814", "pick": 1}
+{"q": "w4888", "pick": 0}
+{"q": "w4933", "pick": 8}
+{"q": "w4963", "pick": 0}
+{"q": "w5102", "pick": 0}
+{"q": "w5182", "pick": 1}
+{"q": "e5236", "unit": true, "pick": 0}
+{"q": "e5278", "unit": true, "pick": 0}
+{"q": "w5366", "pick": 1}
+{"q": "e5444", "unit": false}
+{"q": "w5518", "pick": 1}
+{"q": "w5643", "pick": 1}
+{"q": "w5679", "pick": 9}
+{"q": "w5981", "pick": 1}
+{"q": "e5995", "unit": false}
+{"q": "w6283", "pick": -1, "why": "expr"}
+{"q": "e6303", "unit": true}
+{"q": "w6557", "pick": 4}
+{"q": "w6666", "pick": 4}
+{"q": "w6680", "pick": 7}
+{"q": "w6716", "pick": 0}
+{"q": "w6729", "pick": 3}
+{"q": "w6753", "pick": 1}
+{"q": "w6754", "pick": 12}
+{"q": "w6759", "pick": 0}
+{"q": "w6815", "pick": 0}
+{"q": "e6877", "unit": true, "pick": 1}
+{"q": "w6942", "pick": 10}
+{"q": "w6995", "pick": 1}
+{"q": "w7127", "pick": 22}
+{"q": "w7144", "pick": -1, "why": "missing", "need": "have or go on (a ride, trip, walk)"}
+{"q": "w7145", "pick": 0}
+{"q": "w7169", "pick": -1, "why": "name"}
+{"q": "w7198", "pick": 1}
+{"q": "w7240", "pick": 0}
+{"q": "e7292", "unit": true}
+{"q": "w7301", "pick": 1}
+{"q": "w7358", "pick": 1}
+{"q": "w7420", "pick": 0}
+{"q": "w7424", "pick": 2}
+{"q": "e7491", "unit": true}
+{"q": "w7523", "pick": 2}
+{"q": "w7532", "pick": 1}
+{"q": "w7587", "pick": 3}
+{"q": "e7607", "unit": true, "pick": 0}
+{"q": "w7751", "pick": 1}
+{"q": "e7813", "unit": true, "pick": 0}
+{"q": "w7832", "pick": 1}
+{"q": "w7897", "pick": 1}
+{"q": "e7912", "unit": true, "pick": 0}
+{"q": "w7935", "pick": 0}
+{"q": "e8111", "unit": true, "pick": 2}
+{"q": "e8273", "unit": true, "pick": 0}
+{"q": "w8291", "pick": 0}
+{"q": "w8304", "pick": -1, "why": "expr"}
+{"q": "w8325", "pick": 3}
+{"q": "w8382", "pick": 5}
+{"q": "w8773", "pick": 0}
+{"q": "w8809", "pick": 1}
+{"q": "w8839", "pick": 0}
+{"q": "e8870", "unit": true, "pick": -1}
+{"q": "w8991", "pick": 4}
+{"q": "e9057", "unit": true}
+{"q": "e9074", "unit": false}
+{"q": "e9184", "unit": true, "pick": 0}
+{"q": "w9219", "pick": 0}
+{"q": "w9324", "pick": 0}
+{"q": "w9341", "pick": 4}
+{"q": "w9371", "pick": -1, "why": "other", "note": "nonsense singing syllables"}
+{"q": "w9442", "pick": -1, "why": "expr"}
+{"q": "e9460", "unit": true, "pick": 1}
+{"q": "w9478", "pick": 1}
+{"q": "w9514", "pick": 2}
+{"q": "e9700", "unit": false}
+{"q": "w9784", "pick": 1}
+{"q": "w9841", "pick": -1, "why": "name"}
+{"q": "w9981", "pick": 1}
+{"q": "e9989", "unit": false}
+{"q": "w10107", "pick": 0}
+{"q": "w10117", "pick": 2}
+{"q": "e10135", "unit": true, "pick": -1}
+{"q": "w10293", "pick": 0}
+{"q": "w10434", "pick": 0}
+{"q": "w10490", "pick": 1}
+{"q": "w10516", "pick": -1, "why": "name"}
+{"q": "w10554", "pick": 0}
+{"q": "w10591", "pick": -1, "why": "name"}
+{"q": "e10681", "unit": true, "pick": -1}
+{"q": "w10764", "pick": 8}
+{"q": "w10871", "pick": 2}
+{"q": "e10925", "unit": true, "pick": -1}
+{"q": "e11198", "unit": true}
+{"q": "w11285", "pick": 0}
+{"q": "w11336", "pick": -1, "why": "expr"}
+{"q": "w11398", "pick": 1}
+{"q": "w11405", "pick": 2}
+{"q": "w11417", "pick": 0}
+{"q": "w11555", "pick": 1}
+{"q": "e11558", "unit": true, "pick": 2}
+{"q": "e11610", "unit": true, "pick": 0}
+{"q": "w11647", "pick": 3}
+{"q": "w11652", "pick": 1}
+{"q": "w11699", "pick": 0}
+{"q": "e11714", "unit": false}
+{"q": "w11906", "pick": -1, "why": "missing", "need": "a stage of a competition"}
+{"q": "w12021", "pick": 1}
+{"q": "w12257", "pick": 0}
+{"q": "e12260", "unit": true, "pick": 0}
+{"q": "e12355", "unit": true}
+{"q": "e12359", "unit": false}
+{"q": "w12548", "pick": 0}
+{"q": "e12551", "unit": false}
+{"q": "w12627", "pick": 3}
+{"q": "w12651", "pick": -1, "why": "name"}
+{"q": "w12665", "pick": 0}
+{"q": "w12738", "pick": 0}
+{"q": "e12801", "unit": true, "pick": 1}
+{"q": "w12848", "pick": 1}
+{"q": "w12863", "pick": 2}
+{"q": "w12872", "pick": 0}
+{"q": "e12906", "unit": true, "pick": 0}
+{"q": "w12910", "pick": 3}
+{"q": "w12948", "pick": 1}
+{"q": "w13092", "pick": 0}
+{"q": "w13268", "pick": 4}
+{"q": "w13382", "pick": 4}
+{"q": "w13448", "pick": 8}
+{"q": "w13518", "pick": 0}
+{"q": "w13583", "pick": 2}
+{"q": "w13584", "pick": 2}
+{"q": "e13706", "unit": true, "pick": 0}
+{"q": "e13794", "unit": true, "pick": 2}
+{"q": "e13795", "unit": true, "pick": 0}
+{"q": "w13850", "pick": 0}
+{"q": "w13892", "pick": -1, "why": "expr"}
+{"q": "w13899", "pick": 2}
+{"q": "w13994", "pick": 7}
+{"q": "w14078", "pick": 0}
+{"q": "w14083", "pick": 1}
+{"q": "w14099", "pick": 1}
+{"q": "e14483", "unit": true}
+{"q": "w14488", "pick": 3}
+{"q": "w14587", "pick": 2}
+{"q": "w14606", "pick": -1, "why": "other", "note": "Tamil colloquial address particle, not English"}
+{"q": "w14645", "pick": 1}
+{"q": "w14685", "pick": 4}
+{"q": "e14722", "unit": true}
+{"q": "e14788", "unit": false}
+{"q": "e14811", "unit": true}
+{"q": "w14831", "pick": 9}
+{"q": "e14868", "unit": true, "pick": 1}
+{"q": "e14921", "unit": false}
+{"q": "w14970", "pick": 2}
+{"q": "e15127", "unit": true}
+{"q": "w15246", "pick": 13}
+{"q": "w15265", "pick": 1}
+{"q": "w15301", "pick": 0}
+{"q": "w15408", "pick": 0}
+{"q": "w15470", "pick": 1}
+{"q": "w15554", "pick": 0}
+{"q": "e15562", "unit": true, "pick": 0}
+{"q": "w15758", "pick": 6}
+{"q": "w15854", "pick": 7}
+{"q": "e15882", "unit": true}
+{"q": "w16014", "pick": 1}
+{"q": "e16073", "unit": true, "pick": 0}
+{"q": "w16106", "pick": 1}
+{"q": "w16146", "pick": 3}
+{"q": "w16152", "pick": 0}
+{"q": "w16191", "pick": 1}
+{"q": "e16206", "unit": true, "pick": 0}
+{"q": "e16329", "unit": false}
+{"q": "w16344", "pick": 4}
+{"q": "w16605", "pick": 0}
+{"q": "w16661", "pick": 1}
+{"q": "w16663", "pick": 4}
+{"q": "w16673", "pick": 1}
+{"q": "w16793", "pick": -1, "why": "missing", "need": "a sudden sharp sensation, as of pain"}
+{"q": "w16829", "pick": 3}
+{"q": "w16863", "pick": 0}
+{"q": "w16923", "pick": 1}
+{"q": "w16941", "pick": 0}
+{"q": "e16961", "unit": true, "pick": 0}
+{"q": "w16965", "pick": 19}
+{"q": "w16993", "pick": 0}
+{"q": "w17164", "pick": 2}
+{"q": "e17192", "unit": true}
+{"q": "w17213", "pick": 1}
+{"q": "w17231", "pick": 15}
+{"q": "w17287", "pick": 1}
+{"q": "w17324", "pick": 1}
+{"q": "w17336", "pick": 4}
+{"q": "w17370", "pick": -1, "why": "name"}
+{"q": "w17373", "pick": 13}
+{"q": "e17378", "unit": true}
+{"q": "w17479", "pick": 4}
+{"q": "w17542", "pick": 5}
+{"q": "e17594", "unit": true}
+{"q": "w17613", "pick": 1}
+{"q": "e17627", "unit": true, "pick": 0}
+{"q": "w17804", "pick": 7}
+{"q": "e17810", "unit": false}
+{"q": "w17836", "pick": 4}
+{"q": "w17857", "pick": 1}
+{"q": "w17862", "pick": 0}
+{"q": "w17922", "pick": 0}
+{"q": "e17953", "unit": true}
+{"q": "w18004", "pick": 3}
+{"q": "w18070", "pick": 6}
+{"q": "w18151", "pick": 0}
+{"q": "w18166", "pick": 1}
+{"q": "w18245", "pick": 1}
+{"q": "w18413", "pick": 0}
+{"q": "w18443", "pick": 2}
+{"q": "w18494", "pick": 3}
+{"q": "w18542", "pick": 4}
+{"q": "w18651", "pick": 23}
+{"q": "w18675", "pick": 1}
+{"q": "e18756", "unit": true, "pick": 4}
+{"q": "w18763", "pick": 4}
+{"q": "w18780", "pick": -1, "why": "expr"}
+{"q": "e18828", "unit": true}
+{"q": "w19043", "pick": 1}
+{"q": "e19110", "unit": false}
+{"q": "w19113", "pick": 0}
+{"q": "w19244", "pick": 0}
+{"q": "e19324", "unit": true, "pick": 0}
+{"q": "w19326", "pick": 1}
+{"q": "w19336", "pick": 1}
+{"q": "w19372", "pick": 0}
+{"q": "w19397", "pick": 5}
+{"q": "w19422", "pick": 3}
+{"q": "w19470", "pick": 1}
+{"q": "w19605", "pick": 2}
+{"q": "e19713", "unit": true}
+{"q": "w19723", "pick": 1}
+{"q": "w19728", "pick": 9}
+{"q": "w19828", "pick": 0}
+{"q": "w19837", "pick": 2}
+{"q": "e19861", "unit": true}
+{"q": "e19891", "unit": true, "pick": 0}
+{"q": "e19896", "unit": true}
+{"q": "w19935", "pick": 0}
+{"q": "w19950", "pick": 3}
+{"q": "w19967", "pick": 0}
+{"q": "w20013", "pick": 0}
+{"q": "w20016", "pick": 2}
+{"q": "w20023", "pick": 1}
+{"q": "w20047", "pick": 0}
+{"q": "w20090", "pick": 7}
+{"q": "w20199", "pick": 2}
+{"q": "w20239", "pick": 0}
+{"q": "w20324", "pick": 1}
+{"q": "w20479", "pick": 0}
+{"q": "w20509", "pick": 0}
+{"q": "w20532", "pick": 1}
+{"q": "e20622", "unit": false}
+{"q": "w20683", "pick": 2}
+{"q": "w20720", "pick": 0}
+{"q": "w20749", "pick": 4}
+{"q": "w20895", "pick": 15}
+{"q": "e20916", "unit": true}
+{"q": "w21025", "pick": 2}
+{"q": "w21050", "pick": 1}
+{"q": "w21129", "pick": 2}
+{"q": "w21157", "pick": 1}
+{"q": "w21208", "pick": 3}
+{"q": "w21252", "pick": 7}
+{"q": "w21310", "pick": 4}
+{"q": "e21333", "unit": true}
+{"q": "w21528", "pick": 2}
+{"q": "w21691", "pick": 0}
+{"q": "w21705", "pick": 2}
+{"q": "w21808", "pick": 0}
+{"q": "e21842", "unit": true, "pick": 0}
+{"q": "e21887", "unit": true}
+{"q": "w21895", "pick": 0}
+{"q": "w21930", "pick": 2}
+{"q": "w22014", "pick": 1}
+{"q": "e22021", "unit": true, "pick": 1}
+{"q": "w22035", "pick": 6}
+{"q": "w22126", "pick": 1}
+{"q": "w22141", "pick": 0}
+{"q": "w22178", "pick": 0}
+{"q": "w22302", "pick": 5}
+{"q": "w22577", "pick": 2}
+{"q": "w22664", "pick": 1}
+{"q": "w22687", "pick": 0}
+{"q": "w22701", "pick": 0}
+{"q": "w22716", "pick": 1}
+{"q": "w22927", "pick": 0}
+{"q": "w22955", "pick": 3}
+{"q": "w22980", "pick": 1}
+{"q": "w22982", "pick": 2}
+{"q": "e23114", "unit": true, "pick": -1}
+{"q": "w23115", "pick": -1, "why": "expr"}
+{"q": "w23133", "pick": 1}
+{"q": "w23147", "pick": 1}
+{"q": "w23181", "pick": 2}
+{"q": "w23284", "pick": 2}
+{"q": "w23323", "pick": 1}
+{"q": "w23360", "pick": 1}
+{"q": "w23395", "pick": 5}
+{"q": "w23464", "pick": 2}
+{"q": "w23520", "pick": 4}
+{"q": "w23574", "pick": -1, "why": "name"}
+{"q": "e23656", "unit": false}
+{"q": "w23711", "pick": 0}
+{"q": "w23772", "pick": 0}
+{"q": "e23808", "unit": true, "pick": 1}
+{"q": "e23816", "unit": true}
+{"q": "w23838", "pick": 4}
+{"q": "w23866", "pick": 0}
+{"q": "w23917", "pick": 0}
+{"q": "w23957", "pick": 7}
+{"q": "w24028", "pick": 0}
+{"q": "e24104", "unit": true}
+{"q": "w24138", "pick": 2}
+{"q": "w24179", "pick": 1}
+{"q": "w24209", "pick": 1}
+{"q": "w24360", "pick": 0}
+{"q": "w24386", "pick": 17}
+{"q": "w24405", "pick": 4}
+{"q": "w24479", "pick": 0}
+{"q": "e24480", "unit": false}
+{"q": "w24541", "pick": 3}
+{"q": "w24550", "pick": 4}
+{"q": "e24582", "unit": true, "pick": 0}
+{"q": "w24677", "pick": 6}
+{"q": "e24681", "unit": true}
+{"q": "w25344", "pick": 1}
+{"q": "e25654", "unit": true}
+{"q": "w25662", "pick": 2}
+{"q": "e25707", "unit": false}
+{"q": "w25751", "pick": 0}
+{"q": "w25757", "pick": 0}
+{"q": "w25905", "pick": 0}
+{"q": "e25916", "unit": true}
